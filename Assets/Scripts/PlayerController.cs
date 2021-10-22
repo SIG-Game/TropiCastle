@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
     public float sprintSpeedMultiplier;
 
     Rigidbody2D rb2d;
+    
+    enum directions {UP, DOWN, LEFT, RIGHT};
 
     void Start()
     {
