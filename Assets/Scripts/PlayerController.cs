@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public float movementSpeed;
+    public float sprintSpeedMultiplier;
 
     Rigidbody2D rb2d;
 
@@ -21,6 +20,13 @@ public class PlayerController : MonoBehaviour
         Vector2 inputVector = (new Vector2(horizontalInput, verticalInput));
         inputVector.Normalize();
 
-        rb2d.velocity = movementSpeed * inputVector;
+        Vector2 velocity = movementSpeed * inputVector;
+
+        if (Input.GetButton("Sprint"))
+        {
+            velocity *= sprintSpeedMultiplier;
+        }
+
+        rb2d.velocity = velocity;
     }
 }
