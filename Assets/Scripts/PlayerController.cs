@@ -31,18 +31,24 @@ public class PlayerController : MonoBehaviour
         }
 
         rb2d.velocity = velocity;
-
+        
+        /* test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
         {
             takeDamage(20);
         }
+        */
     }
 
+    //reduces health of player when this is called
     public void takeDamage(int damage)
     {
-        if (currentHealth - damage >= 0) 
+        if (currentHealth - damage >= 0) //doesnt let health go below 0 
         {
             currentHealth -= damage;
+        } else
+        {
+            currentHealth = 0;
         }
     }
 }
