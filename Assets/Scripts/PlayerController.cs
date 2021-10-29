@@ -5,17 +5,14 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float sprintSpeedMultiplier;
 
-    Rigidbody2D rb2d;
-    CapsuleCollider2D hitbox;
-    Direction lastDirection;
+    public Rigidbody2D rb2d;
+    private Direction lastDirection;
 
-    enum Direction { UP, DOWN, LEFT, RIGHT };
+    public enum Direction { UP, DOWN, LEFT, RIGHT };
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        hitbox = GetComponent<CapsuleCollider2D>();
-        
     }
 
     void Update()
@@ -29,25 +26,21 @@ public class PlayerController : MonoBehaviour
             if (horizontalInput < 0)
             {
                 lastDirection = Direction.LEFT;
-                hitbox.transform.Translate((float) -0.4, 0, 0);
                 Debug.Log("Left");
             }
             else if (horizontalInput > 0)
             {
                 lastDirection = Direction.RIGHT;
-                hitbox.transform.Translate((float) 0.4, 0, 0);
                 Debug.Log("Right");
             }
             else if (verticalInput < 0)
             {
                 lastDirection = Direction.DOWN;
-                hitbox.transform.Translate(0,(float)-0.4, 0);
                 Debug.Log("Down");
             } 
             else if (verticalInput > 0) 
             {
                 lastDirection = Direction.UP;
-                hitbox.transform.Translate(0, (float) 0.4, 0);
                 Debug.Log("Up");
             }
         }
@@ -67,8 +60,24 @@ public class PlayerController : MonoBehaviour
         rb2d.velocity = velocity;
     }
 
+    public void Attack() {
+        if (Input.GetButton("Fire1")) {
+            Debug.Log("attacked");
+        }
+    } 
 
-    void Attack() {
+    // // When enemy enters collider hitbox, set to true
+    // void OnTriggerEnter2D(Collider other) {
 
+    // }
+
+    // // When enemy exits, set within range to false
+    // void OnTriggerExit2D(Collider other) {
+
+    // }
+
+    public Direction getLastDir() {
+        return lastDirection;
     }
 }
+
