@@ -4,6 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     public float movementSpeed;
     public float sprintSpeedMultiplier;
+    public int maxHealth = 100;
+    public int currentHealth;
 
     public Rigidbody2D rb2d;
     private Direction lastDirection;
@@ -13,6 +15,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -58,6 +61,25 @@ public class PlayerController : MonoBehaviour
         }
         Attack();
         rb2d.velocity = velocity;
+        
+        /* test takeDamage
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            takeDamage(20);
+        }
+        */
+    }
+
+    //reduces health of player when this is called
+    public void takeDamage(int damage)
+    {
+        if (currentHealth - damage >= 0) //doesnt let health go below 0 
+        {
+            currentHealth -= damage;
+        } else
+        {
+            currentHealth = 0;
+        }
     }
 
     public void Attack() {
