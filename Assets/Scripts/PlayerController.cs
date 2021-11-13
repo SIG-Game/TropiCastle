@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float sprintSpeedMultiplier;
     public InventoryUI inventoryUI;
+    public int maxHealth = 100;
+    public int currentHealth;
 
     Rigidbody2D rb2d;
 
@@ -19,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
         // TODO: Remove (This line is for testing)
         ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), new Item { itemType = Item.ItemType.Test, amount = 1 });
+
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -42,6 +46,25 @@ public class PlayerController : MonoBehaviour
         }
 
         rb2d.velocity = velocity;
+        
+        /* test takeDamage
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            takeDamage(20);
+        }
+        */
+    }
+
+    //reduces health of player when this is called
+    public void takeDamage(int damage)
+    {
+        if (currentHealth - damage >= 0) //doesnt let health go below 0 
+        {
+            currentHealth -= damage;
+        } else
+        {
+            currentHealth = 0;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
