@@ -12,4 +12,5 @@ public class ItemAssets : MonoBehaviour
     public Transform itemWorld;
 
     public Sprite testSprite;
+    public Sprite appleSprite;
 }

@@ -16,11 +16,11 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
 
-        inventory = new Inventory();
+        inventory = new Inventory(UseItem);
         inventoryUI.SetInventory(inventory);
 
         // TODO: Remove (This line is for testing)
-        ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), new Item { itemType = Item.ItemType.Test, amount = 1 });
+        ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), new Item { itemType = Item.ItemType.Apple, amount = 1 });
 
         currentHealth = maxHealth;
     }
@@ -78,12 +78,27 @@ public class PlayerController : MonoBehaviour
     //doesnt let health go above 100
     public void addHealth(int health)
     {
-        if(currentHealth + health <= 100)
+        if (currentHealth + health <= 100)
         {
             currentHealth += health;
         } else
         {
             currentHealth = 100;
+        }
+    }
+
+    private void UseItem(Item item)
+    {
+        switch (item.itemType)
+        {
+            case Item.ItemType.Test:
+                Debug.Log("Test item used");
+                break;
+            case Item.ItemType.Apple:
+                Debug.Log("Apple item used");
+                addHealth(10);
+                inventory.RemoveItem(item);
+                break;
         }
     }
 

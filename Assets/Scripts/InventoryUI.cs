@@ -47,7 +47,7 @@ public class InventoryUI : MonoBehaviour
             itemSlotRectTransform.gameObject.SetActive(true);
 
             itemSlotRectTransform.GetComponent<UIButton>().onLeftClick.AddListener(() => {
-                Debug.Log("Item used");
+                inventory.UseItem(item);
             });
 
             itemSlotRectTransform.GetComponent<UIButton>().onRightClick.AddListener(() => {
