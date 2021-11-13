@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
+    public Sprite front, back, left, right;
+    public SpriteRenderer spriteRender;
+
+
     public Rigidbody2D rb2d;
     private Direction lastDirection;
 
@@ -29,21 +33,25 @@ public class PlayerController : MonoBehaviour
             if (horizontalInput < 0)
             {
                 lastDirection = Direction.LEFT;
+                spriteRender.sprite = left;
                 Debug.Log("Left");
             }
             else if (horizontalInput > 0)
             {
                 lastDirection = Direction.RIGHT;
+                spriteRender.sprite = right;
                 Debug.Log("Right");
             }
             else if (verticalInput < 0)
             {
                 lastDirection = Direction.DOWN;
+                spriteRender.sprite = front;
                 Debug.Log("Down");
             } 
             else if (verticalInput > 0) 
             {
                 lastDirection = Direction.UP;
+                spriteRender.sprite = back;
                 Debug.Log("Up");
             }
         }
