@@ -231,6 +231,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1982112580}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &1421088111 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5288355818519945017, guid: 055035cc7ee7c8646858260629418a55,
+    type: 3}
+  m_PrefabInstance: {fileID: 1982112580}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1441808783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,9 +1849,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
+      propertyPath: back
+      value: 
+      objectReference: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee,
+        type: 3}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: left
+      value: 
+      objectReference: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee,
+        type: 3}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: front
+      value: 
+      objectReference: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee,
+        type: 3}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: right
+      value: 
+      objectReference: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee,
+        type: 3}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
       propertyPath: hitbox
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: forward
+      value: 
+      objectReference: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee,
+        type: 3}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: spriteRender
+      value: 
+      objectReference: {fileID: 1421088111}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: sprintSpeedMultiplier
