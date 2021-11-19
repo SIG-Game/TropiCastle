@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
         }
 
         rb2d.velocity = velocity;
+
         /*
         //test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
@@ -69,6 +70,14 @@ public class PlayerController : MonoBehaviour
         } else
         {
             currentHealth = 100;
+        }
+    }
+
+    void onCollisionEnter2D (Collision2D col)
+    {
+        if(col.gameObject.tag.Equals("Enemy"))
+        {
+            takeDamage(10);
         }
     }
 }
