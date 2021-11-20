@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
     //doesnt let health go above 100
     public void addHealth(int health)
     {
-        if(currentHealth + health <= 100)
+        if(currentHealth + health <= maxHealth)
         {
             currentHealth += health;
         } else
