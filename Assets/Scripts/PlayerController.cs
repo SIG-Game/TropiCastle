@@ -73,11 +73,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void onCollisionEnter2D (Collision2D col)
+    /*
+    void OnCollisionEnter2D (Collision2D col)
     {
         if(col.gameObject.tag.Equals("Enemy"))
         {
             takeDamage(10);
         }
     }
+    */
+    
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag.Equals("Enemy"))
+        {
+            takeDamage(10);
+        }
+    }
+    
 }
