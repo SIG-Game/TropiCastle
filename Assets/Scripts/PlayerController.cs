@@ -34,25 +34,25 @@ public class PlayerController : MonoBehaviour
             {
                 lastDirection = Direction.LEFT;
                 spriteRender.sprite = left;
-                Debug.Log("Left");
+                //Debug.Log("Left");
             }
             else if (horizontalInput > 0)
             {
                 lastDirection = Direction.RIGHT;
                 spriteRender.sprite = right;
-                Debug.Log("Right");
+                //Debug.Log("Right");
             }
             else if (verticalInput < 0)
             {
                 lastDirection = Direction.DOWN;
                 spriteRender.sprite = front;
-                Debug.Log("Down");
+                //Debug.Log("Down");
             } 
             else if (verticalInput > 0) 
             {
                 lastDirection = Direction.UP;
                 spriteRender.sprite = back;
-                Debug.Log("Up");
+                //Debug.Log("Up");
             }
         }
 

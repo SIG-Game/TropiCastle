@@ -141,7 +141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1421088107}
   playerPos: {x: 0, y: 0}
+  enemy: {fileID: 0}
   lastDirection: 0
+  enemyInHitbox: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,10 +1839,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1322979990795452562, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770808729768230584, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3770808729768230584, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770808729768230584, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5288355818519944996, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
