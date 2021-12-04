@@ -25,13 +25,15 @@ public class crabScript : MonoBehaviour
     //doesnt let health go below 0
     public void takeDamage(int damage)
     {
-        if (currentHealth - damage >= 0)
+        if (currentHealth - damage > 0)
         {
             currentHealth -= damage;
         }
         else
         {
             currentHealth = 0;
+
+            Destroy(gameObject);
         }
     }
 
