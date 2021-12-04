@@ -35,8 +35,9 @@ public class AttackScript : MonoBehaviour
     }
 
     void Attack() {
-        if (Input.GetButton("Fire1") && enemy != null) {
+        if (Input.GetButtonDown("Fire1") && enemy != null) {
             // do damage to enemy
+            enemy.GetComponent<crabScript>().takeDamage(10);
             Debug.Log("Attacking enemy");
         }
     }

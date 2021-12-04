@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4442537784667905747}
   - component: {fileID: 1991442756631192048}
   - component: {fileID: 6242077710301518746}
+  - component: {fileID: -5352361096146735681}
   m_Layer: 0
   m_Name: Crab
   m_TagString: Enemy
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e516b7b345781fa42973b1daeaf25bbb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 860cd975e85c746ab84e8c2b94a0c758, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,3 +131,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0401374, y: 0.71093273}
   m_EdgeRadius: 0
+--- !u!114 &-5352361096146735681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376027503358213722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9f3ed866926624cadcc89493aee193, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
