@@ -69,19 +69,27 @@ public class PlayerController : MonoBehaviour
         }
         Attack();
         rb2d.velocity = velocity;
-        
-        /* test takeDamage
+
+        /*
+        //test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
         {
             takeDamage(20);
+        }
+        
+        //test getHealth
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            addHealth(20);
         }
         */
     }
 
     //reduces health of player when this is called
+    //doesnt let health go below 0
     public void takeDamage(int damage)
     {
-        if (currentHealth - damage >= 0) //doesnt let health go below 0 
+        if (currentHealth - damage >= 0)  
         {
             currentHealth -= damage;
         } else
@@ -109,5 +117,37 @@ public class PlayerController : MonoBehaviour
     public Direction getLastDir() {
         return lastDirection;
     }
+    
+    //increases health of a player when called
+    //doesnt let health go above 100
+    public void addHealth(int health)
+    {
+        if(currentHealth + health <= maxHealth)
+        {
+            currentHealth += health;
+        } else
+        {
+            currentHealth = 100;
+        }
+    }
+
+    /*
+    void OnCollisionEnter2D (Collision2D col)
+    {
+        if(col.gameObject.tag.Equals("Enemy"))
+        {
+            takeDamage(10);
+        }
+    }
+    */
+    
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag.Equals("Enemy"))
+        {
+            takeDamage(10);
+        }
+    }
+    
 }
 
