@@ -21,7 +21,11 @@ public class PlayerController : MonoBehaviour
         float verticalInput = Input.GetAxisRaw("Vertical");
 
         Vector2 inputVector = (new Vector2(horizontalInput, verticalInput));
-        inputVector.Normalize();
+
+        if (inputVector.sqrMagnitude > 1f)
+        {
+            inputVector.Normalize();
+        }
 
         Vector2 velocity = movementSpeed * inputVector;
 
