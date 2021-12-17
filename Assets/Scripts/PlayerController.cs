@@ -6,19 +6,21 @@ public class PlayerController : MonoBehaviour
     public float sprintSpeedMultiplier;
     public int maxHealth = 100;
     public int currentHealth;
+    public bool isAttacking = false;
 
     public Sprite front, back, left, right;
     public SpriteRenderer spriteRender;
-
+    public Animator animator;
 
     public Rigidbody2D rb2d;
-    private Direction lastDirection;
+    private Direction lastDirection = Direction.DOWN;
 
     public enum Direction { UP, DOWN, LEFT, RIGHT };
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
     }
 
@@ -29,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
         bool moving = (horizontalInput != 0 || verticalInput != 0) ? true : false;
 
-        if (moving) {
+        if (moving && !isAttacking) {
             if (horizontalInput < 0)
             {
                 lastDirection = Direction.LEFT;
@@ -70,6 +72,11 @@ public class PlayerController : MonoBehaviour
         Attack();
         rb2d.velocity = velocity;
 
+        if (isAttacking)
+        {
+            rb2d.velocity = Vector2.zero;
+        }
+
         /*
         //test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
@@ -99,8 +106,24 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Attack() {
-        if (Input.GetButton("Fire1")) {
-            Debug.Log("attacked");
+        if (Input.GetButtonDown("Fire1") && !isAttacking) {
+            switch (lastDirection) {
+                case Direction.UP:
+                    animator.Play("Swing Up");
+                    break;
+
+                case Direction.DOWN:
+                    animator.Play("Swing Down");
+                    break;
+
+                case Direction.LEFT:
+                    animator.Play("Swing Left");
+                    break;
+
+                case Direction.RIGHT:
+                    animator.Play("Swing Right");
+                    break;
+            }
         }
     } 
 
