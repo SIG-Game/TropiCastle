@@ -7,12 +7,17 @@ public class crabScript : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
+    //private Transform target;
+    public float speed;
+
+
     Rigidbody2D rb2d;
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+        //target = FindObjectOfType<PlayerController>().transform;
     }
 
     // Update is called once per frame
@@ -50,4 +55,25 @@ public class crabScript : MonoBehaviour
             currentHealth = 100;
         }
     }
+
+    //gets knockback when in contact with player
+    //can update to when getting hit by weapon by changing the tag
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Player")
+        {
+            Vector2 difference = transform.position - other.transform.position;
+            transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
+        }
+    }
+
+    //testing basic enemy ai
+    //doesn't work yet
+
+    /*
+    public void FollowPlayer()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+    }
+    */
 }
