@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rb2d;
     private Direction lastDirection = Direction.DOWN;
+    private LayerMask interactableMask;
 
     public enum Direction { UP, DOWN, LEFT, RIGHT };
 
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        interactableMask = LayerMask.GetMask("Interactable");
     }
 
     void Update()
@@ -58,7 +60,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        
+        if (Input.GetButtonDown("Interact"))
+        {
+            Vector2 interactionDirection = GetInteractionDirection();
+
+            // TODO: Shorten length and change length based on direction
+            RaycastHit2D hit = Physics2D.Raycast(transform.position,
+                interactionDirection, 1f, interactableMask);
+
+            // Debug.DrawRay(transform.position, interactionDirection, Color.red);
+
+            if (hit.collider != null)
+            {
+                hit.transform.gameObject.GetComponent<Interactable>().Interact();
+            }
+        }
 
         Vector2 inputVector = (new Vector2(horizontalInput, verticalInput));
 
@@ -176,5 +192,25 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    Vector2 GetInteractionDirection()
+    {
+        switch (lastDirection)
+        {
+            case Direction.UP:
+                return Vector2.up;
+
+            case Direction.DOWN:
+                return Vector2.down;
+
+            case Direction.LEFT:
+                return Vector2.left;
+
+            case Direction.RIGHT:
+                return Vector2.right;
+        }
+
+        // Should not be reached
+        return Vector2.zero;
+    }
 }
 
