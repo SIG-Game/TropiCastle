@@ -58,6 +58,7 @@ public class crabScript : MonoBehaviour
 
     //gets knockback when in contact with player
     //can update to when getting hit by weapon by changing the tag
+    /*
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
@@ -66,7 +67,7 @@ public class crabScript : MonoBehaviour
             transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
         }
     }
-
+    */
     //testing basic enemy ai
     //doesn't work yet
 
