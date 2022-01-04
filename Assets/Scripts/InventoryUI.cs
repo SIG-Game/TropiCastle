@@ -9,6 +9,7 @@ public class InventoryUI : MonoBehaviour
     private Transform itemSlotContainer;
     private Transform itemSlotTemplate;
     private const int numHotbarItems = 10;
+    private int hotbarItemIndex = 0;
 
     public Transform hotbarItemSlotContainer;
 
@@ -84,5 +85,12 @@ public class InventoryUI : MonoBehaviour
                 --y;
             }
         }
+    }
+
+    public void selectHotbarItem(int hotbarItemIndex)
+    {
+        hotbarItemSlotContainer.GetChild(this.hotbarItemIndex).gameObject.GetComponent<Image>().color = new Color32(173, 173, 173, 255);
+        this.hotbarItemIndex = hotbarItemIndex;
+        hotbarItemSlotContainer.GetChild(this.hotbarItemIndex).gameObject.GetComponent<Image>().color = new Color32(140, 140, 140, 255);
     }
 }

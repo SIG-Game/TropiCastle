@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb2d;
 
     private Inventory inventory;
+    private int hotbarItemIndex = 0;
 
     void Start()
     {
@@ -18,13 +20,14 @@ public class PlayerController : MonoBehaviour
 
         inventory = new Inventory(UseItem);
         inventoryUI.SetInventory(inventory);
+        inventoryUI.selectHotbarItem(hotbarItemIndex);
 
         // TODO: Remove (This line is for testing)
         ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), new Item { itemType = Item.ItemType.Apple, amount = 1 });
 
         currentHealth = maxHealth;
     }
-
+    
     void Update()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -46,6 +49,46 @@ public class PlayerController : MonoBehaviour
         }
 
         rb2d.velocity = velocity;
+
+        if (Input.mouseScrollDelta.y < 0f)
+        {
+            ++hotbarItemIndex;
+
+            if (hotbarItemIndex == 10)
+                hotbarItemIndex = 0;
+
+            inventoryUI.selectHotbarItem(hotbarItemIndex);
+        }
+        else if (Input.mouseScrollDelta.y > 0f)
+        {
+            --hotbarItemIndex;
+
+            if (hotbarItemIndex == -1)
+                hotbarItemIndex = 9;
+
+            inventoryUI.selectHotbarItem(hotbarItemIndex);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            List<Item> itemList = inventory.GetItemList();
+            if (hotbarItemIndex < itemList.Count)
+            {
+                UseItem(itemList[hotbarItemIndex]);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            List<Item> itemList = inventory.GetItemList();
+            if (hotbarItemIndex < itemList.Count)
+            {
+                Item item = itemList[hotbarItemIndex];
+                inventory.RemoveItem(item);
+                ItemWorld.DropItem(transform.position, item);
+            }
+        }
+
         /*
         //test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
