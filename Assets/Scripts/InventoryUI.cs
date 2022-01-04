@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ public class InventoryUI : MonoBehaviour
     private Inventory inventory;
     private Transform itemSlotContainer;
     private Transform itemSlotTemplate;
+    private const int numHotbarItems = 10;
+
+    public Transform hotbarItemSlotContainer;
 
     public GameObject player;
 
@@ -37,11 +41,24 @@ public class InventoryUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        foreach (Transform child in hotbarItemSlotContainer)
+        {
+            child.GetChild(0).gameObject.GetComponent<Image>().sprite = null;
+        }
+
         int x = 0;
         int y = 0;
         float itemSlotCellSize = 55f;
 
-        foreach (Item item in inventory.GetItemList())
+        List<Item> inventoryItemList = inventory.GetItemList();
+
+        for (int i = 0; i < numHotbarItems && i < inventoryItemList.Count; ++i)
+        {
+            Item item = inventoryItemList[i];
+            hotbarItemSlotContainer.GetChild(i).GetChild(0).gameObject.GetComponent<Image>().sprite = item.GetSprite();
+        }
+
+        foreach (Item item in inventoryItemList)
         {
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
@@ -64,7 +81,7 @@ public class InventoryUI : MonoBehaviour
             if (x > 4)
             {
                 x = 0;
-                ++y;
+                --y;
             }
         }
     }
