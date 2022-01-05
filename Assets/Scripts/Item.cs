@@ -20,7 +20,7 @@ public class Item : ICloneable
         {
             default:
             case ItemType.Empty:
-                return null;
+                return ItemAssets.Instance.transparentSprite;
             case ItemType.Test:
                 return ItemAssets.Instance.testSprite;
             case ItemType.Apple:
