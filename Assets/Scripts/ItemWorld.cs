@@ -14,16 +14,17 @@ public class ItemWorld : MonoBehaviour
         return itemWorld;
     }
 
-    public static ItemWorld DropItem(Vector3 dropPosition, Item item)
+    public static void DropItem(Vector3 dropPosition, Item item)
     {
+        if (item.itemType == Item.ItemType.Empty)
+            return;
+
         Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         randomOffset.Normalize();
 
         ItemWorld itemWorld = SpawnItemWorld(dropPosition + randomOffset, item);
 
         itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
-
-        return itemWorld;
     }
 
     private Item item;

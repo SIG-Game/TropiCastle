@@ -72,21 +72,27 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             List<Item> itemList = inventory.GetItemList();
-            if (hotbarItemIndex < itemList.Count)
-            {
-                UseItem(itemList[hotbarItemIndex]);
-            }
+
+            UseItem(itemList[hotbarItemIndex]);
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
             List<Item> itemList = inventory.GetItemList();
-            if (hotbarItemIndex < itemList.Count)
+
+            Item item = itemList[hotbarItemIndex];
+            ItemWorld.DropItem(transform.position, (Item)item.Clone());
+            inventory.RemoveItem(item);
+        }
+
+        // Add item test
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            inventory.AddItem(new Item
             {
-                Item item = itemList[hotbarItemIndex];
-                inventory.RemoveItem(item);
-                ItemWorld.DropItem(transform.position, item);
-            }
+                itemType = Item.ItemType.Test,
+                amount = 1
+            });
         }
 
         /*
@@ -134,6 +140,9 @@ public class PlayerController : MonoBehaviour
     {
         switch (item.itemType)
         {
+            case Item.ItemType.Empty:
+                Debug.Log("Empty item used");
+                break;
             case Item.ItemType.Test:
                 Debug.Log("Test item used");
                 break;
@@ -145,14 +154,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         // TODO: Use item tag instead
         ItemWorld itemWorld = collision.gameObject.GetComponent<ItemWorld>();
-        if (itemWorld != null)
+        if (itemWorld != null && !inventory.IsFull())
         {
             inventory.AddItem(itemWorld.GetItem());
-            inventoryUI.RefreshInventoryItems();
             Destroy(itemWorld.gameObject);
         }
     }
