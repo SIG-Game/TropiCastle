@@ -26,12 +26,13 @@ public class Inventory
         firstEmptyIndex = 0;
     }
 
-    public void AddItem(Item item)
+    public void AddItem(Item.ItemType itemType, int amount)
     {
         if (IsFull())
             return;
 
-        itemList[firstEmptyIndex] = item;
+        itemList[firstEmptyIndex].itemType = itemType;
+        itemList[firstEmptyIndex].amount = amount;
         ChangedItemAt?.Invoke(firstEmptyIndex);
         firstEmptyIndex = itemList.FindIndex(x => x.itemType == Item.ItemType.Empty);
     }

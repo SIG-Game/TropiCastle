@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         inventoryUI.selectHotbarItem(hotbarItemIndex);
 
         // TODO: Remove (This line is for testing)
-        ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), new Item { itemType = Item.ItemType.Apple, amount = 1 });
+        ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), Item.ItemType.Apple, 1);
 
         currentHealth = maxHealth;
     }
@@ -81,18 +81,14 @@ public class PlayerController : MonoBehaviour
             List<Item> itemList = inventory.GetItemList();
 
             Item item = itemList[hotbarItemIndex];
-            ItemWorld.DropItem(transform.position, (Item)item.Clone());
+            ItemWorld.DropItem(transform.position, item.itemType, item.amount);
             inventory.RemoveItem(item);
         }
 
         // Add item test
         if (Input.GetKeyDown(KeyCode.C))
         {
-            inventory.AddItem(new Item
-            {
-                itemType = Item.ItemType.Test,
-                amount = 1
-            });
+            inventory.AddItem(Item.ItemType.Test, 1);
         }
 
         /*
@@ -160,7 +156,7 @@ public class PlayerController : MonoBehaviour
         ItemWorld itemWorld = collision.gameObject.GetComponent<ItemWorld>();
         if (itemWorld != null && !inventory.IsFull())
         {
-            inventory.AddItem(itemWorld.GetItem());
+            inventory.AddItem(itemWorld.itemType, itemWorld.amount);
             Destroy(itemWorld.gameObject);
         }
     }

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public class Item : ICloneable
+public class Item
 {
     public enum ItemType
     {
@@ -11,10 +11,7 @@ public class Item : ICloneable
         Apple
     }
 
-    public ItemType itemType;
-    public int amount;
-
-    public Sprite GetSprite()
+    public static Sprite GetSprite(ItemType itemType)
     {
         switch (itemType)
         {
@@ -28,8 +25,11 @@ public class Item : ICloneable
         }
     }
 
-    public object Clone()
+    public ItemType itemType;
+    public int amount;
+
+    public Sprite GetSprite()
     {
-        return MemberwiseClone();
+        return GetSprite(itemType);
     }
 }
