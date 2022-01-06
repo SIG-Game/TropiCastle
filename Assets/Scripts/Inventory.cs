@@ -37,6 +37,18 @@ public class Inventory
         firstEmptyIndex = itemList.FindIndex(x => x.itemType == Item.ItemType.Empty);
     }
 
+    public void SwapItemsAt(int index1, int index2)
+    {
+        Item temp = itemList[index1];
+        itemList[index1] = itemList[index2];
+        itemList[index2] = temp;
+
+        ChangedItemAt?.Invoke(index1);
+        ChangedItemAt?.Invoke(index2);
+
+        firstEmptyIndex = itemList.FindIndex(x => x.itemType == Item.ItemType.Empty);
+    }
+
     public void RemoveItem(Item item)
     {
         if (item.itemType == Item.ItemType.Empty)
