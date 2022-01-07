@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour, IPointerClickHandler
 {
     private Inventory inventory;
-    private Transform itemSlotContainer;
     private GraphicRaycaster graphicRaycaster;
     private RectTransform canvasRectTransform;
     private RectTransform heldItemRectTransform;
@@ -18,6 +17,7 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
     private int heldItemIndex;
 
     public Transform hotbarItemSlotContainer;
+    public Transform itemSlotContainer;
     public GameObject heldItem;
 
     public GameObject player;
@@ -25,7 +25,6 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
 
     void Awake()
     {
-        itemSlotContainer = transform.Find("itemSlotContainer");
         graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
         canvasRectTransform = canvas.GetComponent<RectTransform>();
         heldItemRectTransform = heldItem.GetComponent<RectTransform>();
@@ -45,16 +44,16 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
         Item item = inventoryItemList[index];
 
         if (index < hotbarSize)
-            hotbarItemSlotContainer.GetChild(index).GetChild(0).gameObject.GetComponent<Image>().sprite = item.GetSprite();
+            hotbarItemSlotContainer.GetChild(index).GetChild(0).GetComponent<Image>().sprite = item.GetSprite();
 
         itemSlotContainer.GetChild(index).GetChild(0).GetComponent<Image>().sprite = item.GetSprite();
     }
 
     public void selectHotbarItem(int hotbarItemIndex)
     {
-        hotbarItemSlotContainer.GetChild(this.hotbarItemIndex).gameObject.GetComponent<Image>().color = new Color32(173, 173, 173, 255);
+        hotbarItemSlotContainer.GetChild(this.hotbarItemIndex).GetComponent<Image>().color = new Color32(173, 173, 173, 255);
         this.hotbarItemIndex = hotbarItemIndex;
-        hotbarItemSlotContainer.GetChild(this.hotbarItemIndex).gameObject.GetComponent<Image>().color = new Color32(140, 140, 140, 255);
+        hotbarItemSlotContainer.GetChild(this.hotbarItemIndex).GetComponent<Image>().color = new Color32(140, 140, 140, 255);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -76,7 +75,7 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
             else if (holdingItem && clickedItemIndex == heldItemIndex)
             {
                 if (clickedItemIndex < hotbarSize)
-                    hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).gameObject.GetComponent<Image>().sprite = clickedItem.GetSprite();
+                    hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite = clickedItem.GetSprite();
 
                 itemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite = clickedItem.GetSprite();
 
@@ -87,7 +86,7 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
             else if (!holdingItem && clickedItem.itemType != Item.ItemType.Empty)
             {
                 if (clickedItemIndex < hotbarSize)
-                    hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).gameObject.GetComponent<Image>().sprite = Item.GetSprite(Item.ItemType.Empty);
+                    hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite = Item.GetSprite(Item.ItemType.Empty);
 
                 itemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite = Item.GetSprite(Item.ItemType.Empty);
 
@@ -96,6 +95,23 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
 
                 holdingItem = true;
             }
+        }
+    }
+
+    public void ResetHeldItem()
+    {
+        if (holdingItem)
+        {
+            Item heldItem = inventory.GetItemList()[heldItemIndex];
+
+            if (heldItemIndex < hotbarSize)
+                hotbarItemSlotContainer.GetChild(heldItemIndex).GetChild(0).GetComponent<Image>().sprite = heldItem.GetSprite();
+
+            itemSlotContainer.GetChild(heldItemIndex).GetChild(0).GetComponent<Image>().sprite = heldItem.GetSprite();
+
+            heldItemImage.sprite = Item.GetSprite(Item.ItemType.Empty);
+
+            holdingItem = false;
         }
     }
 

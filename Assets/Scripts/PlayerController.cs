@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
+    private bool gamePaused = false;
 
     void Start()
     {
@@ -30,59 +31,70 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-
-        Vector2 inputVector = (new Vector2(horizontalInput, verticalInput));
-        inputVector.Normalize();
-
-        Vector2 velocity = movementSpeed * inputVector;
-
-        if (Input.GetButton("Sprint"))
+        if (!gamePaused)
         {
-            velocity *= sprintSpeedMultiplier;
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float verticalInput = Input.GetAxisRaw("Vertical");
+
+            Vector2 inputVector = (new Vector2(horizontalInput, verticalInput));
+            inputVector.Normalize();
+
+            Vector2 velocity = movementSpeed * inputVector;
+
+            if (Input.GetButton("Sprint"))
+            {
+                velocity *= sprintSpeedMultiplier;
+            }
+
+            rb2d.velocity = velocity;
+
+            if (Input.mouseScrollDelta.y < 0f)
+            {
+                ++hotbarItemIndex;
+
+                if (hotbarItemIndex == 10)
+                    hotbarItemIndex = 0;
+
+                inventoryUI.selectHotbarItem(hotbarItemIndex);
+            }
+            else if (Input.mouseScrollDelta.y > 0f)
+            {
+                --hotbarItemIndex;
+
+                if (hotbarItemIndex == -1)
+                    hotbarItemIndex = 9;
+
+                inventoryUI.selectHotbarItem(hotbarItemIndex);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                List<Item> itemList = inventory.GetItemList();
+
+                UseItem(itemList[hotbarItemIndex]);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                List<Item> itemList = inventory.GetItemList();
+
+                Item item = itemList[hotbarItemIndex];
+                ItemWorld.DropItem(transform.position, item.itemType, item.amount);
+                inventory.RemoveItem(item);
+            }
         }
 
         if (Input.GetButtonDown("Inventory"))
         {
-            inventoryUI.gameObject.SetActive(!inventoryUI.gameObject.activeInHierarchy);
-        }
+            gamePaused = !gamePaused;
+            inventoryUI.gameObject.SetActive(gamePaused);
+            rb2d.velocity = Vector2.zero;
+            Time.timeScale = gamePaused ? 0f : 1f;
 
-        rb2d.velocity = velocity;
-
-        if (Input.mouseScrollDelta.y < 0f)
-        {
-            ++hotbarItemIndex;
-
-            if (hotbarItemIndex == 10)
-                hotbarItemIndex = 0;
-
-            inventoryUI.selectHotbarItem(hotbarItemIndex);
-        }
-        else if (Input.mouseScrollDelta.y > 0f)
-        {
-            --hotbarItemIndex;
-
-            if (hotbarItemIndex == -1)
-                hotbarItemIndex = 9;
-
-            inventoryUI.selectHotbarItem(hotbarItemIndex);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            List<Item> itemList = inventory.GetItemList();
-
-            UseItem(itemList[hotbarItemIndex]);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            List<Item> itemList = inventory.GetItemList();
-
-            Item item = itemList[hotbarItemIndex];
-            ItemWorld.DropItem(transform.position, item.itemType, item.amount);
-            inventory.RemoveItem(item);
+            if (!gamePaused)
+            {
+                inventoryUI.ResetHeldItem();
+            }
         }
 
         // Add item test
