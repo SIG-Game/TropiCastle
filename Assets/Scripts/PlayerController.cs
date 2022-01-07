@@ -61,8 +61,6 @@ public class PlayerController : MonoBehaviour
                 velocity *= sprintSpeedMultiplier;
             }
 
-            Attack();
-
             rb2d.velocity = velocity;
 
             if (isAttacking)
@@ -91,14 +89,14 @@ public class PlayerController : MonoBehaviour
 
             ProcessNumberKeys();
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetMouseButtonDown(0))
             {
                 List<Item> itemList = inventory.GetItemList();
 
                 UseItem(itemList[hotbarItemIndex]);
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetMouseButtonDown(1))
             {
                 List<Item> itemList = inventory.GetItemList();
 
@@ -201,7 +199,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Attack() {
-        if (Input.GetButtonDown("Fire1") && !isAttacking) {
+        if (!isAttacking) {
             switch (lastDirection) {
                 case Direction.UP:
                     animator.Play("Swing Up");
@@ -302,6 +300,10 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Apple item used");
                 addHealth(10);
                 inventory.RemoveItem(item);
+                break;
+            case Item.ItemType.Stick:
+                Debug.Log("Stick item used");
+                Attack();
                 break;
         }
     }

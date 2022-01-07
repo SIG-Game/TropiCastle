@@ -8,7 +8,8 @@ public class Item
     {
         Empty,
         Test,
-        Apple
+        Apple,
+        Stick
     }
 
     public static Sprite GetSprite(ItemType itemType)
@@ -22,6 +23,8 @@ public class Item
                 return ItemAssets.Instance.testSprite;
             case ItemType.Apple:
                 return ItemAssets.Instance.appleSprite;
+            case ItemType.Stick:
+                return ItemAssets.Instance.stickSprite;
         }
     }
 
