@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour
                 inventoryUI.selectHotbarItem(hotbarItemIndex);
             }
 
+            ProcessNumberKeys();
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 List<Item> itemList = inventory.GetItemList();
@@ -160,6 +162,35 @@ public class PlayerController : MonoBehaviour
                 inventory.RemoveItem(item);
                 break;
         }
+    }
+
+    private void ProcessNumberKeys()
+    {
+        int previousHotbarItemIndex = hotbarItemIndex;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            hotbarItemIndex = 0;
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            hotbarItemIndex = 1;
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            hotbarItemIndex = 2;
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            hotbarItemIndex = 3;
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+            hotbarItemIndex = 4;
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+            hotbarItemIndex = 5;
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+            hotbarItemIndex = 6;
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+            hotbarItemIndex = 7;
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+            hotbarItemIndex = 8;
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+            hotbarItemIndex = 9;
+
+        if (previousHotbarItemIndex != hotbarItemIndex)
+            inventoryUI.selectHotbarItem(hotbarItemIndex);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
