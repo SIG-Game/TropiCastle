@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 5288355818519945018}
   - component: {fileID: 5288355818519944997}
   - component: {fileID: 5288355818519945016}
+  - component: {fileID: 8669891105156055949}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -259,7 +260,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!114 &5288355818519945016
@@ -276,6 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 5
   sprintSpeedMultiplier: 1.25
+  inventoryUI: {fileID: 0}
   maxHealth: 100
   currentHealth: 0
   isAttacking: 0
@@ -286,3 +288,22 @@ MonoBehaviour:
   spriteRender: {fileID: 0}
   animator: {fileID: 0}
   rb2d: {fileID: 0}
+--- !u!95 &8669891105156055949
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288355818519944996}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e109f01cb006b304d9b5c7576024ae8b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
