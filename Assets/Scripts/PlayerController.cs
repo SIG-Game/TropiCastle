@@ -12,9 +12,10 @@ public class PlayerController : MonoBehaviour
 
     public Sprite front, back, left, right;
     public SpriteRenderer spriteRender;
-    public Animator animator;
-
-    public Rigidbody2D rb2d;
+    
+    private Animator animator;
+    private Rigidbody2D rb2d;
+    private BoxCollider2D boxCollider;
     private Direction lastDirection = Direction.DOWN;
     private LayerMask interactableMask;
 
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
         inventory = new Inventory(UseItem);
         inventoryUI.SetInventory(inventory);
@@ -138,11 +140,15 @@ public class PlayerController : MonoBehaviour
             {
                 Vector2 interactionDirection = GetInteractionDirection();
 
-                // TODO: Shorten length and change length based on direction
-                RaycastHit2D hit = Physics2D.Raycast(transform.position,
-                    interactionDirection, 1f, interactableMask);
+                Vector3 raycastOrigin = transform.position;
+                raycastOrigin.x += boxCollider.offset.x;
+                raycastOrigin.y += boxCollider.offset.y;
 
-                // Debug.DrawRay(transform.position, interactionDirection, Color.red);
+                // TODO: Shorten length and change length based on direction
+                RaycastHit2D hit = Physics2D.Raycast(raycastOrigin,
+                    interactionDirection, 0.25f, interactableMask);
+
+                // Debug.DrawRay(raycastOrigin, interactionDirection * 0.25f, Color.red);
 
                 if (hit.collider != null)
                 {
