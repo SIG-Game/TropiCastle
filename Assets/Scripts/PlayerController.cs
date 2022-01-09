@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum Direction { UP, DOWN, LEFT, RIGHT };
+
     public float movementSpeed;
     public float sprintSpeedMultiplier;
     public InventoryUI inventoryUI;
@@ -11,15 +13,13 @@ public class PlayerController : MonoBehaviour
     public bool isAttacking = false;
 
     public Sprite front, back, left, right;
-    public SpriteRenderer spriteRender;
     
+    private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
     private Direction lastDirection = Direction.DOWN;
     private LayerMask interactableMask;
-
-    public enum Direction { UP, DOWN, LEFT, RIGHT };
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
@@ -27,8 +27,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
 
         inventory = new Inventory(UseItem);
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
 
-            Vector2 inputVector = (new Vector2(horizontalInput, verticalInput));
+            Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
             
             if (inputVector.sqrMagnitude > 1f)
             {
@@ -107,32 +108,26 @@ public class PlayerController : MonoBehaviour
                 inventory.RemoveItem(item);
             }
 
-            bool moving = (horizontalInput != 0 || verticalInput != 0) ? true : false;
-
-            if (moving && !isAttacking) {
+            if ((horizontalInput != 0 || verticalInput != 0) && !isAttacking) {
                 if (horizontalInput < 0)
                 {
                     lastDirection = Direction.LEFT;
-                    spriteRender.sprite = left;
-                    //Debug.Log("Left");
+                    spriteRenderer.sprite = left;
                 }
                 else if (horizontalInput > 0)
                 {
                     lastDirection = Direction.RIGHT;
-                    spriteRender.sprite = right;
-                    //Debug.Log("Right");
+                    spriteRenderer.sprite = right;
                 }
                 else if (verticalInput < 0)
                 {
                     lastDirection = Direction.DOWN;
-                    spriteRender.sprite = front;
-                    //Debug.Log("Down");
+                    spriteRenderer.sprite = front;
                 } 
-                else if (verticalInput > 0) 
+                else
                 {
                     lastDirection = Direction.UP;
-                    spriteRender.sprite = back;
-                    //Debug.Log("Up");
+                    spriteRenderer.sprite = back;
                 }
             }
 
@@ -224,17 +219,7 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
-    } 
-
-    // // When enemy enters collider hitbox, set to true
-    // void OnTriggerEnter2D(Collider other) {
-
-    // }
-
-    // // When enemy exits, set within range to false
-    // void OnTriggerExit2D(Collider other) {
-
-    // }
+    }
 
     public Direction getLastDir() {
         return lastDirection;
@@ -249,19 +234,9 @@ public class PlayerController : MonoBehaviour
             currentHealth += health;
         } else
         {
-            currentHealth = 100;
+            currentHealth = maxHealth;
         }
     }
-
-    /*
-    void OnCollisionEnter2D (Collision2D col)
-    {
-        if(col.gameObject.tag.Equals("Enemy"))
-        {
-            takeDamage(10);
-        }
-    }
-    */
     
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -345,7 +320,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // TODO: Use item tag instead
         ItemWorld itemWorld = collision.gameObject.GetComponent<ItemWorld>();
         if (itemWorld != null && !inventory.IsFull())
         {
@@ -354,4 +328,3 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
-
