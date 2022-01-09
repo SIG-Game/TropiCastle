@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float sprintSpeedMultiplier;
     public InventoryUI inventoryUI;
+    public TextMeshProUGUI healthText;
     public int maxHealth = 100;
     public int currentHealth;
     public bool isAttacking = false;
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour
         ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), Item.ItemType.Apple, 1);
 
         currentHealth = maxHealth;
+        healthText.text = "Health: " + currentHealth;
+
         interactableMask = LayerMask.GetMask("Interactable");
     }
     
@@ -197,6 +201,8 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth = 0;
         }
+
+        healthText.text = "Health: " + currentHealth;
     }
 
     public void Attack() {
@@ -236,6 +242,8 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+
+        healthText.text = "Health: " + currentHealth;
     }
     
     void OnTriggerEnter2D(Collider2D col)
