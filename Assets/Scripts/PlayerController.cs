@@ -70,6 +70,22 @@ public class PlayerController : MonoBehaviour
 
             rb2d.velocity = velocity;
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                List<Item> itemList = inventory.GetItemList();
+
+                UseItem(itemList[hotbarItemIndex]);
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                List<Item> itemList = inventory.GetItemList();
+
+                Item item = itemList[hotbarItemIndex];
+                ItemWorld.DropItem(transform.position, item.itemType, item.amount);
+                inventory.RemoveItem(item);
+            }
+
             if (isAttacking)
             {
                 rb2d.velocity = Vector2.zero;
@@ -95,22 +111,6 @@ public class PlayerController : MonoBehaviour
             }
 
             ProcessNumberKeys();
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                List<Item> itemList = inventory.GetItemList();
-
-                UseItem(itemList[hotbarItemIndex]);
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                List<Item> itemList = inventory.GetItemList();
-
-                Item item = itemList[hotbarItemIndex];
-                ItemWorld.DropItem(transform.position, item.itemType, item.amount);
-                inventory.RemoveItem(item);
-            }
 
             if ((horizontalInput != 0 || verticalInput != 0) && !isAttacking) {
                 if (horizontalInput < 0)
@@ -224,6 +224,8 @@ public class PlayerController : MonoBehaviour
                     animator.Play("Swing Right");
                     break;
             }
+
+            isAttacking = true;
         }
     }
 
