@@ -122,6 +122,9 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
 
     private void Update()
     {
-        heldItemRectTransform.anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+        Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+        anchoredPosition.x = Mathf.Clamp(anchoredPosition.x, 0f, canvasRectTransform.rect.width);
+        anchoredPosition.y = Mathf.Clamp(anchoredPosition.y, 0f, canvasRectTransform.rect.height);
+        heldItemRectTransform.anchoredPosition = anchoredPosition;
     }
 }
