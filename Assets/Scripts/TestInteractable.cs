@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class TestInteractable : Interactable
 {
@@ -6,10 +7,12 @@ public class TestInteractable : Interactable
     public Sprite front, back, left, right;
 
     private SpriteRenderer spriteRenderer;
+    private List<string> dialogueLines;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        dialogueLines = new List<string> { "Hello.", "Welcome to the island!" };
     }
 
     public override void Interact()
@@ -32,6 +35,6 @@ public class TestInteractable : Interactable
                 break;
         }
 
-        DialogueBox.Instance.PlayDialogue("Hello.");
+        DialogueBox.Instance.PlayDialogue(dialogueLines);
     }
 }

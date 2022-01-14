@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DialogueBox : MonoBehaviour
@@ -14,9 +15,20 @@ public class DialogueBox : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public PlayerController player;
 
-    public void PlayDialogue(string dialogue)
+    private List<string>.Enumerator linesEnumerator;
+
+    public void PlayDialogue(List<string> lines)
     {
-        dialogueText.text = dialogue;
+        if (lines.Count == 0)
+        {
+            Debug.LogWarning("Dialogue lines list is empty");
+            return;
+        }
+
+        linesEnumerator = lines.GetEnumerator();
+        linesEnumerator.MoveNext();
+
+        dialogueText.text = linesEnumerator.Current;
         dialogueBoxUI.SetActive(true);
         player.dialogueBoxOpen = true;
         player.canInteract = false;
@@ -24,11 +36,18 @@ public class DialogueBox : MonoBehaviour
 
     private void Update()
     {
-        // Must run before PlayerController to prevent dialogue box from immediately closing
+        // Must run before PlayerController to prevent dialogue from immediately advancing
         if (Input.GetButtonDown("Interact") && dialogueBoxUI.activeInHierarchy)
         {
-            dialogueBoxUI.SetActive(false);
-            player.dialogueBoxOpen = false;
+            if (linesEnumerator.MoveNext())
+            {
+                dialogueText.text = linesEnumerator.Current;
+            }
+            else
+            {
+                dialogueBoxUI.SetActive(false);
+                player.dialogueBoxOpen = false;
+            }
         }
     }
 }
