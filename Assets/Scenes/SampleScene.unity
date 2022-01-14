@@ -9647,6 +9647,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7d1cb949058b842b9b8798b2a8eb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 572276101}
+  front: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
 --- !u!61 &1554715251
 BoxCollider2D:
   m_ObjectHideFlags: 0
