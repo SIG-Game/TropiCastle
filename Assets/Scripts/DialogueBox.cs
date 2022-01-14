@@ -24,6 +24,7 @@ public class DialogueBox : MonoBehaviour
 
     private void Update()
     {
+        // Must run before PlayerController to prevent dialogue box from immediately closing
         if (Input.GetButtonDown("Interact") && dialogueBoxUI.activeInHierarchy)
         {
             dialogueBoxUI.SetActive(false);
