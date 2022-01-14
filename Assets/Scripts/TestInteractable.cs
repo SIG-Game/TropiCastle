@@ -7,5 +7,6 @@ public class TestInteractable : Interactable
     public override void Interact()
     {
         Debug.Log("Interacted");
+        DialogueBox.Instance.PlayDialogue("Hello.");
     }
 }

@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public bool isAttacking = false;
+    public bool dialogueBoxOpen = false;
+    public bool canInteract = true;
 
     public Sprite front, back, left, right;
     
@@ -49,6 +51,19 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        // TODO: Allow pausing while dialogue box is open when pausing is implemented
+        if (dialogueBoxOpen)
+        {
+            return;
+        }
+
+        // Player must release interact key to interact again after dialogue box closes
+        // Needed because interact key is also used to advance dialogue
+        if (Input.GetButtonUp("Interact") && !dialogueBoxOpen && !canInteract)
+        {
+            canInteract = true;
+        }
+
         if (!gamePaused)
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -135,7 +150,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Interact"))
+            if (Input.GetButtonDown("Interact") && canInteract)
             {
                 Vector2 interactionDirection = GetInteractionDirection();
 
