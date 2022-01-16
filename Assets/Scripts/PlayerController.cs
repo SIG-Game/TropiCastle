@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private Inventory inventory;
     private int hotbarItemIndex = 0;
     private bool gamePaused = false;
+    private Vector2 velocity;
 
     void Start()
     {
@@ -76,14 +77,12 @@ public class PlayerController : MonoBehaviour
                 inputVector.Normalize();
             }
 
-            Vector2 velocity = movementSpeed * inputVector;
+            velocity = movementSpeed * inputVector;
 
             if (Input.GetButton("Sprint"))
             {
                 velocity *= sprintSpeedMultiplier;
             }
-
-            rb2d.velocity = velocity;
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -203,6 +202,11 @@ public class PlayerController : MonoBehaviour
             addHealth(20);
         }
         */
+    }
+
+    private void FixedUpdate()
+    {
+        rb2d.MovePosition(transform.position + (Vector3)velocity);
     }
 
     //reduces health of player when this is called
