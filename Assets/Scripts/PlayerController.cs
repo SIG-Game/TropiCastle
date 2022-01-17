@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float sprintSpeedMultiplier;
     public InventoryUI inventoryUI;
+    public Crafting crafting;
     public TextMeshProUGUI healthText;
     public int maxHealth = 100;
     public int currentHealth;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         inventory = new Inventory(UseItem);
         inventoryUI.SetInventory(inventory);
         inventoryUI.selectHotbarItem(hotbarItemIndex);
+        crafting.SetInventory(inventory);
 
         // TODO: Remove (This line is for testing)
         ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), Item.ItemType.Apple, 1);
@@ -183,10 +185,20 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Add item test
-        if (Input.GetKeyDown(KeyCode.C))
+        // Add items for testing
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             inventory.AddItem(Item.ItemType.Test, 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            inventory.AddItem(Item.ItemType.Apple, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            inventory.AddItem(Item.ItemType.Stick, 1);
         }
 
         /*
