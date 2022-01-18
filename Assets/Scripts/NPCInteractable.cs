@@ -7,7 +7,7 @@ public class NPCInteractable : Interactable
     public Sprite front, back, left, right;
     public List<string> dialogueLines;
 
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -18,6 +18,13 @@ public class NPCInteractable : Interactable
     {
         Debug.Log("Interacted");
 
+        FacePlayer();
+
+        DialogueBox.Instance.PlayDialogue(dialogueLines);
+    }
+
+    public void FacePlayer()
+    {
         switch (player.getLastDir())
         {
             case PlayerController.Direction.UP:
@@ -33,7 +40,5 @@ public class NPCInteractable : Interactable
                 spriteRenderer.sprite = left;
                 break;
         }
-
-        DialogueBox.Instance.PlayDialogue(dialogueLines);
     }
 }

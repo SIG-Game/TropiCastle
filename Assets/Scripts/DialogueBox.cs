@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class DialogueBox : MonoBehaviour
     public GameObject dialogueBoxUI;
     public TextMeshProUGUI dialogueText;
     public PlayerController player;
+    public Action AfterDialogueAction;
 
     private List<string>.Enumerator linesEnumerator;
 
@@ -45,6 +47,9 @@ public class DialogueBox : MonoBehaviour
             }
             else
             {
+                AfterDialogueAction?.Invoke(); // Action may be null
+                AfterDialogueAction = null; // Action will be set again if used
+
                 dialogueBoxUI.SetActive(false);
                 player.dialogueBoxOpen = false;
             }

@@ -263,6 +263,11 @@ public class PlayerController : MonoBehaviour
     public Direction getLastDir() {
         return lastDirection;
     }
+
+    public Inventory GetInventory()
+    {
+        return inventory;
+    }
     
     //increases health of a player when called
     //doesnt let health go above 100
