@@ -1,24 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TestInteractable : Interactable
+public class NPCInteractable : Interactable
 {
     public PlayerController player;
     public Sprite front, back, left, right;
+    public List<string> dialogueLines;
 
     private SpriteRenderer spriteRenderer;
-    private List<string> dialogueLines;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        dialogueLines = new List<string> { "Hello.", "Welcome to the island!" };
     }
 
     public override void Interact()
     {
         Debug.Log("Interacted");
-        
+
         switch (player.getLastDir())
         {
             case PlayerController.Direction.UP:

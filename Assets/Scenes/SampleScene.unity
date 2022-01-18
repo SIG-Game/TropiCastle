@@ -9748,7 +9748,7 @@ GameObject:
   - component: {fileID: 1554715250}
   - component: {fileID: 1554715249}
   m_Layer: 8
-  m_Name: Interactable Test
+  m_Name: NPC Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9813,7 +9813,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1554715248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f7d1cb949058b842b9b8798b2a8eb99, type: 3}
+  m_Script: {fileID: 11500000, guid: 44c50979a2f034d41ae5453a08dd8e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 572276101}
@@ -9821,6 +9821,9 @@ MonoBehaviour:
   back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  dialogueLines:
+  - Hello.
+  - Welcome to the island!
 --- !u!61 &1554715251
 BoxCollider2D:
   m_ObjectHideFlags: 0
