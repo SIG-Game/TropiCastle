@@ -530,6 +530,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 229394383}
   m_CullTransparentMesh: 0
+--- !u!1 &230194265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 230194267}
+  - component: {fileID: 230194266}
+  m_Layer: 0
+  m_Name: WeaponAssets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &230194266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230194265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e3b5fb8615e1345a3b9dcb3f58be66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stickSprite: {fileID: 21300000, guid: 636204c6013ed2148807b75a92e563ea, type: 3}
+  spearSprite: {fileID: 21300000, guid: 349d3eb683eac8a4097352ae27210a1e, type: 3}
+--- !u!4 &230194267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230194265}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &260115484
 GameObject:
   m_ObjectHideFlags: 0
@@ -7219,19 +7264,13 @@ RectTransform:
   m_AnchoredPosition: {x: -135, y: 80}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &572276099 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5288355818519944996, guid: 055035cc7ee7c8646858260629418a55,
-    type: 3}
-  m_PrefabInstance: {fileID: 1982112580}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &572276101 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
     type: 3}
   m_PrefabInstance: {fileID: 1982112580}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572276099}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8534eeeaa4c8abc4ca8b2eaf577070c9, type: 3}
@@ -7870,6 +7909,7 @@ MonoBehaviour:
   testSprite: {fileID: 21300000, guid: f680a0cebe4dbd447bf13123f1485dd9, type: 3}
   appleSprite: {fileID: 21300000, guid: b7a05f292b2904c1bbb972877b9ab557, type: 3}
   stickSprite: {fileID: 21300000, guid: 3e72a515fa2652440983168014fa75f8, type: 3}
+  spearSprite: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1, type: 3}
 --- !u!1 &866670884
 GameObject:
   m_ObjectHideFlags: 0
@@ -12242,7 +12282,6 @@ MonoBehaviour:
   hotbarItemSlotContainer: {fileID: 1620314559}
   itemSlotContainer: {fileID: 547836657}
   heldItem: {fileID: 1431489655}
-  player: {fileID: 572276099}
   canvas: {fileID: 822617737}
 --- !u!1 &1733815488
 GameObject:

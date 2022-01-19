@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,7 +19,6 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
     public Transform itemSlotContainer;
     public GameObject heldItem;
 
-    public GameObject player;
     public GameObject canvas;
 
     void Awake()

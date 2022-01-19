@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private BoxCollider2D boxCollider;
     private Direction lastDirection = Direction.DOWN;
     private LayerMask interactableMask;
+    private SpriteRenderer weaponSpriteRenderer;
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+
+        weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         inventory = new Inventory(UseItem);
         inventoryUI.SetInventory(inventory);
@@ -201,6 +204,11 @@ public class PlayerController : MonoBehaviour
             inventory.AddItem(Item.ItemType.Stick, 1);
         }
 
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            inventory.AddItem(Item.ItemType.Spear, 1);
+        }
+
         /*
         //test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
@@ -330,8 +338,14 @@ public class PlayerController : MonoBehaviour
                 break;
             case Item.ItemType.Stick:
                 Debug.Log("Stick item used");
+                weaponSpriteRenderer.sprite = WeaponAssets.Instance.stickSprite;
                 Attack();
                 break;
+            case Item.ItemType.Spear:
+                Debug.Log("Spear item used");
+                weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
+                Attack();
+                return;
         }
     }
 
