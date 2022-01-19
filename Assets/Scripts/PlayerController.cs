@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
             if (isAttacking)
             {
-                rb2d.velocity = Vector2.zero;
+                velocity = Vector2.zero;
             }
 
             if (Input.mouseScrollDelta.y < 0f)
