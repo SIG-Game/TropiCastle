@@ -16,4 +16,5 @@ public class ItemAssets : MonoBehaviour
     public Sprite appleSprite;
     public Sprite stickSprite;
     public Sprite spearSprite;
+    public Sprite rockSprite;
 }

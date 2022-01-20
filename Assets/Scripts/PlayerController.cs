@@ -209,6 +209,11 @@ public class PlayerController : MonoBehaviour
             inventory.AddItem(Item.ItemType.Spear, 1);
         }
 
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            inventory.AddItem(Item.ItemType.Rock, 1);
+        }
+
         /*
         //test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
@@ -345,6 +350,9 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Spear item used");
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
                 Attack();
+                return;
+            case Item.ItemType.Rock:
+                Debug.Log("Rock item used");
                 return;
         }
     }
