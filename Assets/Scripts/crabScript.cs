@@ -7,6 +7,9 @@ public class crabScript : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
+    public GameObject itemWorld;
+    public Item.ItemType droppedItemType;
+
     //private Transform target;
     public float speed;
 
@@ -38,6 +41,7 @@ public class crabScript : MonoBehaviour
         {
             currentHealth = 0;
 
+            ItemWorld.SpawnItemWorld(transform.position, droppedItemType, 1);
             Destroy(gameObject);
         }
     }
