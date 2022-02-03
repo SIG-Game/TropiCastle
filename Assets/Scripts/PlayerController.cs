@@ -163,8 +163,8 @@ public class PlayerController : MonoBehaviour
                 raycastOrigin.y += boxCollider.offset.y;
 
                 // TODO: Shorten length and change length based on direction
-                RaycastHit2D hit = Physics2D.Raycast(raycastOrigin,
-                    interactionDirection, 0.25f, interactableMask);
+                RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
+                    boxCollider.size, 0f, interactionDirection, 0.15f, interactableMask);
 
                 // Debug.DrawRay(raycastOrigin, interactionDirection * 0.25f, Color.red);
 
