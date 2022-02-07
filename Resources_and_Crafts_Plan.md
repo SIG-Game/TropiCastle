@@ -21,7 +21,7 @@ Resources / Obtained How / Use (if applicable)
 - Vine
   - Found on trees
   - Can be crafted
--Fish
+- Fish
   - Found by water
   - Can be eaten raw for small health gain or cooked into a better health item
 - Rock
