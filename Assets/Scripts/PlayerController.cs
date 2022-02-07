@@ -214,6 +214,11 @@ public class PlayerController : MonoBehaviour
             inventory.AddItem(Item.ItemType.Rock, 1);
         }
 
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            inventory.AddItem(Item.ItemType.Vine, 1);
+        }
+
         /*
         //test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
@@ -353,6 +358,9 @@ public class PlayerController : MonoBehaviour
                 return;
             case Item.ItemType.Rock:
                 Debug.Log("Rock item used");
+                return;
+            case Item.ItemType.Vine:
+                Debug.Log("Vine item used");
                 return;
         }
     }
