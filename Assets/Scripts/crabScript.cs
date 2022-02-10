@@ -8,7 +8,8 @@ public class crabScript : MonoBehaviour
     public int currentHealth;
 
     public GameObject itemWorld;
-    public Item.ItemType droppedItemType;
+    // public Item.ItemType droppedItemType;
+    public List<Item> DroppedLoot;
 
     //private Transform target;
     public float speed;
@@ -40,8 +41,10 @@ public class crabScript : MonoBehaviour
         else
         {
             currentHealth = 0;
-
-            ItemWorld.SpawnItemWorld(transform.position, droppedItemType, 1);
+            foreach (Item loot in DroppedLoot) {
+                ItemWorld.DropItem(transform.position, loot.itemType, loot.amount);
+            }
+            
             Destroy(gameObject);
         }
     }
