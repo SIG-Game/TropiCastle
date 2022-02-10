@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,7 +19,6 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
     public Transform itemSlotContainer;
     public GameObject heldItem;
 
-    public GameObject player;
     public GameObject canvas;
 
     void Awake()
@@ -66,33 +64,38 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
             int clickedItemIndex = results[0].gameObject.transform.GetSiblingIndex();
             Item clickedItem = inventory.GetItemList()[clickedItemIndex];
 
-            if (holdingItem && clickedItem.itemType == Item.ItemType.Empty)
+            if (holdingItem)
             {
-                inventory.SwapItemsAt(heldItemIndex, clickedItemIndex);
+                if (clickedItemIndex == heldItemIndex)
+                {
+                    // Put held item back
+                    if (clickedItemIndex < hotbarSize)
+                        hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite =
+                            clickedItem.GetSprite();
+
+                    itemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite =
+                        clickedItem.GetSprite();
+                }
+                else
+                {
+                    inventory.SwapItemsAt(heldItemIndex, clickedItemIndex);
+                }
+
                 heldItemImage.sprite = Item.GetSprite(Item.ItemType.Empty);
                 holdingItem = false;
             }
-            else if (holdingItem && clickedItemIndex == heldItemIndex)
+            else if (clickedItem.itemType != Item.ItemType.Empty)
             {
+                // Hold clicked item
                 if (clickedItemIndex < hotbarSize)
-                    hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite = clickedItem.GetSprite();
+                    hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite =
+                        Item.GetSprite(Item.ItemType.Empty);
 
-                itemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite = clickedItem.GetSprite();
-
-                heldItemImage.sprite = Item.GetSprite(Item.ItemType.Empty);
-
-                holdingItem = false;
-            }
-            else if (!holdingItem && clickedItem.itemType != Item.ItemType.Empty)
-            {
-                if (clickedItemIndex < hotbarSize)
-                    hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite = Item.GetSprite(Item.ItemType.Empty);
-
-                itemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite = Item.GetSprite(Item.ItemType.Empty);
+                itemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite =
+                    Item.GetSprite(Item.ItemType.Empty);
 
                 heldItemIndex = clickedItemIndex;
                 heldItemImage.sprite = Item.GetSprite(clickedItem.itemType);
-
                 holdingItem = true;
             }
         }
@@ -117,6 +120,9 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
 
     private void Update()
     {
-        heldItemRectTransform.anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+        Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+        anchoredPosition.x = Mathf.Clamp(anchoredPosition.x, 0f, canvasRectTransform.rect.width);
+        anchoredPosition.y = Mathf.Clamp(anchoredPosition.y, 0f, canvasRectTransform.rect.height);
+        heldItemRectTransform.anchoredPosition = anchoredPosition;
     }
 }

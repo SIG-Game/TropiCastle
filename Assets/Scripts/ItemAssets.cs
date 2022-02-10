@@ -14,4 +14,8 @@ public class ItemAssets : MonoBehaviour
     public Sprite transparentSprite;
     public Sprite testSprite;
     public Sprite appleSprite;
+    public Sprite stickSprite;
+    public Sprite spearSprite;
+    public Sprite rockSprite;
+    public Sprite vineSprite;
 }

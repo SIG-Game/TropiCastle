@@ -1,52 +1,114 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum Direction { UP, DOWN, LEFT, RIGHT };
+
     public float movementSpeed;
     public float sprintSpeedMultiplier;
     public InventoryUI inventoryUI;
+    public Crafting crafting;
+    public TextMeshProUGUI healthText;
     public int maxHealth = 100;
     public int currentHealth;
+    public bool isAttacking = false;
+    public bool dialogueBoxOpen = false;
+    public bool canInteract = true;
 
-    Rigidbody2D rb2d;
+    public Sprite front, back, left, right;
+    
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+    private Rigidbody2D rb2d;
+    private BoxCollider2D boxCollider;
+    private Direction lastDirection = Direction.DOWN;
+    private LayerMask interactableMask;
+    private SpriteRenderer weaponSpriteRenderer;
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
     private bool gamePaused = false;
+    private Vector2 velocity;
 
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+
+        weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         inventory = new Inventory(UseItem);
         inventoryUI.SetInventory(inventory);
         inventoryUI.selectHotbarItem(hotbarItemIndex);
+        crafting.SetInventory(inventory);
 
         // TODO: Remove (This line is for testing)
         ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), Item.ItemType.Apple, 1);
 
         currentHealth = maxHealth;
+        healthText.text = "Health: " + currentHealth;
+
+        interactableMask = LayerMask.GetMask("Interactable");
     }
     
     void Update()
     {
+        // TODO: Allow pausing while dialogue box is open when pausing is implemented
+        if (dialogueBoxOpen)
+        {
+            return;
+        }
+
+        // Player must release interact key to interact again after dialogue box closes
+        // Needed because interact key is also used to advance dialogue
+        if (Input.GetButtonUp("Interact") && !dialogueBoxOpen && !canInteract)
+        {
+            canInteract = true;
+        }
+
         if (!gamePaused)
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
 
-            Vector2 inputVector = (new Vector2(horizontalInput, verticalInput));
-            inputVector.Normalize();
+            Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
+            
+            if (inputVector.sqrMagnitude > 1f)
+            {
+                inputVector.Normalize();
+            }
 
-            Vector2 velocity = movementSpeed * inputVector;
+            velocity = movementSpeed * inputVector;
 
             if (Input.GetButton("Sprint"))
             {
                 velocity *= sprintSpeedMultiplier;
             }
 
-            rb2d.velocity = velocity;
+            if (Input.GetMouseButtonDown(0))
+            {
+                List<Item> itemList = inventory.GetItemList();
+
+                UseItem(itemList[hotbarItemIndex]);
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                List<Item> itemList = inventory.GetItemList();
+
+                Item item = itemList[hotbarItemIndex];
+                ItemWorld.DropItem(transform.position, item.itemType, item.amount);
+                inventory.RemoveItem(item);
+            }
+
+            if (isAttacking)
+            {
+                velocity = Vector2.zero;
+            }
 
             if (Input.mouseScrollDelta.y < 0f)
             {
@@ -69,20 +131,47 @@ public class PlayerController : MonoBehaviour
 
             ProcessNumberKeys();
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                List<Item> itemList = inventory.GetItemList();
-
-                UseItem(itemList[hotbarItemIndex]);
+            if ((horizontalInput != 0 || verticalInput != 0) && !isAttacking) {
+                if (horizontalInput < 0)
+                {
+                    lastDirection = Direction.LEFT;
+                    spriteRenderer.sprite = left;
+                }
+                else if (horizontalInput > 0)
+                {
+                    lastDirection = Direction.RIGHT;
+                    spriteRenderer.sprite = right;
+                }
+                else if (verticalInput < 0)
+                {
+                    lastDirection = Direction.DOWN;
+                    spriteRenderer.sprite = front;
+                } 
+                else
+                {
+                    lastDirection = Direction.UP;
+                    spriteRenderer.sprite = back;
+                }
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetButtonDown("Interact") && canInteract)
             {
-                List<Item> itemList = inventory.GetItemList();
+                Vector2 interactionDirection = GetInteractionDirection();
 
-                Item item = itemList[hotbarItemIndex];
-                ItemWorld.DropItem(transform.position, item.itemType, item.amount);
-                inventory.RemoveItem(item);
+                Vector3 raycastOrigin = transform.position;
+                raycastOrigin.x += boxCollider.offset.x;
+                raycastOrigin.y += boxCollider.offset.y;
+
+                // TODO: Shorten length and change length based on direction
+                RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
+                    boxCollider.size, 0f, interactionDirection, 0.15f, interactableMask);
+
+                // Debug.DrawRay(raycastOrigin, interactionDirection * 0.25f, Color.red);
+
+                if (hit.collider != null)
+                {
+                    hit.transform.gameObject.GetComponent<Interactable>().Interact();
+                }
             }
         }
 
@@ -99,10 +188,35 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Add item test
-        if (Input.GetKeyDown(KeyCode.C))
+        // Add items for testing
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             inventory.AddItem(Item.ItemType.Test, 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            inventory.AddItem(Item.ItemType.Apple, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            inventory.AddItem(Item.ItemType.Stick, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            inventory.AddItem(Item.ItemType.Spear, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            inventory.AddItem(Item.ItemType.Rock, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            inventory.AddItem(Item.ItemType.Vine, 1);
         }
 
         /*
@@ -120,6 +234,11 @@ public class PlayerController : MonoBehaviour
         */
     }
 
+    private void FixedUpdate()
+    {
+        rb2d.MovePosition(transform.position + (Vector3)velocity);
+    }
+
     //reduces health of player when this is called
     //doesnt let health go below 0
     public void takeDamage(int damage)
@@ -131,19 +250,85 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth = 0;
         }
+
+        healthText.text = "Health: " + currentHealth;
     }
 
+    public void Attack() {
+        if (!isAttacking) {
+            switch (lastDirection) {
+                case Direction.UP:
+                    animator.Play("Swing Up");
+                    break;
+
+                case Direction.DOWN:
+                    animator.Play("Swing Down");
+                    break;
+
+                case Direction.LEFT:
+                    animator.Play("Swing Left");
+                    break;
+
+                case Direction.RIGHT:
+                    animator.Play("Swing Right");
+                    break;
+            }
+
+            isAttacking = true;
+        }
+    }
+
+    public Direction getLastDir() {
+        return lastDirection;
+    }
+
+    public Inventory GetInventory()
+    {
+        return inventory;
+    }
+    
     //increases health of a player when called
     //doesnt let health go above 100
     public void addHealth(int health)
     {
-        if (currentHealth + health <= 100)
+        if(currentHealth + health <= maxHealth)
         {
             currentHealth += health;
         } else
         {
-            currentHealth = 100;
+            currentHealth = maxHealth;
         }
+
+        healthText.text = "Health: " + currentHealth;
+    }
+    
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag.Equals("Enemy"))
+        {
+            takeDamage(10);
+        }
+    }
+    
+    Vector2 GetInteractionDirection()
+    {
+        switch (lastDirection)
+        {
+            case Direction.UP:
+                return Vector2.up;
+
+            case Direction.DOWN:
+                return Vector2.down;
+
+            case Direction.LEFT:
+                return Vector2.left;
+
+            case Direction.RIGHT:
+                return Vector2.right;
+        }
+
+        // Should not be reached
+        return Vector2.zero;
     }
 
     private void UseItem(Item item)
@@ -161,6 +346,22 @@ public class PlayerController : MonoBehaviour
                 addHealth(10);
                 inventory.RemoveItem(item);
                 break;
+            case Item.ItemType.Stick:
+                Debug.Log("Stick item used");
+                weaponSpriteRenderer.sprite = WeaponAssets.Instance.stickSprite;
+                Attack();
+                break;
+            case Item.ItemType.Spear:
+                Debug.Log("Spear item used");
+                weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
+                Attack();
+                return;
+            case Item.ItemType.Rock:
+                Debug.Log("Rock item used");
+                return;
+            case Item.ItemType.Vine:
+                Debug.Log("Vine item used");
+                return;
         }
     }
 
@@ -195,7 +396,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // TODO: Use item tag instead
         ItemWorld itemWorld = collision.gameObject.GetComponent<ItemWorld>();
         if (itemWorld != null && !inventory.IsFull())
         {
