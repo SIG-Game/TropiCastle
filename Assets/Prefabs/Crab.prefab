@@ -145,5 +145,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  player: {fileID: 0}
+  itemWorld: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797, type: 3}
+  DroppedLoot:
+  - itemType: 2
+    amount: 3
+  - itemType: 1
+    amount: 1
+  - itemType: 1
+    amount: 1
+  - itemType: 1
+    amount: 1
   speed: 2
