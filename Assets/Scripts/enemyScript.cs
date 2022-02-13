@@ -13,6 +13,8 @@ public class enemyScript : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
+    public List<Item> DroppedLoot;
+
     public Transform player;
     public spawnEnemy spawner;
     public float speed = 5f;
@@ -35,12 +37,6 @@ public class enemyScript : MonoBehaviour
         Vector3 direction = player.position - transform.position;
         direction.Normalize();
         movement = direction;
-
-
-        if(currentHealth == 0)
-        {
-            Destroy(this.gameObject);
-        }
     }
     
     private void FixedUpdate()
@@ -63,6 +59,10 @@ public class enemyScript : MonoBehaviour
         {
             currentHealth = 0;
             spawner.crabDied();
+            foreach (Item loot in DroppedLoot)
+            {
+                ItemWorld.DropItem(transform.position, loot.itemType, loot.amount);
+            }
             Destroy(gameObject);
         }
     }
@@ -87,8 +87,6 @@ public class enemyScript : MonoBehaviour
         //use the velocity
         rb2d.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
     }
-
-
 
     //gets knockback when in contact with player
     //can update to when getting hit by weapon by changing the tag
