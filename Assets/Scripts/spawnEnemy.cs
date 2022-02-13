@@ -5,13 +5,14 @@ using UnityEngine;
 public class spawnEnemy : MonoBehaviour
 {
     public GameObject enemy;
+    public Transform Player;
     float randX;
     float randY;
     Vector2 whereToSpawn;
     public float spawnRate = 2f;
     float nextSpawn = 0.0f;
-    float numCrabs = 0;
-    public float maxCrabs = 4f;
+    int numCrabs = 0;
+    public int maxCrabs = 4;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +29,15 @@ public class spawnEnemy : MonoBehaviour
             randX = Random.Range(-8f, 8f);
             randY = Random.Range(-3f, 4f);
             whereToSpawn = new Vector2(randX, randY);
-            Instantiate(enemy, whereToSpawn, Quaternion.identity);
+            GameObject enemySpawned = Instantiate(enemy, whereToSpawn, Quaternion.identity);
+            enemySpawned.GetComponent<enemyScript>().player = Player;
+            enemySpawned.GetComponent<enemyScript>().spawner = this;
             numCrabs++;
         }
+    }
+
+    public void crabDied()
+    {
+        numCrabs = numCrabs - 1;
     }
 }

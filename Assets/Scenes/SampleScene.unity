@@ -284,6 +284,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3895392963248142510, guid: bfaf9ae57760545859b01d4467686f5b,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1421088113}
+    - target: {fileID: 3895392963248142510, guid: bfaf9ae57760545859b01d4467686f5b,
+        type: 3}
+      propertyPath: maxCrabs
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895392963248142510, guid: bfaf9ae57760545859b01d4467686f5b,
+        type: 3}
+      propertyPath: spawnRate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3895392963248142511, guid: bfaf9ae57760545859b01d4467686f5b,
         type: 3}
       propertyPath: m_Name
@@ -319,6 +334,12 @@ Animator:
 --- !u!212 &1421088111 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 5288355818519945017, guid: 055035cc7ee7c8646858260629418a55,
+    type: 3}
+  m_PrefabInstance: {fileID: 1982112580}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1421088113 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5288355818519945019, guid: 055035cc7ee7c8646858260629418a55,
     type: 3}
   m_PrefabInstance: {fileID: 1982112580}
   m_PrefabAsset: {fileID: 0}

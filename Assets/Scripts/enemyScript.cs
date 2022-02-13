@@ -1,0 +1,117 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class enemyScript : MonoBehaviour
+{
+    private enum State
+    {
+        Chasing,
+        Knockbacked,
+    }
+    private State state;
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public Transform player;
+    public spawnEnemy spawner;
+    public float speed = 5f;
+    private Vector2 movement;
+
+
+    Rigidbody2D rb2d;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb2d = GetComponent<Rigidbody2D>();
+        currentHealth = maxHealth;
+        state = State.Chasing;
+        StartCoroutine("Wait");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Vector3 direction = player.position - transform.position;
+        direction.Normalize();
+        movement = direction;
+
+
+        if(currentHealth == 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    
+    private void FixedUpdate()
+    {
+        if(state == State.Chasing) {
+            moveEnemy(movement);
+        }
+    }
+   
+
+    //reduces health of player when this is called
+    //doesnt let health go below 0
+    public void takeDamage(int damage)
+    {
+        if (currentHealth - damage > 0)
+        {
+            currentHealth -= damage;
+        }
+        else
+        {
+            currentHealth = 0;
+            spawner.crabDied();
+            Destroy(gameObject);
+        }
+    }
+
+    //increases health of a player when called
+    //doesnt let health go above 100
+    public void addHealth(int health)
+    {
+        if (currentHealth + health <= maxHealth)
+        {
+            currentHealth += health;
+        }
+        else
+        {
+            currentHealth = 100;
+        }
+    }
+
+    //simple move towards player
+    void moveEnemy(Vector2 direction)
+    {
+        //use the velocity
+        rb2d.MovePosition((Vector2)transform.position + (direction * speed * Time.deltaTime));
+    }
+
+
+
+    //gets knockback when in contact with player
+    //can update to when getting hit by weapon by changing the tag
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Player")
+        {
+            state = State.Knockbacked;
+            Vector2 difference = transform.position - other.transform.position;
+            difference.Normalize();
+            //transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
+            transform.GetComponent<Rigidbody2D>().AddForce(difference * 5, ForceMode2D.Force);
+            StopCoroutine("Wait");
+            StartCoroutine("Wait");
+            //state = State.Chasing;
+        }
+    }
+   
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1.5f);
+        state = State.Chasing;
+        transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+    
+}
