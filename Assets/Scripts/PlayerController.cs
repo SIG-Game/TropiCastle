@@ -57,9 +57,10 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        // TODO: Allow pausing while dialogue box is open when pausing is implemented
-        if (dialogueBoxOpen)
+        // TODO: Allow pausing while dialogue box is open or attacking when pausing is implemented
+        if (dialogueBoxOpen || isAttacking)
         {
+            velocity = Vector2.zero;
             return;
         }
 
@@ -94,6 +95,13 @@ public class PlayerController : MonoBehaviour
                 List<Item> itemList = inventory.GetItemList();
 
                 UseItem(itemList[hotbarItemIndex]);
+
+                // Prevent doing other actions on the frame an attack starts
+                if (isAttacking)
+                {
+                    velocity = Vector2.zero;
+                    return;
+                }
             }
 
             if (Input.GetMouseButtonDown(1))
@@ -109,11 +117,6 @@ public class PlayerController : MonoBehaviour
                     ItemWorld.SpawnItemWorld(itemPosition, item.itemType, item.amount);
                     inventory.RemoveItem(item);
                 }
-            }
-
-            if (isAttacking)
-            {
-                velocity = Vector2.zero;
             }
 
             if (Input.mouseScrollDelta.y < 0f)
@@ -137,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
             ProcessNumberKeys();
 
-            if ((horizontalInput != 0 || verticalInput != 0) && !isAttacking) {
+            if (horizontalInput != 0 || verticalInput != 0) {
                 if (horizontalInput < 0)
                 {
                     lastDirection = Direction.LEFT;
@@ -261,27 +264,25 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Attack() {
-        if (!isAttacking) {
-            switch (lastDirection) {
-                case Direction.UP:
-                    animator.Play("Swing Up");
-                    break;
+        switch (lastDirection) {
+            case Direction.UP:
+                animator.Play("Swing Up");
+                break;
 
-                case Direction.DOWN:
-                    animator.Play("Swing Down");
-                    break;
+            case Direction.DOWN:
+                animator.Play("Swing Down");
+                break;
 
-                case Direction.LEFT:
-                    animator.Play("Swing Left");
-                    break;
+            case Direction.LEFT:
+                animator.Play("Swing Left");
+                break;
 
-                case Direction.RIGHT:
-                    animator.Play("Swing Right");
-                    break;
-            }
-
-            isAttacking = true;
+            case Direction.RIGHT:
+                animator.Play("Swing Right");
+                break;
         }
+
+        isAttacking = true;
     }
 
     public Direction getLastDir() {
