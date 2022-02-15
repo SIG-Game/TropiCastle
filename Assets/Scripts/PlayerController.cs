@@ -101,8 +101,14 @@ public class PlayerController : MonoBehaviour
                 List<Item> itemList = inventory.GetItemList();
 
                 Item item = itemList[hotbarItemIndex];
-                ItemWorld.DropItem(transform.position, item.itemType, item.amount);
-                inventory.RemoveItem(item);
+
+                if (item.itemType != Item.ItemType.Empty)
+                {
+                    Vector3 itemPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    itemPosition.z = 0f;
+                    ItemWorld.SpawnItemWorld(itemPosition, item.itemType, item.amount);
+                    inventory.RemoveItem(item);
+                }
             }
 
             if (isAttacking)
