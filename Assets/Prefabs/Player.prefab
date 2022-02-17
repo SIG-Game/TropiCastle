@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8534eeeaa4c8abc4ca8b2eaf577070c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.125
+  movementSpeed: 0.06
   sprintSpeedMultiplier: 1.25
   inventoryUI: {fileID: 0}
   crafting: {fileID: 0}

@@ -11,7 +11,8 @@ public class Item
         Apple,
         Stick,
         Spear,
-        Rock
+        Rock,
+        Vine
     }
 
     public static Sprite GetSprite(ItemType itemType)
@@ -31,6 +32,8 @@ public class Item
                 return ItemAssets.Instance.spearSprite;
             case ItemType.Rock:
                 return ItemAssets.Instance.rockSprite;
+            case ItemType.Vine:
+                return ItemAssets.Instance.vineSprite;
         }
     }
 

@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
         // TODO: Allow pausing while dialogue box is open when pausing is implemented
         if (dialogueBoxOpen)
         {
+            velocity = Vector2.zero;
             return;
         }
 
@@ -102,6 +103,13 @@ public class PlayerController : MonoBehaviour
                 List<Item> itemList = inventory.GetItemList();
 
                 UseItem(itemList[hotbarItemIndex]);
+
+                // Prevent doing other actions on the frame an attack starts
+                if (isAttacking)
+                {
+                    velocity = Vector2.zero;
+                    return;
+                }
             }
 
             if (Input.GetMouseButtonDown(1))
@@ -109,13 +117,14 @@ public class PlayerController : MonoBehaviour
                 List<Item> itemList = inventory.GetItemList();
 
                 Item item = itemList[hotbarItemIndex];
-                ItemWorld.DropItem(transform.position, item.itemType, item.amount);
-                inventory.RemoveItem(item);
-            }
 
-            if (isAttacking)
-            {
-                velocity = Vector2.zero;
+                if (item.itemType != Item.ItemType.Empty)
+                {
+                    Vector3 itemPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    itemPosition.z = 0f;
+                    ItemWorld.SpawnItemWorld(itemPosition, item.itemType, item.amount);
+                    inventory.RemoveItem(item);
+                }
             }
 
             if (Input.mouseScrollDelta.y < 0f)
@@ -139,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
             ProcessNumberKeys();
 
-            if ((horizontalInput != 0 || verticalInput != 0) && !isAttacking) {
+            if (horizontalInput != 0 || verticalInput != 0) {
                 if (horizontalInput < 0)
                 {
                     lastDirection = Direction.LEFT;
@@ -171,8 +180,8 @@ public class PlayerController : MonoBehaviour
                 raycastOrigin.y += boxCollider.offset.y;
 
                 // TODO: Shorten length and change length based on direction
-                RaycastHit2D hit = Physics2D.Raycast(raycastOrigin,
-                    interactionDirection, 0.25f, interactableMask);
+                RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
+                    boxCollider.size, 0f, interactionDirection, 0.15f, interactableMask);
 
                 // Debug.DrawRay(raycastOrigin, interactionDirection * 0.25f, Color.red);
 
@@ -222,6 +231,11 @@ public class PlayerController : MonoBehaviour
             inventory.AddItem(Item.ItemType.Rock, 1);
         }
 
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            inventory.AddItem(Item.ItemType.Vine, 1);
+        }
+
         /*
         //test takeDamage
         if(Input.GetKeyDown(KeyCode.Space))
@@ -258,27 +272,25 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Attack() {
-        if (!isAttacking) {
-            switch (lastDirection) {
-                case Direction.UP:
-                    animator.Play("Swing Up");
-                    break;
+        switch (lastDirection) {
+            case Direction.UP:
+                animator.Play("Swing Up");
+                break;
 
-                case Direction.DOWN:
-                    animator.Play("Swing Down");
-                    break;
+            case Direction.DOWN:
+                animator.Play("Swing Down");
+                break;
 
-                case Direction.LEFT:
-                    animator.Play("Swing Left");
-                    break;
+            case Direction.LEFT:
+                animator.Play("Swing Left");
+                break;
 
-                case Direction.RIGHT:
-                    animator.Play("Swing Right");
-                    break;
-            }
-
-            isAttacking = true;
+            case Direction.RIGHT:
+                animator.Play("Swing Right");
+                break;
         }
+
+        isAttacking = true;
     }
 
     public Direction getLastDir() {
@@ -361,6 +373,9 @@ public class PlayerController : MonoBehaviour
                 return;
             case Item.ItemType.Rock:
                 Debug.Log("Rock item used");
+                return;
+            case Item.ItemType.Vine:
+                Debug.Log("Vine item used");
                 return;
         }
     }
