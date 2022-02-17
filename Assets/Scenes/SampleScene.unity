@@ -38407,6 +38407,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ac4be4341a049d0a3605a94566ad99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawned: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797, type: 3}
+  spawnTimer: 2
+  spawnDelay: 4
 --- !u!4 &1936533780
 Transform:
   m_ObjectHideFlags: 0
