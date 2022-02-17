@@ -364,11 +364,13 @@ public class PlayerController : MonoBehaviour
             case Item.ItemType.Stick:
                 Debug.Log("Stick item used");
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.stickSprite;
+                transform.GetChild(0).GetComponent<AttackScript>().damage = 40;
                 Attack();
                 break;
             case Item.ItemType.Spear:
                 Debug.Log("Spear item used");
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
+                transform.GetChild(0).GetComponent<AttackScript>().damage = 60;
                 Attack();
                 return;
             case Item.ItemType.Rock:
