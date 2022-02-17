@@ -67,8 +67,8 @@ public class PlayerController : MonoBehaviour
             rb2d.velocity = Vector2.zero;
             Time.timeScale = gamePaused ? 0f : 1f;
         }
-        // TODO: Allow pausing while dialogue box is open when pausing is implemented
-        if (dialogueBoxOpen)
+
+        if (dialogueBoxOpen || isAttacking)
         {
             velocity = Vector2.zero;
             return;
