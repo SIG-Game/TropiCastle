@@ -39,7 +39,7 @@ public class DialogueBox : MonoBehaviour
     private void Update()
     {
         // Must run before PlayerController to prevent dialogue from immediately advancing
-        if (Input.GetButtonDown("Interact") && dialogueBoxUI.activeInHierarchy)
+        if (Input.GetButtonDown("Interact") && dialogueBoxUI.activeInHierarchy && !player.gamePaused)
         {
             if (linesEnumerator.MoveNext())
             {
