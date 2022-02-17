@@ -47,6 +47,7 @@ public class enemyScript : MonoBehaviour
             float targetRange = 2.5f;
             if(Vector3.Distance(transform.position, player.position) < targetRange)
             {
+                StartCoroutine("Wait");
                 state = State.Chasing;
             }
         }
@@ -107,7 +108,7 @@ public class enemyScript : MonoBehaviour
             Vector2 difference = transform.position - other.transform.position;
             difference.Normalize();
             //transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
-            transform.GetComponent<Rigidbody2D>().AddForce(difference * 5, ForceMode2D.Force);
+            transform.GetComponent<Rigidbody2D>().AddForce(difference * 10, ForceMode2D.Force);
             StopCoroutine("Wait");
             StartCoroutine("Wait");
             //state = State.Chasing;
