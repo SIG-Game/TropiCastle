@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public InventoryUI inventoryUI;
     public Crafting crafting;
     public TextMeshProUGUI healthText;
+    public GameObject pauseMenu;
     public int maxHealth = 100;
     public int currentHealth;
     public bool isAttacking = false;
@@ -29,7 +30,8 @@ public class PlayerController : MonoBehaviour
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
-    private bool gamePaused = false;
+    public bool gamePaused = false;
+    private bool inventoryOpen = false;
     private Vector2 velocity;
 
     void Start()
@@ -57,6 +59,12 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        if (Input.GetButtonDown("Pause") && !inventoryOpen) {
+            gamePaused = !gamePaused;
+            pauseMenu.SetActive(gamePaused);
+            rb2d.velocity = Vector2.zero;
+            Time.timeScale = gamePaused ? 0f : 1f;
+        }
         // TODO: Allow pausing while dialogue box is open when pausing is implemented
         if (dialogueBoxOpen)
         {
@@ -65,12 +73,12 @@ public class PlayerController : MonoBehaviour
 
         // Player must release interact key to interact again after dialogue box closes
         // Needed because interact key is also used to advance dialogue
-        if (Input.GetButtonUp("Interact") && !dialogueBoxOpen && !canInteract)
+        if (Input.GetButtonUp("Interact") && !dialogueBoxOpen && !canInteract && !gamePaused)
         {
             canInteract = true;
         }
 
-        if (!gamePaused)
+        if (!gamePaused && !inventoryOpen)
         {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
             float verticalInput = Input.GetAxisRaw("Vertical");
@@ -154,7 +162,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Interact") && canInteract)
+            if (Input.GetButtonDown("Interact") && canInteract && !gamePaused)
             {
                 Vector2 interactionDirection = GetInteractionDirection();
 
@@ -175,14 +183,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Inventory"))
+        if (Input.GetButtonDown("Inventory") && !gamePaused)
         {
-            gamePaused = !gamePaused;
-            inventoryUI.gameObject.SetActive(gamePaused);
+            inventoryOpen = !inventoryOpen;
+            inventoryUI.gameObject.SetActive(inventoryOpen);
             rb2d.velocity = Vector2.zero;
-            Time.timeScale = gamePaused ? 0f : 1f;
+            Time.timeScale = inventoryOpen ? 0f : 1f;
 
-            if (!gamePaused)
+            if (!inventoryOpen)
             {
                 inventoryUI.ResetHeldItem();
             }
