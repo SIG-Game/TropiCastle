@@ -6,6 +6,7 @@ public class enemyScript : MonoBehaviour
 {
     private enum State
     {
+        Chilling,
         Chasing,
         Knockbacked,
     }
@@ -27,8 +28,8 @@ public class enemyScript : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
-        state = State.Chasing;
-        StartCoroutine("Wait");
+        state = State.Chilling;
+        //StartCoroutine("Wait");
     }
 
     // Update is called once per frame
@@ -41,6 +42,14 @@ public class enemyScript : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if(state == State.Chilling)
+        {
+            float targetRange = 2.5f;
+            if(Vector3.Distance(transform.position, player.position) < targetRange)
+            {
+                state = State.Chasing;
+            }
+        }
         if(state == State.Chasing) {
             moveEnemy(movement);
         }
