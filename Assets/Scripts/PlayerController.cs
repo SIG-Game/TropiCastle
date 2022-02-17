@@ -418,4 +418,13 @@ public class PlayerController : MonoBehaviour
             Destroy(itemWorld.gameObject);
         }
     }
+
+    public void resume() {
+        gamePaused = !gamePaused;
+        pauseMenu.SetActive(gamePaused);
+        rb2d.velocity = Vector2.zero;
+        Time.timeScale = gamePaused ? 0f : 1f;
+    }
 }
+
+
