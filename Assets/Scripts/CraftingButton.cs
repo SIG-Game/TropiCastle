@@ -9,11 +9,14 @@ public class CraftingButton : MonoBehaviour, IPointerClickHandler
     public Item.ItemType resultItemType;
     public int resultAmount;
 
+    public List<Item> testList;
+
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            crafting.CraftItem(ingredients, resultItemType, resultAmount);
+            crafting.CraftItem(ingredients, testList, resultItemType, resultAmount);
         }
     }
 }

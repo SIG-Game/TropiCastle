@@ -26133,6 +26133,13 @@ MonoBehaviour:
   ingredients: 0300000003000000030000000600000005000000
   resultItemType: 4
   resultAmount: 1
+  testList:
+  - itemType: 3
+    amount: 3
+  - itemType: 6
+    amount: 1
+  - itemType: 5
+    amount: 1
 --- !u!114 &700490300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34647,6 +34654,7 @@ MonoBehaviour:
   ingredients: 03000000030000000300000002000000
   resultItemType: 1
   resultAmount: 1
+  testList: []
 --- !u!114 &1816024738
 MonoBehaviour:
   m_ObjectHideFlags: 0

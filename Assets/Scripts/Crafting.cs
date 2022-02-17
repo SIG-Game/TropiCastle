@@ -5,12 +5,21 @@ public class Crafting : MonoBehaviour
 {
     private Inventory inventory;
 
-    public void CraftItem(List<Item.ItemType> ingredients, Item.ItemType resultItemType, int resultAmount)
+    public void CraftItem(List<Item.ItemType> ingredients, List<Item> testList, Item.ItemType resultItemType, int resultAmount)
     {
         List<Item> itemList = inventory.GetItemList();
 
         // Add items to remove to a list so that items aren't removed when crafting fails
         List<Item> itemsUsed = new List<Item>();
+
+        foreach (Item curItem in testList)
+        {
+           // Debug.Log("Finding ingredient " + curItem.itemType);
+        }
+
+
+
+
 
         // This approach must change when inventory item stacking is added
         foreach (Item.ItemType ingredient in ingredients) {
