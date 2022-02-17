@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     public bool dialogueBoxOpen = false;
     public bool canInteract = true;
 
+    public ItemPlacementTrigger itemPlacementTrigger;
+
     public Sprite front, back, left, right;
     
     private SpriteRenderer spriteRenderer;
@@ -112,7 +114,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) && itemPlacementTrigger.canPlace)
             {
                 List<Item> itemList = inventory.GetItemList();
 
@@ -121,6 +123,9 @@ public class PlayerController : MonoBehaviour
                 if (item.itemType != Item.ItemType.Empty)
                 {
                     Vector3 itemPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    // Lock item position to grid
+                    //itemPosition.x = (Mathf.Round(2f * itemPosition.x - 0.5f) / 2f) + 0.25f;
+                    //itemPosition.y = (Mathf.Round(2f * itemPosition.y - 0.5f) / 2f) + 0.25f;
                     itemPosition.z = 0f;
                     ItemWorld.SpawnItemWorld(itemPosition, item.itemType, item.amount);
                     inventory.RemoveItem(item);
