@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public bool isAttacking = false;
     public bool dialogueBoxOpen = false;
     public bool canInteract = true;
+    public bool gamePaused = false;
 
     public ItemPlacementTrigger itemPlacementTrigger;
 
@@ -32,7 +33,6 @@ public class PlayerController : MonoBehaviour
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
-    public bool gamePaused = false;
     private bool inventoryOpen = false;
     private Vector2 velocity;
 
@@ -62,10 +62,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Pause") && !inventoryOpen) {
-            gamePaused = !gamePaused;
-            pauseMenu.SetActive(gamePaused);
-            rb2d.velocity = Vector2.zero;
-            Time.timeScale = gamePaused ? 0f : 1f;
+            TogglePauseMenu();
         }
 
         if (dialogueBoxOpen || isAttacking)
@@ -132,20 +129,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.mouseScrollDelta.y < 0f)
+            if (Input.mouseScrollDelta.y != 0f)
             {
-                ++hotbarItemIndex;
+                hotbarItemIndex -= (int)Mathf.Sign(Input.mouseScrollDelta.y);
 
                 if (hotbarItemIndex == 10)
                     hotbarItemIndex = 0;
-
-                inventoryUI.selectHotbarItem(hotbarItemIndex);
-            }
-            else if (Input.mouseScrollDelta.y > 0f)
-            {
-                --hotbarItemIndex;
-
-                if (hotbarItemIndex == -1)
+                else if (hotbarItemIndex == -1)
                     hotbarItemIndex = 9;
 
                 inventoryUI.selectHotbarItem(hotbarItemIndex);
@@ -240,20 +230,6 @@ public class PlayerController : MonoBehaviour
         {
             inventory.AddItem(Item.ItemType.Vine, 1);
         }
-
-        /*
-        //test takeDamage
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            takeDamage(20);
-        }
-        
-        //test getHealth
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            addHealth(20);
-        }
-        */
     }
 
     private void FixedUpdate()
@@ -261,14 +237,25 @@ public class PlayerController : MonoBehaviour
         rb2d.MovePosition(transform.position + (Vector3)velocity);
     }
 
+    //increases health of a player when called
+    //doesnt let health go above 100
+    public void addHealth(int health)
+    {
+        currentHealth += health;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        healthText.text = "Health: " + currentHealth;
+    }
+
     //reduces health of player when this is called
     //doesnt let health go below 0
     public void takeDamage(int damage)
     {
-        if (currentHealth - damage >= 0)  
-        {
-            currentHealth -= damage;
-        } else
+        currentHealth -= damage;
+        if (currentHealth < 0)
         {
             currentHealth = 0;
         }
@@ -307,29 +294,6 @@ public class PlayerController : MonoBehaviour
         return inventory;
     }
     
-    //increases health of a player when called
-    //doesnt let health go above 100
-    public void addHealth(int health)
-    {
-        if(currentHealth + health <= maxHealth)
-        {
-            currentHealth += health;
-        } else
-        {
-            currentHealth = maxHealth;
-        }
-
-        healthText.text = "Health: " + currentHealth;
-    }
-    
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if(col.gameObject.tag.Equals("Enemy"))
-        {
-            takeDamage(10);
-        }
-    }
-    
     Vector2 GetInteractionDirection()
     {
         switch (lastDirection)
@@ -362,18 +326,15 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Test item used");
                 break;
             case Item.ItemType.Apple:
-                Debug.Log("Apple item used");
                 addHealth(10);
                 inventory.RemoveItem(item);
                 break;
             case Item.ItemType.Stick:
-                Debug.Log("Stick item used");
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.stickSprite;
                 transform.GetChild(0).GetComponent<AttackScript>().damage = 40;
                 Attack();
                 break;
             case Item.ItemType.Spear:
-                Debug.Log("Spear item used");
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
                 transform.GetChild(0).GetComponent<AttackScript>().damage = 60;
                 Attack();
@@ -416,6 +377,22 @@ public class PlayerController : MonoBehaviour
             inventoryUI.selectHotbarItem(hotbarItemIndex);
     }
 
+    public void TogglePauseMenu()
+    {
+        gamePaused = !gamePaused;
+        pauseMenu.SetActive(gamePaused);
+        rb2d.velocity = Vector2.zero;
+        Time.timeScale = gamePaused ? 0f : 1f;
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Enemy"))
+        {
+            takeDamage(10);
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         ItemWorld itemWorld = collision.gameObject.GetComponent<ItemWorld>();
@@ -425,13 +402,4 @@ public class PlayerController : MonoBehaviour
             Destroy(itemWorld.gameObject);
         }
     }
-
-    public void resume() {
-        gamePaused = !gamePaused;
-        pauseMenu.SetActive(gamePaused);
-        rb2d.velocity = Vector2.zero;
-        Time.timeScale = gamePaused ? 0f : 1f;
-    }
 }
-
-
