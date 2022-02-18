@@ -28210,6 +28210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac72a172686b844c38f7532b15a5b6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &485008770
 GameObject:
   m_ObjectHideFlags: 0
@@ -38515,7 +38516,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1967703339
 GameObject:
@@ -38777,6 +38778,11 @@ PrefabInstance:
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: itemPlacementHitbox
+      value: 
+      objectReference: {fileID: 303969647}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: itemPlacementTrigger
       value: 
       objectReference: {fileID: 303969647}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
