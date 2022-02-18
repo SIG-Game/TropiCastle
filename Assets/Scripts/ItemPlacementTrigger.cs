@@ -2,7 +2,7 @@
 
 public class ItemPlacementTrigger : MonoBehaviour
 {
-    public bool canPlace = false;
+    public bool canPlace = true;
 
     void Update()
     {
