@@ -21,12 +21,13 @@ public class enemyScript : MonoBehaviour
     public float speed = 5f;
     private Vector2 movement;
 
-
+    private Vector3 playerColliderOffset;
     Rigidbody2D rb2d;
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        playerColliderOffset = player.GetComponent<BoxCollider2D>().offset;
         currentHealth = maxHealth;
         state = State.Chilling;
         //StartCoroutine("Wait");
@@ -35,7 +36,7 @@ public class enemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = player.position - transform.position;
+        Vector3 direction = player.transform.position + playerColliderOffset - transform.position;
         direction.Normalize();
         movement = direction;
     }
