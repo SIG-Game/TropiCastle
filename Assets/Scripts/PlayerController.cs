@@ -185,6 +185,29 @@ public class PlayerController : MonoBehaviour
                     hit.transform.gameObject.GetComponent<Interactable>().Interact();
                 }
             }
+
+            if (Input.GetButtonDown("Pick Up") && !gamePaused)
+            {
+                // TODO: Use method for casting a box from player
+                Vector2 interactionDirection = GetInteractionDirection();
+
+                Vector3 raycastOrigin = transform.position;
+                raycastOrigin.x += boxCollider.offset.x;
+                raycastOrigin.y += boxCollider.offset.y;
+
+                RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
+                    boxCollider.size, 0f, interactionDirection, 0.15f, interactableMask);
+
+                if (hit.collider != null && hit.collider.GetComponent<ItemWorld>() != null &&
+                    !inventory.IsFull())
+                {
+                    ItemWorld itemWorld = hit.collider.GetComponent<ItemWorld>();
+                    if (itemWorld.spawnedFromSpawner)
+                        itemWorld.spawner.isSpawned = false;
+                    inventory.AddItem(itemWorld.itemType, itemWorld.amount);
+                    Destroy(hit.collider.gameObject);
+                }
+            }
         }
 
         if (Input.GetButtonDown("Inventory") && !gamePaused)
@@ -390,16 +413,6 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.CompareTag("Enemy"))
         {
             takeDamage(10);
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        ItemWorld itemWorld = collision.gameObject.GetComponent<ItemWorld>();
-        if (itemWorld != null && !inventory.IsFull())
-        {
-            inventory.AddItem(itemWorld.itemType, itemWorld.amount);
-            Destroy(itemWorld.gameObject);
         }
     }
 }

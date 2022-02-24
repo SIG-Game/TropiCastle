@@ -644,6 +644,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178494774}
   m_CullTransparentMesh: 0
+--- !u!1 &198128349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5288355818519944996, guid: 055035cc7ee7c8646858260629418a55,
+    type: 3}
+  m_PrefabInstance: {fileID: 1982112580}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &229394383
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,12 +919,12 @@ PrefabInstance:
     - target: {fileID: 4933700376374035560, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.125
+      value: 0.5625
       objectReference: {fileID: 0}
     - target: {fileID: 4933700376374035560, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1.125
+      value: 0.5625
       objectReference: {fileID: 0}
     - target: {fileID: 7351427230836907019, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
@@ -25823,7 +25829,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1982112580}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 198128349}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8534eeeaa4c8abc4ca8b2eaf577070c9, type: 3}
@@ -27685,12 +27691,12 @@ PrefabInstance:
     - target: {fileID: 4933700376374035560, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1
+      value: 0.3125
       objectReference: {fileID: 0}
     - target: {fileID: 4933700376374035560, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1
+      value: 0.3125
       objectReference: {fileID: 0}
     - target: {fileID: 7351427230836907019, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
@@ -35240,8 +35246,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawned: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797, type: 3}
-  spawnTimer: 2
+  player: {fileID: 198128349}
   spawnDelay: 4
+  isSpawned: 0
 --- !u!4 &1936533780
 Transform:
   m_ObjectHideFlags: 0
