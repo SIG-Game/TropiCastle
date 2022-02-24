@@ -11,16 +11,6 @@ public class ItemInteractable : Interactable
 
     public override void Interact()
     {
-        Inventory playerInventory = player.GetInventory();
-
-        if (!playerInventory.IsFull())
-        {
-            ItemWorld itemWorld = GetComponent<ItemWorld>();
-            if (itemWorld.spawnedFromSpawner) {
-                itemWorld.spawner.isSpawned = false;
-            }
-            player.GetInventory().AddItem(itemWorld.itemType, itemWorld.amount);
-            Destroy(gameObject);
-        }
+        Debug.Log("Item interaction");
     }
 }
