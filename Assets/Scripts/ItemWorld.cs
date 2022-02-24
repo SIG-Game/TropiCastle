@@ -30,6 +30,8 @@ public class ItemWorld : MonoBehaviour
     public Item.ItemType itemType;
     public int amount;
     private SpriteRenderer spriteRenderer;
+    public bool spawnedFromSpawner;
+    public ItemSpawner spawner;
 
     private void Awake()
     {

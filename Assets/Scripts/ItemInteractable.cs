@@ -16,6 +16,9 @@ public class ItemInteractable : Interactable
         if (!playerInventory.IsFull())
         {
             ItemWorld itemWorld = GetComponent<ItemWorld>();
+            if (itemWorld.spawnedFromSpawner) {
+                itemWorld.spawner.isSpawned = false;
+            }
             player.GetInventory().AddItem(itemWorld.itemType, itemWorld.amount);
             Destroy(gameObject);
         }

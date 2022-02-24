@@ -5,22 +5,28 @@ using UnityEngine;
 public class ItemSpawner : MonoBehaviour
 {
     public GameObject spawned;
-    public float spawnTimer;
+    public GameObject player;
     public float spawnDelay;
-    private bool isSpawned = false;
+    public bool isSpawned = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("spawnObject", spawnTimer, spawnDelay);
+        InvokeRepeating("spawnObject", 0, spawnDelay);
     }
 
     public void spawnObject() {
-        //if (!isSpawned) {
-            Instantiate(spawned, transform.position, transform.rotation);
-            //isSpawned = !isSpawned;
-        //}
+        if (!isSpawned) {
+            GameObject itemSpawned = Instantiate(spawned, transform.position, transform.rotation);
+            isSpawned = true;
+            ItemWorld iwtest = itemSpawned.GetComponent<ItemWorld>();
+            iwtest.spawnedFromSpawner = true;
+            iwtest.spawner = this;
+            Debug.Log("spawned");
+        }
+
+        
     }
 
     // Update is called once per frame
