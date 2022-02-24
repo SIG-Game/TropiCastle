@@ -8,6 +8,10 @@ public class ItemSpawner : MonoBehaviour
     public GameObject player;
     public float spawnDelay;
     public bool isSpawned = false;
+    private float minX = -6f;
+    private float maxX = 6f;
+    private float minY = -2f;
+    private float maxY = 4f;
 
 
     // Start is called before the first frame update
@@ -18,7 +22,8 @@ public class ItemSpawner : MonoBehaviour
 
     public void spawnObject() {
         if (!isSpawned) {
-            GameObject itemSpawned = Instantiate(spawned, transform.position, transform.rotation);
+            Vector2 spawnLocation = new Vector2(Random.Range(minX,maxX), Random.Range(minY,maxY));
+            GameObject itemSpawned = Instantiate(spawned, spawnLocation, transform.rotation);
             isSpawned = true;
             ItemWorld iwtest = itemSpawned.GetComponent<ItemWorld>();
             iwtest.spawnedFromSpawner = true;
