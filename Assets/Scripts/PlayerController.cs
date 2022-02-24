@@ -392,14 +392,4 @@ public class PlayerController : MonoBehaviour
             takeDamage(10);
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        ItemWorld itemWorld = collision.gameObject.GetComponent<ItemWorld>();
-        if (itemWorld != null && !inventory.IsFull())
-        {
-            inventory.AddItem(itemWorld.itemType, itemWorld.amount);
-            Destroy(itemWorld.gameObject);
-        }
-    }
 }
