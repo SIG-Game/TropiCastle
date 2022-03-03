@@ -253,6 +253,16 @@ public class PlayerController : MonoBehaviour
         {
             inventory.AddItem(Item.ItemType.Vine, 1);
         }
+        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            inventory.AddItem(Item.ItemType.RawCrabMeat, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Comma))
+        {
+            inventory.AddItem(Item.ItemType.Campfire, 1);
+        }
     }
 
     private void FixedUpdate()
