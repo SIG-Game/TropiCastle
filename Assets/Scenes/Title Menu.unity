@@ -1579,6 +1579,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658374888}
   m_CullTransparentMesh: 0
+--- !u!95 &1725670923 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1294731513903538971, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1307662135766534335}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1949939044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,6 +1658,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 341434024216798660, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
+        type: 3}
+      propertyPath: transition
+      value: 
+      objectReference: {fileID: 1725670923}
     - target: {fileID: 1307662136271873102, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
         type: 3}
       propertyPath: m_SortingOrder
@@ -1717,6 +1728,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1307662136271873107, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1307662136342594330, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
         type: 3}
       propertyPath: m_RootOrder
@@ -1776,6 +1792,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LevelLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 1462800338600859575, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4eb148e5584ed34fb3e97a2fbccabf5, type: 3}
