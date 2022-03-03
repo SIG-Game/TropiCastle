@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ItemWorld : MonoBehaviour
+public class ItemWorld : Interactable
 {
     public static ItemWorld SpawnItemWorld(Vector3 position, Item.ItemType itemType, int amount)
     {
@@ -29,13 +29,21 @@ public class ItemWorld : MonoBehaviour
 
     public Item.ItemType itemType;
     public int amount;
-    private SpriteRenderer spriteRenderer;
     public bool spawnedFromSpawner;
     public ItemSpawner spawner;
+
+    private PlayerController player;
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = Item.GetSprite(itemType);
+        player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+    }
+
+    public override void Interact()
+    {
+        Debug.Log("Item interaction with item of type " + itemType);
     }
 }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4933700376374035560}
   - component: {fileID: -8934984620355027408}
   - component: {fileID: -7168290413977722179}
-  - component: {fileID: 419442172996288578}
   m_Layer: 8
   m_Name: ItemWorld
   m_TagString: Untagged
@@ -146,15 +145,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   amount: 1
---- !u!114 &419442172996288578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 60412012990745525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85db291ab1a2da543a90e4485c4af846, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  spawnedFromSpawner: 0
+  spawner: {fileID: 0}
