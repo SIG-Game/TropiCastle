@@ -11,7 +11,7 @@ public class LevelLoaderScript : MonoBehaviour
     // Update is called once per frame
     public void makeTransition()
     {
-       StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
     IEnumerator LoadLevel(int levelIndex)
