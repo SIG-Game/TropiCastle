@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     public bool canInteract = true;
     public bool gamePaused = false;
 
+    public GameObject canvas;
+    public GameObject Hook;
+    public GameObject fish;
+
     public ItemPlacementTrigger itemPlacementTrigger;
 
     public Sprite front, back, left, right;
@@ -262,6 +266,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Comma))
         {
             inventory.AddItem(Item.ItemType.Campfire, 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.G)) 
+        {
+            if (!canvas.activeSelf){
+                fish.GetComponent<RectTransform>().anchoredPosition = new Vector3(180,0,0);
+                canvas.SetActive(true);
+            }
+            
         }
     }
 
