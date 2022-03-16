@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G)) 
         {
             if (!canvas.activeSelf){
-                fish.GetComponent<RectTransform>().anchoredPosition = new Vector3(180,0,0);
+                fish.GetComponent<RectTransform>().anchoredPosition = new Vector3(Random.Range(-190,190),0,0);
                 canvas.SetActive(true);
             }
             
