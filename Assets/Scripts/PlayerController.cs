@@ -437,5 +437,16 @@ public class PlayerController : MonoBehaviour
         {
             takeDamage(10);
         }
+        if (col.gameObject.CompareTag("Water")) 
+        {
+            movementSpeed *= 0.5f;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col) 
+    {
+        if (col.gameObject.CompareTag("Water")) {
+            movementSpeed *= 2f;
+        }
     }
 }
