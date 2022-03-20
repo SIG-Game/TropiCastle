@@ -5,9 +5,8 @@ using UnityEngine.EventSystems;
 public class CraftingButton : MonoBehaviour, IPointerClickHandler
 {
     public Crafting crafting;
-    public List<Item.ItemType> ingredients;
-    public Item.ItemType resultItemType;
-    public int resultAmount;
+    public List<Item> ingredients;
+    public Item resultItem;
 
     public List<Item> testList;
 
@@ -16,7 +15,7 @@ public class CraftingButton : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            crafting.CraftItem(ingredients, testList, resultItemType, resultAmount);
+            crafting.CraftItem(ingredients, resultItem);
         }
     }
 }

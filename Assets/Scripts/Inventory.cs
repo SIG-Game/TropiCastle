@@ -89,6 +89,32 @@ public class Inventory
         ChangedItemAt?.Invoke(itemIndex);
     }
 
+    public void RemoveItem(int index, int amount)
+    {
+        Item item = itemList[index];
+
+        if (item.itemType == Item.ItemType.Empty)
+            return;
+
+        if (amount < item.amount)
+        {
+            item.amount -= amount;
+        }
+        else if (amount == item.amount)
+        {
+            item.itemType = Item.ItemType.Empty;
+
+            if (index < firstEmptyIndex || IsFull())
+                firstEmptyIndex = index;
+        }
+        else
+        {
+            Debug.LogError("Attempting to remove too many items");
+        }
+
+        ChangedItemAt?.Invoke(index);
+    }
+
     public void UseItem(Item item)
     {
         useItemAction(item);

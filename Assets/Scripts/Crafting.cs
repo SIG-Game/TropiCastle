@@ -5,46 +5,59 @@ public class Crafting : MonoBehaviour
 {
     private Inventory inventory;
 
-    public void CraftItem(List<Item.ItemType> ingredients, List<Item> testList, Item.ItemType resultItemType, int resultAmount)
+    public void CraftItem(List<Item> ingredients, Item resultItem)
     {
         List<Item> itemList = inventory.GetItemList();
 
         // Add items to remove to a list so that items aren't removed when crafting fails
-        List<Item> itemsUsed = new List<Item>();
+        // Slot, amount
+        List<(int, int)> itemsUsed = new List<(int, int)>();
 
-        foreach (Item curItem in testList)
+        for (int i = 0; i < ingredients.Count; ++i)
         {
-           // Debug.Log("Finding ingredient " + curItem.itemType);
-        }
+            Item ingredient = ingredients[i];
 
+            Debug.Log("Finding ingredient " + ingredient.itemType);
 
+            int usedCount = 0;
 
+            IEnumerable<Item> itemsWithIngredientType = itemList.FindAll(x => x.itemType == ingredient.itemType);
 
-
-        // This approach must change when inventory item stacking is added
-        foreach (Item.ItemType ingredient in ingredients) {
-            Debug.Log("Finding ingredient " + ingredient);
-
-            Item ingredientItem = itemList.Find(x => x.itemType == ingredient && !itemsUsed.Contains(x));
-
-            if (ingredientItem == null)
+            foreach (Item item in itemsWithIngredientType)
             {
-                Debug.Log("Ingredient " + ingredient + " not found");
-                return;
+                if (item.amount < ingredient.amount - usedCount)
+                {
+                    // Current stack is not large enough for current ingredient
+                    itemsUsed.Add((itemList.IndexOf(item), item.amount));
+                    Debug.Log("Using " + item.amount + " " + item.itemType + " from slot " + itemList.IndexOf(item));
+                    
+                    usedCount += item.amount;
+                }
+                else
+                {
+                    // Current stack is large enough for current ingredient
+                    itemsUsed.Add((itemList.IndexOf(item), ingredient.amount - usedCount));
+                    Debug.Log("Using " + (ingredient.amount - usedCount) + " " + item.itemType + " from slot " + itemList.IndexOf(item));
+
+                    usedCount = ingredient.amount;
+                    break;
+                }
             }
 
-            Debug.Log("Found ingredient " + ingredient);
-
-            itemsUsed.Add(ingredientItem);
+            if (usedCount != ingredient.amount)
+            {
+                Debug.Log("Amount " + ingredient.amount + " of ingredient " + ingredient.itemType + " not found");
+                return;
+            }
         }
 
-        foreach (Item item in itemsUsed)
+        foreach ((int slot, int amount) in itemsUsed)
         {
-            Debug.Log("Used " + item.itemType);
-            inventory.RemoveItem(item);
+            Debug.Log("Removing " + amount + " " + itemList[slot].itemType + " from slot " + slot);
+            inventory.RemoveItem(slot, amount);
         }
 
-        inventory.AddItem(resultItemType, resultAmount);
+        inventory.AddItem(resultItem.itemType, resultItem.amount);
     }
 
     public void SetInventory(Inventory inventory)
