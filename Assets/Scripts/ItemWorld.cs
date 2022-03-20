@@ -39,11 +39,22 @@ public class ItemWorld : Interactable
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = Item.GetSprite(itemType);
-        player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+        player = GameObject.FindObjectsOfType<PlayerController>()[0];
     }
 
     public override void Interact()
     {
         Debug.Log("Item interaction with item of type " + itemType);
+
+        if (itemType == Item.ItemType.Campfire)
+        {
+            Item hotbarItem = player.GetHotbarItem();
+            if (hotbarItem.itemType == Item.ItemType.RawCrabMeat)
+            {
+                Inventory playerInventory = player.GetInventory();
+                playerInventory.RemoveItem(hotbarItem);
+                playerInventory.AddItem(Item.ItemType.CookedCrabMeat, 1);
+            }
+        }
     }
 }

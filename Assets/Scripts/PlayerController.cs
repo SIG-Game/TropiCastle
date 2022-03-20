@@ -423,6 +423,11 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = gamePaused ? 0f : 1f;
     }
 
+    public Item GetHotbarItem()
+    {
+        return inventory.GetItemList()[hotbarItemIndex];
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Enemy"))
