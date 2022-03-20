@@ -261,6 +261,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Comma))
         {
+            inventory.AddItem(Item.ItemType.CookedCrabMeat, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Period))
+        {
             inventory.AddItem(Item.ItemType.Campfire, 1);
         }
     }

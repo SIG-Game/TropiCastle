@@ -14,6 +14,7 @@ public class Item
         Rock,
         Vine,
         RawCrabMeat,
+        CookedCrabMeat,
         Campfire
     }
 
@@ -38,6 +39,8 @@ public class Item
                 return ItemAssets.Instance.vineSprite;
             case ItemType.RawCrabMeat:
                 return ItemAssets.Instance.rawCrabMeatSprite;
+            case ItemType.CookedCrabMeat:
+                return ItemAssets.Instance.cookedCrabMeatSprite;
             case ItemType.Campfire:
                 return ItemAssets.Instance.campfireSprite;
         }

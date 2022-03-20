@@ -19,5 +19,6 @@ public class ItemAssets : MonoBehaviour
     public Sprite rockSprite;
     public Sprite vineSprite;
     public Sprite rawCrabMeatSprite;
+    public Sprite cookedCrabMeatSprite;
     public Sprite campfireSprite;
 }
