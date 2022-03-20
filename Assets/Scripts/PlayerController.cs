@@ -376,13 +376,21 @@ public class PlayerController : MonoBehaviour
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
                 transform.GetChild(0).GetComponent<AttackScript>().damage = 60;
                 Attack();
-                return;
+                break;
             case Item.ItemType.Rock:
                 Debug.Log("Rock item used");
-                return;
+                break;
             case Item.ItemType.Vine:
                 Debug.Log("Vine item used");
-                return;
+                break;
+            case Item.ItemType.RawCrabMeat:
+                addHealth(10);
+                inventory.RemoveItem(item);
+                break;
+            case Item.ItemType.CookedCrabMeat:
+                addHealth(20);
+                inventory.RemoveItem(item);
+                break;
         }
     }
 
