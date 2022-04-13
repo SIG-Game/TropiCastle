@@ -35689,10 +35689,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
+      propertyPath: Hook
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
       propertyPath: back
       value: 
       objectReference: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee,
         type: 3}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: fish
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: left
@@ -35716,6 +35726,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee,
         type: 3}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: hitbox
@@ -35742,6 +35757,11 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 1723173256}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: fishingGame
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: inventoryUI

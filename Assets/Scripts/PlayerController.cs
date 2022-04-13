@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
     public bool canInteract = true;
     public bool gamePaused = false;
 
+    public GameObject canvas;
+    public GameObject Hook;
+    public GameObject fish;
+    public FishingMinigame fishingGame;
+
     public ItemPlacementTrigger itemPlacementTrigger;
 
     public Sprite front, back, left, right;
@@ -267,6 +272,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Period))
         {
             inventory.AddItem(Item.ItemType.Campfire, 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.G)) 
+        {
+            fishingGame.startFishing();
         }
     }
 
