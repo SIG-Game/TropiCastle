@@ -27297,6 +27297,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FishingUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1938744877069393186, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1938744877069393190, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: m_Pivot.x
