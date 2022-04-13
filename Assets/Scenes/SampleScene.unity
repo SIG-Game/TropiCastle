@@ -1448,6 +1448,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 435181085}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &371676216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371676210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ace264946f631d4d8cb3297cd582735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 371676210}
+  Hook: {fileID: 394374863}
+  fish: {fileID: 1655400118}
+  data:
+  - {fileID: 11400000, guid: 65eec1151e5681e43b5c33b29614c867, type: 2}
+  - {fileID: 11400000, guid: c0c10e33d5061a1478d9fc7b51a5fd02, type: 2}
+  - {fileID: 11400000, guid: 1c830ace39ca92c4795df2d10d2daae5, type: 2}
 --- !u!1 &385991229
 GameObject:
   m_ObjectHideFlags: 0
@@ -17123,11 +17142,42 @@ PrefabInstance:
       propertyPath: fish
       value: 
       objectReference: {fileID: 1655400118}
+    - target: {fileID: 6382510168239480045, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382510169126804912, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c830ace39ca92c4795df2d10d2daae5,
+        type: 2}
     - target: {fileID: 6382510169126804912, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: fish
       value: 
       objectReference: {fileID: 1655400118}
+    - target: {fileID: 6382510169126804912, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382510169360717432, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382510169360717432, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382510169360717432, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6382510168206772655, guid: 6eec2d617ac261b42855edf00e17c077, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6eec2d617ac261b42855edf00e17c077, type: 3}
@@ -35830,6 +35880,11 @@ PrefabInstance:
       objectReference: {fileID: 1723173256}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
+      propertyPath: fishingGame
+      value: 
+      objectReference: {fileID: 371676216}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 1731795749}
@@ -36772,5 +36827,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestFish
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1588740537753114462, guid: b0c954508f340ea44857d339ec575259, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b0c954508f340ea44857d339ec575259, type: 3}

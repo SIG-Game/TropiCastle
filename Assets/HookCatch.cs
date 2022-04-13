@@ -4,24 +4,36 @@ using UnityEngine;
 
 public class HookCatch : MonoBehaviour
 {
-    public GameObject canvas;
-    public GameObject fish;
+    // ScriptableFish[] fishInfo = FishingMinigame.GetComponent<ScriptableFish>;
+    // public GameObject canvas;
+    // public GameObject fish;
+    // public ScriptableFish data;
+    public FishingMinigame FishingMinigame;
 
     bool canCatch = false;
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D fish)
     {
-        canCatch = true;
+        Debug.Log("entered");
+        FishingMinigame.canCatch = true;
     }
-    void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit2D(Collider2D fish)
     {
-        canCatch = false;
+        FishingMinigame.canCatch = false;
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && canCatch) {
-            DialogueBox.Instance.PlayDialogue(new List<string>{fish.GetComponent<FishController>().species + "\n" + fish.GetComponent<FishController>().Description});
-            Debug.Log("Fish Caught");
-            canvas.SetActive(false);
+        if (Input.GetMouseButtonDown(1) && canCatch)
+        {
+            // DialogueBox.Instance.PlayDialogue(new List<string> {fish.species + "\n" + fish.description });
+            // Debug.Log("Fish Caught");
+            // // DisplayInfo();
+            FishingMinigame.endFishing();
         }
+    }
+
+    void DisplayInfo(ScriptableFish fish)
+    {
+        DialogueBox.Instance.PlayDialogue(new List<string> {fish.species + "\n" + fish.description });
+            Debug.Log("Fish Caught");
     }
 }

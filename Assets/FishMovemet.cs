@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishMovemet : MonoBehaviour
+public class FishMovement : MonoBehaviour
 {
     public int Speed = 1;
     Direction _direction = Direction.left;

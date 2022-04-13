@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public GameObject canvas;
     public GameObject Hook;
     public GameObject fish;
+    public FishingMinigame fishingGame;
 
     public ItemPlacementTrigger itemPlacementTrigger;
 
@@ -270,11 +271,7 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.G)) 
         {
-            if (!canvas.activeSelf){
-                fish.GetComponent<RectTransform>().anchoredPosition = new Vector3(Random.Range(-190,190),0,0);
-                canvas.SetActive(true);
-            }
-            
+            fishingGame.startFishing();
         }
     }
 
