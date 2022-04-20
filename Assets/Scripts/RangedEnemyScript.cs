@@ -7,12 +7,12 @@ public class RangedEnemyScript : MonoBehaviour
     public Transform Player;
     public GameObject bullet;
 
-    private float shotCooldown;
+    //private float shotCooldown;
     public float startShotCD;
     // Start is called before the first frame update
     void Start()
     {
-        shotCooldown = startShotCD;
+        //shotCooldown = startShotCD;
     }
 
     // Update is called once per frame
@@ -21,6 +21,18 @@ public class RangedEnemyScript : MonoBehaviour
         Vector2 direction = new Vector2(Player.position.x - transform.position.x, Player.position.y - transform.position.y);
         transform.up = direction;
 
+        float targetRange = 6f;
+        if (Vector3.Distance(transform.position, Player.position) < targetRange)
+        {
+            if(Time.time > startShotCD)
+            {
+                Instantiate(bullet, transform.position, transform.rotation);
+                float fireRate = 2f;
+                startShotCD = Time.time + fireRate;
+            }
+        }
+
+        /*
         if(shotCooldown <= 0)
         {
             Instantiate(bullet, transform.position, transform.rotation);
@@ -29,5 +41,6 @@ public class RangedEnemyScript : MonoBehaviour
         {
             shotCooldown -= Time.deltaTime;
         }
+        */
     }
 }
