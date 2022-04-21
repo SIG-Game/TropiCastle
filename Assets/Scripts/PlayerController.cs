@@ -19,9 +19,6 @@ public class PlayerController : MonoBehaviour
     public bool canInteract = true;
     public bool gamePaused = false;
 
-    public GameObject canvas;
-    public GameObject Hook;
-    public GameObject fish;
     public FishingMinigame fishingGame;
 
     public ItemPlacementTrigger itemPlacementTrigger;
@@ -271,7 +268,8 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.G)) 
         {
-            fishingGame.startFishing();
+            inventory.AddItem(Item.ItemType.FishingRod,1);
+            // fishingGame.startFishing();
         }
     }
 
@@ -387,6 +385,10 @@ public class PlayerController : MonoBehaviour
                 return;
             case Item.ItemType.Vine:
                 Debug.Log("Vine item used");
+                return;
+            case Item.ItemType.FishingRod:
+                Debug.Log("Fishing Rod used");
+                fishingGame.startFishing();
                 return;
         }
     }
