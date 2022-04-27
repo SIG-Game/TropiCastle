@@ -16,4 +16,4 @@ MonoBehaviour:
   description: Not made of gold...
   image: {fileID: 0}
   size: 2
-  speed: 6
+  speed: 10

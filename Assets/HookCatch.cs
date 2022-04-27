@@ -13,7 +13,7 @@ public class HookCatch : MonoBehaviour
     bool canCatch = false;
     void OnTriggerEnter2D(Collider2D fish)
     {
-        Debug.Log("entered");
+        // Debug.Log("entered");
         FishingMinigame.canCatch = true;
     }
     void OnTriggerExit2D(Collider2D fish)

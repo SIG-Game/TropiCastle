@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: Test
   description: This fish is a test.
-  image: {fileID: 21300000, guid: 773a04f1a7844b3499b852055b99f01c, type: 3}
+  image: {fileID: 21300000, guid: 3588baae45eac094db4e3b624b0891b3, type: 3}
   size: 1
-  speed: 5
+  speed: 8
