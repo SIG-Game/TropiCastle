@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public Crafting crafting;
     public TextMeshProUGUI healthText;
     public GameObject pauseMenu;
+    public GameObject gameOverUI;
     public int maxHealth = 100;
     public int currentHealth;
     public bool isAttacking = false;
@@ -24,7 +25,8 @@ public class PlayerController : MonoBehaviour
     public ItemPlacementTrigger itemPlacementTrigger;
 
     public Sprite front, back, left, right;
-    
+
+    private bool canPause = true;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Rigidbody2D rb2d;
@@ -63,7 +65,7 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetButtonDown("Pause") && !inventoryOpen) {
+        if (Input.GetButtonDown("Pause") && !inventoryOpen && canPause) {
             TogglePauseMenu();
         }
 
@@ -307,6 +309,14 @@ public class PlayerController : MonoBehaviour
         }
 
         healthText.text = "Health: " + currentHealth;
+
+        if (currentHealth == 0)
+        {
+            Time.timeScale = 0f;
+            canPause = false;
+            gamePaused = true;
+            gameOverUI.SetActive(true);
+        }
     }
 
     public void Attack() {
