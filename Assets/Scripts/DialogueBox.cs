@@ -33,13 +33,14 @@ public class DialogueBox : MonoBehaviour
         dialogueText.text = linesEnumerator.Current;
         dialogueBoxUI.SetActive(true);
         player.dialogueBoxOpen = true;
-        player.canInteract = false;
+        player.canUseDialogueInputs = false;
     }
 
     private void Update()
     {
         // Must run before PlayerController to prevent dialogue from immediately advancing
-        if (Input.GetButtonDown("Interact") && dialogueBoxUI.activeInHierarchy && !player.gamePaused)
+        if ((Input.GetButtonDown("Interact") || Input.GetMouseButtonDown(0)) &&
+            dialogueBoxUI.activeInHierarchy && !player.gamePaused)
         {
             if (linesEnumerator.MoveNext())
             {

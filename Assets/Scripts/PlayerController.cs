@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     public int currentHealth;
     public bool isAttacking = false;
     public bool dialogueBoxOpen = false;
-    public bool canInteract = true;
+    public bool canUseDialogueInputs = true;
     public bool gamePaused = false;
 
     public FishingMinigame fishingGame;
@@ -75,12 +75,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // Player must release interact key to interact again after dialogue box closes
-        // Needed because interact key is also used to advance dialogue
-        if (Input.GetButtonUp("Interact") && !dialogueBoxOpen && !canInteract && !gamePaused)
-        {
-            canInteract = true;
-        }
+        // Player must release next dialogue input to use that input
+        // again for other actions after dialogue box closes
+        if ((Input.GetButtonUp("Interact") || Input.GetMouseButtonUp(0)) &&
+            !dialogueBoxOpen && !canUseDialogueInputs)
+            canUseDialogueInputs = true;
 
         if (!gamePaused && !inventoryOpen)
         {
@@ -101,7 +100,7 @@ public class PlayerController : MonoBehaviour
                 velocity *= sprintSpeedMultiplier;
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && canUseDialogueInputs)
             {
                 List<Item> itemList = inventory.GetItemList();
 
@@ -170,7 +169,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Interact") && canInteract && !gamePaused)
+            if (Input.GetButtonDown("Interact") && canUseDialogueInputs && !gamePaused)
             {
                 Vector2 interactionDirection = GetInteractionDirection();
 
