@@ -27846,6 +27846,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1229704858602496884, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
+        type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1229704858602496884, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1307662134935725080, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1307662136342594330, guid: e4eb148e5584ed34fb3e97a2fbccabf5,
         type: 3}
       propertyPath: m_RootOrder

@@ -464,6 +464,10 @@ public class PlayerController : MonoBehaviour
         {
             takeDamage(10);
         }
+        if(col.gameObject.CompareTag("Bullet"))
+        {
+            takeDamage(10);
+        }
         if (col.gameObject.CompareTag("Water")) 
         {
             movementSpeed *= 0.5f;
