@@ -16,7 +16,8 @@ public class Item
         RawCrabMeat,
         CookedCrabMeat,
         Campfire,
-        FishingRod
+        FishingRod,
+        fish
     }
 
     public static Sprite GetSprite(ItemType itemType)
@@ -46,6 +47,9 @@ public class Item
                 return ItemAssets.Instance.campfireSprite;
             case ItemType.FishingRod:
                 return ItemAssets.Instance.fishingRodSprite;
+            case ItemType.fish:
+                return ItemAssets.Instance.fishSprite;
+                
         }
     }
 

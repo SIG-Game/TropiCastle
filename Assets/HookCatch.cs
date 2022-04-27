@@ -9,6 +9,7 @@ public class HookCatch : MonoBehaviour
     // public GameObject fish;
     // public ScriptableFish data;
     public FishingMinigame FishingMinigame;
+    public PlayerController playerController;
 
     bool canCatch = false;
     void OnTriggerEnter2D(Collider2D fish)
@@ -24,6 +25,7 @@ public class HookCatch : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && canCatch)
         {
+            playerController.GetInventory().AddItem(Item.ItemType.fish, 1);
             // DialogueBox.Instance.PlayDialogue(new List<string> {fish.species + "\n" + fish.description });
             // Debug.Log("Fish Caught");
             // // DisplayInfo();
