@@ -15,7 +15,6 @@ public class Item
         Vine,
         RawCrabMeat,
         CookedCrabMeat,
-        Campfire
         Campfire,
         FishingRod
     }

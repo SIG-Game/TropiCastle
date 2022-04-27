@@ -399,7 +399,6 @@ public class PlayerController : MonoBehaviour
                 addHealth(20);
                 inventory.RemoveItem(item);
                 break;
-                return;
             case Item.ItemType.FishingRod:
                 Debug.Log("Fishing Rod used");
                 fishingGame.startFishing();
