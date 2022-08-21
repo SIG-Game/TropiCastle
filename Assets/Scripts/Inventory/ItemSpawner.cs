@@ -28,7 +28,7 @@ public class ItemSpawner : MonoBehaviour
             itemWorldSpawned.spawnedFromSpawner = true;
             itemWorldSpawned.spawner = this;
 
-            Debug.Log($"Spawned item {itemWorldSpawned.item.info.name}");
+            Debug.Log($"Spawned item {itemWorldSpawned.item.itemData.name}");
         }
     }
 }

@@ -5,33 +5,33 @@ public class Crafting : MonoBehaviour
 {
     private Inventory inventory;
 
-    public void CraftItem(List<Item> ingredients, Item resultItem)
+    public void CraftItem(List<ItemWithAmount> ingredients, ItemWithAmount resultItem)
     {
-        List<Item> itemList = inventory.GetItemList();
+        List<ItemWithAmount> itemList = inventory.GetItemList();
 
         // Add items to remove to a list so that items aren't removed when crafting fails
-        List<Item> itemsUsed = new List<Item>();
+        List<ItemWithAmount> itemsUsed = new List<ItemWithAmount>();
 
         // This approach must change when inventory item stacking is added
-        foreach (Item ingredient in ingredients) {
-            Debug.Log("Finding ingredient " + ingredient.info.name);
+        foreach (ItemWithAmount ingredient in ingredients) {
+            Debug.Log("Finding ingredient " + ingredient.itemData.name);
 
-            Item ingredientItem = itemList.Find(x => x.info.name == ingredient.info.name && !itemsUsed.Contains(x));
+            ItemWithAmount ingredientItem = itemList.Find(x => x.itemData.name == ingredient.itemData.name && !itemsUsed.Contains(x));
 
             if (ingredientItem == null)
             {
-                Debug.Log("Ingredient " + ingredient.info.name + " not found");
+                Debug.Log("Ingredient " + ingredient.itemData.name + " not found");
                 return;
             }
 
-            Debug.Log("Found ingredient " + ingredient.info.name);
+            Debug.Log("Found ingredient " + ingredient.itemData.name);
 
             itemsUsed.Add(ingredientItem);
         }
 
-        foreach (Item item in itemsUsed)
+        foreach (ItemWithAmount item in itemsUsed)
         {
-            Debug.Log("Used " + item.info.name);
+            Debug.Log("Used " + item.itemData.name);
             inventory.RemoveItem(item);
         }
 

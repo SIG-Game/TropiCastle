@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && canUseDialogueInputs)
             {
-                List<Item> itemList = inventory.GetItemList();
+                List<ItemWithAmount> itemList = inventory.GetItemList();
 
                 UseItem(itemList[hotbarItemIndex]);
 
@@ -117,11 +117,11 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1) && itemPlacementTrigger.canPlace)
             {
-                List<Item> itemList = inventory.GetItemList();
+                List<ItemWithAmount> itemList = inventory.GetItemList();
 
-                Item item = itemList[hotbarItemIndex];
+                ItemWithAmount item = itemList[hotbarItemIndex];
 
-                if (item.info.name != "Empty")
+                if (item.itemData.name != "Empty")
                 {
                     Vector3 itemPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     // Lock item position to grid
@@ -330,9 +330,9 @@ public class PlayerController : MonoBehaviour
         return Vector2.zero;
     }
 
-    private void UseItem(Item item)
+    private void UseItem(ItemWithAmount item)
     {
-        switch (item.info.name)
+        switch (item.itemData.name)
         {
             case "Empty":
                 Debug.Log("Empty item used");
@@ -412,7 +412,7 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = gamePaused ? 0f : 1f;
     }
 
-    public Item GetHotbarItem()
+    public ItemWithAmount GetHotbarItem()
     {
         return inventory.GetItemList()[hotbarItemIndex];
     }

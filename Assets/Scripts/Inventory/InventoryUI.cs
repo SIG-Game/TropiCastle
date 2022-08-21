@@ -38,13 +38,13 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
 
     private void Inventory_ChangedItemAt(int index)
     {
-        List<Item> inventoryItemList = inventory.GetItemList();
-        Item item = inventoryItemList[index];
+        List<ItemWithAmount> inventoryItemList = inventory.GetItemList();
+        ItemWithAmount item = inventoryItemList[index];
 
         if (index < hotbarSize)
-            hotbarItemSlotContainer.GetChild(index).GetChild(0).GetComponent<Image>().sprite = item.info.sprite;
+            hotbarItemSlotContainer.GetChild(index).GetChild(0).GetComponent<Image>().sprite = item.itemData.sprite;
 
-        itemSlotContainer.GetChild(index).GetChild(0).GetComponent<Image>().sprite = item.info.sprite;
+        itemSlotContainer.GetChild(index).GetChild(0).GetComponent<Image>().sprite = item.itemData.sprite;
     }
 
     public void selectHotbarItem(int hotbarItemIndex)
@@ -62,7 +62,7 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
         if (results.Count > 0)
         {
             int clickedItemIndex = results[0].gameObject.transform.GetSiblingIndex();
-            Item clickedItem = inventory.GetItemList()[clickedItemIndex];
+            ItemWithAmount clickedItem = inventory.GetItemList()[clickedItemIndex];
 
             if (holdingItem)
             {
@@ -71,10 +71,10 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
                     // Put held item back
                     if (clickedItemIndex < hotbarSize)
                         hotbarItemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite =
-                            clickedItem.info.sprite;
+                            clickedItem.itemData.sprite;
 
                     itemSlotContainer.GetChild(clickedItemIndex).GetChild(0).GetComponent<Image>().sprite =
-                        clickedItem.info.sprite;
+                        clickedItem.itemData.sprite;
                 }
                 else
                 {
@@ -84,7 +84,7 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
                 heldItemImage.sprite = transparentSprite;
                 holdingItem = false;
             }
-            else if (clickedItem.info.name != "Empty")
+            else if (clickedItem.itemData.name != "Empty")
             {
                 // Hold clicked item
                 if (clickedItemIndex < hotbarSize)
@@ -95,7 +95,7 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
                     transparentSprite;
 
                 heldItemIndex = clickedItemIndex;
-                heldItemImage.sprite = clickedItem.info.sprite;
+                heldItemImage.sprite = clickedItem.itemData.sprite;
                 holdingItem = true;
             }
         }
@@ -105,12 +105,12 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
     {
         if (holdingItem)
         {
-            Item heldItem = inventory.GetItemList()[heldItemIndex];
+            ItemWithAmount heldItem = inventory.GetItemList()[heldItemIndex];
 
             if (heldItemIndex < hotbarSize)
-                hotbarItemSlotContainer.GetChild(heldItemIndex).GetChild(0).GetComponent<Image>().sprite = heldItem.info.sprite;
+                hotbarItemSlotContainer.GetChild(heldItemIndex).GetChild(0).GetComponent<Image>().sprite = heldItem.itemData.sprite;
 
-            itemSlotContainer.GetChild(heldItemIndex).GetChild(0).GetComponent<Image>().sprite = heldItem.info.sprite;
+            itemSlotContainer.GetChild(heldItemIndex).GetChild(0).GetComponent<Image>().sprite = heldItem.itemData.sprite;
 
             heldItemImage.sprite = transparentSprite;
 

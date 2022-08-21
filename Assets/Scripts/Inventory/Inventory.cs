@@ -6,27 +6,27 @@ public class Inventory
 {
     public Action<int> ChangedItemAt;
 
-    private List<Item> itemList;
-    private Action<Item> useItemAction;
+    private List<ItemWithAmount> itemList;
+    private Action<ItemWithAmount> useItemAction;
 
     // Every empty item slot points to this instance
-    private Item emptyItemInstance;
+    private ItemWithAmount emptyItemInstance;
 
     private int firstEmptyIndex;
 
     private const int inventorySize = 15;
 
-    public Inventory(Action<Item> useItemAction, ItemScriptableObject emptyItemInfo)
+    public Inventory(Action<ItemWithAmount> useItemAction, ItemScriptableObject emptyItemInfo)
     {
         this.useItemAction = useItemAction;
 
-        emptyItemInstance = new Item
+        emptyItemInstance = new ItemWithAmount
         {
             amount = 0,
-            info = emptyItemInfo
+            itemData = emptyItemInfo
         };
 
-        itemList = new List<Item>(inventorySize);
+        itemList = new List<ItemWithAmount>(inventorySize);
 
         for (int i = 0; i < inventorySize; ++i)
         {
@@ -38,40 +38,40 @@ public class Inventory
 
     public void AddItem(ItemScriptableObject info, int amount)
     {
-        Item newItem = new Item
+        ItemWithAmount newItem = new ItemWithAmount
         {
-            info = info,
+            itemData = info,
             amount = amount
         };
 
         AddItem(newItem);
     }
 
-    public void AddItem(Item newItem)
+    public void AddItem(ItemWithAmount newItem)
     {
         if (IsFull())
             return;
 
         itemList[firstEmptyIndex] = newItem;
         ChangedItemAt?.Invoke(firstEmptyIndex);
-        firstEmptyIndex = itemList.FindIndex(x => x.info.name == "Empty");
+        firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
 
     public void SwapItemsAt(int index1, int index2)
     {
-        Item temp = itemList[index1];
+        ItemWithAmount temp = itemList[index1];
         itemList[index1] = itemList[index2];
         itemList[index2] = temp;
 
         ChangedItemAt?.Invoke(index1);
         ChangedItemAt?.Invoke(index2);
 
-        firstEmptyIndex = itemList.FindIndex(x => x.info.name == "Empty");
+        firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
 
-    public void RemoveItem(Item item)
+    public void RemoveItem(ItemWithAmount item)
     {
-        if (item.info.name == "Empty")
+        if (item.itemData.name == "Empty")
             return;
 
         int itemIndex = itemList.IndexOf(item);
@@ -83,12 +83,12 @@ public class Inventory
         ChangedItemAt?.Invoke(itemIndex);
     }
 
-    public void UseItem(Item item)
+    public void UseItem(ItemWithAmount item)
     {
         useItemAction(item);
     }
 
-    public List<Item> GetItemList()
+    public List<ItemWithAmount> GetItemList()
     {
         return itemList;
     }

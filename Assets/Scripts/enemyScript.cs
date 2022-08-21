@@ -14,7 +14,7 @@ public class enemyScript : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
-    public List<Item> DroppedLoot;
+    public List<ItemWithAmount> DroppedLoot;
 
     public Transform player;
     public spawnEnemy spawner;
@@ -77,7 +77,7 @@ public class enemyScript : MonoBehaviour
 
             // TODO: This doesn't work properly for loot items with amount value > 1
             // This should be revisited if stackable items get added
-            foreach (Item loot in DroppedLoot)
+            foreach (ItemWithAmount loot in DroppedLoot)
             {
                 ItemWorld.DropItem(itemWorldPrefab, transform.position, loot);
             }

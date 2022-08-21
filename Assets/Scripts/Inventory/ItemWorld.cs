@@ -2,18 +2,18 @@
 
 public class ItemWorld : Interactable
 {
-    public static void SpawnItemWorld(GameObject itemWorldPrefab, Vector3 position, Item itemToSpawn)
+    public static void SpawnItemWorld(GameObject itemWorldPrefab, Vector3 position, ItemWithAmount itemToSpawn)
     {
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity);
 
         ItemWorld itemWorld = spawnedGameObject.GetComponent<ItemWorld>();
         itemWorld.item = itemToSpawn;
-        itemWorld.spriteRenderer.sprite = itemToSpawn.info.sprite;
+        itemWorld.spriteRenderer.sprite = itemToSpawn.itemData.sprite;
     }
 
-    public static void DropItem(GameObject itemWorldPrefab, Vector3 dropPosition, Item itemToDrop)
+    public static void DropItem(GameObject itemWorldPrefab, Vector3 dropPosition, ItemWithAmount itemToDrop)
     {
-        if (itemToDrop.info.name == "Empty")
+        if (itemToDrop.itemData.name == "Empty")
             return;
 
         Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
@@ -26,7 +26,7 @@ public class ItemWorld : Interactable
         //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
     }
 
-    public Item item;
+    public ItemWithAmount item;
     public bool spawnedFromSpawner;
     public ItemSpawner spawner;
 
@@ -37,19 +37,19 @@ public class ItemWorld : Interactable
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = item.info.sprite;
+        spriteRenderer.sprite = item.itemData.sprite;
         player = FindObjectsOfType<PlayerController>()[0];
         cookedCrabScriptableObject = Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat");
     }
 
     public override void Interact()
     {
-        Debug.Log("Item interaction with item named " + item.info.name);
+        Debug.Log("Item interaction with item named " + item.itemData.name);
 
-        if (item.info.name == "Campfire")
+        if (item.itemData.name == "Campfire")
         {
-            Item hotbarItem = player.GetHotbarItem();
-            if (hotbarItem.info.name == "RawCrabMeat")
+            ItemWithAmount hotbarItem = player.GetHotbarItem();
+            if (hotbarItem.itemData.name == "RawCrabMeat")
             {
                 Inventory playerInventory = player.GetInventory();
                 playerInventory.RemoveItem(hotbarItem);

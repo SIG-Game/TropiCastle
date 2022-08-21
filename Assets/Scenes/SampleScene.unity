@@ -1181,6 +1181,12 @@ PrefabInstance:
       propertyPath: item.amount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7168290413977722179, guid: 431e7be619be686458842aa83a2c8797,
+        type: 3}
+      propertyPath: item.itemData
+      value: 
+      objectReference: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649,
+        type: 2}
     - target: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
       propertyPath: m_Name
@@ -19787,18 +19793,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crafting: {fileID: 2003006741}
   ingredients:
-  - info: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
     amount: 1
-  - info: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
     amount: 1
-  - info: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
     amount: 1
-  - info: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
+  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
     amount: 1
-  - info: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
+  - itemData: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
     amount: 1
   resultItem:
-    info: {fileID: 11400000, guid: 3f1a9772cbbbdc84ba12bdeddd4d8074, type: 2}
+    itemData: {fileID: 11400000, guid: 3f1a9772cbbbdc84ba12bdeddd4d8074, type: 2}
     amount: 1
 --- !u!114 &700490300
 MonoBehaviour:
@@ -31060,6 +31066,12 @@ PrefabInstance:
       propertyPath: item.amount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7168290413977722179, guid: 431e7be619be686458842aa83a2c8797,
+        type: 3}
+      propertyPath: item.itemData
+      value: 
+      objectReference: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303,
+        type: 2}
     - target: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
       propertyPath: m_Name
@@ -38730,6 +38742,12 @@ PrefabInstance:
       propertyPath: item.amount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7168290413977722179, guid: 431e7be619be686458842aa83a2c8797,
+        type: 3}
+      propertyPath: item.itemData
+      value: 
+      objectReference: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101,
+        type: 2}
     - target: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
         type: 3}
       propertyPath: m_Name
@@ -38846,16 +38864,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crafting: {fileID: 2003006741}
   ingredients:
-  - info: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
+  - itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
     amount: 1
-  - info: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
+  - itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
     amount: 1
-  - info: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
+  - itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
     amount: 1
-  - info: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
+  - itemData: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
     amount: 1
   resultItem:
-    info: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+    itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
     amount: 1
 --- !u!114 &1816024738
 MonoBehaviour:
