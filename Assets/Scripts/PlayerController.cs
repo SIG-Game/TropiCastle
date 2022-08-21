@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     public float movementSpeed;
     public float sprintSpeedMultiplier;
+    public ItemScriptableObject emptyItemInfo;
     public InventoryUI inventoryUI;
     public Crafting crafting;
     public TextMeshProUGUI healthText;
@@ -25,6 +26,9 @@ public class PlayerController : MonoBehaviour
     public ItemPlacementTrigger itemPlacementTrigger;
 
     public Sprite front, back, left, right;
+
+    // TODO: This could be moved to a singleton
+    public GameObject itemWorldPrefab;
 
     private bool canPause = true;
     private SpriteRenderer spriteRenderer;
@@ -49,13 +53,10 @@ public class PlayerController : MonoBehaviour
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
-        inventory = new Inventory(UseItem);
+        inventory = new Inventory(UseItem, emptyItemInfo);
         inventoryUI.SetInventory(inventory);
         inventoryUI.selectHotbarItem(hotbarItemIndex);
         crafting.SetInventory(inventory);
-
-        // TODO: Remove (This line is for testing)
-        ItemWorld.SpawnItemWorld(new Vector3(5f, 2.5f), Item.ItemType.Apple, 1);
 
         currentHealth = maxHealth;
         healthText.text = "Health: " + currentHealth;
@@ -120,14 +121,15 @@ public class PlayerController : MonoBehaviour
 
                 Item item = itemList[hotbarItemIndex];
 
-                if (item.itemType != Item.ItemType.Empty)
+                if (item.info.name != "Empty")
                 {
                     Vector3 itemPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     // Lock item position to grid
                     //itemPosition.x = (Mathf.Round(2f * itemPosition.x - 0.5f) / 2f) + 0.25f;
                     //itemPosition.y = (Mathf.Round(2f * itemPosition.y - 0.5f) / 2f) + 0.25f;
                     itemPosition.z = 0f;
-                    ItemWorld.SpawnItemWorld(itemPosition, item.itemType, item.amount);
+
+                    ItemWorld.SpawnItemWorld(itemWorldPrefab, itemPosition, item);
                     inventory.RemoveItem(item);
                 }
             }
@@ -189,9 +191,9 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+            // TODO: Use mouse for picking up items
             if (Input.GetButtonDown("Pick Up") && !gamePaused)
             {
-                // TODO: Use method for casting a box from player
                 Vector2 interactionDirection = GetInteractionDirection();
 
                 Vector3 raycastOrigin = transform.position;
@@ -207,7 +209,7 @@ public class PlayerController : MonoBehaviour
                     ItemWorld itemWorld = hit.collider.GetComponent<ItemWorld>();
                     if (itemWorld.spawnedFromSpawner)
                         itemWorld.spawner.isSpawned = false;
-                    inventory.AddItem(itemWorld.itemType, itemWorld.amount);
+                    inventory.AddItem(itemWorld.item);
                     Destroy(hit.collider.gameObject);
                 }
             }
@@ -226,56 +228,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Add items for testing
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            inventory.AddItem(Item.ItemType.Test, 1);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            inventory.AddItem(Item.ItemType.Apple, 1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            inventory.AddItem(Item.ItemType.Stick, 1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            inventory.AddItem(Item.ItemType.Spear, 1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            inventory.AddItem(Item.ItemType.Rock, 1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            inventory.AddItem(Item.ItemType.Vine, 1);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            inventory.AddItem(Item.ItemType.RawCrabMeat, 1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Comma))
-        {
-            inventory.AddItem(Item.ItemType.CookedCrabMeat, 1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Period))
-        {
-            inventory.AddItem(Item.ItemType.Campfire, 1);
-        }
-        
+        // Debug input for fishing
         if (Input.GetKeyDown(KeyCode.G)) 
         {
-            inventory.AddItem(Item.ItemType.FishingRod,1);
-            // fishingGame.startFishing();
+            // TODO: Resources.Load calls should maybe use Addressables instead
+            ItemScriptableObject fishingRodScriptableObject = Resources.Load<ItemScriptableObject>("Items/FishingRod");
+
+            inventory.AddItem(fishingRodScriptableObject, 1);
+            fishingGame.startFishing();
         }
     }
 
@@ -372,43 +332,43 @@ public class PlayerController : MonoBehaviour
 
     private void UseItem(Item item)
     {
-        switch (item.itemType)
+        switch (item.info.name)
         {
-            case Item.ItemType.Empty:
+            case "Empty":
                 Debug.Log("Empty item used");
                 break;
-            case Item.ItemType.Test:
+            case "Test":
                 Debug.Log("Test item used");
                 break;
-            case Item.ItemType.Apple:
+            case "Apple":
                 addHealth(10);
                 inventory.RemoveItem(item);
                 break;
-            case Item.ItemType.Stick:
+            case "Stick":
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.stickSprite;
                 transform.GetChild(0).GetComponent<AttackScript>().damage = 40;
                 Attack();
                 break;
-            case Item.ItemType.Spear:
+            case "Spear":
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
                 transform.GetChild(0).GetComponent<AttackScript>().damage = 60;
                 Attack();
                 break;
-            case Item.ItemType.Rock:
+            case "Rock":
                 Debug.Log("Rock item used");
                 break;
-            case Item.ItemType.Vine:
+            case "Vine":
                 Debug.Log("Vine item used");
                 break;
-            case Item.ItemType.RawCrabMeat:
+            case "RawCrabMeat":
                 addHealth(10);
                 inventory.RemoveItem(item);
                 break;
-            case Item.ItemType.CookedCrabMeat:
+            case "CookedCrabMeat":
                 addHealth(20);
                 inventory.RemoveItem(item);
                 break;
-            case Item.ItemType.FishingRod:
+            case "FishingRod":
                 Debug.Log("Fishing Rod used");
                 fishingGame.startFishing();
                 return;

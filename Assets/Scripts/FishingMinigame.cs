@@ -16,11 +16,12 @@ public class FishingMinigame : MonoBehaviour
     public Direction _direction = Direction.left;
     public bool canCatch = false;
     public PlayerController player;
-    // Start is called before the first frame update
+
+    private ItemScriptableObject fishScriptableObject;
+
     void Start()
     {
-
-
+        fishScriptableObject = Resources.Load<ItemScriptableObject>("Items/Fish");
     }
 
     // Update is called once per frame
@@ -31,7 +32,7 @@ public class FishingMinigame : MonoBehaviour
             
             DialogueBox.Instance.PlayDialogue(new List<string> { data[choosen].species + "\n" + data[choosen].description });
             Debug.Log("Fish Caught" + choosen + " " + data[choosen].species);
-            player.GetInventory().AddItem(Item.ItemType.fish, 1);
+            player.GetInventory().AddItem(fishScriptableObject, 1);
             endFishing();
         }
         fish.transform.localPosition = fish.transform.localPosition + new Vector3(0.1f * data[choosen].speed * (int)_direction, 0, 0);

@@ -5,10 +5,12 @@ using UnityEngine;
 public class Chimp : NPCInteractable
 {
     List<Sprite> directionSprites;
+    ItemScriptableObject appleItemScriptableObject;
 
     void Start()
     {
         directionSprites = new List<Sprite> { front, left, back, right };
+        appleItemScriptableObject = Resources.Load<ItemScriptableObject>("Items/Apple");
 
         StartCoroutine("Spin");
     }
@@ -37,7 +39,7 @@ public class Chimp : NPCInteractable
 
     private void Chimp_AfterDialogueAction()
     {
-        player.GetInventory().AddItem(Item.ItemType.Apple, 1);
+        player.GetInventory().AddItem(appleItemScriptableObject, 1);
         StartCoroutine("Spin");
     }
 }

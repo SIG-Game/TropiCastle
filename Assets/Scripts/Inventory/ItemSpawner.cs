@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
-    public GameObject spawned;
+    public GameObject itemWorldPrefab;
     public GameObject player;
     public float spawnDelay;
     public bool isSpawned = false;
@@ -13,8 +13,6 @@ public class ItemSpawner : MonoBehaviour
     private float minY = -2f;
     private float maxY = 4f;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("spawnObject", 0, spawnDelay);
@@ -23,20 +21,14 @@ public class ItemSpawner : MonoBehaviour
     public void spawnObject() {
         if (!isSpawned) {
             Vector2 spawnLocation = new Vector2(Random.Range(minX,maxX), Random.Range(minY,maxY));
-            GameObject itemSpawned = Instantiate(spawned, spawnLocation, transform.rotation);
+            GameObject itemSpawned = Instantiate(itemWorldPrefab, spawnLocation, transform.rotation);
             isSpawned = true;
-            ItemWorld iwtest = itemSpawned.GetComponent<ItemWorld>();
-            iwtest.spawnedFromSpawner = true;
-            iwtest.spawner = this;
-            Debug.Log("spawned");
+
+            ItemWorld itemWorldSpawned = itemSpawned.GetComponent<ItemWorld>();
+            itemWorldSpawned.spawnedFromSpawner = true;
+            itemWorldSpawned.spawner = this;
+
+            Debug.Log($"Spawned item {itemWorldSpawned.item.info.name}");
         }
-
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

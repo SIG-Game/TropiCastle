@@ -19,6 +19,10 @@ public class enemyScript : MonoBehaviour
     public Transform player;
     public spawnEnemy spawner;
     public float speed = 5f;
+
+    // TODO: This could be moved to a singleton
+    public GameObject itemWorldPrefab;
+
     private Vector2 movement;
 
     private Vector3 playerColliderOffset;
@@ -70,9 +74,12 @@ public class enemyScript : MonoBehaviour
         {
             currentHealth = 0;
             spawner.crabDied();
+
+            // TODO: This doesn't work properly for loot items with amount value > 1
+            // This should be revisited if stackable items get added
             foreach (Item loot in DroppedLoot)
             {
-                ItemWorld.DropItem(transform.position, loot.itemType, loot.amount);
+                ItemWorld.DropItem(itemWorldPrefab, transform.position, loot);
             }
             Destroy(gameObject);
         }

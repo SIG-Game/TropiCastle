@@ -12,20 +12,28 @@ public class HookCatch : MonoBehaviour
     public PlayerController playerController;
 
     bool canCatch = false;
+    private ItemScriptableObject fishScriptableObject;
+
+    void Start()
+    {
+        fishScriptableObject = Resources.Load<ItemScriptableObject>("Items/Fish");
+    }
+
     void OnTriggerEnter2D(Collider2D fish)
     {
-        // Debug.Log("entered");
         FishingMinigame.canCatch = true;
     }
+
     void OnTriggerExit2D(Collider2D fish)
     {
         FishingMinigame.canCatch = false;
     }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(1) && canCatch)
         {
-            playerController.GetInventory().AddItem(Item.ItemType.fish, 1);
+            playerController.GetInventory().AddItem(fishScriptableObject, 1);
             // DialogueBox.Instance.PlayDialogue(new List<string> {fish.species + "\n" + fish.description });
             // Debug.Log("Fish Caught");
             // // DisplayInfo();
