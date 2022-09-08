@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38bdaa6e0ae05c64c9ad9e3964903e17, type: 3}
-  m_Name: Marlin
+  m_Name: Pufferfish
   m_EditorClassIdentifier: 
-  species: Marlin
-  description: Quite the nose on this one
-  image: {fileID: 21300000, guid: cfa79c1b28ceb51418c432c96af1ae48, type: 3}
-  size: 20
-  speed: 20
+  species: Pufferfish
+  description: A very prickly fish
+  image: {fileID: 21300000, guid: f3b3794134fff55499f85d4093968f67, type: 3}
+  size: 5
+  speed: 8
