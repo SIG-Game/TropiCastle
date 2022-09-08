@@ -12,7 +12,7 @@ public class FishingMinigame : MonoBehaviour
     public Sprite fishImageL;
     public Sprite fishImageR;
     public ScriptableFish[] data;
-    int choosen = 0;
+    int chosen = 0;
     public Direction _direction = Direction.left;
     public bool canCatch = false;
     public PlayerController player;
@@ -30,12 +30,12 @@ public class FishingMinigame : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && canCatch)
         {
             
-            DialogueBox.Instance.PlayDialogue(new List<string> { data[choosen].species + "\n" + data[choosen].description });
-            Debug.Log("Fish Caught" + choosen + " " + data[choosen].species);
+            DialogueBox.Instance.PlayDialogue(new List<string> { data[chosen].species + "\n" + data[chosen].description });
+            Debug.Log("Fish Caught" + chosen + " " + data[chosen].species);
             player.GetInventory().AddItem(fishScriptableObject, 1);
             endFishing();
         }
-        fish.transform.localPosition = fish.transform.localPosition + new Vector3(0.1f * data[choosen].speed * (int)_direction, 0, 0);
+        fish.transform.localPosition = fish.transform.localPosition + new Vector3(0.1f * data[chosen].speed * (int)_direction, 0, 0);
         if (fish.transform.localPosition.x >= 200 || fish.transform.localPosition.x <= -200)
         {
             // Debug.Log(transform.localPosition.x);
@@ -69,8 +69,8 @@ public class FishingMinigame : MonoBehaviour
                 image.sprite = fishImageL;
                 _direction = Direction.left;
             }
-            choosen = Random.Range(0, data.Length);
-            Debug.Log("SELECTED: " + choosen + " " + data[choosen].species + " " + data[choosen].speed);
+            chosen = Random.Range(0, data.Length);
+            Debug.Log("SELECTED: " + chosen + " " + data[chosen].species + " " + data[chosen].speed);
             canvas.SetActive(true);
             int positionX = Random.Range(80, 190);
             if (Random.Range(-1, 1) == -1)
@@ -85,4 +85,10 @@ public class FishingMinigame : MonoBehaviour
     {
         canvas.SetActive(false);
     }
+}
+
+public enum Direction
+{
+    left = -1,
+    right = 1
 }
