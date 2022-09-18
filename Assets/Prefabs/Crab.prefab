@@ -146,9 +146,9 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   DroppedLoot:
-  - info: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
+  - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
     amount: 1
-  - info: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
+  - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
     amount: 1
   player: {fileID: 0}
   spawner: {fileID: 0}
