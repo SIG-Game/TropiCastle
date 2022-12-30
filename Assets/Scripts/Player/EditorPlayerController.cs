@@ -1,21 +1,18 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(PlayerController))]
-public class PlayerControllerEditor : Editor
+public class EditorPlayerController : Editor
 {
-    int selectedIndex = 0;
-    UnityEngine.Object[] itemScriptableObjects;
-    String[] options;
-    Inventory inventory;
+    private int selectedIndex;
+    private ItemScriptableObject[] itemScriptableObjects;
+    private string[] options;
 
     private void OnEnable()
     {
-        // Get items
-        itemScriptableObjects = Resources.LoadAll("Items", typeof(ItemScriptableObject));
-
+        selectedIndex = 0;
+        itemScriptableObjects = Resources.LoadAll<ItemScriptableObject>("Items");
         options = itemScriptableObjects.Select(x => x.name).ToArray();
     }
 
@@ -38,9 +35,9 @@ public class PlayerControllerEditor : Editor
                 return;
             }
 
-            inventory = ((PlayerController)target).GetInventory();
-            ItemScriptableObject foundItemScriptableObject = (ItemScriptableObject)itemScriptableObjects.Single(x => x.name == options[selectedIndex]);
-            inventory.AddItem(foundItemScriptableObject, 1);
+            ItemScriptableObject itemScriptableObjectToAdd = itemScriptableObjects[selectedIndex];
+            Inventory inventory = ((PlayerController)target).GetInventory();
+            inventory.AddItem(itemScriptableObjectToAdd, 1);
         }
     }
 }
