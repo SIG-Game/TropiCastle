@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1376027503358213722, guid: 14eafeb4364c04735ba4669ae2166aa2, type: 3}
   Player: {fileID: 0}
-  spawnRate: 1
-  maxCrabs: 1
+  timeBetweenSpawns: 5
+  maxEnemies: 2

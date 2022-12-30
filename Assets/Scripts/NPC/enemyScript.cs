@@ -17,7 +17,7 @@ public class enemyScript : MonoBehaviour
     public List<ItemWithAmount> DroppedLoot;
 
     public Transform player;
-    public spawnEnemy spawner;
+    public EnemySpawner spawner;
     public float speed = 5f;
 
     // TODO: This could be moved to a singleton
@@ -73,7 +73,7 @@ public class enemyScript : MonoBehaviour
         else
         {
             currentHealth = 0;
-            spawner.crabDied();
+            spawner.SpawnedEnemyDied();
 
             // TODO: This doesn't work properly for loot items with amount value > 1
             // This should be revisited if stackable items get added
