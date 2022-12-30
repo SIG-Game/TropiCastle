@@ -6,8 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     public enum Direction { UP, DOWN, LEFT, RIGHT };
 
-    public float movementSpeed;
-    public float sprintSpeedMultiplier;
     public ItemScriptableObject emptyItemInfo;
     public InventoryUI inventoryUI;
     public Crafting crafting;
@@ -25,13 +23,10 @@ public class PlayerController : MonoBehaviour
 
     public ItemPlacementTrigger itemPlacementTrigger;
 
-    public Sprite front, back, left, right;
-
     // TODO: This could be moved to a singleton
     public GameObject itemWorldPrefab;
 
     private bool canPause = true;
-    private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
@@ -46,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -63,17 +57,11 @@ public class PlayerController : MonoBehaviour
 
         interactableMask = LayerMask.GetMask("Interactable");
     }
-    
+
     void Update()
     {
         if (Input.GetButtonDown("Pause") && !inventoryOpen && canPause) {
             TogglePauseMenu();
-        }
-
-        if (dialogueBoxOpen || isAttacking)
-        {
-            velocity = Vector2.zero;
-            return;
         }
 
         // Player must release next dialogue input to use that input
@@ -84,23 +72,6 @@ public class PlayerController : MonoBehaviour
 
         if (!gamePaused && !inventoryOpen)
         {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
-
-            Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
-            
-            if (inputVector.sqrMagnitude > 1f)
-            {
-                inputVector.Normalize();
-            }
-
-            velocity = movementSpeed * inputVector;
-
-            if (Input.GetButton("Sprint"))
-            {
-                velocity *= sprintSpeedMultiplier;
-            }
-
             if (Input.GetMouseButtonDown(0) && canUseDialogueInputs)
             {
                 List<ItemWithAmount> itemList = inventory.GetItemList();
@@ -147,29 +118,6 @@ public class PlayerController : MonoBehaviour
             }
 
             ProcessNumberKeys();
-
-            if (horizontalInput != 0 || verticalInput != 0) {
-                if (horizontalInput < 0)
-                {
-                    lastDirection = Direction.LEFT;
-                    spriteRenderer.sprite = left;
-                }
-                else if (horizontalInput > 0)
-                {
-                    lastDirection = Direction.RIGHT;
-                    spriteRenderer.sprite = right;
-                }
-                else if (verticalInput < 0)
-                {
-                    lastDirection = Direction.DOWN;
-                    spriteRenderer.sprite = front;
-                } 
-                else
-                {
-                    lastDirection = Direction.UP;
-                    spriteRenderer.sprite = back;
-                }
-            }
 
             if (Input.GetButtonDown("Interact") && canUseDialogueInputs && !gamePaused)
             {
@@ -229,7 +177,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Debug input for fishing
-        if (Input.GetKeyDown(KeyCode.G)) 
+        if (Input.GetKeyDown(KeyCode.G))
         {
             // TODO: Resources.Load calls should maybe use Addressables instead
             ItemScriptableObject fishingRodScriptableObject = Resources.Load<ItemScriptableObject>("Items/FishingRod");
@@ -242,6 +190,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rb2d.MovePosition(transform.position + (Vector3)velocity);
+    }
+
+    public bool CanMove()
+    {
+        return !dialogueBoxOpen && !isAttacking && !gamePaused && !inventoryOpen;
     }
 
     //increases health of a player when called
@@ -304,11 +257,21 @@ public class PlayerController : MonoBehaviour
         return lastDirection;
     }
 
+    public void SetLastDirection(Direction newLastDirection)
+    {
+        lastDirection = newLastDirection;
+    }
+
+    public void SetVelocity(Vector2 newVelocity)
+    {
+        velocity = newVelocity;
+    }
+
     public Inventory GetInventory()
     {
         return inventory;
     }
-    
+
     Vector2 GetInteractionDirection()
     {
         switch (lastDirection)
@@ -426,17 +389,6 @@ public class PlayerController : MonoBehaviour
         if(col.gameObject.CompareTag("Bullet"))
         {
             takeDamage(10);
-        }
-        if (col.gameObject.CompareTag("Water")) 
-        {
-            movementSpeed *= 0.5f;
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D col) 
-    {
-        if (col.gameObject.CompareTag("Water")) {
-            movementSpeed *= 2f;
         }
     }
 }
