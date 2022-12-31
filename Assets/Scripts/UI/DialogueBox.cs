@@ -1,39 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
 public class DialogueBox : MonoBehaviour
 {
+    [SerializeField] private GameObject dialogueBoxUI;
+    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private PlayerController player;
+
+    private IEnumerator<string> linesEnumerator;
+
+    public Action AfterDialogueAction;
+
     public static DialogueBox Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
-    }
 
-    public GameObject dialogueBoxUI;
-    public TextMeshProUGUI dialogueText;
-    public PlayerController player;
-    public Action AfterDialogueAction;
-
-    private List<string>.Enumerator linesEnumerator;
-
-    public void PlayDialogue(List<string> lines)
-    {
-        if (lines.Count == 0)
-        {
-            Debug.LogWarning("Dialogue lines list is empty");
-            return;
-        }
-
-        linesEnumerator = lines.GetEnumerator();
-        linesEnumerator.MoveNext();
-
-        dialogueText.text = linesEnumerator.Current;
-        dialogueBoxUI.SetActive(true);
-        player.dialogueBoxOpen = true;
-        player.canUseDialogueInputs = false;
+        linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
+        AfterDialogueAction = null;
     }
 
     private void Update()
@@ -55,5 +43,27 @@ public class DialogueBox : MonoBehaviour
                 player.dialogueBoxOpen = false;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        Instance = null;
+    }
+
+    public void PlayDialogue(List<string> lines)
+    {
+        if (lines.Count == 0)
+        {
+            Debug.LogWarning("Dialogue lines list is empty");
+            return;
+        }
+
+        linesEnumerator = lines.GetEnumerator();
+        linesEnumerator.MoveNext();
+
+        dialogueText.text = linesEnumerator.Current;
+        dialogueBoxUI.SetActive(true);
+        player.dialogueBoxOpen = true;
+        player.canUseDialogueInputs = false;
     }
 }
