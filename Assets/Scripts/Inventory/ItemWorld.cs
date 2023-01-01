@@ -30,7 +30,6 @@ public class ItemWorld : Interactable
     public bool spawnedFromSpawner;
     public ItemSpawner spawner;
 
-    private PlayerController player;
     private SpriteRenderer spriteRenderer;
     private ItemScriptableObject cookedCrabScriptableObject;
 
@@ -38,11 +37,10 @@ public class ItemWorld : Interactable
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = item.itemData.sprite;
-        player = FindObjectsOfType<PlayerController>()[0];
         cookedCrabScriptableObject = Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat");
     }
 
-    public override void Interact()
+    public override void Interact(PlayerController player)
     {
         Debug.Log("Item interaction with item named " + item.itemData.name);
 

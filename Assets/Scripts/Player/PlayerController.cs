@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
                 if (hit.collider != null)
                 {
-                    hit.transform.gameObject.GetComponent<Interactable>().Interact();
+                    hit.transform.gameObject.GetComponent<Interactable>().Interact(this);
                 }
             }
 

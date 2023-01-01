@@ -15,8 +15,10 @@ public class Chimp : NPCInteractable
         StartCoroutine("Spin");
     }
 
-    public override void Interact()
+    public override void Interact(PlayerController player)
     {
+        this.player = player;
+
         StopCoroutine("Spin");
 
         FacePlayer();
