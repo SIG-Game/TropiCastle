@@ -26,11 +26,12 @@ public class PlayerController : MonoBehaviour
     // TODO: This could be moved to a singleton
     public GameObject itemWorldPrefab;
 
+    public Direction lastDirection { get; set; }
+
     private bool canPause = true;
     private Animator animator;
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
-    private Direction lastDirection = Direction.DOWN;
     private LayerMask interactableMask;
     private SpriteRenderer weaponSpriteRenderer;
 
@@ -51,6 +52,8 @@ public class PlayerController : MonoBehaviour
         inventoryUI.SetInventory(inventory);
         inventoryUI.selectHotbarItem(hotbarItemIndex);
         crafting.SetInventory(inventory);
+
+        lastDirection = Direction.DOWN;
 
         currentHealth = maxHealth;
         healthText.text = "Health: " + currentHealth;
@@ -251,15 +254,6 @@ public class PlayerController : MonoBehaviour
         }
 
         isAttacking = true;
-    }
-
-    public Direction getLastDir() {
-        return lastDirection;
-    }
-
-    public void SetLastDirection(Direction newLastDirection)
-    {
-        lastDirection = newLastDirection;
     }
 
     public void SetVelocity(Vector2 newVelocity)

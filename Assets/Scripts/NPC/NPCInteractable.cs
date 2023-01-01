@@ -27,7 +27,7 @@ public class NPCInteractable : Interactable
 
     public void FacePlayer()
     {
-        switch (player.getLastDir())
+        switch (player.lastDirection)
         {
             case PlayerController.Direction.UP:
                 spriteRenderer.sprite = front;
