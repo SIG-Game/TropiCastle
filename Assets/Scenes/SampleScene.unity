@@ -39823,6 +39823,11 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3015389456133774718, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 1723173256}
     - target: {fileID: 3770808729768230584, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: m_Offset.x

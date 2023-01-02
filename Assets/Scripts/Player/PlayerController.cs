@@ -9,10 +9,7 @@ public class PlayerController : MonoBehaviour
     public ItemScriptableObject emptyItemInfo;
     public InventoryUI inventoryUI;
     public Crafting crafting;
-    public TextMeshProUGUI healthText;
     public GameObject gameOverUI;
-    public int maxHealth = 100;
-    public int currentHealth;
     public bool isAttacking = false;
     public bool dialogueBoxOpen = false;
     public bool canUseDialogueInputs = true;
@@ -29,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
+    private HealthController healthController;
     private LayerMask interactableMask;
     private SpriteRenderer weaponSpriteRenderer;
 
@@ -42,6 +40,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        healthController = GetComponent<HealthController>();
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
@@ -51,9 +50,6 @@ public class PlayerController : MonoBehaviour
         crafting.SetInventory(inventory);
 
         lastDirection = Direction.DOWN;
-
-        currentHealth = maxHealth;
-        healthText.text = "Health: " + currentHealth;
 
         interactableMask = LayerMask.GetMask("Interactable");
     }
@@ -203,38 +199,12 @@ public class PlayerController : MonoBehaviour
         return !dialogueBoxOpen && !isAttacking && !PauseController.Instance.gamePaused && !inventoryOpen;
     }
 
-    //increases health of a player when called
-    //doesnt let health go above 100
-    public void addHealth(int health)
+    public void PlayerDeath()
     {
-        currentHealth += health;
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-
-        healthText.text = "Health: " + currentHealth;
-    }
-
-    //reduces health of player when this is called
-    //doesnt let health go below 0
-    public void takeDamage(int damage)
-    {
-        currentHealth -= damage;
-        if (currentHealth < 0)
-        {
-            currentHealth = 0;
-        }
-
-        healthText.text = "Health: " + currentHealth;
-
-        if (currentHealth == 0)
-        {
-            Time.timeScale = 0f;
-            PauseController.Instance.canPause = false;
-            PauseController.Instance.gamePaused = true;
-            gameOverUI.SetActive(true);
-        }
+        Time.timeScale = 0f;
+        PauseController.Instance.canPause = false;
+        PauseController.Instance.gamePaused = true;
+        gameOverUI.SetActive(true);
     }
 
     public void Attack() {
@@ -301,7 +271,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Test item used");
                 break;
             case "Apple":
-                addHealth(10);
+                healthController.IncreaseHealth(10);
                 inventory.RemoveItem(item);
                 break;
             case "Stick":
@@ -321,11 +291,11 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Vine item used");
                 break;
             case "RawCrabMeat":
-                addHealth(10);
+                healthController.IncreaseHealth(10);
                 inventory.RemoveItem(item);
                 break;
             case "CookedCrabMeat":
-                addHealth(20);
+                healthController.IncreaseHealth(20);
                 inventory.RemoveItem(item);
                 break;
             case "FishingRod":
@@ -371,13 +341,14 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Enemy"))
+        if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("Bullet"))
         {
-            takeDamage(10);
-        }
-        if(col.gameObject.CompareTag("Bullet"))
-        {
-            takeDamage(10);
+            healthController.DecreaseHealth(10);
+
+            if (healthController.currentHealth == 0)
+            {
+                PlayerDeath();
+            }
         }
     }
 }

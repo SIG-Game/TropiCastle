@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 5288355818519944997}
   - component: {fileID: 5288355818519945016}
   - component: {fileID: 2526882180276161147}
+  - component: {fileID: 3015389456133774718}
   - component: {fileID: 8669891105156055949}
   m_Layer: 0
   m_Name: Player
@@ -280,15 +281,10 @@ MonoBehaviour:
   emptyItemInfo: {fileID: 0}
   inventoryUI: {fileID: 0}
   crafting: {fileID: 0}
-  healthText: {fileID: 0}
-  pauseMenu: {fileID: 0}
   gameOverUI: {fileID: 0}
-  maxHealth: 100
-  currentHealth: 0
   isAttacking: 0
   dialogueBoxOpen: 0
   canUseDialogueInputs: 1
-  gamePaused: 0
   fishingGame: {fileID: 0}
   itemPlacementTrigger: {fileID: 0}
   itemWorldPrefab: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
@@ -311,6 +307,20 @@ MonoBehaviour:
   back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+--- !u!114 &3015389456133774718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288355818519944996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339fd80acfd9dd142aef9ef7f6ce56ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthText: {fileID: 0}
 --- !u!95 &8669891105156055949
 Animator:
   serializedVersion: 3
