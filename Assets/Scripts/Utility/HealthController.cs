@@ -1,25 +1,22 @@
-﻿using TMPro;
+﻿using System;
 using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
-    [SerializeField] private TextMeshProUGUI healthText;
 
-    public int currentHealth { get; private set; }
+    private int currentHealth;
+
+    public event Action<int> OnHealthChanged = delegate { };
 
     private void Awake()
     {
         currentHealth = maxHealth;
-        UpdateHealthText();
     }
 
-    private void UpdateHealthText()
+    private void Start()
     {
-        if (healthText != null)
-        {
-            healthText.text = "Health: " + currentHealth;
-        }
+        OnHealthChanged(currentHealth);
     }
 
     public void IncreaseHealth(int amount)
@@ -31,7 +28,7 @@ public class HealthController : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        UpdateHealthText();
+        OnHealthChanged(currentHealth);
     }
 
     public void DecreaseHealth(int amount)
@@ -43,6 +40,6 @@ public class HealthController : MonoBehaviour
             currentHealth = 0;
         }
 
-        UpdateHealthText();
+        OnHealthChanged(currentHealth);
     }
 }

@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
         lastDirection = Direction.DOWN;
 
         interactableMask = LayerMask.GetMask("Interactable");
+
+        healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
 
     void Update()
@@ -334,6 +336,14 @@ public class PlayerController : MonoBehaviour
             inventoryUI.selectHotbarItem(hotbarItemIndex);
     }
 
+    private void HealthController_OnHealthChanged(int newHealth)
+    {
+        if (newHealth == 0)
+        {
+            PlayerDeath();
+        }
+    }
+
     public ItemWithAmount GetHotbarItem()
     {
         return inventory.GetItemList()[hotbarItemIndex];
@@ -344,11 +354,6 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("Bullet"))
         {
             healthController.DecreaseHealth(10);
-
-            if (healthController.currentHealth == 0)
-            {
-                PlayerDeath();
-            }
         }
     }
 }
