@@ -10,14 +10,12 @@ public class PlayerController : MonoBehaviour
     public InventoryUI inventoryUI;
     public Crafting crafting;
     public TextMeshProUGUI healthText;
-    public GameObject pauseMenu;
     public GameObject gameOverUI;
     public int maxHealth = 100;
     public int currentHealth;
     public bool isAttacking = false;
     public bool dialogueBoxOpen = false;
     public bool canUseDialogueInputs = true;
-    public bool gamePaused = false;
 
     public FishingMinigame fishingGame;
 
@@ -28,7 +26,6 @@ public class PlayerController : MonoBehaviour
 
     public Direction lastDirection { get; set; }
 
-    private bool canPause = true;
     private Animator animator;
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
@@ -63,8 +60,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Pause") && !inventoryOpen && canPause) {
-            TogglePauseMenu();
+        if (PauseController.Instance.gamePaused)
+        {
+            return;
         }
 
         // Player must release next dialogue input to use that input
@@ -73,7 +71,7 @@ public class PlayerController : MonoBehaviour
             !dialogueBoxOpen && !canUseDialogueInputs)
             canUseDialogueInputs = true;
 
-        if (!gamePaused && !inventoryOpen)
+        if (!inventoryOpen)
         {
             if (Input.GetMouseButtonDown(0) && canUseDialogueInputs)
             {
@@ -122,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
             ProcessNumberKeys();
 
-            if (Input.GetButtonDown("Interact") && canUseDialogueInputs && !gamePaused)
+            if (Input.GetButtonDown("Interact") && canUseDialogueInputs)
             {
                 Vector2 interactionDirection = GetInteractionDirection();
 
@@ -143,7 +141,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // TODO: Use mouse for picking up items
-            if (Input.GetButtonDown("Pick Up") && !gamePaused)
+            if (Input.GetButtonDown("Pick Up"))
             {
                 Vector2 interactionDirection = GetInteractionDirection();
 
@@ -166,7 +164,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Inventory") && !gamePaused)
+        if (Input.GetButtonDown("Inventory"))
         {
             inventoryOpen = !inventoryOpen;
             inventoryUI.gameObject.SetActive(inventoryOpen);
@@ -195,9 +193,14 @@ public class PlayerController : MonoBehaviour
         rb2d.MovePosition(transform.position + (Vector3)velocity);
     }
 
+    public bool GetInventoryOpen()
+    {
+        return inventoryOpen;
+    }
+
     public bool CanMove()
     {
-        return !dialogueBoxOpen && !isAttacking && !gamePaused && !inventoryOpen;
+        return !dialogueBoxOpen && !isAttacking && !PauseController.Instance.gamePaused && !inventoryOpen;
     }
 
     //increases health of a player when called
@@ -228,8 +231,8 @@ public class PlayerController : MonoBehaviour
         if (currentHealth == 0)
         {
             Time.timeScale = 0f;
-            canPause = false;
-            gamePaused = true;
+            PauseController.Instance.canPause = false;
+            PauseController.Instance.gamePaused = true;
             gameOverUI.SetActive(true);
         }
     }
@@ -359,14 +362,6 @@ public class PlayerController : MonoBehaviour
 
         if (previousHotbarItemIndex != hotbarItemIndex)
             inventoryUI.selectHotbarItem(hotbarItemIndex);
-    }
-
-    public void TogglePauseMenu()
-    {
-        gamePaused = !gamePaused;
-        pauseMenu.SetActive(gamePaused);
-        rb2d.velocity = Vector2.zero;
-        Time.timeScale = gamePaused ? 0f : 1f;
     }
 
     public ItemWithAmount GetHotbarItem()
