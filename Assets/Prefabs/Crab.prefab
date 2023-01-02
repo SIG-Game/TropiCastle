@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1991442756631192048}
   - component: {fileID: 6242077710301518746}
   - component: {fileID: -5352361096146735681}
+  - component: {fileID: 5115571631946345362}
   m_Layer: 0
   m_Name: Crab
   m_TagString: Enemy
@@ -155,3 +156,16 @@ MonoBehaviour:
   speed: 2
   itemWorldPrefab: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
+--- !u!114 &5115571631946345362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376027503358213722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339fd80acfd9dd142aef9ef7f6ce56ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100

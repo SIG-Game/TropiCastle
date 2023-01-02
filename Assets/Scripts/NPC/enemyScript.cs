@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: Clean up this class
 public class enemyScript : MonoBehaviour
 {
     private enum State
@@ -11,8 +12,6 @@ public class enemyScript : MonoBehaviour
         Knockbacked,
     }
     private State state;
-    public int maxHealth = 100;
-    public int currentHealth;
 
     public List<ItemWithAmount> DroppedLoot;
 
@@ -27,12 +26,20 @@ public class enemyScript : MonoBehaviour
 
     private Vector3 playerColliderOffset;
     Rigidbody2D rb2d;
+    private HealthController healthController;
+
+    private void Awake()
+    {
+        healthController = GetComponent<HealthController>();
+
+        healthController.OnHealthChanged += HealthController_OnHealthChanged;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         playerColliderOffset = player.GetComponent<BoxCollider2D>().offset;
-        currentHealth = maxHealth;
         state = State.Chilling;
         //StartCoroutine("Wait");
     }
@@ -44,7 +51,7 @@ public class enemyScript : MonoBehaviour
         direction.Normalize();
         movement = direction;
     }
-    
+
     private void FixedUpdate()
     {
         if(state == State.Chilling)
@@ -60,19 +67,11 @@ public class enemyScript : MonoBehaviour
             moveEnemy(movement);
         }
     }
-   
 
-    //reduces health of player when this is called
-    //doesnt let health go below 0
-    public void takeDamage(int damage)
+    private void HealthController_OnHealthChanged(int newHealth)
     {
-        if (currentHealth - damage > 0)
+        if (newHealth <= 0)
         {
-            currentHealth -= damage;
-        }
-        else
-        {
-            currentHealth = 0;
             spawner.SpawnedEnemyDied();
 
             // TODO: This doesn't work properly for loot items with amount value > 1
@@ -82,20 +81,6 @@ public class enemyScript : MonoBehaviour
                 ItemWorld.DropItem(itemWorldPrefab, transform.position, loot);
             }
             Destroy(gameObject);
-        }
-    }
-
-    //increases health of a player when called
-    //doesnt let health go above 100
-    public void addHealth(int health)
-    {
-        if (currentHealth + health <= maxHealth)
-        {
-            currentHealth += health;
-        }
-        else
-        {
-            currentHealth = 100;
         }
     }
 
@@ -122,12 +107,12 @@ public class enemyScript : MonoBehaviour
             //state = State.Chasing;
         }
     }
-   
+
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(1.5f);
         state = State.Chasing;
         transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
-    
+
 }
