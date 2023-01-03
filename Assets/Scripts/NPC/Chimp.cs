@@ -4,30 +4,28 @@ using UnityEngine;
 
 public class Chimp : NPCInteractable
 {
-    List<Sprite> directionSprites;
-    ItemScriptableObject appleItemScriptableObject;
+    private List<Sprite> directionSprites;
+    private ItemScriptableObject appleItemScriptableObject;
+    private Coroutine spinCoroutine;
 
-    void Start()
+    private void Start()
     {
         directionSprites = new List<Sprite> { front, left, back, right };
         appleItemScriptableObject = Resources.Load<ItemScriptableObject>("Items/Apple");
 
-        StartCoroutine("Spin");
+        spinCoroutine = StartCoroutine(Spin());
     }
 
     public override void Interact(PlayerController player)
     {
-        this.player = player;
-
-        StopCoroutine("Spin");
-
-        FacePlayer();
-
         DialogueBox.Instance.AfterDialogueAction = Chimp_AfterDialogueAction;
-        DialogueBox.Instance.PlayDialogue(dialogueLines);
+
+        StopCoroutine(spinCoroutine);
+
+        base.Interact(player);
     }
 
-    IEnumerator Spin()
+    private IEnumerator Spin()
     {
         while (true)
         {
@@ -42,6 +40,6 @@ public class Chimp : NPCInteractable
     private void Chimp_AfterDialogueAction()
     {
         player.GetInventory().AddItem(appleItemScriptableObject, 1);
-        StartCoroutine("Spin");
+        spinCoroutine = StartCoroutine(Spin());
     }
 }
