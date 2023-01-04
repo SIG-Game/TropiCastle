@@ -2,42 +2,21 @@
 
 public class ItemWorld : Interactable
 {
-    public static void SpawnItemWorld(GameObject itemWorldPrefab, Vector3 position, ItemWithAmount itemToSpawn)
-    {
-        GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity);
-
-        ItemWorld itemWorld = spawnedGameObject.GetComponent<ItemWorld>();
-        itemWorld.item = itemToSpawn;
-        itemWorld.spriteRenderer.sprite = itemToSpawn.itemData.sprite;
-    }
-
-    public static void DropItem(GameObject itemWorldPrefab, Vector3 dropPosition, ItemWithAmount itemToDrop)
-    {
-        if (itemToDrop.itemData.name == "Empty")
-            return;
-
-        Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-        randomOffset.Normalize();
-        randomOffset *= 0.7f;
-
-        SpawnItemWorld(itemWorldPrefab, dropPosition + randomOffset, itemToDrop);
-
-        // Dropped items currently don't move
-        //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
-    }
-
     public ItemWithAmount item;
     public bool spawnedFromSpawner;
     public ItemSpawner spawner;
 
-    private SpriteRenderer spriteRenderer;
     private ItemScriptableObject cookedCrabScriptableObject;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = item.itemData.sprite;
         cookedCrabScriptableObject = Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat");
+    }
+
+    private void Start()
+    {
+        // Not in Awake because this needs to happen after ItemWorldPrefabInstanceFactory sets item
+        GetComponent<SpriteRenderer>().sprite = item.itemData.sprite;
     }
 
     public override void Interact(PlayerController player)

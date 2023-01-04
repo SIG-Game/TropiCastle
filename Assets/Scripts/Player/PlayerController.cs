@@ -18,9 +18,6 @@ public class PlayerController : MonoBehaviour
 
     public ItemPlacementTrigger itemPlacementTrigger;
 
-    // TODO: This could be moved to a singleton
-    public GameObject itemWorldPrefab;
-
     public Direction lastDirection { get; set; }
 
     private Animator animator;
@@ -99,7 +96,7 @@ public class PlayerController : MonoBehaviour
                     //itemPosition.y = (Mathf.Round(2f * itemPosition.y - 0.5f) / 2f) + 0.25f;
                     itemPosition.z = 0f;
 
-                    ItemWorld.SpawnItemWorld(itemWorldPrefab, itemPosition, item);
+                    ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, item);
                     inventory.RemoveItem(item);
                 }
             }

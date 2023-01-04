@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float waitTimeAfterKnockback;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private List<ItemWithAmount> droppedLoot;
-    [SerializeField] private GameObject itemWorldPrefab; // TODO: This could be moved to a singleton
 
     private Rigidbody2D rb2d;
     private HealthController healthController;
@@ -80,7 +79,7 @@ public class Enemy : MonoBehaviour
             // This should be revisited if stackable items get added
             foreach (ItemWithAmount loot in droppedLoot)
             {
-                ItemWorld.DropItem(itemWorldPrefab, transform.position, loot);
+                ItemWorldPrefabInstanceFactory.Instance.DropItem(transform.position, loot);
             }
             Destroy(gameObject);
         }
