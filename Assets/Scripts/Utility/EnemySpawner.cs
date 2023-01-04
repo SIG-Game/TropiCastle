@@ -46,8 +46,8 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log($"Spawned enemy at ({randX}, {randY}).");
 
         GameObject spawnedEnemy = Instantiate(enemy, spawnPosition, Quaternion.identity);
-        spawnedEnemy.GetComponent<enemyScript>().player = player;
-        spawnedEnemy.GetComponent<enemyScript>().spawner = this;
+        spawnedEnemy.GetComponent<Enemy>().SetPlayerTransform(player);
+        spawnedEnemy.GetComponent<Enemy>().SetEnemySpawner(this);
         numEnemies++;
     }
 

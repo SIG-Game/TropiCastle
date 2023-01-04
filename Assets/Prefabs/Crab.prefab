@@ -141,19 +141,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1376027503358213722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd9f3ed866926624cadcc89493aee193, type: 3}
+  m_Script: {fileID: 11500000, guid: 04da0f0e64a8d7b4f9556e8da61d08d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
-  DroppedLoot:
+  speed: 0.05
+  knockbackForce: 0.7
+  targetRange: 2.5
+  waitTimeAfterKnockback: 1.5
+  playerTransform: {fileID: 0}
+  droppedLoot:
   - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
     amount: 1
   - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
     amount: 1
-  player: {fileID: 0}
-  spawner: {fileID: 0}
-  speed: 2
   itemWorldPrefab: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
 --- !u!114 &5115571631946345362
