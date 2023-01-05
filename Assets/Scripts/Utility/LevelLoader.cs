@@ -17,6 +17,11 @@ public class LevelLoader : MonoBehaviour
         animator.SetTrigger("Start");
     }
 
+    public void ReloadScene()
+    {
+        TransitionToScene(SceneManager.GetActiveScene().name);
+    }
+
     public void OnTransitionCompletedAnimationEvent()
     {
         Time.timeScale = 1f; // TODO: This statement might not always apply, so it could be moved
