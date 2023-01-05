@@ -39700,11 +39700,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ac4be4341a049d0a3605a94566ad99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemWorldPrefab: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
-    type: 3}
-  player: {fileID: 198128349}
-  spawnDelay: 4
-  isSpawned: 0
+  itemToSpawn:
+    itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
+    amount: 1
+  spawnRateSeconds: 4
 --- !u!4 &1936533780
 Transform:
   m_ObjectHideFlags: 0

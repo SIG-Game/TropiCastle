@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
                     //itemPosition.y = (Mathf.Round(2f * itemPosition.y - 0.5f) / 2f) + 0.25f;
                     itemPosition.z = 0f;
 
-                    ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, item);
+                    _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, item);
                     inventory.RemoveItem(item);
                 }
             }
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
                 {
                     ItemWorld itemWorld = hit.collider.GetComponent<ItemWorld>();
                     if (itemWorld.spawnedFromSpawner)
-                        itemWorld.spawner.isSpawned = false;
+                        itemWorld.spawner.SpawnedItemWorldPrefabInstanceRemoved();
                     inventory.AddItem(itemWorld.item);
                     Destroy(hit.collider.gameObject);
                 }

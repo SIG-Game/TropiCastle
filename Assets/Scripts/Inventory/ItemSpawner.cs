@@ -1,34 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
-    public GameObject itemWorldPrefab;
-    public GameObject player;
-    public float spawnDelay;
-    public bool isSpawned = false;
-    private float minX = -6f;
-    private float maxX = 6f;
-    private float minY = -2f;
-    private float maxY = 4f;
+    [SerializeField] private ItemWithAmount itemToSpawn;
+    [SerializeField] private float spawnRateSeconds;
 
-    void Start()
+    private bool itemSpawned;
+
+    private const float minX = -6f;
+    private const float maxX = 6f;
+    private const float minY = -2f;
+    private const float maxY = 4f;
+
+    private void Start()
     {
-        InvokeRepeating("spawnObject", 0, spawnDelay);
+        itemSpawned = false;
+
+        InvokeRepeating("SpawnItem", 0f, spawnRateSeconds);
     }
 
-    public void spawnObject() {
-        if (!isSpawned) {
-            Vector2 spawnLocation = new Vector2(Random.Range(minX,maxX), Random.Range(minY,maxY));
-            GameObject itemSpawned = Instantiate(itemWorldPrefab, spawnLocation, transform.rotation);
-            isSpawned = true;
+    private void SpawnItem()
+    {
+        if (!itemSpawned)
+        {
+            Vector2 spawnLocation = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
+            ItemWorld spawnedItemWorld = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(spawnLocation, itemToSpawn);
 
-            ItemWorld itemWorldSpawned = itemSpawned.GetComponent<ItemWorld>();
-            itemWorldSpawned.spawnedFromSpawner = true;
-            itemWorldSpawned.spawner = this;
+            spawnedItemWorld.spawnedFromSpawner = true;
+            spawnedItemWorld.spawner = this;
 
-            Debug.Log($"Spawned item {itemWorldSpawned.item.itemData.name}");
+            itemSpawned = true;
+
+            Debug.Log($"Spawned item {spawnedItemWorld.item.itemData.name} at {spawnLocation}.");
         }
+    }
+
+    public void SpawnedItemWorldPrefabInstanceRemoved()
+    {
+        itemSpawned = false;
     }
 }

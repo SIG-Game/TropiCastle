@@ -16,11 +16,14 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         Instance = null;
     }
 
-    public void SpawnItemWorld(Vector3 position, ItemWithAmount itemToSpawn)
+    public ItemWorld SpawnItemWorld(Vector3 position, ItemWithAmount itemToSpawn)
     {
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity);
+        ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
-        spawnedGameObject.GetComponent<ItemWorld>().item = itemToSpawn;
+        spawnedItemWorld.item = itemToSpawn;
+
+        return spawnedItemWorld;
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)
@@ -32,7 +35,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         randomOffset.Normalize();
         randomOffset *= 0.7f;
 
-        SpawnItemWorld(dropPosition + randomOffset, itemToDrop);
+        _ = SpawnItemWorld(dropPosition + randomOffset, itemToDrop);
 
         // Dropped items currently don't move
         //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
