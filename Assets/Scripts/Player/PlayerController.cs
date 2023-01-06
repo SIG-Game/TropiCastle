@@ -151,8 +151,12 @@ public class PlayerController : MonoBehaviour
                     !inventory.IsFull())
                 {
                     ItemWorld itemWorld = hit.collider.GetComponent<ItemWorld>();
-                    if (itemWorld.spawnedFromSpawner)
+
+                    if (itemWorld.spawner != null)
+                    {
                         itemWorld.spawner.SpawnedItemWorldPrefabInstanceRemoved();
+                    }
+
                     inventory.AddItem(itemWorld.item);
                     Destroy(hit.collider.gameObject);
                 }

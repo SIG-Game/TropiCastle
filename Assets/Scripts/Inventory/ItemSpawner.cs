@@ -26,7 +26,6 @@ public class ItemSpawner : MonoBehaviour
             Vector2 spawnLocation = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
             ItemWorld spawnedItemWorld = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(spawnLocation, itemToSpawn);
 
-            spawnedItemWorld.spawnedFromSpawner = true;
             spawnedItemWorld.spawner = this;
 
             itemSpawned = true;

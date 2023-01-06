@@ -2,16 +2,9 @@
 
 public class ItemWorld : Interactable
 {
-    public ItemWithAmount item;
-    public bool spawnedFromSpawner;
-    public ItemSpawner spawner;
+    [SerializeField] public ItemWithAmount item;
 
-    private ItemScriptableObject cookedCrabScriptableObject;
-
-    private void Awake()
-    {
-        cookedCrabScriptableObject = Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat");
-    }
+    public ItemSpawner spawner { get; set; }
 
     private void Start()
     {
@@ -30,7 +23,7 @@ public class ItemWorld : Interactable
             {
                 Inventory playerInventory = player.GetInventory();
                 playerInventory.RemoveItem(hotbarItem);
-                playerInventory.AddItem(cookedCrabScriptableObject, 1);
+                playerInventory.AddItem(Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat"), 1);
             }
         }
     }
