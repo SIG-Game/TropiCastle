@@ -117,17 +117,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetButtonDown("Interact") && canUseDialogueInputs)
             {
-                Vector2 interactionDirection = GetInteractionDirection();
-
-                Vector3 raycastOrigin = transform.position;
-                raycastOrigin.x += boxCollider.offset.x;
-                raycastOrigin.y += boxCollider.offset.y;
-
-                // TODO: Shorten length and change length based on direction
-                RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
-                    boxCollider.size, 0f, interactionDirection, 0.15f, interactableMask);
-
-                // Debug.DrawRay(raycastOrigin, interactionDirection * 0.25f, Color.red);
+                RaycastHit2D hit = InteractionCast();
 
                 if (hit.collider != null)
                 {
@@ -138,14 +128,7 @@ public class PlayerController : MonoBehaviour
             // TODO: Use mouse for picking up items
             if (Input.GetButtonDown("Pick Up"))
             {
-                Vector2 interactionDirection = GetInteractionDirection();
-
-                Vector3 raycastOrigin = transform.position;
-                raycastOrigin.x += boxCollider.offset.x;
-                raycastOrigin.y += boxCollider.offset.y;
-
-                RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
-                    boxCollider.size, 0f, interactionDirection, 0.15f, interactableMask);
+                RaycastHit2D hit = InteractionCast();
 
                 if (hit.collider != null && hit.collider.GetComponent<ItemWorld>() != null &&
                     !inventory.IsFull())
@@ -190,6 +173,23 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rb2d.MovePosition(transform.position + (Vector3)velocity);
+    }
+
+    private RaycastHit2D InteractionCast()
+    {
+        Vector2 interactionDirection = GetInteractionDirection();
+
+        Vector3 raycastOrigin = transform.position;
+        raycastOrigin.x += boxCollider.offset.x;
+        raycastOrigin.y += boxCollider.offset.y;
+
+        // TODO: Shorten length and change length based on direction
+        RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
+            boxCollider.size, 0f, interactionDirection, 0.15f, interactableMask);
+
+        // Debug.DrawRay(raycastOrigin, interactionDirection * 0.25f, Color.red);
+
+        return hit;
     }
 
     public bool GetInventoryOpen()
