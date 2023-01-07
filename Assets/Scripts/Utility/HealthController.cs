@@ -42,4 +42,9 @@ public class HealthController : MonoBehaviour
 
         OnHealthChanged(currentHealth);
     }
+
+    public bool AtMaxHealth()
+    {
+        return currentHealth >= maxHealth;
+    }
 }

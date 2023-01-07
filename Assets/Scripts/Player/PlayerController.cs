@@ -274,8 +274,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Test item used");
                 break;
             case "Apple":
-                healthController.IncreaseHealth(10);
-                inventory.RemoveItem(item);
+                ConsumeHealingItem(item, 10);
                 break;
             case "Stick":
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.stickSprite;
@@ -294,17 +293,24 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Vine item used");
                 break;
             case "RawCrabMeat":
-                healthController.IncreaseHealth(10);
-                inventory.RemoveItem(item);
+                ConsumeHealingItem(item, 10);
                 break;
             case "CookedCrabMeat":
-                healthController.IncreaseHealth(20);
-                inventory.RemoveItem(item);
+                ConsumeHealingItem(item, 20);
                 break;
             case "FishingRod":
                 Debug.Log("Fishing Rod used");
                 fishingGame.startFishing();
                 return;
+        }
+    }
+
+    private void ConsumeHealingItem(ItemWithAmount item, int amountToHeal)
+    {
+        if (!healthController.AtMaxHealth())
+        {
+            healthController.IncreaseHealth(amountToHeal);
+            inventory.RemoveItem(item);
         }
     }
 
