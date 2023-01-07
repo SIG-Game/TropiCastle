@@ -267,12 +267,6 @@ public class PlayerController : MonoBehaviour
     {
         switch (item.itemData.name)
         {
-            case "Empty":
-                Debug.Log("Empty item used");
-                break;
-            case "Test":
-                Debug.Log("Test item used");
-                break;
             case "Apple":
                 ConsumeHealingItem(item, 10);
                 break;
@@ -286,12 +280,6 @@ public class PlayerController : MonoBehaviour
                 transform.GetChild(0).GetComponent<AttackScript>().damage = 60;
                 Attack();
                 break;
-            case "Rock":
-                Debug.Log("Rock item used");
-                break;
-            case "Vine":
-                Debug.Log("Vine item used");
-                break;
             case "RawCrabMeat":
                 ConsumeHealingItem(item, 10);
                 break;
@@ -299,9 +287,11 @@ public class PlayerController : MonoBehaviour
                 ConsumeHealingItem(item, 20);
                 break;
             case "FishingRod":
-                Debug.Log("Fishing Rod used");
                 fishingGame.startFishing();
-                return;
+                break;
+            default:
+                Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
+                break;
         }
     }
 
