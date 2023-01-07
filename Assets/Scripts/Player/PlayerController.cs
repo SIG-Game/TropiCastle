@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private HealthController healthController;
     private LayerMask interactableMask;
     private SpriteRenderer weaponSpriteRenderer;
+    private AttackScript attackScript;
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
         healthController = GetComponent<HealthController>();
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        attackScript = transform.GetChild(0).GetComponent<AttackScript>();
 
         ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
         inventory = new Inventory(UseItem, emptyItemInfo);
@@ -272,12 +274,12 @@ public class PlayerController : MonoBehaviour
                 break;
             case "Stick":
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.stickSprite;
-                transform.GetChild(0).GetComponent<AttackScript>().damage = 40;
+                attackScript.damage = 40;
                 Attack();
                 break;
             case "Spear":
                 weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
-                transform.GetChild(0).GetComponent<AttackScript>().damage = 60;
+                attackScript.damage = 60;
                 Attack();
                 break;
             case "RawCrabMeat":
