@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     public enum Direction { UP, DOWN, LEFT, RIGHT };
 
-    public ItemScriptableObject emptyItemInfo;
     public InventoryUI inventoryUI;
     public Crafting crafting;
     public GameObject gameOverUI;
@@ -41,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
+        ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
         inventory = new Inventory(UseItem, emptyItemInfo);
         inventoryUI.SetInventory(inventory);
         inventoryUI.selectHotbarItem(hotbarItemIndex);
