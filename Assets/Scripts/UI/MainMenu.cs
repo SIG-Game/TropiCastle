@@ -7,8 +7,4 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene"); // loads next scene
     }
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
 }

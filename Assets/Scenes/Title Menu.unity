@@ -765,8 +765,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1341892509}
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 1341892510}
+        m_MethodName: QuitButton_OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -775,7 +775,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
 --- !u!114 &1099247670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1250,6 +1250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1341892508}
   - component: {fileID: 1341892509}
+  - component: {fileID: 1341892510}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1289,6 +1290,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5de7803c6c116aa4fba4cdd85752d357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1341892510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341892507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e2c13b292eb0aa4e981696dc426a53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1367980002
