@@ -7,7 +7,7 @@ public class PauseController : MonoBehaviour
 
     private bool gamePaused;
 
-    public bool CanPause { get; set; }
+    public bool CanOpenPauseMenu { get; set; }
     public bool GamePaused
     {
         get => gamePaused;
@@ -17,6 +17,7 @@ public class PauseController : MonoBehaviour
             Time.timeScale = gamePaused ? 0f : 1f;
         }
     }
+    public bool PauseMenuOpen { get; private set; }
 
     public static PauseController Instance;
 
@@ -24,13 +25,14 @@ public class PauseController : MonoBehaviour
     {
         Instance = this;
 
-        CanPause = true;
+        CanOpenPauseMenu = true;
         GamePaused = false;
+        PauseMenuOpen = false;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Pause") && !playerController.GetInventoryOpen() && CanPause)
+        if (Input.GetButtonDown("Pause") && CanOpenPauseMenu)
         {
             TogglePauseMenu();
         }
@@ -44,7 +46,8 @@ public class PauseController : MonoBehaviour
     public void TogglePauseMenu()
     {
         GamePaused = !GamePaused;
-        pauseMenu.SetActive(GamePaused);
+        PauseMenuOpen = GamePaused;
+        pauseMenu.SetActive(PauseMenuOpen);
         playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 }

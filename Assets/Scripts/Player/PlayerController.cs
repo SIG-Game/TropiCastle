@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
-    private bool inventoryOpen = false;
     private Vector2 velocity;
 
     void Start()
@@ -56,6 +55,19 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButtonDown("Inventory") && !PauseController.Instance.PauseMenuOpen)
+        {
+            PauseController.Instance.CanOpenPauseMenu = PauseController.Instance.GamePaused;
+            PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
+            inventoryUI.gameObject.SetActive(PauseController.Instance.GamePaused);
+            rb2d.velocity = Vector2.zero;
+
+            if (!PauseController.Instance.GamePaused)
+            {
+                inventoryUI.ResetHeldItem();
+            }
+        }
+
         if (PauseController.Instance.GamePaused)
         {
             return;
@@ -67,96 +79,81 @@ public class PlayerController : MonoBehaviour
             !dialogueBoxOpen && !canUseDialogueInputs)
             canUseDialogueInputs = true;
 
-        if (!inventoryOpen)
+
+        if (Input.GetMouseButtonDown(0) && canUseDialogueInputs)
         {
-            if (Input.GetMouseButtonDown(0) && canUseDialogueInputs)
+            List<ItemWithAmount> itemList = inventory.GetItemList();
+
+            UseItem(itemList[hotbarItemIndex]);
+
+            // Prevent doing other actions on the frame an attack starts
+            if (isAttacking)
             {
-                List<ItemWithAmount> itemList = inventory.GetItemList();
-
-                UseItem(itemList[hotbarItemIndex]);
-
-                // Prevent doing other actions on the frame an attack starts
-                if (isAttacking)
-                {
-                    velocity = Vector2.zero;
-                    return;
-                }
-            }
-
-            if (Input.GetMouseButtonDown(1) && itemPlacementTrigger.canPlace)
-            {
-                List<ItemWithAmount> itemList = inventory.GetItemList();
-
-                ItemWithAmount item = itemList[hotbarItemIndex];
-
-                if (item.itemData.name != "Empty")
-                {
-                    Vector3 itemPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    // Lock item position to grid
-                    //itemPosition.x = (Mathf.Round(2f * itemPosition.x - 0.5f) / 2f) + 0.25f;
-                    //itemPosition.y = (Mathf.Round(2f * itemPosition.y - 0.5f) / 2f) + 0.25f;
-                    itemPosition.z = 0f;
-
-                    _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, item);
-                    inventory.RemoveItem(item);
-                }
-            }
-
-            if (Input.mouseScrollDelta.y != 0f)
-            {
-                hotbarItemIndex -= (int)Mathf.Sign(Input.mouseScrollDelta.y);
-
-                if (hotbarItemIndex == 10)
-                    hotbarItemIndex = 0;
-                else if (hotbarItemIndex == -1)
-                    hotbarItemIndex = 9;
-
-                inventoryUI.selectHotbarItem(hotbarItemIndex);
-            }
-
-            ProcessNumberKeys();
-
-            if (Input.GetButtonDown("Interact") && canUseDialogueInputs)
-            {
-                RaycastHit2D hit = InteractionCast();
-
-                if (hit.collider != null)
-                {
-                    hit.transform.gameObject.GetComponent<Interactable>().Interact(this);
-                }
-            }
-
-            // TODO: Use mouse for picking up items
-            if (Input.GetButtonDown("Pick Up"))
-            {
-                RaycastHit2D hit = InteractionCast();
-
-                if (hit.collider != null && hit.collider.GetComponent<ItemWorld>() != null &&
-                    !inventory.IsFull())
-                {
-                    ItemWorld itemWorld = hit.collider.GetComponent<ItemWorld>();
-
-                    if (itemWorld.spawner != null)
-                    {
-                        itemWorld.spawner.SpawnedItemWorldPrefabInstanceRemoved();
-                    }
-
-                    inventory.AddItem(itemWorld.item);
-                    Destroy(hit.collider.gameObject);
-                }
+                velocity = Vector2.zero;
+                return;
             }
         }
 
-        if (Input.GetButtonDown("Inventory"))
+        if (Input.GetMouseButtonDown(1) && itemPlacementTrigger.canPlace)
         {
-            inventoryOpen = !inventoryOpen;
-            inventoryUI.gameObject.SetActive(inventoryOpen);
-            rb2d.velocity = Vector2.zero;
-            Time.timeScale = inventoryOpen ? 0f : 1f;
+            List<ItemWithAmount> itemList = inventory.GetItemList();
 
-            if (!inventoryOpen)
+            ItemWithAmount item = itemList[hotbarItemIndex];
+
+            if (item.itemData.name != "Empty")
             {
-                inventoryUI.ResetHeldItem();
+                Vector3 itemPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                // Lock item position to grid
+                //itemPosition.x = (Mathf.Round(2f * itemPosition.x - 0.5f) / 2f) + 0.25f;
+                //itemPosition.y = (Mathf.Round(2f * itemPosition.y - 0.5f) / 2f) + 0.25f;
+                itemPosition.z = 0f;
+
+                _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, item);
+                inventory.RemoveItem(item);
+            }
+        }
+
+        if (Input.mouseScrollDelta.y != 0f)
+        {
+            hotbarItemIndex -= (int)Mathf.Sign(Input.mouseScrollDelta.y);
+
+            if (hotbarItemIndex == 10)
+                hotbarItemIndex = 0;
+            else if (hotbarItemIndex == -1)
+                hotbarItemIndex = 9;
+
+            inventoryUI.selectHotbarItem(hotbarItemIndex);
+        }
+
+        ProcessNumberKeys();
+
+        if (Input.GetButtonDown("Interact") && canUseDialogueInputs)
+        {
+            RaycastHit2D hit = InteractionCast();
+
+            if (hit.collider != null)
+            {
+                hit.transform.gameObject.GetComponent<Interactable>().Interact(this);
+            }
+        }
+
+        // TODO: Use mouse for picking up items
+        if (Input.GetButtonDown("Pick Up"))
+        {
+            RaycastHit2D hit = InteractionCast();
+
+            if (hit.collider != null && hit.collider.GetComponent<ItemWorld>() != null &&
+                !inventory.IsFull())
+            {
+                ItemWorld itemWorld = hit.collider.GetComponent<ItemWorld>();
+
+                if (itemWorld.spawner != null)
+                {
+                    itemWorld.spawner.SpawnedItemWorldPrefabInstanceRemoved();
+                }
+
+                inventory.AddItem(itemWorld.item);
+                Destroy(hit.collider.gameObject);
             }
         }
 
@@ -193,19 +190,14 @@ public class PlayerController : MonoBehaviour
         return hit;
     }
 
-    public bool GetInventoryOpen()
-    {
-        return inventoryOpen;
-    }
-
     public bool CanMove()
     {
-        return !dialogueBoxOpen && !isAttacking && !PauseController.Instance.GamePaused && !inventoryOpen;
+        return !dialogueBoxOpen && !isAttacking && !PauseController.Instance.GamePaused;
     }
 
     public void PlayerDeath()
     {
-        PauseController.Instance.CanPause = false;
+        PauseController.Instance.CanOpenPauseMenu = false;
         PauseController.Instance.GamePaused = true;
         gameOverUI.SetActive(true);
     }
