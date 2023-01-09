@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (PauseController.Instance.gamePaused)
+        if (PauseController.Instance.GamePaused)
         {
             return;
         }
@@ -200,14 +200,13 @@ public class PlayerController : MonoBehaviour
 
     public bool CanMove()
     {
-        return !dialogueBoxOpen && !isAttacking && !PauseController.Instance.gamePaused && !inventoryOpen;
+        return !dialogueBoxOpen && !isAttacking && !PauseController.Instance.GamePaused && !inventoryOpen;
     }
 
     public void PlayerDeath()
     {
-        Time.timeScale = 0f;
-        PauseController.Instance.canPause = false;
-        PauseController.Instance.gamePaused = true;
+        PauseController.Instance.CanPause = false;
+        PauseController.Instance.GamePaused = true;
         gameOverUI.SetActive(true);
     }
 

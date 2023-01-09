@@ -5,8 +5,18 @@ public class PauseController : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private PlayerController playerController;
 
-    public bool canPause { get; set; }
-    public bool gamePaused { get; set; }
+    private bool gamePaused;
+
+    public bool CanPause { get; set; }
+    public bool GamePaused
+    {
+        get => gamePaused;
+        set
+        {
+            gamePaused = value;
+            Time.timeScale = gamePaused ? 0f : 1f;
+        }
+    }
 
     public static PauseController Instance;
 
@@ -14,13 +24,13 @@ public class PauseController : MonoBehaviour
     {
         Instance = this;
 
-        canPause = true;
-        gamePaused = false;
+        CanPause = true;
+        GamePaused = false;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Pause") && !playerController.GetInventoryOpen() && canPause)
+        if (Input.GetButtonDown("Pause") && !playerController.GetInventoryOpen() && CanPause)
         {
             TogglePauseMenu();
         }
@@ -33,9 +43,8 @@ public class PauseController : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        gamePaused = !gamePaused;
-        pauseMenu.SetActive(gamePaused);
+        GamePaused = !GamePaused;
+        pauseMenu.SetActive(GamePaused);
         playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        Time.timeScale = gamePaused ? 0f : 1f;
     }
 }
