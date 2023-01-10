@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     public Direction lastDirection { get; set; }
 
     private Animator animator;
-    private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
     private HealthController healthController;
     private LayerMask interactableMask;
@@ -28,12 +27,10 @@ public class PlayerController : MonoBehaviour
 
     private Inventory inventory;
     private int hotbarItemIndex = 0;
-    private Vector2 velocity;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         healthController = GetComponent<HealthController>();
 
@@ -60,7 +57,6 @@ public class PlayerController : MonoBehaviour
             PauseController.Instance.CanOpenPauseMenu = PauseController.Instance.GamePaused;
             PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
             inventoryUI.gameObject.SetActive(PauseController.Instance.GamePaused);
-            rb2d.velocity = Vector2.zero;
 
             if (!PauseController.Instance.GamePaused)
             {
@@ -89,7 +85,6 @@ public class PlayerController : MonoBehaviour
             // Prevent doing other actions on the frame an attack starts
             if (isAttacking)
             {
-                velocity = Vector2.zero;
                 return;
             }
         }
@@ -168,11 +163,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        rb2d.MovePosition(transform.position + (Vector3)velocity);
-    }
-
     private RaycastHit2D InteractionCast()
     {
         Vector2 interactionDirection = GetInteractionDirection();
@@ -222,11 +212,6 @@ public class PlayerController : MonoBehaviour
         }
 
         isAttacking = true;
-    }
-
-    public void SetVelocity(Vector2 newVelocity)
-    {
-        velocity = newVelocity;
     }
 
     public Inventory GetInventory()

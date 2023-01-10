@@ -7,19 +7,24 @@ public class PlayerMovement : MonoBehaviour
     public Sprite front, back, left, right;
 
     private PlayerController playerController;
+    private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
+    private Vector2 velocity;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
+        rb2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        velocity = Vector2.zero;
     }
 
     private void Update()
     {
         if (!playerController.CanMove())
         {
-            playerController.SetVelocity(Vector2.zero);
+            velocity = Vector2.zero;
             return;
         }
 
@@ -40,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
             newVelocity *= sprintSpeedMultiplier;
         }
 
-        playerController.SetVelocity(newVelocity);
+        velocity = newVelocity;
 
         if (inputVector != Vector2.zero)
         {
@@ -65,6 +70,11 @@ public class PlayerMovement : MonoBehaviour
                 spriteRenderer.sprite = back;
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        rb2d.MovePosition(transform.position + (Vector3)velocity);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
