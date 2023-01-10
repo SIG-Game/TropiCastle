@@ -423,8 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81c009ebcb861984296330923d931001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FishingMinigame: {fileID: 4788721817516295151}
-  playerController: {fileID: 0}
+  fishingMinigame: {fileID: 4788721817516295151}
 --- !u!1 &1938744878196299697
 GameObject:
   m_ObjectHideFlags: 0
