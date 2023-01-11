@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NPCInteractable : Interactable
@@ -16,13 +17,18 @@ public class NPCInteractable : Interactable
 
     public override void Interact(PlayerController player)
     {
+        Interact(player, null);
+    }
+
+    protected void Interact(PlayerController player, Action afterDialogueAction)
+    {
         Debug.Log("Interacted");
 
         this.player = player;
 
         FacePlayer();
 
-        DialogueBox.Instance.PlayDialogue(dialogueLines);
+        DialogueBox.Instance.PlayDialogue(dialogueLines, afterDialogueAction);
     }
 
     public void FacePlayer()

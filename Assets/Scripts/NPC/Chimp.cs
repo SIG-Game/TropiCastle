@@ -18,11 +18,9 @@ public class Chimp : NPCInteractable
 
     public override void Interact(PlayerController player)
     {
-        DialogueBox.Instance.AfterDialogueAction = Chimp_AfterDialogueAction;
-
         StopCoroutine(spinCoroutine);
 
-        base.Interact(player);
+        Interact(player, Chimp_AfterDialogueAction);
     }
 
     private IEnumerator Spin()

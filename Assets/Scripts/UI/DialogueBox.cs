@@ -11,8 +11,7 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private PlayerController player;
 
     private IEnumerator<string> linesEnumerator;
-
-    public Action AfterDialogueAction;
+    private Action afterDialogueAction;
 
     public static DialogueBox Instance { get; private set; }
 
@@ -21,7 +20,7 @@ public class DialogueBox : MonoBehaviour
         Instance = this;
 
         linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
-        AfterDialogueAction = null;
+        afterDialogueAction = null;
     }
 
     private void Update()
@@ -36,8 +35,7 @@ public class DialogueBox : MonoBehaviour
             }
             else
             {
-                AfterDialogueAction?.Invoke(); // Action may be null
-                AfterDialogueAction = null; // Action will be set again if used
+                afterDialogueAction?.Invoke(); // afterDialogueAction may be null
 
                 dialogueBoxUI.SetActive(false);
                 player.dialogueBoxOpen = false;
@@ -50,13 +48,15 @@ public class DialogueBox : MonoBehaviour
         Instance = null;
     }
 
-    public void PlayDialogue(List<string> lines)
+    public void PlayDialogue(List<string> lines, Action afterDialogueAction = null)
     {
         if (lines.Count == 0)
         {
             Debug.LogWarning("Dialogue lines list is empty");
             return;
         }
+
+        this.afterDialogueAction = afterDialogueAction;
 
         linesEnumerator = lines.GetEnumerator();
         linesEnumerator.MoveNext();
