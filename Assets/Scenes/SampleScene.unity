@@ -30841,6 +30841,8 @@ MonoBehaviour:
   back: {fileID: -8782420528491673401, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
   left: {fileID: -2894374843917858475, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
   right: {fileID: -4276444356177666921, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
+  defaultSprite: {fileID: -1438307777634969595, guid: 709e98cf21a73d7448807c6489d9c4f6,
+    type: 3}
   dialogueLines:
   - mmmmmmmmm...
   - (The benevolent chimp hands you a delicious red apple.)
@@ -32759,6 +32761,8 @@ MonoBehaviour:
   back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  defaultSprite: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee,
+    type: 3}
   dialogueLines:
   - Hello.
   - Welcome to the island!

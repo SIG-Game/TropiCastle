@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class NPCInteractable : Interactable
 {
-    public Sprite front, back, left, right;
-    public List<string> dialogueLines;
+    [SerializeField] protected Sprite front, back, left, right;
+    [SerializeField] protected Sprite defaultSprite;
+    [SerializeField] protected List<string> dialogueLines;
 
-    protected PlayerController player;
     protected SpriteRenderer spriteRenderer;
 
     private void Awake()
@@ -17,21 +17,17 @@ public class NPCInteractable : Interactable
 
     public override void Interact(PlayerController player)
     {
-        Interact(player, null);
+        Interact(player, () => spriteRenderer.sprite = defaultSprite);
     }
 
     protected void Interact(PlayerController player, Action afterDialogueAction)
     {
-        Debug.Log("Interacted");
-
-        this.player = player;
-
-        FacePlayer();
+        FacePlayer(player);
 
         DialogueBox.Instance.PlayDialogue(dialogueLines, afterDialogueAction);
     }
 
-    public void FacePlayer()
+    public void FacePlayer(PlayerController player)
     {
         switch (player.lastDirection)
         {

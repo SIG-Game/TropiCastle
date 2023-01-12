@@ -20,7 +20,7 @@ public class Chimp : NPCInteractable
     {
         StopCoroutine(spinCoroutine);
 
-        Interact(player, Chimp_AfterDialogueAction);
+        Interact(player, () => Chimp_AfterDialogueAction(player));
     }
 
     private IEnumerator Spin()
@@ -35,7 +35,7 @@ public class Chimp : NPCInteractable
         }
     }
 
-    private void Chimp_AfterDialogueAction()
+    private void Chimp_AfterDialogueAction(PlayerController player)
     {
         player.GetInventory().AddItem(appleItemScriptableObject, 1);
         spinCoroutine = StartCoroutine(Spin());
