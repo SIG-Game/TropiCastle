@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
 
     public FishingMinigame fishingGame;
 
-    public ItemPlacementTrigger itemPlacementTrigger;
-
     public Direction lastDirection { get; set; }
 
     private Animator animator;
@@ -86,25 +84,6 @@ public class PlayerController : MonoBehaviour
             if (isAttacking)
             {
                 return;
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1) && itemPlacementTrigger.canPlace)
-        {
-            List<ItemWithAmount> itemList = inventory.GetItemList();
-
-            ItemWithAmount item = itemList[hotbarItemIndex];
-
-            if (item.itemData.name != "Empty")
-            {
-                Vector3 itemPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                // Lock item position to grid
-                //itemPosition.x = (Mathf.Round(2f * itemPosition.x - 0.5f) / 2f) + 0.25f;
-                //itemPosition.y = (Mathf.Round(2f * itemPosition.y - 0.5f) / 2f) + 0.25f;
-                itemPosition.z = 0f;
-
-                _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, item);
-                inventory.RemoveItem(item);
             }
         }
 
