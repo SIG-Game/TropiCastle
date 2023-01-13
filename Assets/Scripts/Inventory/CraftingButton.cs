@@ -1,18 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class CraftingButton : MonoBehaviour, IPointerClickHandler
+public class CraftingButton : MonoBehaviour
 {
-    public Crafting crafting;
-    public List<ItemWithAmount> ingredients;
-    public ItemWithAmount resultItem;
+    [SerializeField] private Crafting crafting;
+    [SerializeField] private List<ItemWithAmount> ingredients;
+    [SerializeField] private ItemWithAmount resultItem;
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void CraftingButton_OnClick()
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            crafting.CraftItem(ingredients, resultItem);
-        }
+        crafting.CraftItem(ingredients, resultItem);
     }
 }
