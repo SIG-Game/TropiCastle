@@ -5,7 +5,7 @@ public class Crafting : MonoBehaviour
 {
     private Inventory inventory;
 
-    public void CraftItem(List<ItemWithAmount> ingredients, ItemWithAmount resultItem)
+    public void CraftItem(CraftingRecipeScriptableObject craftingRecipe)
     {
         List<ItemWithAmount> itemList = inventory.GetItemList();
 
@@ -13,7 +13,7 @@ public class Crafting : MonoBehaviour
         List<ItemWithAmount> itemsUsed = new List<ItemWithAmount>();
 
         // This approach must change when inventory item stacking is added
-        foreach (ItemWithAmount ingredient in ingredients) {
+        foreach (ItemWithAmount ingredient in craftingRecipe.ingredients) {
             Debug.Log("Finding ingredient " + ingredient.itemData.name);
 
             ItemWithAmount ingredientItem = itemList.Find(x => x.itemData.name == ingredient.itemData.name && !itemsUsed.Contains(x));
@@ -35,7 +35,7 @@ public class Crafting : MonoBehaviour
             inventory.RemoveItem(item);
         }
 
-        inventory.AddItem(resultItem);
+        inventory.AddItem(craftingRecipe.resultItem);
     }
 
     public void SetInventory(Inventory inventory)

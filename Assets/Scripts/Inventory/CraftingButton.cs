@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CraftingButton : MonoBehaviour
 {
     [SerializeField] private Crafting crafting;
-    [SerializeField] private List<ItemWithAmount> ingredients;
-    [SerializeField] private ItemWithAmount resultItem;
+    [SerializeField] private CraftingRecipeScriptableObject craftingRecipe;
 
     public void CraftingButton_OnClick()
     {
-        crafting.CraftItem(ingredients, resultItem);
+        crafting.CraftItem(craftingRecipe);
     }
 }

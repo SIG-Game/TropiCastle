@@ -20004,20 +20004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crafting: {fileID: 2003006741}
-  ingredients:
-  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
-    amount: 1
-  resultItem:
-    itemData: {fileID: 11400000, guid: 3f1a9772cbbbdc84ba12bdeddd4d8074, type: 2}
-    amount: 1
+  craftingRecipe: {fileID: 11400000, guid: 46d2472a2843f104d899177307cb20df, type: 2}
 --- !u!114 &700490300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39087,18 +39074,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crafting: {fileID: 2003006741}
-  ingredients:
-  - itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
-    amount: 1
-  resultItem:
-    itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    amount: 1
+  craftingRecipe: {fileID: 11400000, guid: 4116c5661eb3e4d4d920a89fcebba448, type: 2}
 --- !u!114 &1816024738
 MonoBehaviour:
   m_ObjectHideFlags: 0
