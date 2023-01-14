@@ -4,39 +4,30 @@ public class ItemPlacementTrigger : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
 
-    private bool canPlace;
-
-    private void Awake()
-    {
-        canPlace = true;
-    }
-
     private void Update()
     {
         transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetMouseButtonDown(1) && canPlace)
+        if (Input.GetMouseButtonDown(1))
         {
-            ItemWithAmount itemToPlace = player.GetHotbarItem();
+            // 0.2f is half the size of the Item World prefab's hitbox
+            Vector2 overlapAreaCornerA = new Vector2(transform.position.x - 0.2f, transform.position.y - 0.2f);
+            Vector2 overlapAreaCornerB = new Vector2(transform.position.x + 0.2f, transform.position.y + 0.2f);
+            Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerA, overlapAreaCornerB);
 
-            if (itemToPlace.itemData.name != "Empty")
+            if (itemWorldOverlap == null)
             {
-                Vector3 itemPosition = transform.position;
-                itemPosition.z = 0f;
+                ItemWithAmount itemToPlace = player.GetHotbarItem();
 
-                _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, itemToPlace);
-                player.GetInventory().RemoveItem(itemToPlace);
+                if (itemToPlace.itemData.name != "Empty")
+                {
+                    Vector3 itemPosition = transform.position;
+                    itemPosition.z = 0f;
+
+                    _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, itemToPlace);
+                    player.GetInventory().RemoveItem(itemToPlace);
+                }
             }
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        canPlace = false;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        canPlace = true;
     }
 }
