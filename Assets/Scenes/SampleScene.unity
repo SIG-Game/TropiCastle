@@ -613,12 +613,12 @@ PrefabInstance:
     - target: {fileID: 1938744877069393186, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: m_Name
-      value: FishingUI
+      value: Fishing UI Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 1938744877069393186, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1938744877069393189, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
@@ -885,32 +885,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 3588baae45eac094db4e3b624b0891b3,
         type: 3}
-    - target: {fileID: 4788721819336372589, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.5625
-      objectReference: {fileID: 0}
-    - target: {fileID: 4788721819336372589, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.5625
-      objectReference: {fileID: 0}
-    - target: {fileID: 4788721819336372589, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3588baae45eac094db4e3b624b0891b3,
-        type: 3}
-    - target: {fileID: 4788721819336372589, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4788721819336372589, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1938744877069393191, guid: 6eec2d617ac261b42855edf00e17c077, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6eec2d617ac261b42855edf00e17c077, type: 3}
