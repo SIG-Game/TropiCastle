@@ -12,13 +12,13 @@ public class FishingMinigame : MonoBehaviour
     [HideInInspector] public bool canCatch = false;
 
     private Direction direction = Direction.left;
-    private ScriptableFish[] fishScriptableObjects;
+    private FishScriptableObject[] fishScriptableObjects;
     private ItemScriptableObject fishItemScriptableObject;
-    private ScriptableFish selectedFish;
+    private FishScriptableObject selectedFish;
 
     private void Awake()
     {
-        fishScriptableObjects = Resources.LoadAll<ScriptableFish>("Fish");
+        fishScriptableObjects = Resources.LoadAll<FishScriptableObject>("Fish");
         fishItemScriptableObject = Resources.Load<ItemScriptableObject>("Items/Fish");
     }
 
