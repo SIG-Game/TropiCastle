@@ -7,8 +7,6 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private GameObject fishingUI;
     [SerializeField] private GameObject fish;
     [SerializeField] private Image fishImage;
-    [SerializeField] private Sprite fishSpriteL;
-    [SerializeField] private Sprite fishSpriteR;
     [SerializeField] private PlayerController player;
 
     [HideInInspector] public bool canCatch = false;
@@ -47,7 +45,8 @@ public class FishingMinigame : MonoBehaviour
     private void ChangeDirection()
     {
         direction = (Direction)(-(int)direction);
-        fishImage.sprite = direction == Direction.left ? fishSpriteL : fishSpriteR;
+        fishImage.transform.localScale = new Vector3(-fishImage.transform.localScale.x,
+            fishImage.transform.localScale.y, fishImage.transform.localScale.z);
     }
 
     private void EndFishing()
@@ -61,12 +60,12 @@ public class FishingMinigame : MonoBehaviour
         {
             if (Random.Range(0, 2) == 0)
             {
-                fishImage.sprite = fishSpriteR;
+                fishImage.transform.localScale = new Vector3(-1f, fishImage.transform.localScale.y, fishImage.transform.localScale.z);
                 direction = Direction.right;
             }
             else
             {
-                fishImage.sprite = fishSpriteL;
+                fishImage.transform.localScale = new Vector3(1f, fishImage.transform.localScale.y, fishImage.transform.localScale.z);
                 direction = Direction.left;
             }
 
