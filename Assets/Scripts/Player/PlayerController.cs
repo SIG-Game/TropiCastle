@@ -169,7 +169,12 @@ public class PlayerController : MonoBehaviour
         gameOverUI.SetActive(true);
     }
 
-    public void Attack() {
+    public void AttackWithWeapon(string weaponName) {
+        WeaponScriptableObject weaponScriptableObject = Resources.Load<WeaponScriptableObject>("Weapons/" + weaponName);
+
+        weaponSpriteRenderer.sprite = weaponScriptableObject.sprite;
+        weaponController.damage = weaponScriptableObject.damage;
+
         switch (lastDirection) {
             case Direction.UP:
                 animator.Play("Swing Up");
@@ -225,14 +230,8 @@ public class PlayerController : MonoBehaviour
                 ConsumeHealingItem(item, 10);
                 break;
             case "Stick":
-                weaponSpriteRenderer.sprite = WeaponAssets.Instance.stickSprite;
-                weaponController.damage = 40;
-                Attack();
-                break;
             case "Spear":
-                weaponSpriteRenderer.sprite = WeaponAssets.Instance.spearSprite;
-                weaponController.damage = 60;
-                Attack();
+                AttackWithWeapon(item.itemData.name);
                 break;
             case "RawCrabMeat":
                 ConsumeHealingItem(item, 10);
