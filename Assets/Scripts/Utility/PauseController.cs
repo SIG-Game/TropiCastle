@@ -2,7 +2,7 @@
 
 public class PauseController : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private PlayerController playerController;
 
     private bool gamePaused;
@@ -47,7 +47,7 @@ public class PauseController : MonoBehaviour
     {
         GamePaused = !GamePaused;
         PauseMenuOpen = GamePaused;
-        pauseMenu.SetActive(PauseMenuOpen);
+        pauseMenuUI.SetActive(PauseMenuOpen);
         playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 }
