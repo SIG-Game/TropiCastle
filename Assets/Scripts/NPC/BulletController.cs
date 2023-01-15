@@ -1,17 +1,10 @@
 ﻿using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class BulletController : MonoBehaviour
 {
-    public float speed;
-    Rigidbody2D rb2d;
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb2d = GetComponent<Rigidbody2D>();
-    }
+    [SerializeField] private float speed;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
@@ -20,11 +13,9 @@ public class BulletScript : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("hit player");
+            Debug.Log($"{nameof(BulletController)} trigger hit player");
             Destroy(gameObject);
-            
         }
-        
     }
 
     private void OnBecameInvisible()
