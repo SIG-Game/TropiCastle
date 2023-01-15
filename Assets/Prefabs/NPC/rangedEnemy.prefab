@@ -94,6 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f338fff407165e9489902f46d12c9808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  player: {fileID: 0}
   bullet: {fileID: 21336417945378469, guid: 4c3833ef25f48904d81cf0bb466f6015, type: 3}
-  startShotCD: 3
+  targetRange: 6
+  waitTimeBeforeShootingSeconds: 3
+  timeBetweenShotsSeconds: 2
