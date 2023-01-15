@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
     public enum Direction { UP, DOWN, LEFT, RIGHT };
 
     public InventoryUI inventoryUI;
-    public Crafting crafting;
     public GameObject gameOverUI;
     public bool isAttacking = false;
     public bool dialogueBoxOpen = false;
@@ -26,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private Inventory inventory;
     private int hotbarItemIndex = 0;
 
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -39,7 +38,6 @@ public class PlayerController : MonoBehaviour
         inventory = new Inventory(UseItem, emptyItemInfo);
         inventoryUI.SetInventory(inventory);
         inventoryUI.selectHotbarItem(hotbarItemIndex);
-        crafting.SetInventory(inventory);
 
         lastDirection = Direction.DOWN;
 
