@@ -11,7 +11,6 @@ public class FishingMinigame : MonoBehaviour
 
     [HideInInspector] public bool canCatch = false;
 
-    private Direction direction = Direction.left;
     private FishScriptableObject[] fishScriptableObjects;
     private FishScriptableObject selectedFish;
 
@@ -32,7 +31,7 @@ public class FishingMinigame : MonoBehaviour
                 EndFishing();
             }
 
-            fish.transform.localPosition += new Vector3(0.1f * selectedFish.speed * (int)direction, 0f, 0f);
+            fish.transform.localPosition += new Vector3(0.1f * selectedFish.speed * -fishImage.transform.localScale.x, 0f, 0f);
 
             if (fish.transform.localPosition.x >= 200 || fish.transform.localPosition.x <= -200)
             {
@@ -43,7 +42,6 @@ public class FishingMinigame : MonoBehaviour
 
     private void ChangeDirection()
     {
-        direction = (Direction)(-(int)direction);
         fishImage.transform.localScale = new Vector3(-fishImage.transform.localScale.x,
             fishImage.transform.localScale.y, fishImage.transform.localScale.z);
     }
@@ -57,16 +55,8 @@ public class FishingMinigame : MonoBehaviour
     {
         if (!fishingUI.activeSelf)
         {
-            if (Random.Range(0, 2) == 0)
-            {
-                fishImage.transform.localScale = new Vector3(-1f, fishImage.transform.localScale.y, fishImage.transform.localScale.z);
-                direction = Direction.right;
-            }
-            else
-            {
-                fishImage.transform.localScale = new Vector3(1f, fishImage.transform.localScale.y, fishImage.transform.localScale.z);
-                direction = Direction.left;
-            }
+            fishImage.transform.localScale = new Vector3(Random.Range(0, 2) == 0 ? 1f : -1f,
+                fishImage.transform.localScale.y, fishImage.transform.localScale.z);
 
             int selectedFishIndex = Random.Range(0, fishScriptableObjects.Length);
             selectedFish = fishScriptableObjects[selectedFishIndex];
@@ -86,10 +76,4 @@ public class FishingMinigame : MonoBehaviour
             Debug.Log("Spawned fish at: " + fish.transform.localPosition.x);
         }
     }
-}
-
-public enum Direction
-{
-    left = -1,
-    right = 1
 }
