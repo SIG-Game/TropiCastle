@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: Marlin
   description: Quite the nose on this one
-  speed: 20
+  speed: 440

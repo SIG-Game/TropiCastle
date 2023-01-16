@@ -31,10 +31,13 @@ public class FishingMinigame : MonoBehaviour
                 EndFishing();
             }
 
-            fish.transform.localPosition += new Vector3(0.1f * selectedFish.speed * -fishImage.transform.localScale.x, 0f, 0f);
+            fish.transform.localPosition += new Vector3(selectedFish.speed * Time.deltaTime * -fishImage.transform.localScale.x, 0f, 0f);
 
-            if (fish.transform.localPosition.x >= 200 || fish.transform.localPosition.x <= -200)
+            if (fish.transform.localPosition.x >= 200f || fish.transform.localPosition.x <= -200f)
             {
+                fish.transform.localPosition = new Vector3(Mathf.Clamp(fish.transform.localPosition.x, -200f, 200f),
+                    fish.transform.localPosition.y, fish.transform.localPosition.z);
+
                 ChangeDirection();
             }
         }

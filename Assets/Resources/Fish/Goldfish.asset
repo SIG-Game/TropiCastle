@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   species: Goldfish
   description: Not made of gold...
-  speed: 10
+  speed: 220
