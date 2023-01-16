@@ -13,13 +13,11 @@ public class FishingMinigame : MonoBehaviour
 
     private Direction direction = Direction.left;
     private FishScriptableObject[] fishScriptableObjects;
-    private ItemScriptableObject fishItemScriptableObject;
     private FishScriptableObject selectedFish;
 
     private void Awake()
     {
         fishScriptableObjects = Resources.LoadAll<FishScriptableObject>("Fish");
-        fishItemScriptableObject = Resources.Load<ItemScriptableObject>("Items/Fish");
     }
 
     private void Update()
@@ -29,7 +27,8 @@ public class FishingMinigame : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && canCatch)
             {
                 DialogueBox.Instance.PlayDialogue(new List<string> { selectedFish.species + "\n" + selectedFish.description });
-                player.GetInventory().AddItem(fishItemScriptableObject, 1);
+                ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
+                player.GetInventory().AddItem(caughtFishItem, 1);
                 EndFishing();
             }
 
