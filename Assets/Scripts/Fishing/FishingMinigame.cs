@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 public class FishingMinigame : MonoBehaviour
@@ -11,12 +14,13 @@ public class FishingMinigame : MonoBehaviour
 
     [HideInInspector] public bool canCatch = false;
 
-    private FishScriptableObject[] fishScriptableObjects;
     private FishScriptableObject selectedFish;
+
+    private AsyncOperationHandle<IList<FishScriptableObject>> fishScriptableObjectsLoadHandle;
 
     private void Awake()
     {
-        fishScriptableObjects = Resources.LoadAll<FishScriptableObject>("Fish");
+        fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
     }
 
     private void Update()
@@ -43,6 +47,11 @@ public class FishingMinigame : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Addressables.Release(fishScriptableObjectsLoadHandle);
+    }
+
     private void ChangeDirection()
     {
         fishImage.transform.localScale = new Vector3(-fishImage.transform.localScale.x,
@@ -54,15 +63,20 @@ public class FishingMinigame : MonoBehaviour
         fishingUI.SetActive(false);
     }
 
-    public void StartFishing()
+    public IEnumerator StartFishing()
     {
+        while (!fishScriptableObjectsLoadHandle.IsDone)
+        {
+            yield return fishScriptableObjectsLoadHandle;
+        }
+
         if (!fishingUI.activeSelf)
         {
             fishImage.transform.localScale = new Vector3(Random.Range(0, 2) == 0 ? 1f : -1f,
                 fishImage.transform.localScale.y, fishImage.transform.localScale.z);
 
-            int selectedFishIndex = Random.Range(0, fishScriptableObjects.Length);
-            selectedFish = fishScriptableObjects[selectedFishIndex];
+            int selectedFishIndex = Random.Range(0, fishScriptableObjectsLoadHandle.Result.Count);
+            selectedFish = fishScriptableObjectsLoadHandle.Result[selectedFishIndex];
 
             Debug.Log("Selected fish: " + selectedFish.species);
 

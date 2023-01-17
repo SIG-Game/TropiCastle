@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
             ItemScriptableObject fishingRodScriptableObject = Resources.Load<ItemScriptableObject>("Items/FishingRod");
 
             inventory.AddItem(fishingRodScriptableObject, 1);
-            fishingGame.StartFishing();
+            StartCoroutine(fishingGame.StartFishing());
         }
     }
 
@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
                 ConsumeHealingItem(item, 20);
                 break;
             case "FishingRod":
-                fishingGame.StartFishing();
+                StartCoroutine(fishingGame.StartFishing());
                 break;
             default:
                 Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
