@@ -109,26 +109,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // TODO: Use mouse for picking up items
-        if (Input.GetButtonDown("Pick Up"))
-        {
-            RaycastHit2D hit = InteractionCast();
-
-            if (hit.collider != null && hit.collider.GetComponent<ItemWorld>() != null &&
-                !inventory.IsFull())
-            {
-                ItemWorld itemWorld = hit.collider.GetComponent<ItemWorld>();
-
-                if (itemWorld.spawner != null)
-                {
-                    itemWorld.spawner.SpawnedItemWorldPrefabInstanceRemoved();
-                }
-
-                inventory.AddItem(itemWorld.item);
-                Destroy(hit.collider.gameObject);
-            }
-        }
-
         // Debug input for fishing
         if (Input.GetKeyDown(KeyCode.G))
         {

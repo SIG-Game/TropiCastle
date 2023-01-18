@@ -1235,7 +1235,7 @@ GameObject:
   - component: {fileID: 303969646}
   - component: {fileID: 303969647}
   m_Layer: 0
-  m_Name: Item Placement Hitbox
+  m_Name: Item Pickup and Placement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
