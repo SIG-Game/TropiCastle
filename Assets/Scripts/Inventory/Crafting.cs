@@ -7,7 +7,8 @@ public class Crafting : MonoBehaviour
 
     private Inventory inventory;
 
-    private void Start() {
+    private void Start()
+    {
         inventory = player.GetInventory();
     }
 
@@ -15,30 +16,40 @@ public class Crafting : MonoBehaviour
     {
         List<ItemWithAmount> itemList = inventory.GetItemList();
 
-        // Add items to remove to a list so that items aren't removed when crafting fails
-        List<ItemWithAmount> itemsUsed = new List<ItemWithAmount>();
+        // Add indexes of items to remove to a list so that items aren't removed when crafting fails
+        List<int> itemsToRemoveIndexes = new List<int>();
 
         // This approach must change when inventory item stacking is added
-        foreach (ItemWithAmount ingredient in craftingRecipe.ingredients) {
-            Debug.Log("Finding ingredient " + ingredient.itemData.name);
+        foreach (ItemWithAmount ingredient in craftingRecipe.ingredients)
+        {
+            ItemWithAmount inventoryIngredientItem = null;
 
-            ItemWithAmount ingredientItem = itemList.Find(x => x.itemData.name == ingredient.itemData.name && !itemsUsed.Contains(x));
+            for (int i = 0; i < itemList.Count; ++i)
+            {
+                ItemWithAmount currentItem = itemList[i];
 
-            if (ingredientItem == null)
+                if (currentItem.itemData.name == ingredient.itemData.name && !itemsToRemoveIndexes.Contains(i))
+                {
+                    inventoryIngredientItem = currentItem;
+                    itemsToRemoveIndexes.Add(i);
+                    Debug.Log("Found ingredient " + ingredient.itemData.name);
+                    break;
+                }
+            }
+
+            if (inventoryIngredientItem == null)
             {
                 Debug.Log("Ingredient " + ingredient.itemData.name + " not found");
                 return;
             }
-
-            Debug.Log("Found ingredient " + ingredient.itemData.name);
-
-            itemsUsed.Add(ingredientItem);
         }
 
-        foreach (ItemWithAmount item in itemsUsed)
+        foreach (int itemIndex in itemsToRemoveIndexes)
         {
-            Debug.Log("Used " + item.itemData.name);
-            inventory.RemoveItem(item);
+            ItemWithAmount itemToRemove = itemList[itemIndex];
+
+            inventory.RemoveItem(itemToRemove);
+            Debug.Log("Used ingredient " + itemToRemove.itemData.name);
         }
 
         inventory.AddItem(craftingRecipe.resultItem);
