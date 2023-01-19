@@ -35,7 +35,7 @@ public class FishingMinigame : MonoBehaviour
                 EndFishing();
             }
 
-            fish.transform.localPosition += new Vector3(selectedFish.speed * Time.deltaTime * -fishImage.transform.localScale.x, 0f, 0f);
+            fish.transform.localPosition += new Vector3(selectedFish.speed * Time.deltaTime * fishImage.transform.localScale.x, 0f, 0f);
 
             if (fish.transform.localPosition.x >= 200f || fish.transform.localPosition.x <= -200f)
             {
