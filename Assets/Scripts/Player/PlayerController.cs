@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
 
     public FishingMinigame fishingGame;
 
+    // TODO: Remove because PauseMenuOpen from PauseController.cs
+    // should replace the usage of CanOpenPauseMenu from PauseMenu.cs
+    public PauseMenu pauseMenu;
+
     public Direction lastDirection { get; set; }
 
     private Animator animator;
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Inventory") && !PauseController.Instance.PauseMenuOpen)
         {
-            PauseController.Instance.CanOpenPauseMenu = PauseController.Instance.GamePaused;
+            pauseMenu.CanOpenPauseMenu = PauseController.Instance.GamePaused;
             PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
             inventoryUI.gameObject.SetActive(PauseController.Instance.GamePaused);
 
@@ -144,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDeath()
     {
-        PauseController.Instance.CanOpenPauseMenu = false;
+        pauseMenu.CanOpenPauseMenu = false;
         PauseController.Instance.GamePaused = true;
         gameOverUI.SetActive(true);
     }

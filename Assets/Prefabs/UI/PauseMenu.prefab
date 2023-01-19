@@ -461,7 +461,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8469253193703958127}
+      - m_Target: {fileID: 3581496665754294413}
         m_MethodName: TogglePauseMenu
         m_Mode: 1
         m_Arguments:
@@ -1078,6 +1078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5546319517758469060}
   - component: {fileID: 8469253193703958127}
+  - component: {fileID: 3581496665754294413}
   - component: {fileID: 2160573628843243474}
   m_Layer: 5
   m_Name: Controllers
@@ -1115,6 +1116,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f74733bf8d687694f8e0e0018723c827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3581496665754294413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8996233945527217483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b200a3e6789e3c48917d0e2ac74aa25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 8471863251377667687}
