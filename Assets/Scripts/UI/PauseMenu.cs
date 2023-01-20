@@ -5,16 +5,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private PlayerController playerController;
 
-    public bool CanOpenPauseMenu { get; set; }
-
-    private void Awake()
-    {
-        CanOpenPauseMenu = true;
-    }
-
     private void Update()
     {
-        if (Input.GetButtonDown("Pause") && CanOpenPauseMenu)
+        if (Input.GetButtonDown("Pause") &&
+            (!PauseController.Instance.PauseMenuOpen || pauseMenuUI.activeInHierarchy))
         {
             TogglePauseMenu();
         }
