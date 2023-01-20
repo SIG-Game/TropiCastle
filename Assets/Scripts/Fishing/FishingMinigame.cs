@@ -65,6 +65,12 @@ public class FishingMinigame : MonoBehaviour
 
     public IEnumerator StartFishing()
     {
+        if (player.GetInventory().IsFull())
+        {
+            DialogueBox.Instance.PlayDialogue(new List<string> { "You cannot fish because your inventory is full." });
+            yield break;
+        }
+
         while (!fishScriptableObjectsLoadHandle.IsDone)
         {
             yield return fishScriptableObjectsLoadHandle;
