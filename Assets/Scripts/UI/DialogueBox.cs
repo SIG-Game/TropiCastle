@@ -48,18 +48,17 @@ public class DialogueBox : MonoBehaviour
         Instance = null;
     }
 
-    public void PlayDialogue(List<string> lines, Action afterDialogueAction = null)
+    public void PlayDialogue(IEnumerable<string> lines, Action afterDialogueAction = null)
     {
-        if (lines.Count == 0)
-        {
-            Debug.LogWarning("Dialogue lines list is empty");
-            return;
-        }
-
         this.afterDialogueAction = afterDialogueAction;
 
         linesEnumerator = lines.GetEnumerator();
-        linesEnumerator.MoveNext();
+
+        if (!linesEnumerator.MoveNext())
+        {
+            Debug.LogWarning($"Dialogue lines {nameof(IEnumerable<string>)} is empty");
+            return;
+        }
 
         dialogueText.text = linesEnumerator.Current;
         dialogueBoxUI.SetActive(true);
