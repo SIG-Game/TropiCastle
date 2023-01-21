@@ -48,10 +48,27 @@ public class DialogueBox : MonoBehaviour
         Instance = null;
     }
 
-    public void PlayDialogue(IEnumerable<string> lines, Action afterDialogueAction = null)
+    public void PlayDialogue(string line, Action afterDialogueAction = null)
     {
+        if (string.IsNullOrWhiteSpace(line))
+        {
+            Debug.LogWarning($"Dialogue line is empty");
+            return;
+        }
+
+        linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
+
         this.afterDialogueAction = afterDialogueAction;
 
+        dialogueText.text = line;
+        dialogueBoxUI.SetActive(true);
+        player.dialogueBoxOpen = true;
+        player.canUseDialogueInputs = false;
+    }
+
+
+    public void PlayDialogue(IEnumerable<string> lines, Action afterDialogueAction = null)
+    {
         linesEnumerator = lines.GetEnumerator();
 
         if (!linesEnumerator.MoveNext())
@@ -59,6 +76,8 @@ public class DialogueBox : MonoBehaviour
             Debug.LogWarning($"Dialogue lines {nameof(IEnumerable<string>)} is empty");
             return;
         }
+
+        this.afterDialogueAction = afterDialogueAction;
 
         dialogueText.text = linesEnumerator.Current;
         dialogueBoxUI.SetActive(true);

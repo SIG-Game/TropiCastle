@@ -29,7 +29,7 @@ public class FishingMinigame : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && canCatch)
             {
-                DialogueBox.Instance.PlayDialogue(new List<string> { selectedFish.species + "\n" + selectedFish.description });
+                DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description);
                 ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
                 player.GetInventory().AddItem(caughtFishItem, 1);
                 EndFishing();
@@ -67,7 +67,7 @@ public class FishingMinigame : MonoBehaviour
     {
         if (player.GetInventory().IsFull())
         {
-            DialogueBox.Instance.PlayDialogue(new List<string> { "You cannot fish because your inventory is full." });
+            DialogueBox.Instance.PlayDialogue("You cannot fish because your inventory is full.");
             yield break;
         }
 
