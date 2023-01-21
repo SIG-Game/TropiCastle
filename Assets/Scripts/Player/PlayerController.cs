@@ -49,10 +49,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Inventory") &&
-            (!PauseController.Instance.PauseMenuOpen || inventoryUI.gameObject.activeInHierarchy))
+            (!PauseController.Instance.GamePaused || inventoryUI.gameObject.activeInHierarchy))
         {
             PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
-            PauseController.Instance.PauseMenuOpen = PauseController.Instance.GamePaused;
             inventoryUI.gameObject.SetActive(PauseController.Instance.GamePaused);
 
             if (!PauseController.Instance.GamePaused)
@@ -145,7 +144,6 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDeath()
     {
-        PauseController.Instance.PauseMenuOpen = true;
         PauseController.Instance.GamePaused = true;
         gameOverUI.SetActive(true);
     }

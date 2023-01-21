@@ -8,7 +8,7 @@ public class PauseMenu : MonoBehaviour
     private void Update()
     {
         if (Input.GetButtonDown("Pause") &&
-            (!PauseController.Instance.PauseMenuOpen || pauseMenuUI.activeInHierarchy))
+            (!PauseController.Instance.GamePaused || pauseMenuUI.activeInHierarchy))
         {
             TogglePauseMenu();
         }
@@ -17,8 +17,7 @@ public class PauseMenu : MonoBehaviour
     public void TogglePauseMenu()
     {
         PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
-        PauseController.Instance.PauseMenuOpen = PauseController.Instance.GamePaused;
-        pauseMenuUI.SetActive(PauseController.Instance.PauseMenuOpen);
+        pauseMenuUI.SetActive(PauseController.Instance.GamePaused);
         playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 }

@@ -13,7 +13,6 @@ public class PauseController : MonoBehaviour
             Time.timeScale = gamePaused ? 0f : 1f;
         }
     }
-    public bool PauseMenuOpen { get; set; }
 
     public static PauseController Instance;
 
@@ -22,7 +21,6 @@ public class PauseController : MonoBehaviour
         Instance = this;
 
         GamePaused = false;
-        PauseMenuOpen = false;
     }
 
     private void OnDestroy()
