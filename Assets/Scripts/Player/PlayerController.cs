@@ -203,20 +203,18 @@ public class PlayerController : MonoBehaviour
 
     private void UseItem(ItemWithAmount item)
     {
+        if (item.itemData is HealingItemScriptableObject)
+        {
+            HealingItemScriptableObject healingItemData = item.itemData as HealingItemScriptableObject;
+            ConsumeHealingItem(item, healingItemData.healAmount);
+            return;
+        }
+
         switch (item.itemData.name)
         {
-            case "Apple":
-                ConsumeHealingItem(item, 10);
-                break;
             case "Stick":
             case "Spear":
                 AttackWithWeapon(item.itemData.name);
-                break;
-            case "RawCrabMeat":
-                ConsumeHealingItem(item, 10);
-                break;
-            case "CookedCrabMeat":
-                ConsumeHealingItem(item, 20);
                 break;
             case "FishingRod":
                 StartCoroutine(fishingGame.StartFishing());
