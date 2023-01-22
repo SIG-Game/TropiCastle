@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Spear
   sprite: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1, type: 3}
-  weapon: {fileID: 11400000, guid: 277acdd4d64a5b94296f02aa7160690a, type: 2}
+  weaponSprite: {fileID: 21300000, guid: 349d3eb683eac8a4097352ae27210a1e, type: 3}
+  damage: 60

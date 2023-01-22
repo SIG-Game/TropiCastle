@@ -3,5 +3,6 @@
 [CreateAssetMenu(menuName = "Weapon Item")]
 public class WeaponItemScriptableObject : ItemScriptableObject
 {
-    public WeaponScriptableObject weapon;
+    public Sprite weaponSprite;
+    public int damage;
 }

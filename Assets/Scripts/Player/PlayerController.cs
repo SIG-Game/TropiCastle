@@ -148,9 +148,9 @@ public class PlayerController : MonoBehaviour
         gameOverUI.SetActive(true);
     }
 
-    public void AttackWithWeapon(WeaponScriptableObject weaponScriptableObject) {
-        weaponSpriteRenderer.sprite = weaponScriptableObject.sprite;
-        weaponController.damage = weaponScriptableObject.damage;
+    public void AttackWithWeapon(WeaponItemScriptableObject weaponItemData) {
+        weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
+        weaponController.damage = weaponItemData.damage;
 
         switch (lastDirection) {
             case Direction.UP:
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (item.itemData is WeaponItemScriptableObject weaponItemData)
         {
-            AttackWithWeapon(weaponItemData.weapon);
+            AttackWithWeapon(weaponItemData);
         }
         else if (item.itemData.name == "FishingRod")
         {
