@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Inventory
 {
@@ -49,7 +50,10 @@ public class Inventory
     public void AddItem(ItemWithAmount newItem)
     {
         if (IsFull())
+        {
+            Debug.LogWarning("Attempted to add an item to a full inventory");
             return;
+        }
 
         itemList[firstEmptyIndex] = newItem;
         ChangedItemAt?.Invoke(firstEmptyIndex);
