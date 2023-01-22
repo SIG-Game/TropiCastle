@@ -11,8 +11,8 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private GameObject fish;
     [SerializeField] private Image fishImage;
     [SerializeField] private PlayerController player;
-
-    [HideInInspector] public bool canCatch = false;
+    [SerializeField] private float minCatchFishX;
+    [SerializeField] private float maxCatchFishX;
 
     private FishScriptableObject selectedFish;
 
@@ -27,7 +27,7 @@ public class FishingMinigame : MonoBehaviour
     {
         if (fishingUI.activeSelf)
         {
-            if (Input.GetMouseButtonDown(0) && canCatch)
+            if (Input.GetMouseButtonDown(0) && fish.transform.localPosition.x >= minCatchFishX && fish.transform.localPosition.x <= maxCatchFishX)
             {
                 DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description);
                 ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
