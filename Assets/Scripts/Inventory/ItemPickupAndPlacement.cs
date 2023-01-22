@@ -4,6 +4,13 @@ public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
 
+    private Inventory playerInventory;
+
+    private void Start()
+    {
+        playerInventory = player.GetInventory();
+    }
+
     private void Update()
     {
         Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -17,14 +24,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
             {
                 ItemWorld itemWorld = mouseOverlapPoint.GetComponent<ItemWorld>();
 
-                if (itemWorld != null)
+                if (itemWorld != null && !playerInventory.IsFull())
                 {
                     if (itemWorld.spawner != null)
                     {
                         itemWorld.spawner.SpawnedItemWorldPrefabInstanceRemoved();
                     }
 
-                    player.GetInventory().AddItem(itemWorld.item);
+                    playerInventory.AddItem(itemWorld.item);
                     Destroy(mouseOverlapPoint.gameObject);
                 }
             }
@@ -46,7 +53,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
                         itemPosition.z = 0f;
 
                         _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, itemToPlace);
-                        player.GetInventory().RemoveItem(itemToPlace);
+                        playerInventory.RemoveItem(itemToPlace);
                     }
                 }
             }
