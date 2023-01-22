@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
+  m_Script: {fileID: 11500000, guid: b2584ce2c2cfc1e4e96c67b07389cab7, type: 3}
   m_Name: Spear
   m_EditorClassIdentifier: 
   name: Spear
   sprite: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1, type: 3}
+  weapon: {fileID: 11400000, guid: 277acdd4d64a5b94296f02aa7160690a, type: 2}

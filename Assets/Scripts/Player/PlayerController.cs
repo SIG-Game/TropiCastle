@@ -148,9 +148,7 @@ public class PlayerController : MonoBehaviour
         gameOverUI.SetActive(true);
     }
 
-    public void AttackWithWeapon(string weaponName) {
-        WeaponScriptableObject weaponScriptableObject = Resources.Load<WeaponScriptableObject>("Weapons/" + weaponName);
-
+    public void AttackWithWeapon(WeaponScriptableObject weaponScriptableObject) {
         weaponSpriteRenderer.sprite = weaponScriptableObject.sprite;
         weaponController.damage = weaponScriptableObject.damage;
 
@@ -203,25 +201,21 @@ public class PlayerController : MonoBehaviour
 
     private void UseItem(ItemWithAmount item)
     {
-        if (item.itemData is HealingItemScriptableObject)
+        if (item.itemData is HealingItemScriptableObject healingItemData)
         {
-            HealingItemScriptableObject healingItemData = item.itemData as HealingItemScriptableObject;
             ConsumeHealingItem(item, healingItemData.healAmount);
-            return;
         }
-
-        switch (item.itemData.name)
+        else if (item.itemData is WeaponItemScriptableObject weaponItemData)
         {
-            case "Stick":
-            case "Spear":
-                AttackWithWeapon(item.itemData.name);
-                break;
-            case "FishingRod":
-                StartCoroutine(fishingGame.StartFishing());
-                break;
-            default:
-                Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
-                break;
+            AttackWithWeapon(weaponItemData.weapon);
+        }
+        else if (item.itemData.name == "FishingRod")
+        {
+            StartCoroutine(fishingGame.StartFishing());
+        }
+        else
+        {
+            Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
         }
     }
 
