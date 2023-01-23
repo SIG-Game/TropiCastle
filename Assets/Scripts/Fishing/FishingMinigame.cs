@@ -27,12 +27,17 @@ public class FishingMinigame : MonoBehaviour
     {
         if (fishingUI.activeSelf)
         {
-            if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame() && fish.transform.localPosition.x >= minCatchFishX && fish.transform.localPosition.x <= maxCatchFishX)
+            if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
             {
-                DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description);
-                ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
-                player.GetInventory().AddItem(caughtFishItem, 1);
-                EndFishing();
+                if (fish.transform.localPosition.x >= minCatchFishX && fish.transform.localPosition.x <= maxCatchFishX)
+                {
+                    DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description);
+                    ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
+                    player.GetInventory().AddItem(caughtFishItem, 1);
+                }
+
+                fishingUI.SetActive(false);
+                return;
             }
 
             fish.transform.localPosition += new Vector3(selectedFish.speed * Time.deltaTime * fishImage.transform.localScale.x, 0f, 0f);
@@ -56,11 +61,6 @@ public class FishingMinigame : MonoBehaviour
     {
         fishImage.transform.localScale = new Vector3(-fishImage.transform.localScale.x,
             fishImage.transform.localScale.y, fishImage.transform.localScale.z);
-    }
-
-    private void EndFishing()
-    {
-        fishingUI.SetActive(false);
     }
 
     public IEnumerator StartFishing()
