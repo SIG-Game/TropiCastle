@@ -3,6 +3,7 @@
 public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
+    [SerializeField] private InventoryFullUIController inventoryFullUIController;
 
     private Inventory playerInventory;
 
@@ -24,8 +25,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
             {
                 ItemWorld itemWorld = mouseOverlapPoint.GetComponent<ItemWorld>();
 
-                if (itemWorld != null && !playerInventory.IsFull())
+                if (itemWorld != null)
                 {
+                    if (playerInventory.IsFull())
+                    {
+                        inventoryFullUIController.ShowInventoryFullText();
+                        return;
+                    }
+
                     if (itemWorld.spawner != null)
                     {
                         itemWorld.spawner.SpawnedItemWorldPrefabInstanceRemoved();
