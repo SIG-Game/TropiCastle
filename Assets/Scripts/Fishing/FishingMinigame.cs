@@ -27,7 +27,7 @@ public class FishingMinigame : MonoBehaviour
     {
         if (fishingUI.activeSelf)
         {
-            if (Input.GetMouseButtonDown(0) && fish.transform.localPosition.x >= minCatchFishX && fish.transform.localPosition.x <= maxCatchFishX)
+            if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame() && fish.transform.localPosition.x >= minCatchFishX && fish.transform.localPosition.x <= maxCatchFishX)
             {
                 DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description);
                 ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);

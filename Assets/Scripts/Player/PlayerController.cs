@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
             canUseDialogueInputs = true;
 
 
-        if (Input.GetMouseButtonDown(0) && canUseDialogueInputs)
+        if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame() && canUseDialogueInputs)
         {
             List<ItemWithAmount> itemList = inventory.GetItemList();
 
