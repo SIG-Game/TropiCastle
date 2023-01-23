@@ -26,19 +26,25 @@ public class DialogueBox : MonoBehaviour
     private void Update()
     {
         // Must run before PlayerController to prevent dialogue from immediately advancing
-        if ((Input.GetButtonDown("Interact") || Input.GetMouseButtonDown(0)) &&
-            dialogueBoxUI.activeInHierarchy && !PauseController.Instance.GamePaused)
+        if (dialogueBoxUI.activeInHierarchy && !PauseController.Instance.GamePaused)
         {
-            if (linesEnumerator.MoveNext())
-            {
-                dialogueText.text = linesEnumerator.Current;
-            }
-            else
-            {
-                afterDialogueAction?.Invoke(); // afterDialogueAction may be null
+            // Get both inputs so that neither can be used elsewhere
+            bool leftClickInput = InputManager.Instance.GetLeftClickDownIfUnusedThisFrame();
+            bool interactButtonInput = InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
 
-                dialogueBoxUI.SetActive(false);
-                player.dialogueBoxOpen = false;
+            if (leftClickInput || interactButtonInput)
+            {
+                if (linesEnumerator.MoveNext())
+                {
+                    dialogueText.text = linesEnumerator.Current;
+                }
+                else
+                {
+                    afterDialogueAction?.Invoke(); // afterDialogueAction may be null
+
+                    dialogueBoxUI.SetActive(false);
+                    player.dialogueBoxOpen = false;
+                }
             }
         }
     }
@@ -63,7 +69,6 @@ public class DialogueBox : MonoBehaviour
         dialogueText.text = line;
         dialogueBoxUI.SetActive(true);
         player.dialogueBoxOpen = true;
-        player.canUseDialogueInputs = false;
     }
 
 
@@ -82,6 +87,5 @@ public class DialogueBox : MonoBehaviour
         dialogueText.text = linesEnumerator.Current;
         dialogueBoxUI.SetActive(true);
         player.dialogueBoxOpen = true;
-        player.canUseDialogueInputs = false;
     }
 }

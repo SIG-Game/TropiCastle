@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     public GameObject gameOverUI;
     public bool isAttacking = false;
     public bool dialogueBoxOpen = false;
-    public bool canUseDialogueInputs = true;
 
     public FishingMinigame fishingGame;
 
@@ -65,14 +64,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // Player must release next dialogue input to use that input
-        // again for other actions after dialogue box closes
-        if ((Input.GetButtonUp("Interact") || Input.GetMouseButtonUp(0)) &&
-            !dialogueBoxOpen && !canUseDialogueInputs)
-            canUseDialogueInputs = true;
-
-
-        if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame() && canUseDialogueInputs)
+        if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
         {
             List<ItemWithAmount> itemList = inventory.GetItemList();
 
@@ -99,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
         ProcessNumberKeys();
 
-        if (Input.GetButtonDown("Interact") && canUseDialogueInputs)
+        if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
         {
             RaycastHit2D hit = InteractionCast();
 

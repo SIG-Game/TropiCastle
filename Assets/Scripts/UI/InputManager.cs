@@ -4,17 +4,19 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
 
-    private bool leftClickInputUsedThisFrame;
+    private bool leftClickDownUsedThisFrame;
+    private bool interactButtonDownUsedThisFrame;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    // Has to run before any scripts that use GetLeftClickDownIfUnusedThisFrame method
+    // Has to run before any scripts that use IfUnusedThisFrame methods
     private void Update()
     {
-        leftClickInputUsedThisFrame = false;
+        leftClickDownUsedThisFrame = false;
+        interactButtonDownUsedThisFrame = false;
     }
 
     private void OnDestroy()
@@ -26,10 +28,23 @@ public class InputManager : MonoBehaviour
     // Otherwise, returns false
     public bool GetLeftClickDownIfUnusedThisFrame()
     {
-        if (!leftClickInputUsedThisFrame)
+        if (!leftClickDownUsedThisFrame)
         {
-            leftClickInputUsedThisFrame = true;
+            leftClickDownUsedThisFrame = true;
             return Input.GetMouseButtonDown(0);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool GetInteractButtonDownIfUnusedThisFrame()
+    {
+        if (!interactButtonDownUsedThisFrame)
+        {
+            interactButtonDownUsedThisFrame = true;
+            return Input.GetButtonDown("Interact");
         }
         else
         {
