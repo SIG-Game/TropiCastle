@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crafting: {fileID: 0}
   craftingRecipe: {fileID: 0}
+  craftingButtonText: {fileID: 6009137097693483157}
 --- !u!1 &6009137097693483159
 GameObject:
   m_ObjectHideFlags: 0
