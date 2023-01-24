@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
@@ -24,14 +25,14 @@ public class InputManager : MonoBehaviour
         Instance = null;
     }
 
-    // Returns left-click down bool when that input has not been used this frame
+    // Returns input bool when that input has not been used this frame
     // Otherwise, returns false
-    public bool GetLeftClickDownIfUnusedThisFrame()
+    private static bool GetInputIfUnusedThisFrame(Func<bool> inputFunc, ref bool inputUsedThisFrame)
     {
-        if (!leftClickDownUsedThisFrame)
+        if (!inputUsedThisFrame)
         {
-            leftClickDownUsedThisFrame = true;
-            return Input.GetMouseButtonDown(0);
+            inputUsedThisFrame = true;
+            return inputFunc();
         }
         else
         {
@@ -39,16 +40,9 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public bool GetInteractButtonDownIfUnusedThisFrame()
-    {
-        if (!interactButtonDownUsedThisFrame)
-        {
-            interactButtonDownUsedThisFrame = true;
-            return Input.GetButtonDown("Interact");
-        }
-        else
-        {
-            return false;
-        }
-    }
+    public bool GetLeftClickDownIfUnusedThisFrame() =>
+        GetInputIfUnusedThisFrame(() => Input.GetMouseButtonDown(0), ref leftClickDownUsedThisFrame);
+
+    public bool GetInteractButtonDownIfUnusedThisFrame() =>
+        GetInputIfUnusedThisFrame(() => Input.GetButtonDown("Interact"), ref interactButtonDownUsedThisFrame);
 }
