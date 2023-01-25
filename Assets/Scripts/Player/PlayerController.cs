@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     public InventoryUI inventoryUI;
     public GameObject gameOverUI;
     public bool isAttacking = false;
-    public bool dialogueBoxOpen = false;
 
     public FishingMinigame fishingGame;
 
@@ -131,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
     public bool CanMove()
     {
-        return !dialogueBoxOpen && !isAttacking && !PauseController.Instance.GamePaused;
+        return !isAttacking && !PauseController.Instance.GamePaused && !DialogueBox.Instance.DialogueBoxOpen();
     }
 
     public void PlayerDeath()

@@ -26,7 +26,7 @@ public class DialogueBox : MonoBehaviour
     private void Update()
     {
         // Must run before PlayerController to prevent dialogue from immediately advancing
-        if (dialogueBoxUI.activeInHierarchy && !PauseController.Instance.GamePaused)
+        if (DialogueBoxOpen() && !PauseController.Instance.GamePaused)
         {
             // Get both inputs so that neither can be used elsewhere
             bool leftClickInput = InputManager.Instance.GetLeftClickDownIfUnusedThisFrame();
@@ -43,7 +43,6 @@ public class DialogueBox : MonoBehaviour
                     afterDialogueAction?.Invoke(); // afterDialogueAction may be null
 
                     dialogueBoxUI.SetActive(false);
-                    player.dialogueBoxOpen = false;
                 }
             }
         }
@@ -68,7 +67,6 @@ public class DialogueBox : MonoBehaviour
 
         dialogueText.text = line;
         dialogueBoxUI.SetActive(true);
-        player.dialogueBoxOpen = true;
     }
 
 
@@ -86,6 +84,10 @@ public class DialogueBox : MonoBehaviour
 
         dialogueText.text = linesEnumerator.Current;
         dialogueBoxUI.SetActive(true);
-        player.dialogueBoxOpen = true;
+    }
+
+    public bool DialogueBoxOpen()
+    {
+        return dialogueBoxUI.activeInHierarchy;
     }
 }
