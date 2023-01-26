@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 2526882180276161147}
   - component: {fileID: 3015389456133774718}
   - component: {fileID: 8669891105156055949}
+  - component: {fileID: 3827053378170763305}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -278,17 +279,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8534eeeaa4c8abc4ca8b2eaf577070c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyItemInfo: {fileID: 0}
   inventoryUI: {fileID: 0}
-  crafting: {fileID: 0}
   gameOverUI: {fileID: 0}
   isAttacking: 0
-  dialogueBoxOpen: 0
-  canUseDialogueInputs: 1
   fishingGame: {fileID: 0}
-  itemPlacementTrigger: {fileID: 0}
-  itemWorldPrefab: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
-    type: 3}
 --- !u!114 &2526882180276161147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +314,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  healthText: {fileID: 0}
 --- !u!95 &8669891105156055949
 Animator:
   serializedVersion: 3
@@ -340,3 +333,14 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!210 &3827053378170763305
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288355818519944996}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
