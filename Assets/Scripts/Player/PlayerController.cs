@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public enum Direction { UP, DOWN, LEFT, RIGHT };
+    public enum Direction { Up, Down, Left, Right };
 
     public InventoryUI inventoryUI;
     public GameObject gameOverUI;
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         inventoryUI.SetInventory(inventory);
         inventoryUI.selectHotbarItem(hotbarItemIndex);
 
-        lastDirection = Direction.DOWN;
+        lastDirection = Direction.Down;
 
         interactableMask = LayerMask.GetMask("Interactable");
 
@@ -143,23 +143,7 @@ public class PlayerController : MonoBehaviour
         weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
         weaponController.damage = weaponItemData.damage;
 
-        switch (lastDirection) {
-            case Direction.UP:
-                animator.Play("Swing Up");
-                break;
-
-            case Direction.DOWN:
-                animator.Play("Swing Down");
-                break;
-
-            case Direction.LEFT:
-                animator.Play("Swing Left");
-                break;
-
-            case Direction.RIGHT:
-                animator.Play("Swing Right");
-                break;
-        }
+        animator.Play($"Swing {lastDirection}");
 
         isAttacking = true;
     }
@@ -173,16 +157,16 @@ public class PlayerController : MonoBehaviour
     {
         switch (lastDirection)
         {
-            case Direction.UP:
+            case Direction.Up:
                 return Vector2.up;
 
-            case Direction.DOWN:
+            case Direction.Down:
                 return Vector2.down;
 
-            case Direction.LEFT:
+            case Direction.Left:
                 return Vector2.left;
 
-            case Direction.RIGHT:
+            case Direction.Right:
                 return Vector2.right;
         }
 
