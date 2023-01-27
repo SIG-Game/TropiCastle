@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -6,12 +7,13 @@ public class PlayerController : MonoBehaviour
     public enum Direction { Up, Down, Left, Right };
 
     public InventoryUI inventoryUI;
-    public GameObject gameOverUI;
     public bool isAttacking = false;
 
     public FishingMinigame fishingGame;
 
     public Direction lastDirection { get; set; }
+
+    public static event Action OnPlayerDied = delegate { };
 
     private Animator animator;
     private BoxCollider2D boxCollider;
@@ -111,6 +113,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        OnPlayerDied = delegate { };
+    }
+
     private RaycastHit2D InteractionCast()
     {
         Vector2 interactionDirection = GetInteractionDirection();
@@ -136,7 +143,7 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath()
     {
         PauseController.Instance.GamePaused = true;
-        gameOverUI.SetActive(true);
+        OnPlayerDied();
     }
 
     public void AttackWithWeapon(WeaponItemScriptableObject weaponItemData) {
