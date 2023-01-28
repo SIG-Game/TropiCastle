@@ -56,9 +56,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
         if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
         {
-            List<ItemWithAmount> itemList = inventory.GetItemList();
-
-            UseItem(itemList[hotbarUIController.HotbarItemIndex]);
+            UseItem(GetHotbarItem());
 
             // Prevent doing other actions on the frame an attack starts
             if (isAttacking)
@@ -191,7 +189,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
     public ItemWithAmount GetHotbarItem()
     {
-        return inventory.GetItemList()[hotbarUIController.HotbarItemIndex];
+        return inventory.GetItemAtIndex(hotbarUIController.HotbarItemIndex);
     }
 
     void OnTriggerEnter2D(Collider2D col)

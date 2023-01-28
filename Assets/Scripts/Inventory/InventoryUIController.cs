@@ -46,8 +46,7 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
 
     private void Inventory_ChangedItemAt(int index)
     {
-        List<ItemWithAmount> inventoryItemList = inventory.GetItemList();
-        ItemWithAmount item = inventoryItemList[index];
+        ItemWithAmount item = inventory.GetItemAtIndex(index);
 
         SetSpriteAtSlotIndex(index, item.itemData.sprite);
     }
@@ -70,7 +69,7 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
         if (results.Count > 0)
         {
             int clickedItemIndex = results[0].gameObject.transform.GetSiblingIndex();
-            ItemWithAmount clickedItem = inventory.GetItemList()[clickedItemIndex];
+            ItemWithAmount clickedItem = inventory.GetItemAtIndex(clickedItemIndex);
 
             if (holdingItem)
             {
@@ -103,7 +102,7 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
     {
         if (holdingItem)
         {
-            ItemWithAmount heldItem = inventory.GetItemList()[heldItemIndex];
+            ItemWithAmount heldItem = inventory.GetItemAtIndex(heldItemIndex);
 
             SetSpriteAtSlotIndex(heldItemIndex, heldItem.itemData.sprite);
 

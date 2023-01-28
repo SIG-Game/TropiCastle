@@ -91,6 +91,8 @@ public class Inventory
         useItemAction(item);
     }
 
+    public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
+
     public List<ItemWithAmount> GetItemList()
     {
         return itemList;
