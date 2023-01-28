@@ -6,9 +6,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 {
     public enum Direction { Up, Down, Left, Right };
 
-    public InventoryUIController inventoryUIController;
     public HotbarUIController hotbarUIController;
-    public GameObject inventoryUI;
 
     public bool isAttacking = false;
 
@@ -48,18 +46,6 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
     void Update()
     {
-        if (Input.GetButtonDown("Inventory") &&
-            (!PauseController.Instance.GamePaused || inventoryUI.activeInHierarchy))
-        {
-            PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
-            inventoryUI.SetActive(PauseController.Instance.GamePaused);
-
-            if (!PauseController.Instance.GamePaused)
-            {
-                inventoryUIController.ResetHeldItem();
-            }
-        }
-
         if (PauseController.Instance.GamePaused)
         {
             return;

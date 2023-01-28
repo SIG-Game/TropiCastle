@@ -9,6 +9,7 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Sprite transparentSprite;
     [SerializeField] private Transform hotbarItemSlotContainer;
     [SerializeField] private Transform itemSlotContainer;
+    [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject heldItem;
     [SerializeField] private GameObject canvas;
 
@@ -118,5 +119,17 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
         anchoredPosition.x = Mathf.Clamp(anchoredPosition.x, 0f, canvasRectTransform.rect.width);
         anchoredPosition.y = Mathf.Clamp(anchoredPosition.y, 0f, canvasRectTransform.rect.height);
         heldItemRectTransform.anchoredPosition = anchoredPosition;
+
+        if (Input.GetButtonDown("Inventory") &&
+            (!PauseController.Instance.GamePaused || inventoryUI.activeInHierarchy))
+        {
+            PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
+            inventoryUI.SetActive(PauseController.Instance.GamePaused);
+
+            if (!PauseController.Instance.GamePaused)
+            {
+                ResetHeldItem();
+            }
+        }
     }
 }
