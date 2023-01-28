@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
     private Vector2 velocity;
+    private int waterLayer;
 
     private void Awake()
     {
@@ -18,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         velocity = Vector2.zero;
+
+        waterLayer = LayerMask.NameToLayer("Water");
     }
 
     private void Update()
@@ -79,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Water"))
+        if (col.gameObject.layer == waterLayer)
         {
             movementSpeed *= 0.5f;
         }
@@ -87,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Water"))
+        if (col.gameObject.layer == waterLayer)
         {
             movementSpeed *= 2f;
         }
