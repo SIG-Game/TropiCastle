@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
 
+        // TODO: Resources.Load calls should maybe use Addressables instead
         ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
         inventory = new Inventory(UseItem, emptyItemInfo);
 
@@ -74,16 +75,6 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
             {
                 hit.transform.gameObject.GetComponent<Interactable>().Interact(this);
             }
-        }
-
-        // Debug input for fishing
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            // TODO: Resources.Load calls should maybe use Addressables instead
-            ItemScriptableObject fishingRodScriptableObject = Resources.Load<ItemScriptableObject>("Items/FishingRod");
-
-            inventory.AddItem(fishingRodScriptableObject, 1);
-            StartCoroutine(fishingGame.StartFishing());
         }
     }
 
