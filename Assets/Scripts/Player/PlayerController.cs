@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IInventoryGetter
 {
     public enum Direction { Up, Down, Left, Right };
 
-    public InventoryUI inventoryUI;
+    public InventoryUIController inventoryUIController;
+    public GameObject inventoryUI;
+
     public bool isAttacking = false;
 
     public FishingMinigame fishingGame;
@@ -36,8 +38,7 @@ public class PlayerController : MonoBehaviour
 
         ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
         inventory = new Inventory(UseItem, emptyItemInfo);
-        inventoryUI.SetInventory(inventory);
-        inventoryUI.selectHotbarItem(hotbarItemIndex);
+        inventoryUIController.selectHotbarItem(hotbarItemIndex);
 
         lastDirection = Direction.Down;
 
@@ -49,14 +50,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Inventory") &&
-            (!PauseController.Instance.GamePaused || inventoryUI.gameObject.activeInHierarchy))
+            (!PauseController.Instance.GamePaused || inventoryUI.activeInHierarchy))
         {
             PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
-            inventoryUI.gameObject.SetActive(PauseController.Instance.GamePaused);
+            inventoryUI.SetActive(PauseController.Instance.GamePaused);
 
             if (!PauseController.Instance.GamePaused)
             {
-                inventoryUI.ResetHeldItem();
+                inventoryUIController.ResetHeldItem();
             }
         }
 
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
             else if (hotbarItemIndex == -1)
                 hotbarItemIndex = 9;
 
-            inventoryUI.selectHotbarItem(hotbarItemIndex);
+            inventoryUIController.selectHotbarItem(hotbarItemIndex);
         }
 
         ProcessNumberKeys();
@@ -236,7 +237,7 @@ public class PlayerController : MonoBehaviour
             hotbarItemIndex = 9;
 
         if (previousHotbarItemIndex != hotbarItemIndex)
-            inventoryUI.selectHotbarItem(hotbarItemIndex);
+            inventoryUIController.selectHotbarItem(hotbarItemIndex);
     }
 
     private void HealthController_OnHealthChanged(int newHealth)

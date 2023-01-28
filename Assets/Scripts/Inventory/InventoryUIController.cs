@@ -3,8 +3,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour, IPointerClickHandler
+public class InventoryUIController : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] private MonoBehaviour targetInventoryGetter;
+    [SerializeField] private Sprite transparentSprite;
+    [SerializeField] private Transform hotbarItemSlotContainer;
+    [SerializeField] private Transform itemSlotContainer;
+    [SerializeField] private GameObject heldItem;
+    [SerializeField] private GameObject canvas;
+
     private Inventory inventory;
     private GraphicRaycaster graphicRaycaster;
     private RectTransform canvasRectTransform;
@@ -15,13 +22,7 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
     private bool holdingItem = false;
     private int heldItemIndex;
 
-    public Sprite transparentSprite;
-    public Transform hotbarItemSlotContainer;
-    public Transform itemSlotContainer;
-    public GameObject heldItem;
-    public GameObject canvas;
-
-    void Awake()
+    private void Awake()
     {
         graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
         canvasRectTransform = canvas.GetComponent<RectTransform>();
@@ -29,9 +30,16 @@ public class InventoryUI : MonoBehaviour, IPointerClickHandler
         heldItemImage = heldItem.GetComponent<Image>();
     }
 
-    public void SetInventory(Inventory inventory)
+    private void Start()
     {
-        this.inventory = inventory;
+        if (targetInventoryGetter is IInventoryGetter inventoryGetter)
+        {
+            inventory = inventoryGetter.GetInventory();
+        }
+        else
+        {
+            Debug.LogError($"{nameof(targetInventoryGetter)} does not implement {nameof(IInventoryGetter)}");
+        }
 
         inventory.ChangedItemAt = Inventory_ChangedItemAt;
     }
