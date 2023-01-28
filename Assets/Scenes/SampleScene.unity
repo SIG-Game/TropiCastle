@@ -1923,7 +1923,7 @@ GameObject:
   - component: {fileID: 385991231}
   - component: {fileID: 385991235}
   - component: {fileID: 385991234}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Ocean
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20046,7 +20046,7 @@ GameObject:
   - component: {fileID: 798929916}
   - component: {fileID: 798929915}
   - component: {fileID: 798929917}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: ShallowOcean
   m_TagString: Water
   m_Icon: {fileID: 0}

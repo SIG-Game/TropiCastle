@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
     private BoxCollider2D boxCollider;
     private HealthController healthController;
     private LayerMask interactableMask;
+    private LayerMask waterMask;
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
 
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         lastDirection = Direction.Down;
 
         interactableMask = LayerMask.GetMask("Interactable");
+        waterMask = LayerMask.GetMask("Water");
 
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
         if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
         {
-            RaycastHit2D hit = InteractionCast();
+            RaycastHit2D hit = InteractionCast(interactableMask, 0.15f);
 
             if (hit.collider != null)
             {
@@ -90,7 +92,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         OnPlayerDied = delegate { };
     }
 
-    private RaycastHit2D InteractionCast()
+    private RaycastHit2D InteractionCast(LayerMask mask, float boxCastDistance)
     {
         Vector2 interactionDirection = GetInteractionDirection();
 
@@ -100,7 +102,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
         // TODO: Shorten length and change length based on direction
         RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
-            boxCollider.size, 0f, interactionDirection, 0.15f, interactableMask);
+            boxCollider.size, 0f, interactionDirection, boxCastDistance, mask);
 
         // Debug.DrawRay(raycastOrigin, interactionDirection * 0.25f, Color.red);
 
@@ -165,6 +167,12 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         }
         else if (item.itemData.name == "FishingRod")
         {
+            if (InteractionCast(waterMask, 0.5f).collider == null)
+            {
+                DialogueBox.Instance.PlayDialogue("You must be facing water to fish.");
+                return;
+            }
+
             StartCoroutine(fishingGame.StartFishing());
         }
         else
