@@ -18,7 +18,6 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
     private const int hotbarSize = 10;
-    private int hotbarItemIndex = 0;
     private bool holdingItem = false;
     private int heldItemIndex;
 
@@ -60,13 +59,6 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
         }
 
         itemSlotContainer.GetChild(slotIndex).GetChild(0).GetComponent<Image>().sprite = newSprite;
-    }
-
-    public void selectHotbarItem(int hotbarItemIndex)
-    {
-        hotbarItemSlotContainer.GetChild(this.hotbarItemIndex).GetComponent<Image>().color = new Color32(173, 173, 173, 255);
-        this.hotbarItemIndex = hotbarItemIndex;
-        hotbarItemSlotContainer.GetChild(this.hotbarItemIndex).GetComponent<Image>().color = new Color32(140, 140, 140, 255);
     }
 
     public void OnPointerClick(PointerEventData eventData)

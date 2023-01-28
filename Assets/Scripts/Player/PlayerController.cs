@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
     public enum Direction { Up, Down, Left, Right };
 
     public InventoryUIController inventoryUIController;
+    public HotbarUIController hotbarUIController;
     public GameObject inventoryUI;
 
     public bool isAttacking = false;
@@ -25,7 +26,6 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
     private WeaponController weaponController;
 
     private Inventory inventory;
-    private int hotbarItemIndex = 0;
 
     void Awake()
     {
@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
         ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
         inventory = new Inventory(UseItem, emptyItemInfo);
-        inventoryUIController.selectHotbarItem(hotbarItemIndex);
 
         lastDirection = Direction.Down;
 
@@ -70,7 +69,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         {
             List<ItemWithAmount> itemList = inventory.GetItemList();
 
-            UseItem(itemList[hotbarItemIndex]);
+            UseItem(itemList[hotbarUIController.HotbarItemIndex]);
 
             // Prevent doing other actions on the frame an attack starts
             if (isAttacking)
@@ -78,20 +77,6 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
                 return;
             }
         }
-
-        if (Input.mouseScrollDelta.y != 0f)
-        {
-            hotbarItemIndex -= (int)Mathf.Sign(Input.mouseScrollDelta.y);
-
-            if (hotbarItemIndex == 10)
-                hotbarItemIndex = 0;
-            else if (hotbarItemIndex == -1)
-                hotbarItemIndex = 9;
-
-            inventoryUIController.selectHotbarItem(hotbarItemIndex);
-        }
-
-        ProcessNumberKeys();
 
         if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
         {
@@ -211,35 +196,6 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         }
     }
 
-    private void ProcessNumberKeys()
-    {
-        int previousHotbarItemIndex = hotbarItemIndex;
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            hotbarItemIndex = 0;
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            hotbarItemIndex = 1;
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            hotbarItemIndex = 2;
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-            hotbarItemIndex = 3;
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-            hotbarItemIndex = 4;
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-            hotbarItemIndex = 5;
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-            hotbarItemIndex = 6;
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-            hotbarItemIndex = 7;
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-            hotbarItemIndex = 8;
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-            hotbarItemIndex = 9;
-
-        if (previousHotbarItemIndex != hotbarItemIndex)
-            inventoryUIController.selectHotbarItem(hotbarItemIndex);
-    }
-
     private void HealthController_OnHealthChanged(int newHealth)
     {
         if (newHealth == 0)
@@ -250,7 +206,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
     public ItemWithAmount GetHotbarItem()
     {
-        return inventory.GetItemList()[hotbarItemIndex];
+        return inventory.GetItemList()[hotbarUIController.HotbarItemIndex];
     }
 
     void OnTriggerEnter2D(Collider2D col)

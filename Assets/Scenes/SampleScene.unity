@@ -31732,6 +31732,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1304918690}
+  - component: {fileID: 1304918691}
   m_Layer: 5
   m_Name: Hotbar UI
   m_TagString: Untagged
@@ -31761,6 +31762,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 40}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1304918691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304918689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc31599282b18304680eaba8ac3df522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hotbarItemSlotContainer: {fileID: 1620314559}
 --- !u!1001 &1320933409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39400,6 +39414,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 7e019843c4dcad84ab99f8e6a79f1532,
         type: 2}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: hotbarUIController
+      value: 
+      objectReference: {fileID: 1304918691}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: itemPlacementHitbox
