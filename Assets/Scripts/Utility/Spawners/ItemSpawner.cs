@@ -6,11 +6,11 @@ public class ItemSpawner : PrefabSpawner
 
     protected override void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
     {
+        spawnedPrefab.name = $"{itemToSpawn.itemData.name} ItemWorld";
+
         ItemWorld spawnedItemWorld = spawnedPrefab.GetComponent<ItemWorld>();
 
         spawnedItemWorld.item = itemToSpawn;
         spawnedItemWorld.spawner = this;
-
-        Debug.Log($"Spawned item {spawnedItemWorld.item.itemData.name} at {spawnedPrefab.transform.position}.");
     }
 }

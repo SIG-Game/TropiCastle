@@ -10,7 +10,5 @@ public class EnemySpawner : PrefabSpawner
 
         spawnedEnemy.SetPlayerTransform(player);
         spawnedEnemy.SetSpawner(this);
-
-        Debug.Log($"Spawned enemy {prefabToSpawn.gameObject.name} at {spawnedPrefab.transform.position}.");
     }
 }

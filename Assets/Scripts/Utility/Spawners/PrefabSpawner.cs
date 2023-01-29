@@ -47,12 +47,13 @@ public class PrefabSpawner : MonoBehaviour
         GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
         ApplySpawnedPrefabProperties(spawnedPrefab);
 
+        Debug.Log($"Spawned {spawnedPrefab.gameObject.name} at {spawnedPrefab.transform.position}.");
+
         numPrefabs++;
     }
 
     protected virtual void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
     {
-        Debug.Log($"Spawned prefab {prefabToSpawn.gameObject.name} at {spawnedPrefab.transform.position}.");
     }
 
     public void SpawnedPrefabRemoved()
