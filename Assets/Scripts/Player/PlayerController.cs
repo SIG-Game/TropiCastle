@@ -35,9 +35,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
 
-        // TODO: Resources.Load calls should maybe use Addressables instead
-        ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
-        inventory = new Inventory(emptyItemInfo);
+        inventory = new Inventory();
 
         lastDirection = Direction.Down;
 

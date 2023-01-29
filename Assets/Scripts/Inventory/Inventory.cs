@@ -15,8 +15,11 @@ public class Inventory
 
     private const int inventorySize = 15;
 
-    public Inventory(ItemScriptableObject emptyItemInfo)
+    public Inventory()
     {
+        // TODO: Resources.Load calls should maybe use Addressables instead
+        ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
+
         emptyItemInstance = new ItemWithAmount
         {
             amount = 0,
