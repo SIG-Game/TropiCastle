@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
         // TODO: Resources.Load calls should maybe use Addressables instead
         ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
-        inventory = new Inventory(UseItem, emptyItemInfo);
+        inventory = new Inventory(emptyItemInfo);
 
         lastDirection = Direction.Down;
 

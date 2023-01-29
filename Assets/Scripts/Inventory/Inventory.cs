@@ -7,7 +7,6 @@ public class Inventory
     public Action<int> ChangedItemAt;
 
     private List<ItemWithAmount> itemList;
-    private Action<ItemWithAmount> useItemAction;
 
     // Every empty item slot points to this instance
     private ItemWithAmount emptyItemInstance;
@@ -16,10 +15,8 @@ public class Inventory
 
     private const int inventorySize = 15;
 
-    public Inventory(Action<ItemWithAmount> useItemAction, ItemScriptableObject emptyItemInfo)
+    public Inventory(ItemScriptableObject emptyItemInfo)
     {
-        this.useItemAction = useItemAction;
-
         emptyItemInstance = new ItemWithAmount
         {
             amount = 0,
@@ -84,11 +81,6 @@ public class Inventory
         itemList[itemIndex] = emptyItemInstance;
 
         ChangedItemAt?.Invoke(itemIndex);
-    }
-
-    public void UseItem(ItemWithAmount item)
-    {
-        useItemAction(item);
     }
 
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
