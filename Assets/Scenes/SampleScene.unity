@@ -31409,6 +31409,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1603847551198906971, guid: bfaf9ae57760545859b01d4467686f5b,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 572276104}
     - target: {fileID: 3895392963248142505, guid: bfaf9ae57760545859b01d4467686f5b,
         type: 3}
       propertyPath: m_RootOrder
@@ -31464,21 +31469,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3895392963248142510, guid: bfaf9ae57760545859b01d4467686f5b,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 572276104}
-    - target: {fileID: 3895392963248142510, guid: bfaf9ae57760545859b01d4467686f5b,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 572276104}
     - target: {fileID: 3895392963248142511, guid: bfaf9ae57760545859b01d4467686f5b,
         type: 3}
       propertyPath: m_Name
       value: EnemySpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 572276104}
+    - target: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 572276104}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfaf9ae57760545859b01d4467686f5b, type: 3}
 --- !u!1001 &1257249682
@@ -38975,13 +38978,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1936533778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85ac4be4341a049d0a3605a94566ad99, type: 3}
+  m_Script: {fileID: 11500000, guid: 838c8148a0c22d44294d71c3ccda99b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabToSpawn: {fileID: 0}
   itemToSpawn:
     itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
     amount: 1
-  spawnRateSeconds: 4
+  player: {fileID: 572276104}
+  timeBetweenSpawns: 4
+  maxSpawnedPrefabs: 1
+  minSpawnPosition: {x: -6, y: -2}
+  maxSpawnPosition: {x: 6, y: 4}
 --- !u!4 &1936533780
 Transform:
   m_ObjectHideFlags: 0

@@ -35,7 +35,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
                     if (itemWorld.spawner != null)
                     {
-                        itemWorld.spawner.SpawnedItemWorldPrefabInstanceRemoved();
+                        itemWorld.spawner.SpawnedPrefabRemoved();
                     }
 
                     playerInventory.AddItem(itemWorld.item);

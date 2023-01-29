@@ -4,7 +4,7 @@ public class ItemWorld : Interactable
 {
     [SerializeField] public ItemWithAmount item;
 
-    public ItemSpawner spawner { get; set; }
+    public PrefabSpawner spawner { get; set; }
 
     private void Start()
     {
