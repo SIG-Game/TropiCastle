@@ -47,6 +47,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -78,9 +80,12 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
@@ -312,6 +317,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      CoastTiles_1: -4822999904191685392
+      CoastTiles_5: 555142886276941770
+      CoastTiles_6: -8901799561179727716
+      CoastTiles_3: -1713313998192073664
+      CoastTiles_4: -6005265024969847929
+      CoastTiles_7: 5684915801569841961
+      CoastTiles_0: -8466957408498362610
+      CoastTiles_2: -5784543858201735610
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
