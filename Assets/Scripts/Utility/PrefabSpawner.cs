@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-// TODO: Make enemy spawner and item spawner subclasses of this class
+// TODO: Make enemy spawner subclass of this class
 public class PrefabSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject prefabToSpawn;
-    [SerializeField] private ItemWithAmount itemToSpawn;
+    [SerializeField] protected GameObject prefabToSpawn;
     [SerializeField] private Transform player;
     [SerializeField] private float timeBetweenSpawns;
     [SerializeField] private int maxSpawnedPrefabs;
@@ -47,28 +46,23 @@ public class PrefabSpawner : MonoBehaviour
         float spawnYPosition = Random.Range(minSpawnPosition.y, maxSpawnPosition.y);
         Vector2 spawnPosition = new Vector2(spawnXPosition, spawnYPosition);
 
-        if (itemToSpawn.itemData != null)
-        {
-            ItemWorld spawnedItemWorld = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(spawnPosition, itemToSpawn);
-            spawnedItemWorld.spawner = this;
-
-            Debug.Log($"Spawned item {spawnedItemWorld.item.itemData.name} at {spawnPosition}.");
-        }
-        else
-        {
-            GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-
-            Enemy spawnedEnemy = spawnedPrefab.GetComponent<Enemy>();
-
-            if (spawnedEnemy != null) {
-                spawnedEnemy.SetPlayerTransform(player);
-                spawnedEnemy.SetSpawner(this);
-            }
-
-            Debug.Log($"Spawned prefab {prefabToSpawn.gameObject.name} at {spawnPosition}.");
-        }
+        GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+        ApplySpawnedPrefabProperties(spawnedPrefab);
 
         numPrefabs++;
+    }
+
+    protected virtual void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
+    {
+        Enemy spawnedEnemy = spawnedPrefab.GetComponent<Enemy>();
+
+        if (spawnedEnemy != null)
+        {
+            spawnedEnemy.SetPlayerTransform(player);
+            spawnedEnemy.SetSpawner(this);
+        }
+
+        Debug.Log($"Spawned prefab {prefabToSpawn.gameObject.name} at {spawnedPrefab.transform.position}.");
     }
 
     public void SpawnedPrefabRemoved()
