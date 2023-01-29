@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 
-// TODO: Make enemy spawner subclass of this class
 public class PrefabSpawner : MonoBehaviour
 {
     [SerializeField] protected GameObject prefabToSpawn;
-    [SerializeField] private Transform player;
     [SerializeField] private float timeBetweenSpawns;
     [SerializeField] private int maxSpawnedPrefabs;
     [SerializeField] private Vector2 minSpawnPosition;
@@ -54,14 +52,6 @@ public class PrefabSpawner : MonoBehaviour
 
     protected virtual void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
     {
-        Enemy spawnedEnemy = spawnedPrefab.GetComponent<Enemy>();
-
-        if (spawnedEnemy != null)
-        {
-            spawnedEnemy.SetPlayerTransform(player);
-            spawnedEnemy.SetSpawner(this);
-        }
-
         Debug.Log($"Spawned prefab {prefabToSpawn.gameObject.name} at {spawnedPrefab.transform.position}.");
     }
 

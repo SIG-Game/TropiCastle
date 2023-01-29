@@ -31409,8 +31409,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1603847551198906971, guid: bfaf9ae57760545859b01d4467686f5b,
-        type: 3}
+    - target: {fileID: 0}
       propertyPath: player
       value: 
       objectReference: {fileID: 572276104}
@@ -31474,6 +31473,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 7958139642870328749, guid: bfaf9ae57760545859b01d4467686f5b,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 572276104}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfaf9ae57760545859b01d4467686f5b, type: 3}
 --- !u!1001 &1257249682
@@ -38975,7 +38979,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
-  player: {fileID: 572276104}
   timeBetweenSpawns: 4
   maxSpawnedPrefabs: 1
   minSpawnPosition: {x: -6, y: -2}
