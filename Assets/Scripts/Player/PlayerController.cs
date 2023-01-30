@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IInventoryGetter
 {
-    public enum Direction { Up, Down, Left, Right };
-
     public HotbarUIController hotbarUIController;
 
     public bool isAttacking = false;
 
     public FishingMinigame fishingGame;
 
-    public Direction lastDirection { get; set; }
+    public PlayerDirection lastDirection { get; set; }
 
     public static event Action OnPlayerDied = delegate { };
 
@@ -37,7 +35,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
         inventory = new Inventory();
 
-        lastDirection = Direction.Down;
+        lastDirection = PlayerDirection.Down;
 
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
@@ -125,16 +123,16 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
     {
         switch (lastDirection)
         {
-            case Direction.Up:
+            case PlayerDirection.Up:
                 return Vector2.up;
 
-            case Direction.Down:
+            case PlayerDirection.Down:
                 return Vector2.down;
 
-            case Direction.Left:
+            case PlayerDirection.Left:
                 return Vector2.left;
 
-            case Direction.Right:
+            case PlayerDirection.Right:
                 return Vector2.right;
         }
 

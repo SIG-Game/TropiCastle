@@ -31,16 +31,16 @@ public class NPCInteractable : Interactable
     {
         switch (player.lastDirection)
         {
-            case PlayerController.Direction.Up:
+            case PlayerDirection.Up:
                 spriteRenderer.sprite = front;
                 break;
-            case PlayerController.Direction.Down:
+            case PlayerDirection.Down:
                 spriteRenderer.sprite = back;
                 break;
-            case PlayerController.Direction.Left:
+            case PlayerDirection.Left:
                 spriteRenderer.sprite = right;
                 break;
-            case PlayerController.Direction.Right:
+            case PlayerDirection.Right:
                 spriteRenderer.sprite = left;
                 break;
         }
