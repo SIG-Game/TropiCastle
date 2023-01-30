@@ -144,27 +144,26 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
     private void UseItem(ItemWithAmount item)
     {
-        if (item.itemData is HealingItemScriptableObject healingItemData)
+        switch (item.itemData)
         {
-            ConsumeHealingItem(item, healingItemData.healAmount);
-        }
-        else if (item.itemData is WeaponItemScriptableObject weaponItemData)
-        {
-            AttackWithWeapon(weaponItemData);
-        }
-        else if (item.itemData.name == "FishingRod")
-        {
-            if (InteractionCast(waterMask, 0.5f).collider == null)
-            {
-                DialogueBox.Instance.PlayDialogue("You must be facing water to fish.");
-                return;
-            }
+            case HealingItemScriptableObject healingItemData:
+                ConsumeHealingItem(item, healingItemData.healAmount);
+                break;
+            case WeaponItemScriptableObject weaponItemData:
+                AttackWithWeapon(weaponItemData);
+                break;
+            case { name: "FishingRod" }:
+                if (InteractionCast(waterMask, 0.5f).collider == null)
+                {
+                    DialogueBox.Instance.PlayDialogue("You must be facing water to fish.");
+                    break;
+                }
 
-            StartCoroutine(fishingGame.StartFishing());
-        }
-        else
-        {
-            Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
+                StartCoroutine(fishingGame.StartFishing());
+                break;
+            default:
+                Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
+                break;
         }
     }
 
