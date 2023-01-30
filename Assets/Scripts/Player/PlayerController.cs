@@ -121,23 +121,15 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
     Vector2 GetInteractionDirection()
     {
-        switch (lastDirection)
+        Vector2 interactionDirection = lastDirection switch
         {
-            case PlayerDirection.Up:
-                return Vector2.up;
-
-            case PlayerDirection.Down:
-                return Vector2.down;
-
-            case PlayerDirection.Left:
-                return Vector2.left;
-
-            case PlayerDirection.Right:
-                return Vector2.right;
-        }
-
-        // Should not be reached
-        return Vector2.zero;
+            PlayerDirection.Up => Vector2.up,
+            PlayerDirection.Down => Vector2.down,
+            PlayerDirection.Left => Vector2.left,
+            PlayerDirection.Right => Vector2.right,
+            _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
+        };
+        return interactionDirection;
     }
 
     private void UseItem(ItemWithAmount item)
