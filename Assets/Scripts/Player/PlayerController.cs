@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IInventoryGetter
 {
-    public HotbarUIController hotbarUIController;
-
-    public bool isAttacking = false;
-
-    public FishingMinigame fishingGame;
+    [SerializeField] private bool isAttacking;
+    [SerializeField] private HotbarUIController hotbarUIController;
+    [SerializeField] private FishingMinigame fishingMinigame;
 
     public PlayerDirection lastDirection { get; set; }
 
@@ -17,14 +14,13 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
     private Animator animator;
     private BoxCollider2D boxCollider;
     private HealthController healthController;
-    private LayerMask interactableMask;
-    private LayerMask waterMask;
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
-
     private Inventory inventory;
+    private LayerMask interactableMask;
+    private LayerMask waterMask;
 
-    void Awake()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -35,15 +31,17 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
         inventory = new Inventory();
 
-        lastDirection = PlayerDirection.Down;
-
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
+
+        isAttacking = false;
+
+        lastDirection = PlayerDirection.Down;
 
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
 
-    void Update()
+    private void Update()
     {
         if (PauseController.Instance.GamePaused)
         {
@@ -72,9 +70,32 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("Bullet"))
+        {
+            healthController.DecreaseHealth(10);
+        }
+    }
+
     private void OnDestroy()
     {
+        healthController.OnHealthChanged -= HealthController_OnHealthChanged;
+
         OnPlayerDied = delegate { };
+    }
+
+    private Vector2 GetInteractionDirection()
+    {
+        Vector2 interactionDirection = lastDirection switch
+        {
+            PlayerDirection.Up => Vector2.up,
+            PlayerDirection.Down => Vector2.down,
+            PlayerDirection.Left => Vector2.left,
+            PlayerDirection.Right => Vector2.right,
+            _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
+        };
+        return interactionDirection;
     }
 
     private RaycastHit2D InteractionCast(LayerMask mask, float boxCastDistance)
@@ -94,44 +115,6 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         return hit;
     }
 
-    public bool CanMove()
-    {
-        return !isAttacking && !PauseController.Instance.GamePaused && !DialogueBox.Instance.DialogueBoxOpen();
-    }
-
-    public void PlayerDeath()
-    {
-        PauseController.Instance.GamePaused = true;
-        OnPlayerDied();
-    }
-
-    public void AttackWithWeapon(WeaponItemScriptableObject weaponItemData) {
-        weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
-        weaponController.damage = weaponItemData.damage;
-
-        animator.Play($"Swing {lastDirection}");
-
-        isAttacking = true;
-    }
-
-    public Inventory GetInventory()
-    {
-        return inventory;
-    }
-
-    Vector2 GetInteractionDirection()
-    {
-        Vector2 interactionDirection = lastDirection switch
-        {
-            PlayerDirection.Up => Vector2.up,
-            PlayerDirection.Down => Vector2.down,
-            PlayerDirection.Left => Vector2.left,
-            PlayerDirection.Right => Vector2.right,
-            _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
-        };
-        return interactionDirection;
-    }
-
     private void UseItem(ItemWithAmount item)
     {
         switch (item.itemData)
@@ -149,7 +132,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
                     break;
                 }
 
-                StartCoroutine(fishingGame.StartFishing());
+                StartCoroutine(fishingMinigame.StartFishing());
                 break;
             default:
                 Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
@@ -166,6 +149,22 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         }
     }
 
+    private void AttackWithWeapon(WeaponItemScriptableObject weaponItemData)
+    {
+        weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
+        weaponController.damage = weaponItemData.damage;
+
+        animator.Play($"Swing {lastDirection}");
+
+        isAttacking = true;
+    }
+
+    private void PlayerDeath()
+    {
+        PauseController.Instance.GamePaused = true;
+        OnPlayerDied();
+    }
+
     private void HealthController_OnHealthChanged(int newHealth)
     {
         if (newHealth == 0)
@@ -174,16 +173,9 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         }
     }
 
-    public ItemWithAmount GetHotbarItem()
-    {
-        return inventory.GetItemAtIndex(hotbarUIController.HotbarItemIndex);
-    }
+    public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !DialogueBox.Instance.DialogueBoxOpen();
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("Bullet"))
-        {
-            healthController.DecreaseHealth(10);
-        }
-    }
+    public ItemWithAmount GetHotbarItem() => inventory.GetItemAtIndex(hotbarUIController.HotbarItemIndex);
+
+    public Inventory GetInventory() => inventory;
 }
