@@ -13,7 +13,7 @@ public class Inventory
 
     private int firstEmptyIndex;
 
-    private const int inventorySize = 15;
+    private const int inventorySize = 30;
 
     public Inventory()
     {
