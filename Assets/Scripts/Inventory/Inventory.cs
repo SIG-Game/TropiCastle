@@ -13,10 +13,12 @@ public class Inventory
 
     private int firstEmptyIndex;
 
-    private const int inventorySize = 30;
+    private int inventorySize;
 
-    public Inventory()
+    public Inventory(int inventorySize)
     {
+        this.inventorySize = inventorySize;
+
         // TODO: Resources.Load calls should maybe use Addressables instead
         ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
 

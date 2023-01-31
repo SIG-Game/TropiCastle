@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IInventoryGetter
 {
     [SerializeField] private bool isAttacking;
+    [SerializeField] private int inventorySize;
     [SerializeField] private HotbarUIController hotbarUIController;
     [SerializeField] private FishingMinigame fishingMinigame;
 
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
 
-        inventory = new Inventory();
+        inventory = new Inventory(inventorySize);
 
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
