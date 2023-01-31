@@ -14,6 +14,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void Update()
     {
+        if (PauseController.Instance.GamePaused)
+        {
+            return;
+        }
+
         Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(1))
