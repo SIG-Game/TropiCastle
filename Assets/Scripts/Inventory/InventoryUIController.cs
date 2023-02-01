@@ -53,12 +53,20 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
 
     private void SetSpriteAtSlotIndex(int slotIndex, Sprite newSprite)
     {
-        if (slotIndex < hotbarSize)
+        if (slotIndex < hotbarSize && !inventoryUI.activeInHierarchy)
         {
             hotbarItemSlotContainer.GetChild(slotIndex).GetChild(0).GetComponent<Image>().sprite = newSprite;
         }
 
         itemSlotContainer.GetChild(slotIndex).GetChild(0).GetComponent<Image>().sprite = newSprite;
+    }
+
+    private void UpdateSpritesInAllHotbarSlots()
+    {
+        for (int i = 0; i < hotbarSize; ++i)
+        {
+            hotbarItemSlotContainer.GetChild(i).GetChild(0).GetComponent<Image>().sprite = inventory.GetItemAtIndex(i).itemData.sprite;
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -125,9 +133,10 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
             PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
             inventoryUI.SetActive(PauseController.Instance.GamePaused);
 
-            if (!PauseController.Instance.GamePaused)
+            if (!inventoryUI.activeInHierarchy)
             {
                 ResetHeldItem();
+                UpdateSpritesInAllHotbarSlots();
             }
         }
     }
