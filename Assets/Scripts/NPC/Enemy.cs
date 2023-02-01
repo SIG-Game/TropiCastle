@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
     private Vector2 velocityDirection;
     private Vector2 playerColliderOffset;
     private State state;
-    private PrefabSpawner spawner;
 
     private void Awake()
     {
@@ -73,8 +72,6 @@ public class Enemy : MonoBehaviour
     {
         if (newHealth <= 0)
         {
-            spawner.SpawnedPrefabRemoved();
-
             // TODO: This doesn't work properly for loot items with amount value > 1
             // This should be revisited if stackable items get added
             foreach (ItemWithAmount loot in droppedLoot)
@@ -120,10 +117,5 @@ public class Enemy : MonoBehaviour
     public void SetPlayerTransform(Transform playerTransform)
     {
         this.playerTransform = playerTransform;
-    }
-
-    public void SetSpawner(PrefabSpawner spawner)
-    {
-        this.spawner = spawner;
     }
 }

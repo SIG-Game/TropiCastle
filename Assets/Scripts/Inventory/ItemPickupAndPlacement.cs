@@ -38,11 +38,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
                         return;
                     }
 
-                    if (itemWorld.spawner != null)
-                    {
-                        itemWorld.spawner.SpawnedPrefabRemoved();
-                    }
-
                     playerInventory.AddItem(itemWorld.item);
                     Destroy(mouseOverlapPoint.gameObject);
                 }

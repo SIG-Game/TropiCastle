@@ -4,8 +4,6 @@ public class ItemWorld : Interactable
 {
     [SerializeField] public ItemWithAmount item;
 
-    public PrefabSpawner spawner { get; set; }
-
     private void Start()
     {
         // Not in Awake because this needs to happen after ItemWorldPrefabInstanceFactory sets item

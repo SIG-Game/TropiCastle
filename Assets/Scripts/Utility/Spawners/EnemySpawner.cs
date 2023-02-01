@@ -9,6 +9,5 @@ public class EnemySpawner : PrefabSpawner
         Enemy spawnedEnemy = spawnedPrefab.GetComponent<Enemy>();
 
         spawnedEnemy.SetPlayerTransform(player);
-        spawnedEnemy.SetSpawner(this);
     }
 }

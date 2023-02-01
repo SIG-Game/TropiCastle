@@ -11,6 +11,16 @@ public class PrefabSpawner : MonoBehaviour
     private int numPrefabs;
     private float spawnTimer;
 
+    private void Awake()
+    {
+        if (prefabToSpawn.GetComponent<Spawnable>() == null)
+        {
+            Debug.LogError($"{nameof(prefabToSpawn)} named {prefabToSpawn.gameObject.name} " +
+                $"must have {nameof(Spawnable)} component. Destroying spawner...");
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         numPrefabs = 0;
@@ -45,6 +55,8 @@ public class PrefabSpawner : MonoBehaviour
         Vector2 spawnPosition = new Vector2(spawnXPosition, spawnYPosition);
 
         GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+        spawnedPrefab.GetComponent<Spawnable>().SetSpawner(this);
+
         ApplySpawnedPrefabProperties(spawnedPrefab);
 
         Debug.Log($"Spawned {spawnedPrefab.gameObject.name} at {spawnedPrefab.transform.position}.");
@@ -56,7 +68,7 @@ public class PrefabSpawner : MonoBehaviour
     {
     }
 
-    public void SpawnedPrefabRemoved()
+    public void SpawnedPrefabDestroyed()
     {
         numPrefabs--;
     }
