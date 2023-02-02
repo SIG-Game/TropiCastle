@@ -303,6 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 0.06
   sprintSpeedMultiplier: 1.25
+  waterSpeedMultiplier: 0.5
   front: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}

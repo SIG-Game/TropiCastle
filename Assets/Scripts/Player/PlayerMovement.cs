@@ -2,14 +2,16 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float movementSpeed;
-    public float sprintSpeedMultiplier;
-    public Sprite front, back, left, right;
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float sprintSpeedMultiplier;
+    [SerializeField] private float waterSpeedMultiplier;
+    [SerializeField] private Sprite front, back, left, right;
 
     private PlayerController playerController;
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
     private Vector2 velocity;
+    private bool inWater;
     private int waterLayer;
 
     private void Awake()
@@ -19,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         velocity = Vector2.zero;
+
+        inWater = false;
 
         waterLayer = LayerMask.NameToLayer("Water");
     }
@@ -46,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButton("Sprint"))
         {
             newVelocity *= sprintSpeedMultiplier;
+        }
+
+        if (inWater)
+        {
+            newVelocity *= waterSpeedMultiplier;
         }
 
         velocity = newVelocity;
@@ -84,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.layer == waterLayer)
         {
-            movementSpeed *= 0.5f;
+            inWater = true;
         }
     }
 
@@ -92,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.layer == waterLayer)
         {
-            movementSpeed *= 2f;
+            inWater = false;
         }
     }
 }
