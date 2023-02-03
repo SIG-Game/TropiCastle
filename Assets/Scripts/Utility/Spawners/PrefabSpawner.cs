@@ -7,6 +7,7 @@ public class PrefabSpawner : MonoBehaviour
     [SerializeField] private int maxSpawnedPrefabs;
     [SerializeField] private Vector2 minSpawnPosition;
     [SerializeField] private Vector2 maxSpawnPosition;
+    [SerializeField] private bool logOnSpawn;
 
     private int numPrefabs;
     private float spawnTimer;
@@ -59,7 +60,10 @@ public class PrefabSpawner : MonoBehaviour
 
         ApplySpawnedPrefabProperties(spawnedPrefab);
 
-        Debug.Log($"Spawned {spawnedPrefab.gameObject.name} at {spawnedPrefab.transform.position}.");
+        if (logOnSpawn)
+        {
+            Debug.Log($"Spawned {spawnedPrefab.gameObject.name} at {spawnedPrefab.transform.position}.");
+        }
 
         numPrefabs++;
     }
