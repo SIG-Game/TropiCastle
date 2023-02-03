@@ -5,18 +5,37 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 {
     [SerializeField] private bool isAttacking;
     [SerializeField] private int inventorySize;
+    [SerializeField] private Sprite front, back, left, right;
     [SerializeField] private HotbarUIController hotbarUIController;
     [SerializeField] private FishingMinigame fishingMinigame;
 
-    public PlayerDirection lastDirection { get; set; }
+    public PlayerDirection LastDirection
+    {
+        get => lastDirection;
+        set
+        {
+            lastDirection = value;
+
+            spriteRenderer.sprite = lastDirection switch
+            {
+                PlayerDirection.Up => back,
+                PlayerDirection.Down => front,
+                PlayerDirection.Left => left,
+                PlayerDirection.Right => right,
+                _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
+            };
+        }
+    }
 
     public static event Action OnPlayerDied = delegate { };
 
     private Animator animator;
     private BoxCollider2D boxCollider;
     private HealthController healthController;
+    private SpriteRenderer spriteRenderer;
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
+    private PlayerDirection lastDirection;
     private Inventory inventory;
     private LayerMask interactableMask;
     private LayerMask waterMask;
@@ -26,6 +45,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         healthController = GetComponent<HealthController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
@@ -37,7 +57,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
         isAttacking = false;
 
-        lastDirection = PlayerDirection.Down;
+        LastDirection = PlayerDirection.Down;
 
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }

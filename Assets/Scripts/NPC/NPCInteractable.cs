@@ -29,13 +29,13 @@ public class NPCInteractable : Interactable
 
     public void FacePlayer(PlayerController player)
     {
-        spriteRenderer.sprite = player.lastDirection switch
+        spriteRenderer.sprite = player.LastDirection switch
         {
             PlayerDirection.Up => front,
             PlayerDirection.Down => back,
             PlayerDirection.Left => right,
             PlayerDirection.Right => left,
-            _ => throw new ArgumentOutOfRangeException(nameof(player.lastDirection))
+            _ => throw new ArgumentOutOfRangeException(nameof(player.LastDirection))
         };
     }
 }
