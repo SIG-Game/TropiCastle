@@ -8,26 +8,25 @@ public class Inventory
 
     private List<ItemWithAmount> itemList;
 
-    // Every empty item slot points to this instance
-    private ItemWithAmount emptyItemInstance;
-
     private int firstEmptyIndex;
 
-    private int inventorySize;
+    // Every empty item slot points to this instance
+    private static ItemWithAmount emptyItemInstance;
 
-    public Inventory(int inventorySize)
+    static Inventory()
     {
-        this.inventorySize = inventorySize;
-
         // TODO: Resources.Load calls should maybe use Addressables instead
         ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
 
         emptyItemInstance = new ItemWithAmount
         {
-            amount = 0,
-            itemData = emptyItemInfo
+            itemData = emptyItemInfo,
+            amount = 0
         };
+    }
 
+    public Inventory(int inventorySize)
+    {
         itemList = new List<ItemWithAmount>(inventorySize);
 
         for (int i = 0; i < inventorySize; ++i)
