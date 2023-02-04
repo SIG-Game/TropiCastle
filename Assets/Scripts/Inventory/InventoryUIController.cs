@@ -137,10 +137,20 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
 
         if (holdingItem)
         {
-            Vector2 heldItemAnchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
-            heldItemAnchoredPosition.x = Mathf.Clamp(heldItemAnchoredPosition.x, 0f, canvasRectTransform.rect.width);
-            heldItemAnchoredPosition.y = Mathf.Clamp(heldItemAnchoredPosition.y, 0f, canvasRectTransform.rect.height);
-            heldItemRectTransform.anchoredPosition = heldItemAnchoredPosition;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, null,
+                out Vector2 heldItemAnchoredPosition))
+            {
+                float halfCanvasRectTransformWidth = canvasRectTransform.rect.width / 2f;
+                float halfCanvasRectTransformHeight = canvasRectTransform.rect.height / 2f;
+
+                heldItemAnchoredPosition.x = Mathf.Clamp(heldItemAnchoredPosition.x, -halfCanvasRectTransformWidth, halfCanvasRectTransformWidth);
+                heldItemAnchoredPosition.y = Mathf.Clamp(heldItemAnchoredPosition.y, -halfCanvasRectTransformHeight, halfCanvasRectTransformHeight);
+                heldItemRectTransform.anchoredPosition = heldItemAnchoredPosition;
+            }
+            else
+            {
+                Debug.LogError($"Failed to get {nameof(heldItemAnchoredPosition)} from {nameof(canvasRectTransform)}");
+            }
         }
     }
 }
