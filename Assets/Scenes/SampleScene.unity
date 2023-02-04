@@ -34154,6 +34154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotbarItemSlotContainer: {fileID: 1620314559}
+  inventoryItemSlotContainer: {fileID: 547836657}
 --- !u!1001 &1319385576
 PrefabInstance:
   m_ObjectHideFlags: 0

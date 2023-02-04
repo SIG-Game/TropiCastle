@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class HotbarUIController : MonoBehaviour
 {
     [SerializeField] private Transform hotbarItemSlotContainer;
+    [SerializeField] private Transform inventoryItemSlotContainer;
 
     public int HotbarItemIndex { get; private set; }
 
@@ -37,9 +38,28 @@ public class HotbarUIController : MonoBehaviour
 
     public void SelectHotbarItem(int newHotbarItemIndex)
     {
-        hotbarItemSlotContainer.GetChild(HotbarItemIndex).GetComponent<Image>().color = new Color32(173, 173, 173, 255);
+        UnhighlightItemSlotAtIndex(hotbarItemSlotContainer, HotbarItemIndex);
+        UnhighlightItemSlotAtIndex(inventoryItemSlotContainer, HotbarItemIndex);
+
         HotbarItemIndex = newHotbarItemIndex;
-        hotbarItemSlotContainer.GetChild(HotbarItemIndex).GetComponent<Image>().color = new Color32(140, 140, 140, 255);
+
+        HighlightItemSlotAtIndex(hotbarItemSlotContainer, HotbarItemIndex);
+        HighlightItemSlotAtIndex(inventoryItemSlotContainer, HotbarItemIndex);
+    }
+
+    private static void UnhighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
+    {
+        SetItemSlotColorAtIndex(itemSlotContainer, index, new Color32(173, 173, 173, 255));
+    }
+
+    private static void HighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
+    {
+        SetItemSlotColorAtIndex(itemSlotContainer, index, new Color32(140, 140, 140, 255));
+    }
+
+    private static void SetItemSlotColorAtIndex(Transform itemSlotContainer, int index, Color color)
+    {
+        itemSlotContainer.GetChild(index).GetComponent<Image>().color = color;
     }
 
     private void ProcessNumberKeys()
