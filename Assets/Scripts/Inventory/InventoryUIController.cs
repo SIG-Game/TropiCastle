@@ -122,11 +122,6 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
 
     private void Update()
     {
-        Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
-        anchoredPosition.x = Mathf.Clamp(anchoredPosition.x, 0f, canvasRectTransform.rect.width);
-        anchoredPosition.y = Mathf.Clamp(anchoredPosition.y, 0f, canvasRectTransform.rect.height);
-        heldItemRectTransform.anchoredPosition = anchoredPosition;
-
         if (Input.GetButtonDown("Inventory") &&
             (!PauseController.Instance.GamePaused || inventoryUI.activeInHierarchy))
         {
@@ -138,6 +133,14 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
                 ResetHeldItem();
                 UpdateSpritesInAllHotbarSlots();
             }
+        }
+
+        if (holdingItem)
+        {
+            Vector2 heldItemAnchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+            heldItemAnchoredPosition.x = Mathf.Clamp(heldItemAnchoredPosition.x, 0f, canvasRectTransform.rect.width);
+            heldItemAnchoredPosition.y = Mathf.Clamp(heldItemAnchoredPosition.y, 0f, canvasRectTransform.rect.height);
+            heldItemRectTransform.anchoredPosition = heldItemAnchoredPosition;
         }
     }
 }
