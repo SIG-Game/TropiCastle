@@ -5,6 +5,8 @@ public class HotbarUIController : MonoBehaviour
 {
     [SerializeField] private Transform hotbarItemSlotContainer;
     [SerializeField] private Transform inventoryItemSlotContainer;
+    [SerializeField] private Color highlightedSlotColor;
+    [SerializeField] private Color unhighlightedSlotColor;
 
     public int HotbarItemIndex { get; private set; }
 
@@ -47,14 +49,14 @@ public class HotbarUIController : MonoBehaviour
         HighlightItemSlotAtIndex(inventoryItemSlotContainer, HotbarItemIndex);
     }
 
-    private static void UnhighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
+    private void UnhighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
     {
-        SetItemSlotColorAtIndex(itemSlotContainer, index, new Color32(173, 173, 173, 255));
+        SetItemSlotColorAtIndex(itemSlotContainer, index, unhighlightedSlotColor);
     }
 
-    private static void HighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
+    private void HighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
     {
-        SetItemSlotColorAtIndex(itemSlotContainer, index, new Color32(140, 140, 140, 255));
+        SetItemSlotColorAtIndex(itemSlotContainer, index, highlightedSlotColor);
     }
 
     private static void SetItemSlotColorAtIndex(Transform itemSlotContainer, int index, Color color)

@@ -34155,6 +34155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hotbarItemSlotContainer: {fileID: 1620314559}
   inventoryItemSlotContainer: {fileID: 547836657}
+  highlightedSlotColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
+  unhighlightedSlotColor: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 1}
 --- !u!1001 &1319385576
 PrefabInstance:
   m_ObjectHideFlags: 0
