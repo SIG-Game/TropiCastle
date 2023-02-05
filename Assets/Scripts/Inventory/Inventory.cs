@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory
 {
-    public Action<int> ChangedItemAt;
+    public event Action<int> ChangedItemAt = delegate { };
 
     private List<ItemWithAmount> itemList;
 
@@ -57,7 +57,7 @@ public class Inventory
         }
 
         itemList[firstEmptyIndex] = newItem;
-        ChangedItemAt?.Invoke(firstEmptyIndex);
+        ChangedItemAt(firstEmptyIndex);
         firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
 
@@ -67,8 +67,8 @@ public class Inventory
         itemList[index1] = itemList[index2];
         itemList[index2] = temp;
 
-        ChangedItemAt?.Invoke(index1);
-        ChangedItemAt?.Invoke(index2);
+        ChangedItemAt(index1);
+        ChangedItemAt(index2);
 
         firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
@@ -84,7 +84,7 @@ public class Inventory
 
         itemList[itemIndex] = emptyItemInstance;
 
-        ChangedItemAt?.Invoke(itemIndex);
+        ChangedItemAt(itemIndex);
     }
 
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];

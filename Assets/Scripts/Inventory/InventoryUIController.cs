@@ -26,7 +26,7 @@ public class InventoryUIController : MonoBehaviour
             Debug.LogError($"{nameof(targetInventoryGetter)} does not implement {nameof(IInventoryGetter)}");
         }
 
-        inventory.ChangedItemAt = Inventory_ChangedItemAt;
+        inventory.ChangedItemAt += Inventory_ChangedItemAt;
     }
 
     private void Update()
@@ -48,6 +48,8 @@ public class InventoryUIController : MonoBehaviour
 
     private void OnDestroy()
     {
+        inventory.ChangedItemAt -= Inventory_ChangedItemAt;
+
         OnInventoryClosed = delegate { };
     }
 
