@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private enum State
-    {
-        Chilling,
-        Chasing,
-        KnockedBack,
-    }
-
     [SerializeField] private float speed;
     [SerializeField] private float knockbackForce;
     [SerializeField] private float targetRange;
@@ -22,14 +15,14 @@ public class Enemy : MonoBehaviour
     private HealthController healthController;
     private Vector2 velocityDirection;
     private Vector2 playerColliderOffset;
-    private State state;
+    private EnemyState state;
 
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         healthController = GetComponent<HealthController>();
 
-        state = State.Chilling;
+        state = EnemyState.Chilling;
 
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
@@ -42,17 +35,17 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (state == State.Chilling)
+        if (state == EnemyState.Chilling)
         {
             velocityDirection = Vector2.zero;
 
             if (Vector2.Distance(transform.position, GetPlayerColliderPosition()) <= targetRange)
             {
-                state = State.Chasing;
+                state = EnemyState.Chasing;
             }
         }
 
-        if (state == State.Chasing)
+        if (state == EnemyState.Chasing)
         {
             Vector2 directionToPlayer = (GetPlayerColliderPosition() - (Vector2)transform.position).normalized;
 
@@ -86,11 +79,11 @@ public class Enemy : MonoBehaviour
     //can update to when getting hit by weapon by changing the tag
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && state != State.KnockedBack)
+        if (other.tag == "Player" && state != EnemyState.KnockedBack)
         {
             velocityDirection = Vector2.zero;
 
-            state = State.KnockedBack;
+            state = EnemyState.KnockedBack;
 
             Vector2 directionFromPlayer = ((Vector2)transform.position - GetPlayerColliderPosition()).normalized;
 
@@ -104,7 +97,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator Wait()
     {
         yield return new WaitForSeconds(waitTimeAfterKnockback);
-        state = State.Chasing;
+        state = EnemyState.Chasing;
         transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
