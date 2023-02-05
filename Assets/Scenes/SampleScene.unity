@@ -34796,7 +34796,7 @@ GameObject:
   - component: {fileID: 1431489658}
   - component: {fileID: 1431489657}
   m_Layer: 5
-  m_Name: Held Item
+  m_Name: Held Item UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41155,6 +41155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1731795748}
   - component: {fileID: 1731795749}
+  - component: {fileID: 1731795752}
   - component: {fileID: 1731795750}
   - component: {fileID: 1731795751}
   m_Layer: 5
@@ -41198,12 +41199,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetInventoryGetter: {fileID: 572276101}
-  transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
   hotbarItemSlotContainer: {fileID: 1620314559}
   inventoryItemSlotContainer: {fileID: 547836657}
   inventoryUI: {fileID: 1128719742}
-  heldItem: {fileID: 1431489655}
-  canvas: {fileID: 822617737}
 --- !u!114 &1731795750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41231,6 +41229,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   addItemDropdownController: {fileID: 1731795750}
   player: {fileID: 572276101}
+--- !u!114 &1731795752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731795747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e34f0af238941647b03742195ad7145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldItemUI: {fileID: 1431489655}
+  canvas: {fileID: 822617737}
+  inventoryUIController: {fileID: 1731795749}
+  transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
 --- !u!1 &1739818043
 GameObject:
   m_ObjectHideFlags: 0
