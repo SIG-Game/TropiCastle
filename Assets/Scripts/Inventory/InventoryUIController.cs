@@ -5,15 +5,12 @@ using UnityEngine.UI;
 public class InventoryUIController : MonoBehaviour
 {
     [SerializeField] private MonoBehaviour targetInventoryGetter;
-    [SerializeField] private Transform hotbarItemSlotContainer;
     [SerializeField] private Transform inventoryItemSlotContainer;
     [SerializeField] private GameObject inventoryUI;
 
     private Inventory inventory;
 
     public event Action OnInventoryClosed = delegate { };
-
-    private const int hotbarSize = 10;
 
     private void Start()
     {
@@ -32,15 +29,13 @@ public class InventoryUIController : MonoBehaviour
     private void Update()
     {
         if (Input.GetButtonDown("Inventory") &&
-            (!PauseController.Instance.GamePaused || inventoryUI.activeInHierarchy))
+            (!PauseController.Instance.GamePaused || IsInventoryUIOpen()))
         {
             PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
             inventoryUI.SetActive(PauseController.Instance.GamePaused);
 
-            if (!inventoryUI.activeInHierarchy)
+            if (!IsInventoryUIOpen())
             {
-                UpdateSpritesInAllHotbarSlots();
-
                 OnInventoryClosed();
             }
         }
@@ -49,39 +44,26 @@ public class InventoryUIController : MonoBehaviour
     private void OnDestroy()
     {
         inventory.ChangedItemAt -= Inventory_ChangedItemAt;
-
-        OnInventoryClosed = delegate { };
     }
 
     private void Inventory_ChangedItemAt(int index)
     {
-        ItemWithAmount item = inventory.GetItemAtIndex(index);
+        Sprite changedItemSprite = inventory.GetItemAtIndex(index).itemData.sprite;
 
-        SetSpriteAtSlotIndex(item.itemData.sprite, index);
+        SetInventorySpriteAtSlotIndex(changedItemSprite, index);
     }
 
-    public void SetSpriteAtSlotIndex(Sprite sprite, int slotIndex)
+    public void SetInventorySpriteAtSlotIndex(Sprite sprite, int slotIndex)
     {
-        if (slotIndex < hotbarSize && !inventoryUI.activeInHierarchy)
-        {
-            SetSpriteAtSlotIndexInContainer(sprite, slotIndex, hotbarItemSlotContainer);
-        }
-
         SetSpriteAtSlotIndexInContainer(sprite, slotIndex, inventoryItemSlotContainer);
     }
 
-    private void UpdateSpritesInAllHotbarSlots()
-    {
-        for (int i = 0; i < hotbarSize; ++i)
-        {
-            SetSpriteAtSlotIndexInContainer(inventory.GetItemAtIndex(i).itemData.sprite, i, hotbarItemSlotContainer);
-        }
-    }
-
-    private void SetSpriteAtSlotIndexInContainer(Sprite sprite, int slotIndex, Transform itemSlotContainer)
+    public static void SetSpriteAtSlotIndexInContainer(Sprite sprite, int slotIndex, Transform itemSlotContainer)
     {
         itemSlotContainer.GetChild(slotIndex).GetChild(0).GetComponent<Image>().sprite = sprite;
     }
 
     public Inventory GetInventory() => inventory;
+
+    public bool IsInventoryUIOpen() => inventoryUI.activeInHierarchy;
 }

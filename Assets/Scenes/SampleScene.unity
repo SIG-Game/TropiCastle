@@ -2405,7 +2405,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 572276101}
   inventoryFullUIController: {fileID: 2024199923}
-  halfItemWorldPrefabColliderSize: 0.2
 --- !u!1 &315073302
 GameObject:
   m_ObjectHideFlags: 0
@@ -34156,6 +34155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hotbarItemSlotContainer: {fileID: 1620314559}
   inventoryItemSlotContainer: {fileID: 547836657}
+  inventoryUIController: {fileID: 1731795749}
   highlightedSlotColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
 --- !u!1001 &1319385576
 PrefabInstance:
@@ -41199,7 +41199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetInventoryGetter: {fileID: 572276101}
-  hotbarItemSlotContainer: {fileID: 1620314559}
   inventoryItemSlotContainer: {fileID: 547836657}
   inventoryUI: {fileID: 1128719742}
 --- !u!114 &1731795750

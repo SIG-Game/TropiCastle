@@ -91,7 +91,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IPointerClickHandler
         bool shouldPutHeldItemBack = itemIndex == heldItemIndex;
         if (shouldPutHeldItemBack)
         {
-            inventoryUIController.SetSpriteAtSlotIndex(itemData.sprite, itemIndex);
+            inventoryUIController.SetInventorySpriteAtSlotIndex(itemData.sprite, itemIndex);
         }
         else
         {
@@ -103,7 +103,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IPointerClickHandler
 
     private void HoldItem(int itemIndex, ItemScriptableObject itemData)
     {
-        inventoryUIController.SetSpriteAtSlotIndex(transparentSprite, itemIndex);
+        inventoryUIController.SetInventorySpriteAtSlotIndex(transparentSprite, itemIndex);
 
         heldItemIndex = itemIndex;
         heldItemImage.sprite = itemData.sprite;
@@ -120,7 +120,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IPointerClickHandler
         {
             ItemWithAmount heldItem = inventory.GetItemAtIndex(heldItemIndex);
 
-            inventoryUIController.SetSpriteAtSlotIndex(heldItem.itemData.sprite, heldItemIndex);
+            inventoryUIController.SetInventorySpriteAtSlotIndex(heldItem.itemData.sprite, heldItemIndex);
 
             HideHeldItem();
         }

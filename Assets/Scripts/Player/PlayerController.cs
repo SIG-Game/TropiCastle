@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
 
     public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !DialogueBox.Instance.DialogueBoxOpen();
 
-    public ItemWithAmount GetHotbarItem() => inventory.GetItemAtIndex(hotbarUIController.HotbarItemIndex);
+    public ItemWithAmount GetHotbarItem() => inventory.GetItemAtIndex(hotbarUIController.SelectedItemIndex);
 
     public Inventory GetInventory() => inventory;
 }

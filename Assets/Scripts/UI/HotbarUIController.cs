@@ -5,20 +5,34 @@ public class HotbarUIController : MonoBehaviour
 {
     [SerializeField] private Transform hotbarItemSlotContainer;
     [SerializeField] private Transform inventoryItemSlotContainer;
+    [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Color highlightedSlotColor;
 
+    private Inventory inventory;
     private Color unhighlightedSlotColor;
+    private int hotbarSize;
 
-    public int HotbarItemIndex { get; private set; }
+    public int SelectedItemIndex { get; private set; }
 
     private void Awake()
     {
-        HotbarItemIndex = 0;
+        SelectedItemIndex = 0;
 
         unhighlightedSlotColor = hotbarItemSlotContainer.GetChild(0).GetComponent<Image>().color;
+        hotbarSize = hotbarItemSlotContainer.childCount;
 
-        HighlightItemSlotAtIndex(hotbarItemSlotContainer, HotbarItemIndex);
-        HighlightItemSlotAtIndex(inventoryItemSlotContainer, HotbarItemIndex);
+        HighlightItemSlotAtIndex(hotbarItemSlotContainer, SelectedItemIndex);
+        HighlightItemSlotAtIndex(inventoryItemSlotContainer, SelectedItemIndex);
+
+        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
+    }
+
+    private void Start()
+    {
+        // Runs after InventoryUIController Start method due to execution
+        // order because that's where inventoryUIController's inventory is set
+        inventory = inventoryUIController.GetInventory();
+        inventory.ChangedItemAt += Inventory_ChangedItemAt;
     }
 
     private void Update()
@@ -30,28 +44,62 @@ public class HotbarUIController : MonoBehaviour
 
         if (Input.mouseScrollDelta.y != 0f)
         {
-            int newHotbarItemIndex = HotbarItemIndex - (int)Mathf.Sign(Input.mouseScrollDelta.y);
+            int newSelectedItemIndex = SelectedItemIndex - (int)Mathf.Sign(Input.mouseScrollDelta.y);
 
-            if (newHotbarItemIndex == 10)
-                newHotbarItemIndex = 0;
-            else if (newHotbarItemIndex == -1)
-                newHotbarItemIndex = 9;
+            if (newSelectedItemIndex == hotbarSize)
+                newSelectedItemIndex = 0;
+            else if (newSelectedItemIndex == -1)
+                newSelectedItemIndex = hotbarSize - 1;
 
-            SelectHotbarItem(newHotbarItemIndex);
+            SelectHotbarItem(newSelectedItemIndex);
         }
 
-        ProcessNumberKeys();
+        ProcessNumberKeysForItemSelection();
     }
 
-    public void SelectHotbarItem(int newHotbarItemIndex)
+    private void OnDestroy()
     {
-        UnhighlightItemSlotAtIndex(hotbarItemSlotContainer, HotbarItemIndex);
-        UnhighlightItemSlotAtIndex(inventoryItemSlotContainer, HotbarItemIndex);
+        inventory.ChangedItemAt -= Inventory_ChangedItemAt;
+        inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
+    }
 
-        HotbarItemIndex = newHotbarItemIndex;
+    private void Inventory_ChangedItemAt(int index)
+    {
+        if (index >= hotbarSize || inventoryUIController.IsInventoryUIOpen())
+        {
+            return;
+        }
 
-        HighlightItemSlotAtIndex(hotbarItemSlotContainer, HotbarItemIndex);
-        HighlightItemSlotAtIndex(inventoryItemSlotContainer, HotbarItemIndex);
+        Sprite changedItemSprite = inventory.GetItemAtIndex(index).itemData.sprite;
+
+        InventoryUIController.SetSpriteAtSlotIndexInContainer(changedItemSprite, index, hotbarItemSlotContainer);
+    }
+
+    private void InventoryUIController_OnInventoryClosed()
+    {
+        UpdateSpritesInAllHotbarSlots();
+    }
+
+    private void UpdateSpritesInAllHotbarSlots()
+    {
+        for (int i = 0; i < hotbarSize; ++i)
+        {
+            Sprite itemSpriteAtCurrentIndex = inventory.GetItemAtIndex(i).itemData.sprite;
+
+            InventoryUIController.SetSpriteAtSlotIndexInContainer(itemSpriteAtCurrentIndex, i,
+                hotbarItemSlotContainer);
+        }
+    }
+
+    private void SelectHotbarItem(int newSelectedItemIndex)
+    {
+        UnhighlightItemSlotAtIndex(hotbarItemSlotContainer, SelectedItemIndex);
+        UnhighlightItemSlotAtIndex(inventoryItemSlotContainer, SelectedItemIndex);
+
+        SelectedItemIndex = newSelectedItemIndex;
+
+        HighlightItemSlotAtIndex(hotbarItemSlotContainer, SelectedItemIndex);
+        HighlightItemSlotAtIndex(inventoryItemSlotContainer, SelectedItemIndex);
     }
 
     private void UnhighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
@@ -69,32 +117,32 @@ public class HotbarUIController : MonoBehaviour
         itemSlotContainer.GetChild(index).GetComponent<Image>().color = color;
     }
 
-    private void ProcessNumberKeys()
+    private void ProcessNumberKeysForItemSelection()
     {
-        int newHotbarItemIndex = HotbarItemIndex;
+        int newSelectedItemIndex = SelectedItemIndex;
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            newHotbarItemIndex = 0;
+            newSelectedItemIndex = 0;
         else if (Input.GetKeyDown(KeyCode.Alpha2))
-            newHotbarItemIndex = 1;
+            newSelectedItemIndex = 1;
         else if (Input.GetKeyDown(KeyCode.Alpha3))
-            newHotbarItemIndex = 2;
+            newSelectedItemIndex = 2;
         else if (Input.GetKeyDown(KeyCode.Alpha4))
-            newHotbarItemIndex = 3;
+            newSelectedItemIndex = 3;
         else if (Input.GetKeyDown(KeyCode.Alpha5))
-            newHotbarItemIndex = 4;
+            newSelectedItemIndex = 4;
         else if (Input.GetKeyDown(KeyCode.Alpha6))
-            newHotbarItemIndex = 5;
+            newSelectedItemIndex = 5;
         else if (Input.GetKeyDown(KeyCode.Alpha7))
-            newHotbarItemIndex = 6;
+            newSelectedItemIndex = 6;
         else if (Input.GetKeyDown(KeyCode.Alpha8))
-            newHotbarItemIndex = 7;
+            newSelectedItemIndex = 7;
         else if (Input.GetKeyDown(KeyCode.Alpha9))
-            newHotbarItemIndex = 8;
+            newSelectedItemIndex = 8;
         else if (Input.GetKeyDown(KeyCode.Alpha0))
-            newHotbarItemIndex = 9;
+            newSelectedItemIndex = 9;
 
-        if (newHotbarItemIndex != HotbarItemIndex)
-            SelectHotbarItem(newHotbarItemIndex);
+        if (newSelectedItemIndex != SelectedItemIndex)
+            SelectHotbarItem(newSelectedItemIndex);
     }
 }
