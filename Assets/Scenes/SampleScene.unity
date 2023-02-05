@@ -41200,7 +41200,7 @@ MonoBehaviour:
   targetInventoryGetter: {fileID: 572276101}
   transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
   hotbarItemSlotContainer: {fileID: 1620314559}
-  itemSlotContainer: {fileID: 547836657}
+  inventoryItemSlotContainer: {fileID: 547836657}
   inventoryUI: {fileID: 1128719742}
   heldItem: {fileID: 1431489655}
   canvas: {fileID: 822617737}

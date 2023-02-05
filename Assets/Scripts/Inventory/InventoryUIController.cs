@@ -8,7 +8,7 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
     [SerializeField] private MonoBehaviour targetInventoryGetter;
     [SerializeField] private Sprite transparentSprite;
     [SerializeField] private Transform hotbarItemSlotContainer;
-    [SerializeField] private Transform itemSlotContainer;
+    [SerializeField] private Transform inventoryItemSlotContainer;
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private GameObject heldItem;
     [SerializeField] private GameObject canvas;
@@ -18,9 +18,10 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
     private RectTransform canvasRectTransform;
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
-    private const int hotbarSize = 10;
-    private bool holdingItem = false;
+    private bool holdingItem;
     private int heldItemIndex;
+
+    private const int hotbarSize = 10;
 
     private void Awake()
     {
@@ -28,6 +29,8 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
         canvasRectTransform = canvas.GetComponent<RectTransform>();
         heldItemRectTransform = heldItem.GetComponent<RectTransform>();
         heldItemImage = heldItem.GetComponent<Image>();
+
+        holdingItem = false;
     }
 
     private void Start()
@@ -42,82 +45,6 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
         }
 
         inventory.ChangedItemAt = Inventory_ChangedItemAt;
-    }
-
-    private void Inventory_ChangedItemAt(int index)
-    {
-        ItemWithAmount item = inventory.GetItemAtIndex(index);
-
-        SetSpriteAtSlotIndex(index, item.itemData.sprite);
-    }
-
-    private void SetSpriteAtSlotIndex(int slotIndex, Sprite newSprite)
-    {
-        if (slotIndex < hotbarSize && !inventoryUI.activeInHierarchy)
-        {
-            hotbarItemSlotContainer.GetChild(slotIndex).GetChild(0).GetComponent<Image>().sprite = newSprite;
-        }
-
-        itemSlotContainer.GetChild(slotIndex).GetChild(0).GetComponent<Image>().sprite = newSprite;
-    }
-
-    private void UpdateSpritesInAllHotbarSlots()
-    {
-        for (int i = 0; i < hotbarSize; ++i)
-        {
-            hotbarItemSlotContainer.GetChild(i).GetChild(0).GetComponent<Image>().sprite = inventory.GetItemAtIndex(i).itemData.sprite;
-        }
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        List<RaycastResult> results = new List<RaycastResult>();
-        graphicRaycaster.Raycast(eventData, results);
-
-        if (results.Count > 0)
-        {
-            int clickedItemIndex = results[0].gameObject.transform.GetSiblingIndex();
-            ItemWithAmount clickedItem = inventory.GetItemAtIndex(clickedItemIndex);
-
-            if (holdingItem)
-            {
-                if (clickedItemIndex == heldItemIndex)
-                {
-                    // Put held item back
-                    SetSpriteAtSlotIndex(clickedItemIndex, clickedItem.itemData.sprite);
-                }
-                else
-                {
-                    inventory.SwapItemsAt(heldItemIndex, clickedItemIndex);
-                }
-
-                heldItemImage.sprite = transparentSprite;
-                holdingItem = false;
-            }
-            else if (clickedItem.itemData.name != "Empty")
-            {
-                // Hold clicked item
-                SetSpriteAtSlotIndex(clickedItemIndex, transparentSprite);
-
-                heldItemIndex = clickedItemIndex;
-                heldItemImage.sprite = clickedItem.itemData.sprite;
-                holdingItem = true;
-            }
-        }
-    }
-
-    public void ResetHeldItem()
-    {
-        if (holdingItem)
-        {
-            ItemWithAmount heldItem = inventory.GetItemAtIndex(heldItemIndex);
-
-            SetSpriteAtSlotIndex(heldItemIndex, heldItem.itemData.sprite);
-
-            heldItemImage.sprite = transparentSprite;
-
-            holdingItem = false;
-        }
     }
 
     private void Update()
@@ -137,20 +64,108 @@ public class InventoryUIController : MonoBehaviour, IPointerClickHandler
 
         if (holdingItem)
         {
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, null,
-                out Vector2 heldItemAnchoredPosition))
-            {
-                float halfCanvasRectTransformWidth = canvasRectTransform.rect.width / 2f;
-                float halfCanvasRectTransformHeight = canvasRectTransform.rect.height / 2f;
+            UpdateHeldItemPosition();
+        }
+    }
 
-                heldItemAnchoredPosition.x = Mathf.Clamp(heldItemAnchoredPosition.x, -halfCanvasRectTransformWidth, halfCanvasRectTransformWidth);
-                heldItemAnchoredPosition.y = Mathf.Clamp(heldItemAnchoredPosition.y, -halfCanvasRectTransformHeight, halfCanvasRectTransformHeight);
-                heldItemRectTransform.anchoredPosition = heldItemAnchoredPosition;
+    private void Inventory_ChangedItemAt(int index)
+    {
+        ItemWithAmount item = inventory.GetItemAtIndex(index);
+
+        SetSpriteAtSlotIndex(item.itemData.sprite, index);
+    }
+
+    private void SetSpriteAtSlotIndex(Sprite sprite, int slotIndex)
+    {
+        if (slotIndex < hotbarSize && !inventoryUI.activeInHierarchy)
+        {
+            SetSpriteAtSlotIndexInContainer(sprite, slotIndex, hotbarItemSlotContainer);
+        }
+
+        SetSpriteAtSlotIndexInContainer(sprite, slotIndex, inventoryItemSlotContainer);
+    }
+
+    private void UpdateSpritesInAllHotbarSlots()
+    {
+        for (int i = 0; i < hotbarSize; ++i)
+        {
+            SetSpriteAtSlotIndexInContainer(inventory.GetItemAtIndex(i).itemData.sprite, i, hotbarItemSlotContainer);
+        }
+    }
+
+    private void SetSpriteAtSlotIndexInContainer(Sprite sprite, int slotIndex, Transform itemSlotContainer)
+    {
+        itemSlotContainer.GetChild(slotIndex).GetChild(0).GetComponent<Image>().sprite = sprite;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        List<RaycastResult> results = new List<RaycastResult>();
+        graphicRaycaster.Raycast(eventData, results);
+
+        if (results.Count == 0)
+        {
+            return;
+        }
+
+        int clickedItemIndex = results[0].gameObject.transform.GetSiblingIndex();
+        ItemScriptableObject clickedItemData = inventory.GetItemAtIndex(clickedItemIndex).itemData;
+
+        if (holdingItem)
+        {
+            if (clickedItemIndex == heldItemIndex)
+            {
+                // Put held item back
+                SetSpriteAtSlotIndex(clickedItemData.sprite, clickedItemIndex);
             }
             else
             {
-                Debug.LogError($"Failed to get {nameof(heldItemAnchoredPosition)} from {nameof(canvasRectTransform)}");
+                inventory.SwapItemsAt(heldItemIndex, clickedItemIndex);
             }
+
+            heldItemImage.sprite = transparentSprite;
+            holdingItem = false;
+        }
+        else if (clickedItemData.name != "Empty")
+        {
+            // Hold clicked item
+            SetSpriteAtSlotIndex(transparentSprite, clickedItemIndex);
+
+            heldItemIndex = clickedItemIndex;
+            heldItemImage.sprite = clickedItemData.sprite;
+            holdingItem = true;
+        }
+    }
+
+    private void ResetHeldItem()
+    {
+        if (holdingItem)
+        {
+            ItemWithAmount heldItem = inventory.GetItemAtIndex(heldItemIndex);
+
+            SetSpriteAtSlotIndex(heldItem.itemData.sprite, heldItemIndex);
+
+            heldItemImage.sprite = transparentSprite;
+
+            holdingItem = false;
+        }
+    }
+
+    private void UpdateHeldItemPosition()
+    {
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, Input.mousePosition, null,
+                out Vector2 heldItemAnchoredPosition))
+        {
+            float halfCanvasRectTransformWidth = canvasRectTransform.rect.width / 2f;
+            float halfCanvasRectTransformHeight = canvasRectTransform.rect.height / 2f;
+
+            heldItemAnchoredPosition.x = Mathf.Clamp(heldItemAnchoredPosition.x, -halfCanvasRectTransformWidth, halfCanvasRectTransformWidth);
+            heldItemAnchoredPosition.y = Mathf.Clamp(heldItemAnchoredPosition.y, -halfCanvasRectTransformHeight, halfCanvasRectTransformHeight);
+            heldItemRectTransform.anchoredPosition = heldItemAnchoredPosition;
+        }
+        else
+        {
+            Debug.LogError($"Failed to get {nameof(heldItemAnchoredPosition)} from {nameof(canvasRectTransform)}");
         }
     }
 }
