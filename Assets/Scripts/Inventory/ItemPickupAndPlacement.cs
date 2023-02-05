@@ -4,19 +4,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
-    [SerializeField] private float halfItemWorldPrefabColliderSize;
 
     private Inventory playerInventory;
-    private Vector2 halfItemWorldPrefabColliderSizeRepeated;
-
-    private void Awake()
-    {
-        halfItemWorldPrefabColliderSizeRepeated = new Vector2(halfItemWorldPrefabColliderSize, halfItemWorldPrefabColliderSize);
-    }
+    private Vector2 itemWorldPrefabColliderExtents;
 
     private void Start()
     {
         playerInventory = player.GetInventory();
+        itemWorldPrefabColliderExtents = ItemWorldPrefabInstanceFactory.Instance.GetItemWorldPrefabColliderExtents();
     }
 
     private void Update()
@@ -75,8 +70,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private bool CanPlaceItemAtPosition(Vector2 position)
     {
-        Vector2 overlapAreaCornerBottomLeft = position - halfItemWorldPrefabColliderSizeRepeated;
-        Vector2 overlapAreaCornerTopRight = position + halfItemWorldPrefabColliderSizeRepeated;
+        Vector2 overlapAreaCornerBottomLeft = position - itemWorldPrefabColliderExtents;
+        Vector2 overlapAreaCornerTopRight = position + itemWorldPrefabColliderExtents;
 
         Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
 

@@ -4,11 +4,17 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 {
     [SerializeField] private GameObject itemWorldPrefab;
 
+    private Vector2 itemWorldPrefabColliderExtents;
+
     public static ItemWorldPrefabInstanceFactory Instance;
 
     private void Awake()
     {
         Instance = this;
+
+        // BoxCollider2D bounds property (which has extents property) is not set
+        // until prefab is instantiated, so that property cannot be used here
+        itemWorldPrefabColliderExtents = itemWorldPrefab.GetComponent<BoxCollider2D>().size / 2f;
     }
 
     private void OnDestroy()
@@ -40,4 +46,6 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         // Dropped items currently don't move
         //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
     }
+
+    public Vector2 GetItemWorldPrefabColliderExtents() => itemWorldPrefabColliderExtents;
 }
