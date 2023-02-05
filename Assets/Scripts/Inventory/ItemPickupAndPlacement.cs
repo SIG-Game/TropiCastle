@@ -4,8 +4,15 @@ public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
+    [SerializeField] private float halfItemWorldPrefabColliderSize;
 
     private Inventory playerInventory;
+    private Vector2 halfItemWorldPrefabColliderSizeRepeated;
+
+    private void Awake()
+    {
+        halfItemWorldPrefabColliderSizeRepeated = new Vector2(halfItemWorldPrefabColliderSize, halfItemWorldPrefabColliderSize);
+    }
 
     private void Start()
     {
@@ -19,51 +26,60 @@ public class ItemPickupAndPlacement : MonoBehaviour
             return;
         }
 
-        Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
         if (Input.GetMouseButtonDown(1))
         {
-            Collider2D mouseOverlapPoint = Physics2D.OverlapPoint(mouseWorldPoint);
+            Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D mouseOverlapCollider = Physics2D.OverlapPoint(mouseWorldPoint);
 
-            // Pick up item
-            if (mouseOverlapPoint != null)
+            bool mouseIsOverCollider = mouseOverlapCollider != null;
+            if (mouseIsOverCollider)
             {
-                ItemWorld itemWorld = mouseOverlapPoint.GetComponent<ItemWorld>();
-
-                if (itemWorld != null)
-                {
-                    if (playerInventory.IsFull())
-                    {
-                        inventoryFullUIController.ShowInventoryFullText();
-                        return;
-                    }
-
-                    playerInventory.AddItem(itemWorld.item);
-                    Destroy(mouseOverlapPoint.gameObject);
-                }
+                AttemptToPickUpItemFromCollider(mouseOverlapCollider);
             }
-            // Attempt to place item
-            else
+            else if (CanPlaceItemAtPosition(mouseWorldPoint))
             {
-                // 0.2f is half the size of the Item World prefab's hitbox
-                Vector2 overlapAreaCornerA = new Vector2(mouseWorldPoint.x - 0.2f, mouseWorldPoint.y - 0.2f);
-                Vector2 overlapAreaCornerB = new Vector2(mouseWorldPoint.x + 0.2f, mouseWorldPoint.y + 0.2f);
-                Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerA, overlapAreaCornerB);
-
-                if (itemWorldOverlap == null)
-                {
-                    ItemWithAmount itemToPlace = player.GetHotbarItem();
-
-                    if (itemToPlace.itemData.name != "Empty")
-                    {
-                        Vector3 itemPosition = mouseWorldPoint;
-                        itemPosition.z = 0f;
-
-                        _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(itemPosition, itemToPlace);
-                        playerInventory.RemoveItem(itemToPlace);
-                    }
-                }
+                PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
             }
         }
+    }
+
+    private void AttemptToPickUpItemFromCollider(Collider2D collider)
+    {
+        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+
+        if (itemWorld == null)
+        {
+            return;
+        }
+
+        if (playerInventory.IsFull())
+        {
+            inventoryFullUIController.ShowInventoryFullText();
+            return;
+        }
+
+        playerInventory.AddItem(itemWorld.item);
+        Destroy(itemWorld.gameObject);
+    }
+
+    private void PlaceSelectedPlayerHotbarItemAtPosition(Vector2 position)
+    {
+        ItemWithAmount itemToPlace = player.GetHotbarItem();
+
+        if (itemToPlace.itemData.name != "Empty")
+        {
+            _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(position, itemToPlace);
+            playerInventory.RemoveItem(itemToPlace);
+        }
+    }
+
+    private bool CanPlaceItemAtPosition(Vector2 position)
+    {
+        Vector2 overlapAreaCornerBottomLeft = position - halfItemWorldPrefabColliderSizeRepeated;
+        Vector2 overlapAreaCornerTopRight = position + halfItemWorldPrefabColliderSizeRepeated;
+
+        Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
+
+        return itemWorldOverlap == null;
     }
 }
