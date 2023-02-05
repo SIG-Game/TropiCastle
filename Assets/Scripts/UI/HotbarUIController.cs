@@ -6,14 +6,19 @@ public class HotbarUIController : MonoBehaviour
     [SerializeField] private Transform hotbarItemSlotContainer;
     [SerializeField] private Transform inventoryItemSlotContainer;
     [SerializeField] private Color highlightedSlotColor;
-    [SerializeField] private Color unhighlightedSlotColor;
+
+    private Color unhighlightedSlotColor;
 
     public int HotbarItemIndex { get; private set; }
 
     private void Awake()
     {
         HotbarItemIndex = 0;
-        SelectHotbarItem(HotbarItemIndex);
+
+        unhighlightedSlotColor = hotbarItemSlotContainer.GetChild(0).GetComponent<Image>().color;
+
+        HighlightItemSlotAtIndex(hotbarItemSlotContainer, HotbarItemIndex);
+        HighlightItemSlotAtIndex(inventoryItemSlotContainer, HotbarItemIndex);
     }
 
     private void Update()
