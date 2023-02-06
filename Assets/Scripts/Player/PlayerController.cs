@@ -1,10 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IInventoryGetter
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private bool isAttacking;
-    [SerializeField] private int inventorySize;
     [SerializeField] private Sprite front, back, left, right;
     [SerializeField] private HotbarUIController hotbarUIController;
     [SerializeField] private FishingMinigame fishingMinigame;
@@ -32,11 +31,11 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
     private Animator animator;
     private BoxCollider2D boxCollider;
     private HealthController healthController;
+    private Inventory inventory;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
     private PlayerDirection lastDirection;
-    private Inventory inventory;
     private LayerMask interactableMask;
     private LayerMask waterMask;
 
@@ -44,13 +43,12 @@ public class PlayerController : MonoBehaviour, IInventoryGetter
     {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
+        inventory = GetComponent<Inventory>();
         healthController = GetComponent<HealthController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
-
-        inventory = new Inventory(inventorySize);
 
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");

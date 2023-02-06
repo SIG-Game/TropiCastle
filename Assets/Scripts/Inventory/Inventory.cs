@@ -2,31 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory
+public class Inventory : MonoBehaviour
 {
-    public event Action<ItemWithAmount, int> ChangedItemAtIndex = delegate { };
+    [SerializeField] private int inventorySize;
 
     private List<ItemWithAmount> itemList;
-
     private int firstEmptyIndex;
+
+    public event Action<ItemWithAmount, int> ChangedItemAtIndex = delegate { };
 
     // Every empty item slot points to this instance
     private static ItemWithAmount emptyItemInstance;
 
-    static Inventory()
+    private void Awake()
     {
-        // TODO: Resources.Load calls should maybe use Addressables instead
-        ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
-
-        emptyItemInstance = new ItemWithAmount
+        if (emptyItemInstance == null)
         {
-            itemData = emptyItemInfo,
-            amount = 0
-        };
-    }
+            ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
 
-    public Inventory(int inventorySize)
-    {
+            emptyItemInstance = new ItemWithAmount
+            {
+                itemData = emptyItemInfo,
+                amount = 0
+            };
+        }
+
         itemList = new List<ItemWithAmount>(inventorySize);
 
         for (int i = 0; i < inventorySize; ++i)

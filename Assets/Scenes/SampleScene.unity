@@ -41198,9 +41198,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954349676e9910b4380b29a8abadb35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetInventoryGetter: {fileID: 572276101}
-  inventoryItemSlotContainer: {fileID: 547836657}
+  inventory: {fileID: 1982112582}
   inventoryUI: {fileID: 1128719742}
+  inventoryItemSlotContainer: {fileID: 547836657}
 --- !u!114 &1731795750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42803,6 +42803,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 339fd80acfd9dd142aef9ef7f6ce56ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1982112582 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 856750480813842556, guid: 055035cc7ee7c8646858260629418a55,
+    type: 3}
+  m_PrefabInstance: {fileID: 1982112580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198128349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea1cb71b9f11954195decf85a918b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1987957654

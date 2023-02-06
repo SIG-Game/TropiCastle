@@ -4,25 +4,14 @@ using UnityEngine.UI;
 
 public class InventoryUIController : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour targetInventoryGetter;
-    [SerializeField] private Transform inventoryItemSlotContainer;
+    [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject inventoryUI;
-
-    private Inventory inventory;
+    [SerializeField] private Transform inventoryItemSlotContainer;
 
     public event Action OnInventoryClosed = delegate { };
 
-    private void Start()
+    private void Awake()
     {
-        if (targetInventoryGetter is IInventoryGetter inventoryGetter)
-        {
-            inventory = inventoryGetter.GetInventory();
-        }
-        else
-        {
-            Debug.LogError($"{nameof(targetInventoryGetter)} does not implement {nameof(IInventoryGetter)}");
-        }
-
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
     }
 

@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 5288355818519945016}
   - component: {fileID: 2526882180276161147}
   - component: {fileID: 3015389456133774718}
+  - component: {fileID: 856750480813842556}
   - component: {fileID: 8669891105156055949}
   - component: {fileID: 3827053378170763305}
   m_Layer: 0
@@ -286,7 +287,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
-  inventorySize: 30
   front: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
@@ -321,6 +321,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+--- !u!114 &856750480813842556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288355818519944996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea1cb71b9f11954195decf85a918b02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySize: 30
 --- !u!95 &8669891105156055949
 Animator:
   serializedVersion: 4
