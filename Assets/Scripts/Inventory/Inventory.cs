@@ -56,19 +56,17 @@ public class Inventory
             return;
         }
 
-        itemList[firstEmptyIndex] = newItem;
-        ChangedItemAt(firstEmptyIndex);
+        SetItemAtIndex(newItem, firstEmptyIndex);
+
         firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
 
     public void SwapItemsAt(int index1, int index2)
     {
-        ItemWithAmount temp = itemList[index1];
-        itemList[index1] = itemList[index2];
-        itemList[index2] = temp;
+        ItemWithAmount itemAtIndex1BeforeSwap = itemList[index1];
 
-        ChangedItemAt(index1);
-        ChangedItemAt(index2);
+        SetItemAtIndex(itemList[index2], index1);
+        SetItemAtIndex(itemAtIndex1BeforeSwap, index2);
 
         firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
@@ -82,20 +80,18 @@ public class Inventory
         if (itemIndex < firstEmptyIndex || IsFull())
             firstEmptyIndex = itemIndex;
 
-        itemList[itemIndex] = emptyItemInstance;
-
-        ChangedItemAt(itemIndex);
+        SetItemAtIndex(emptyItemInstance, itemIndex);
     }
 
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
 
-    public List<ItemWithAmount> GetItemList()
-    {
-        return itemList;
-    }
+    public List<ItemWithAmount> GetItemList() => itemList;
 
-    public bool IsFull()
+    public bool IsFull() => firstEmptyIndex == -1;
+
+    private void SetItemAtIndex(ItemWithAmount item, int index)
     {
-        return firstEmptyIndex == -1;
+        itemList[index] = item;
+        ChangedItemAt(index);
     }
 }
