@@ -32,7 +32,7 @@ public class HotbarUIController : MonoBehaviour
         // Runs after InventoryUIController Start method due to execution
         // order because that's where inventoryUIController's inventory is set
         inventory = inventoryUIController.GetInventory();
-        inventory.ChangedItemAt += Inventory_ChangedItemAt;
+        inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
     }
 
     private void Update()
@@ -59,18 +59,18 @@ public class HotbarUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        inventory.ChangedItemAt -= Inventory_ChangedItemAt;
+        inventory.ChangedItemAtIndex -= Inventory_ChangedItemAtIndex;
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
 
-    private void Inventory_ChangedItemAt(int index)
+    private void Inventory_ChangedItemAtIndex(ItemWithAmount item, int index)
     {
         if (index >= hotbarSize || inventoryUIController.IsInventoryUIOpen())
         {
             return;
         }
 
-        Sprite changedItemSprite = inventory.GetItemAtIndex(index).itemData.sprite;
+        Sprite changedItemSprite = item.itemData.sprite;
 
         InventoryUIController.SetSpriteAtSlotIndexInContainer(changedItemSprite, index, hotbarItemSlotContainer);
     }

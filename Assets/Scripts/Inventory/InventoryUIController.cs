@@ -23,7 +23,7 @@ public class InventoryUIController : MonoBehaviour
             Debug.LogError($"{nameof(targetInventoryGetter)} does not implement {nameof(IInventoryGetter)}");
         }
 
-        inventory.ChangedItemAt += Inventory_ChangedItemAt;
+        inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
     }
 
     private void Update()
@@ -43,12 +43,12 @@ public class InventoryUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        inventory.ChangedItemAt -= Inventory_ChangedItemAt;
+        inventory.ChangedItemAtIndex -= Inventory_ChangedItemAtIndex;
     }
 
-    private void Inventory_ChangedItemAt(int index)
+    private void Inventory_ChangedItemAtIndex(ItemWithAmount item, int index)
     {
-        Sprite changedItemSprite = inventory.GetItemAtIndex(index).itemData.sprite;
+        Sprite changedItemSprite = item.itemData.sprite;
 
         SetInventorySpriteAtSlotIndex(changedItemSprite, index);
     }

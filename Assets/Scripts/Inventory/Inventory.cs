@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory
 {
-    public event Action<int> ChangedItemAt = delegate { };
+    public event Action<ItemWithAmount, int> ChangedItemAtIndex = delegate { };
 
     private List<ItemWithAmount> itemList;
 
@@ -92,6 +92,6 @@ public class Inventory
     private void SetItemAtIndex(ItemWithAmount item, int index)
     {
         itemList[index] = item;
-        ChangedItemAt(index);
+        ChangedItemAtIndex(item, index);
     }
 }
