@@ -16,7 +16,7 @@ public class ItemWorld : Interactable
 
         if (item.itemData.name == "Campfire")
         {
-            ItemWithAmount hotbarItem = player.GetHotbarItem();
+            ItemWithAmount hotbarItem = player.GetSelectedItem();
             if (hotbarItem.itemData.name == "RawCrabMeat")
             {
                 Inventory playerInventory = player.GetInventory();

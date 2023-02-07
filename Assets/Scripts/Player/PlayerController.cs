@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private bool isAttacking;
     [SerializeField] private Sprite front, back, left, right;
-    [SerializeField] private HotbarUIController hotbarUIController;
     [SerializeField] private FishingMinigame fishingMinigame;
 
     public PlayerDirection LastDirection
@@ -32,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private BoxCollider2D boxCollider;
     private HealthController healthController;
     private Inventory inventory;
+    private ItemSelectionController itemSelectionController;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
@@ -43,8 +43,9 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
-        inventory = GetComponent<Inventory>();
         healthController = GetComponent<HealthController>();
+        inventory = GetComponent<Inventory>();
+        itemSelectionController = GetComponent<ItemSelectionController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
         if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
         {
-            UseItem(GetHotbarItem());
+            UseItem(GetSelectedItem());
 
             // Prevent doing other actions on the frame an attack starts
             if (isAttacking)
@@ -194,7 +195,7 @@ public class PlayerController : MonoBehaviour
 
     public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !DialogueBox.Instance.DialogueBoxOpen();
 
-    public ItemWithAmount GetHotbarItem() => inventory.GetItemAtIndex(hotbarUIController.SelectedItemIndex);
+    public ItemWithAmount GetSelectedItem() => inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
 
     public Inventory GetInventory() => inventory;
 }

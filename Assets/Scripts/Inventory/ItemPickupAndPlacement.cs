@@ -59,7 +59,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void PlaceSelectedPlayerHotbarItemAtPosition(Vector2 position)
     {
-        ItemWithAmount itemToPlace = player.GetHotbarItem();
+        ItemWithAmount itemToPlace = player.GetSelectedItem();
 
         if (itemToPlace.itemData.name != "Empty")
         {
