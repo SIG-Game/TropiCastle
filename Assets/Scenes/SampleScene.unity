@@ -34153,6 +34153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc31599282b18304680eaba8ac3df522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 1982112582}
   hotbarItemSlotContainer: {fileID: 1620314559}
   inventoryItemSlotContainer: {fileID: 547836657}
   inventoryUIController: {fileID: 1731795749}

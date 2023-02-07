@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class HotbarUIController : MonoBehaviour
 {
+    [SerializeField] private Inventory inventory;
     [SerializeField] private Transform hotbarItemSlotContainer;
     [SerializeField] private Transform inventoryItemSlotContainer;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Color highlightedSlotColor;
 
-    private Inventory inventory;
     private Color unhighlightedSlotColor;
     private int hotbarSize;
 
@@ -24,15 +24,8 @@ public class HotbarUIController : MonoBehaviour
         HighlightItemSlotAtIndex(hotbarItemSlotContainer, SelectedItemIndex);
         HighlightItemSlotAtIndex(inventoryItemSlotContainer, SelectedItemIndex);
 
-        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
-    }
-
-    private void Start()
-    {
-        // Runs after InventoryUIController Start method due to execution
-        // order because that's where inventoryUIController's inventory is set
-        inventory = inventoryUIController.GetInventory();
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
+        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
     }
 
     private void Update()
