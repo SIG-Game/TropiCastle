@@ -21,6 +21,8 @@ public class FishingMinigame : MonoBehaviour
     private void Awake()
     {
         fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
+
+        player.OnFishingRodUsed += Player_OnFishingRodUsed;
     }
 
     private void Update()
@@ -55,6 +57,13 @@ public class FishingMinigame : MonoBehaviour
     private void OnDestroy()
     {
         Addressables.Release(fishScriptableObjectsLoadHandle);
+
+        player.OnFishingRodUsed -= Player_OnFishingRodUsed;
+    }
+
+    private void Player_OnFishingRodUsed()
+    {
+        StartCoroutine(StartFishing());
     }
 
     private void ChangeDirection()
@@ -63,7 +72,7 @@ public class FishingMinigame : MonoBehaviour
             fishImage.transform.localScale.y, fishImage.transform.localScale.z);
     }
 
-    public IEnumerator StartFishing()
+    private IEnumerator StartFishing()
     {
         if (player.GetInventory().IsFull())
         {

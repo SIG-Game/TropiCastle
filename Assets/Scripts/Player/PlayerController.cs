@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private bool isAttacking;
     [SerializeField] private Sprite front, back, left, right;
-    [SerializeField] private FishingMinigame fishingMinigame;
 
     public PlayerDirection LastDirection
     {
@@ -24,6 +23,8 @@ public class PlayerController : MonoBehaviour
             };
         }
     }
+
+    public event Action OnFishingRodUsed = delegate { };
 
     public static event Action OnPlayerDied = delegate { };
 
@@ -152,7 +153,7 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
 
-                StartCoroutine(fishingMinigame.StartFishing());
+                OnFishingRodUsed();
                 break;
             default:
                 Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
