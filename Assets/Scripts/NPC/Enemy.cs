@@ -6,7 +6,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float knockbackForce;
-    [SerializeField] private float targetRange;
+    [SerializeField] private float maxStartChasingDistanceToPlayer;
+    [SerializeField] private float minStopChasingDistanceToPlayer;
     [SerializeField] private float waitTimeAfterKnockback;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private List<ItemWithAmount> droppedLoot;
@@ -39,7 +40,7 @@ public class Enemy : MonoBehaviour
         {
             velocityDirection = Vector2.zero;
 
-            if (Vector2.Distance(transform.position, GetPlayerColliderPosition()) <= targetRange)
+            if (Vector2.Distance(transform.position, GetPlayerColliderPosition()) <= maxStartChasingDistanceToPlayer)
             {
                 state = EnemyState.Chasing;
             }
@@ -47,9 +48,19 @@ public class Enemy : MonoBehaviour
 
         if (state == EnemyState.Chasing)
         {
-            Vector2 directionToPlayer = (GetPlayerColliderPosition() - (Vector2)transform.position).normalized;
+            Vector2 fromEnemyToPlayerPosition = GetPlayerColliderPosition() - (Vector2)transform.position;
 
-            velocityDirection = directionToPlayer;
+            float distanceToPlayer = fromEnemyToPlayerPosition.magnitude;
+
+            if (distanceToPlayer >= minStopChasingDistanceToPlayer)
+            {
+                state = EnemyState.Chilling;
+            }
+            else
+            {
+                Vector2 directionToPlayer = fromEnemyToPlayerPosition.normalized;
+                velocityDirection = directionToPlayer;
+            }
         }
     }
 

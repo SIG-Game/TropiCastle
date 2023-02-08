@@ -150,7 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.05
   knockbackForce: 0.7
-  targetRange: 2.5
+  maxStartChasingDistanceToPlayer: 2.5
+  minStopChasingDistanceToPlayer: 3.75
   waitTimeAfterKnockback: 1.5
   playerTransform: {fileID: 0}
   droppedLoot:
