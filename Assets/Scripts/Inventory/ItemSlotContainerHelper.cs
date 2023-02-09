@@ -12,4 +12,7 @@ public static class ItemSlotContainerHelper
     {
         itemSlotContainer.GetChild(index).GetComponent<Image>().color = color;
     }
+
+    public static Color GetUnhighlightedSlotColor(Transform itemSlotContainer) =>
+        itemSlotContainer.GetChild(0).GetComponent<Image>().color;
 }

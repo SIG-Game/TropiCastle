@@ -34156,7 +34156,6 @@ MonoBehaviour:
   inventory: {fileID: 1982112582}
   itemSelectionController: {fileID: 1982112583}
   hotbarItemSlotContainer: {fileID: 1620314559}
-  inventoryItemSlotContainer: {fileID: 547836657}
   inventoryUIController: {fileID: 1731795749}
   highlightedSlotColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
 --- !u!1001 &1319385576
@@ -41203,6 +41202,8 @@ MonoBehaviour:
   inventory: {fileID: 1982112582}
   inventoryUI: {fileID: 1128719742}
   inventoryItemSlotContainer: {fileID: 547836657}
+  itemSelectionController: {fileID: 1982112583}
+  highlightedSlotColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
 --- !u!114 &1731795750
 MonoBehaviour:
   m_ObjectHideFlags: 0

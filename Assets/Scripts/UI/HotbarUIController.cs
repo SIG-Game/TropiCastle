@@ -6,7 +6,6 @@ public class HotbarUIController : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private Transform hotbarItemSlotContainer;
-    [SerializeField] private Transform inventoryItemSlotContainer;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Color highlightedSlotColor;
 
@@ -15,7 +14,7 @@ public class HotbarUIController : MonoBehaviour
 
     private void Awake()
     {
-        unhighlightedSlotColor = hotbarItemSlotContainer.GetChild(0).GetComponent<Image>().color;
+        unhighlightedSlotColor = ItemSlotContainerHelper.GetUnhighlightedSlotColor(hotbarItemSlotContainer);
         hotbarSize = hotbarItemSlotContainer.childCount;
 
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
@@ -46,14 +45,12 @@ public class HotbarUIController : MonoBehaviour
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        HighlightItemSlotAtIndex(hotbarItemSlotContainer, index);
-        HighlightItemSlotAtIndex(inventoryItemSlotContainer, index);
+        HighlightHotbarItemSlotAtIndex(index);
     }
 
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        UnhighlightItemSlotAtIndex(hotbarItemSlotContainer, index);
-        UnhighlightItemSlotAtIndex(inventoryItemSlotContainer, index);
+        UnhighlightHotbarItemSlotAtIndex(index);
     }
 
     private void InventoryUIController_OnInventoryClosed()
@@ -71,13 +68,13 @@ public class HotbarUIController : MonoBehaviour
         }
     }
 
-    private void UnhighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
+    private void HighlightHotbarItemSlotAtIndex(int index)
     {
-        ItemSlotContainerHelper.SetItemSlotColorAtIndex(itemSlotContainer, index, unhighlightedSlotColor);
+        ItemSlotContainerHelper.SetItemSlotColorAtIndex(hotbarItemSlotContainer, index, highlightedSlotColor);
     }
 
-    private void HighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
+    private void UnhighlightHotbarItemSlotAtIndex(int index)
     {
-        ItemSlotContainerHelper.SetItemSlotColorAtIndex(itemSlotContainer, index, highlightedSlotColor);
+        ItemSlotContainerHelper.SetItemSlotColorAtIndex(hotbarItemSlotContainer, index, unhighlightedSlotColor);
     }
 }
