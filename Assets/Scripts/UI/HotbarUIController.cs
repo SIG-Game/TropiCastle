@@ -41,7 +41,7 @@ public class HotbarUIController : MonoBehaviour
 
         Sprite changedItemSprite = item.itemData.sprite;
 
-        InventoryUIController.SetSpriteAtSlotIndexInContainer(changedItemSprite, index, hotbarItemSlotContainer);
+        ItemSlotContainerHelper.SetItemSlotSpriteAtIndex(hotbarItemSlotContainer, index, changedItemSprite);
     }
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
@@ -67,23 +67,17 @@ public class HotbarUIController : MonoBehaviour
         {
             Sprite itemSpriteAtCurrentIndex = inventory.GetItemAtIndex(i).itemData.sprite;
 
-            InventoryUIController.SetSpriteAtSlotIndexInContainer(itemSpriteAtCurrentIndex, i,
-                hotbarItemSlotContainer);
+            ItemSlotContainerHelper.SetItemSlotSpriteAtIndex(hotbarItemSlotContainer, i, itemSpriteAtCurrentIndex);
         }
     }
 
     private void UnhighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
     {
-        SetItemSlotColorAtIndex(itemSlotContainer, index, unhighlightedSlotColor);
+        ItemSlotContainerHelper.SetItemSlotColorAtIndex(itemSlotContainer, index, unhighlightedSlotColor);
     }
 
     private void HighlightItemSlotAtIndex(Transform itemSlotContainer, int index)
     {
-        SetItemSlotColorAtIndex(itemSlotContainer, index, highlightedSlotColor);
-    }
-
-    private static void SetItemSlotColorAtIndex(Transform itemSlotContainer, int index, Color color)
-    {
-        itemSlotContainer.GetChild(index).GetComponent<Image>().color = color;
+        ItemSlotContainerHelper.SetItemSlotColorAtIndex(itemSlotContainer, index, highlightedSlotColor);
     }
 }

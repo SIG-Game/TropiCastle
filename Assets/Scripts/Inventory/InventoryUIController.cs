@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InventoryUIController : MonoBehaviour
 {
@@ -44,12 +43,7 @@ public class InventoryUIController : MonoBehaviour
 
     public void SetInventorySpriteAtSlotIndex(Sprite sprite, int slotIndex)
     {
-        SetSpriteAtSlotIndexInContainer(sprite, slotIndex, inventoryItemSlotContainer);
-    }
-
-    public static void SetSpriteAtSlotIndexInContainer(Sprite sprite, int slotIndex, Transform itemSlotContainer)
-    {
-        itemSlotContainer.GetChild(slotIndex).GetChild(0).GetComponent<Image>().sprite = sprite;
+        ItemSlotContainerHelper.SetItemSlotSpriteAtIndex(inventoryItemSlotContainer, slotIndex, sprite);
     }
 
     public Inventory GetInventory() => inventory;
