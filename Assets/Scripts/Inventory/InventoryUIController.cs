@@ -13,6 +13,13 @@ public class InventoryUIController : MonoBehaviour
 
     public event Action OnInventoryClosed = delegate { };
 
+    public static bool InventoryUIOpen;
+
+    static InventoryUIController()
+    {
+        InventoryUIOpen = false;
+    }
+
     private void Awake()
     {
         unhighlightedSlotColor = ItemSlotContainerHelper.GetUnhighlightedSlotColor(inventoryItemSlotContainer);
@@ -25,12 +32,13 @@ public class InventoryUIController : MonoBehaviour
     private void Update()
     {
         if (Input.GetButtonDown("Inventory") &&
-            (!PauseController.Instance.GamePaused || IsInventoryUIOpen()))
+            (!PauseController.Instance.GamePaused || InventoryUIOpen))
         {
-            PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
-            inventoryUI.SetActive(PauseController.Instance.GamePaused);
+            InventoryUIOpen = !InventoryUIOpen;
+            PauseController.Instance.GamePaused = InventoryUIOpen;
+            inventoryUI.SetActive(InventoryUIOpen);
 
-            if (!IsInventoryUIOpen())
+            if (!InventoryUIOpen)
             {
                 OnInventoryClosed();
             }
@@ -77,6 +85,4 @@ public class InventoryUIController : MonoBehaviour
     }
 
     public Inventory GetInventory() => inventory;
-
-    public bool IsInventoryUIOpen() => inventoryUI.activeInHierarchy;
 }

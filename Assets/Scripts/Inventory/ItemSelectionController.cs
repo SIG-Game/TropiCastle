@@ -32,7 +32,7 @@ public class ItemSelectionController : MonoBehaviour
 
     private void Update()
     {
-        if (PauseController.Instance.GamePaused)
+        if (PauseController.Instance.GamePaused && !InventoryUIController.InventoryUIOpen)
         {
             return;
         }

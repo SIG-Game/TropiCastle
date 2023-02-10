@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class HotbarUIController : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class HotbarUIController : MonoBehaviour
 
     private Color unhighlightedSlotColor;
     private int hotbarSize;
+    private int hotbarHighlightedItemSlotIndex;
 
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class HotbarUIController : MonoBehaviour
 
     private void Inventory_ChangedItemAtIndex(ItemWithAmount item, int index)
     {
-        if (index >= hotbarSize || inventoryUIController.IsInventoryUIOpen())
+        if (index >= hotbarSize || InventoryUIController.InventoryUIOpen)
         {
             return;
         }
@@ -45,17 +45,28 @@ public class HotbarUIController : MonoBehaviour
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
+        if (InventoryUIController.InventoryUIOpen)
+        {
+            return;
+        }
+
         HighlightHotbarItemSlotAtIndex(index);
     }
 
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
+        if (InventoryUIController.InventoryUIOpen)
+        {
+            return;
+        }
+
         UnhighlightHotbarItemSlotAtIndex(index);
     }
 
     private void InventoryUIController_OnInventoryClosed()
     {
         UpdateSpritesInAllHotbarSlots();
+        UpdateHotbarHighlightedItemSlot();
     }
 
     private void UpdateSpritesInAllHotbarSlots()
@@ -68,8 +79,16 @@ public class HotbarUIController : MonoBehaviour
         }
     }
 
+    private void UpdateHotbarHighlightedItemSlot()
+    {
+        UnhighlightHotbarItemSlotAtIndex(hotbarHighlightedItemSlotIndex);
+        HighlightHotbarItemSlotAtIndex(itemSelectionController.SelectedItemIndex);
+    }
+
     private void HighlightHotbarItemSlotAtIndex(int index)
     {
+        hotbarHighlightedItemSlotIndex = index;
+
         ItemSlotContainerHelper.SetItemSlotColorAtIndex(hotbarItemSlotContainer, index, highlightedSlotColor);
     }
 
