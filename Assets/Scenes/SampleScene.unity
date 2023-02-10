@@ -20055,6 +20055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac72a172686b844c38f7532b15a5b6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minTimeBetweenHits: 0.33333334
 --- !u!4 &447312985 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2684681028314190750, guid: 431e7be619be686458842aa83a2c8797,

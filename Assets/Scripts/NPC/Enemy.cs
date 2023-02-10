@@ -18,8 +18,12 @@ public class Enemy : MonoBehaviour
     private Vector2 playerColliderOffset;
     private EnemyState state;
 
+    public float LastHitTime { get; set; }
+
     private void Awake()
     {
+        LastHitTime = 0f;
+
         rb2d = GetComponent<Rigidbody2D>();
         healthController = GetComponent<HealthController>();
 
