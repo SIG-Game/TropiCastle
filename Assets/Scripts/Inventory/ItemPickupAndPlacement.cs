@@ -52,7 +52,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void SetPickupArrowColorFromCollider(Collider2D collider)
     {
-        if (collider != null && collider.GetComponent<ItemWorld>() != null)
+        if (collider != null && collider.CompareTag("Item World"))
         {
             pickupArrowSpriteRenderer.color = Color.white;
         }
@@ -64,9 +64,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void AttemptToPickUpItemFromCollider(Collider2D collider)
     {
-        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
-
-        if (itemWorld == null)
+        if (!collider.CompareTag("Item World"))
         {
             return;
         }
@@ -77,8 +75,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
             return;
         }
 
-        playerInventory.AddItem(itemWorld.item);
-        Destroy(itemWorld.gameObject);
+        playerInventory.AddItem(collider.GetComponent<ItemWorld>().item);
+        Destroy(collider.gameObject);
     }
 
     private void PlaceSelectedPlayerHotbarItemAtPosition(Vector2 position)
