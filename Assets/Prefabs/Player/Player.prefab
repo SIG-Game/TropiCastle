@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2130907984869856252}
   - component: {fileID: 6454610303096076927}
   - component: {fileID: 5537719117326702039}
+  - component: {fileID: 981241631752593405}
   m_Layer: 0
   m_Name: AttackBox
   m_TagString: Player
@@ -27,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5231422074505905440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.35, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5288355818519945019}
@@ -75,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c0c01a9105b182848b4eb445a4ec28d6, type: 3}
-  m_Color: {r: 0.8301887, g: 0.019579919, b: 0.019579919, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 636204c6013ed2148807b75a92e563ea, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -120,19 +121,32 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.5, y: 0}
+  m_Offset: {x: 0, y: 0.28125}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.0625, y: 0.5625}
   m_EdgeRadius: 0
+--- !u!114 &981241631752593405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231422074505905440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac72a172686b844c38f7532b15a5b6e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minTimeBetweenHits: 0.33333334
 --- !u!1 &5288355818519944996
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +306,6 @@ MonoBehaviour:
   back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  fishingMinigame: {fileID: 0}
 --- !u!114 &2526882180276161147
 MonoBehaviour:
   m_ObjectHideFlags: 0
