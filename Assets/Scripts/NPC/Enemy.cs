@@ -104,12 +104,12 @@ public class Enemy : MonoBehaviour
 
             transform.GetComponent<Rigidbody2D>().AddForce(directionFromPlayer * knockbackForce, ForceMode2D.Impulse);
 
-            StopCoroutine("Wait");
-            StartCoroutine("Wait");
+            StopCoroutine(nameof(WaitCoroutine));
+            StartCoroutine(nameof(WaitCoroutine));
         }
     }
 
-    private IEnumerator Wait()
+    private IEnumerator WaitCoroutine()
     {
         yield return new WaitForSeconds(waitTimeAfterKnockback);
         state = EnemyState.Chasing;

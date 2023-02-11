@@ -63,7 +63,7 @@ public class FishingMinigame : MonoBehaviour
 
     private void Player_OnFishingRodUsed()
     {
-        StartCoroutine(StartFishing());
+        StartCoroutine(StartFishingCoroutine());
     }
 
     private void ChangeDirection()
@@ -72,7 +72,7 @@ public class FishingMinigame : MonoBehaviour
             fishImage.transform.localScale.y, fishImage.transform.localScale.z);
     }
 
-    private IEnumerator StartFishing()
+    private IEnumerator StartFishingCoroutine()
     {
         if (player.GetInventory().IsFull())
         {

@@ -13,7 +13,7 @@ public class Chimp : NPCInteractable
         directionSprites = new List<Sprite> { front, left, back, right };
         appleItemScriptableObject = Resources.Load<ItemScriptableObject>("Items/Apple");
 
-        spinCoroutine = StartCoroutine(Spin());
+        spinCoroutine = StartCoroutine(SpinCoroutine());
     }
 
     public override void Interact(PlayerController player)
@@ -23,7 +23,7 @@ public class Chimp : NPCInteractable
         Interact(player, () => Chimp_AfterDialogueAction(player));
     }
 
-    private IEnumerator Spin()
+    private IEnumerator SpinCoroutine()
     {
         while (true)
         {
@@ -38,6 +38,6 @@ public class Chimp : NPCInteractable
     private void Chimp_AfterDialogueAction(PlayerController player)
     {
         player.GetInventory().AddItem(appleItemScriptableObject, 1);
-        spinCoroutine = StartCoroutine(Spin());
+        spinCoroutine = StartCoroutine(SpinCoroutine());
     }
 }
