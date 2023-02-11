@@ -2406,8 +2406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 572276101}
   inventoryFullUIController: {fileID: 2024199923}
-  highlightSquare: {fileID: 1576510338}
-  highlightSquareOverItemColor: {r: 0.10630463, g: 0.7264151, b: 0, a: 0.6666667}
+  pickupArrow: {fileID: 1576510338}
 --- !u!1 &315073302
 GameObject:
   m_ObjectHideFlags: 0
@@ -35714,7 +35713,7 @@ GameObject:
   - component: {fileID: 1576510340}
   - component: {fileID: 1576510339}
   m_Layer: 0
-  m_Name: Highlight Square
+  m_Name: Pickup Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35761,7 +35760,7 @@ SpriteRenderer:
   m_SortingLayerID: -1413811973
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 93d3295aada86474b9158b5409198b64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 139b5536c2bd13f4ea8c61779460309a, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
