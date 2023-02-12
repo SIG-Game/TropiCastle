@@ -8,6 +8,7 @@ public class ItemWorld : Interactable
     {
         // Not in Awake because this needs to happen after ItemWorldPrefabInstanceFactory sets item
         GetComponent<SpriteRenderer>().sprite = item.itemData.sprite;
+        name = $"{item.itemData.name} ItemWorld";
     }
 
     public override void Interact(PlayerController player)

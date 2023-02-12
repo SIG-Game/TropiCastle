@@ -3,6 +3,7 @@
 public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 {
     [SerializeField] private GameObject itemWorldPrefab;
+    [SerializeField] private Transform itemWorldParent;
 
     private Vector2 itemWorldPrefabColliderExtents;
 
@@ -24,7 +25,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
     public ItemWorld SpawnItemWorld(Vector3 position, ItemWithAmount itemToSpawn)
     {
-        GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity);
+        GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity, itemWorldParent);
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
         spawnedItemWorld.item = itemToSpawn;
