@@ -71,16 +71,22 @@ public class Inventory : MonoBehaviour
         firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
 
-    public void RemoveItem(ItemWithAmount item)
+    public void RemoveItemAtIndex(int index)
     {
-        if (item.itemData.name == "Empty")
+        ItemWithAmount itemAtIndex = itemList[index];
+
+        if (itemAtIndex.itemData.name == "Empty")
+        {
+            Debug.LogWarning("Attempted to remove empty item from inventory");
             return;
+        }
 
-        int itemIndex = itemList.IndexOf(item);
-        if (itemIndex < firstEmptyIndex || IsFull())
-            firstEmptyIndex = itemIndex;
+        SetItemAtIndex(emptyItemInstance, index);
 
-        SetItemAtIndex(emptyItemInstance, itemIndex);
+        if (index < firstEmptyIndex || IsFull())
+        {
+            firstEmptyIndex = index;
+        }
     }
 
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];

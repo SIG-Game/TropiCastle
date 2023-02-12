@@ -46,10 +46,8 @@ public class Crafting : MonoBehaviour
 
         foreach (int itemIndex in itemsToRemoveIndexes)
         {
-            ItemWithAmount itemToRemove = itemList[itemIndex];
-
-            inventory.RemoveItem(itemToRemove);
-            Debug.Log("Used ingredient " + itemToRemove.itemData.name);
+            Debug.Log("Using ingredient " + itemList[itemIndex].itemData.name);
+            inventory.RemoveItemAtIndex(itemIndex);
         }
 
         inventory.AddItem(craftingRecipe.resultItem);

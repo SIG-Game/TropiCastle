@@ -89,11 +89,12 @@ public class ItemPickupAndPlacement : MonoBehaviour
     private void PlaceSelectedPlayerHotbarItemAtPosition(Vector2 position)
     {
         ItemWithAmount itemToPlace = player.GetSelectedItem();
+        int itemToPlaceIndex = player.GetSelectedItemIndex();
 
         if (itemToPlace.itemData.name != "Empty")
         {
             _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(position, itemToPlace);
-            playerInventory.RemoveItem(itemToPlace);
+            playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
         }
     }
 

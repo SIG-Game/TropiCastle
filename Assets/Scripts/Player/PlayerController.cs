@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
         if (!healthController.AtMaxHealth())
         {
             healthController.IncreaseHealth(amountToHeal);
-            inventory.RemoveItem(item);
+            inventory.RemoveItemAtIndex(GetSelectedItemIndex());
         }
     }
 
@@ -195,6 +195,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !DialogueBox.Instance.DialogueBoxOpen();
+
+    public int GetSelectedItemIndex() => itemSelectionController.SelectedItemIndex;
 
     public ItemWithAmount GetSelectedItem() => inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
 

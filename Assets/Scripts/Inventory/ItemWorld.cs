@@ -18,10 +18,11 @@ public class ItemWorld : Interactable
         if (item.itemData.name == "Campfire")
         {
             ItemWithAmount hotbarItem = player.GetSelectedItem();
+            int selectedItemIndex = player.GetSelectedItemIndex();
             if (hotbarItem.itemData.name == "RawCrabMeat")
             {
                 Inventory playerInventory = player.GetInventory();
-                playerInventory.RemoveItem(hotbarItem);
+                playerInventory.RemoveItemAtIndex(selectedItemIndex);
                 playerInventory.AddItem(Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat"), 1);
             }
         }
