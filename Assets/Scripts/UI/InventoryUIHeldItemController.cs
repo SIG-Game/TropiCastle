@@ -25,14 +25,9 @@ public class InventoryUIHeldItemController : MonoBehaviour, IPointerClickHandler
         heldItemRectTransform = heldItemUI.GetComponent<RectTransform>();
         heldItemImage = heldItemUI.GetComponent<Image>();
 
-        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
-    }
-
-    private void Start()
-    {
-        // Runs after InventoryUIController Start method due to execution
-        // order because that's where inventoryUIController's inventory is set
         inventory = inventoryUIController.GetInventory();
+
+        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
     }
 
     private void Update()
