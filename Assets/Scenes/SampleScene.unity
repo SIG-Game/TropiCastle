@@ -2406,6 +2406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 572276101}
   inventoryFullUIController: {fileID: 2024199923}
+  itemSelectionController: {fileID: 1982112583}
   cursorIcon: {fileID: 1576510338}
   cursorIconBackground: {fileID: 875007344}
   itemPickupArrow: {fileID: 21300000, guid: 139b5536c2bd13f4ea8c61779460309a, type: 3}

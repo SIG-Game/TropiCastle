@@ -4,6 +4,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
+    [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private GameObject cursorIcon;
     [SerializeField] private GameObject cursorIconBackground;
     [SerializeField] private Sprite itemPickupArrow;
@@ -82,7 +83,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
             return;
         }
 
-        playerInventory.AddItem(itemWorld.item);
+        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemWorld.item,
+            itemSelectionController.SelectedItemIndex);
         Destroy(itemWorld.gameObject);
     }
 

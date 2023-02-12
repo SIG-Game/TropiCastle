@@ -61,6 +61,19 @@ public class Inventory : MonoBehaviour
         firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
 
+    public void AddItemAtIndexWithFallbackToFirstEmptyIndex(ItemWithAmount newItem, int index)
+    {
+        if (itemList[index].itemData.name == "Empty")
+        {
+            SetItemAtIndex(newItem, index);
+            firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
+        }
+        else
+        {
+            AddItem(newItem);
+        }
+    }
+
     public void SwapItemsAt(int index1, int index2)
     {
         ItemWithAmount itemAtIndex1BeforeSwap = itemList[index1];
