@@ -55,7 +55,7 @@ public class PrefabSpawner : MonoBehaviour
         float spawnYPosition = Random.Range(minSpawnPosition.y, maxSpawnPosition.y);
         Vector2 spawnPosition = new Vector2(spawnXPosition, spawnYPosition);
 
-        GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+        GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity, transform);
         spawnedPrefab.GetComponent<Spawnable>().SetSpawner(this);
 
         ApplySpawnedPrefabProperties(spawnedPrefab);
