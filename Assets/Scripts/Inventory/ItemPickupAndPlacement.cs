@@ -4,41 +4,63 @@ public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
-    [SerializeField] private GameObject pickupArrow;
+    [SerializeField] private GameObject cursorIcon;
+    [SerializeField] private GameObject cursorIconBackground;
+    [SerializeField] private Sprite itemPickupArrow;
+    [SerializeField] private Color canPlaceCursorIconBackgroundColor;
+    [SerializeField] private Color cannotPlaceCursorIconBackgroundColor;
 
     private Inventory playerInventory;
     private Vector2 itemWorldPrefabColliderExtents;
-    private SpriteRenderer pickupArrowSpriteRenderer;
+    private SpriteRenderer cursorIconSpriteRenderer;
+    private SpriteRenderer cursorIconBackgroundSpriteRenderer;
 
     private void Start()
     {
         playerInventory = player.GetInventory();
         itemWorldPrefabColliderExtents = ItemWorldPrefabInstanceFactory.Instance.GetItemWorldPrefabColliderExtents();
-        pickupArrowSpriteRenderer = pickupArrow.GetComponent<SpriteRenderer>();
+
+        cursorIconSpriteRenderer = cursorIcon.GetComponent<SpriteRenderer>();
+        cursorIconBackgroundSpriteRenderer = cursorIconBackground.GetComponent<SpriteRenderer>();
+
+        cursorIconBackground.transform.localScale = itemWorldPrefabColliderExtents * 2f;
     }
 
     private void Update()
     {
         if (PauseController.Instance.GamePaused)
         {
-            if (pickupArrowSpriteRenderer.color != Color.clear)
-            {
-                pickupArrowSpriteRenderer.color = Color.clear;
-            }
-
+            HideCursorIcon();
             return;
         }
 
         Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Collider2D mouseOverlapCollider = Physics2D.OverlapPoint(mouseWorldPoint);
 
-        pickupArrow.transform.position = mouseWorldPoint;
+        cursorIcon.transform.position = mouseWorldPoint;
 
-        SetPickupArrowColorFromCollider(mouseOverlapCollider);
+        bool mouseIsOverCollider = mouseOverlapCollider != null;
+        bool mouseIsOverItemWorld = mouseIsOverCollider && mouseOverlapCollider.CompareTag("Item World");
+        bool placingItem = Input.GetMouseButton(1) && player.GetSelectedItem().itemData.name != "Empty";
 
-        if (Input.GetMouseButtonDown(1))
+        if (mouseIsOverItemWorld)
         {
-            bool mouseIsOverCollider = mouseOverlapCollider != null;
+            cursorIconSpriteRenderer.sprite = itemPickupArrow;
+            cursorIconBackgroundSpriteRenderer.color = Color.clear;
+        }
+        else if (placingItem)
+        {
+            cursorIconSpriteRenderer.sprite = player.GetSelectedItem().itemData.sprite;
+            cursorIconBackgroundSpriteRenderer.color = CanPlaceItemAtPosition(mouseWorldPoint) ?
+                canPlaceCursorIconBackgroundColor : cannotPlaceCursorIconBackgroundColor;
+        }
+        else
+        {
+            HideCursorIcon();
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
             if (mouseIsOverCollider)
             {
                 AttemptToPickUpItemFromCollider(mouseOverlapCollider);
@@ -47,18 +69,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
             {
                 PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
             }
-        }
-    }
 
-    private void SetPickupArrowColorFromCollider(Collider2D collider)
-    {
-        if (collider != null && collider.CompareTag("Item World"))
-        {
-            pickupArrowSpriteRenderer.color = Color.white;
-        }
-        else
-        {
-            pickupArrowSpriteRenderer.color = Color.clear;
+            HideCursorIcon();
         }
     }
 
@@ -98,5 +110,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
         Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
 
         return itemWorldOverlap == null;
+    }
+
+    private void HideCursorIcon()
+    {
+        cursorIconSpriteRenderer.sprite = null;
+        cursorIconBackgroundSpriteRenderer.color = Color.clear;
     }
 }
