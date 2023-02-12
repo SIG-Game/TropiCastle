@@ -61,9 +61,9 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
-            if (mouseIsOverCollider)
+            if (mouseIsOverItemWorld)
             {
-                AttemptToPickUpItemFromCollider(mouseOverlapCollider);
+                PickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>());
             }
             else if (CanPlaceItemAtPosition(mouseWorldPoint))
             {
@@ -74,21 +74,16 @@ public class ItemPickupAndPlacement : MonoBehaviour
         }
     }
 
-    private void AttemptToPickUpItemFromCollider(Collider2D collider)
+    private void PickUpItemFromItemWorld(ItemWorld itemWorld)
     {
-        if (!collider.CompareTag("Item World"))
-        {
-            return;
-        }
-
         if (playerInventory.IsFull())
         {
             inventoryFullUIController.ShowInventoryFullText();
             return;
         }
 
-        playerInventory.AddItem(collider.GetComponent<ItemWorld>().item);
-        Destroy(collider.gameObject);
+        playerInventory.AddItem(itemWorld.item);
+        Destroy(itemWorld.gameObject);
     }
 
     private void PlaceSelectedPlayerHotbarItemAtPosition(Vector2 position)
