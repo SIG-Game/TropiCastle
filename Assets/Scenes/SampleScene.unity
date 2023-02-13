@@ -1110,11 +1110,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fishing Minigame
       objectReference: {fileID: 0}
-    - target: {fileID: 1938744877069393186, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1938744877069393189, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: m_PixelPerfect
@@ -1225,68 +1220,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1938744877832514434, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877832514434, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877832514435, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c20123fde93f50e43adc0c471ec8acb5,
-        type: 3}
-    - target: {fileID: 1938744877832514435, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0.990566
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877832514435, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0.990566
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877832514435, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0.990566
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877893344358, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 117.26788
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877893344358, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 123.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877893344359, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.5625
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877893344359, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 1938744877893344359, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: c20123fde93f50e43adc0c471ec8acb5,
-        type: 3}
-    - target: {fileID: 1938744877893344359, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1938744877893344376, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: m_Size.x
@@ -1374,14 +1307,19 @@ PrefabInstance:
       propertyPath: PlayerController
       value: 
       objectReference: {fileID: 198128349}
-    - target: {fileID: 4788721818253555063, guid: 6eec2d617ac261b42855edf00e17c077,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3588baae45eac094db4e3b624b0891b3,
-        type: 3}
-    m_RemovedComponents:
-    - {fileID: 1938744877069393191, guid: 6eec2d617ac261b42855edf00e17c077, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Size.x
+      value: 0.5625
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Size.y
+      value: 1.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eec2d617ac261b42855edf00e17c077, type: 3}
 --- !u!1 &170383294
 GameObject:
