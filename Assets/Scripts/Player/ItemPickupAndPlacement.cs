@@ -5,40 +5,31 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private ItemSelectionController itemSelectionController;
-    [SerializeField] private GameObject cursorIcon;
-    [SerializeField] private GameObject cursorIconBackground;
+    [SerializeField] private CursorController cursorController;
     [SerializeField] private Sprite itemPickupArrow;
-    [SerializeField] private Color canPlaceCursorIconBackgroundColor;
-    [SerializeField] private Color cannotPlaceCursorIconBackgroundColor;
+    [SerializeField] private Color canPlaceCursorBackgroundColor;
+    [SerializeField] private Color cannotPlaceCursorBackgroundColor;
 
     private Inventory playerInventory;
     private Vector2 itemWorldPrefabColliderExtents;
-    private SpriteRenderer cursorIconSpriteRenderer;
-    private SpriteRenderer cursorIconBackgroundSpriteRenderer;
 
     private void Start()
     {
         playerInventory = player.GetInventory();
         itemWorldPrefabColliderExtents = ItemWorldPrefabInstanceFactory.Instance.GetItemWorldPrefabColliderExtents();
 
-        cursorIconSpriteRenderer = cursorIcon.GetComponent<SpriteRenderer>();
-        cursorIconBackgroundSpriteRenderer = cursorIconBackground.GetComponent<SpriteRenderer>();
-
-        cursorIconBackground.transform.localScale = itemWorldPrefabColliderExtents * 2f;
+        cursorController.SetCursorBackgroundLocalScale(itemWorldPrefabColliderExtents * 2f);
     }
 
     private void Update()
     {
         if (PauseController.Instance.GamePaused)
         {
-            HideCursorIcon();
             return;
         }
 
         Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Collider2D mouseOverlapCollider = Physics2D.OverlapPoint(mouseWorldPoint);
-
-        cursorIcon.transform.position = mouseWorldPoint;
 
         bool mouseIsOverCollider = mouseOverlapCollider != null;
         bool mouseIsOverItemWorld = mouseIsOverCollider && mouseOverlapCollider.CompareTag("Item World");
@@ -46,18 +37,18 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         if (mouseIsOverItemWorld)
         {
-            cursorIconSpriteRenderer.sprite = itemPickupArrow;
-            cursorIconBackgroundSpriteRenderer.color = Color.clear;
+            cursorController.SetCursorSprite(itemPickupArrow);
+            cursorController.SetCursorBackgroundColor(Color.clear);
         }
         else if (placingItem)
         {
-            cursorIconSpriteRenderer.sprite = player.GetSelectedItem().itemData.sprite;
-            cursorIconBackgroundSpriteRenderer.color = CanPlaceItemAtPosition(mouseWorldPoint) ?
-                canPlaceCursorIconBackgroundColor : cannotPlaceCursorIconBackgroundColor;
+            cursorController.SetCursorSprite(player.GetSelectedItem().itemData.sprite);
+            cursorController.SetCursorBackgroundColor(CanPlaceItemAtPosition(mouseWorldPoint) ?
+                canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
         }
         else
         {
-            HideCursorIcon();
+            cursorController.UseDefaultCursor();
         }
 
         if (Input.GetMouseButtonUp(1))
@@ -71,7 +62,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
                 PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
             }
 
-            HideCursorIcon();
+            cursorController.UseDefaultCursor();
         }
     }
 
@@ -108,11 +99,5 @@ public class ItemPickupAndPlacement : MonoBehaviour
         Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
 
         return itemWorldOverlap == null;
-    }
-
-    private void HideCursorIcon()
-    {
-        cursorIconSpriteRenderer.sprite = null;
-        cursorIconBackgroundSpriteRenderer.color = Color.clear;
     }
 }
