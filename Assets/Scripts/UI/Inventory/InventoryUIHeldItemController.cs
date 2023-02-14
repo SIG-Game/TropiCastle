@@ -45,17 +45,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IPointerClickHandler
 
     private void UpdateHeldItemPosition()
     {
-        bool mousePositionConvertedToHeldItemAnchoredPosition = RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRectTransform, Input.mousePosition, null, out Vector2 heldItemAnchoredPosition);
-        if (mousePositionConvertedToHeldItemAnchoredPosition)
-        {
-            heldItemRectTransform.anchoredPosition = ClampPositionWithCenterAnchorToCanvas(heldItemAnchoredPosition);
-        }
-        else
-        {
-            Debug.LogError($"Failed to get {nameof(heldItemAnchoredPosition)} from {nameof(Input.mousePosition)} " +
-                $"using {nameof(canvasRectTransform)}");
-        }
+        heldItemRectTransform.anchoredPosition =
+            MouseCanvasPositionHelper.GetMouseCanvasPosition(canvasRectTransform);
     }
 
     public void OnPointerClick(PointerEventData eventData)

@@ -38,16 +38,7 @@ public class IngredientsTooltipController : MonoBehaviour
 
     private void UpdateIngredientsTooltipPosition()
     {
-        bool mousePositionConvertedToIngredientsTooltipAnchoredPosition = RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRectTransform, Input.mousePosition, null, out Vector2 ingredientsTooltipAnchoredPosition);
-        if (mousePositionConvertedToIngredientsTooltipAnchoredPosition)
-        {
-            ingredientsTooltipRectTransform.anchoredPosition = ingredientsTooltipAnchoredPosition;
-        }
-        else
-        {
-            Debug.LogError($"Failed to get {nameof(ingredientsTooltipAnchoredPosition)} from {nameof(Input.mousePosition)} " +
-                $"using {nameof(canvasRectTransform)}");
-        }
+        ingredientsTooltipRectTransform.anchoredPosition =
+            MouseCanvasPositionHelper.GetMouseCanvasPosition(canvasRectTransform);
     }
 }
