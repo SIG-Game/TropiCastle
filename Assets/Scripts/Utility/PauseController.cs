@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PauseController : MonoBehaviour
 {
@@ -11,10 +12,22 @@ public class PauseController : MonoBehaviour
         {
             gamePaused = value;
             Time.timeScale = gamePaused ? 0f : 1f;
+
+            if (gamePaused)
+            {
+                OnGamePaused();
+            }
+            else
+            {
+                OnGameUnpaused();
+            }
         }
     }
 
     public static PauseController Instance;
+
+    public static event Action OnGamePaused;
+    public static event Action OnGameUnpaused;
 
     private void Awake()
     {
