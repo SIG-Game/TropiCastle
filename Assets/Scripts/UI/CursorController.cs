@@ -10,6 +10,8 @@ public class CursorController : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.visible = false;
+
         cursorSpriteRenderer = GetComponent<SpriteRenderer>();
         cursorBackgroundSpriteRenderer = cursorBackground.GetComponent<SpriteRenderer>();
 
@@ -63,11 +65,13 @@ public class CursorController : MonoBehaviour
 
     private void PauseController_OnGamePaused()
     {
+        Cursor.visible = true;
         HideCursor();
     }
 
     private void PauseController_OnGameUnpaused()
     {
+        Cursor.visible = false;
         UseDefaultCursor();
     }
 }
