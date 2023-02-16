@@ -13,8 +13,10 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private float minCatchFishX;
     [SerializeField] private float maxCatchFishX;
+    [SerializeField] private bool logFishInfo;
 
     private FishScriptableObject selectedFish;
+    private Inventory playerInventory;
 
     private AsyncOperationHandle<IList<FishScriptableObject>> fishScriptableObjectsLoadHandle;
 
@@ -25,33 +27,30 @@ public class FishingMinigame : MonoBehaviour
         player.OnFishingRodUsed += Player_OnFishingRodUsed;
     }
 
+    private void Start()
+    {
+        playerInventory = player.GetInventory();
+    }
+
     private void Update()
     {
-        if (fishingUI.activeSelf)
+        if (!fishingUI.activeSelf || PauseController.Instance.GamePaused)
         {
-            if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
-            {
-                if (fish.transform.localPosition.x >= minCatchFishX && fish.transform.localPosition.x <= maxCatchFishX)
-                {
-                    DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description);
-                    ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
-                    player.GetInventory().AddItem(caughtFishItem, 1);
-                }
-
-                fishingUI.SetActive(false);
-                return;
-            }
-
-            fish.transform.localPosition += new Vector3(selectedFish.speed * Time.deltaTime * fishImage.transform.localScale.x, 0f, 0f);
-
-            if (fish.transform.localPosition.x >= 200f || fish.transform.localPosition.x <= -200f)
-            {
-                fish.transform.localPosition = new Vector3(Mathf.Clamp(fish.transform.localPosition.x, -200f, 200f),
-                    fish.transform.localPosition.y, fish.transform.localPosition.z);
-
-                ChangeDirection();
-            }
+            return;
         }
+
+        if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
+        {
+            AttemptToCatchFish();
+            fishingUI.SetActive(false);
+            return;
+        }
+
+        float fishXDirection = fishImage.transform.localScale.x;
+        float fishXSpeed = selectedFish.speed * Time.deltaTime;
+        fish.transform.localPosition += Vector3.right * fishXDirection * fishXSpeed;
+
+        ChangeFishDirectionIfFishAtEdge();
     }
 
     private void OnDestroy()
@@ -61,20 +60,25 @@ public class FishingMinigame : MonoBehaviour
         player.OnFishingRodUsed -= Player_OnFishingRodUsed;
     }
 
-    private void Player_OnFishingRodUsed()
+    private void AttemptToCatchFish()
     {
-        StartCoroutine(StartFishingCoroutine());
+        bool canCatchFish = fish.transform.localPosition.x >= minCatchFishX && fish.transform.localPosition.x <= maxCatchFishX;
+        if (canCatchFish)
+        {
+            CatchFish();
+        }
     }
 
-    private void ChangeDirection()
+    private void CatchFish()
     {
-        fishImage.transform.localScale = new Vector3(-fishImage.transform.localScale.x,
-            fishImage.transform.localScale.y, fishImage.transform.localScale.z);
+        DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description);
+        ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
+        playerInventory.AddItem(caughtFishItem, 1);
     }
 
     private IEnumerator StartFishingCoroutine()
     {
-        if (player.GetInventory().IsFull())
+        if (playerInventory.IsFull())
         {
             DialogueBox.Instance.PlayDialogue("You cannot fish because your inventory is full.");
             yield break;
@@ -85,27 +89,70 @@ public class FishingMinigame : MonoBehaviour
             yield return fishScriptableObjectsLoadHandle;
         }
 
-        if (!fishingUI.activeSelf)
+        if (fishingUI.activeSelf)
         {
-            fishImage.transform.localScale = new Vector3(Random.Range(0, 2) == 0 ? 1f : -1f,
-                fishImage.transform.localScale.y, fishImage.transform.localScale.z);
-
-            int selectedFishIndex = Random.Range(0, fishScriptableObjectsLoadHandle.Result.Count);
-            selectedFish = fishScriptableObjectsLoadHandle.Result[selectedFishIndex];
-
-            Debug.Log("Selected fish: " + selectedFish.species);
-
-            fishingUI.SetActive(true);
-
-            int positionX = Random.Range(80, 190);
-
-            if (Random.Range(0, 2) == 0)
-            {
-                positionX *= -1;
-            }
-
-            fish.GetComponent<RectTransform>().anchoredPosition = new Vector3(positionX, 0, 0);
-            Debug.Log("Spawned fish at: " + fish.transform.localPosition.x);
+            Debug.LogWarning($"{nameof(StartFishingCoroutine)} started with {nameof(fishingUI)} active");
+            yield break;
         }
+
+        float randomFishXDirection = Random.Range(0, 2) == 0 ? 1f : -1f;
+        fishImage.transform.localScale = new Vector3(randomFishXDirection,
+            fishImage.transform.localScale.y, fishImage.transform.localScale.z);
+
+        fish.GetComponent<RectTransform>().anchoredPosition = new Vector3(GetRandomFishXPosition(), 0f, 0f);
+
+        if (logFishInfo)
+        {
+            Debug.Log("Set fish UI position to: " + fish.transform.localPosition.x);
+        }
+
+        SelectRandomFish();
+
+        fishingUI.SetActive(true);
+    }
+
+    private void SelectRandomFish()
+    {
+        int selectedFishIndex = Random.Range(0, fishScriptableObjectsLoadHandle.Result.Count);
+        selectedFish = fishScriptableObjectsLoadHandle.Result[selectedFishIndex];
+
+        if (logFishInfo)
+        {
+            Debug.Log("Selected fish: " + selectedFish.species);
+        }
+    }
+
+    private float GetRandomFishXPosition()
+    {
+        float xPosition = Random.Range(80f, 190f);
+
+        if (Random.Range(0, 2) == 0)
+        {
+            xPosition *= -1f;
+        }
+
+        return xPosition;
+    }
+
+    private void ChangeFishDirectionIfFishAtEdge()
+    {
+        if (fish.transform.localPosition.x >= 200f || fish.transform.localPosition.x <= -200f)
+        {
+            fish.transform.localPosition = new Vector3(Mathf.Clamp(fish.transform.localPosition.x, -200f, 200f),
+                fish.transform.localPosition.y, fish.transform.localPosition.z);
+
+            ChangeFishDirection();
+        }
+    }
+
+    private void ChangeFishDirection()
+    {
+        fishImage.transform.localScale = new Vector3(-fishImage.transform.localScale.x,
+            fishImage.transform.localScale.y, fishImage.transform.localScale.z);
+    }
+
+    private void Player_OnFishingRodUsed()
+    {
+        StartCoroutine(StartFishingCoroutine());
     }
 }
