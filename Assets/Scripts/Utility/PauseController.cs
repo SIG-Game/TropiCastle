@@ -26,8 +26,8 @@ public class PauseController : MonoBehaviour
 
     public static PauseController Instance;
 
-    public static event Action OnGamePaused;
-    public static event Action OnGameUnpaused;
+    public static event Action OnGamePaused = delegate { };
+    public static event Action OnGameUnpaused = delegate { };
 
     private void Awake()
     {
