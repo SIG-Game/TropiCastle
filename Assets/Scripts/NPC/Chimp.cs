@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Chimp : NPCInteractable
 {
+    [SerializeField] private List<ItemWithAmount> potentialItemsToGive;
+    [SerializeField] private List<string> itemToGiveDialogueLines;
+
     private List<Sprite> directionSprites;
-    private ItemScriptableObject appleItemScriptableObject;
     private Coroutine spinCoroutine;
+    private ItemWithAmount itemToGive;
 
     private void Start()
     {
         directionSprites = new List<Sprite> { front, left, back, right };
-        appleItemScriptableObject = Resources.Load<ItemScriptableObject>("Items/Apple");
 
         spinCoroutine = StartCoroutine(SpinCoroutine());
     }
@@ -19,6 +21,10 @@ public class Chimp : NPCInteractable
     public override void Interact(PlayerController player)
     {
         StopCoroutine(spinCoroutine);
+
+        int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
+        itemToGive = potentialItemsToGive[itemToGiveIndex];
+        dialogueLines[1] = itemToGiveDialogueLines[itemToGiveIndex];
 
         Interact(player, () => Chimp_AfterDialogueAction(player));
     }
@@ -37,7 +43,7 @@ public class Chimp : NPCInteractable
 
     private void Chimp_AfterDialogueAction(PlayerController player)
     {
-        player.GetInventory().AddItem(appleItemScriptableObject, 1);
+        player.GetInventory().AddItem(itemToGive);
         spinCoroutine = StartCoroutine(SpinCoroutine());
     }
 }

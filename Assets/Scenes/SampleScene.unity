@@ -32208,7 +32208,18 @@ MonoBehaviour:
     type: 3}
   dialogueLines:
   - mmmmmmmmm...
+  - (Placeholder for dialogue line in "Item To Give Dialogue Lines".)
+  potentialItemsToGive:
+  - itemData: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
+    amount: 1
+  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+    amount: 1
+  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
+    amount: 1
+  itemToGiveDialogueLines:
   - (The benevolent chimp hands you a delicious red apple.)
+  - (The kind chimp hands you a stick.)
+  - (The gracious chimp hands you a vine.)
 --- !u!1 &1034708147
 GameObject:
   m_ObjectHideFlags: 0
