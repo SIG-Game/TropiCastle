@@ -3,14 +3,7 @@ using UnityEngine;
 
 public class Crafting : MonoBehaviour
 {
-    [SerializeField] private PlayerController player;
-
-    private Inventory inventory;
-
-    private void Start()
-    {
-        inventory = player.GetInventory();
-    }
+    [SerializeField] private Inventory inventory;
 
     public void CraftItem(CraftingRecipeScriptableObject craftingRecipe)
     {
