@@ -39,5 +39,8 @@ public class PauseController : MonoBehaviour
     private void OnDestroy()
     {
         Instance = null;
+
+        OnGamePaused = delegate { };
+        OnGameUnpaused = delegate { };
     }
 }
