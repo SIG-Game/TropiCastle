@@ -32220,6 +32220,9 @@ MonoBehaviour:
   - (The benevolent chimp hands you a delicious red apple.)
   - (The kind chimp hands you a stick.)
   - (The gracious chimp hands you a vine.)
+  notGivingItemDialogueLine: (The chimp stares at you and smiles.)
+  minTimeSecondsBetweenGives: 5
+  maxTimeSecondsBetweenGives: 10
 --- !u!1 &1034708147
 GameObject:
   m_ObjectHideFlags: 0
