@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Title Menu.unity
     guid: c244738f895d43949bd51fff5736b4ac
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Beach.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 32ca78d957a9fb14da3c022b83c55d17,
