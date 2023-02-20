@@ -21,6 +21,8 @@ public class ItemSelectionController : MonoBehaviour
         }
     }
 
+    public bool CanScroll { private get; set; }
+
     public event Action<int> OnItemSelectedAtIndex = delegate { };
     public event Action<int> OnItemDeselectedAtIndex = delegate { };
 
@@ -28,6 +30,8 @@ public class ItemSelectionController : MonoBehaviour
     {
         selectedItemIndex = 0;
         OnItemSelectedAtIndex(selectedItemIndex);
+
+        CanScroll = true;
     }
 
     private void Update()
@@ -37,7 +41,7 @@ public class ItemSelectionController : MonoBehaviour
             return;
         }
 
-        if (Input.mouseScrollDelta.y != 0f)
+        if (Input.mouseScrollDelta.y != 0f && CanScroll)
         {
             int newSelectedItemIndex = SelectedItemIndex - (int)Mathf.Sign(Input.mouseScrollDelta.y);
 
