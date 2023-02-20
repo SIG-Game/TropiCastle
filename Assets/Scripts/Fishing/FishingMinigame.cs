@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class FishingMinigame : MonoBehaviour
 {
@@ -72,9 +74,10 @@ public class FishingMinigame : MonoBehaviour
 
     private void CatchFish()
     {
-        DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description);
         ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
-        playerInventory.AddItem(caughtFishItem, 1);
+        Action afterCatchDialogueAction = () => playerInventory.AddItem(caughtFishItem, 1);
+        DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description,
+            afterCatchDialogueAction);
     }
 
     private IEnumerator StartFishingCoroutine()
