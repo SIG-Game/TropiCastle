@@ -49,6 +49,7 @@ public class FishingMinigame : MonoBehaviour
         {
             AttemptToCatchFish();
             fishingUI.SetActive(false);
+            player.IsFishing = false;
             return;
         }
 
@@ -98,6 +99,8 @@ public class FishingMinigame : MonoBehaviour
             Debug.LogWarning($"{nameof(StartFishingCoroutine)} started with {nameof(fishingUI)} active");
             yield break;
         }
+
+        player.IsFishing = true;
 
         SetFishPositionAndDirection();
 

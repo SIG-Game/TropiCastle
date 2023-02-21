@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool IsFishing { private get; set; }
+
     public event Action OnFishingRodUsed = delegate { };
 
     public static event Action OnPlayerDied = delegate { };
@@ -194,7 +196,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !DialogueBox.Instance.DialogueBoxOpen();
+    public bool CanMove() => !isAttacking && !IsFishing && !PauseController.Instance.GamePaused &&
+        !DialogueBox.Instance.DialogueBoxOpen();
 
     public int GetSelectedItemIndex() => itemSelectionController.SelectedItemIndex;
 
