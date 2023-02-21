@@ -43931,6 +43931,7 @@ MonoBehaviour:
   dialogueBoxUI: {fileID: 8306802}
   dialogueText: {fileID: 315073305}
   player: {fileID: 572276101}
+  characterScrollWaitSeconds: 0.025
 --- !u!1001 &2113817890
 PrefabInstance:
   m_ObjectHideFlags: 0

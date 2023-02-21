@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,9 +10,13 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private GameObject dialogueBoxUI;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private PlayerController player;
+    [SerializeField] private float characterScrollWaitSeconds;
+
+    private const string alphaColorTag = "<color=#00000000>";
 
     private IEnumerator<string> linesEnumerator;
     private Action afterDialogueAction;
+    private WaitForSeconds characterScrollWaitForSecondsObject;
 
     public static DialogueBox Instance { get; private set; }
 
@@ -21,6 +26,7 @@ public class DialogueBox : MonoBehaviour
 
         linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
         afterDialogueAction = null;
+        characterScrollWaitForSecondsObject = new WaitForSeconds(characterScrollWaitSeconds);
     }
 
     private void Update()
@@ -36,7 +42,7 @@ public class DialogueBox : MonoBehaviour
             {
                 if (linesEnumerator.MoveNext())
                 {
-                    dialogueText.text = linesEnumerator.Current;
+                    DisplayScrollingText(linesEnumerator.Current);
                 }
                 else
                 {
@@ -65,7 +71,7 @@ public class DialogueBox : MonoBehaviour
 
         this.afterDialogueAction = afterDialogueAction;
 
-        dialogueText.text = line;
+        DisplayScrollingText(line);
         dialogueBoxUI.SetActive(true);
     }
 
@@ -82,8 +88,31 @@ public class DialogueBox : MonoBehaviour
 
         this.afterDialogueAction = afterDialogueAction;
 
-        dialogueText.text = linesEnumerator.Current;
+        DisplayScrollingText(linesEnumerator.Current);
         dialogueBoxUI.SetActive(true);
+    }
+
+    private void DisplayScrollingText(string text)
+    {
+        StopAllCoroutines();
+        StartCoroutine(DisplayScrollingTextCoroutine(text));
+    }
+
+    private IEnumerator DisplayScrollingTextCoroutine(string text)
+    {
+        int alphaTagIndex = 0;
+
+        while (alphaTagIndex < text.Length)
+        {
+            string scrollingText = text.Insert(alphaTagIndex, alphaColorTag);
+            dialogueText.text = scrollingText;
+
+            yield return characterScrollWaitForSecondsObject;
+
+            alphaTagIndex++;
+        }
+
+        dialogueText.text = text;
     }
 
     public bool DialogueBoxOpen()
