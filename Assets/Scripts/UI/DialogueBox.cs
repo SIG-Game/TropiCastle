@@ -16,7 +16,9 @@ public class DialogueBox : MonoBehaviour
 
     private IEnumerator<string> linesEnumerator;
     private Action afterDialogueAction;
+    private Coroutine displayScrollingTextCoroutineObject;
     private WaitForSeconds characterScrollWaitForSecondsObject;
+    private bool textScrolling;
 
     public static DialogueBox Instance { get; private set; }
 
@@ -27,6 +29,7 @@ public class DialogueBox : MonoBehaviour
         linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
         afterDialogueAction = null;
         characterScrollWaitForSecondsObject = new WaitForSeconds(characterScrollWaitSeconds);
+        textScrolling = false;
     }
 
     private void Update()
@@ -40,7 +43,13 @@ public class DialogueBox : MonoBehaviour
 
             if (leftClickInput || interactButtonInput)
             {
-                if (linesEnumerator.MoveNext())
+                if (textScrolling)
+                {
+                    StopDisplayScrollingTextCoroutineIfNotNull();
+                    textScrolling = false;
+                    dialogueText.text = linesEnumerator.Current;
+                }
+                else if (linesEnumerator.MoveNext())
                 {
                     DisplayScrollingText(linesEnumerator.Current);
                 }
@@ -94,12 +103,13 @@ public class DialogueBox : MonoBehaviour
 
     private void DisplayScrollingText(string text)
     {
-        StopAllCoroutines();
-        StartCoroutine(DisplayScrollingTextCoroutine(text));
+        StopDisplayScrollingTextCoroutineIfNotNull();
+        displayScrollingTextCoroutineObject = StartCoroutine(DisplayScrollingTextCoroutine(text));
     }
 
     private IEnumerator DisplayScrollingTextCoroutine(string text)
     {
+        textScrolling = true;
         int alphaTagIndex = 0;
 
         while (alphaTagIndex < text.Length)
@@ -113,6 +123,15 @@ public class DialogueBox : MonoBehaviour
         }
 
         dialogueText.text = text;
+        textScrolling = false;
+    }
+
+    private void StopDisplayScrollingTextCoroutineIfNotNull()
+    {
+        if (displayScrollingTextCoroutineObject != null)
+        {
+            StopCoroutine(displayScrollingTextCoroutineObject);
+        }
     }
 
     public bool DialogueBoxOpen()
