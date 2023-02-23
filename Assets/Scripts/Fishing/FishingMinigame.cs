@@ -13,6 +13,7 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private GameObject fish;
     [SerializeField] private Image fishImage;
     [SerializeField] private PlayerController player;
+    [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private float fishMinX;
     [SerializeField] private float fishMaxX;
     [SerializeField] private float fishStartPositionMinAbsX;
@@ -85,7 +86,7 @@ public class FishingMinigame : MonoBehaviour
     {
         if (playerInventory.IsFull())
         {
-            DialogueBox.Instance.PlayDialogue("You cannot fish because your inventory is full.");
+            inventoryFullUIController.ShowInventoryFullText();
             yield break;
         }
 

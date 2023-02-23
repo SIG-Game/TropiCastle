@@ -1307,6 +1307,11 @@ PrefabInstance:
       propertyPath: PlayerController
       value: 
       objectReference: {fileID: 198128349}
+    - target: {fileID: 4788721817516295151, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: inventoryFullUIController
+      value: 
+      objectReference: {fileID: 2024199923}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6eec2d617ac261b42855edf00e17c077, type: 3}
 --- !u!1 &170383294
