@@ -47,7 +47,7 @@ public class DialogueBox : MonoBehaviour
                 {
                     StopDisplayScrollingTextCoroutineIfNotNull();
                     textScrolling = false;
-                    dialogueText.text = linesEnumerator.Current;
+                    dialogueText.maxVisibleCharacters = dialogueText.text.Length;
                 }
                 else if (linesEnumerator.MoveNext())
                 {
@@ -110,19 +110,18 @@ public class DialogueBox : MonoBehaviour
     private IEnumerator DisplayScrollingTextCoroutine(string text)
     {
         textScrolling = true;
-        int alphaTagIndex = 0;
-
-        while (alphaTagIndex < text.Length)
-        {
-            string scrollingText = text.Insert(alphaTagIndex, alphaColorTag);
-            dialogueText.text = scrollingText;
-
-            yield return characterScrollWaitForSecondsObject;
-
-            alphaTagIndex++;
-        }
 
         dialogueText.text = text;
+
+        for (int visibleCharacters = 0; visibleCharacters < text.Length; ++visibleCharacters)
+        {
+            dialogueText.maxVisibleCharacters = visibleCharacters;
+
+            yield return characterScrollWaitForSecondsObject;
+        }
+
+        dialogueText.maxVisibleCharacters = text.Length;
+
         textScrolling = false;
     }
 
