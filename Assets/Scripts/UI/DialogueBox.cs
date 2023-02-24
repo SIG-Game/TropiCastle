@@ -12,8 +12,6 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private float characterScrollWaitSeconds;
 
-    private const string alphaColorTag = "<color=#00000000>";
-
     private IEnumerator<string> linesEnumerator;
     private Action afterDialogueAction;
     private Coroutine displayScrollingTextCoroutineObject;
@@ -32,33 +30,21 @@ public class DialogueBox : MonoBehaviour
         textScrolling = false;
     }
 
+    // Must run before PlayerController Update method to prevent
+    // dialogue from immediately advancing after interaction
     private void Update()
     {
-        // Must run before PlayerController to prevent dialogue from immediately advancing
-        if (DialogueBoxOpen() && !PauseController.Instance.GamePaused)
+        bool canAdvanceDialogue = DialogueBoxOpen() && !PauseController.Instance.GamePaused;
+        if (canAdvanceDialogue)
         {
             // Get both inputs so that neither can be used elsewhere
             bool leftClickInput = InputManager.Instance.GetLeftClickDownIfUnusedThisFrame();
             bool interactButtonInput = InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
 
-            if (leftClickInput || interactButtonInput)
+            bool advanceDialogueInputPressedThisFrame = leftClickInput || interactButtonInput;
+            if (advanceDialogueInputPressedThisFrame)
             {
-                if (textScrolling)
-                {
-                    StopDisplayScrollingTextCoroutineIfNotNull();
-                    textScrolling = false;
-                    dialogueText.maxVisibleCharacters = dialogueText.text.Length;
-                }
-                else if (linesEnumerator.MoveNext())
-                {
-                    DisplayScrollingText(linesEnumerator.Current);
-                }
-                else
-                {
-                    afterDialogueAction?.Invoke(); // afterDialogueAction may be null
-
-                    dialogueBoxUI.SetActive(false);
-                }
+                AdvanceDialogue();
             }
         }
     }
@@ -66,6 +52,22 @@ public class DialogueBox : MonoBehaviour
     private void OnDestroy()
     {
         Instance = null;
+    }
+
+    private void AdvanceDialogue()
+    {
+        if (textScrolling)
+        {
+            SkipTextScrolling();
+        }
+        else if (linesEnumerator.MoveNext())
+        {
+            DisplayScrollingText(linesEnumerator.Current);
+        }
+        else
+        {
+            CloseDialogueBox();
+        }
     }
 
     public void PlayDialogue(string line, Action afterDialogueAction = null)
@@ -83,7 +85,6 @@ public class DialogueBox : MonoBehaviour
         DisplayScrollingText(line);
         dialogueBoxUI.SetActive(true);
     }
-
 
     public void PlayDialogue(IEnumerable<string> lines, Action afterDialogueAction = null)
     {
@@ -125,6 +126,19 @@ public class DialogueBox : MonoBehaviour
         textScrolling = false;
     }
 
+    private void SkipTextScrolling()
+    {
+        StopDisplayScrollingTextCoroutineIfNotNull();
+        textScrolling = false;
+        dialogueText.maxVisibleCharacters = dialogueText.text.Length;
+    }
+
+    private void CloseDialogueBox()
+    {
+        afterDialogueAction?.Invoke(); // afterDialogueAction may be null
+        dialogueBoxUI.SetActive(false);
+    }
+
     private void StopDisplayScrollingTextCoroutineIfNotNull()
     {
         if (displayScrollingTextCoroutineObject != null)
@@ -133,8 +147,5 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
-    public bool DialogueBoxOpen()
-    {
-        return dialogueBoxUI.activeInHierarchy;
-    }
+    public bool DialogueBoxOpen() => dialogueBoxUI.activeInHierarchy;
 }
