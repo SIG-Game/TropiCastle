@@ -19,7 +19,16 @@ public class ItemSlotTooltipController : MonoBehaviour, IPointerEnterHandler, IP
 
         if (slotItemData.name != "Empty")
         {
-            tooltipController.ShowTooltipWithText(slotItemData.name);
+            string tooltipText = slotItemData switch
+            {
+                HealingItemScriptableObject healingItem =>
+                    $"{slotItemData.name}\nHeals {healingItem.healAmount} Health",
+                WeaponItemScriptableObject weaponItem =>
+                    $"{slotItemData.name}\nDeals {weaponItem.damage} Damage",
+                _ => slotItemData.name
+            };
+
+            tooltipController.ShowTooltipWithText(tooltipText);
         }
     }
 
