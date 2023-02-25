@@ -10,8 +10,12 @@ public class InventoryTooltipController : MonoBehaviour
     private RectTransform inventoryTooltipRectTransform;
     private bool tooltipIsVisible;
 
+    public static InventoryTooltipController Instance;
+
     private void Awake()
     {
+        Instance = this;
+
         inventoryTooltipRectTransform = GetComponent<RectTransform>();
         tooltipIsVisible = false;
 
@@ -28,6 +32,8 @@ public class InventoryTooltipController : MonoBehaviour
 
     private void OnDestroy()
     {
+        Instance = null;
+
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
 

@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 public class ItemSlotTooltipController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Inventory inventory;
-    [SerializeField] private InventoryTooltipController tooltipController;
 
     private int slotItemIndex;
 
@@ -28,12 +27,12 @@ public class ItemSlotTooltipController : MonoBehaviour, IPointerEnterHandler, IP
                 _ => slotItemData.name
             };
 
-            tooltipController.ShowTooltipWithText(tooltipText);
+            InventoryTooltipController.Instance.ShowTooltipWithText(tooltipText);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        tooltipController.ShowTooltipWithText(string.Empty);
+        InventoryTooltipController.Instance.ShowTooltipWithText(string.Empty);
     }
 }

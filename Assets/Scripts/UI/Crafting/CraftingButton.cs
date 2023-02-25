@@ -10,19 +10,16 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private CraftingRecipeScriptableObject craftingRecipe;
     [SerializeField] private TextMeshProUGUI craftingButtonText;
     [SerializeField] private Image craftingButtonImage;
-    [SerializeField] private InventoryTooltipController inventoryTooltipController;
 
     public void CraftingButton_OnClick()
     {
         crafting.CraftItem(craftingRecipe);
     }
 
-    public void SetUpCraftingButton(Crafting crafting, CraftingRecipeScriptableObject craftingRecipe,
-        InventoryTooltipController inventoryTooltipController)
+    public void SetUpCraftingButton(Crafting crafting, CraftingRecipeScriptableObject craftingRecipe)
     {
         this.crafting = crafting;
         this.craftingRecipe = craftingRecipe;
-        this.inventoryTooltipController = inventoryTooltipController;
 
         craftingButtonText.text = $"Craft {craftingRecipe.name}";
         craftingButtonImage.sprite = craftingRecipe.resultItem.itemData.sprite;
@@ -30,12 +27,12 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        inventoryTooltipController.ShowTooltipWithText(GetIngredientsAsString());
+        InventoryTooltipController.Instance.ShowTooltipWithText(GetIngredientsAsString());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        inventoryTooltipController.HideTooltip();
+        InventoryTooltipController.Instance.HideTooltip();
     }
 
     private string GetIngredientsAsString()

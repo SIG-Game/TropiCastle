@@ -3,7 +3,6 @@
 public class CraftingButtonGenerator : MonoBehaviour
 {
     [SerializeField] private Crafting crafting;
-    [SerializeField] private InventoryTooltipController inventoryTooltipController;
     [SerializeField] private GameObject craftingButtonPrefab;
     [SerializeField] private Transform craftingButtonsParentTransform;
     [SerializeField] private int yDistanceBetweenButtons;
@@ -17,8 +16,7 @@ public class CraftingButtonGenerator : MonoBehaviour
             GameObject craftingButton = Instantiate(craftingButtonPrefab, craftingButtonsParentTransform);
             craftingButton.name = $"Craft {craftingRecipes[i].name} Button";
 
-            craftingButton.GetComponent<CraftingButton>().SetUpCraftingButton(crafting, craftingRecipes[i],
-                inventoryTooltipController);
+            craftingButton.GetComponent<CraftingButton>().SetUpCraftingButton(crafting, craftingRecipes[i]);
         }
     }
 }
