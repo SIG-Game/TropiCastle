@@ -1,18 +1,18 @@
 using TMPro;
 using UnityEngine;
 
-public class IngredientsTooltipController : MonoBehaviour
+public class InventoryTooltipController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tooltipText;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
 
-    private RectTransform ingredientsTooltipRectTransform;
+    private RectTransform inventoryTooltipRectTransform;
     private bool tooltipIsVisible;
 
     private void Awake()
     {
-        ingredientsTooltipRectTransform = GetComponent<RectTransform>();
+        inventoryTooltipRectTransform = GetComponent<RectTransform>();
         tooltipIsVisible = false;
 
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
@@ -22,7 +22,7 @@ public class IngredientsTooltipController : MonoBehaviour
     {
         if (tooltipIsVisible)
         {
-            UpdateIngredientsTooltipPosition();
+            UpdateInventoryTooltipPosition();
         }
     }
 
@@ -35,7 +35,7 @@ public class IngredientsTooltipController : MonoBehaviour
     {
         tooltipText.text = text;
         tooltipIsVisible = true;
-        UpdateIngredientsTooltipPosition();
+        UpdateInventoryTooltipPosition();
     }
 
     public void HideTooltip()
@@ -44,9 +44,9 @@ public class IngredientsTooltipController : MonoBehaviour
         tooltipIsVisible = false;
     }
 
-    private void UpdateIngredientsTooltipPosition()
+    private void UpdateInventoryTooltipPosition()
     {
-        ingredientsTooltipRectTransform.anchoredPosition =
+        inventoryTooltipRectTransform.anchoredPosition =
             MouseCanvasPositionHelper.GetMouseCanvasPosition(canvasRectTransform);
     }
 

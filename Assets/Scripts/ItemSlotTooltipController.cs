@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class ItemSlotTooltipController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Inventory inventory;
-    [SerializeField] private IngredientsTooltipController tooltipController;
+    [SerializeField] private InventoryTooltipController tooltipController;
 
     private int slotItemIndex;
 

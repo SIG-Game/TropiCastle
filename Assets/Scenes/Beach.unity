@@ -21477,7 +21477,7 @@ GameObject:
   - component: {fileID: 743848480}
   - component: {fileID: 743848481}
   m_Layer: 5
-  m_Name: Ingredients Tooltip
+  m_Name: Inventory Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44771,6 +44771,11 @@ PrefabInstance:
       propertyPath: crafting
       value: 
       objectReference: {fileID: 2003006741}
+    - target: {fileID: 3268635071200376722, guid: b880f180c15adf449b8c0003cb592fc8,
+        type: 3}
+      propertyPath: inventoryTooltipController
+      value: 
+      objectReference: {fileID: 743848481}
     - target: {fileID: 3268635071200376722, guid: b880f180c15adf449b8c0003cb592fc8,
         type: 3}
       propertyPath: ingredientsTooltipController
