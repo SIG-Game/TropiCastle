@@ -5,6 +5,7 @@ public class IngredientsTooltipController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tooltipText;
     [SerializeField] private RectTransform canvasRectTransform;
+    [SerializeField] private InventoryUIController inventoryUIController;
 
     private RectTransform ingredientsTooltipRectTransform;
     private bool tooltipIsVisible;
@@ -13,6 +14,8 @@ public class IngredientsTooltipController : MonoBehaviour
     {
         ingredientsTooltipRectTransform = GetComponent<RectTransform>();
         tooltipIsVisible = false;
+
+        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
     }
 
     private void Update()
@@ -21,6 +24,11 @@ public class IngredientsTooltipController : MonoBehaviour
         {
             UpdateIngredientsTooltipPosition();
         }
+    }
+
+    private void OnDestroy()
+    {
+        inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
 
     public void ShowTooltipWithText(string text)
@@ -40,5 +48,10 @@ public class IngredientsTooltipController : MonoBehaviour
     {
         ingredientsTooltipRectTransform.anchoredPosition =
             MouseCanvasPositionHelper.GetMouseCanvasPosition(canvasRectTransform);
+    }
+
+    private void InventoryUIController_OnInventoryClosed()
+    {
+        HideTooltip();
     }
 }
