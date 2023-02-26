@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemSlotTooltipController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventoryUIItemSlotController : MonoBehaviour, IPointerClickHandler,
+    IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Inventory inventory;
+    [SerializeField] private InventoryUIHeldItemController heldItemController;
 
     private int slotItemIndex;
 
@@ -29,6 +31,11 @@ public class ItemSlotTooltipController : MonoBehaviour, IPointerEnterHandler, IP
 
             InventoryTooltipController.Instance.ShowTooltipWithText(tooltipText);
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        heldItemController.ClickedItemAtIndex(slotItemIndex);
     }
 
     public void OnPointerExit(PointerEventData eventData)

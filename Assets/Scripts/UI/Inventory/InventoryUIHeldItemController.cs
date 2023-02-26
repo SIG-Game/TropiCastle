@@ -1,27 +1,20 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryUIHeldItemController : MonoBehaviour, IPointerClickHandler
+public class InventoryUIHeldItemController : MonoBehaviour
 {
     [SerializeField] private GameObject heldItemUI;
-    [SerializeField] private GameObject canvas;
+    [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Sprite transparentSprite;
 
     private Inventory inventory;
-    private GraphicRaycaster graphicRaycaster;
-    private RectTransform canvasRectTransform;
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
     private int heldItemIndex;
 
     private void Awake()
     {
-        graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
-        canvasRectTransform = canvas.GetComponent<RectTransform>();
-
         heldItemRectTransform = heldItemUI.GetComponent<RectTransform>();
         heldItemImage = heldItemUI.GetComponent<Image>();
 
@@ -49,17 +42,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IPointerClickHandler
             MouseCanvasPositionHelper.GetMouseCanvasPosition(canvasRectTransform);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void ClickedItemAtIndex(int clickedItemIndex)
     {
-        List<RaycastResult> raycastResults = new List<RaycastResult>();
-        graphicRaycaster.Raycast(eventData, raycastResults);
-
-        if (raycastResults.Count == 0)
-        {
-            return;
-        }
-
-        int clickedItemIndex = raycastResults[0].gameObject.transform.GetSiblingIndex();
         ItemScriptableObject clickedItemData = inventory.GetItemAtIndex(clickedItemIndex).itemData;
 
         if (HoldingItem())

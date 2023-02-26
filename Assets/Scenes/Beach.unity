@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &35900105
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,7 +817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &157961986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,7 +1574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &198128349 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5288355818519944996, guid: 055035cc7ee7c8646858260629418a55,
@@ -1725,7 +1725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &262267701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1870,7 +1870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &273550720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2122,7 +2122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &293081961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2429,7 +2429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &303969644
 GameObject:
   m_ObjectHideFlags: 0
@@ -20474,7 +20474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!114 &572276101 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
@@ -20760,7 +20760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &598317262
 GameObject:
   m_ObjectHideFlags: 0
@@ -21277,7 +21277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &655574628
 GameObject:
   m_ObjectHideFlags: 0
@@ -31875,7 +31875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!224 &865019840 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1938744877069393190, guid: 6eec2d617ac261b42855edf00e17c077,
@@ -32151,7 +32151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &882202650
 GameObject:
   m_ObjectHideFlags: 0
@@ -33106,7 +33106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &1118113340
 GameObject:
   m_ObjectHideFlags: 0
@@ -33327,7 +33327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &1127594727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33635,7 +33635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &1164421704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33780,7 +33780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &1223021898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34109,7 +34109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &1257249682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34753,7 +34753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &1304918689
 GameObject:
   m_ObjectHideFlags: 0
@@ -34954,7 +34954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &1320933409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35246,7 +35246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &1338842770
 GameObject:
   m_ObjectHideFlags: 0
@@ -35697,7 +35697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &1480236917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35842,7 +35842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &1482350653
 GameObject:
   m_ObjectHideFlags: 0
@@ -36169,7 +36169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &1524518747
 GameObject:
   m_ObjectHideFlags: 0
@@ -42085,7 +42085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heldItemUI: {fileID: 1431489655}
-  canvas: {fileID: 822617737}
+  canvasRectTransform: {fileID: 822617741}
   inventoryUIController: {fileID: 1731795749}
   transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
 --- !u!1 &1739818043
@@ -42263,7 +42263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &1764152488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42408,7 +42408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &1770944051
 GameObject:
   m_ObjectHideFlags: 0
@@ -43175,7 +43175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &1936533778
 GameObject:
   m_ObjectHideFlags: 0
@@ -44013,7 +44013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &2020118345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44158,7 +44158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &2024199921
 GameObject:
   m_ObjectHideFlags: 0
@@ -44355,7 +44355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1 &2079185302
 GameObject:
   m_ObjectHideFlags: 0
@@ -44689,7 +44689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
-  tooltipController: {fileID: 743848481}
+  heldItemController: {fileID: 1731795752}
 --- !u!1001 &8504354260993737575
 PrefabInstance:
   m_ObjectHideFlags: 0
