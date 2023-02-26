@@ -27,12 +27,18 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        InventoryTooltipController.Instance.ShowTooltipWithText(GetIngredientsAsString());
+        if (!InventoryUIHeldItemController.Instance.HoldingItem())
+        {
+            InventoryTooltipController.Instance.ShowTooltipWithText(GetIngredientsAsString());
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        InventoryTooltipController.Instance.HideTooltip();
+        if (!InventoryUIHeldItemController.Instance.HoldingItem())
+        {
+            InventoryTooltipController.Instance.HideTooltip();
+        }
     }
 
     private string GetIngredientsAsString()
