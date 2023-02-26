@@ -16,6 +16,11 @@ public class InventoryUIItemSlotController : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (heldItemController.HoldingItem())
+        {
+            return;
+        }
+
         ItemScriptableObject slotItemData = inventory.GetItemAtIndex(slotItemIndex).itemData;
 
         if (slotItemData.name != "Empty")
@@ -40,6 +45,9 @@ public class InventoryUIItemSlotController : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        InventoryTooltipController.Instance.ShowTooltipWithText(string.Empty);
+        if (!heldItemController.HoldingItem())
+        {
+            InventoryTooltipController.Instance.ShowTooltipWithText(string.Empty);
+        }
     }
 }
