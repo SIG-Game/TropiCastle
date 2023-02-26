@@ -7,8 +7,12 @@ public class InventoryFullUIController : MonoBehaviour
 
     private float activeTimer;
 
+    public static InventoryFullUIController Instance;
+
     private void Awake()
     {
+        Instance = this;
+
         activeTimer = 0f;
     }
 
@@ -23,6 +27,11 @@ public class InventoryFullUIController : MonoBehaviour
                 inventoryFullUI.SetActive(false);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        Instance = null;
     }
 
     public void ShowInventoryFullText()

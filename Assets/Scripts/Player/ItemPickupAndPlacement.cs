@@ -3,7 +3,6 @@
 public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
-    [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Sprite itemPickupArrow;
@@ -70,7 +69,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         if (playerInventory.IsFull())
         {
-            inventoryFullUIController.ShowInventoryFullText();
+            InventoryFullUIController.Instance.ShowInventoryFullText();
             return;
         }
 

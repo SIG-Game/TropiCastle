@@ -13,7 +13,6 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private GameObject fish;
     [SerializeField] private Image fishImage;
     [SerializeField] private PlayerController player;
-    [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private float fishMinX;
     [SerializeField] private float fishMaxX;
     [SerializeField] private float fishStartPositionMinAbsX;
@@ -86,7 +85,7 @@ public class FishingMinigame : MonoBehaviour
     {
         if (playerInventory.IsFull())
         {
-            inventoryFullUIController.ShowInventoryFullText();
+            InventoryFullUIController.Instance.ShowInventoryFullText();
             yield break;
         }
 
