@@ -5,7 +5,6 @@ public class InventoryUIItemSlotController : MonoBehaviour, IPointerClickHandler
     IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Inventory inventory;
-    [SerializeField] private InventoryUIHeldItemController heldItemController;
 
     private int slotItemIndex;
 
@@ -16,7 +15,7 @@ public class InventoryUIItemSlotController : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (heldItemController.HoldingItem())
+        if (InventoryUIHeldItemController.Instance.HoldingItem())
         {
             return;
         }
@@ -40,12 +39,12 @@ public class InventoryUIItemSlotController : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        heldItemController.ClickedItemAtIndex(slotItemIndex);
+        InventoryUIHeldItemController.Instance.ClickedItemAtIndex(slotItemIndex);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!heldItemController.HoldingItem())
+        if (!InventoryUIHeldItemController.Instance.HoldingItem())
         {
             InventoryTooltipController.Instance.ShowTooltipWithText(string.Empty);
         }

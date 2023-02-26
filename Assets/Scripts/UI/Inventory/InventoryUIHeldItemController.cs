@@ -13,8 +13,12 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private Image heldItemImage;
     private int heldItemIndex;
 
+    public static InventoryUIHeldItemController Instance;
+
     private void Awake()
     {
+        Instance = this;
+
         heldItemRectTransform = heldItemUI.GetComponent<RectTransform>();
         heldItemImage = heldItemUI.GetComponent<Image>();
 
@@ -33,6 +37,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
     private void OnDestroy()
     {
+        Instance = null;
+
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
 
