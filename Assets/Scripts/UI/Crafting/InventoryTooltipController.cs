@@ -53,7 +53,7 @@ public class InventoryTooltipController : MonoBehaviour
     private void UpdateInventoryTooltipPosition()
     {
         inventoryTooltipRectTransform.anchoredPosition =
-            MouseCanvasPositionHelper.GetMouseCanvasPosition(canvasRectTransform);
+            MouseCanvasPositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
     }
 
     private void InventoryUIController_OnInventoryClosed()

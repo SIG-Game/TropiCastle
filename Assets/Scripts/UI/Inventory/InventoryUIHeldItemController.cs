@@ -39,7 +39,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private void UpdateHeldItemPosition()
     {
         heldItemRectTransform.anchoredPosition =
-            MouseCanvasPositionHelper.GetMouseCanvasPosition(canvasRectTransform);
+            MouseCanvasPositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
     }
 
     public void ClickedItemAtIndex(int clickedItemIndex)
@@ -101,21 +101,5 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private void HideHeldItem()
     {
         heldItemImage.sprite = transparentSprite;
-    }
-
-    private Vector2 ClampPositionWithCenterAnchorToCanvas(Vector2 position) =>
-        new Vector2(ClampValueWithCenterAnchorToCanvasWidth(position.x),
-            ClampValueWithCenterAnchorToCanvasHeight(position.y));
-
-    private float ClampValueWithCenterAnchorToCanvasWidth(float value) =>
-        ClampValueWithCenterAnchorToLimit(value, canvasRectTransform.rect.width);
-
-    private float ClampValueWithCenterAnchorToCanvasHeight(float value) =>
-        ClampValueWithCenterAnchorToLimit(value, canvasRectTransform.rect.height);
-
-    private float ClampValueWithCenterAnchorToLimit(float value, float limit)
-    {
-        float halfLimit = limit / 2f;
-        return Mathf.Clamp(value, -halfLimit, halfLimit);
     }
 }
