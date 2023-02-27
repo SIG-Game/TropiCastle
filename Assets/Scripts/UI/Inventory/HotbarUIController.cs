@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class HotbarUIController : MonoBehaviour
 {
@@ -8,12 +9,14 @@ public class HotbarUIController : MonoBehaviour
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Color highlightedSlotColor;
 
+    private List<ItemSlotController> itemSlotControllers;
     private Color unhighlightedSlotColor;
     private int hotbarSize;
     private int hotbarHighlightedItemSlotIndex;
 
     private void Awake()
     {
+        itemSlotControllers = ItemSlotContainerHelper.GetItemSlotControllers(hotbarItemSlotContainer);
         unhighlightedSlotColor = ItemSlotContainerHelper.GetUnhighlightedSlotColor(hotbarItemSlotContainer);
         hotbarSize = hotbarItemSlotContainer.childCount;
 
@@ -40,7 +43,7 @@ public class HotbarUIController : MonoBehaviour
 
         Sprite changedItemSprite = item.itemData.sprite;
 
-        ItemSlotContainerHelper.SetItemSlotSpriteAtIndex(hotbarItemSlotContainer, index, changedItemSprite);
+        itemSlotControllers[index].SetSprite(changedItemSprite);
     }
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
@@ -75,7 +78,7 @@ public class HotbarUIController : MonoBehaviour
         {
             Sprite itemSpriteAtCurrentIndex = inventory.GetItemAtIndex(i).itemData.sprite;
 
-            ItemSlotContainerHelper.SetItemSlotSpriteAtIndex(hotbarItemSlotContainer, i, itemSpriteAtCurrentIndex);
+            itemSlotControllers[i].SetSprite(itemSpriteAtCurrentIndex);
         }
     }
 
@@ -89,11 +92,11 @@ public class HotbarUIController : MonoBehaviour
     {
         hotbarHighlightedItemSlotIndex = index;
 
-        ItemSlotContainerHelper.SetItemSlotColorAtIndex(hotbarItemSlotContainer, index, highlightedSlotColor);
+        itemSlotControllers[index].SetBackgroundColor(highlightedSlotColor);
     }
 
     private void UnhighlightHotbarItemSlotAtIndex(int index)
     {
-        ItemSlotContainerHelper.SetItemSlotColorAtIndex(hotbarItemSlotContainer, index, unhighlightedSlotColor);
+        itemSlotControllers[index].SetBackgroundColor(unhighlightedSlotColor);
     }
 }
