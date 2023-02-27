@@ -78,12 +78,7 @@ public class DialogueBox : MonoBehaviour
             return;
         }
 
-        linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
-
-        this.afterDialogueAction = afterDialogueAction;
-
-        DisplayScrollingText(line);
-        dialogueBoxUI.SetActive(true);
+        PlayDialogue(new[] { line }, afterDialogueAction);
     }
 
     public void PlayDialogue(IEnumerable<string> lines, Action afterDialogueAction = null)
