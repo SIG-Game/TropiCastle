@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,4 +16,19 @@ public static class ItemSlotContainerHelper
 
     public static Color GetUnhighlightedSlotColor(Transform itemSlotContainer) =>
         itemSlotContainer.GetChild(0).GetComponent<Image>().color;
+
+    public static List<InventoryUIItemSlotController> GetItemSlotControllers(
+        Transform itemSlotContainer)
+    {
+        List<InventoryUIItemSlotController> itemSlotControllers =
+            new List<InventoryUIItemSlotController>();
+
+        foreach (Transform itemSlot in itemSlotContainer)
+        {
+            itemSlotControllers.Add(itemSlot
+                .GetComponent<InventoryUIItemSlotController>());
+        }
+
+        return itemSlotControllers;
+    }
 }

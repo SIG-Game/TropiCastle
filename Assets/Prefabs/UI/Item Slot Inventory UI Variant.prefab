@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 3940269534088966668, guid: 41b1c1a20cea77944a32a62a21f6716c,
         type: 3}
       propertyPath: m_Name
-      value: Item Slot Inventory UI
+      value: Item Slot Inventory UI Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3940269534088966671, guid: 41b1c1a20cea77944a32a62a21f6716c,
         type: 3}
@@ -119,6 +119,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41b1c1a20cea77944a32a62a21f6716c, type: 3}
+--- !u!114 &415455371410550688 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3940269534088966656, guid: 41b1c1a20cea77944a32a62a21f6716c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3705715058460761504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415455371410550700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &415455371410550700 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3940269534088966668, guid: 41b1c1a20cea77944a32a62a21f6716c,
@@ -138,4 +150,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  heldItemController: {fileID: 0}
+  itemSlotImage: {fileID: 415455371632956867}
+  itemSlotBackgroundImage: {fileID: 415455371410550688}
+--- !u!114 &415455371632956867 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3940269534252583011, guid: 41b1c1a20cea77944a32a62a21f6716c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3705715058460761504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

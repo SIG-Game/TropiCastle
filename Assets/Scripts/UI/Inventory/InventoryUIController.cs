@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryUIController : MonoBehaviour
@@ -10,6 +11,8 @@ public class InventoryUIController : MonoBehaviour
     [SerializeField] private Color highlightedSlotColor;
 
     private Color unhighlightedSlotColor;
+
+    private List<InventoryUIItemSlotController> itemSlotControllers;
 
     public event Action OnInventoryClosed = delegate { };
 
@@ -23,6 +26,8 @@ public class InventoryUIController : MonoBehaviour
     private void Awake()
     {
         unhighlightedSlotColor = ItemSlotContainerHelper.GetUnhighlightedSlotColor(inventoryItemSlotContainer);
+
+        itemSlotControllers = ItemSlotContainerHelper.GetItemSlotControllers(inventoryItemSlotContainer);
 
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
@@ -61,27 +66,17 @@ public class InventoryUIController : MonoBehaviour
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        HighlightInventoryItemSlotAtIndex(index);
+        itemSlotControllers[index].SetBackgroundColor(highlightedSlotColor);
     }
 
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        UnhighlightInventoryItemSlotAtIndex(index);
+        itemSlotControllers[index].SetBackgroundColor(unhighlightedSlotColor);
     }
 
     public void SetInventorySpriteAtSlotIndex(Sprite sprite, int slotIndex)
     {
-        ItemSlotContainerHelper.SetItemSlotSpriteAtIndex(inventoryItemSlotContainer, slotIndex, sprite);
-    }
-
-    private void HighlightInventoryItemSlotAtIndex(int index)
-    {
-        ItemSlotContainerHelper.SetItemSlotColorAtIndex(inventoryItemSlotContainer, index, highlightedSlotColor);
-    }
-
-    private void UnhighlightInventoryItemSlotAtIndex(int index)
-    {
-        ItemSlotContainerHelper.SetItemSlotColorAtIndex(inventoryItemSlotContainer, index, unhighlightedSlotColor);
+        itemSlotControllers[slotIndex].SetSprite(sprite);
     }
 
     public Inventory GetInventory() => inventory;
