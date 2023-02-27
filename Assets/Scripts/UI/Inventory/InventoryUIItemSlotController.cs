@@ -1,13 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class InventoryUIItemSlotController : MonoBehaviour, IPointerClickHandler,
+public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Inventory inventory;
-    [SerializeField] private Image itemSlotImage;
-    [SerializeField] private Image itemSlotBackgroundImage;
 
     private int slotItemIndex;
 
@@ -51,15 +48,5 @@ public class InventoryUIItemSlotController : MonoBehaviour, IPointerClickHandler
         {
             InventoryTooltipController.Instance.ShowTooltipWithText(string.Empty);
         }
-    }
-
-    public void SetSprite(Sprite sprite)
-    {
-        itemSlotImage.sprite = sprite;
-    }
-
-    public void SetBackgroundColor(Color color)
-    {
-        itemSlotBackgroundImage.color = color;
     }
 }

@@ -12,7 +12,7 @@ public class InventoryUIController : MonoBehaviour
 
     private Color unhighlightedSlotColor;
 
-    private List<InventoryUIItemSlotController> itemSlotControllers;
+    private List<ItemSlotController> itemSlotControllers;
 
     public event Action OnInventoryClosed = delegate { };
 

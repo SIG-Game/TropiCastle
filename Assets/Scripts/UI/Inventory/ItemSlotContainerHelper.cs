@@ -17,16 +17,13 @@ public static class ItemSlotContainerHelper
     public static Color GetUnhighlightedSlotColor(Transform itemSlotContainer) =>
         itemSlotContainer.GetChild(0).GetComponent<Image>().color;
 
-    public static List<InventoryUIItemSlotController> GetItemSlotControllers(
-        Transform itemSlotContainer)
+    public static List<ItemSlotController> GetItemSlotControllers(Transform itemSlotContainer)
     {
-        List<InventoryUIItemSlotController> itemSlotControllers =
-            new List<InventoryUIItemSlotController>();
+        List<ItemSlotController> itemSlotControllers = new List<ItemSlotController>();
 
         foreach (Transform itemSlot in itemSlotContainer)
         {
-            itemSlotControllers.Add(itemSlot
-                .GetComponent<InventoryUIItemSlotController>());
+            itemSlotControllers.Add(itemSlot.GetComponent<ItemSlotController>());
         }
 
         return itemSlotControllers;
