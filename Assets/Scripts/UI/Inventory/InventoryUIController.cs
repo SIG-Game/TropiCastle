@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryUIController : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject inventoryUI;
-    [SerializeField] private Transform inventoryItemSlotContainer;
+    [SerializeField] private ItemSlotContainerController itemSlotContainer;
     [SerializeField] private ItemSelectionController itemSelectionController;
-    [SerializeField] private Color highlightedSlotColor;
-
-    private Color unhighlightedSlotColor;
-
-    private List<ItemSlotController> itemSlotControllers;
 
     public event Action OnInventoryClosed = delegate { };
 
@@ -25,10 +19,6 @@ public class InventoryUIController : MonoBehaviour
 
     private void Awake()
     {
-        unhighlightedSlotColor = ItemSlotContainerHelper.GetUnhighlightedSlotColor(inventoryItemSlotContainer);
-
-        itemSlotControllers = ItemSlotContainerHelper.GetItemSlotControllers(inventoryItemSlotContainer);
-
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
@@ -66,17 +56,17 @@ public class InventoryUIController : MonoBehaviour
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        itemSlotControllers[index].SetBackgroundColor(highlightedSlotColor);
+        itemSlotContainer.HighlightSlotAtIndex(index);
     }
 
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        itemSlotControllers[index].SetBackgroundColor(unhighlightedSlotColor);
+        itemSlotContainer.UnhighlightSlotAtIndex(index);
     }
 
     public void SetInventorySpriteAtSlotIndex(Sprite sprite, int slotIndex)
     {
-        itemSlotControllers[slotIndex].SetSprite(sprite);
+        itemSlotContainer.SetSpriteAtSlotIndex(sprite, slotIndex);
     }
 
     public Inventory GetInventory() => inventory;

@@ -1,29 +1,26 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HotbarUIController : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private ItemSelectionController itemSelectionController;
-    [SerializeField] private Transform hotbarItemSlotContainer;
+    [SerializeField] private ItemSlotContainerController itemSlotContainer;
     [SerializeField] private InventoryUIController inventoryUIController;
-    [SerializeField] private Color highlightedSlotColor;
 
-    private List<ItemSlotController> itemSlotControllers;
-    private Color unhighlightedSlotColor;
     private int hotbarSize;
     private int hotbarHighlightedItemSlotIndex;
 
     private void Awake()
     {
-        itemSlotControllers = ItemSlotContainerHelper.GetItemSlotControllers(hotbarItemSlotContainer);
-        unhighlightedSlotColor = ItemSlotContainerHelper.GetUnhighlightedSlotColor(hotbarItemSlotContainer);
-        hotbarSize = hotbarItemSlotContainer.childCount;
-
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
+    }
+
+    private void Start()
+    {
+        hotbarSize = itemSlotContainer.GetItemSlotCount();
     }
 
     private void OnDestroy()
@@ -43,7 +40,7 @@ public class HotbarUIController : MonoBehaviour
 
         Sprite changedItemSprite = item.itemData.sprite;
 
-        itemSlotControllers[index].SetSprite(changedItemSprite);
+        itemSlotContainer.SetSpriteAtSlotIndex(changedItemSprite, index);
     }
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
@@ -63,7 +60,7 @@ public class HotbarUIController : MonoBehaviour
             return;
         }
 
-        UnhighlightHotbarItemSlotAtIndex(index);
+        itemSlotContainer.UnhighlightSlotAtIndex(index);
     }
 
     private void InventoryUIController_OnInventoryClosed()
@@ -78,13 +75,13 @@ public class HotbarUIController : MonoBehaviour
         {
             Sprite itemSpriteAtCurrentIndex = inventory.GetItemAtIndex(i).itemData.sprite;
 
-            itemSlotControllers[i].SetSprite(itemSpriteAtCurrentIndex);
+            itemSlotContainer.SetSpriteAtSlotIndex(itemSpriteAtCurrentIndex, i);
         }
     }
 
     private void UpdateHotbarHighlightedItemSlot()
     {
-        UnhighlightHotbarItemSlotAtIndex(hotbarHighlightedItemSlotIndex);
+        itemSlotContainer.UnhighlightSlotAtIndex(hotbarHighlightedItemSlotIndex);
         HighlightHotbarItemSlotAtIndex(itemSelectionController.SelectedItemIndex);
     }
 
@@ -92,11 +89,6 @@ public class HotbarUIController : MonoBehaviour
     {
         hotbarHighlightedItemSlotIndex = index;
 
-        itemSlotControllers[index].SetBackgroundColor(highlightedSlotColor);
-    }
-
-    private void UnhighlightHotbarItemSlotAtIndex(int index)
-    {
-        itemSlotControllers[index].SetBackgroundColor(unhighlightedSlotColor);
+        itemSlotContainer.HighlightSlotAtIndex(index);
     }
 }

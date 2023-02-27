@@ -827,7 +827,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 37
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -1093,7 +1093,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 34
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -2767,7 +2767,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 33
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -19958,7 +19958,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 36
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -20411,7 +20411,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 32
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -31782,7 +31782,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -33255,7 +33255,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 35
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -34287,6 +34287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1304918690}
   - component: {fileID: 1304918691}
+  - component: {fileID: 1304918692}
   m_Layer: 5
   m_Name: Hotbar UI
   m_TagString: Untagged
@@ -34330,8 +34331,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
   itemSelectionController: {fileID: 1982112583}
-  hotbarItemSlotContainer: {fileID: 1620314559}
+  itemSlotContainer: {fileID: 1304918692}
   inventoryUIController: {fileID: 1731795749}
+--- !u!114 &1304918692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304918689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2324658b3ea894589c718b1b1aa578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSlotContainerTransform: {fileID: 1620314559}
   highlightedSlotColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
 --- !u!1001 &1320933409
 PrefabInstance:
@@ -34952,7 +34966,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 39
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -41594,7 +41608,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
@@ -41859,6 +41873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1731795748}
   - component: {fileID: 1731795749}
+  - component: {fileID: 1731795753}
   - component: {fileID: 1731795752}
   - component: {fileID: 1731795750}
   - component: {fileID: 1731795751}
@@ -41904,9 +41919,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 1982112582}
   inventoryUI: {fileID: 1128719742}
-  inventoryItemSlotContainer: {fileID: 547836657}
+  itemSlotContainer: {fileID: 1731795753}
   itemSelectionController: {fileID: 1982112583}
-  highlightedSlotColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
 --- !u!114 &1731795750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41950,6 +41964,20 @@ MonoBehaviour:
   canvasRectTransform: {fileID: 822617741}
   inventoryUIController: {fileID: 1731795749}
   transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
+--- !u!114 &1731795753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731795747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2324658b3ea894589c718b1b1aa578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSlotContainerTransform: {fileID: 547836657}
+  highlightedSlotColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
 --- !u!1 &1739818043
 GameObject:
   m_ObjectHideFlags: 0
@@ -42014,7 +42042,7 @@ PrefabInstance:
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
       propertyPath: m_RootOrder
-      value: 38
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
         type: 3}
