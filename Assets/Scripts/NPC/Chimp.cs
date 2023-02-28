@@ -9,9 +9,12 @@ public class Chimp : NPCInteractable
     [SerializeField] private string notGivingItemDialogueLine;
     [SerializeField] private float minTimeSecondsBetweenGives;
     [SerializeField] private float maxTimeSecondsBetweenGives;
+    [SerializeField] private Transform itemToGiveInWorld;
+    [SerializeField] private List<Vector3> itemToGiveInWorldOffsets;
 
     private List<Sprite> directionSprites;
     private Coroutine spinCoroutine;
+    private SpriteRenderer itemToGiveInWorldSpriteRenderer;
     private ItemWithAmount itemToGive;
     private float lastGiveTimeSeconds;
     private float timeSecondsUntilNextGive;
@@ -22,6 +25,8 @@ public class Chimp : NPCInteractable
 
         spinCoroutine = StartCoroutine(SpinCoroutine());
 
+        itemToGiveInWorldSpriteRenderer = itemToGiveInWorld.GetComponent<SpriteRenderer>();
+
         lastGiveTimeSeconds = 0f;
         timeSecondsUntilNextGive = 0f;
     }
@@ -30,20 +35,23 @@ public class Chimp : NPCInteractable
     {
         StopCoroutine(spinCoroutine);
 
-        bool giveItem = lastGiveTimeSeconds + timeSecondsUntilNextGive <= Time.time;
+        FacePlayer(player);
 
+        bool giveItem = lastGiveTimeSeconds + timeSecondsUntilNextGive <= Time.time;
         if (giveItem)
         {
             int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
             itemToGive = potentialItemsToGive[itemToGiveIndex];
             dialogueLines[1] = itemToGiveDialogueLines[itemToGiveIndex];
+            ShowItemToGiveInWorld();
         }
         else
         {
             dialogueLines[1] = notGivingItemDialogueLine;
         }
 
-        Interact(player, () => Chimp_AfterDialogueAction(player, giveItem));
+        DialogueBox.Instance.PlayDialogue(dialogueLines,
+            () => Chimp_AfterDialogueAction(player, giveItem));
     }
 
     private IEnumerator SpinCoroutine()
@@ -64,11 +72,40 @@ public class Chimp : NPCInteractable
         {
             player.GetInventory().AddItem(itemToGive);
 
+            HideItemToGiveInWorld();
+
             lastGiveTimeSeconds = Time.time;
             timeSecondsUntilNextGive = GetRandomTimeSecondsUntilNextGive();
         }
 
         spinCoroutine = StartCoroutine(SpinCoroutine());
+    }
+
+    private void ShowItemToGiveInWorld()
+    {
+        Vector3 itemToGiveInWorldOffset;
+
+        if (spriteRenderer.sprite == front)
+            itemToGiveInWorldOffset = itemToGiveInWorldOffsets[0];
+        else if (spriteRenderer.sprite == back)
+            itemToGiveInWorldOffset = itemToGiveInWorldOffsets[1];
+        else if (spriteRenderer.sprite == left)
+            itemToGiveInWorldOffset = itemToGiveInWorldOffsets[2];
+        else
+            itemToGiveInWorldOffset = itemToGiveInWorldOffsets[3];
+
+        if (spriteRenderer.sprite == back)
+            itemToGiveInWorldSpriteRenderer.sortingOrder = -1;
+        else
+            itemToGiveInWorldSpriteRenderer.sortingOrder = 1;
+
+        itemToGiveInWorld.position = transform.position + itemToGiveInWorldOffset;
+        itemToGiveInWorldSpriteRenderer.sprite = itemToGive.itemData.sprite;
+    }
+
+    private void HideItemToGiveInWorld()
+    {
+        itemToGiveInWorldSpriteRenderer.sprite = null;
     }
 
     private float GetRandomTimeSecondsUntilNextGive() =>
