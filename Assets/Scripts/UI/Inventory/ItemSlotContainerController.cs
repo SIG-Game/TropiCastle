@@ -1,29 +1,44 @@
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ItemSlotContainerController : MonoBehaviour
 {
-    [SerializeField] private Transform itemSlotContainerTransform;
     [SerializeField] private Color highlightedSlotColor;
+    [SerializeField] private Color unhighlightedSlotColor;
+    [SerializeField] private List<ItemSlotController> itemSlotControllers;
 
-    private List<ItemSlotController> itemSlotControllers;
-    private Color unhighlightedSlotColor;
-
-    private void Awake()
+    [ContextMenu("Set Item Slot Controllers")]
+    private void SetItemSlotControllers()
     {
         itemSlotControllers = new List<ItemSlotController>();
 
-        foreach (Transform itemSlot in itemSlotContainerTransform)
+        foreach (Transform itemSlot in transform)
         {
             itemSlotControllers.Add(itemSlot.GetComponent<ItemSlotController>());
         }
 
-        if (itemSlotControllers.Count > 0)
+        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+    }
+
+    [ContextMenu("Set Unhighlighted Slot Color")]
+    private void SetUnhighlightedSlotColor()
+    {
+        if (itemSlotControllers.Count == 0)
+        {
+            Debug.LogWarning($"No {nameof(itemSlotControllers)} set, so " +
+                $"{nameof(unhighlightedSlotColor)} will not be set.");
+        }
+        else
         {
             unhighlightedSlotColor = itemSlotControllers[0].GetComponent<Image>().color;
+
+            EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
         }
     }
+
 
     public void SetSpriteAtSlotIndex(Sprite sprite, int slotIndex)
     {
