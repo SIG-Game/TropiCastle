@@ -7,6 +7,7 @@ public class Chimp : NPCInteractable
     [SerializeField] private List<ItemWithAmount> potentialItemsToGive;
     [SerializeField] private List<string> itemToGiveDialogueLines;
     [SerializeField] private string notGivingItemDialogueLine;
+    [SerializeField] private string playerInventoryFullDialogueLine;
     [SerializeField] private float minTimeSecondsBetweenGives;
     [SerializeField] private float maxTimeSecondsBetweenGives;
     [SerializeField] private Transform itemToGiveInWorld;
@@ -40,10 +41,18 @@ public class Chimp : NPCInteractable
         bool giveItem = lastGiveTimeSeconds + timeSecondsUntilNextGive <= Time.time;
         if (giveItem)
         {
-            int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
-            itemToGive = potentialItemsToGive[itemToGiveIndex];
-            dialogueLines[1] = itemToGiveDialogueLines[itemToGiveIndex];
-            ShowItemToGiveInWorld();
+            if (player.GetInventory().IsFull())
+            {
+                dialogueLines[1] = playerInventoryFullDialogueLine;
+                giveItem = false;
+            }
+            else
+            {
+                int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
+                itemToGive = potentialItemsToGive[itemToGiveIndex];
+                dialogueLines[1] = itemToGiveDialogueLines[itemToGiveIndex];
+                ShowItemToGiveInWorld();
+            }
         }
         else
         {
