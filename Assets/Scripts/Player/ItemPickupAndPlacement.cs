@@ -30,6 +30,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
         Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Collider2D mouseOverlapCollider = Physics2D.OverlapPoint(mouseWorldPoint);
 
+        float mouseXPosition = Input.mousePosition.x;
+        float mouseYPosition = Input.mousePosition.y;
+        bool mouseIsOnScreen = mouseXPosition >= 0f && mouseXPosition <= Screen.width &&
+            mouseYPosition >= 0f && mouseYPosition <= Screen.height;
+
         bool mouseIsOverCollider = mouseOverlapCollider != null;
         bool mouseIsOverItemWorld = mouseIsOverCollider && mouseOverlapCollider.CompareTag("Item World");
         bool placingItem = Input.GetMouseButton(1) && player.GetSelectedItem().itemData.name != "Empty";
@@ -39,7 +44,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             cursorController.SetCursorSprite(itemPickupArrow);
             cursorController.SetCursorBackgroundColor(Color.clear);
         }
-        else if (placingItem)
+        else if (placingItem && mouseIsOnScreen)
         {
             cursorController.SetCursorSprite(player.GetSelectedItem().itemData.sprite);
             cursorController.SetCursorBackgroundColor(CanPlaceItemAtPosition(mouseWorldPoint) ?
@@ -56,7 +61,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             {
                 PickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>());
             }
-            else if (CanPlaceItemAtPosition(mouseWorldPoint))
+            else if (CanPlaceItemAtPosition(mouseWorldPoint) && mouseIsOnScreen)
             {
                 PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
             }
