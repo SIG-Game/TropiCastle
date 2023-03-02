@@ -26,8 +26,17 @@ public class InventoryUIController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Inventory") &&
-            (!PauseController.Instance.GamePaused || InventoryUIOpen))
+        bool closeInventoryUI = Input.GetKeyDown(KeyCode.Escape) && InventoryUIOpen;
+
+        if (closeInventoryUI)
+        {
+            InputManager.Instance.EscapeKeyUsedThisFrame = true;
+        }
+
+        bool toggleInventoryUI = (Input.GetButtonDown("Inventory") &&
+            (!PauseController.Instance.GamePaused || InventoryUIOpen)) ||
+            closeInventoryUI;
+        if (toggleInventoryUI)
         {
             InventoryUIOpen = !InventoryUIOpen;
             PauseController.Instance.GamePaused = InventoryUIOpen;

@@ -7,6 +7,11 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
+        if (InputManager.Instance.EscapeKeyUsedThisFrame)
+        {
+            return;
+        }
+
         if (Input.GetButtonDown("Pause") &&
             (!PauseController.Instance.GamePaused || pauseMenuUI.activeInHierarchy))
         {

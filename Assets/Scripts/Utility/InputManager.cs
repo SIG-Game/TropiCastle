@@ -5,6 +5,8 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
 
+    public bool EscapeKeyUsedThisFrame { get; set; }
+
     private bool leftClickDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
 
@@ -16,6 +18,8 @@ public class InputManager : MonoBehaviour
     // Has to run before any scripts that use IfUnusedThisFrame methods
     private void Update()
     {
+        EscapeKeyUsedThisFrame = false;
+
         leftClickDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;
     }
