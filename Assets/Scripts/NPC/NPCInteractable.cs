@@ -5,19 +5,22 @@ using UnityEngine;
 public class NPCInteractable : Interactable
 {
     [SerializeField] protected Sprite front, back, left, right;
-    [SerializeField] protected Sprite defaultSprite;
+    [SerializeField] private CharacterDirection defaultDirection;
     [SerializeField] protected List<string> dialogueLines;
 
+    private CharacterDirection currentDirection;
     protected SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        SetDirectionAndUpdateSprite(defaultDirection);
     }
 
     public override void Interact(PlayerController player)
     {
-        Interact(player, () => spriteRenderer.sprite = defaultSprite);
+        Interact(player, () => SetDirectionAndUpdateSprite(defaultDirection));
     }
 
     protected void Interact(PlayerController player, Action afterDialogueAction)
@@ -29,13 +32,29 @@ public class NPCInteractable : Interactable
 
     public void FacePlayer(PlayerController player)
     {
-        spriteRenderer.sprite = player.LastDirection switch
+        CharacterDirection newDirection = player.LastDirection switch
         {
-            PlayerDirection.Up => front,
-            PlayerDirection.Down => back,
-            PlayerDirection.Left => right,
-            PlayerDirection.Right => left,
+            CharacterDirection.Up => CharacterDirection.Down,
+            CharacterDirection.Down => CharacterDirection.Up,
+            CharacterDirection.Left => CharacterDirection.Right,
+            CharacterDirection.Right => CharacterDirection.Left,
             _ => throw new ArgumentOutOfRangeException(nameof(player.LastDirection))
+        };
+
+        SetDirectionAndUpdateSprite(newDirection);
+    }
+
+    protected void SetDirectionAndUpdateSprite(CharacterDirection direction)
+    {
+        currentDirection = direction;
+
+        spriteRenderer.sprite = currentDirection switch
+        {
+            CharacterDirection.Up => back,
+            CharacterDirection.Down => front,
+            CharacterDirection.Left => left,
+            CharacterDirection.Right => right,
+            _ => throw new ArgumentOutOfRangeException(nameof(currentDirection))
         };
     }
 }

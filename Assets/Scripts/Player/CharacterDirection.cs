@@ -1,4 +1,4 @@
-public enum PlayerDirection
+public enum CharacterDirection
 {
     Up,
     Down,

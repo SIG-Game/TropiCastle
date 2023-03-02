@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isAttacking;
     [SerializeField] private Sprite front, back, left, right;
 
-    public PlayerDirection LastDirection
+    public CharacterDirection LastDirection
     {
         get => lastDirection;
         set
@@ -15,10 +15,10 @@ public class PlayerController : MonoBehaviour
 
             spriteRenderer.sprite = lastDirection switch
             {
-                PlayerDirection.Up => back,
-                PlayerDirection.Down => front,
-                PlayerDirection.Left => left,
-                PlayerDirection.Right => right,
+                CharacterDirection.Up => back,
+                CharacterDirection.Down => front,
+                CharacterDirection.Left => left,
+                CharacterDirection.Right => right,
                 _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
             };
         }
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
-    private PlayerDirection lastDirection;
+    private CharacterDirection lastDirection;
     private LayerMask interactableMask;
     private LayerMask waterMask;
 
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
         isAttacking = false;
 
-        LastDirection = PlayerDirection.Down;
+        LastDirection = CharacterDirection.Down;
 
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
@@ -112,10 +112,10 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 interactionDirection = lastDirection switch
         {
-            PlayerDirection.Up => Vector2.up,
-            PlayerDirection.Down => Vector2.down,
-            PlayerDirection.Left => Vector2.left,
-            PlayerDirection.Right => Vector2.right,
+            CharacterDirection.Up => Vector2.up,
+            CharacterDirection.Down => Vector2.down,
+            CharacterDirection.Left => Vector2.left,
+            CharacterDirection.Right => Vector2.right,
             _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
         };
         return interactionDirection;
