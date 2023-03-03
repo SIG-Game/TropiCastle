@@ -5,13 +5,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Inventory inventory;
-
-    private int slotItemIndex;
-
-    private void Awake()
-    {
-        slotItemIndex = transform.GetSiblingIndex();
-    }
+    [SerializeField] private int slotItemIndex;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

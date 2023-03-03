@@ -13,12 +13,10 @@ public class ItemSlotContainerController : MonoBehaviour
     [ContextMenu("Set Item Slot Controllers")]
     private void SetItemSlotControllers()
     {
-        itemSlotControllers = new List<ItemSlotController>();
+        ItemSlotController[] childItemSlotControllersArray =
+            GetComponentsInChildren<ItemSlotController>();
 
-        foreach (Transform itemSlot in transform)
-        {
-            itemSlotControllers.Add(itemSlot.GetComponent<ItemSlotController>());
-        }
+        itemSlotControllers = new List<ItemSlotController>(childItemSlotControllersArray);
 
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
     }
