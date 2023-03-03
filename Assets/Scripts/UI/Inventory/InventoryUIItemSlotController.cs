@@ -43,4 +43,9 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
             InventoryTooltipController.Instance.ShowTooltipWithText(string.Empty);
         }
     }
+
+    public void SetSlotItemIndex(int slotItemIndex)
+    {
+        this.slotItemIndex = slotItemIndex;
+    }
 }
