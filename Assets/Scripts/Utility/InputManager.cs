@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance;
 
     public bool EscapeKeyUsedThisFrame { get; set; }
+    public bool NumberKeyUsedThisFrame { get; set; }
 
     private bool leftClickDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
@@ -19,6 +20,7 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         EscapeKeyUsedThisFrame = false;
+        NumberKeyUsedThisFrame = false;
 
         leftClickDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;

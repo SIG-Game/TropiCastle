@@ -38,23 +38,6 @@ public class ItemSlotContainerController : MonoBehaviour
         }
     }
 
-    [ContextMenu("Set Inventory UI Item Slot Indexes")]
-    private void SetInventoryUIItemSlotIndexes()
-    {
-        InventoryUIItemSlotController[] childInventoryUIItemSlots =
-            GetComponentsInChildren<InventoryUIItemSlotController>();
-
-        Undo.RecordObjects(childInventoryUIItemSlots, "Set Inventory UI Item Slot Indexes");
-
-        int currentSlotItemIndex = 0;
-        foreach (InventoryUIItemSlotController inventoryUIItemSlot in
-            childInventoryUIItemSlots)
-        {
-            inventoryUIItemSlot.SetSlotItemIndex(currentSlotItemIndex);
-            ++currentSlotItemIndex;
-        }
-    }
-
     public void SetSpriteAtSlotIndex(Sprite sprite, int slotIndex)
     {
         itemSlotControllers[slotIndex].SetSprite(sprite);

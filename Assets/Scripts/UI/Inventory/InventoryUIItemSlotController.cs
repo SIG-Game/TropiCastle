@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private InventoryUIItemSlotContainerController inventoryUIItemSlotContainer;
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
 
@@ -13,6 +14,8 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
         {
             return;
         }
+
+        inventoryUIItemSlotContainer.HoveredItemIndex = slotItemIndex;
 
         ItemScriptableObject slotItemData = inventory.GetItemAtIndex(slotItemIndex).itemData;
 
@@ -35,6 +38,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
+            inventoryUIItemSlotContainer.HoveredItemIndex = -1;
             InventoryUIHeldItemController.Instance.LeftClickedItemAtIndex(slotItemIndex);
         }
     }
@@ -43,6 +47,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     {
         if (!InventoryUIHeldItemController.Instance.HoldingItem())
         {
+            inventoryUIItemSlotContainer.HoveredItemIndex = -1;
             InventoryTooltipController.Instance.ShowTooltipWithText(string.Empty);
         }
     }

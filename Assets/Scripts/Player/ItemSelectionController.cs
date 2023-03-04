@@ -53,7 +53,10 @@ public class ItemSelectionController : MonoBehaviour
             SelectedItemIndex = newSelectedItemIndex;
         }
 
-        ProcessNumberKeysToUpdateSelectedItemIndex();
+        if (!InputManager.Instance.NumberKeyUsedThisFrame)
+        {
+            ProcessNumberKeysToUpdateSelectedItemIndex();
+        }
     }
 
     private void ProcessNumberKeysToUpdateSelectedItemIndex()
