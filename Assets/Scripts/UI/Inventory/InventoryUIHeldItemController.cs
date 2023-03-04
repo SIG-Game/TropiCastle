@@ -32,6 +32,12 @@ public class InventoryUIHeldItemController : MonoBehaviour
         if (HoldingItem())
         {
             UpdateHeldItemPosition();
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                ResetHeldItem();
+                InventoryTooltipController.Instance.HideTooltip();
+            }
         }
     }
 
@@ -48,7 +54,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
             MouseCanvasPositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
     }
 
-    public void ClickedItemAtIndex(int clickedItemIndex)
+    public void LeftClickedItemAtIndex(int clickedItemIndex)
     {
         ItemScriptableObject clickedItemData = inventory.GetItemAtIndex(clickedItemIndex).itemData;
 
