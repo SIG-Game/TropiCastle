@@ -20,13 +20,9 @@ public class NPCInteractable : Interactable
 
     public override void Interact(PlayerController player)
     {
-        Interact(player, () => SetDirectionAndUpdateSprite(defaultDirection));
-    }
-
-    protected void Interact(PlayerController player, Action afterDialogueAction)
-    {
         FacePlayer(player);
 
+        Action afterDialogueAction = () => SetDirectionAndUpdateSprite(defaultDirection);
         DialogueBox.Instance.PlayDialogue(dialogueLines, afterDialogueAction);
     }
 
