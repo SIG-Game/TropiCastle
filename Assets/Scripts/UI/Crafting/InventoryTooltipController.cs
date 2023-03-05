@@ -7,6 +7,8 @@ public class InventoryTooltipController : MonoBehaviour
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
 
+    private string heldItemTooltipText;
+    private string hoveredTooltipText;
     private RectTransform inventoryTooltipRectTransform;
     private bool tooltipIsVisible;
 
@@ -16,6 +18,8 @@ public class InventoryTooltipController : MonoBehaviour
     {
         Instance = this;
 
+        heldItemTooltipText = string.Empty;
+        hoveredTooltipText = string.Empty;
         inventoryTooltipRectTransform = GetComponent<RectTransform>();
         tooltipIsVisible = false;
 
@@ -37,14 +41,68 @@ public class InventoryTooltipController : MonoBehaviour
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
 
-    public void ShowTooltipWithText(string text)
+    public void SetHeldItemTooltipText(string heldItemTooltipText)
     {
-        tooltipText.text = text;
-        tooltipIsVisible = true;
+        this.heldItemTooltipText = heldItemTooltipText;
+
+        ShowTooltipText(this.heldItemTooltipText);
         UpdateInventoryTooltipPosition();
     }
 
-    public void HideTooltip()
+    public void ClearHeldItemTooltipText()
+    {
+        heldItemTooltipText = string.Empty;
+
+        if (hoveredTooltipText != string.Empty)
+        {
+            ShowTooltipText(hoveredTooltipText);
+            UpdateInventoryTooltipPosition();
+        }
+        else
+        {
+            HideTooltip();
+        }
+    }
+
+    public void SetHoveredTooltipText(string hoveredTooltipText)
+    {
+        this.hoveredTooltipText = hoveredTooltipText;
+
+        if (heldItemTooltipText == string.Empty)
+        {
+            ShowTooltipText(this.hoveredTooltipText);
+            UpdateInventoryTooltipPosition();
+        }
+    }
+
+    public void ClearHoveredTooltipText()
+    {
+        hoveredTooltipText = string.Empty;
+
+        if (heldItemTooltipText == string.Empty)
+        {
+            HideTooltip();
+        }
+    }
+
+    public static string GetItemTooltipText(ItemScriptableObject item) =>
+        item switch
+        {
+            HealingItemScriptableObject healingItem =>
+                $"{item.name}\nHeals {healingItem.healAmount} Health",
+            WeaponItemScriptableObject weaponItem =>
+                $"{item.name}\nDeals {weaponItem.damage} Damage",
+            { name: "Empty" } => string.Empty,
+            _ => item.name
+        };
+
+    private void ShowTooltipText(string text)
+    {
+        tooltipText.text = text;
+        tooltipIsVisible = true;
+    }
+
+    private void HideTooltip()
     {
         tooltipText.text = string.Empty;
         tooltipIsVisible = false;
@@ -58,6 +116,7 @@ public class InventoryTooltipController : MonoBehaviour
 
     private void InventoryUIController_OnInventoryClosed()
     {
-        HideTooltip();
+        ClearHeldItemTooltipText();
+        ClearHoveredTooltipText();
     }
 }

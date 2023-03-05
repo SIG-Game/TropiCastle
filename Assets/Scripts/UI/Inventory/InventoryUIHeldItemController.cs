@@ -35,8 +35,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))
             {
+                InventoryTooltipController.Instance.ClearHeldItemTooltipText();
                 ResetHeldItem();
-                InventoryTooltipController.Instance.HideTooltip();
             }
         }
     }
@@ -78,8 +78,13 @@ public class InventoryUIHeldItemController : MonoBehaviour
         else
         {
             inventory.SwapItemsAt(heldItemIndex, itemIndex);
+
+            ItemScriptableObject placedItem = inventory.GetItemAtIndex(itemIndex).itemData;
+            InventoryTooltipController.Instance.SetHoveredTooltipText(
+                InventoryTooltipController.GetItemTooltipText(placedItem));
         }
 
+        InventoryTooltipController.Instance.ClearHeldItemTooltipText();
         HideHeldItem();
     }
 

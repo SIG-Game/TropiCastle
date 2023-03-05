@@ -20,7 +20,7 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
     // before that variable is checked in ItemSelectionController
     private void Update()
     {
-        if (HoveredItemIndex != -1)
+        if (!InventoryUIHeldItemController.Instance.HoldingItem() && HoveredItemIndex != -1)
         {
             int numberKeyIndex = -1;
 

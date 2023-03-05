@@ -10,28 +10,9 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (InventoryUIHeldItemController.Instance.HoldingItem())
-        {
-            return;
-        }
-
         inventoryUIItemSlotContainer.HoveredItemIndex = slotItemIndex;
 
-        ItemScriptableObject slotItemData = inventory.GetItemAtIndex(slotItemIndex).itemData;
-
-        if (slotItemData.name != "Empty")
-        {
-            string tooltipText = slotItemData switch
-            {
-                HealingItemScriptableObject healingItem =>
-                    $"{slotItemData.name}\nHeals {healingItem.healAmount} Health",
-                WeaponItemScriptableObject weaponItem =>
-                    $"{slotItemData.name}\nDeals {weaponItem.damage} Damage",
-                _ => slotItemData.name
-            };
-
-            InventoryTooltipController.Instance.ShowTooltipWithText(tooltipText);
-        }
+        InventoryTooltipController.Instance.SetHoveredTooltipText(GetSlotItemTooltipText());
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -40,16 +21,25 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
         {
             inventoryUIItemSlotContainer.HoveredItemIndex = -1;
             InventoryUIHeldItemController.Instance.LeftClickedItemAtIndex(slotItemIndex);
+
+            if (InventoryUIHeldItemController.Instance.HoldingItem())
+            {
+                InventoryTooltipController.Instance.SetHeldItemTooltipText(GetSlotItemTooltipText());
+            }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!InventoryUIHeldItemController.Instance.HoldingItem())
-        {
-            inventoryUIItemSlotContainer.HoveredItemIndex = -1;
-            InventoryTooltipController.Instance.ShowTooltipWithText(string.Empty);
-        }
+        inventoryUIItemSlotContainer.HoveredItemIndex = -1;
+        InventoryTooltipController.Instance.ClearHoveredTooltipText();
+    }
+
+    private string GetSlotItemTooltipText()
+    {
+        ItemScriptableObject slotItemData = inventory.GetItemAtIndex(slotItemIndex).itemData;
+
+        return InventoryTooltipController.GetItemTooltipText(slotItemData);
     }
 
     public void SetSlotItemIndex(int slotItemIndex)
