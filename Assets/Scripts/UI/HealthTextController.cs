@@ -5,11 +5,11 @@ public class HealthTextController : MonoBehaviour
 {
     [SerializeField] private HealthController targetHealthController;
 
-    private TextMeshProUGUI healthText;
+    private TMP_Text healthText;
 
     private void Awake()
     {
-        healthText = GetComponent<TextMeshProUGUI>();
+        healthText = GetComponent<TMP_Text>();
 
         targetHealthController.OnHealthChanged += HealthController_OnHeathChanged;
     }
