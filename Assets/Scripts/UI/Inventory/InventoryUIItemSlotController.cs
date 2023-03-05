@@ -19,7 +19,6 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            inventoryUIItemSlotContainer.HoveredItemIndex = -1;
             InventoryUIHeldItemController.Instance.LeftClickedItemAtIndex(slotItemIndex);
 
             if (InventoryUIHeldItemController.Instance.HoldingItem())

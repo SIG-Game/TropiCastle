@@ -20,7 +20,7 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
     // before that variable is checked in ItemSelectionController
     private void Update()
     {
-        if (!InventoryUIHeldItemController.Instance.HoldingItem() && HoveredItemIndex != -1)
+        if (InventoryUIHeldItemController.Instance.HoldingItem() || HoveredItemIndex != -1)
         {
             int numberKeyIndex = -1;
 
@@ -47,8 +47,29 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
 
             if (numberKeyIndex != -1)
             {
+                int swapItemIndex;
+
+                if (InventoryUIHeldItemController.Instance.HoldingItem())
+                {
+                    swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
+
+                    InventoryTooltipController.Instance.ClearHeldItemTooltipText();
+                    InventoryUIHeldItemController.Instance.HideHeldItem();
+                }
+                else
+                {
+                    swapItemIndex = HoveredItemIndex;
+                }
+
                 InputManager.Instance.NumberKeyUsedThisFrame = true;
-                inventory.SwapItemsAt(HoveredItemIndex, numberKeyIndex);
+                inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
+
+                if (HoveredItemIndex != -1)
+                {
+                    ItemScriptableObject hoveredItem = inventory.GetItemAtIndex(HoveredItemIndex).itemData;
+                    InventoryTooltipController.Instance.SetHoveredTooltipText(
+                        InventoryTooltipController.GetItemTooltipText(hoveredItem));
+                }
             }
         }
     }

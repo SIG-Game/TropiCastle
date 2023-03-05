@@ -113,10 +113,12 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
     }
 
-    private void HideHeldItem()
+    public void HideHeldItem()
     {
         heldItemImage.sprite = transparentSprite;
     }
 
     public bool HoldingItem() => heldItemImage.sprite != transparentSprite;
+
+    public int GetHeldItemIndex() => heldItemIndex;
 }
