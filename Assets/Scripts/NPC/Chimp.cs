@@ -13,7 +13,7 @@ public class Chimp : NPCInteractable
     [SerializeField] private Transform itemToGiveInWorld;
     [SerializeField] private List<Vector3> itemToGiveInWorldOffsets;
 
-    private List<Sprite> directionSprites;
+    private List<CharacterDirection> spinDirections;
     private Coroutine spinCoroutine;
     private SpriteRenderer itemToGiveInWorldSpriteRenderer;
     private ItemWithAmount itemToGive;
@@ -22,7 +22,8 @@ public class Chimp : NPCInteractable
 
     private void Start()
     {
-        directionSprites = new List<Sprite> { front, left, back, right };
+        spinDirections = new List<CharacterDirection> { CharacterDirection.Down,
+            CharacterDirection.Left, CharacterDirection.Up, CharacterDirection.Right };
 
         spinCoroutine = StartCoroutine(SpinCoroutine());
 
@@ -67,9 +68,9 @@ public class Chimp : NPCInteractable
     {
         while (true)
         {
-            foreach (Sprite directionSprite in directionSprites)
+            foreach (CharacterDirection direction in spinDirections)
             {
-                spriteRenderer.sprite = directionSprite;
+                SetDirectionAndUpdateSprite(direction);
                 yield return new WaitForSeconds(0.175f);
             }
         }
@@ -92,18 +93,9 @@ public class Chimp : NPCInteractable
 
     private void ShowItemToGiveInWorld()
     {
-        Vector3 itemToGiveInWorldOffset;
+        Vector3 itemToGiveInWorldOffset = itemToGiveInWorldOffsets[(int)currentDirection];
 
-        if (spriteRenderer.sprite == front)
-            itemToGiveInWorldOffset = itemToGiveInWorldOffsets[0];
-        else if (spriteRenderer.sprite == back)
-            itemToGiveInWorldOffset = itemToGiveInWorldOffsets[1];
-        else if (spriteRenderer.sprite == left)
-            itemToGiveInWorldOffset = itemToGiveInWorldOffsets[2];
-        else
-            itemToGiveInWorldOffset = itemToGiveInWorldOffsets[3];
-
-        if (spriteRenderer.sprite == back)
+        if (currentDirection == CharacterDirection.Up)
             itemToGiveInWorldSpriteRenderer.sortingOrder = -1;
         else
             itemToGiveInWorldSpriteRenderer.sortingOrder = 1;

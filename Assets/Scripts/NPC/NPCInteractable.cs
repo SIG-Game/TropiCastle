@@ -8,7 +8,7 @@ public class NPCInteractable : Interactable
     [SerializeField] private CharacterDirection defaultDirection;
     [SerializeField] protected List<string> dialogueLines;
 
-    private CharacterDirection currentDirection;
+    protected CharacterDirection currentDirection;
     protected SpriteRenderer spriteRenderer;
 
     private void Awake()
