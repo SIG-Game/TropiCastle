@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,7 +7,6 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 {
     [SerializeField] private Crafting crafting;
     [SerializeField] private CraftingRecipeScriptableObject craftingRecipe;
-    [SerializeField] private TextMeshProUGUI craftingButtonText;
     [SerializeField] private Image craftingButtonImage;
 
     public void CraftingButton_OnClick()
@@ -21,7 +19,6 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         this.crafting = crafting;
         this.craftingRecipe = craftingRecipe;
 
-        craftingButtonText.text = $"Craft {craftingRecipe.name}";
         craftingButtonImage.sprite = craftingRecipe.resultItem.itemData.sprite;
     }
 
