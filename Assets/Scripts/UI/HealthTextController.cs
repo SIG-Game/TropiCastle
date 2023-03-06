@@ -4,6 +4,7 @@ using UnityEngine;
 public class HealthTextController : MonoBehaviour
 {
     [SerializeField] private HealthController targetHealthController;
+    [SerializeField] private bool displayHealthPrefix;
 
     private TMP_Text healthText;
 
@@ -21,6 +22,13 @@ public class HealthTextController : MonoBehaviour
 
     private void HealthController_OnHeathChanged(int newHealth)
     {
-        healthText.text = "Health: " + newHealth;
+        if (displayHealthPrefix)
+        {
+            healthText.text = "Health: " + newHealth;
+        }
+        else
+        {
+            healthText.text = newHealth.ToString();
+        }
     }
 }

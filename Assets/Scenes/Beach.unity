@@ -42710,6 +42710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHealthController: {fileID: 1982112581}
+  displayHealthPrefix: 1
 --- !u!1 &1731795747
 GameObject:
   m_ObjectHideFlags: 0
