@@ -16,6 +16,10 @@ public class PrefabSpawner : MonoBehaviour
     private Vector3 topRightCornerSpawnArea;
     private Vector3 bottomLeftCornerSpawnArea;
     private Vector3 bottomRightCornerSpawnArea;
+    private BoxCollider2D prefabToSpawnBoxCollider;
+    private Vector2 prefabToSpawnColliderExtents;
+
+    private const int maxSpawnAttempts = 20;
 
     private void Awake()
     {
@@ -30,6 +34,9 @@ public class PrefabSpawner : MonoBehaviour
         topRightCornerSpawnArea = new Vector3(maxSpawnPosition.x, maxSpawnPosition.y);
         bottomLeftCornerSpawnArea = new Vector3(minSpawnPosition.x, minSpawnPosition.y);
         bottomRightCornerSpawnArea = new Vector3(maxSpawnPosition.x, minSpawnPosition.y);
+
+        prefabToSpawnBoxCollider = prefabToSpawn.GetComponent<BoxCollider2D>();
+        prefabToSpawnColliderExtents = prefabToSpawnBoxCollider.size / 2f;
     }
 
     private void Start()
@@ -69,9 +76,27 @@ public class PrefabSpawner : MonoBehaviour
 
     private void SpawnPrefab()
     {
-        float spawnXPosition = Random.Range(minSpawnPosition.x, maxSpawnPosition.x);
-        float spawnYPosition = Random.Range(minSpawnPosition.y, maxSpawnPosition.y);
-        Vector2 spawnPosition = new Vector2(spawnXPosition, spawnYPosition);
+        Vector2 spawnPosition;
+        bool canSpawnPrefab;
+        int spawnAttempts = 0;
+
+        do
+        {
+            float spawnXPosition = Random.Range(minSpawnPosition.x, maxSpawnPosition.x);
+            float spawnYPosition = Random.Range(minSpawnPosition.y, maxSpawnPosition.y);
+            spawnPosition = new Vector2(spawnXPosition, spawnYPosition);
+
+            canSpawnPrefab = CanSpawnPrefabAtPosition(spawnPosition);
+
+            spawnAttempts++;
+
+            if (spawnAttempts == maxSpawnAttempts && !canSpawnPrefab)
+            {
+                Debug.LogWarning($"Failed to spawn {prefabToSpawn.name} prefab outside of " +
+                    $"colliders after {maxSpawnAttempts} attempts");
+                return;
+            }
+        } while (!canSpawnPrefab);
 
         GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity, transform);
         spawnedPrefab.GetComponent<Spawnable>().SetSpawner(this);
@@ -84,6 +109,21 @@ public class PrefabSpawner : MonoBehaviour
         }
 
         numPrefabs++;
+    }
+
+    private bool CanSpawnPrefabAtPosition(Vector2 position)
+    {
+        if (prefabToSpawnBoxCollider.isTrigger)
+        {
+            return true;
+        }
+
+        Vector2 overlapAreaCornerBottomLeft = position - prefabToSpawnColliderExtents;
+        Vector2 overlapAreaCornerTopRight = position + prefabToSpawnColliderExtents;
+
+        Collider2D prefabOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
+
+        return prefabOverlap == null;
     }
 
     protected virtual void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
