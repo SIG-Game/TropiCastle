@@ -11,11 +11,13 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private Inventory playerInventory;
     private Vector2 itemWorldPrefabColliderExtents;
+    private bool waitingForRightClickReleaseAfterPickup;
 
     private void Start()
     {
         playerInventory = player.GetInventory();
         itemWorldPrefabColliderExtents = ItemWorldPrefabInstanceFactory.Instance.GetItemWorldPrefabColliderExtents();
+        waitingForRightClickReleaseAfterPickup = false;
 
         cursorController.SetCursorBackgroundLocalScale(itemWorldPrefabColliderExtents * 2f);
     }
@@ -24,6 +26,13 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         if (PauseController.Instance.GamePaused)
         {
+            // This check needs to occur in case right-click is released while
+            // the game is paused after picking up an item on press of that click
+            if (Input.GetMouseButtonUp(1))
+            {
+                waitingForRightClickReleaseAfterPickup = false;
+            }
+
             return;
         }
 
@@ -37,7 +46,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         bool mouseIsOverCollider = mouseOverlapCollider != null;
         bool mouseIsOverItemWorld = mouseIsOverCollider && mouseOverlapCollider.CompareTag("Item World");
-        bool placingItem = Input.GetMouseButton(1) && player.GetSelectedItem().itemData.name != "Empty";
+        bool placingItem = Input.GetMouseButton(1) && !waitingForRightClickReleaseAfterPickup
+            && player.GetSelectedItem().itemData.name != "Empty";
 
         if (mouseIsOverItemWorld)
         {
@@ -55,18 +65,32 @@ public class ItemPickupAndPlacement : MonoBehaviour
             cursorController.UseDefaultCursor();
         }
 
+        if (Input.GetMouseButtonDown(1) && mouseIsOverItemWorld)
+        {
+            PickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>());
+
+            // Prevent item placement on right-click release from using
+            // the same click as item pickup on right-click press
+            waitingForRightClickReleaseAfterPickup = true;
+
+            cursorController.UseDefaultCursor();
+        }
+
         if (Input.GetMouseButtonUp(1))
         {
             if (mouseIsOverItemWorld)
             {
                 PickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>());
             }
-            else if (CanPlaceItemAtPosition(mouseWorldPoint) && mouseIsOnScreen)
+            else if (CanPlaceItemAtPosition(mouseWorldPoint) && mouseIsOnScreen &&
+                !waitingForRightClickReleaseAfterPickup)
             {
                 PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
             }
 
             cursorController.UseDefaultCursor();
+
+            waitingForRightClickReleaseAfterPickup = false;
         }
     }
 
