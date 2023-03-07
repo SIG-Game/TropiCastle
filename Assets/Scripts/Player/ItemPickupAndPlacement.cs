@@ -11,13 +11,13 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private Inventory playerInventory;
     private Vector2 itemWorldPrefabColliderExtents;
-    private bool waitingForRightClickReleaseAfterPickup;
+    private bool waitingForRightClickReleaseBeforePlacement;
 
     private void Start()
     {
         playerInventory = player.GetInventory();
         itemWorldPrefabColliderExtents = ItemWorldPrefabInstanceFactory.Instance.GetItemWorldPrefabColliderExtents();
-        waitingForRightClickReleaseAfterPickup = false;
+        waitingForRightClickReleaseBeforePlacement = false;
 
         cursorController.SetCursorBackgroundLocalScale(itemWorldPrefabColliderExtents * 2f);
     }
@@ -30,7 +30,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             // the game is paused after picking up an item on press of that click
             if (Input.GetMouseButtonUp(1))
             {
-                waitingForRightClickReleaseAfterPickup = false;
+                waitingForRightClickReleaseBeforePlacement = false;
             }
 
             return;
@@ -46,7 +46,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         bool mouseIsOverCollider = mouseOverlapCollider != null;
         bool mouseIsOverItemWorld = mouseIsOverCollider && mouseOverlapCollider.CompareTag("Item World");
-        bool placingItem = Input.GetMouseButton(1) && !waitingForRightClickReleaseAfterPickup
+        bool placingItem = Input.GetMouseButton(1) && !waitingForRightClickReleaseBeforePlacement
             && player.GetSelectedItem().itemData.name != "Empty";
 
         if (mouseIsOverItemWorld)
@@ -71,9 +71,15 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
             // Prevent item placement on right-click release from using
             // the same click as item pickup on right-click press
-            waitingForRightClickReleaseAfterPickup = true;
+            waitingForRightClickReleaseBeforePlacement = true;
 
             cursorController.UseDefaultCursor();
+        }
+
+        // Cancel item placement when left-click is pressed while placing an item
+        if (placingItem && InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
+        {
+            waitingForRightClickReleaseBeforePlacement = true;
         }
 
         if (Input.GetMouseButtonUp(1))
@@ -83,14 +89,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
                 PickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>());
             }
             else if (CanPlaceItemAtPosition(mouseWorldPoint) && mouseIsOnScreen &&
-                !waitingForRightClickReleaseAfterPickup)
+                !waitingForRightClickReleaseBeforePlacement)
             {
                 PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
             }
 
             cursorController.UseDefaultCursor();
 
-            waitingForRightClickReleaseAfterPickup = false;
+            waitingForRightClickReleaseBeforePlacement = false;
         }
     }
 
