@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CraftingButtonGenerator : MonoBehaviour
 {
@@ -7,16 +10,22 @@ public class CraftingButtonGenerator : MonoBehaviour
     [SerializeField] private Transform craftingButtonsParentTransform;
     [SerializeField] private int yDistanceBetweenButtons;
 
-    private void Awake()
+    [ContextMenu("Generate Crafting Buttons")]
+    private void GenerateCraftingButtons()
     {
         CraftingRecipeScriptableObject[] craftingRecipes = Resources.LoadAll<CraftingRecipeScriptableObject>("Crafting Recipes");
 
         for (int i = 0; i < craftingRecipes.Length; ++i)
         {
-            GameObject craftingButton = Instantiate(craftingButtonPrefab, craftingButtonsParentTransform);
+            Object craftingButton = PrefabUtility.InstantiatePrefab(craftingButtonPrefab,
+                craftingButtonsParentTransform);
             craftingButton.name = $"Craft {craftingRecipes[i].name} Button";
 
-            craftingButton.GetComponent<CraftingButton>().SetUpCraftingButton(crafting, craftingRecipes[i]);
+            GameObject craftingButtonGameObject = craftingButton as GameObject;
+            craftingButtonGameObject?.GetComponent<CraftingButton>()
+                .SetUpCraftingButton(crafting, craftingRecipes[i]);
         }
+
+        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
     }
 }
