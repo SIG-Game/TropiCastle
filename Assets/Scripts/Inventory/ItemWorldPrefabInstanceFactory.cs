@@ -7,6 +7,8 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
     private Vector2 itemWorldPrefabColliderExtents;
 
+    private const int maxDropSpawnAttempts = 20;
+
     public static ItemWorldPrefabInstanceFactory Instance;
 
     private void Awake()
@@ -36,14 +38,44 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         if (itemToDrop.itemData.name == "Empty")
             return;
 
-        Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-        randomOffset.Normalize();
-        randomOffset *= 0.7f;
+        Vector2 spawnPosition;
+        bool canSpawnItemToDrop;
+        int spawnAttempts = 0;
 
-        SpawnItemWorld(dropPosition + randomOffset, itemToDrop);
+        do
+        {
+            Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+            randomOffset.Normalize();
+            randomOffset *= 0.7f;
+
+            spawnPosition = dropPosition + randomOffset;
+
+            canSpawnItemToDrop = CanSpawnItemWorldAtPosition(spawnPosition);
+
+            spawnAttempts++;
+
+            if (spawnAttempts == maxDropSpawnAttempts && !canSpawnItemToDrop)
+            {
+                Debug.LogWarning($"Failed to drop {itemToDrop.itemData.name} item outside of " +
+                    $"colliders after {maxDropSpawnAttempts} attempts");
+                return;
+            }
+        } while (!canSpawnItemToDrop);
+
+        SpawnItemWorld(spawnPosition, itemToDrop);
 
         // Dropped items currently don't move
         //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
+    }
+
+    private bool CanSpawnItemWorldAtPosition(Vector2 position)
+    {
+        Vector2 overlapAreaCornerBottomLeft = position - itemWorldPrefabColliderExtents;
+        Vector2 overlapAreaCornerTopRight = position + itemWorldPrefabColliderExtents;
+
+        Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
+
+        return itemWorldOverlap == null;
     }
 
     public Vector2 GetItemWorldPrefabColliderExtents() => itemWorldPrefabColliderExtents;
