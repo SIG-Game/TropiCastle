@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PrefabSpawner : MonoBehaviour
 {
@@ -76,27 +78,24 @@ public class PrefabSpawner : MonoBehaviour
 
     private void SpawnPrefab()
     {
-        Vector2 spawnPosition;
-        bool canSpawnPrefab;
-        int spawnAttempts = 0;
-
-        do
+        Func<Vector2> spawnPositionGenerator = () =>
         {
             float spawnXPosition = Random.Range(minSpawnPosition.x, maxSpawnPosition.x);
             float spawnYPosition = Random.Range(minSpawnPosition.y, maxSpawnPosition.y);
-            spawnPosition = new Vector2(spawnXPosition, spawnYPosition);
+            return new Vector2(spawnXPosition, spawnYPosition);
+        };
 
-            canSpawnPrefab = CanSpawnPrefabAtPosition(spawnPosition);
+        Vector2 spawnPosition;
 
-            spawnAttempts++;
-
-            if (spawnAttempts == maxSpawnAttempts && !canSpawnPrefab)
-            {
-                Debug.LogWarning($"Failed to spawn {prefabToSpawn.name} prefab outside of " +
-                    $"colliders after {maxSpawnAttempts} attempts");
-                return;
-            }
-        } while (!canSpawnPrefab);
+        if (prefabToSpawnBoxCollider.isTrigger)
+        {
+            spawnPosition = spawnPositionGenerator();
+        }
+        else if (!SpawnColliderHelper.TryGetSpawnPositionOutsideColliders(spawnPositionGenerator, prefabToSpawnColliderExtents,
+            maxSpawnAttempts, out spawnPosition))
+        {
+            return;
+        }
 
         GameObject spawnedPrefab = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity, transform);
         spawnedPrefab.GetComponent<Spawnable>().SetSpawner(this);

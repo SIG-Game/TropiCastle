@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 {
@@ -38,31 +40,19 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         if (itemToDrop.itemData.name == "Empty")
             return;
 
-        Vector2 spawnPosition;
-        bool canSpawnItemToDrop;
-        int spawnAttempts = 0;
-
-        do
+        Func<Vector2> spawnPositionGenerator = () =>
         {
             Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             randomOffset.Normalize();
             randomOffset *= 0.7f;
+            return dropPosition + randomOffset;
+        };
 
-            spawnPosition = dropPosition + randomOffset;
-
-            canSpawnItemToDrop = CanSpawnItemWorldAtPosition(spawnPosition);
-
-            spawnAttempts++;
-
-            if (spawnAttempts == maxDropSpawnAttempts && !canSpawnItemToDrop)
-            {
-                Debug.LogWarning($"Failed to drop {itemToDrop.itemData.name} item outside of " +
-                    $"colliders after {maxDropSpawnAttempts} attempts");
-                return;
-            }
-        } while (!canSpawnItemToDrop);
-
-        SpawnItemWorld(spawnPosition, itemToDrop);
+        if (SpawnColliderHelper.TryGetSpawnPositionOutsideColliders(spawnPositionGenerator, itemWorldPrefabColliderExtents,
+            maxDropSpawnAttempts, out Vector2 spawnPosition))
+        {
+            SpawnItemWorld(spawnPosition, itemToDrop);
+        }
 
         // Dropped items currently don't move
         //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
