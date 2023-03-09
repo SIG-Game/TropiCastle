@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class SpawnColliderHelper
@@ -34,8 +35,13 @@ public static class SpawnColliderHelper
         Vector2 overlapAreaCornerBottomLeft = position - colliderExtents;
         Vector2 overlapAreaCornerTopRight = position + colliderExtents;
 
-        Collider2D colliderOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
+        // Triggers are not used by a default ContactFilter2D
+        ContactFilter2D contactFilter = new ContactFilter2D();
 
-        return colliderOverlap == null;
+        List<Collider2D> overlapResults = new List<Collider2D>();
+        Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight,
+            contactFilter, overlapResults);
+
+        return overlapResults.Count == 0;
     }
 }
