@@ -11,6 +11,7 @@ public class PrefabSpawner : MonoBehaviour
     [SerializeField] private Vector2 maxSpawnPosition;
     [SerializeField] private bool logOnSpawn;
     [SerializeField] private bool drawSpawnArea;
+    [SerializeField] private Color drawnSpawnAreaColor = Color.black;
 
     private int numPrefabs;
     private float spawnTimer;
@@ -56,10 +57,10 @@ public class PrefabSpawner : MonoBehaviour
     {
         if (drawSpawnArea)
         {
-            Debug.DrawLine(topLeftCornerSpawnArea, topRightCornerSpawnArea);
-            Debug.DrawLine(topRightCornerSpawnArea, bottomRightCornerSpawnArea);
-            Debug.DrawLine(bottomRightCornerSpawnArea, bottomLeftCornerSpawnArea);
-            Debug.DrawLine(bottomLeftCornerSpawnArea, topLeftCornerSpawnArea);
+            Debug.DrawLine(topLeftCornerSpawnArea, topRightCornerSpawnArea, drawnSpawnAreaColor);
+            Debug.DrawLine(topRightCornerSpawnArea, bottomRightCornerSpawnArea, drawnSpawnAreaColor);
+            Debug.DrawLine(bottomRightCornerSpawnArea, bottomLeftCornerSpawnArea, drawnSpawnAreaColor);
+            Debug.DrawLine(bottomLeftCornerSpawnArea, topLeftCornerSpawnArea, drawnSpawnAreaColor);
         }
 
         if (numPrefabs >= maxSpawnedPrefabs)
