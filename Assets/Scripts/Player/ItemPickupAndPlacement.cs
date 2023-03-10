@@ -125,13 +125,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
         }
     }
 
-    private bool CanPlaceItemAtPosition(Vector2 position)
-    {
-        Vector2 overlapAreaCornerBottomLeft = position - itemWorldPrefabColliderExtents;
-        Vector2 overlapAreaCornerTopRight = position + itemWorldPrefabColliderExtents;
-
-        Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
-
-        return itemWorldOverlap == null;
-    }
+    private bool CanPlaceItemAtPosition(Vector2 position) =>
+        SpawnColliderHelper.CanSpawnColliderAtPosition(position, itemWorldPrefabColliderExtents);
 }

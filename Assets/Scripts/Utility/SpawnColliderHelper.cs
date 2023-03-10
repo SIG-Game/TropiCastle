@@ -30,7 +30,7 @@ public static class SpawnColliderHelper
         return true;
     }
 
-    private static bool CanSpawnColliderAtPosition(Vector2 position, Vector2 colliderExtents)
+    public static bool CanSpawnColliderAtPosition(Vector2 position, Vector2 colliderExtents)
     {
         Vector2 overlapAreaCornerBottomLeft = position - colliderExtents;
         Vector2 overlapAreaCornerTopRight = position + colliderExtents;
@@ -39,7 +39,7 @@ public static class SpawnColliderHelper
         ContactFilter2D contactFilter = new ContactFilter2D();
 
         List<Collider2D> overlapResults = new List<Collider2D>();
-        Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight,
+        _ = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight,
             contactFilter, overlapResults);
 
         return overlapResults.Count == 0;
