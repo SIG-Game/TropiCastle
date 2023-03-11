@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.05
+  playerDamageAmount: 10
   knockbackForce: 0.7
   maxStartChasingDistanceToPlayer: 2.5
   minStopChasingDistanceToPlayer: 3.75

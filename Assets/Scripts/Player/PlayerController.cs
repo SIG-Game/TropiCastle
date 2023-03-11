@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("Bullet"))
+        if (col.gameObject.CompareTag("Bullet"))
         {
             healthController.DecreaseHealth(10);
         }

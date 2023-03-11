@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private int playerDamageAmount;
     [SerializeField] private float knockbackForce;
     [SerializeField] private float maxStartChasingDistanceToPlayer;
     [SerializeField] private float minStopChasingDistanceToPlayer;
@@ -94,18 +95,23 @@ public class Enemy : MonoBehaviour
     //can update to when getting hit by weapon by changing the tag
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && state != EnemyState.KnockedBack)
+        if (other.tag == "Player")
         {
-            velocityDirection = Vector2.zero;
+            other.GetComponent<HealthController>().DecreaseHealth(playerDamageAmount);
 
-            state = EnemyState.KnockedBack;
+            if (state != EnemyState.KnockedBack)
+            {
+                velocityDirection = Vector2.zero;
 
-            Vector2 directionFromPlayer = ((Vector2)transform.position - GetPlayerColliderPosition()).normalized;
+                state = EnemyState.KnockedBack;
 
-            transform.GetComponent<Rigidbody2D>().AddForce(directionFromPlayer * knockbackForce, ForceMode2D.Impulse);
+                Vector2 directionFromPlayer = ((Vector2)transform.position - GetPlayerColliderPosition()).normalized;
 
-            StopCoroutine(nameof(WaitCoroutine));
-            StartCoroutine(nameof(WaitCoroutine));
+                transform.GetComponent<Rigidbody2D>().AddForce(directionFromPlayer * knockbackForce, ForceMode2D.Impulse);
+
+                StopCoroutine(nameof(WaitCoroutine));
+                StartCoroutine(nameof(WaitCoroutine));
+            }
         }
     }
 
