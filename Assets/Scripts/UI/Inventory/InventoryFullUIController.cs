@@ -2,10 +2,12 @@
 
 public class InventoryFullUIController : MonoBehaviour
 {
-    [SerializeField] private GameObject inventoryFullUI;
-    [SerializeField] private float activeTimeSeconds;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private float visibleTimeSeconds;
+    [SerializeField] private float alphaChangeSpeed;
 
-    private float activeTimer;
+    private float visibleTimer;
+    private float targetAlpha;
 
     public static InventoryFullUIController Instance;
 
@@ -13,19 +15,28 @@ public class InventoryFullUIController : MonoBehaviour
     {
         Instance = this;
 
-        activeTimer = 0f;
+        targetAlpha = 0f;
+
+        // Do not increase timer until inventory full UI is shown
+        visibleTimer = visibleTimeSeconds;
     }
 
     private void Update()
     {
-        if (activeTimer < activeTimeSeconds)
+        if (visibleTimer < visibleTimeSeconds)
         {
-            activeTimer += Time.deltaTime;
+            visibleTimer += Time.deltaTime;
 
-            if (activeTimer >= activeTimeSeconds)
+            if (visibleTimer >= visibleTimeSeconds)
             {
-                inventoryFullUI.SetActive(false);
+                targetAlpha = 0f;
             }
+        }
+
+        if (canvasGroup.alpha != targetAlpha)
+        {
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha,
+                alphaChangeSpeed * Time.deltaTime);
         }
     }
 
@@ -36,7 +47,7 @@ public class InventoryFullUIController : MonoBehaviour
 
     public void ShowInventoryFullText()
     {
-        inventoryFullUI.SetActive(true);
-        activeTimer = 0f;
+        visibleTimer = 0f;
+        targetAlpha = 1f;
     }
 }
