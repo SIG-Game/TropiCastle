@@ -111,21 +111,6 @@ public class PrefabSpawner : MonoBehaviour
         numPrefabs++;
     }
 
-    private bool CanSpawnPrefabAtPosition(Vector2 position)
-    {
-        if (prefabToSpawnBoxCollider.isTrigger)
-        {
-            return true;
-        }
-
-        Vector2 overlapAreaCornerBottomLeft = position - prefabToSpawnColliderExtents;
-        Vector2 overlapAreaCornerTopRight = position + prefabToSpawnColliderExtents;
-
-        Collider2D prefabOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
-
-        return prefabOverlap == null;
-    }
-
     protected virtual void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
     {
     }

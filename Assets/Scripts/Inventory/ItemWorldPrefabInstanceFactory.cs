@@ -58,15 +58,5 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
     }
 
-    private bool CanSpawnItemWorldAtPosition(Vector2 position)
-    {
-        Vector2 overlapAreaCornerBottomLeft = position - itemWorldPrefabColliderExtents;
-        Vector2 overlapAreaCornerTopRight = position + itemWorldPrefabColliderExtents;
-
-        Collider2D itemWorldOverlap = Physics2D.OverlapArea(overlapAreaCornerBottomLeft, overlapAreaCornerTopRight);
-
-        return itemWorldOverlap == null;
-    }
-
     public Vector2 GetItemWorldPrefabColliderExtents() => itemWorldPrefabColliderExtents;
 }
