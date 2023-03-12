@@ -12,7 +12,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     {
         inventoryUIItemSlotContainer.HoveredItemIndex = slotItemIndex;
 
-        InventoryTooltipController.Instance.SetHoveredTooltipText(GetSlotItemTooltipText());
+        InventoryUITooltipController.Instance.SetHoveredTooltipText(GetSlotItemTooltipText());
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -23,7 +23,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
 
             if (InventoryUIHeldItemController.Instance.HoldingItem())
             {
-                InventoryTooltipController.Instance.SetHeldItemTooltipText(GetSlotItemTooltipText());
+                InventoryUITooltipController.Instance.SetHeldItemTooltipText(GetSlotItemTooltipText());
             }
         }
     }
@@ -31,14 +31,14 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     public void OnPointerExit(PointerEventData eventData)
     {
         inventoryUIItemSlotContainer.HoveredItemIndex = -1;
-        InventoryTooltipController.Instance.ClearHoveredTooltipText();
+        InventoryUITooltipController.Instance.ClearHoveredTooltipText();
     }
 
     private string GetSlotItemTooltipText()
     {
         ItemScriptableObject slotItemData = inventory.GetItemAtIndex(slotItemIndex).itemData;
 
-        return InventoryTooltipController.GetItemTooltipText(slotItemData);
+        return InventoryUITooltipController.GetItemTooltipText(slotItemData);
     }
 
     public void SetSlotItemIndex(int slotItemIndex)

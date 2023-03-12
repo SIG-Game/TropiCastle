@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class InventoryTooltipController : MonoBehaviour
+public class InventoryUITooltipController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tooltipText;
     [SerializeField] private RectTransform canvasRectTransform;
@@ -12,7 +12,7 @@ public class InventoryTooltipController : MonoBehaviour
     private RectTransform inventoryTooltipRectTransform;
     private bool tooltipIsVisible;
 
-    public static InventoryTooltipController Instance;
+    public static InventoryUITooltipController Instance;
 
     private void Awake()
     {

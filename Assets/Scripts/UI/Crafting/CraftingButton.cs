@@ -24,12 +24,12 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        InventoryTooltipController.Instance.SetHoveredTooltipText(GetIngredientsAsString());
+        InventoryUITooltipController.Instance.SetHoveredTooltipText(GetIngredientsAsString());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        InventoryTooltipController.Instance.ClearHoveredTooltipText();
+        InventoryUITooltipController.Instance.ClearHoveredTooltipText();
     }
 
     private string GetIngredientsAsString()

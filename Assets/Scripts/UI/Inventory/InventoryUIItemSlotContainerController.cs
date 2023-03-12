@@ -53,7 +53,7 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
                 {
                     swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
 
-                    InventoryTooltipController.Instance.ClearHeldItemTooltipText();
+                    InventoryUITooltipController.Instance.ClearHeldItemTooltipText();
                     InventoryUIHeldItemController.Instance.HideHeldItem();
                 }
                 else
@@ -67,8 +67,8 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
                 if (HoveredItemIndex != -1)
                 {
                     ItemScriptableObject hoveredItem = inventory.GetItemAtIndex(HoveredItemIndex).itemData;
-                    InventoryTooltipController.Instance.SetHoveredTooltipText(
-                        InventoryTooltipController.GetItemTooltipText(hoveredItem));
+                    InventoryUITooltipController.Instance.SetHoveredTooltipText(
+                        InventoryUITooltipController.GetItemTooltipText(hoveredItem));
                 }
             }
         }
