@@ -20184,6 +20184,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 46d2472a2843f104d899177307cb20df,
         type: 2}
+    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_Pivot.x
