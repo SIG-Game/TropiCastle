@@ -97,7 +97,11 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<HealthController>().DecreaseHealth(playerDamageAmount);
+            HealthController playerHealthController = other.GetComponent<HealthController>();
+            if (playerHealthController != null)
+            {
+                playerHealthController.DecreaseHealth(playerDamageAmount);
+            }
 
             if (state != EnemyState.KnockedBack)
             {
