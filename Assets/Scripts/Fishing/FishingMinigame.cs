@@ -77,8 +77,8 @@ public class FishingMinigame : MonoBehaviour
     {
         ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
         Action afterCatchDialogueAction = () => playerInventory.AddItem(caughtFishItem, 1);
-        DialogueBox.Instance.PlayDialogue(selectedFish.species + "\n" + selectedFish.description,
-            afterCatchDialogueAction);
+        DialogueBox.Instance.PlayDialogue($"You caught a {selectedFish.species.ToLowerInvariant()}!\n" +
+            $"{selectedFish.description}", afterCatchDialogueAction);
     }
 
     private IEnumerator StartFishingCoroutine()
