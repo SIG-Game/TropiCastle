@@ -67,13 +67,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && mouseIsOverItemWorld)
         {
-            PickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>());
+            if (TryPickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>()))
+            {
+                cursorController.UseDefaultCursor();
+            }
 
             // Prevent item placement on right-click release from using
             // the same click as item pickup on right-click press
             waitingForRightClickReleaseBeforePlacement = true;
-
-            cursorController.UseDefaultCursor();
         }
 
         // Cancel item placement when left-click is pressed while placing an item
@@ -86,31 +87,34 @@ public class ItemPickupAndPlacement : MonoBehaviour
         {
             if (mouseIsOverItemWorld)
             {
-                PickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>());
+                if (TryPickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>()))
+                {
+                    cursorController.UseDefaultCursor();
+                }
             }
             else if (CanPlaceItemAtPosition(mouseWorldPoint) && mouseIsOnScreen &&
                 !waitingForRightClickReleaseBeforePlacement)
             {
                 PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
+                cursorController.UseDefaultCursor();
             }
-
-            cursorController.UseDefaultCursor();
 
             waitingForRightClickReleaseBeforePlacement = false;
         }
     }
 
-    private void PickUpItemFromItemWorld(ItemWorld itemWorld)
+    private bool TryPickUpItemFromItemWorld(ItemWorld itemWorld)
     {
         if (playerInventory.IsFull())
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
-            return;
+            return false;
         }
 
         playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemWorld.item,
             itemSelectionController.SelectedItemIndex);
         Destroy(itemWorld.gameObject);
+        return true;
     }
 
     private void PlaceSelectedPlayerHotbarItemAtPosition(Vector2 position)
