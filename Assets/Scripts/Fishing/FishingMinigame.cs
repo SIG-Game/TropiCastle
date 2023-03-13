@@ -25,12 +25,14 @@ public class FishingMinigame : MonoBehaviour
     private Inventory playerInventory;
 
     private AsyncOperationHandle<IList<FishScriptableObject>> fishScriptableObjectsLoadHandle;
+    private IList<FishScriptableObject> fishScriptableObjects;
 
     private void Awake()
     {
         fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
+        fishScriptableObjects = fishScriptableObjectsLoadHandle.WaitForCompletion();
 
-        player.OnFishingRodUsed += Player_OnFishingRodUsed;
+        player.OnFishingRodUsed += StartFishingMinigame;
     }
 
     private void Start()
@@ -60,7 +62,7 @@ public class FishingMinigame : MonoBehaviour
     {
         Addressables.Release(fishScriptableObjectsLoadHandle);
 
-        player.OnFishingRodUsed -= Player_OnFishingRodUsed;
+        player.OnFishingRodUsed -= StartFishingMinigame;
     }
 
     private void AttemptToCatchFish()
@@ -81,23 +83,18 @@ public class FishingMinigame : MonoBehaviour
             $"{selectedFish.description}", afterCatchDialogueAction);
     }
 
-    private IEnumerator StartFishingCoroutine()
+    private void StartFishingMinigame()
     {
         if (playerInventory.IsFull())
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
-            yield break;
-        }
-
-        while (!fishScriptableObjectsLoadHandle.IsDone)
-        {
-            yield return fishScriptableObjectsLoadHandle;
+            return;
         }
 
         if (fishingUI.activeSelf)
         {
-            Debug.LogWarning($"{nameof(StartFishingCoroutine)} started with {nameof(fishingUI)} active");
-            yield break;
+            Debug.LogWarning($"{nameof(StartFishingMinigame)} started with {nameof(fishingUI)} active");
+            return;
         }
 
         player.IsFishing = true;
@@ -125,8 +122,8 @@ public class FishingMinigame : MonoBehaviour
 
     private void SelectRandomFish()
     {
-        int selectedFishIndex = Random.Range(0, fishScriptableObjectsLoadHandle.Result.Count);
-        selectedFish = fishScriptableObjectsLoadHandle.Result[selectedFishIndex];
+        int selectedFishIndex = Random.Range(0, fishScriptableObjects.Count);
+        selectedFish = fishScriptableObjects[selectedFishIndex];
 
         if (logFishInfo)
         {
@@ -172,10 +169,5 @@ public class FishingMinigame : MonoBehaviour
     {
         fishImage.transform.localScale = new Vector3(-fishImage.transform.localScale.x,
             fishImage.transform.localScale.y, fishImage.transform.localScale.z);
-    }
-
-    private void Player_OnFishingRodUsed()
-    {
-        StartCoroutine(StartFishingCoroutine());
     }
 }
