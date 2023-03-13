@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -5,11 +6,14 @@ public class DebugAddItemDropdownController : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown dropdown;
 
-    private ItemScriptableObject[] itemScriptableObjects;
+    private List<ItemScriptableObject> itemScriptableObjects;
 
     private void Awake()
     {
-        itemScriptableObjects = Resources.LoadAll<ItemScriptableObject>("Items");
+        itemScriptableObjects = new List<ItemScriptableObject>(
+            Resources.LoadAll<ItemScriptableObject>("Items"));
+
+        itemScriptableObjects.RemoveAll(x => x.name == "Empty");
 
         foreach (ItemScriptableObject itemScriptableObject in itemScriptableObjects)
         {
