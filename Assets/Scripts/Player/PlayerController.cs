@@ -24,9 +24,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool IsFishing { private get; set; }
-
     public event Action OnFishingRodUsed = delegate { };
+
+    // Not used for pausing menu
+    public static bool ActionDisablingUIOpen { get; set; }
 
     public static event Action OnPlayerDied = delegate { };
 
@@ -60,6 +61,8 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
 
         LastDirection = CharacterDirection.Down;
+
+        ActionDisablingUIOpen = false;
 
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
@@ -188,8 +191,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool CanMove() => !isAttacking && !IsFishing && !PauseController.Instance.GamePaused &&
-        !DialogueBox.Instance.DialogueBoxOpen();
+    public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !ActionDisablingUIOpen;
 
     public int GetSelectedItemIndex() => itemSelectionController.SelectedItemIndex;
 

@@ -49,9 +49,9 @@ public class FishingMinigame : MonoBehaviour
 
         if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
         {
+            PlayerController.ActionDisablingUIOpen = false;
             AttemptToCatchFish();
             fishingUI.SetActive(false);
-            player.IsFishing = false;
             return;
         }
 
@@ -97,7 +97,7 @@ public class FishingMinigame : MonoBehaviour
             return;
         }
 
-        player.IsFishing = true;
+        PlayerController.ActionDisablingUIOpen = true;
 
         SetFishPositionAndDirection();
 

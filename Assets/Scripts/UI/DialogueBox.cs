@@ -95,6 +95,7 @@ public class DialogueBox : MonoBehaviour
 
         DisplayScrollingText(linesEnumerator.Current);
         dialogueBoxUI.SetActive(true);
+        PlayerController.ActionDisablingUIOpen = true;
     }
 
     private void DisplayScrollingText(string text)
@@ -132,6 +133,7 @@ public class DialogueBox : MonoBehaviour
     {
         afterDialogueAction?.Invoke(); // afterDialogueAction may be null
         dialogueBoxUI.SetActive(false);
+        PlayerController.ActionDisablingUIOpen = false;
     }
 
     private void StopDisplayScrollingTextCoroutineIfNotNull()
@@ -142,5 +144,5 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
-    public bool DialogueBoxOpen() => dialogueBoxUI.activeInHierarchy;
+    private bool DialogueBoxOpen() => dialogueBoxUI.activeInHierarchy;
 }
