@@ -16,9 +16,11 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         crafting.CraftItem(craftingRecipe);
     }
 
-    public void SetUpCraftingButton(Crafting crafting, CraftingRecipeScriptableObject craftingRecipe)
+    public void SetUpCraftingButton(Crafting crafting, Inventory playerInventory,
+        CraftingRecipeScriptableObject craftingRecipe)
     {
         this.crafting = crafting;
+        this.playerInventory = playerInventory;
         this.craftingRecipe = craftingRecipe;
 
         craftingButtonImage.sprite = craftingRecipe.resultItem.itemData.sprite;

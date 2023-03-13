@@ -45680,6 +45680,11 @@ PrefabInstance:
       objectReference: {fileID: 2003006741}
     - target: {fileID: 3268635071200376722, guid: b880f180c15adf449b8c0003cb592fc8,
         type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 3268635071200376722, guid: b880f180c15adf449b8c0003cb592fc8,
+        type: 3}
       propertyPath: inventoryTooltipController
       value: 
       objectReference: {fileID: 743848481}

@@ -8,6 +8,7 @@ public class CraftingButtonGenerator : MonoBehaviour
     [SerializeField] private Crafting crafting;
     [SerializeField] private GameObject craftingButtonPrefab;
     [SerializeField] private Transform craftingButtonsParentTransform;
+    [SerializeField] private Inventory playerInventory;
     [SerializeField] private int yDistanceBetweenButtons;
 
     [ContextMenu("Generate Crafting Buttons")]
@@ -23,7 +24,7 @@ public class CraftingButtonGenerator : MonoBehaviour
 
             GameObject craftingButtonGameObject = craftingButton as GameObject;
             craftingButtonGameObject?.GetComponent<CraftingButton>()
-                .SetUpCraftingButton(crafting, craftingRecipes[i]);
+                .SetUpCraftingButton(crafting, playerInventory, craftingRecipes[i]);
         }
 
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
