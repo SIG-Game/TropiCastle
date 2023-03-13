@@ -4,6 +4,7 @@ using UnityEngine;
 public class InventoryUIController : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
+    [SerializeField] private GameObject craftingUI;
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private ItemSlotContainerController itemSlotContainer;
     [SerializeField] private ItemSelectionController itemSelectionController;
@@ -40,6 +41,7 @@ public class InventoryUIController : MonoBehaviour
         {
             InventoryUIOpen = !InventoryUIOpen;
             PauseController.Instance.GamePaused = InventoryUIOpen;
+            craftingUI.SetActive(InventoryUIOpen);
             inventoryUI.SetActive(InventoryUIOpen);
 
             if (!InventoryUIOpen)
