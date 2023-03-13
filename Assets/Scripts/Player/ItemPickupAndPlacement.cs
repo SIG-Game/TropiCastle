@@ -24,10 +24,10 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void Update()
     {
-        if (PauseController.Instance.GamePaused)
+        if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen)
         {
-            // This check needs to occur in case right-click is released while
-            // the game is paused after picking up an item on press of that click
+            // This check needs to occur in case right-click is released while the
+            // above condition is true after picking up an item on press of that click
             if (Input.GetMouseButtonUp(1))
             {
                 waitingForRightClickReleaseBeforePlacement = false;
