@@ -95,6 +95,13 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
+        // Do not check for fish input on the same frame that an item is used
+        else if (Input.GetButtonDown("Fish") &&
+            !ActionDisablingUIOpen &&
+            inventory.GetItemList().FindIndex(x => x.itemData.name == "FishingRod") != -1)
+        {
+            Fish();
+        }
 
         if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
         {
@@ -156,13 +163,7 @@ public class PlayerController : MonoBehaviour
                 AttackWithWeapon(weaponItemData);
                 break;
             case { name: "FishingRod" }:
-                if (InteractionCast(waterMask, 0.5f).collider == null)
-                {
-                    DialogueBox.Instance.PlayDialogue("You must be facing water to fish.");
-                    break;
-                }
-
-                OnFishingRodUsed();
+                Fish();
                 break;
             default:
                 Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
@@ -187,6 +188,17 @@ public class PlayerController : MonoBehaviour
         animator.Play($"Swing {lastDirection}");
 
         isAttacking = true;
+    }
+
+    private void Fish()
+    {
+        if (InteractionCast(waterMask, 0.5f).collider == null)
+        {
+            DialogueBox.Instance.PlayDialogue("You must be facing water to fish.");
+            return;
+        }
+
+        OnFishingRodUsed();
     }
 
     private void PlayerDeath()
