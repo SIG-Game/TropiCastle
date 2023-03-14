@@ -17,11 +17,12 @@ public class CursorController : MonoBehaviour
 
         PauseController.OnGamePaused += PauseController_OnGamePaused;
         PauseController.OnGameUnpaused += PauseController_OnGameUnpaused;
+        PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
     }
 
     private void Update()
     {
-        if (PauseController.Instance.GamePaused)
+        if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen)
         {
             return;
         }
@@ -39,6 +40,7 @@ public class CursorController : MonoBehaviour
     {
         PauseController.OnGamePaused -= PauseController_OnGamePaused;
         PauseController.OnGameUnpaused -= PauseController_OnGameUnpaused;
+        PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
     }
 
     public void SetCursorSprite(Sprite sprite)
@@ -77,6 +79,22 @@ public class CursorController : MonoBehaviour
     private void PauseController_OnGameUnpaused()
     {
         Cursor.visible = false;
-        UseDefaultCursor();
+
+        if (!PlayerController.ActionDisablingUIOpen)
+        {
+            UseDefaultCursor();
+        }
+    }
+
+    private void PlayerController_OnActionDisablingUIOpenSet(bool actionDisablingUIOpen)
+    {
+        if (actionDisablingUIOpen)
+        {
+            HideCursor();
+        }
+        else
+        {
+            UseDefaultCursor();
+        }
     }
 }

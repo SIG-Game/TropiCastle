@@ -26,10 +26,21 @@ public class PlayerController : MonoBehaviour
 
     public event Action OnFishingRodUsed = delegate { };
 
+    private static bool actionDisablingUIOpen;
+
     // Not used for pausing menu
-    public static bool ActionDisablingUIOpen { get; set; }
+    public static bool ActionDisablingUIOpen
+    {
+        get => actionDisablingUIOpen;
+        set
+        {
+            actionDisablingUIOpen = value;
+            OnActionDisablingUIOpenSet(actionDisablingUIOpen);
+        }
+    }
 
     public static event Action OnPlayerDied = delegate { };
+    public static event Action<bool> OnActionDisablingUIOpenSet = delegate { };
 
     private Animator animator;
     private BoxCollider2D boxCollider;
@@ -101,6 +112,7 @@ public class PlayerController : MonoBehaviour
         healthController.OnHealthChanged -= HealthController_OnHealthChanged;
 
         OnPlayerDied = delegate { };
+        OnActionDisablingUIOpenSet = delegate { };
     }
 
     private Vector2 GetInteractionDirection()
