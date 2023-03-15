@@ -102,6 +102,18 @@ public class PlayerController : MonoBehaviour
         {
             Fish();
         }
+        else if (Input.GetButtonDown("Heal"))
+        {
+            int healingItemIndex = inventory.GetItemList().FindIndex(x => x.itemData is HealingItemScriptableObject);
+
+            if (healingItemIndex != -1)
+            {
+                HealingItemScriptableObject healingItem = inventory.GetItemAtIndex(healingItemIndex).itemData
+                    as HealingItemScriptableObject;
+
+                ConsumeHealingItem(healingItemIndex, healingItem.healAmount);
+            }
+        }
 
         if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
         {
@@ -157,7 +169,7 @@ public class PlayerController : MonoBehaviour
         switch (item.itemData)
         {
             case HealingItemScriptableObject healingItemData:
-                ConsumeHealingItem(item, healingItemData.healAmount);
+                ConsumeHealingItem(GetSelectedItemIndex(), healingItemData.healAmount);
                 break;
             case WeaponItemScriptableObject weaponItemData:
                 AttackWithWeapon(weaponItemData);
@@ -171,12 +183,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ConsumeHealingItem(ItemWithAmount item, int amountToHeal)
+    private void ConsumeHealingItem(int itemIndex, int amountToHeal)
     {
         if (!healthController.AtMaxHealth())
         {
             healthController.IncreaseHealth(amountToHeal);
-            inventory.RemoveItemAtIndex(GetSelectedItemIndex());
+            inventory.RemoveItemAtIndex(itemIndex);
         }
     }
 
