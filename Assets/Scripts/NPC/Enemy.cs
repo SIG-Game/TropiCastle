@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float knockbackForce;
     [SerializeField] private float maxStartChasingDistanceToPlayer;
     [SerializeField] private float minStopChasingDistanceToPlayer;
+    [SerializeField] private float initialWaitTimeBeforeChilling;
     [SerializeField] private float waitTimeAfterKnockback;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private List<ItemWithAmount> droppedLoot;
@@ -28,7 +29,9 @@ public class Enemy : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         healthController = GetComponent<HealthController>();
 
-        state = EnemyState.Chilling;
+        state = EnemyState.Initial;
+
+        StartCoroutine(InitialWaitBeforeChillingCoroutine());
 
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
@@ -113,13 +116,19 @@ public class Enemy : MonoBehaviour
 
                 transform.GetComponent<Rigidbody2D>().AddForce(directionFromPlayer * knockbackForce, ForceMode2D.Impulse);
 
-                StopCoroutine(nameof(WaitCoroutine));
-                StartCoroutine(nameof(WaitCoroutine));
+                StopCoroutine(nameof(WaitAfterKnockbackCoroutine));
+                StartCoroutine(nameof(WaitAfterKnockbackCoroutine));
             }
         }
     }
 
-    private IEnumerator WaitCoroutine()
+    private IEnumerator InitialWaitBeforeChillingCoroutine()
+    {
+        yield return new WaitForSeconds(initialWaitTimeBeforeChilling);
+        state = EnemyState.Chilling;
+    }
+
+    private IEnumerator WaitAfterKnockbackCoroutine()
     {
         yield return new WaitForSeconds(waitTimeAfterKnockback);
         state = EnemyState.Chasing;

@@ -342,6 +342,7 @@ MonoBehaviour:
   knockbackForce: 0.7
   maxStartChasingDistanceToPlayer: 2.5
   minStopChasingDistanceToPlayer: 3.75
+  initialWaitTimeBeforeChilling: 1.5
   waitTimeAfterKnockback: 1.5
   playerTransform: {fileID: 0}
   droppedLoot:
