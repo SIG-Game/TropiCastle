@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -7,10 +8,9 @@ public class InventoryUITooltipController : MonoBehaviour
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
 
-    private string heldItemTooltipText;
-    private string hoveredTooltipText;
+    private List<KeyValuePair<string, int>> tooltipTextsWithPriority;
+
     private RectTransform inventoryTooltipRectTransform;
-    private bool tooltipIsVisible;
 
     public static InventoryUITooltipController Instance;
 
@@ -18,17 +18,16 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         Instance = this;
 
-        heldItemTooltipText = string.Empty;
-        hoveredTooltipText = string.Empty;
+        tooltipTextsWithPriority = new List<KeyValuePair<string, int>>();
+
         inventoryTooltipRectTransform = GetComponent<RectTransform>();
-        tooltipIsVisible = false;
 
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
     }
 
     private void Update()
     {
-        if (tooltipIsVisible)
+        if (!string.IsNullOrEmpty(tooltipText.text))
         {
             UpdateInventoryTooltipPosition();
         }
@@ -41,48 +40,34 @@ public class InventoryUITooltipController : MonoBehaviour
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
 
-    public void SetHeldItemTooltipText(string heldItemTooltipText)
+    public void AddTooltipTextWithPriority(KeyValuePair<string, int> textWithPriority)
     {
-        this.heldItemTooltipText = heldItemTooltipText;
-
-        ShowTooltipText(this.heldItemTooltipText);
+        tooltipTextsWithPriority.Add(textWithPriority);
+        tooltipText.text = GetTooltipTextWithHighestPriority();
         UpdateInventoryTooltipPosition();
     }
 
-    public void ClearHeldItemTooltipText()
+    public void RemoveTooltipTextWithPriority(KeyValuePair<string, int> textWithPriority)
     {
-        heldItemTooltipText = string.Empty;
-
-        if (hoveredTooltipText != string.Empty)
-        {
-            ShowTooltipText(hoveredTooltipText);
-            UpdateInventoryTooltipPosition();
-        }
-        else
-        {
-            HideTooltip();
-        }
+        tooltipTextsWithPriority.Remove(textWithPriority);
+        tooltipText.text = GetTooltipTextWithHighestPriority();
     }
 
-    public void SetHoveredTooltipText(string hoveredTooltipText)
+    private string GetTooltipTextWithHighestPriority()
     {
-        this.hoveredTooltipText = hoveredTooltipText;
+        string tooltipTextWithHighestPriority = null;
+        int? highestPriority = null;
 
-        if (heldItemTooltipText == string.Empty)
+        foreach (var tooltipTextWithPriority in tooltipTextsWithPriority)
         {
-            ShowTooltipText(this.hoveredTooltipText);
-            UpdateInventoryTooltipPosition();
+            if (highestPriority == null || tooltipTextWithPriority.Value > highestPriority)
+            {
+                highestPriority = tooltipTextWithPriority.Value;
+                tooltipTextWithHighestPriority = tooltipTextWithPriority.Key;
+            }
         }
-    }
 
-    public void ClearHoveredTooltipText()
-    {
-        hoveredTooltipText = string.Empty;
-
-        if (heldItemTooltipText == string.Empty)
-        {
-            HideTooltip();
-        }
+        return tooltipTextWithHighestPriority ?? string.Empty;
     }
 
     public static string GetItemTooltipText(ItemScriptableObject item) =>
@@ -96,18 +81,6 @@ public class InventoryUITooltipController : MonoBehaviour
             _ => item.name
         };
 
-    private void ShowTooltipText(string text)
-    {
-        tooltipText.text = text;
-        tooltipIsVisible = true;
-    }
-
-    private void HideTooltip()
-    {
-        tooltipText.text = string.Empty;
-        tooltipIsVisible = false;
-    }
-
     private void UpdateInventoryTooltipPosition()
     {
         inventoryTooltipRectTransform.anchoredPosition =
@@ -116,7 +89,7 @@ public class InventoryUITooltipController : MonoBehaviour
 
     private void InventoryUIController_OnInventoryClosed()
     {
-        ClearHeldItemTooltipText();
-        ClearHoveredTooltipText();
+        tooltipTextsWithPriority.Clear();
+        tooltipText.text = string.Empty;
     }
 }

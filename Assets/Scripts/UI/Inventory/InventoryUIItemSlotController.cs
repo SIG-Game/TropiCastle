@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,11 +9,12 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
 
+    private KeyValuePair<string, int> tooltipTextWithPriority;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         inventoryUIItemSlotContainer.HoveredItemIndex = slotItemIndex;
-
-        InventoryUITooltipController.Instance.SetHoveredTooltipText(GetSlotItemTooltipText());
+        SetSlotTooltipText();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -20,18 +22,25 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             InventoryUIHeldItemController.Instance.LeftClickedItemAtIndex(slotItemIndex);
-
-            if (InventoryUIHeldItemController.Instance.HoldingItem())
-            {
-                InventoryUITooltipController.Instance.SetHeldItemTooltipText(GetSlotItemTooltipText());
-            }
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         inventoryUIItemSlotContainer.HoveredItemIndex = -1;
-        InventoryUITooltipController.Instance.ClearHoveredTooltipText();
+        InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
+    }
+
+    public void ResetSlotTooltipText()
+    {
+        InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
+        SetSlotTooltipText();
+    }
+
+    private void SetSlotTooltipText()
+    {
+        tooltipTextWithPriority = new KeyValuePair<string, int>(GetSlotItemTooltipText(), 0);
+        InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
     private string GetSlotItemTooltipText()

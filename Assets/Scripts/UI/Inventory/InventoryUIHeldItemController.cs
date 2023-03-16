@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,11 +7,13 @@ public class InventoryUIHeldItemController : MonoBehaviour
     [SerializeField] private GameObject heldItemUI;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private InventoryUIItemSlotContainerController itemSlotContainer;
     [SerializeField] private Sprite transparentSprite;
 
     private Inventory inventory;
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
+    private KeyValuePair<string, int> tooltipTextWithPriority;
     private int heldItemIndex;
 
     public static InventoryUIHeldItemController Instance;
@@ -35,7 +38,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))
             {
-                InventoryUITooltipController.Instance.ClearHeldItemTooltipText();
                 ResetHeldItem();
             }
         }
@@ -79,12 +81,9 @@ public class InventoryUIHeldItemController : MonoBehaviour
         {
             inventory.SwapItemsAt(heldItemIndex, itemIndex);
 
-            ItemScriptableObject placedItem = inventory.GetItemAtIndex(itemIndex).itemData;
-            InventoryUITooltipController.Instance.SetHoveredTooltipText(
-                InventoryUITooltipController.GetItemTooltipText(placedItem));
+            itemSlotContainer.UpdateInventoryTooltipAtIndex(itemIndex);
         }
 
-        InventoryUITooltipController.Instance.ClearHeldItemTooltipText();
         HideHeldItem();
     }
 
@@ -94,6 +93,10 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
         heldItemIndex = itemIndex;
         heldItemImage.sprite = itemData.sprite;
+
+        tooltipTextWithPriority = new KeyValuePair<string, int>(
+            InventoryUITooltipController.GetItemTooltipText(itemData), 1);
+        InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
     private void InventoryUIController_OnInventoryClosed()
@@ -116,6 +119,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
     public void HideHeldItem()
     {
         heldItemImage.sprite = transparentSprite;
+
+        InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
     public bool HoldingItem() => heldItemImage.sprite != transparentSprite;

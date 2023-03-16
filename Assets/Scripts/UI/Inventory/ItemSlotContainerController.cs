@@ -9,7 +9,7 @@ public class ItemSlotContainerController : MonoBehaviour
 {
     [SerializeField] private Color highlightedSlotColor;
     [SerializeField] private Color unhighlightedSlotColor;
-    [SerializeField] private List<ItemSlotController> itemSlotControllers;
+    [SerializeField] protected List<ItemSlotController> itemSlotControllers;
 
     [ContextMenu("Set Item Slot Controllers")]
     private void SetItemSlotControllers()

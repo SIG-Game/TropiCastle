@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
     public int HoveredItemIndex { private get; set; }
 
     private Inventory inventory;
+    private KeyValuePair<string, int> tooltipTextWithPriority;
 
     private void Awake()
     {
@@ -53,7 +55,6 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
                 {
                     swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
 
-                    InventoryUITooltipController.Instance.ClearHeldItemTooltipText();
                     InventoryUIHeldItemController.Instance.HideHeldItem();
                 }
                 else
@@ -67,11 +68,16 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
                 if (HoveredItemIndex != -1)
                 {
                     ItemScriptableObject hoveredItem = inventory.GetItemAtIndex(HoveredItemIndex).itemData;
-                    InventoryUITooltipController.Instance.SetHoveredTooltipText(
-                        InventoryUITooltipController.GetItemTooltipText(hoveredItem));
+
+                    UpdateInventoryTooltipAtIndex(HoveredItemIndex);
                 }
             }
         }
+    }
+
+    public void UpdateInventoryTooltipAtIndex(int itemIndex)
+    {
+        (itemSlotControllers[itemIndex] as InventoryUIItemSlotController).ResetSlotTooltipText();
     }
 
     [ContextMenu("Set Inventory UI Item Slot Indexes")]
