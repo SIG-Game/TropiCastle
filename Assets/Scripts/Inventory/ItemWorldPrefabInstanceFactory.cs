@@ -1,13 +1,14 @@
 ﻿using System;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 {
     [SerializeField] private GameObject itemWorldPrefab;
     [SerializeField] private Transform itemWorldParent;
-
-    private Vector2 itemWorldPrefabColliderExtents;
+    [SerializeField] private Vector2 itemWorldPrefabColliderExtents;
 
     private const int maxDropSpawnAttempts = 20;
 
@@ -16,15 +17,21 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        // BoxCollider2D bounds property (which has extents property) is not set
-        // until prefab is instantiated, so that property cannot be used here
-        itemWorldPrefabColliderExtents = itemWorldPrefab.GetComponent<BoxCollider2D>().size / 2f;
     }
 
     private void OnDestroy()
     {
         Instance = null;
+    }
+
+    [ContextMenu("Set Item World Prefab Collider Extents")]
+    private void SetItemWorldPrefabColliderExtents()
+    {
+        // BoxCollider2D bounds property (which has extents property) is not set
+        // until prefab is instantiated, so that property cannot be used here
+        itemWorldPrefabColliderExtents = itemWorldPrefab.GetComponent<BoxCollider2D>().size / 2f;
+
+        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
     }
 
     public void SpawnItemWorld(Vector3 position, ItemWithAmount itemToSpawn)

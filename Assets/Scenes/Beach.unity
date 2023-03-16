@@ -36122,6 +36122,7 @@ MonoBehaviour:
   itemWorldPrefab: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
   itemWorldParent: {fileID: 979836934}
+  itemWorldPrefabColliderExtents: {x: 0.2, y: 0.2}
 --- !u!4 &1482350655
 Transform:
   m_ObjectHideFlags: 0
