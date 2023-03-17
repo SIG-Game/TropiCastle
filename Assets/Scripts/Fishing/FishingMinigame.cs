@@ -47,7 +47,11 @@ public class FishingMinigame : MonoBehaviour
             return;
         }
 
-        if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
+        // Get both inputs so that neither can be used elsewhere
+        bool leftClickInput = InputManager.Instance.GetLeftClickDownIfUnusedThisFrame();
+        bool fishButtonInput = InputManager.Instance.GetFishButtonDownIfUnusedThisFrame();
+
+        if (leftClickInput || fishButtonInput)
         {
             PlayerController.ActionDisablingUIOpen = false;
             AttemptToCatchFish();

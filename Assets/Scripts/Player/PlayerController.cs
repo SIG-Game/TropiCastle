@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         // Do not check for fish input on the same frame that an item is used
-        else if (Input.GetButtonDown("Fish") &&
+        else if (InputManager.Instance.GetFishButtonDownIfUnusedThisFrame() &&
             !ActionDisablingUIOpen &&
             inventory.GetItemList().FindIndex(x => x.itemData.name == "FishingRod") != -1)
         {
