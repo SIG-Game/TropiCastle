@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
 
     private bool leftClickDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
+    private bool fishButtonDownUsedThisFrame;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class InputManager : MonoBehaviour
 
         leftClickDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;
+        fishButtonDownUsedThisFrame = false;
     }
 
     private void OnDestroy()
@@ -51,4 +53,7 @@ public class InputManager : MonoBehaviour
 
     public bool GetInteractButtonDownIfUnusedThisFrame() =>
         GetInputIfUnusedThisFrame(() => Input.GetButtonDown("Interact"), ref interactButtonDownUsedThisFrame);
+
+    public bool GetFishButtonDownIfUnusedThisFrame() =>
+        GetInputIfUnusedThisFrame(() => Input.GetButtonDown("Fish"), ref fishButtonDownUsedThisFrame);
 }
