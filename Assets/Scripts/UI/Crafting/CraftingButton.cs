@@ -15,7 +15,10 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void CraftingButton_OnClick()
     {
-        crafting.CraftItem(craftingRecipe);
+        if (!InventoryUIHeldItemController.Instance.HoldingItem())
+        {
+            crafting.CraftItem(craftingRecipe);
+        }
     }
 
     public void SetUpCraftingButton(Crafting crafting, Inventory playerInventory,
