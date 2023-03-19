@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class InventoryUITooltipController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tooltipText;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private bool logTooltipList;
 
     private List<KeyValuePair<string, int>> tooltipTextsWithPriority;
 
@@ -43,6 +45,13 @@ public class InventoryUITooltipController : MonoBehaviour
     public void AddTooltipTextWithPriority(KeyValuePair<string, int> textWithPriority)
     {
         tooltipTextsWithPriority.Add(textWithPriority);
+
+        if (logTooltipList)
+        {
+            Debug.Log("After adding:");
+            LogTooltipList();
+        }
+
         tooltipText.text = GetTooltipTextWithHighestPriority();
         UpdateInventoryTooltipPosition();
     }
@@ -50,6 +59,13 @@ public class InventoryUITooltipController : MonoBehaviour
     public void RemoveTooltipTextWithPriority(KeyValuePair<string, int> textWithPriority)
     {
         tooltipTextsWithPriority.Remove(textWithPriority);
+
+        if (logTooltipList)
+        {
+            Debug.Log("After removing:");
+            LogTooltipList();
+        }
+
         tooltipText.text = GetTooltipTextWithHighestPriority();
     }
 
@@ -91,5 +107,18 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         tooltipTextsWithPriority.Clear();
         tooltipText.text = string.Empty;
+    }
+
+    private void LogTooltipList()
+    {
+        var tooltipListStringBuilder = new StringBuilder();
+
+        foreach (KeyValuePair<string, int> textWithPriority in tooltipTextsWithPriority)
+        {
+            string textWithoutNewlines = textWithPriority.Key.Replace("\n", string.Empty);
+            tooltipListStringBuilder.Append($"\"{textWithoutNewlines}\": {textWithPriority.Value}, ");
+        }
+
+        Debug.Log(tooltipListStringBuilder.ToString());
     }
 }
