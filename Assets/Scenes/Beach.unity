@@ -42965,7 +42965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addItemDropdownController: {fileID: 1731795750}
-  player: {fileID: 572276101}
+  playerInventory: {fileID: 1982112582}
 --- !u!114 &1731795752
 MonoBehaviour:
   m_ObjectHideFlags: 0
