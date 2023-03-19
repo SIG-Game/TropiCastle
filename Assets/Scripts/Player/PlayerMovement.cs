@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerController playerController;
     private Rigidbody2D rb2d;
     private Vector2 velocity;
+    private InputAction moveAction;
     private bool inWater;
     private int waterLayer;
 
@@ -18,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
 
         velocity = Vector2.zero;
+
+        moveAction = GetComponent<PlayerInput>().currentActionMap["Move"];
 
         inWater = false;
 
@@ -32,15 +36,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-
-        Vector2 inputVector = new Vector2(horizontalInput, verticalInput);
-
-        if (inputVector.sqrMagnitude > 1f)
-        {
-            inputVector.Normalize();
-        }
+        Vector2 inputVector = moveAction.ReadValue<Vector2>();
 
         Vector2 newVelocity = movementSpeed * inputVector;
 
