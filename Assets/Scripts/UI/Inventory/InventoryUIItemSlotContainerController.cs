@@ -9,7 +9,6 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
     public int HoveredItemIndex { private get; set; }
 
     private Inventory inventory;
-    private KeyValuePair<string, int> tooltipTextWithPriority;
 
     private void Awake()
     {
@@ -67,8 +66,6 @@ public class InventoryUIItemSlotContainerController : ItemSlotContainerControlle
 
                 if (HoveredItemIndex != -1)
                 {
-                    ItemScriptableObject hoveredItem = inventory.GetItemAtIndex(HoveredItemIndex).itemData;
-
                     UpdateInventoryTooltipAtIndex(HoveredItemIndex);
                 }
             }
