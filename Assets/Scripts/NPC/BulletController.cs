@@ -11,7 +11,7 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             Debug.Log($"{nameof(BulletController)} trigger hit player");
             other.GetComponent<HealthController>().DecreaseHealth(10);

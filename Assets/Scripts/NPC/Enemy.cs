@@ -98,7 +98,7 @@ public class Enemy : MonoBehaviour
     //can update to when getting hit by weapon by changing the tag
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             HealthController playerHealthController = other.GetComponent<HealthController>();
             if (playerHealthController != null)
