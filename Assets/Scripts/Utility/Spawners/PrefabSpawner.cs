@@ -28,7 +28,7 @@ public class PrefabSpawner : MonoBehaviour
     {
         if (prefabToSpawn.GetComponent<Spawnable>() == null)
         {
-            Debug.LogError($"{nameof(prefabToSpawn)} named {prefabToSpawn.gameObject.name} " +
+            Debug.LogError($"{nameof(prefabToSpawn)} named {prefabToSpawn.name} " +
                 $"must have {nameof(Spawnable)} component. Destroying spawner...");
             Destroy(gameObject);
         }
@@ -105,7 +105,7 @@ public class PrefabSpawner : MonoBehaviour
 
         if (logOnSpawn)
         {
-            Debug.Log($"Spawned {spawnedPrefab.gameObject.name} at {spawnedPrefab.transform.position}.");
+            Debug.Log($"Spawned {spawnedPrefab.name} at {spawnedPrefab.transform.position}.");
         }
 
         numPrefabs++;
