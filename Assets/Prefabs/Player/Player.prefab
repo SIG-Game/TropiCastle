@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 981241631752593405}
   m_Layer: 0
   m_Name: AttackBox
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minTimeBetweenHits: 0.33333334
+  enemyKnockbackForce: 2
 --- !u!1 &5288355818519944996
 GameObject:
   m_ObjectHideFlags: 0

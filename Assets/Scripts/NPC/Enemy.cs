@@ -108,18 +108,27 @@ public class Enemy : MonoBehaviour
 
             if (state != EnemyState.KnockedBack)
             {
-                velocityDirection = Vector2.zero;
-
-                state = EnemyState.KnockedBack;
-
                 Vector2 directionFromPlayer = ((Vector2)transform.position - GetPlayerColliderPosition()).normalized;
-
-                transform.GetComponent<Rigidbody2D>().AddForce(directionFromPlayer * knockbackForce, ForceMode2D.Impulse);
-
-                StopCoroutine(nameof(WaitAfterKnockbackCoroutine));
-                StartCoroutine(nameof(WaitAfterKnockbackCoroutine));
+                ApplyKnockback(directionFromPlayer, knockbackForce);
             }
         }
+    }
+
+    public void ApplyKnockback(Vector2 normalizedDirection, float force)
+    {
+        if (state == EnemyState.KnockedBack)
+        {
+            return;
+        }
+
+        velocityDirection = Vector2.zero;
+
+        state = EnemyState.KnockedBack;
+
+        transform.GetComponent<Rigidbody2D>().AddForce(normalizedDirection * force, ForceMode2D.Impulse);
+
+        StopCoroutine(nameof(WaitAfterKnockbackCoroutine));
+        StartCoroutine(nameof(WaitAfterKnockbackCoroutine));
     }
 
     private IEnumerator InitialWaitBeforeChillingCoroutine()
