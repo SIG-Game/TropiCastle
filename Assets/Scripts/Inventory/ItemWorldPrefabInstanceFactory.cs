@@ -47,13 +47,13 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         if (itemToDrop.itemData.name == "Empty")
             return;
 
-        Func<Vector2> spawnPositionGenerator = () =>
+        Vector2 spawnPositionGenerator()
         {
             Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
             randomOffset.Normalize();
             randomOffset *= 0.7f;
             return dropPosition + randomOffset;
-        };
+        }
 
         if (SpawnColliderHelper.TryGetSpawnPositionOutsideColliders(spawnPositionGenerator, itemWorldPrefabColliderExtents,
             maxDropSpawnAttempts, out Vector2 spawnPosition))

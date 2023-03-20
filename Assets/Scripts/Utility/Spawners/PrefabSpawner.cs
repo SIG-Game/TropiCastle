@@ -79,12 +79,12 @@ public class PrefabSpawner : MonoBehaviour
 
     private void SpawnPrefab()
     {
-        Func<Vector2> spawnPositionGenerator = () =>
+        Vector2 spawnPositionGenerator()
         {
             float spawnXPosition = Random.Range(minSpawnPosition.x, maxSpawnPosition.x);
             float spawnYPosition = Random.Range(minSpawnPosition.y, maxSpawnPosition.y);
             return new Vector2(spawnXPosition, spawnYPosition);
-        };
+        }
 
         Vector2 spawnPosition;
 
