@@ -9,7 +9,6 @@ public class DialogueBox : MonoBehaviour
 {
     [SerializeField] private GameObject dialogueBoxUI;
     [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private PlayerController player;
     [SerializeField] private float characterScrollWaitSeconds;
 
     private IEnumerator<string> linesEnumerator;
