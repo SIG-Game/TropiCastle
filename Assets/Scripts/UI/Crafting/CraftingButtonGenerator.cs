@@ -23,7 +23,7 @@ public class CraftingButtonGenerator : MonoBehaviour
             craftingButton.name = $"Craft {craftingRecipes[i].name} Button";
 
             GameObject craftingButtonGameObject = craftingButton as GameObject;
-            craftingButtonGameObject?.GetComponent<CraftingButton>()
+            craftingButtonGameObject.GetComponent<CraftingButton>()
                 .SetUpCraftingButton(crafting, playerInventory, craftingRecipes[i]);
         }
 
