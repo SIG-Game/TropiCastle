@@ -21,11 +21,14 @@ public class PlayerMovement : MonoBehaviour
 
         velocity = Vector2.zero;
 
-        moveAction = GetComponent<PlayerInput>().currentActionMap["Move"];
-
         inWater = false;
 
         waterLayer = LayerMask.NameToLayer("Water");
+    }
+
+    private void Start()
+    {
+        moveAction = InputManager.Instance.GetAction("Move");
     }
 
     private void Update()

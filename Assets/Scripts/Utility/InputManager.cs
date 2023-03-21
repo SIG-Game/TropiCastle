@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class InputManager : MonoBehaviour
     public bool EscapeKeyUsedThisFrame { get; set; }
     public bool NumberKeyUsedThisFrame { get; set; }
 
+    private PlayerInput playerInput;
+
     private bool leftClickDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
     private bool fishButtonDownUsedThisFrame;
@@ -15,6 +18,8 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        playerInput = GetComponent<PlayerInput>();
     }
 
     // Has to run before any scripts that use IfUnusedThisFrame methods
@@ -56,4 +61,6 @@ public class InputManager : MonoBehaviour
 
     public bool GetFishButtonDownIfUnusedThisFrame() =>
         GetInputIfUnusedThisFrame(() => Input.GetButtonDown("Fish"), ref fishButtonDownUsedThisFrame);
+
+    public InputAction GetAction(string actionName) => playerInput.currentActionMap[actionName];
 }
