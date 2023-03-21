@@ -69,7 +69,9 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             }
 
             ingredientsStringBuilder.Append(playerHasIngredient ? "<color=#00FF00>" : "<color=#FF0000>");
-            ingredientsStringBuilder.Append("- " + ingredient.itemData.name + "</color>");
+            ingredientsStringBuilder.Append($"- {ingredient.itemData.name}: ");
+            ingredientsStringBuilder.Append(playerHasIngredient ? "Y" : "N");
+            ingredientsStringBuilder.Append("</color>");
             ingredientsStringBuilder.AppendLine();
         }
 
