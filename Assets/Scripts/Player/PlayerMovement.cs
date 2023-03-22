@@ -57,21 +57,29 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputVector != Vector2.zero)
         {
-            if (inputVector.x < 0)
+            // If the magnitude of the input's y component is greater than the magnitude of the
+            // input's x component, then set the sprite based only on the input's y component
+            if (Mathf.Abs(inputVector.y) > Mathf.Abs(inputVector.x))
             {
-                playerController.LastDirection = CharacterDirection.Left;
-            }
-            else if (inputVector.x > 0)
-            {
-                playerController.LastDirection = CharacterDirection.Right;
-            }
-            else if (inputVector.y < 0)
-            {
-                playerController.LastDirection = CharacterDirection.Down;
+                if (inputVector.y > 0f)
+                {
+                    playerController.LastDirection = CharacterDirection.Up;
+                }
+                else
+                {
+                    playerController.LastDirection = CharacterDirection.Down;
+                }
             }
             else
             {
-                playerController.LastDirection = CharacterDirection.Up;
+                if (inputVector.x > 0f)
+                {
+                    playerController.LastDirection = CharacterDirection.Right;
+                }
+                else
+                {
+                    playerController.LastDirection = CharacterDirection.Left;
+                }
             }
         }
     }
