@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
 
     private PlayerInput playerInput;
 
+    private InputAction interactAction;
     private bool leftClickDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
     private bool fishButtonDownUsedThisFrame;
@@ -20,6 +21,11 @@ public class InputManager : MonoBehaviour
         Instance = this;
 
         playerInput = GetComponent<PlayerInput>();
+    }
+
+    private void Start()
+    {
+        interactAction = InputManager.Instance.GetAction("Interact");
     }
 
     // Has to run before any scripts that use IfUnusedThisFrame methods
@@ -57,7 +63,7 @@ public class InputManager : MonoBehaviour
         GetInputIfUnusedThisFrame(() => Input.GetMouseButtonDown(0), ref leftClickDownUsedThisFrame);
 
     public bool GetInteractButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => Input.GetButtonDown("Interact"), ref interactButtonDownUsedThisFrame);
+        GetInputIfUnusedThisFrame(() => interactAction.WasPressedThisFrame(), ref interactButtonDownUsedThisFrame);
 
     public bool GetFishButtonDownIfUnusedThisFrame() =>
         GetInputIfUnusedThisFrame(() => Input.GetButtonDown("Fish"), ref fishButtonDownUsedThisFrame);
