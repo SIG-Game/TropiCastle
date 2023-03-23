@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private int playerDamageAmount;
-    [SerializeField] private float knockbackForce;
+    [SerializeField] private float playerKnockbackForce;
     [SerializeField] private float maxStartChasingDistanceToPlayer;
     [SerializeField] private float minStopChasingDistanceToPlayer;
     [SerializeField] private float initialWaitTimeBeforeChilling;
@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
             if (state != EnemyState.KnockedBack)
             {
                 Vector2 directionFromPlayer = ((Vector2)transform.position - GetPlayerColliderPosition()).normalized;
-                ApplyKnockback(directionFromPlayer, knockbackForce);
+                ApplyKnockback(directionFromPlayer, playerKnockbackForce);
             }
         }
     }

@@ -291,7 +291,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2.25
   m_AngularDrag: 0.5
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -339,11 +339,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.05
   playerDamageAmount: 10
-  knockbackForce: 0.7
+  playerKnockbackForce: 1.5
   maxStartChasingDistanceToPlayer: 2.5
   minStopChasingDistanceToPlayer: 3.75
   initialWaitTimeBeforeChilling: 1.5
-  waitTimeAfterKnockback: 1.5
+  waitTimeAfterKnockback: 0.6
   playerTransform: {fileID: 0}
   droppedLoot:
   - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
