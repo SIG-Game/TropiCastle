@@ -25,8 +25,15 @@ public class InventoryUIController : MonoBehaviour
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
     }
 
+    // Must run after any script Update methods that can set ActionDisablingUIOpen to true to
+    // prevent an action disabling UI from opening on the same frame that the inventory UI is opened
     private void Update()
     {
+        if (PlayerController.ActionDisablingUIOpen)
+        {
+            return;
+        }
+
         bool closeInventoryUI = Input.GetKeyDown(KeyCode.Escape) && InventoryUIOpen;
 
         if (closeInventoryUI)
