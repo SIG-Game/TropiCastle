@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
     private Vector2 velocity;
     private InputAction moveAction;
+    private InputAction sprintAction;
     private bool inWater;
     private int waterLayer;
 
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         moveAction = InputManager.Instance.GetAction("Move");
+        sprintAction = InputManager.Instance.GetAction("Sprint");
     }
 
     private void Update()
@@ -43,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 newVelocity = movementSpeed * inputVector;
 
-        if (Input.GetButton("Sprint"))
+        if (sprintAction.IsPressed())
         {
             newVelocity *= sprintSpeedMultiplier;
         }
