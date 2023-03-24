@@ -195,7 +195,8 @@ public class PlayerController : MonoBehaviour
     private void AttackWithWeapon(WeaponItemScriptableObject weaponItemData)
     {
         weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
-        weaponController.damage = weaponItemData.damage;
+        weaponController.Damage = weaponItemData.damage;
+        weaponController.EnemyKnockbackForce = weaponItemData.knockback;
 
         animator.Play($"Swing {lastDirection}");
 

@@ -3,9 +3,9 @@
 public class WeaponController : MonoBehaviour
 {
     [SerializeField] private float minTimeBetweenHits;
-    [SerializeField] private float enemyKnockbackForce;
 
-    public int damage { private get; set; }
+    public int Damage { private get; set; }
+    public float EnemyKnockbackForce { private get; set; }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -20,12 +20,12 @@ public class WeaponController : MonoBehaviour
         {
             hitEnemy.LastHitTime = Time.time;
 
-            other.GetComponent<HealthController>().DecreaseHealth(damage);
+            other.GetComponent<HealthController>().DecreaseHealth(Damage);
 
             Vector2 directionToEnemy = (other.transform.position - transform.position).normalized;
-            hitEnemy.ApplyKnockback(directionToEnemy, enemyKnockbackForce);
+            hitEnemy.ApplyKnockback(directionToEnemy, EnemyKnockbackForce);
 
-            Debug.Log($"Attacked enemy {other.name} for {damage} damage.");
+            Debug.Log($"Attacked enemy {other.name} for {Damage} damage with knockback {EnemyKnockbackForce}.");
         }
     }
 }

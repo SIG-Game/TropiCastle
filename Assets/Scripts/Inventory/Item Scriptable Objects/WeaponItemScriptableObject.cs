@@ -5,4 +5,5 @@ public class WeaponItemScriptableObject : ItemScriptableObject
 {
     public Sprite weaponSprite;
     public int damage;
+    public float knockback;
 }
