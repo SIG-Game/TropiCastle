@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class InventoryUITooltipController : MonoBehaviour
 {
@@ -48,7 +51,10 @@ public class InventoryUITooltipController : MonoBehaviour
 
         if (logTooltipList)
         {
-            Debug.Log("After adding:");
+            MethodBase callingMethod = new StackFrame(1).GetMethod();
+            string callingMethodName = callingMethod.Name;
+            string callingType = callingMethod.DeclaringType.Name;
+            Debug.Log($"After adding called from {callingMethodName} in {callingType}:");
             LogTooltipList();
         }
 
@@ -62,7 +68,10 @@ public class InventoryUITooltipController : MonoBehaviour
 
         if (logTooltipList)
         {
-            Debug.Log("After removing:");
+            MethodBase callingMethod = new StackFrame(1).GetMethod();
+            string callingMethodName = callingMethod.Name;
+            string callingType = callingMethod.DeclaringType.Name;
+            Debug.Log($"After removing called from {callingMethodName} in {callingType}:");
             LogTooltipList();
         }
 
