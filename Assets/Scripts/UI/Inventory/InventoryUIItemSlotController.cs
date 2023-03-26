@@ -39,6 +39,13 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
 
     private void SetSlotTooltipText()
     {
+        if (InventoryUITooltipController.Instance.TooltipListContains(tooltipTextWithPriority))
+        {
+            InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
+            Debug.Log("Attempted to add tooltip to tooltip list when a tooltip for " +
+                "this item slot already existed in that list");
+        }
+
         tooltipTextWithPriority = new KeyValuePair<string, int>(GetSlotItemTooltipText(), 0);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }

@@ -128,4 +128,7 @@ public class InventoryUITooltipController : MonoBehaviour
 
         Debug.Log(tooltipListStringBuilder.ToString());
     }
+
+    public bool TooltipListContains(KeyValuePair<string, int> textWithPriority) =>
+        tooltipTextsWithPriority.Contains(textWithPriority);
 }

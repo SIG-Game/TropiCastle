@@ -21286,7 +21286,7 @@ MonoBehaviour:
   tooltipText: {fileID: 1295407917}
   canvasRectTransform: {fileID: 822617741}
   inventoryUIController: {fileID: 1731795749}
-  logTooltipList: 1
+  logTooltipList: 0
 --- !u!1 &755552813
 GameObject:
   m_ObjectHideFlags: 0
