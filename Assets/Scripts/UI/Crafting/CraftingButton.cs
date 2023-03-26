@@ -12,6 +12,14 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private Inventory playerInventory;
 
     private KeyValuePair<string, int> tooltipTextWithPriority;
+    private string resultItemTooltipText;
+
+    private void Awake()
+    {
+        // This could be changed to not be set at runtime
+        // It this wasn't set at runtime, an old item tooltip format might get cached
+        resultItemTooltipText = InventoryUITooltipController.GetItemTooltipText(craftingRecipe.resultItem.itemData);
+    }
 
     public void CraftingButton_OnClick()
     {
@@ -33,7 +41,8 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltipTextWithPriority = new KeyValuePair<string, int>(GetIngredientsAsString(), 0);
+        string craftingButtonTooltipText = $"{GetIngredientsAsString()}Result:\n{resultItemTooltipText}";
+        tooltipTextWithPriority = new KeyValuePair<string, int>(craftingButtonTooltipText, 0);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
