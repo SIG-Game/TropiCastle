@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9056604, g: 0.05398215, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -447,6 +447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af1584e9adacdb4fa4d5328a2f3fd4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fishUIImage: {fileID: 4788721818253555063}
   fishMinX: -200
   fishMaxX: 200
   fishStartPositionMinAbsX: 80

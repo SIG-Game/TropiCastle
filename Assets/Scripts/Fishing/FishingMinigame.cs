@@ -108,6 +108,7 @@ public class FishingMinigame : MonoBehaviour
         int selectedFishIndex = Random.Range(0, fishScriptableObjects.Count);
         selectedFish = fishScriptableObjects[selectedFishIndex];
         fishUI.Speed = selectedFish.speed;
+        fishUI.SetColor(selectedFish.fishUIColor);
 
         if (logSelectedFish)
         {

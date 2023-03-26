@@ -15,3 +15,4 @@ MonoBehaviour:
   species: Goldfish
   description: Not made of gold...
   speed: 220
+  fishUIColor: {r: 1, g: 0.6825071, b: 0, a: 1}

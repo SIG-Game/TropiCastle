@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FishUIController : MonoBehaviour
 {
+    [SerializeField] private Image fishUIImage;
     [SerializeField] private float fishMinX;
     [SerializeField] private float fishMaxX;
     [SerializeField] private float fishStartPositionMinAbsX;
@@ -74,5 +76,10 @@ public class FishUIController : MonoBehaviour
         }
 
         return xPosition;
+    }
+
+    public void SetColor(Color color)
+    {
+        fishUIImage.color = color;
     }
 }
