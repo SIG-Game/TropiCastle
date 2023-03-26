@@ -8,6 +8,8 @@ public class DebugAddItemDropdownController : MonoBehaviour
 
     private List<ItemScriptableObject> itemScriptableObjects;
 
+    public float ScrollRectVerticalNormalizedPosition { get; set; }
+
     private void Awake()
     {
         itemScriptableObjects = new List<ItemScriptableObject>(
@@ -20,6 +22,8 @@ public class DebugAddItemDropdownController : MonoBehaviour
             TMP_Dropdown.OptionData itemOption = new TMP_Dropdown.OptionData(itemScriptableObject.name, itemScriptableObject.sprite);
             dropdown.options.Add(itemOption);
         }
+
+        ScrollRectVerticalNormalizedPosition = 1f;
     }
 
     public ItemScriptableObject GetSelectedItemScriptableObject() => itemScriptableObjects[dropdown.value];

@@ -20513,6 +20513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc5a626935b8fd4ab72b7bcfe85be1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugAddItemDropdownController: {fileID: 1731795750}
   itemSelectionController: {fileID: 1982112583}
 --- !u!1 &606382242
 GameObject:
