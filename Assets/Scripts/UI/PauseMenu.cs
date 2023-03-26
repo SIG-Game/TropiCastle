@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private InputAction pauseInputAction;
+
+    private void Start()
+    {
+        pauseInputAction = InputManager.Instance.GetAction("Pause");
+    }
 
     private void Update()
     {
@@ -12,7 +19,7 @@ public class PauseMenu : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Pause") &&
+        if (pauseInputAction.WasPressedThisFrame() &&
             (!PauseController.Instance.GamePaused || pauseMenuUI.activeInHierarchy))
         {
             TogglePauseMenu();
