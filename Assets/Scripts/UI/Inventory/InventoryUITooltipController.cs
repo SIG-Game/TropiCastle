@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using TMPro;
@@ -80,19 +81,16 @@ public class InventoryUITooltipController : MonoBehaviour
 
     private string GetTooltipTextWithHighestPriority()
     {
-        string tooltipTextWithHighestPriority = null;
-        int? highestPriority = null;
-
-        foreach (var tooltipTextWithPriority in tooltipTextsWithPriority)
+        if (tooltipTextsWithPriority.Count > 0)
         {
-            if (highestPriority == null || tooltipTextWithPriority.Value > highestPriority)
-            {
-                highestPriority = tooltipTextWithPriority.Value;
-                tooltipTextWithHighestPriority = tooltipTextWithPriority.Key;
-            }
+            var tooltipWithHighestPriority = tooltipTextsWithPriority.Aggregate((max, next) => next.Value > max.Value ? next : max);
+            var tooltipTextWithHighestPriority = tooltipWithHighestPriority.Key;
+            return tooltipTextWithHighestPriority;
         }
-
-        return tooltipTextWithHighestPriority ?? string.Empty;
+        else
+        {
+            return string.Empty;
+        }
     }
 
     public static string GetItemTooltipText(ItemScriptableObject item) =>
