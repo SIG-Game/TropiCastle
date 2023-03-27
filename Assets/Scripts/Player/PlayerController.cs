@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
     private CharacterDirection lastDirection;
+    private InputAction healInputAction;
     private LayerMask interactableMask;
     private LayerMask waterMask;
 
@@ -78,6 +80,11 @@ public class PlayerController : MonoBehaviour
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
 
+    private void Start()
+    {
+        healInputAction = InputManager.Instance.GetAction("Heal");
+    }
+
     private void Update()
     {
         if (PauseController.Instance.GamePaused)
@@ -102,7 +109,7 @@ public class PlayerController : MonoBehaviour
         {
             Fish();
         }
-        else if (Input.GetButtonDown("Heal"))
+        else if (healInputAction.WasPressedThisFrame())
         {
             int healingItemIndex = inventory.GetItemList().FindIndex(x => x.itemData is HealingItemScriptableObject);
 
