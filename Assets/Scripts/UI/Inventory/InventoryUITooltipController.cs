@@ -14,7 +14,7 @@ public class InventoryUITooltipController : MonoBehaviour
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private bool logTooltipList;
 
-    private List<KeyValuePair<string, int>> tooltipTextsWithPriority;
+    private List<Tooltip> tooltipTextsWithPriority;
 
     private RectTransform inventoryTooltipRectTransform;
 
@@ -24,7 +24,7 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         Instance = this;
 
-        tooltipTextsWithPriority = new List<KeyValuePair<string, int>>();
+        tooltipTextsWithPriority = new List<Tooltip>();
 
         inventoryTooltipRectTransform = GetComponent<RectTransform>();
 
@@ -46,7 +46,7 @@ public class InventoryUITooltipController : MonoBehaviour
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
 
-    public void AddTooltipTextWithPriority(KeyValuePair<string, int> textWithPriority)
+    public void AddTooltipTextWithPriority(Tooltip textWithPriority)
     {
         tooltipTextsWithPriority.Add(textWithPriority);
 
@@ -63,7 +63,7 @@ public class InventoryUITooltipController : MonoBehaviour
         UpdateInventoryTooltipPosition();
     }
 
-    public void RemoveTooltipTextWithPriority(KeyValuePair<string, int> textWithPriority)
+    public void RemoveTooltipTextWithPriority(Tooltip textWithPriority)
     {
         tooltipTextsWithPriority.Remove(textWithPriority);
 
@@ -83,8 +83,9 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         if (tooltipTextsWithPriority.Count > 0)
         {
-            var tooltipWithHighestPriority = tooltipTextsWithPriority.Aggregate((max, next) => next.Value > max.Value ? next : max);
-            var tooltipTextWithHighestPriority = tooltipWithHighestPriority.Key;
+            var tooltipWithHighestPriority = tooltipTextsWithPriority.Aggregate((max, next) =>
+                next.Priority > max.Priority ? next : max);
+            var tooltipTextWithHighestPriority = tooltipWithHighestPriority.Text;
             return tooltipTextWithHighestPriority;
         }
         else
@@ -120,15 +121,15 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         var tooltipListStringBuilder = new StringBuilder();
 
-        foreach (KeyValuePair<string, int> textWithPriority in tooltipTextsWithPriority)
+        foreach (Tooltip textWithPriority in tooltipTextsWithPriority)
         {
-            string textWithoutNewlines = textWithPriority.Key.Replace("\n", string.Empty);
-            tooltipListStringBuilder.Append($"\"{textWithoutNewlines}\": {textWithPriority.Value}, ");
+            string textWithoutNewlines = textWithPriority.Text.Replace("\n", string.Empty);
+            tooltipListStringBuilder.Append($"\"{textWithoutNewlines}\": {textWithPriority.Priority}, ");
         }
 
         Debug.Log(tooltipListStringBuilder.ToString());
     }
 
-    public bool TooltipListContains(KeyValuePair<string, int> textWithPriority) =>
+    public bool TooltipListContains(Tooltip textWithPriority) =>
         tooltipTextsWithPriority.Contains(textWithPriority);
 }

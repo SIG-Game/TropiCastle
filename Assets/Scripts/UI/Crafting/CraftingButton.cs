@@ -11,7 +11,7 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private Image craftingButtonImage;
     [SerializeField] private Inventory playerInventory;
 
-    private KeyValuePair<string, int> tooltipTextWithPriority;
+    private Tooltip tooltipTextWithPriority;
     private string resultItemTooltipText;
 
     private void Awake()
@@ -42,7 +42,7 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         string craftingButtonTooltipText = $"{GetIngredientsAsString()}Result:\n{resultItemTooltipText}";
-        tooltipTextWithPriority = new KeyValuePair<string, int>(craftingButtonTooltipText, 0);
+        tooltipTextWithPriority = new Tooltip(craftingButtonTooltipText, 0);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 

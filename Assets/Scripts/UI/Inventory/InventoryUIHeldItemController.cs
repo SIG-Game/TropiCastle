@@ -13,7 +13,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private Inventory inventory;
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
-    private KeyValuePair<string, int> tooltipTextWithPriority;
+    private Tooltip tooltipTextWithPriority;
     private int heldItemIndex;
 
     public static InventoryUIHeldItemController Instance;
@@ -94,7 +94,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemIndex = itemIndex;
         heldItemImage.sprite = itemData.sprite;
 
-        tooltipTextWithPriority = new KeyValuePair<string, int>(
+        tooltipTextWithPriority = new Tooltip(
             InventoryUITooltipController.GetItemTooltipText(itemData), 1);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }

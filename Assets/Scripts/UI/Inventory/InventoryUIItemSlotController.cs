@@ -9,7 +9,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
 
-    private KeyValuePair<string, int> tooltipTextWithPriority;
+    private Tooltip tooltipTextWithPriority;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -46,7 +46,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
                 "this item slot already existed in that list");
         }
 
-        tooltipTextWithPriority = new KeyValuePair<string, int>(GetSlotItemTooltipText(), 0);
+        tooltipTextWithPriority = new Tooltip(GetSlotItemTooltipText(), 0);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
