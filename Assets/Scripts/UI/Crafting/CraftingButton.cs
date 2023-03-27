@@ -18,7 +18,8 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         // This could be changed to not be set at runtime
         // It this wasn't set at runtime, an old item tooltip format might get cached
-        resultItemTooltipText = InventoryUITooltipController.GetItemTooltipText(craftingRecipe.resultItem.itemData);
+        resultItemTooltipText = $"Result:\n" +
+            $"{InventoryUITooltipController.GetItemTooltipText(craftingRecipe.resultItem.itemData)}";
     }
 
     public void CraftingButton_OnClick()
@@ -41,8 +42,8 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        string craftingButtonTooltipText = $"{GetIngredientsAsString()}Result:\n{resultItemTooltipText}";
-        tooltipTextWithPriority = new Tooltip(craftingButtonTooltipText, 0);
+        string craftingButtonTooltipText = GetIngredientsAsString();
+        tooltipTextWithPriority = new Tooltip(craftingButtonTooltipText, resultItemTooltipText, 0);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 

@@ -10,6 +10,7 @@ using Debug = UnityEngine.Debug;
 public class InventoryUITooltipController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tooltipText;
+    [SerializeField] private TextMeshProUGUI alternateTooltipText;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private bool logTooltipList;
@@ -59,7 +60,7 @@ public class InventoryUITooltipController : MonoBehaviour
             LogTooltipList();
         }
 
-        tooltipText.text = GetTooltipTextWithHighestPriority();
+        UpdateTooltipText();
         UpdateInventoryTooltipPosition();
     }
 
@@ -76,22 +77,29 @@ public class InventoryUITooltipController : MonoBehaviour
             LogTooltipList();
         }
 
-        tooltipText.text = GetTooltipTextWithHighestPriority();
+        UpdateTooltipText();
     }
 
-    private string GetTooltipTextWithHighestPriority()
+    private void UpdateTooltipText()
     {
+        string tooltipTextWithHighestPriority = string.Empty;
+        string alternateTooltipTextWithHighestPriority = string.Empty;
+
         if (tooltipTextsWithPriority.Count > 0)
         {
             var tooltipWithHighestPriority = tooltipTextsWithPriority.Aggregate((max, next) =>
                 next.Priority > max.Priority ? next : max);
-            var tooltipTextWithHighestPriority = tooltipWithHighestPriority.Text;
-            return tooltipTextWithHighestPriority;
+            tooltipTextWithHighestPriority = tooltipWithHighestPriority.Text;
+
+            if (tooltipWithHighestPriority.AlternateText != null)
+            {
+                alternateTooltipTextWithHighestPriority =
+                    tooltipWithHighestPriority.AlternateText;
+            }
         }
-        else
-        {
-            return string.Empty;
-        }
+
+        tooltipText.text = tooltipTextWithHighestPriority;
+        alternateTooltipText.text = alternateTooltipTextWithHighestPriority;
     }
 
     public static string GetItemTooltipText(ItemScriptableObject item) =>
@@ -115,6 +123,7 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         tooltipTextsWithPriority.Clear();
         tooltipText.text = string.Empty;
+        alternateTooltipText.text = string.Empty;
     }
 
     private void LogTooltipList()
