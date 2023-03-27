@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class InventoryFullUIController : MonoBehaviour
 {
@@ -6,7 +7,8 @@ public class InventoryFullUIController : MonoBehaviour
     [SerializeField] private float visibleTimeSeconds;
     [SerializeField] private float alphaChangeSpeed;
 
-    private float visibleTimer;
+    private Coroutine startFadingOutAfterWaitCoroutineObject;
+    private WaitForSeconds visibleWaitForSeconds;
     private float targetAlpha;
 
     public static InventoryFullUIController Instance;
@@ -15,24 +17,13 @@ public class InventoryFullUIController : MonoBehaviour
     {
         Instance = this;
 
-        targetAlpha = 0f;
+        visibleWaitForSeconds = new WaitForSeconds(visibleTimeSeconds);
 
-        // Do not increase timer until inventory full UI is shown
-        visibleTimer = visibleTimeSeconds;
+        targetAlpha = 0f;
     }
 
     private void Update()
     {
-        if (visibleTimer < visibleTimeSeconds)
-        {
-            visibleTimer += Time.deltaTime;
-
-            if (visibleTimer >= visibleTimeSeconds)
-            {
-                targetAlpha = 0f;
-            }
-        }
-
         if (canvasGroup.alpha != targetAlpha)
         {
             canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha,
@@ -45,9 +36,23 @@ public class InventoryFullUIController : MonoBehaviour
         Instance = null;
     }
 
+    private IEnumerator StartFadingOutAfterWaitCoroutine()
+    {
+        yield return visibleWaitForSeconds;
+
+        targetAlpha = 0f;
+    }
+
     public void ShowInventoryFullText()
     {
-        visibleTimer = 0f;
+        if (startFadingOutAfterWaitCoroutineObject != null)
+        {
+            StopCoroutine(startFadingOutAfterWaitCoroutineObject);
+        }
+
         targetAlpha = 1f;
+
+        startFadingOutAfterWaitCoroutineObject =
+            StartCoroutine(StartFadingOutAfterWaitCoroutine());
     }
 }
