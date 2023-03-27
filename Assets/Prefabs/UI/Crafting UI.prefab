@@ -255,7 +255,6 @@ MonoBehaviour:
     type: 3}
   craftingButtonsParentTransform: {fileID: 3872985726266844870}
   playerInventory: {fileID: 0}
-  yDistanceBetweenButtons: -60
 --- !u!1001 &3872985727176148562
 PrefabInstance:
   m_ObjectHideFlags: 0
