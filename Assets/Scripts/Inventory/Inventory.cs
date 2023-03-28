@@ -37,6 +37,23 @@ public class Inventory : MonoBehaviour
         firstEmptyIndex = 0;
     }
 
+    [ContextMenu("Fill Inventory")]
+    private void FillInventory()
+    {
+        ItemScriptableObject coconutItemInfo = Resources.Load<ItemScriptableObject>("Items/Coconut");
+
+        ItemWithAmount coconutItem = new ItemWithAmount
+        {
+            itemData = coconutItemInfo,
+            amount = 1
+        };
+
+        while (!IsFull())
+        {
+            AddItem(coconutItem);
+        }
+    }
+
     public void AddItem(ItemScriptableObject info, int amount)
     {
         ItemWithAmount newItem = new ItemWithAmount
