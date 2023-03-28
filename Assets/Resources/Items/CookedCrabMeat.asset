@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 589775ed7f6875e428770945389d8911, type: 3}
   m_Name: CookedCrabMeat
   m_EditorClassIdentifier: 
-  name: CookedCrabMeat
+  name: Cooked Crab Meat
   sprite: {fileID: 21300000, guid: 26cadbf702382f248ae1939959bc0872, type: 3}
   healAmount: 20
