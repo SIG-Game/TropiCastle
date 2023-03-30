@@ -19,7 +19,7 @@ public class ItemWorld : Interactable
         {
             ItemWithAmount hotbarItem = player.GetSelectedItem();
             int selectedItemIndex = player.GetSelectedItemIndex();
-            if (hotbarItem.itemData.name == "RawCrabMeat")
+            if (hotbarItem.itemData.name == "Raw Crab Meat")
             {
                 Inventory playerInventory = player.GetInventory();
                 playerInventory.RemoveItemAtIndex(selectedItemIndex);

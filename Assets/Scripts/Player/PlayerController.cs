@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
         // Do not check for fish input on the same frame that an item is used
         else if (InputManager.Instance.GetFishButtonDownIfUnusedThisFrame() &&
             !ActionDisablingUIOpen &&
-            inventory.GetItemList().FindIndex(x => x.itemData.name == "FishingRod") != -1)
+            inventory.GetItemList().FindIndex(x => x.itemData.name == "Fishing Rod") != -1)
         {
             Fish();
         }
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
             case WeaponItemScriptableObject weaponItemData:
                 AttackWithWeapon(weaponItemData);
                 break;
-            case { name: "FishingRod" }:
+            case { name: "Fishing Rod" }:
                 Fish();
                 break;
             default:
