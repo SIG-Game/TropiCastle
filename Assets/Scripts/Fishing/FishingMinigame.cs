@@ -10,6 +10,7 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private GameObject fishingUI;
     [SerializeField] private FishUIController fishUI;
     [SerializeField] private PlayerController player;
+    [SerializeField] private PlayerFishItemInWorldController playerFishItemInWorld;
     [SerializeField] private float minCatchFishX;
     [SerializeField] private float maxCatchFishX;
     [SerializeField] private bool logSelectedFish;
@@ -74,7 +75,15 @@ public class FishingMinigame : MonoBehaviour
     private void CatchFish()
     {
         ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
-        Action afterCatchDialogueAction = () => playerInventory.AddItem(caughtFishItem, 1);
+
+        playerFishItemInWorld.ShowPlayerFishItemInWorld(caughtFishItem.sprite);
+
+        Action afterCatchDialogueAction = () =>
+        {
+            playerInventory.AddItem(caughtFishItem, 1);
+            playerFishItemInWorld.HidePlayerFishItemInWorld();
+        };
+
         DialogueBox.Instance.PlayDialogue($"You caught a {selectedFish.species.ToLowerInvariant()}!\n" +
             $"{selectedFish.description}", afterCatchDialogueAction);
     }
