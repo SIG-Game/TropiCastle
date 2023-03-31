@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InventoryUIController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class InventoryUIController : MonoBehaviour
     [SerializeField] private GameObject inventoryUI;
     [SerializeField] private ItemSlotContainerController itemSlotContainer;
     [SerializeField] private ItemSelectionController itemSelectionController;
+
+    private InputAction inventoryAction;
 
     public event Action OnInventoryClosed = delegate { };
 
@@ -23,6 +26,11 @@ public class InventoryUIController : MonoBehaviour
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
+    }
+
+    private void Start()
+    {
+        inventoryAction = InputManager.Instance.GetAction("Inventory");
     }
 
     // Must run after any script Update methods that can set ActionDisablingUIOpen to true to
@@ -41,7 +49,7 @@ public class InventoryUIController : MonoBehaviour
             InputManager.Instance.EscapeKeyUsedThisFrame = true;
         }
 
-        bool toggleInventoryUI = (Input.GetButtonDown("Inventory") &&
+        bool toggleInventoryUI = (inventoryAction.WasPressedThisFrame() &&
             (!PauseController.Instance.GamePaused || InventoryUIOpen)) ||
             closeInventoryUI;
         if (toggleInventoryUI)
