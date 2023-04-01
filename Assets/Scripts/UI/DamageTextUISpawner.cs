@@ -23,9 +23,12 @@ public class DamageTextUISpawner : MonoBehaviour
         {
             int damage = previousHealth.Value - newHealth;
 
-            GameObject damageTextGameObject = Instantiate(damageTextPrefab, transform);
+            if (damage > 0)
+            {
+                GameObject damageTextGameObject = Instantiate(damageTextPrefab, transform);
 
-            damageTextGameObject.GetComponent<DamageTextUIController>().SetUpDamageText(damage);
+                damageTextGameObject.GetComponent<DamageTextUIController>().SetUpDamageText(damage);
+            }
         }
 
         previousHealth = newHealth;
