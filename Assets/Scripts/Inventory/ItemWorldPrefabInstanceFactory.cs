@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +10,9 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
     [SerializeField] private Transform itemWorldParent;
     [SerializeField] private Vector2 itemWorldPrefabColliderExtents;
 
+    private Dictionary<string, IItemInteraction> itemNameToInteraction;
+    private CampfireItemInteraction campfireItemInteraction;
+
     private const int maxDropSpawnAttempts = 20;
 
     public static ItemWorldPrefabInstanceFactory Instance;
@@ -17,6 +20,13 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        campfireItemInteraction = new CampfireItemInteraction();
+
+        itemNameToInteraction = new Dictionary<string, IItemInteraction>
+        {
+            { "Campfire", campfireItemInteraction }
+        };
     }
 
     private void OnDestroy()
@@ -40,6 +50,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
         spawnedItemWorld.item = itemToSpawn;
+        spawnedItemWorld.ItemInteraction = itemNameToInteraction.GetValueOrDefault(itemToSpawn.itemData.name);
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)
