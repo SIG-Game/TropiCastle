@@ -1,10 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AutoHealButton : MonoBehaviour
 {
+    [SerializeField] private Button autoHealButton;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private HealthController playerHealthController;
+
+    private void Awake()
+    {
+        playerHealthController.OnHealthChanged += HealthController_OnHealthChanged;
+    }
 
     public void AutoHealButton_OnClick()
     {
@@ -28,5 +35,10 @@ public class AutoHealButton : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void HealthController_OnHealthChanged(int _)
+    {
+        autoHealButton.interactable = !playerHealthController.AtMaxHealth();
     }
 }

@@ -41267,6 +41267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173113857dcaed846a62149e214ed6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoHealButton: {fileID: 846923064}
   playerInventory: {fileID: 1982112582}
   playerHealthController: {fileID: 1982112581}
 --- !u!1 &1739818043
