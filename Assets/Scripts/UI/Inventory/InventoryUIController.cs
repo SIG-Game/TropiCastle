@@ -37,6 +37,8 @@ public class InventoryUIController : ItemSlotContainerController
 
     // Must run after any script Update methods that can set ActionDisablingUIOpen to true to
     // prevent an action disabling UI from opening on the same frame that the inventory UI is opened
+    // Must run before ItemSelectionController Update method so that using number keys to swap items
+    // in inventory UI takes priority over using number keys to select an item
     private void Update()
     {
         if (PlayerController.ActionDisablingUIOpen)
