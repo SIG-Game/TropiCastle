@@ -154,7 +154,7 @@ public class InventoryUIController : ItemSlotContainerController
     {
         Sprite changedItemSprite = item.itemData.sprite;
 
-        SetInventorySpriteAtSlotIndex(changedItemSprite, index);
+        SetSpriteAtSlotIndex(changedItemSprite, index);
     }
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
@@ -165,11 +165,6 @@ public class InventoryUIController : ItemSlotContainerController
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
         UnhighlightSlotAtIndex(index);
-    }
-
-    public void SetInventorySpriteAtSlotIndex(Sprite sprite, int slotIndex)
-    {
-        SetSpriteAtSlotIndex(sprite, slotIndex);
     }
 
     public Inventory GetInventory() => inventory;
