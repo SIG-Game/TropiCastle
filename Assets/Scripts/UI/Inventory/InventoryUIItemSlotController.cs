@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private InventoryUIItemSlotContainerController inventoryUIItemSlotContainer;
+    [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
 
@@ -13,7 +12,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        inventoryUIItemSlotContainer.HoveredItemIndex = slotItemIndex;
+        inventoryUIController.HoveredItemIndex = slotItemIndex;
         SetSlotTooltipText();
     }
 
@@ -27,7 +26,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        inventoryUIItemSlotContainer.HoveredItemIndex = -1;
+        inventoryUIController.HoveredItemIndex = -1;
         InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
     }
 

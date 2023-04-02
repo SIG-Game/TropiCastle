@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +6,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
     [SerializeField] private GameObject heldItemUI;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
-    [SerializeField] private InventoryUIItemSlotContainerController itemSlotContainer;
     [SerializeField] private Sprite transparentSprite;
 
     private Inventory inventory;
@@ -81,7 +79,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         {
             inventory.SwapItemsAt(heldItemIndex, itemIndex);
 
-            itemSlotContainer.UpdateInventoryTooltipAtIndex(itemIndex);
+            inventoryUIController.UpdateInventoryTooltipAtIndex(itemIndex);
         }
 
         HideHeldItem();

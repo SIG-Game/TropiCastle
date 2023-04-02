@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-public class HotbarUIController : MonoBehaviour
+public class HotbarUIController : ItemSlotContainerController
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private ItemSelectionController itemSelectionController;
-    [SerializeField] private ItemSlotContainerController itemSlotContainer;
     [SerializeField] private InventoryUIController inventoryUIController;
 
     private int hotbarSize;
@@ -20,7 +19,7 @@ public class HotbarUIController : MonoBehaviour
 
     private void Start()
     {
-        hotbarSize = itemSlotContainer.GetItemSlotCount();
+        hotbarSize = GetItemSlotCount();
     }
 
     private void OnDestroy()
@@ -40,7 +39,7 @@ public class HotbarUIController : MonoBehaviour
 
         Sprite changedItemSprite = item.itemData.sprite;
 
-        itemSlotContainer.SetSpriteAtSlotIndex(changedItemSprite, index);
+        SetSpriteAtSlotIndex(changedItemSprite, index);
     }
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
@@ -60,7 +59,7 @@ public class HotbarUIController : MonoBehaviour
             return;
         }
 
-        itemSlotContainer.UnhighlightSlotAtIndex(index);
+        UnhighlightSlotAtIndex(index);
     }
 
     private void InventoryUIController_OnInventoryClosed()
@@ -75,13 +74,13 @@ public class HotbarUIController : MonoBehaviour
         {
             Sprite itemSpriteAtCurrentIndex = inventory.GetItemAtIndex(i).itemData.sprite;
 
-            itemSlotContainer.SetSpriteAtSlotIndex(itemSpriteAtCurrentIndex, i);
+            SetSpriteAtSlotIndex(itemSpriteAtCurrentIndex, i);
         }
     }
 
     private void UpdateHotbarHighlightedItemSlot()
     {
-        itemSlotContainer.UnhighlightSlotAtIndex(hotbarHighlightedItemSlotIndex);
+        UnhighlightSlotAtIndex(hotbarHighlightedItemSlotIndex);
         HighlightHotbarItemSlotAtIndex(itemSelectionController.SelectedItemIndex);
     }
 
@@ -89,6 +88,6 @@ public class HotbarUIController : MonoBehaviour
     {
         hotbarHighlightedItemSlotIndex = index;
 
-        itemSlotContainer.HighlightSlotAtIndex(index);
+        HighlightSlotAtIndex(index);
     }
 }

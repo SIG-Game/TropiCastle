@@ -1,16 +1,18 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InventoryUIController : MonoBehaviour
+public class InventoryUIController : ItemSlotContainerController
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject craftingUI;
     [SerializeField] private GameObject inventoryUI;
-    [SerializeField] private ItemSlotContainerController itemSlotContainer;
     [SerializeField] private ItemSelectionController itemSelectionController;
 
     private InputAction inventoryAction;
+
+    public int HoveredItemIndex { private get; set; }
 
     public event Action OnInventoryClosed = delegate { };
 
@@ -64,6 +66,57 @@ public class InventoryUIController : MonoBehaviour
                 OnInventoryClosed();
             }
         }
+
+        if (InventoryUIOpen &&
+            (InventoryUIHeldItemController.Instance.HoldingItem() || HoveredItemIndex != -1))
+        {
+            int numberKeyIndex = -1;
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                numberKeyIndex = 0;
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+                numberKeyIndex = 1;
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+                numberKeyIndex = 2;
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+                numberKeyIndex = 3;
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+                numberKeyIndex = 4;
+            else if (Input.GetKeyDown(KeyCode.Alpha6))
+                numberKeyIndex = 5;
+            else if (Input.GetKeyDown(KeyCode.Alpha7))
+                numberKeyIndex = 6;
+            else if (Input.GetKeyDown(KeyCode.Alpha8))
+                numberKeyIndex = 7;
+            else if (Input.GetKeyDown(KeyCode.Alpha9))
+                numberKeyIndex = 8;
+            else if (Input.GetKeyDown(KeyCode.Alpha0))
+                numberKeyIndex = 9;
+
+            if (numberKeyIndex != -1)
+            {
+                int swapItemIndex;
+
+                if (InventoryUIHeldItemController.Instance.HoldingItem())
+                {
+                    swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
+
+                    InventoryUIHeldItemController.Instance.HideHeldItem();
+                }
+                else
+                {
+                    swapItemIndex = HoveredItemIndex;
+                }
+
+                InputManager.Instance.NumberKeyUsedThisFrame = true;
+                inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
+
+                if (HoveredItemIndex != -1)
+                {
+                    UpdateInventoryTooltipAtIndex(HoveredItemIndex);
+                }
+            }
+        }
     }
 
     private void OnDestroy()
@@ -71,6 +124,28 @@ public class InventoryUIController : MonoBehaviour
         inventory.ChangedItemAtIndex -= Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex -= ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex -= ItemSelectionController_OnItemDeselectedAtIndex;
+    }
+
+    public void UpdateInventoryTooltipAtIndex(int itemIndex)
+    {
+        (itemSlotControllers[itemIndex] as InventoryUIItemSlotController).ResetSlotTooltipText();
+    }
+
+    [ContextMenu("Set Inventory UI Item Slot Indexes")]
+    private void SetInventoryUIItemSlotIndexes()
+    {
+        InventoryUIItemSlotController[] childInventoryUIItemSlots =
+            GetComponentsInChildren<InventoryUIItemSlotController>(true);
+
+        Undo.RecordObjects(childInventoryUIItemSlots, "Set Inventory UI Item Slot Indexes");
+
+        int currentSlotItemIndex = 0;
+        foreach (InventoryUIItemSlotController inventoryUIItemSlot in
+            childInventoryUIItemSlots)
+        {
+            inventoryUIItemSlot.SetSlotItemIndex(currentSlotItemIndex);
+            ++currentSlotItemIndex;
+        }
     }
 
     private void Inventory_ChangedItemAtIndex(ItemWithAmount item, int index)
@@ -82,17 +157,17 @@ public class InventoryUIController : MonoBehaviour
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        itemSlotContainer.HighlightSlotAtIndex(index);
+        HighlightSlotAtIndex(index);
     }
 
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        itemSlotContainer.UnhighlightSlotAtIndex(index);
+        UnhighlightSlotAtIndex(index);
     }
 
     public void SetInventorySpriteAtSlotIndex(Sprite sprite, int slotIndex)
     {
-        itemSlotContainer.SetSpriteAtSlotIndex(sprite, slotIndex);
+        SetSpriteAtSlotIndex(sprite, slotIndex);
     }
 
     public Inventory GetInventory() => inventory;

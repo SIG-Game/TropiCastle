@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ItemSlotContainerController : MonoBehaviour
+public abstract class ItemSlotContainerController : MonoBehaviour
 {
     [SerializeField] private Color highlightedSlotColor;
     [SerializeField] private Color unhighlightedSlotColor;
@@ -15,7 +14,7 @@ public class ItemSlotContainerController : MonoBehaviour
     private void SetItemSlotControllers()
     {
         ItemSlotController[] childItemSlotControllersArray =
-            GetComponentsInChildren<ItemSlotController>();
+            GetComponentsInChildren<ItemSlotController>(true);
 
         itemSlotControllers = new List<ItemSlotController>(childItemSlotControllersArray);
 
