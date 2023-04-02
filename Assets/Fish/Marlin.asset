@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Marlin
   m_EditorClassIdentifier: 
   species: Marlin
-  description: Quite the nose on this one
+  description: Quite the nose on this one.
   speed: 440
   fishUIColor: {r: 0, g: 0.655246, b: 1, a: 1}

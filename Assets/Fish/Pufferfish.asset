@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pufferfish
   m_EditorClassIdentifier: 
   species: Pufferfish
-  description: A very prickly fish
+  description: A very prickly fish.
   speed: 176
   fishUIColor: {r: 1, g: 0.9346504, b: 0.30566037, a: 1}
