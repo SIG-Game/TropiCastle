@@ -10,8 +10,8 @@ public class CraftingButtonGenerator : MonoBehaviour
     [SerializeField] private Transform craftingButtonsParentTransform;
     [SerializeField] private Inventory playerInventory;
 
-    [ContextMenu("Generate Crafting Buttons")]
-    private void GenerateCraftingButtons()
+    [ContextMenu("Regenerate Crafting Buttons")]
+    private void RegenerateCraftingButtons()
     {
         if (PrefabStageUtility.GetCurrentPrefabStage() != null)
         {
@@ -20,21 +20,27 @@ public class CraftingButtonGenerator : MonoBehaviour
             return;
         }
 
-        string path = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
-        GameObject prefabRoot = PrefabUtility.LoadPrefabContents(path);
+        string prefabAssetPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
+        GameObject prefabRoot = PrefabUtility.LoadPrefabContents(prefabAssetPath);
 
-        CraftingRecipeScriptableObject[] craftingRecipes = Resources.LoadAll<CraftingRecipeScriptableObject>("Crafting Recipes");
+        Transform prefabCraftingButtonsParent =
+            prefabRoot.GetComponent<CraftingButtonGenerator>().craftingButtonsParentTransform;
+
+        DeleteCraftingButtons(prefabCraftingButtonsParent);
+
+        CraftingRecipeScriptableObject[] craftingRecipes =
+            Resources.LoadAll<CraftingRecipeScriptableObject>("Crafting Recipes");
 
         // Apply changes to prefab
         for (int i = 0; i < craftingRecipes.Length; ++i)
         {
             Object craftingButton = PrefabUtility.InstantiatePrefab(craftingButtonPrefab,
-                prefabRoot.GetComponent<CraftingButtonGenerator>().craftingButtonsParentTransform);
+                prefabCraftingButtonsParent);
             craftingButton.name = $"Craft {craftingRecipes[i].name} Button";
         }
 
         PrefabUtility.RecordPrefabInstancePropertyModifications(prefabRoot);
-        PrefabUtility.SaveAsPrefabAsset(prefabRoot, path);
+        PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabAssetPath);
         PrefabUtility.UnloadPrefabContents(prefabRoot);
 
         // Apply changes to prefab instance
@@ -50,5 +56,16 @@ public class CraftingButtonGenerator : MonoBehaviour
             EditorUtility.SetDirty(instanceCraftingButtonGameObject.transform
                 .GetChild(0).GetComponent<Image>());
         }
+    }
+
+    private void DeleteCraftingButtons(Transform prefabCraftingButtonsParent)
+    {
+        // Delete crafting buttons from prefab
+        while (prefabCraftingButtonsParent.childCount > 0)
+        {
+            DestroyImmediate(prefabCraftingButtonsParent.GetChild(0).gameObject);
+        }
+
+        // Crafting buttons are deleted from the prefab instance automatically
     }
 }
