@@ -118,14 +118,14 @@ public class Enemy : MonoBehaviour
     {
         if (state == EnemyState.KnockedBack)
         {
-            return;
+            rb2d.velocity = Vector2.zero;
         }
 
         velocityDirection = Vector2.zero;
 
         state = EnemyState.KnockedBack;
 
-        transform.GetComponent<Rigidbody2D>().AddForce(normalizedDirection * force, ForceMode2D.Impulse);
+        rb2d.AddForce(normalizedDirection * force, ForceMode2D.Impulse);
 
         StopCoroutine(nameof(WaitAfterKnockbackCoroutine));
         StartCoroutine(nameof(WaitAfterKnockbackCoroutine));
