@@ -11,6 +11,8 @@ public class Chimp : NPCInteractable
     [SerializeField] private float minTimeSecondsBetweenGives;
     [SerializeField] private float maxTimeSecondsBetweenGives;
     [SerializeField] private Transform itemToGiveInWorld;
+
+    // Direction order for this variable is up, down, left, right
     [SerializeField] private List<Vector3> itemToGiveInWorldOffsets;
 
     private List<CharacterDirection> spinDirections;
@@ -100,7 +102,7 @@ public class Chimp : NPCInteractable
         else
             itemToGiveInWorldSpriteRenderer.sortingOrder = 1;
 
-        itemToGiveInWorld.position = transform.position + itemToGiveInWorldOffset;
+        itemToGiveInWorld.localPosition = itemToGiveInWorldOffset;
         itemToGiveInWorldSpriteRenderer.sprite = itemToGive.itemData.sprite;
     }
 
