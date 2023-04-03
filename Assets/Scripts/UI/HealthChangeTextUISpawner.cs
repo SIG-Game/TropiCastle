@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class DamageTextUISpawner : MonoBehaviour
+public class HealthChangeTextUISpawner : MonoBehaviour
 {
     [SerializeField] private HealthController targetHealthController;
-    [SerializeField] private GameObject damageTextPrefab;
+    [SerializeField] private GameObject healthChangeTextPrefab;
 
     private int? previousHealth;
 
@@ -21,14 +21,13 @@ public class DamageTextUISpawner : MonoBehaviour
     {
         if (previousHealth != null)
         {
-            int damage = previousHealth.Value - newHealth;
+            GameObject healthChangeTextGameObject = Instantiate(healthChangeTextPrefab, transform);
+            HealthChangeTextUIController healthChangeTextUIController =
+                healthChangeTextGameObject.GetComponent<HealthChangeTextUIController>();
 
-            if (damage > 0)
-            {
-                GameObject damageTextGameObject = Instantiate(damageTextPrefab, transform);
+            int healthDelta = newHealth - previousHealth.Value;
 
-                damageTextGameObject.GetComponent<DamageTextUIController>().SetUpDamageText(damage);
-            }
+            healthChangeTextUIController.SetUpHealthChangeText(healthDelta);
         }
 
         previousHealth = newHealth;

@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 3201894121020275491}
   - component: {fileID: 1407859890151699208}
   m_Layer: 0
-  m_Name: Damage Text Spawner
+  m_Name: Health Change Text Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,5 +542,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHealthController: {fileID: 3015389456133774718}
-  damageTextPrefab: {fileID: 928500359597897181, guid: 9242018da622f564fab950dc3cde3d28,
+  healthChangeTextPrefab: {fileID: 928500359597897181, guid: 9242018da622f564fab950dc3cde3d28,
     type: 3}

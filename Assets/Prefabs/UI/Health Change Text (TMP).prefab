@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8620204725213791092}
   - component: {fileID: 2394823414205868313}
   m_Layer: 0
-  m_Name: Damage Text (TMP)
+  m_Name: Health Change Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff6659e6c6bcca439703906137aeb66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageText: {fileID: 8620204725213791092}
+  healthChangeText: {fileID: 8620204725213791092}
+  damageTextColor: {r: 0.8862745, g: 0, b: 0, a: 1}
+  healTextColor: {r: 0.079430856, g: 0.8679245, b: 0, a: 1}
   yVelocity: 1
   waitSecondsBeforeFadeOut: 0.35
   fadeOutSpeed: 3.5

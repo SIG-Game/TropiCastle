@@ -2,9 +2,11 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class DamageTextUIController : MonoBehaviour
+public class HealthChangeTextUIController : MonoBehaviour
 {
-    [SerializeField] private TMP_Text damageText;
+    [SerializeField] private TMP_Text healthChangeText;
+    [SerializeField] private Color damageTextColor;
+    [SerializeField] private Color healTextColor;
     [SerializeField] private float yVelocity;
     [SerializeField] private float waitSecondsBeforeFadeOut;
     [SerializeField] private float fadeOutSpeed;
@@ -29,11 +31,11 @@ public class DamageTextUIController : MonoBehaviour
     {
         yield return beforeFadeOutWaitForSecondsObject;
 
-        while (damageText.color.a > 0f)
+        while (healthChangeText.color.a > 0f)
         {
             yield return null;
 
-            float newAlpha = damageText.color.a - fadeOutSpeed * Time.deltaTime;
+            float newAlpha = healthChangeText.color.a - fadeOutSpeed * Time.deltaTime;
 
             if (newAlpha <= 0f)
             {
@@ -42,12 +44,22 @@ public class DamageTextUIController : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            damageText.color = new Color(damageText.color.r, damageText.color.g, damageText.color.b, newAlpha);
+            healthChangeText.color = new Color(healthChangeText.color.r, healthChangeText.color.g,
+                healthChangeText.color.b, newAlpha);
         }
     }
 
-    public void SetUpDamageText(int damage)
+    public void SetUpHealthChangeText(int healthDelta)
     {
-        damageText.text = $"-{damage}";
+        if (healthDelta < 0)
+        {
+            healthChangeText.text = healthDelta.ToString();
+            healthChangeText.color = damageTextColor;
+        }
+        else
+        {
+            healthChangeText.text = $"+{healthDelta}";
+            healthChangeText.color = healTextColor;
+        }
     }
 }
