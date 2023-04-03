@@ -51,14 +51,7 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         tooltipTextsWithPriority.Add(textWithPriority);
 
-        if (logTooltipList)
-        {
-            MethodBase callingMethod = new StackFrame(1).GetMethod();
-            string callingMethodName = callingMethod.Name;
-            string callingType = callingMethod.DeclaringType.Name;
-            Debug.Log($"After adding called from {callingMethodName} in {callingType}:");
-            LogTooltipList();
-        }
+        LogTooltipListAfterTooltipOperation("adding");
 
         UpdateTooltipText();
         UpdateInventoryTooltipPosition();
@@ -68,14 +61,7 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         tooltipTextsWithPriority.Remove(textWithPriority);
 
-        if (logTooltipList)
-        {
-            MethodBase callingMethod = new StackFrame(1).GetMethod();
-            string callingMethodName = callingMethod.Name;
-            string callingType = callingMethod.DeclaringType.Name;
-            Debug.Log($"After removing called from {callingMethodName} in {callingType}:");
-            LogTooltipList();
-        }
+        LogTooltipListAfterTooltipOperation("removing");
 
         UpdateTooltipText();
     }
@@ -137,6 +123,24 @@ public class InventoryUITooltipController : MonoBehaviour
         }
 
         Debug.Log(tooltipListStringBuilder.ToString());
+    }
+
+    private void LogTooltipListAfterTooltipOperation(string operationName)
+    {
+        if (logTooltipList)
+        {
+            // callingMethod is the method that called the method
+            // that called LogTooltipListAfterTooltipOperation
+            MethodBase callingMethod = new StackFrame(2).GetMethod();
+
+            string callingMethodName = callingMethod.Name;
+            string callingType = callingMethod.DeclaringType.Name;
+
+            Debug.Log($"Tooltip list after {operationName} called from " +
+                $"{callingMethodName} in {callingType}:");
+
+            LogTooltipList();
+        }
     }
 
     public bool TooltipListContains(Tooltip textWithPriority) =>
