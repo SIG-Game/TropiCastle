@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -11,10 +12,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float minStopChasingDistanceToPlayer;
     [SerializeField] private float initialWaitTimeBeforeChilling;
     [SerializeField] private float waitTimeAfterKnockback;
+    [SerializeField] private float fadeOutSpeed;
+    [SerializeField] private TMP_Text healthText;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private List<ItemWithAmount> droppedLoot;
 
     private Rigidbody2D rb2d;
+    private new Collider2D collider2D;
+    private SpriteRenderer spriteRenderer;
     private HealthController healthController;
     private Vector2 velocityDirection;
     private Vector2 playerColliderOffset;
@@ -27,6 +32,8 @@ public class Enemy : MonoBehaviour
         LastHitTime = 0f;
 
         rb2d = GetComponent<Rigidbody2D>();
+        collider2D = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         healthController = GetComponent<HealthController>();
 
         state = EnemyState.Initial;
@@ -70,6 +77,34 @@ public class Enemy : MonoBehaviour
                 velocityDirection = directionToPlayer;
             }
         }
+
+        if (state == EnemyState.FadingOut)
+        {
+            float newAlpha = spriteRenderer.color.a - fadeOutSpeed * Time.deltaTime;
+
+            if (newAlpha <= 0f)
+            {
+                newAlpha = 0f;
+
+                // TODO: This doesn't work properly for loot items with amount value > 1
+                // This should be revisited if stackable items get added
+                foreach (ItemWithAmount loot in droppedLoot)
+                {
+                    ItemWorldPrefabInstanceFactory.Instance.DropItem(transform.position, loot);
+                }
+
+                Destroy(gameObject);
+            }
+
+            spriteRenderer.color = new Color(spriteRenderer.color.r,
+                spriteRenderer.color.g, spriteRenderer.color.b, newAlpha);
+
+            if (healthText != null)
+            {
+                healthText.color = new Color(healthText.color.r,
+                    healthText.color.g, healthText.color.b, newAlpha);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -84,13 +119,9 @@ public class Enemy : MonoBehaviour
     {
         if (newHealth <= 0)
         {
-            // TODO: This doesn't work properly for loot items with amount value > 1
-            // This should be revisited if stackable items get added
-            foreach (ItemWithAmount loot in droppedLoot)
-            {
-                ItemWorldPrefabInstanceFactory.Instance.DropItem(transform.position, loot);
-            }
-            Destroy(gameObject);
+            state = EnemyState.FadingOut;
+
+            collider2D.enabled = false;
         }
     }
 
@@ -123,7 +154,10 @@ public class Enemy : MonoBehaviour
 
         velocityDirection = Vector2.zero;
 
-        state = EnemyState.KnockedBack;
+        if (state != EnemyState.FadingOut)
+        {
+            state = EnemyState.KnockedBack;
+        }
 
         rb2d.AddForce(normalizedDirection * force, ForceMode2D.Impulse);
 
@@ -140,7 +174,12 @@ public class Enemy : MonoBehaviour
     private IEnumerator WaitAfterKnockbackCoroutine()
     {
         yield return new WaitForSeconds(waitTimeAfterKnockback);
-        state = EnemyState.Chasing;
+
+        if (state != EnemyState.FadingOut)
+        {
+            state = EnemyState.Chasing;
+        }
+
         transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 

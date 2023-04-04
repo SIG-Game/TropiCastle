@@ -344,6 +344,8 @@ MonoBehaviour:
   minStopChasingDistanceToPlayer: 3.75
   initialWaitTimeBeforeChilling: 1.5
   waitTimeAfterKnockback: 0.6
+  fadeOutSpeed: 3.5
+  healthText: {fileID: 9101218326862731885}
   playerTransform: {fileID: 0}
   droppedLoot:
   - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
