@@ -48,6 +48,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1938744877069393190}
   - component: {fileID: 4788721817516295151}
+  - component: {fileID: 239831750938302052}
   m_Layer: 5
   m_Name: Fishing Minigame
   m_TagString: Untagged
@@ -91,9 +92,30 @@ MonoBehaviour:
   fishingUI: {fileID: 24094386154538983}
   fishUI: {fileID: 6030874414711316719}
   player: {fileID: 0}
+  playerFishItemInWorld: {fileID: 0}
   minCatchFishX: -50
   maxCatchFishX: 50
   logSelectedFish: 0
+--- !u!95 &239831750938302052
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938744877069393186}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a8a65b9b4c969ef4eb5b1a445e90127a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1938744877440384526
 GameObject:
   m_ObjectHideFlags: 0

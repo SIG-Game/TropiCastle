@@ -15,14 +15,18 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private float maxCatchFishX;
     [SerializeField] private bool logSelectedFish;
 
+    private Animator animator;
     private FishScriptableObject selectedFish;
     private Inventory playerInventory;
+    private bool catchFailedAnimationStarted;
 
     private AsyncOperationHandle<IList<FishScriptableObject>> fishScriptableObjectsLoadHandle;
     private IList<FishScriptableObject> fishScriptableObjects;
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
+
         fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
         fishScriptableObjects = fishScriptableObjectsLoadHandle.WaitForCompletion();
 
@@ -49,8 +53,6 @@ public class FishingMinigame : MonoBehaviour
         {
             PlayerController.ActionDisablingUIOpen = false;
             AttemptToCatchFish();
-            fishingUI.SetActive(false);
-            fishUI.gameObject.SetActive(false);
             return;
         }
     }
@@ -65,10 +67,15 @@ public class FishingMinigame : MonoBehaviour
     private void AttemptToCatchFish()
     {
         bool canCatchFish = fishUI.transform.localPosition.x >= minCatchFishX &&
-            fishUI.transform.localPosition.x <= maxCatchFishX;
+            fishUI.transform.localPosition.x <= maxCatchFishX && !catchFailedAnimationStarted;
         if (canCatchFish)
         {
             CatchFish();
+        }
+        else
+        {
+            animator.SetTrigger("Catch Failed");
+            catchFailedAnimationStarted = true;
         }
     }
 
@@ -86,6 +93,8 @@ public class FishingMinigame : MonoBehaviour
 
         DialogueBox.Instance.PlayDialogue($"You caught a {selectedFish.species.ToLowerInvariant()}!\n" +
             $"{selectedFish.description}", afterCatchDialogueAction);
+
+        HideFishingUI();
     }
 
     private void StartFishingMinigame()
@@ -104,6 +113,9 @@ public class FishingMinigame : MonoBehaviour
 
         PlayerController.ActionDisablingUIOpen = true;
 
+        catchFailedAnimationStarted = false;
+
+        fishUI.ResetFishUIImage();
         fishUI.SetFishUIPositionAndDirection();
 
         SelectRandomFish();
@@ -123,5 +135,11 @@ public class FishingMinigame : MonoBehaviour
         {
             Debug.Log("Selected fish: " + selectedFish.species);
         }
+    }
+
+    private void HideFishingUI()
+    {
+        fishingUI.SetActive(false);
+        fishUI.gameObject.SetActive(false);
     }
 }

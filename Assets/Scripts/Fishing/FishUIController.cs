@@ -11,6 +11,7 @@ public class FishUIController : MonoBehaviour
     [SerializeField] private bool logStartPosition;
 
     private RectTransform rectTransform;
+    private RectTransform fishUIImageRectTransform;
 
     public float Speed { private get; set; }
 
@@ -64,6 +65,19 @@ public class FishUIController : MonoBehaviour
         float randomFishXDirection = Random.Range(0, 2) == 0 ? 1f : -1f;
         transform.localScale = new Vector3(randomFishXDirection,
             transform.localScale.y, transform.localScale.z);
+    }
+
+    public void ResetFishUIImage()
+    {
+        if (fishUIImageRectTransform == null)
+        {
+            fishUIImageRectTransform = fishUIImage.GetComponent<RectTransform>();
+        }
+
+        fishUIImageRectTransform.localScale = Vector3.one;
+
+        fishUIImage.color = new Color(fishUIImage.color.r,
+            fishUIImage.color.g, fishUIImage.color.b, 1f);
     }
 
     private float GetRandomFishXPosition()
