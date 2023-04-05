@@ -227,7 +227,7 @@ public class PlayerController : MonoBehaviour
         OnPlayerDied();
     }
 
-    private void HealthController_OnHealthChanged(int newHealth)
+    private void HealthController_OnHealthChanged(int newHealth, int _)
     {
         if (newHealth == 0)
         {

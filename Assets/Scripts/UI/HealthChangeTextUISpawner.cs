@@ -5,8 +5,6 @@ public class HealthChangeTextUISpawner : MonoBehaviour
     [SerializeField] private HealthController targetHealthController;
     [SerializeField] private GameObject healthChangeTextPrefab;
 
-    private int? previousHealth;
-
     private void Awake()
     {
         targetHealthController.OnHealthChanged += HealthController_OnHealthChanged;
@@ -17,19 +15,15 @@ public class HealthChangeTextUISpawner : MonoBehaviour
         targetHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
     }
 
-    private void HealthController_OnHealthChanged(int newHealth)
+    private void HealthController_OnHealthChanged(int newHealth, int healthDelta)
     {
-        if (previousHealth != null)
+        if (healthDelta != 0)
         {
             GameObject healthChangeTextGameObject = Instantiate(healthChangeTextPrefab, transform);
             HealthChangeTextUIController healthChangeTextUIController =
                 healthChangeTextGameObject.GetComponent<HealthChangeTextUIController>();
 
-            int healthDelta = newHealth - previousHealth.Value;
-
             healthChangeTextUIController.SetUpHealthChangeText(healthDelta);
         }
-
-        previousHealth = newHealth;
     }
 }

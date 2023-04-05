@@ -115,7 +115,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void HealthController_OnHealthChanged(int newHealth)
+    private void HealthController_OnHealthChanged(int newHealth, int _)
     {
         if (newHealth <= 0)
         {

@@ -12,15 +12,15 @@ public class HealthTextController : MonoBehaviour
     {
         healthText = GetComponent<TMP_Text>();
 
-        targetHealthController.OnHealthChanged += HealthController_OnHeathChanged;
+        targetHealthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
 
     private void OnDestroy()
     {
-        targetHealthController.OnHealthChanged -= HealthController_OnHeathChanged;
+        targetHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
     }
 
-    private void HealthController_OnHeathChanged(int newHealth)
+    private void HealthController_OnHealthChanged(int newHealth, int _)
     {
         if (displayHealthPrefix)
         {

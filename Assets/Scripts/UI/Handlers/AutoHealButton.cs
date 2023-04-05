@@ -37,7 +37,7 @@ public class AutoHealButton : MonoBehaviour
         }
     }
 
-    private void HealthController_OnHealthChanged(int _)
+    private void HealthController_OnHealthChanged(int _, int _1)
     {
         autoHealButton.interactable = !playerHealthController.AtMaxHealth();
     }
