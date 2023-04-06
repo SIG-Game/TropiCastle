@@ -17,7 +17,10 @@ public class HealthTextController : MonoBehaviour
 
     private void OnDestroy()
     {
-        targetHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
+        if (targetHealthController != null)
+        {
+            targetHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
+        }
     }
 
     private void HealthController_OnHealthChanged(int newHealth, int _)

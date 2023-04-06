@@ -115,6 +115,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (healthController != null)
+        {
+            healthController.OnHealthChanged -= HealthController_OnHealthChanged;
+        }
+    }
+
     private void HealthController_OnHealthChanged(int newHealth, int _)
     {
         if (newHealth <= 0)

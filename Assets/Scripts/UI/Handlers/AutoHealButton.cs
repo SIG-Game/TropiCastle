@@ -13,6 +13,14 @@ public class AutoHealButton : MonoBehaviour
         playerHealthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
 
+    private void OnDestroy()
+    {
+        if (playerHealthController != null)
+        {
+            playerHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
+        }
+    }
+
     public void AutoHealButton_OnClick()
     {
         if (playerHealthController.AtMaxHealth())

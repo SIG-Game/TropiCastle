@@ -135,7 +135,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        healthController.OnHealthChanged -= HealthController_OnHealthChanged;
+        if (healthController != null)
+        {
+            healthController.OnHealthChanged -= HealthController_OnHealthChanged;
+        }
 
         OnPlayerDied = delegate { };
         OnActionDisablingUIOpenSet = delegate { };
