@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private bool isAttacking;
     [SerializeField] private Sprite front, back, left, right;
+    [SerializeField] private SpriteMask overlaySpriteMask;
 
     public CharacterDirection LastDirection
     {
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
                 CharacterDirection.Right => right,
                 _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
             };
+
+            overlaySpriteMask.sprite = spriteRenderer.sprite;
         }
     }
 
