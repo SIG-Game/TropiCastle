@@ -69,55 +69,9 @@ public class InventoryUIController : ItemSlotContainerController
             }
         }
 
-        if (InventoryUIOpen &&
-            (InventoryUIHeldItemController.Instance.HoldingItem() || HoveredItemIndex != -1))
+        if (InventoryUIOpen)
         {
-            int numberKeyIndex = -1;
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                numberKeyIndex = 0;
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-                numberKeyIndex = 1;
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-                numberKeyIndex = 2;
-            else if (Input.GetKeyDown(KeyCode.Alpha4))
-                numberKeyIndex = 3;
-            else if (Input.GetKeyDown(KeyCode.Alpha5))
-                numberKeyIndex = 4;
-            else if (Input.GetKeyDown(KeyCode.Alpha6))
-                numberKeyIndex = 5;
-            else if (Input.GetKeyDown(KeyCode.Alpha7))
-                numberKeyIndex = 6;
-            else if (Input.GetKeyDown(KeyCode.Alpha8))
-                numberKeyIndex = 7;
-            else if (Input.GetKeyDown(KeyCode.Alpha9))
-                numberKeyIndex = 8;
-            else if (Input.GetKeyDown(KeyCode.Alpha0))
-                numberKeyIndex = 9;
-
-            if (numberKeyIndex != -1)
-            {
-                int swapItemIndex;
-
-                if (InventoryUIHeldItemController.Instance.HoldingItem())
-                {
-                    swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
-
-                    InventoryUIHeldItemController.Instance.HideHeldItem();
-                }
-                else
-                {
-                    swapItemIndex = HoveredItemIndex;
-                }
-
-                InputManager.Instance.NumberKeyUsedThisFrame = true;
-                inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
-
-                if (HoveredItemIndex != -1)
-                {
-                    UpdateInventoryTooltipAtIndex(HoveredItemIndex);
-                }
-            }
+            SwapItemsUsingNumberKeyInput();
         }
     }
 
@@ -126,6 +80,42 @@ public class InventoryUIController : ItemSlotContainerController
         inventory.ChangedItemAtIndex -= Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex -= ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex -= ItemSelectionController_OnItemDeselectedAtIndex;
+    }
+
+    private void SwapItemsUsingNumberKeyInput()
+    {
+        int numberKeyIndex = GetNumberKeyIndex();
+
+        bool numberKeyPressedThisFrame = numberKeyIndex != -1;
+
+        bool swappingItems = numberKeyPressedThisFrame &&
+            (InventoryUIHeldItemController.Instance.HoldingItem() || HoveredItemIndex != -1);
+
+        if (swappingItems)
+        {
+            InputManager.Instance.NumberKeyUsedThisFrame = true;
+
+            int swapItemIndex;
+
+            if (InventoryUIHeldItemController.Instance.HoldingItem())
+            {
+                swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
+
+                InventoryUIHeldItemController.Instance.HideHeldItem();
+            }
+            else
+            {
+                swapItemIndex = HoveredItemIndex;
+            }
+
+            inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
+
+            bool hoveredItemPotentiallyChanged = HoveredItemIndex != -1;
+            if (hoveredItemPotentiallyChanged)
+            {
+                UpdateInventoryTooltipAtIndex(HoveredItemIndex);
+            }
+        }
     }
 
     public void UpdateInventoryTooltipAtIndex(int itemIndex)
@@ -165,6 +155,34 @@ public class InventoryUIController : ItemSlotContainerController
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
         UnhighlightSlotAtIndex(index);
+    }
+
+    private int GetNumberKeyIndex()
+    {
+        int numberKeyIndex = -1;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            numberKeyIndex = 0;
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            numberKeyIndex = 1;
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            numberKeyIndex = 2;
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            numberKeyIndex = 3;
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+            numberKeyIndex = 4;
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+            numberKeyIndex = 5;
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+            numberKeyIndex = 6;
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+            numberKeyIndex = 7;
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+            numberKeyIndex = 8;
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+            numberKeyIndex = 9;
+
+        return numberKeyIndex;
     }
 
     public Inventory GetInventory() => inventory;
