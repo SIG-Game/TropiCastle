@@ -31821,6 +31821,10 @@ MonoBehaviour:
     can sense that your inventory is full.)
   minTimeSecondsBetweenGives: 5
   maxTimeSecondsBetweenGives: 10
+  minSpinsBeforeWait: 2
+  maxSpinsBeforeWait: 5
+  minWaitBetweenSpinsSeconds: 0.5
+  maxWaitBetweenSpinsSeconds: 3
   itemToGiveInWorld: {fileID: 1459581749}
   itemToGiveInWorldOffsets:
   - {x: 0, y: 0.25, z: 0}

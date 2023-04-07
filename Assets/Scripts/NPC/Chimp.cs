@@ -10,6 +10,10 @@ public class Chimp : NPCInteractable
     [SerializeField] private string playerInventoryFullDialogueLine;
     [SerializeField] private float minTimeSecondsBetweenGives;
     [SerializeField] private float maxTimeSecondsBetweenGives;
+    [SerializeField] private int minSpinsBeforeWait;
+    [SerializeField] private int maxSpinsBeforeWait;
+    [SerializeField] private float minWaitBetweenSpinsSeconds;
+    [SerializeField] private float maxWaitBetweenSpinsSeconds;
     [SerializeField] private Transform itemToGiveInWorld;
 
     // Direction order for this variable is up, down, left, right
@@ -70,11 +74,23 @@ public class Chimp : NPCInteractable
     {
         while (true)
         {
-            foreach (CharacterDirection direction in spinDirections)
+            int numberOfSpinsBeforeWait = Random.Range(minSpinsBeforeWait, maxSpinsBeforeWait + 1);
+
+            for (int i = 0; i < numberOfSpinsBeforeWait; ++i)
             {
-                SetDirectionAndUpdateSprite(direction);
-                yield return new WaitForSeconds(0.175f);
+                foreach (CharacterDirection direction in spinDirections)
+                {
+                    SetDirectionAndUpdateSprite(direction);
+                    yield return new WaitForSeconds(0.175f);
+                }
             }
+
+            SetDirectionAndUpdateSprite(CharacterDirection.Down);
+
+            float waitBeforeSpinningSeconds = Random.Range(minWaitBetweenSpinsSeconds,
+                maxWaitBetweenSpinsSeconds);
+
+            yield return new WaitForSeconds(waitBeforeSpinningSeconds);
         }
     }
 
