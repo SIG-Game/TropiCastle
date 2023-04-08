@@ -112,7 +112,8 @@ public class InventoryUIController : ItemSlotContainerController
 
             inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
 
-            bool hoveredItemPotentiallyChanged = HoveredItemIndex != -1;
+            bool hoveredItemPotentiallyChanged = HoveredItemIndex == swapItemIndex ||
+                HoveredItemIndex == numberKeyIndex;
             if (hoveredItemPotentiallyChanged)
             {
                 UpdateInventoryTooltipAtIndex(HoveredItemIndex);
