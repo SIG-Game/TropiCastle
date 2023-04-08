@@ -1,15 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AutoHealButton : MonoBehaviour
+public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Button autoHealButton;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private HealthController playerHealthController;
 
+    private Tooltip maxHealthTooltip;
+
     private void Awake()
     {
+        maxHealthTooltip = new Tooltip("Already at max health.", 0);
+
         playerHealthController.OnHealthChanged += HealthController_OnHealthChanged;
     }
 
@@ -48,5 +53,21 @@ public class AutoHealButton : MonoBehaviour
     private void HealthController_OnHealthChanged(int _, int _1)
     {
         autoHealButton.interactable = !playerHealthController.AtMaxHealth();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (playerHealthController.AtMaxHealth())
+        {
+            InventoryUITooltipController.Instance.AddTooltipTextWithPriority(maxHealthTooltip);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (playerHealthController.AtMaxHealth())
+        {
+            InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(maxHealthTooltip);
+        }
     }
 }

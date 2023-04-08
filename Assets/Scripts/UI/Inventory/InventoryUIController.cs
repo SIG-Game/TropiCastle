@@ -8,6 +8,7 @@ public class InventoryUIController : ItemSlotContainerController
     [SerializeField] private Inventory inventory;
     [SerializeField] private GameObject craftingUI;
     [SerializeField] private GameObject inventoryUI;
+    [SerializeField] private GameObject autoHealButton;
     [SerializeField] private ItemSelectionController itemSelectionController;
 
     private InputAction inventoryAction;
@@ -62,6 +63,7 @@ public class InventoryUIController : ItemSlotContainerController
             PauseController.Instance.GamePaused = InventoryUIOpen;
             craftingUI.SetActive(InventoryUIOpen);
             inventoryUI.SetActive(InventoryUIOpen);
+            autoHealButton.SetActive(InventoryUIOpen);
 
             if (!InventoryUIOpen)
             {
