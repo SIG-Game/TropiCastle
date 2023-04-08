@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Crafting crafting;
+    [SerializeField] private CraftingButtonDependencies craftingButtonDependencies;
     [SerializeField] private CraftingRecipeScriptableObject craftingRecipe;
     [SerializeField] private Image craftingButtonImage;
-    [SerializeField] private Inventory playerInventory;
 
     private Tooltip tooltipTextWithPriority;
     private string resultItemTooltipText;
@@ -26,15 +25,14 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (!InventoryUIHeldItemController.Instance.HoldingItem())
         {
-            crafting.CraftItem(craftingRecipe);
+            craftingButtonDependencies.GetCrafting().CraftItem(craftingRecipe);
         }
     }
 
-    public void SetUpCraftingButton(Crafting crafting, Inventory playerInventory,
+    public void SetUpCraftingButton(CraftingButtonDependencies craftingButtonDependencies,
         CraftingRecipeScriptableObject craftingRecipe)
     {
-        this.crafting = crafting;
-        this.playerInventory = playerInventory;
+        this.craftingButtonDependencies = craftingButtonDependencies;
         this.craftingRecipe = craftingRecipe;
 
         craftingButtonImage.sprite = craftingRecipe.resultItem.itemData.sprite;
@@ -56,7 +54,8 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         StringBuilder ingredientsStringBuilder = new StringBuilder("Ingredients:\n");
 
-        List<ItemWithAmount> playerInventoryItemList = playerInventory.GetItemList();
+        List<ItemWithAmount> playerInventoryItemList =
+            craftingButtonDependencies.GetPlayerInventory().GetItemList();
 
         // Get indexes of inventory items used when checking if the player's inventory has an ingredient
         // so that an inventory item is not reused when multiple ingredients have the same item name

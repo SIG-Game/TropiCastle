@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class CraftingButtonGenerator : MonoBehaviour
 {
-    [SerializeField] private Crafting crafting;
+    [SerializeField] private CraftingButtonDependencies craftingButtonDependencies;
     [SerializeField] private GameObject craftingButtonPrefab;
     [SerializeField] private Transform craftingButtonsParentTransform;
-    [SerializeField] private Inventory playerInventory;
 
     [ContextMenu("Regenerate Crafting Buttons")]
     private void RegenerateCraftingButtons()
@@ -50,7 +49,7 @@ public class CraftingButtonGenerator : MonoBehaviour
                 craftingButtonsParentTransform.GetChild(i).gameObject;
 
             instanceCraftingButtonGameObject.GetComponent<CraftingButton>()
-                .SetUpCraftingButton(crafting, playerInventory, craftingRecipes[i]);
+                .SetUpCraftingButton(craftingButtonDependencies, craftingRecipes[i]);
 
             EditorUtility.SetDirty(instanceCraftingButtonGameObject.GetComponent<CraftingButton>());
             EditorUtility.SetDirty(instanceCraftingButtonGameObject.transform
