@@ -60,7 +60,9 @@ public class PlayerOverlayController : MonoBehaviour
                 StopCoroutine(startFadingOutAfterWaitCoroutineObject);
             }
 
-            targetAlpha = maxAlpha;
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g,
+                spriteRenderer.color.b, maxAlpha);
+            targetAlpha = spriteRenderer.color.a;
 
             startFadingOutAfterWaitCoroutineObject =
                 StartCoroutine(StartFadingOutAfterWaitCoroutine());
