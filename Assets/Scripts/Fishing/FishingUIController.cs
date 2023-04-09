@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
 
-public class FishingMinigame : MonoBehaviour
+public class FishingUIController : MonoBehaviour
 {
     [SerializeField] private GameObject fishingUI;
     [SerializeField] private FishUIController fishUI;
@@ -30,7 +30,7 @@ public class FishingMinigame : MonoBehaviour
         fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
         fishScriptableObjects = fishScriptableObjectsLoadHandle.WaitForCompletion();
 
-        player.OnFishingRodUsed += StartFishingMinigame;
+        player.OnFishingRodUsed += StartFishing;
     }
 
     private void Start()
@@ -61,7 +61,7 @@ public class FishingMinigame : MonoBehaviour
     {
         Addressables.Release(fishScriptableObjectsLoadHandle);
 
-        player.OnFishingRodUsed -= StartFishingMinigame;
+        player.OnFishingRodUsed -= StartFishing;
     }
 
     private void AttemptToCatchFish()
@@ -97,7 +97,7 @@ public class FishingMinigame : MonoBehaviour
         HideFishingUI();
     }
 
-    private void StartFishingMinigame()
+    private void StartFishing()
     {
         if (playerInventory.IsFull())
         {
@@ -107,7 +107,7 @@ public class FishingMinigame : MonoBehaviour
 
         if (fishingUI.activeSelf)
         {
-            Debug.LogWarning($"{nameof(StartFishingMinigame)} started with {nameof(fishingUI)} active");
+            Debug.LogWarning($"{nameof(StartFishing)} called with {nameof(fishingUI)} active");
             return;
         }
 

@@ -132,7 +132,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fishing Minigame
+  m_Name: Fishing UI Controller
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Catch Failed

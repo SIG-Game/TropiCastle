@@ -1279,7 +1279,7 @@ PrefabInstance:
     - target: {fileID: 1938744877069393186, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: m_Name
-      value: Fishing Minigame
+      value: Fishing UI Controller
       objectReference: {fileID: 0}
     - target: {fileID: 1938744877069393189, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}

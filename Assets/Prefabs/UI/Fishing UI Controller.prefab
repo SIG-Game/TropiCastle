@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 4788721817516295151}
   - component: {fileID: 239831750938302052}
   m_Layer: 5
-  m_Name: Fishing Minigame
+  m_Name: Fishing UI Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
