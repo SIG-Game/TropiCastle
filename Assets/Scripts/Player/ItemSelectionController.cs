@@ -53,37 +53,12 @@ public class ItemSelectionController : MonoBehaviour
             SelectedItemIndex = newSelectedItemIndex;
         }
 
-        if (!InputManager.Instance.NumberKeyUsedThisFrame)
+        int numberKeyIndex = InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
+
+        bool numberKeyInputAvailable = numberKeyIndex != -1;
+        if (numberKeyInputAvailable)
         {
-            ProcessNumberKeysToUpdateSelectedItemIndex();
+            SelectedItemIndex = numberKeyIndex;
         }
-    }
-
-    private void ProcessNumberKeysToUpdateSelectedItemIndex()
-    {
-        int newSelectedItemIndex = SelectedItemIndex;
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            newSelectedItemIndex = 0;
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            newSelectedItemIndex = 1;
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            newSelectedItemIndex = 2;
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-            newSelectedItemIndex = 3;
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-            newSelectedItemIndex = 4;
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-            newSelectedItemIndex = 5;
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-            newSelectedItemIndex = 6;
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-            newSelectedItemIndex = 7;
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-            newSelectedItemIndex = 8;
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-            newSelectedItemIndex = 9;
-
-        SelectedItemIndex = newSelectedItemIndex;
     }
 }

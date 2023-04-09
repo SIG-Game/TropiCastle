@@ -86,38 +86,41 @@ public class InventoryUIController : ItemSlotContainerController
 
     private void SwapItemsUsingNumberKeyInput()
     {
-        int numberKeyIndex = GetNumberKeyIndex();
-
-        bool numberKeyPressedThisFrame = numberKeyIndex != -1;
-
-        bool swappingItems = numberKeyPressedThisFrame &&
-            (InventoryUIHeldItemController.Instance.HoldingItem() || HoveredItemIndex != -1);
-
-        if (swappingItems)
+        bool canSwapItems = InventoryUIHeldItemController.Instance.HoldingItem() ||
+            HoveredItemIndex != -1;
+        if (!canSwapItems)
         {
-            InputManager.Instance.NumberKeyUsedThisFrame = true;
+            return;
+        }
 
-            int swapItemIndex;
+        int numberKeyIndex = InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
 
-            if (InventoryUIHeldItemController.Instance.HoldingItem())
-            {
-                swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
+        bool numberKeyInputAvailable = numberKeyIndex != -1;
+        if (!numberKeyInputAvailable)
+        {
+            return;
+        }
 
-                InventoryUIHeldItemController.Instance.HideHeldItem();
-            }
-            else
-            {
-                swapItemIndex = HoveredItemIndex;
-            }
+        int swapItemIndex;
 
-            inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
+        if (InventoryUIHeldItemController.Instance.HoldingItem())
+        {
+            swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
 
-            bool hoveredItemPotentiallyChanged = HoveredItemIndex == swapItemIndex ||
-                HoveredItemIndex == numberKeyIndex;
-            if (hoveredItemPotentiallyChanged)
-            {
-                UpdateInventoryTooltipAtIndex(HoveredItemIndex);
-            }
+            InventoryUIHeldItemController.Instance.HideHeldItem();
+        }
+        else
+        {
+            swapItemIndex = HoveredItemIndex;
+        }
+
+        inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
+
+        bool hoveredItemPotentiallyChanged = HoveredItemIndex == swapItemIndex ||
+            HoveredItemIndex == numberKeyIndex;
+        if (hoveredItemPotentiallyChanged)
+        {
+            UpdateInventoryTooltipAtIndex(HoveredItemIndex);
         }
     }
 
@@ -158,34 +161,6 @@ public class InventoryUIController : ItemSlotContainerController
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
         UnhighlightSlotAtIndex(index);
-    }
-
-    private int GetNumberKeyIndex()
-    {
-        int numberKeyIndex = -1;
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            numberKeyIndex = 0;
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            numberKeyIndex = 1;
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            numberKeyIndex = 2;
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-            numberKeyIndex = 3;
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-            numberKeyIndex = 4;
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-            numberKeyIndex = 5;
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-            numberKeyIndex = 6;
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-            numberKeyIndex = 7;
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-            numberKeyIndex = 8;
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-            numberKeyIndex = 9;
-
-        return numberKeyIndex;
     }
 
     public Inventory GetInventory() => inventory;

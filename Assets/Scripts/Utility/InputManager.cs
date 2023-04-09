@@ -7,12 +7,12 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance;
 
     public bool EscapeKeyUsedThisFrame { get; set; }
-    public bool NumberKeyUsedThisFrame { get; set; }
 
     private PlayerInput playerInput;
 
     private InputAction interactAction;
     private InputAction fishAction;
+    private bool numberKeyUsedThisFrame;
     private bool leftClickDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
     private bool fishButtonDownUsedThisFrame;
@@ -34,8 +34,8 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         EscapeKeyUsedThisFrame = false;
-        NumberKeyUsedThisFrame = false;
 
+        numberKeyUsedThisFrame = false;
         leftClickDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;
         fishButtonDownUsedThisFrame = false;
@@ -59,6 +59,41 @@ public class InputManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public int GetNumberKeyIndexIfUnusedThisFrame()
+    {
+        if (numberKeyUsedThisFrame)
+        {
+            return -1;
+        }
+
+        int numberKeyIndex = -1;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            numberKeyIndex = 0;
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            numberKeyIndex = 1;
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            numberKeyIndex = 2;
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            numberKeyIndex = 3;
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+            numberKeyIndex = 4;
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+            numberKeyIndex = 5;
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+            numberKeyIndex = 6;
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+            numberKeyIndex = 7;
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+            numberKeyIndex = 8;
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+            numberKeyIndex = 9;
+
+        numberKeyUsedThisFrame = true;
+
+        return numberKeyIndex;
     }
 
     public bool GetLeftClickDownIfUnusedThisFrame() =>
