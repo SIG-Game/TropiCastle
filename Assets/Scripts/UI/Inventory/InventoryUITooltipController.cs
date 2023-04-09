@@ -11,13 +11,14 @@ public class InventoryUITooltipController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tooltipText;
     [SerializeField] private TextMeshProUGUI alternateTooltipText;
+    [SerializeField] private RectTransform tooltipBackgroundRectTransform;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private bool logTooltipList;
 
     private List<Tooltip> tooltipTextsWithPriority;
 
-    private RectTransform inventoryTooltipRectTransform;
+    private RectTransform rectTransform;
 
     public static InventoryUITooltipController Instance;
 
@@ -27,7 +28,7 @@ public class InventoryUITooltipController : MonoBehaviour
 
         tooltipTextsWithPriority = new List<Tooltip>();
 
-        inventoryTooltipRectTransform = GetComponent<RectTransform>();
+        rectTransform = GetComponent<RectTransform>();
 
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
     }
@@ -101,8 +102,31 @@ public class InventoryUITooltipController : MonoBehaviour
 
     private void UpdateInventoryTooltipPosition()
     {
-        inventoryTooltipRectTransform.anchoredPosition =
+        Vector2 newAnchoredPosition =
             MouseCanvasPositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
+
+        float rightEdgeXPosition = newAnchoredPosition.x +
+            tooltipBackgroundRectTransform.rect.xMax;
+        float bottomEdgeYPosition = newAnchoredPosition.y +
+            tooltipBackgroundRectTransform.rect.yMin;
+
+        if (rightEdgeXPosition > canvasRectTransform.rect.xMax)
+        {
+            float moveLeftDistance = rightEdgeXPosition - canvasRectTransform.rect.xMax;
+
+            newAnchoredPosition = new Vector2(newAnchoredPosition.x - moveLeftDistance,
+                newAnchoredPosition.y);
+        }
+
+        if (bottomEdgeYPosition < canvasRectTransform.rect.yMin)
+        {
+            float moveUpDistance = bottomEdgeYPosition - canvasRectTransform.rect.yMin;
+
+            newAnchoredPosition = new Vector2(newAnchoredPosition.x,
+                newAnchoredPosition.y - moveUpDistance);
+        }
+
+        rectTransform.anchoredPosition = newAnchoredPosition;
     }
 
     private void InventoryUIController_OnInventoryClosed()
