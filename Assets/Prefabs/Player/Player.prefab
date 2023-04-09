@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minTimeBetweenHits: 0.33333334
+  logOnHit: 0
 --- !u!1 &5288355818519944996
 GameObject:
   m_ObjectHideFlags: 0
