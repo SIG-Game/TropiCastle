@@ -49,7 +49,7 @@ public class FishingUIController : MonoBehaviour
         bool leftClickInput = InputManager.Instance.GetLeftClickDownIfUnusedThisFrame();
         bool fishButtonInput = InputManager.Instance.GetFishButtonDownIfUnusedThisFrame();
 
-        if (leftClickInput || fishButtonInput)
+        if ((leftClickInput || fishButtonInput) && !catchFailedAnimationStarted)
         {
             PlayerController.ActionDisablingUIOpen = false;
             AttemptToCatchFish();
@@ -67,7 +67,7 @@ public class FishingUIController : MonoBehaviour
     private void AttemptToCatchFish()
     {
         bool canCatchFish = fishUI.transform.localPosition.x >= minCatchFishX &&
-            fishUI.transform.localPosition.x <= maxCatchFishX && !catchFailedAnimationStarted;
+            fishUI.transform.localPosition.x <= maxCatchFishX;
         if (canCatchFish)
         {
             CatchFish();
