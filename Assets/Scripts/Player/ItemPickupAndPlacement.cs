@@ -10,16 +10,12 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private Color cannotPlaceCursorBackgroundColor;
 
     private Inventory playerInventory;
-    private Vector2 itemWorldPrefabColliderExtents;
     private bool waitingForRightClickReleaseBeforePlacement;
 
     private void Start()
     {
         playerInventory = player.GetInventory();
-        itemWorldPrefabColliderExtents = ItemWorldPrefabInstanceFactory.Instance.GetItemWorldPrefabColliderExtents();
         waitingForRightClickReleaseBeforePlacement = false;
-
-        cursorController.SetCursorBackgroundLocalScale(itemWorldPrefabColliderExtents * 2f);
     }
 
     private void Update()
@@ -56,7 +52,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
         }
         else if (placingItem && mouseIsOnScreen)
         {
-            cursorController.SetCursorSprite(player.GetSelectedItem().itemData.sprite);
+            ItemScriptableObject selectedItemData = player.GetSelectedItem().itemData;
+
+            Vector2 selectedItemColliderSize =
+                ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItemData);
+
+            cursorController.SetCursorBackgroundLocalScale(selectedItemColliderSize);
+
+            cursorController.SetCursorSprite(selectedItemData.sprite);
             cursorController.SetCursorBackgroundColor(CanPlaceItemAtPosition(mouseWorldPoint) ?
                 canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
         }
@@ -129,6 +132,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
         }
     }
 
-    private bool CanPlaceItemAtPosition(Vector2 position) =>
-        SpawnColliderHelper.CanSpawnColliderAtPosition(position, itemWorldPrefabColliderExtents);
+    private bool CanPlaceItemAtPosition(Vector2 position)
+    {
+        Vector2 selectedItemColliderExtents =
+            ItemWorldPrefabInstanceFactory.GetItemColliderExtents(player.GetSelectedItem().itemData);
+
+        return SpawnColliderHelper.CanSpawnColliderAtPosition(position, selectedItemColliderExtents);
+    }
 }

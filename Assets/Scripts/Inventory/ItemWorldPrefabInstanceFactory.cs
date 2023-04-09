@@ -49,6 +49,11 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity, itemWorldParent);
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
+        if (itemToSpawn.itemData.hasCustomColliderSize)
+        {
+            spawnedGameObject.GetComponent<BoxCollider2D>().size = itemToSpawn.itemData.customColliderSize;
+        }
+
         spawnedItemWorld.item = itemToSpawn;
         spawnedItemWorld.ItemInteraction = itemNameToInteraction.GetValueOrDefault(itemToSpawn.itemData.name);
     }
@@ -66,7 +71,9 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
             return dropPosition + randomOffset;
         }
 
-        if (SpawnColliderHelper.TryGetSpawnPositionOutsideColliders(spawnPositionGenerator, itemWorldPrefabColliderExtents,
+        Vector2 itemColliderExtents = GetItemColliderExtents(itemToDrop.itemData);
+
+        if (SpawnColliderHelper.TryGetSpawnPositionOutsideColliders(spawnPositionGenerator, itemColliderExtents,
             maxDropSpawnAttempts, out Vector2 spawnPosition))
         {
             SpawnItemWorld(spawnPosition, itemToDrop);
@@ -76,5 +83,35 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
     }
 
-    public Vector2 GetItemWorldPrefabColliderExtents() => itemWorldPrefabColliderExtents;
+    public static Vector2 GetItemColliderExtents(ItemScriptableObject itemData)
+    {
+        Vector2 itemColliderExtents;
+
+        if (itemData.hasCustomColliderSize)
+        {
+            itemColliderExtents = itemData.customColliderSize / 2f;
+        }
+        else
+        {
+            itemColliderExtents = Instance.itemWorldPrefabColliderExtents;
+        }
+
+        return itemColliderExtents;
+    }
+
+    public static Vector2 GetItemColliderSize(ItemScriptableObject itemData)
+    {
+        Vector2 itemColliderSize;
+
+        if (itemData.hasCustomColliderSize)
+        {
+            itemColliderSize = itemData.customColliderSize;
+        }
+        else
+        {
+            itemColliderSize = Instance.itemWorldPrefabColliderExtents * 2f;
+        }
+
+        return itemColliderSize;
+    }
 }
