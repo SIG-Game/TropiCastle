@@ -40958,9 +40958,10 @@ MonoBehaviour:
   - {fileID: 1764074029}
   - {fileID: 1433404778}
   inventory: {fileID: 1982112582}
-  craftingUI: {fileID: 1878749031}
-  inventoryUI: {fileID: 1128719742}
-  autoHealButton: {fileID: 850799049}
+  inventoryUIGameObjects:
+  - {fileID: 1128719742}
+  - {fileID: 1878749031}
+  - {fileID: 850799049}
   itemSelectionController: {fileID: 1982112583}
 --- !u!114 &1731795750
 MonoBehaviour:
