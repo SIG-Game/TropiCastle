@@ -8,12 +8,9 @@ public class Chimp : NPCInteractable
     [SerializeField] private List<string> itemToGiveDialogueLines;
     [SerializeField] private string notGivingItemDialogueLine;
     [SerializeField] private string playerInventoryFullDialogueLine;
-    [SerializeField] private float minTimeSecondsBetweenGives;
-    [SerializeField] private float maxTimeSecondsBetweenGives;
-    [SerializeField] private int minSpinsBeforeWait;
-    [SerializeField] private int maxSpinsBeforeWait;
-    [SerializeField] private float minWaitBetweenSpinsSeconds;
-    [SerializeField] private float maxWaitBetweenSpinsSeconds;
+    [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
+    [SerializeField] private Vector2Int spinsBeforeWaitRange;
+    [SerializeField] private Vector2 timeBetweenSpinsSecondsRange;
     [SerializeField] private Transform itemToGiveInWorld;
 
     // Direction order for this variable is up, down, left, right
@@ -74,7 +71,8 @@ public class Chimp : NPCInteractable
     {
         while (true)
         {
-            int numberOfSpinsBeforeWait = Random.Range(minSpinsBeforeWait, maxSpinsBeforeWait + 1);
+            int numberOfSpinsBeforeWait = Random.Range(spinsBeforeWaitRange.x,
+                spinsBeforeWaitRange.y + 1);
 
             for (int i = 0; i < numberOfSpinsBeforeWait; ++i)
             {
@@ -87,8 +85,8 @@ public class Chimp : NPCInteractable
 
             SetDirectionAndUpdateSprite(CharacterDirection.Down);
 
-            float waitBeforeSpinningSeconds = Random.Range(minWaitBetweenSpinsSeconds,
-                maxWaitBetweenSpinsSeconds);
+            float waitBeforeSpinningSeconds = Random.Range(timeBetweenSpinsSecondsRange.x,
+                timeBetweenSpinsSecondsRange.y);
 
             yield return new WaitForSeconds(waitBeforeSpinningSeconds);
         }
@@ -128,5 +126,5 @@ public class Chimp : NPCInteractable
     }
 
     private float GetRandomTimeSecondsUntilNextGive() =>
-        Random.Range(minTimeSecondsBetweenGives, maxTimeSecondsBetweenGives);
+        Random.Range(timeBetweenGivesSecondsRange.x, timeBetweenGivesSecondsRange.y);
 }

@@ -31873,12 +31873,9 @@ MonoBehaviour:
   notGivingItemDialogueLine: (The chimp stares at you and smiles.)
   playerInventoryFullDialogueLine: (The chimp is eager to give you something but
     can sense that your inventory is full.)
-  minTimeSecondsBetweenGives: 5
-  maxTimeSecondsBetweenGives: 10
-  minSpinsBeforeWait: 2
-  maxSpinsBeforeWait: 5
-  minWaitBetweenSpinsSeconds: 0.5
-  maxWaitBetweenSpinsSeconds: 3
+  timeBetweenGivesSecondsRange: {x: 5, y: 10}
+  spinsBeforeWaitRange: {x: 2, y: 5}
+  timeBetweenSpinsSecondsRange: {x: 0.5, y: 3}
   itemToGiveInWorld: {fileID: 1459581749}
   itemToGiveInWorldOffsets:
   - {x: 0, y: 0.25, z: 0}
