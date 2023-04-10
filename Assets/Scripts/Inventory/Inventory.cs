@@ -93,6 +93,11 @@ public class Inventory : MonoBehaviour
 
     public void SwapItemsAt(int index1, int index2)
     {
+        if (index1 == index2)
+        {
+            return;
+        }
+
         ItemWithAmount itemAtIndex1BeforeSwap = itemList[index1];
 
         SetItemAtIndex(itemList[index2], index1);
