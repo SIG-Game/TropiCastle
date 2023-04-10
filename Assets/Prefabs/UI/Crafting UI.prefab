@@ -29,7 +29,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3354558262622184765}
+  - {fileID: 1543378682345313520}
   m_Father: {fileID: 3872985727311164804}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -269,13 +269,30 @@ MonoBehaviour:
   craftingButtonPrefab: {fileID: 6009137097597202608, guid: 466a4b07e1998a740a8b182a342903dd,
     type: 3}
   craftingButtonsParentTransform: {fileID: 3872985726266844870}
---- !u!1001 &9072913410942129586
+--- !u!1001 &5048413025896064127
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 3872985726266844870}
     m_Modifications:
+    - target: {fileID: 2692672177494040863, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1,
+        type: 3}
+    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: craftingRecipe
+      value: 
+      objectReference: {fileID: 11400000, guid: 46d2472a2843f104d899177307cb20df,
+        type: 2}
+    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: craftingButtonDependencies
+      value: 
+      objectReference: {fileID: 8455560938854511820}
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_Pivot.x
@@ -388,9 +405,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
---- !u!224 &3354558262622184765 stripped
+--- !u!224 &1543378682345313520 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
     type: 3}
-  m_PrefabInstance: {fileID: 9072913410942129586}
+  m_PrefabInstance: {fileID: 5048413025896064127}
   m_PrefabAsset: {fileID: 0}
