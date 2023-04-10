@@ -55,7 +55,9 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
     private CharacterDirection lastDirection;
+    private InputAction attackInputAction;
     private InputAction healInputAction;
+    private WeaponItemScriptableObject strongestWeaponInInventory;
     private LayerMask interactableMask;
     private LayerMask waterMask;
 
@@ -81,10 +83,12 @@ public class PlayerController : MonoBehaviour
         ActionDisablingUIOpen = false;
 
         healthController.OnHealthChanged += HealthController_OnHealthChanged;
+        inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
     }
 
     private void Start()
     {
+        attackInputAction = InputManager.Instance.GetAction("Attack");
         healInputAction = InputManager.Instance.GetAction("Heal");
     }
 
@@ -104,6 +108,10 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
+        }
+        else if (attackInputAction.WasPressedThisFrame() && strongestWeaponInInventory != null)
+        {
+            AttackWithWeapon(strongestWeaponInInventory);
         }
         // Do not check for fish input on the same frame that an item is used
         else if (InputManager.Instance.GetFishButtonDownIfUnusedThisFrame() &&
@@ -141,6 +149,11 @@ public class PlayerController : MonoBehaviour
         if (healthController != null)
         {
             healthController.OnHealthChanged -= HealthController_OnHealthChanged;
+        }
+
+        if (inventory != null)
+        {
+            inventory.ChangedItemAtIndex -= Inventory_ChangedItemAtIndex;
         }
 
         OnPlayerDied = delegate { };
@@ -238,6 +251,32 @@ public class PlayerController : MonoBehaviour
         if (newHealth == 0)
         {
             PlayerDeath();
+        }
+    }
+
+    private void Inventory_ChangedItemAtIndex(ItemWithAmount _, int _1)
+    {
+        UpdateStrongestWeaponInInventory();
+    }
+
+    private void UpdateStrongestWeaponInInventory()
+    {
+        strongestWeaponInInventory = null;
+
+        foreach (ItemWithAmount item in inventory.GetItemList())
+        {
+            if (item.itemData is not WeaponItemScriptableObject)
+            {
+                continue;
+            }
+
+            WeaponItemScriptableObject weapon = item.itemData as WeaponItemScriptableObject;
+
+            if (strongestWeaponInInventory == null ||
+                weapon.damage > strongestWeaponInInventory.damage)
+            {
+                strongestWeaponInInventory = weapon;
+            }
         }
     }
 
