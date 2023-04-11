@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private bool isAttacking;
     [SerializeField] private Sprite front, back, left, right;
     [SerializeField] private SpriteMask overlaySpriteMask;
 
@@ -60,6 +59,7 @@ public class PlayerController : MonoBehaviour
     private WeaponItemScriptableObject strongestWeaponInInventory;
     private LayerMask interactableMask;
     private LayerMask waterMask;
+    private bool isAttacking;
 
     private void Awake()
     {
@@ -225,8 +225,6 @@ public class PlayerController : MonoBehaviour
         weaponController.EnemyKnockbackForce = weaponItemData.knockback;
 
         animator.Play($"Swing {lastDirection}");
-
-        isAttacking = true;
     }
 
     private void Fish()
@@ -278,6 +276,16 @@ public class PlayerController : MonoBehaviour
                 strongestWeaponInInventory = weapon;
             }
         }
+    }
+
+    private void AttackStartedAnimationEvent()
+    {
+        isAttacking = true;
+    }
+
+    private void AttackEndedAnimationEvent()
+    {
+        isAttacking = false;
     }
 
     public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !ActionDisablingUIOpen;
