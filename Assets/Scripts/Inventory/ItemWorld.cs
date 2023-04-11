@@ -6,10 +6,16 @@ public class ItemWorld : Interactable
 
     public IItemInteraction ItemInteraction { private get; set; }
 
+    // These operations must be in the Start method because the Awake
+    // method runs before ItemWorldPrefabInstanceFactory sets item
     private void Start()
     {
-        // Not in Awake because this needs to happen after ItemWorldPrefabInstanceFactory sets item
         GetComponent<SpriteRenderer>().sprite = item.itemData.sprite;
+
+        if (item.itemData.hasCustomColliderSize) {
+            GetComponent<BoxCollider2D>().size = item.itemData.customColliderSize;
+        }
+
         name = $"{item.itemData.name} ItemWorld";
     }
 

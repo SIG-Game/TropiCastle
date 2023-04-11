@@ -49,11 +49,6 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity, itemWorldParent);
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
-        if (itemToSpawn.itemData.hasCustomColliderSize)
-        {
-            spawnedGameObject.GetComponent<BoxCollider2D>().size = itemToSpawn.itemData.customColliderSize;
-        }
-
         spawnedItemWorld.item = itemToSpawn;
         spawnedItemWorld.ItemInteraction = itemNameToInteraction.GetValueOrDefault(itemToSpawn.itemData.name);
     }
