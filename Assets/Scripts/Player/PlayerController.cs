@@ -96,6 +96,11 @@ public class PlayerController : MonoBehaviour
     {
         if (PauseController.Instance.GamePaused)
         {
+            if (healInputAction.WasPressedThisFrame() && InventoryUIController.InventoryUIOpen)
+            {
+                ConsumeFirstHealingItemInInventory();
+            }
+
             return;
         }
 
@@ -122,15 +127,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (healInputAction.WasPressedThisFrame())
         {
-            int healingItemIndex = inventory.GetItemList().FindIndex(x => x.itemData is HealingItemScriptableObject);
-
-            if (healingItemIndex != -1)
-            {
-                HealingItemScriptableObject healingItem = inventory.GetItemAtIndex(healingItemIndex).itemData
-                    as HealingItemScriptableObject;
-
-                ConsumeHealingItem(healingItemIndex, healingItem.healAmount);
-            }
+            ConsumeFirstHealingItemInInventory();
         }
 
         if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
@@ -242,6 +239,19 @@ public class PlayerController : MonoBehaviour
     {
         PauseController.Instance.GamePaused = true;
         OnPlayerDied();
+    }
+
+    public void ConsumeFirstHealingItemInInventory()
+    {
+        int healingItemIndex = inventory.GetItemList().FindIndex(x => x.itemData is HealingItemScriptableObject);
+
+        if (healingItemIndex != -1)
+        {
+            HealingItemScriptableObject healingItem = inventory.GetItemAtIndex(healingItemIndex).itemData
+                as HealingItemScriptableObject;
+
+            ConsumeHealingItem(healingItemIndex, healingItem.healAmount);
+        }
     }
 
     private void HealthController_OnHealthChanged(int newHealth, int _)

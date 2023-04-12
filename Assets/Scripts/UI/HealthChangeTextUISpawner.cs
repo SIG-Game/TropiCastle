@@ -20,7 +20,7 @@ public class HealthChangeTextUISpawner : MonoBehaviour
 
     private void HealthController_OnHealthChanged(int newHealth, int healthDelta)
     {
-        if (healthDelta != 0)
+        if (healthDelta != 0 && !PauseController.Instance.GamePaused)
         {
             GameObject healthChangeTextGameObject = Instantiate(healthChangeTextPrefab, transform);
             HealthChangeTextUIController healthChangeTextUIController =
