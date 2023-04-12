@@ -22,6 +22,7 @@ public class ItemSelectionController : MonoBehaviour
     }
 
     public bool CanScroll { private get; set; }
+    public bool CanSelect { private get; set; }
 
     public event Action<int> OnItemSelectedAtIndex = delegate { };
     public event Action<int> OnItemDeselectedAtIndex = delegate { };
@@ -32,11 +33,13 @@ public class ItemSelectionController : MonoBehaviour
         OnItemSelectedAtIndex(selectedItemIndex);
 
         CanScroll = true;
+        CanSelect = true;
     }
 
     private void Update()
     {
-        if (PauseController.Instance.GamePaused && !InventoryUIController.InventoryUIOpen)
+        if ((PauseController.Instance.GamePaused && !InventoryUIController.InventoryUIOpen) ||
+            !CanSelect)
         {
             return;
         }

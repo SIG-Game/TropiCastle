@@ -291,11 +291,15 @@ public class PlayerController : MonoBehaviour
     private void AttackStartedAnimationEvent()
     {
         isAttacking = true;
+
+        itemSelectionController.CanSelect = false;
     }
 
     private void AttackEndedAnimationEvent()
     {
         isAttacking = false;
+
+        itemSelectionController.CanSelect = true;
     }
 
     public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !ActionDisablingUIOpen;
