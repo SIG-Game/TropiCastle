@@ -51,9 +51,7 @@ public class FishingUIController : MonoBehaviour
 
         if ((leftClickInput || fishButtonInput) && !catchFailedAnimationStarted)
         {
-            PlayerController.ActionDisablingUIOpen = false;
             AttemptToCatchFish();
-            return;
         }
     }
 
@@ -141,5 +139,7 @@ public class FishingUIController : MonoBehaviour
     {
         fishingUI.SetActive(false);
         fishUI.gameObject.SetActive(false);
+
+        PlayerController.ActionDisablingUIOpen = false;
     }
 }
