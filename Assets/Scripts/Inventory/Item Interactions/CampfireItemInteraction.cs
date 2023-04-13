@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class CampfireItemInteraction : IItemInteraction {
+public class CampfireItemInteraction : IItemInteraction
+{
     public void Interact(PlayerController playerController)
     {
-        ItemWithAmount hotbarItem = playerController.GetSelectedItem();
+        Inventory playerInventory = playerController.GetInventory();
 
-        if (hotbarItem.itemData.name == "Raw Crab Meat")
+        int rawCrabMeatIndex = playerInventory.GetItemList()
+            .FindIndex(x => x.itemData.name == "Raw Crab Meat");
+
+        if (rawCrabMeatIndex != -1)
         {
-            Inventory playerInventory = playerController.GetInventory();
-            int selectedItemIndex = playerController.GetSelectedItemIndex();
-
-            playerInventory.RemoveItemAtIndex(selectedItemIndex);
+            playerInventory.RemoveItemAtIndex(rawCrabMeatIndex);
             playerInventory.AddItem(Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat"), 1);
         }
     }
