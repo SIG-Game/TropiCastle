@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class InventoryUITooltipController : MonoBehaviour
@@ -65,6 +66,7 @@ public class InventoryUITooltipController : MonoBehaviour
         LogTooltipListAfterTooltipOperation("removing");
 
         UpdateTooltipText();
+        UpdateInventoryTooltipPosition();
     }
 
     private void UpdateTooltipText()
@@ -87,6 +89,9 @@ public class InventoryUITooltipController : MonoBehaviour
 
         tooltipText.text = tooltipTextWithHighestPriority;
         alternateTooltipText.text = alternateTooltipTextWithHighestPriority;
+
+        // Refresh tooltipText and alternateTooltipText preferred sizes
+        LayoutRebuilder.ForceRebuildLayoutImmediate(tooltipBackgroundRectTransform);
     }
 
     public static string GetItemTooltipText(ItemScriptableObject item) =>
@@ -112,18 +117,16 @@ public class InventoryUITooltipController : MonoBehaviour
 
         if (rightEdgeXPosition > canvasRectTransform.rect.xMax)
         {
-            float moveLeftDistance = rightEdgeXPosition - canvasRectTransform.rect.xMax;
+            float distanceOverRightEdge = rightEdgeXPosition - canvasRectTransform.rect.xMax;
 
-            newAnchoredPosition = new Vector2(newAnchoredPosition.x - moveLeftDistance,
-                newAnchoredPosition.y);
+            newAnchoredPosition.x -= distanceOverRightEdge;
         }
 
         if (bottomEdgeYPosition < canvasRectTransform.rect.yMin)
         {
-            float moveUpDistance = bottomEdgeYPosition - canvasRectTransform.rect.yMin;
+            float distanceOverBottomEdge = bottomEdgeYPosition - canvasRectTransform.rect.yMin;
 
-            newAnchoredPosition = new Vector2(newAnchoredPosition.x,
-                newAnchoredPosition.y - moveUpDistance);
+            newAnchoredPosition.y -= distanceOverBottomEdge;
         }
 
         rectTransform.anchoredPosition = newAnchoredPosition;
