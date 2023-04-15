@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,13 +10,24 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private HealthController playerHealthController;
 
+    private InventoryUITooltipController inventoryUITooltip;
     private Tooltip maxHealthTooltip;
+    private Tooltip healingItemsToConsumeTooltip;
+    private bool hoveringOverAutoHealButton;
 
     private void Awake()
     {
         maxHealthTooltip = new Tooltip("Already at max health.", 0);
 
+        hoveringOverAutoHealButton = false;
+
         playerHealthController.OnHealthChanged += HealthController_OnHealthChanged;
+        playerInventory.ChangedItemAtIndex += PlayerInventory_ChangedItemAtIndex;
+    }
+
+    private void Start()
+    {
+        inventoryUITooltip = InventoryUITooltipController.Instance;
     }
 
     private void OnDestroy()
@@ -24,15 +36,15 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             playerHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
         }
+
+        if (playerInventory != null)
+        {
+            playerInventory.ChangedItemAtIndex -= PlayerInventory_ChangedItemAtIndex;
+        }
     }
 
     public void AutoHealButton_OnClick()
     {
-        if (playerHealthController.AtMaxHealth())
-        {
-            return;
-        }
-
         List<ItemWithAmount> playerInventoryItemList = playerInventory.GetItemList();
 
         for (int i = 0; i < playerInventoryItemList.Count; ++i)
@@ -53,21 +65,100 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void HealthController_OnHealthChanged(int _, int _1)
     {
         autoHealButton.interactable = !playerHealthController.AtMaxHealth();
+
+        bool maxHealthTooltipShouldBeVisible =
+            hoveringOverAutoHealButton && playerHealthController.AtMaxHealth();
+
+        if (maxHealthTooltipShouldBeVisible &&
+            inventoryUITooltip.TooltipListContains(healingItemsToConsumeTooltip))
+        {
+            inventoryUITooltip.RemoveTooltipTextWithPriority(healingItemsToConsumeTooltip);
+
+            inventoryUITooltip.AddTooltipTextWithPriority(maxHealthTooltip);
+        }
+    }
+
+    private void PlayerInventory_ChangedItemAtIndex(ItemWithAmount _, int _1)
+    {
+        bool shouldUpdateHealingItemsToConsumeTooltip = hoveringOverAutoHealButton &&
+            inventoryUITooltip.TooltipListContains(healingItemsToConsumeTooltip);
+
+        if (shouldUpdateHealingItemsToConsumeTooltip)
+        {
+            inventoryUITooltip.RemoveTooltipTextWithPriority(healingItemsToConsumeTooltip);
+
+            UseHealingItemsToConsumeTooltip();
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        hoveringOverAutoHealButton = true;
+
         if (playerHealthController.AtMaxHealth())
         {
-            InventoryUITooltipController.Instance.AddTooltipTextWithPriority(maxHealthTooltip);
+            inventoryUITooltip.AddTooltipTextWithPriority(maxHealthTooltip);
+        }
+        else
+        {
+            UseHealingItemsToConsumeTooltip();
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        hoveringOverAutoHealButton = false;
+
         if (playerHealthController.AtMaxHealth())
         {
-            InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(maxHealthTooltip);
+            inventoryUITooltip.RemoveTooltipTextWithPriority(maxHealthTooltip);
         }
+        else if (inventoryUITooltip.TooltipListContains(healingItemsToConsumeTooltip))
+        {
+            inventoryUITooltip.RemoveTooltipTextWithPriority(healingItemsToConsumeTooltip);
+        }
+    }
+
+    private void UseHealingItemsToConsumeTooltip()
+    {
+        string healingItemsToConsumeNames = GetHealingItemsToConsumeNames();
+
+        if (!string.IsNullOrEmpty(healingItemsToConsumeNames))
+        {
+            healingItemsToConsumeTooltip =
+                new Tooltip($"Will Consume:\n{healingItemsToConsumeNames}", 0);
+
+            inventoryUITooltip.AddTooltipTextWithPriority(healingItemsToConsumeTooltip);
+        }
+    }
+
+    private string GetHealingItemsToConsumeNames()
+    {
+        StringBuilder healingItemsToConsumeStringBuilder = new StringBuilder();
+
+        int healthBelowMax = playerHealthController.GetMaxHealth() -
+            playerHealthController.GetCurrentHealth();
+
+        int healthFromItemsToConsume = 0;
+
+        List<ItemWithAmount> playerInventoryItemList = playerInventory.GetItemList();
+
+        for (int i = 0; i < playerInventoryItemList.Count; ++i)
+        {
+            if (playerInventoryItemList[i].itemData is HealingItemScriptableObject healingItem)
+            {
+                healingItemsToConsumeStringBuilder.AppendLine($"- {healingItem.name}");
+
+                healthFromItemsToConsume += healingItem.healAmount;
+
+                bool maxHealthReached = healthFromItemsToConsume >= healthBelowMax;
+                if (maxHealthReached)
+                {
+                    break;
+                }
+            }
+        }
+
+        return healingItemsToConsumeStringBuilder.ToString();
     }
 }

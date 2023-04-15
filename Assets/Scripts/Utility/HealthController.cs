@@ -56,4 +56,8 @@ public class HealthController : MonoBehaviour
     {
         return currentHealth >= maxHealth;
     }
+
+    public int GetCurrentHealth() => currentHealth;
+
+    public int GetMaxHealth() => maxHealth;
 }
