@@ -4,10 +4,8 @@ using UnityEngine.UI;
 public class FishUIController : MonoBehaviour
 {
     [SerializeField] private Image fishUIImage;
-    [SerializeField] private float fishMinX;
-    [SerializeField] private float fishMaxX;
-    [SerializeField] private float fishStartPositionMinAbsX;
-    [SerializeField] private float fishStartPositionMaxAbsX;
+    [SerializeField] private Vector2 fishXPositionRange;
+    [SerializeField] private Vector2 fishStartAbsXPositionRange;
     [SerializeField] private bool logStartPosition;
 
     private RectTransform rectTransform;
@@ -26,8 +24,8 @@ public class FishUIController : MonoBehaviour
         float fishXSpeed = Speed * Time.deltaTime;
         transform.localPosition += Vector3.right * fishXDirection * fishXSpeed;
 
-        bool fishMovedPastXPositionLimit = transform.localPosition.x >= fishMaxX ||
-            transform.localPosition.x <= fishMinX;
+        bool fishMovedPastXPositionLimit = transform.localPosition.x <= fishXPositionRange.x ||
+            transform.localPosition.x >= fishXPositionRange.y;
         if (fishMovedPastXPositionLimit)
         {
             ClampFishXPositionToLimit();
@@ -37,7 +35,8 @@ public class FishUIController : MonoBehaviour
 
     private void ClampFishXPositionToLimit()
     {
-        float clampedFishXPosition = Mathf.Clamp(transform.localPosition.x, fishMinX, fishMaxX);
+        float clampedFishXPosition = Mathf.Clamp(transform.localPosition.x,
+            fishXPositionRange.x, fishXPositionRange.y);
         transform.localPosition = new Vector3(clampedFishXPosition,
                 transform.localPosition.y, transform.localPosition.z);
     }
@@ -82,7 +81,8 @@ public class FishUIController : MonoBehaviour
 
     private float GetRandomFishXPosition()
     {
-        float xPosition = Random.Range(fishStartPositionMinAbsX, fishStartPositionMaxAbsX);
+        float xPosition = Random.Range(fishStartAbsXPositionRange.x,
+            fishStartAbsXPositionRange.y);
 
         if (Random.Range(0, 2) == 0)
         {

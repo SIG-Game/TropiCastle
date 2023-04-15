@@ -93,8 +93,7 @@ MonoBehaviour:
   fishUI: {fileID: 6030874414711316719}
   player: {fileID: 0}
   playerFishItemInWorld: {fileID: 0}
-  minCatchFishX: -50
-  maxCatchFishX: 50
+  catchFishXPositionRange: {x: -50, y: 50}
   logSelectedFish: 0
 --- !u!95 &239831750938302052
 Animator:
@@ -470,8 +469,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishUIImage: {fileID: 4788721818253555063}
-  fishMinX: -200
-  fishMaxX: 200
-  fishStartPositionMinAbsX: 80
-  fishStartPositionMaxAbsX: 190
+  fishXPositionRange: {x: -200, y: 200}
+  fishStartAbsXPositionRange: {x: 80, y: 190}
   logStartPosition: 0
