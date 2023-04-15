@@ -20,7 +20,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void Update()
     {
-        if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen)
+        if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen ||
+            player.IsAttacking)
         {
             // This check needs to occur in case right-click is released while the
             // above condition is true after picking up an item on press of that click

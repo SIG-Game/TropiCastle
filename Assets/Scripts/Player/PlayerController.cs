@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool IsAttacking { get; private set; }
+
     public event Action OnFishingRodUsed = delegate { };
 
     private static bool actionDisablingUIOpen;
@@ -59,7 +61,6 @@ public class PlayerController : MonoBehaviour
     private WeaponItemScriptableObject strongestWeaponInInventory;
     private LayerMask interactableMask;
     private LayerMask waterMask;
-    private bool isAttacking;
 
     private void Awake()
     {
@@ -76,7 +77,7 @@ public class PlayerController : MonoBehaviour
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
 
-        isAttacking = false;
+        IsAttacking = false;
 
         LastDirection = CharacterDirection.Down;
 
@@ -109,7 +110,7 @@ public class PlayerController : MonoBehaviour
             UseItem(GetSelectedItem());
 
             // Prevent doing other actions on the frame an attack starts
-            if (isAttacking)
+            if (IsAttacking)
             {
                 return;
             }
@@ -290,19 +291,19 @@ public class PlayerController : MonoBehaviour
 
     private void AttackStartedAnimationEvent()
     {
-        isAttacking = true;
+        IsAttacking = true;
 
         itemSelectionController.CanSelect = false;
     }
 
     private void AttackEndedAnimationEvent()
     {
-        isAttacking = false;
+        IsAttacking = false;
 
         itemSelectionController.CanSelect = true;
     }
 
-    public bool CanMove() => !isAttacking && !PauseController.Instance.GamePaused && !ActionDisablingUIOpen;
+    public bool CanMove() => !IsAttacking && !PauseController.Instance.GamePaused && !ActionDisablingUIOpen;
 
     public int GetSelectedItemIndex() => itemSelectionController.SelectedItemIndex;
 
