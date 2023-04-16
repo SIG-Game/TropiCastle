@@ -9,6 +9,7 @@ public class FishingUIController : MonoBehaviour
 {
     [SerializeField] private GameObject fishingUI;
     [SerializeField] private FishUIController fishUI;
+    [SerializeField] private Transform hookTransform;
     [SerializeField] private PlayerController player;
     [SerializeField] private PlayerItemInWorldController playerItemInWorld;
     [SerializeField] private Vector2 catchFishXPositionRange;
@@ -63,8 +64,11 @@ public class FishingUIController : MonoBehaviour
 
     private void AttemptToCatchFish()
     {
-        bool canCatchFish = fishUI.transform.localPosition.x >= catchFishXPositionRange.x &&
-            fishUI.transform.localPosition.x <= catchFishXPositionRange.y;
+        float catchFishXMin = hookTransform.position.x + catchFishXPositionRange.x;
+        float catchFishXMax = hookTransform.position.x + catchFishXPositionRange.y;
+
+        bool canCatchFish = fishUI.transform.position.x >= catchFishXMin &&
+            fishUI.transform.position.x <= catchFishXMax;
         if (canCatchFish)
         {
             CatchFish();
