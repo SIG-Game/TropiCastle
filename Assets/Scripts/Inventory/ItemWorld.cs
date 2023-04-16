@@ -4,6 +4,7 @@ using UnityEngine;
 public class ItemWorld : Interactable
 {
     [SerializeField] public ItemWithAmount item;
+    [SerializeField] private bool logOnInteract;
 
     private IItemInteraction itemInteraction;
 
@@ -32,7 +33,11 @@ public class ItemWorld : Interactable
     {
         if (itemInteraction != null)
         {
-            Debug.Log("Item interaction with item interaction type " + itemInteraction.GetType().Name);
+            if (logOnInteract)
+            {
+                Debug.Log("Item interaction with item interaction type " + itemInteraction.GetType().Name);
+            }
+
             itemInteraction.Interact(player);
         }
     }

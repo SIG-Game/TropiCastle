@@ -150,6 +150,7 @@ MonoBehaviour:
   item:
     itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
     amount: 1
+  logOnInteract: 0
 --- !u!114 &5689536345290061009
 MonoBehaviour:
   m_ObjectHideFlags: 0
