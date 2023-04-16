@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6612598337352294783}
   - component: {fileID: 6075103288335445172}
   m_Layer: 8
-  m_Name: Fish Item
+  m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 5288355818519945016}
   playerTransform: {fileID: 5288355818519945019}
-  fishItemInWorldOffsets:
+  itemInWorldOffsets:
   - {x: 0, y: 0.35, z: 0}
   - {x: 0, y: 0.3, z: 0}
   - {x: -0.12, y: 0.27, z: 0}

@@ -4,6 +4,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
     [SerializeField] private ItemSelectionController itemSelectionController;
+    [SerializeField] private PlayerItemInWorldController playerItemInWorld;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Sprite itemPickupArrow;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
@@ -63,17 +64,19 @@ public class ItemPickupAndPlacement : MonoBehaviour
             cursorController.SetCursorSprite(selectedItemData.sprite);
             cursorController.SetCursorBackgroundColor(CanPlaceItemAtPosition(mouseWorldPoint) ?
                 canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
+
+            playerItemInWorld.ShowPlayerItemInWorld(selectedItemData.sprite);
         }
         else
         {
-            cursorController.UseDefaultCursor();
+            ResetCursorAndPlayerItem();
         }
 
         if (Input.GetMouseButtonDown(1) && mouseIsOverItemWorld)
         {
             if (TryPickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>()))
             {
-                cursorController.UseDefaultCursor();
+                ResetCursorAndPlayerItem();
             }
 
             // Prevent item placement on right-click release from using
@@ -93,14 +96,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
             {
                 if (TryPickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>()))
                 {
-                    cursorController.UseDefaultCursor();
+                    ResetCursorAndPlayerItem();
                 }
             }
             else if (CanPlaceItemAtPosition(mouseWorldPoint) && mouseIsOnScreen &&
                 !waitingForRightClickReleaseBeforePlacement)
             {
                 PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
-                cursorController.UseDefaultCursor();
+                ResetCursorAndPlayerItem();
             }
 
             waitingForRightClickReleaseBeforePlacement = false;
@@ -139,5 +142,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
             ItemWorldPrefabInstanceFactory.GetItemColliderExtents(player.GetSelectedItem().itemData);
 
         return SpawnColliderHelper.CanSpawnColliderAtPosition(position, selectedItemColliderExtents);
+    }
+
+    private void ResetCursorAndPlayerItem()
+    {
+        cursorController.UseDefaultCursor();
+        playerItemInWorld.HidePlayerItemInWorld();
     }
 }

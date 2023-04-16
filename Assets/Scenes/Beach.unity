@@ -1480,6 +1480,11 @@ PrefabInstance:
       objectReference: {fileID: 198128349}
     - target: {fileID: 4788721817516295151, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
+      propertyPath: playerItemInWorld
+      value: 
+      objectReference: {fileID: 1982112584}
+    - target: {fileID: 4788721817516295151, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
       propertyPath: playerFishItemInWorld
       value: 
       objectReference: {fileID: 1982112584}
@@ -43382,6 +43387,11 @@ PrefabInstance:
       propertyPath: cursorController
       value: 
       objectReference: {fileID: 1812985303}
+    - target: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
+      propertyPath: playerItemInWorld
+      value: 
+      objectReference: {fileID: 1982112584}
     - target: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
         type: 3}
       propertyPath: itemSelectionController
