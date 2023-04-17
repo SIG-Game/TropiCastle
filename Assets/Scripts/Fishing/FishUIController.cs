@@ -61,7 +61,7 @@ public class FishUIController : MonoBehaviour
             Debug.Log("Set fish UI x position to: " + transform.localPosition.x);
         }
 
-        float randomFishXDirection = Random.Range(0, 2) == 0 ? 1f : -1f;
+        float randomFishXDirection = GetRandomSign();
         transform.localScale = new Vector3(randomFishXDirection,
             transform.localScale.y, transform.localScale.z);
     }
@@ -79,18 +79,10 @@ public class FishUIController : MonoBehaviour
             fishUIImage.color.g, fishUIImage.color.b, 1f);
     }
 
-    private float GetRandomFishXPosition()
-    {
-        float xPosition = Random.Range(fishStartAbsXPositionRange.x,
-            fishStartAbsXPositionRange.y);
+    private float GetRandomFishXPosition() => Random.Range(fishStartAbsXPositionRange.x,
+        fishStartAbsXPositionRange.y) * GetRandomSign();
 
-        if (Random.Range(0, 2) == 0)
-        {
-            xPosition *= -1f;
-        }
-
-        return xPosition;
-    }
+    private float GetRandomSign() => Random.Range(0, 2) == 0 ? 1f : -1f;
 
     public void SetColor(Color color)
     {
