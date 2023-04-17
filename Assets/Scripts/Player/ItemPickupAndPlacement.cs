@@ -69,7 +69,12 @@ public class ItemPickupAndPlacement : MonoBehaviour
         }
         else
         {
-            ResetCursorAndPlayerItem();
+            cursorController.UseDefaultCursor();
+        }
+
+        if (placingItem && !mouseIsOnScreen)
+        {
+            playerItemInWorld.HidePlayerItemInWorld();
         }
 
         if (Input.GetMouseButtonDown(1) && mouseIsOverItemWorld)
