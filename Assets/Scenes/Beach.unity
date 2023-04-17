@@ -40929,8 +40929,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954349676e9910b4380b29a8abadb35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightedSlotColor: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
-  unhighlightedSlotColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  highlightedSlotColor: {r: 0.41568628, g: 0.61960787, b: 0.68235296, a: 1}
+  unhighlightedSlotColor: {r: 0.551869, g: 0.7941783, b: 0.8679245, a: 1}
   itemSlotControllers:
   - {fileID: 3705715057410961521}
   - {fileID: 64656420}
@@ -41851,7 +41851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
+  m_Color: {r: 0.19282661, g: 0.41649535, b: 0.6509434, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
