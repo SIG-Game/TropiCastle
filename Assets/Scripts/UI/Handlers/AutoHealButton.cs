@@ -12,12 +12,14 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private InventoryUITooltipController inventoryUITooltip;
     private Tooltip maxHealthTooltip;
+    private Tooltip noHealingItemsTooltip;
     private Tooltip healingItemsToConsumeTooltip;
     private bool hoveringOverAutoHealButton;
 
     private void Awake()
     {
         maxHealthTooltip = new Tooltip("Already at max health.", 0);
+        noHealingItemsTooltip = new Tooltip("No healing items available.", 0);
 
         hoveringOverAutoHealButton = false;
 
@@ -69,10 +71,16 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         bool maxHealthTooltipShouldBeVisible =
             hoveringOverAutoHealButton && playerHealthController.AtMaxHealth();
 
-        if (maxHealthTooltipShouldBeVisible &&
-            inventoryUITooltip.TooltipListContains(healingItemsToConsumeTooltip))
+        if (maxHealthTooltipShouldBeVisible)
         {
-            inventoryUITooltip.RemoveTooltipTextWithPriority(healingItemsToConsumeTooltip);
+            if (inventoryUITooltip.TooltipListContains(healingItemsToConsumeTooltip))
+            {
+                inventoryUITooltip.RemoveTooltipTextWithPriority(healingItemsToConsumeTooltip);
+            }
+            else if (inventoryUITooltip.TooltipListContains(noHealingItemsTooltip))
+            {
+                inventoryUITooltip.RemoveTooltipTextWithPriority(noHealingItemsTooltip);
+            }
 
             inventoryUITooltip.AddTooltipTextWithPriority(maxHealthTooltip);
         }
@@ -87,7 +95,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             inventoryUITooltip.RemoveTooltipTextWithPriority(healingItemsToConsumeTooltip);
 
-            UseHealingItemsToConsumeTooltip();
+            UseHealingItemsTooltip();
         }
     }
 
@@ -101,7 +109,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
         else
         {
-            UseHealingItemsToConsumeTooltip();
+            UseHealingItemsTooltip();
         }
     }
 
@@ -117,13 +125,21 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             inventoryUITooltip.RemoveTooltipTextWithPriority(healingItemsToConsumeTooltip);
         }
+        else if (inventoryUITooltip.TooltipListContains(noHealingItemsTooltip))
+        {
+            inventoryUITooltip.RemoveTooltipTextWithPriority(noHealingItemsTooltip);
+        }
     }
 
-    private void UseHealingItemsToConsumeTooltip()
+    private void UseHealingItemsTooltip()
     {
         string healingItemsToConsumeNames = GetHealingItemsToConsumeNames();
 
-        if (!string.IsNullOrEmpty(healingItemsToConsumeNames))
+        if (string.IsNullOrEmpty(healingItemsToConsumeNames))
+        {
+            inventoryUITooltip.AddTooltipTextWithPriority(noHealingItemsTooltip);
+        }
+        else
         {
             healingItemsToConsumeTooltip =
                 new Tooltip($"Will Consume:\n{healingItemsToConsumeNames}", 0);
