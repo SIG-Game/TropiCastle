@@ -10,148 +10,160 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private Color canPlaceCursorBackgroundColor;
     [SerializeField] private Color cannotPlaceCursorBackgroundColor;
 
+    public bool WaitingForRightClickReleaseBeforePlacement { get; set; }
+
+    public DefaultItemPickupAndPlacementState DefaultState { get; private set; }
+    public ItemPickupState PickupState { get; private set; }
+    public ItemPlacementState PlacementState { get; private set; }
+
+    private BaseItemPickupAndPlacementState currentState;
     private Inventory playerInventory;
-    private bool waitingForRightClickReleaseBeforePlacement;
+    private Vector2 mouseWorldPoint;
+    private ItemWorld hoveredItemWorld;
+    private bool canPlaceItemAtMousePosition;
+    private bool mouseIsOverItemWorld;
+    private bool placingItem;
+
+    private void Awake()
+    {
+        WaitingForRightClickReleaseBeforePlacement = false;
+
+        DefaultState = new DefaultItemPickupAndPlacementState(this);
+        PickupState = new ItemPickupState(this);
+        PlacementState = new ItemPlacementState(this);
+
+        currentState = DefaultState;
+
+        currentState.StateEnter();
+    }
 
     private void Start()
     {
         playerInventory = player.GetInventory();
-        waitingForRightClickReleaseBeforePlacement = false;
     }
 
     private void Update()
     {
+        if (Input.GetMouseButtonUp(1))
+        {
+            WaitingForRightClickReleaseBeforePlacement = false;
+        }
+
         if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen ||
             player.IsAttacking)
         {
-            // This check needs to occur in case right-click is released while the
-            // above condition is true after picking up an item on press of that click
-            if (Input.GetMouseButtonUp(1))
+            bool shouldCancelPlacement = currentState == PlacementState;
+            if (shouldCancelPlacement)
             {
-                waitingForRightClickReleaseBeforePlacement = false;
+                SwitchState(DefaultState);
             }
 
             return;
         }
 
-        Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Collider2D mouseOverlapCollider = Physics2D.OverlapPoint(mouseWorldPoint);
+        UpdateInstanceVariables();
 
-        float mouseXPosition = Input.mousePosition.x;
-        float mouseYPosition = Input.mousePosition.y;
-        bool mouseIsOnScreen = mouseXPosition >= 0f && mouseXPosition <= Screen.width &&
-            mouseYPosition >= 0f && mouseYPosition <= Screen.height;
+        currentState.StateUpdate();
 
-        bool mouseIsOverCollider = mouseOverlapCollider != null;
-        bool mouseIsOverItemWorld = mouseIsOverCollider && mouseOverlapCollider.CompareTag("Item World");
-        bool placingItem = Input.GetMouseButton(1) && !waitingForRightClickReleaseBeforePlacement
-            && player.GetSelectedItem().itemData.name != "Empty";
-
-        if (mouseIsOverItemWorld)
-        {
-            cursorController.SetCursorSprite(itemPickupArrow);
-            cursorController.SetCursorBackgroundColor(Color.clear);
-        }
-        else if (placingItem && mouseIsOnScreen)
-        {
-            ItemScriptableObject selectedItemData = player.GetSelectedItem().itemData;
-
-            Vector2 selectedItemColliderSize =
-                ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItemData);
-
-            cursorController.SetCursorBackgroundLocalScale(selectedItemColliderSize);
-
-            cursorController.SetCursorSprite(selectedItemData.sprite);
-            cursorController.SetCursorBackgroundColor(CanPlaceItemAtPosition(mouseWorldPoint) ?
-                canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
-
-            playerItemInWorld.ShowPlayerItemInWorld(selectedItemData.sprite);
-        }
-        else
-        {
-            cursorController.UseDefaultCursor();
-        }
-
-        if (placingItem && !mouseIsOnScreen)
-        {
-            playerItemInWorld.HidePlayerItemInWorld();
-        }
-
-        if (Input.GetMouseButtonDown(1) && mouseIsOverItemWorld)
-        {
-            if (TryPickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>()))
-            {
-                ResetCursorAndPlayerItem();
-            }
-
-            // Prevent item placement on right-click release from using
-            // the same click as item pickup on right-click press
-            waitingForRightClickReleaseBeforePlacement = true;
-        }
-
-        // Cancel item placement when left-click is pressed while placing an item
-        if (placingItem && InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
-        {
-            waitingForRightClickReleaseBeforePlacement = true;
-        }
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            if (mouseIsOverItemWorld)
-            {
-                if (TryPickUpItemFromItemWorld(mouseOverlapCollider.GetComponent<ItemWorld>()))
-                {
-                    ResetCursorAndPlayerItem();
-                }
-            }
-            else if (CanPlaceItemAtPosition(mouseWorldPoint) && mouseIsOnScreen &&
-                !waitingForRightClickReleaseBeforePlacement)
-            {
-                PlaceSelectedPlayerHotbarItemAtPosition(mouseWorldPoint);
-                ResetCursorAndPlayerItem();
-            }
-
-            waitingForRightClickReleaseBeforePlacement = false;
-        }
+        return;
     }
 
-    private bool TryPickUpItemFromItemWorld(ItemWorld itemWorld)
+    public void PickUpHoveredItem()
     {
         if (playerInventory.IsFull())
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
-            return false;
         }
 
-        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemWorld.item,
+        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItemWorld.item,
             itemSelectionController.SelectedItemIndex);
-        Destroy(itemWorld.gameObject);
-        return true;
+        Destroy(hoveredItemWorld.gameObject);
     }
 
-    private void PlaceSelectedPlayerHotbarItemAtPosition(Vector2 position)
+    public void PlaceSelectedPlayerHotbarItemAtMousePosition()
     {
         ItemWithAmount itemToPlace = player.GetSelectedItem();
         int itemToPlaceIndex = player.GetSelectedItemIndex();
 
         if (itemToPlace.itemData.name != "Empty")
         {
-            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(position, itemToPlace);
+            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(mouseWorldPoint, itemToPlace);
             playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
         }
     }
 
-    private bool CanPlaceItemAtPosition(Vector2 position)
-    {
-        Vector2 selectedItemColliderExtents =
-            ItemWorldPrefabInstanceFactory.GetItemColliderExtents(player.GetSelectedItem().itemData);
-
-        return SpawnColliderHelper.CanSpawnColliderAtPosition(position, selectedItemColliderExtents);
-    }
-
-    private void ResetCursorAndPlayerItem()
+    public void ResetCursor()
     {
         cursorController.UseDefaultCursor();
+    }
+
+    public void ResetCursorAndPlayerItem()
+    {
+        ResetCursor();
         playerItemInWorld.HidePlayerItemInWorld();
     }
+
+    public void UsePickupCursor()
+    {
+        cursorController.SetCursorSprite(itemPickupArrow);
+        cursorController.SetCursorBackgroundColor(Color.clear);
+    }
+
+    public void UsePlacementCursorAndPlayerItem()
+    {
+        ItemScriptableObject selectedItemData = player.GetSelectedItem().itemData;
+
+        Vector2 selectedItemColliderSize =
+            ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItemData);
+
+        cursorController.SetCursorBackgroundLocalScale(selectedItemColliderSize);
+
+        cursorController.SetCursorSprite(selectedItemData.sprite);
+        cursorController.SetCursorBackgroundColor(canPlaceItemAtMousePosition ?
+            canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
+
+        playerItemInWorld.ShowPlayerItemInWorld(selectedItemData.sprite);
+    }
+
+    private void UpdateInstanceVariables()
+    {
+        mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Collider2D mouseOverlapCollider = Physics2D.OverlapPoint(mouseWorldPoint);
+
+        bool mouseIsOverCollider = mouseOverlapCollider != null;
+        mouseIsOverItemWorld = mouseIsOverCollider && mouseOverlapCollider.CompareTag("Item World");
+
+        if (mouseIsOverItemWorld)
+        {
+            hoveredItemWorld = mouseOverlapCollider.GetComponent<ItemWorld>();
+        }
+        else
+        {
+            hoveredItemWorld = null;
+        }
+
+        ItemScriptableObject selectedItemData = player.GetSelectedItem().itemData;
+
+        Vector2 selectedItemColliderExtents =
+            ItemWorldPrefabInstanceFactory.GetItemColliderExtents(selectedItemData);
+
+        canPlaceItemAtMousePosition =
+             SpawnColliderHelper.CanSpawnColliderAtPosition(mouseWorldPoint, selectedItemColliderExtents);
+
+        placingItem = Input.GetMouseButton(1) && !WaitingForRightClickReleaseBeforePlacement
+            && selectedItemData.name != "Empty";
+    }
+
+    public void SwitchState(BaseItemPickupAndPlacementState newState)
+    {
+        currentState.StateExit();
+        currentState = newState;
+        currentState.StateEnter();
+    }
+
+    public bool CanPlaceItemAtMousePosition() => canPlaceItemAtMousePosition;
+
+    public bool MouseIsOverItemWorld() => mouseIsOverItemWorld;
+
+    public bool PlacingItem() => placingItem;
 }
