@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetHealthController: {fileID: 0}
   healthBarFill: {fileID: 1302316974455510666}
+  fillChangeSpeed: 1.5
 --- !u!1 &1302316974455510669
 GameObject:
   m_ObjectHideFlags: 0
