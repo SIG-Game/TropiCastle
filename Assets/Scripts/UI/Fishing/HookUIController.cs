@@ -15,9 +15,13 @@ public class HookUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.localPosition = initialPosition;
+        float randomXPosition = Random.Range(hookXPositionRange.x, hookXPositionRange.y);
 
-        xVelocity = xSpeed;
+        transform.localPosition = new Vector3(randomXPosition, initialPosition.y, initialPosition.z);
+
+        float randomXVelocityDirection = Random.Range(0, 2) == 0 ? 1f : -1f;
+
+        xVelocity = xSpeed * randomXVelocityDirection;
     }
 
     private void Update()
