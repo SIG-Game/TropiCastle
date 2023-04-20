@@ -7,8 +7,8 @@ public class HealthController : MonoBehaviour
 
     private int currentHealth;
 
-    // Event parameters are newHealth and healthDelta
-    public event Action<int, int> OnHealthChanged = delegate { };
+    public event Action<int> OnHealthSet = delegate { };
+    public event Action<int> OnHealthChangedByAmount = delegate { };
 
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class HealthController : MonoBehaviour
 
     private void Start()
     {
-        OnHealthChanged(currentHealth, 0);
+        OnHealthSet(currentHealth);
     }
 
     public void IncreaseHealth(int amount)
@@ -33,7 +33,8 @@ public class HealthController : MonoBehaviour
 
         int healthDelta = currentHealth - initialHealth;
 
-        OnHealthChanged(currentHealth, healthDelta);
+        OnHealthSet(currentHealth);
+        OnHealthChangedByAmount(healthDelta);
     }
 
     public void DecreaseHealth(int amount)
@@ -49,7 +50,8 @@ public class HealthController : MonoBehaviour
 
         int healthDelta = currentHealth - initialHealth;
 
-        OnHealthChanged(currentHealth, healthDelta);
+        OnHealthSet(currentHealth);
+        OnHealthChangedByAmount(healthDelta);
     }
 
     public bool AtMaxHealth()

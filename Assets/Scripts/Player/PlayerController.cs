@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
         ActionDisablingUIOpen = false;
 
-        healthController.OnHealthChanged += HealthController_OnHealthChanged;
+        healthController.OnHealthSet += HealthController_OnHealthSet;
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
     }
 
@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
     {
         if (healthController != null)
         {
-            healthController.OnHealthChanged -= HealthController_OnHealthChanged;
+            healthController.OnHealthSet -= HealthController_OnHealthSet;
         }
 
         if (inventory != null)
@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HealthController_OnHealthChanged(int newHealth, int _)
+    private void HealthController_OnHealthSet(int newHealth)
     {
         if (newHealth == 0)
         {

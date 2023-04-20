@@ -21,7 +21,7 @@ public class PlayerOverlayController : MonoBehaviour
 
         targetAlpha = 0f;
 
-        playerHealthController.OnHealthChanged += HealthController_OnHealthChanged;
+        playerHealthController.OnHealthChangedByAmount += HealthController_OnHealthChangedByAmount;
     }
 
     private void Update()
@@ -40,7 +40,7 @@ public class PlayerOverlayController : MonoBehaviour
     {
         if (playerHealthController != null)
         {
-            playerHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
+            playerHealthController.OnHealthChangedByAmount -= HealthController_OnHealthChangedByAmount;
         }
     }
 
@@ -51,7 +51,7 @@ public class PlayerOverlayController : MonoBehaviour
         targetAlpha = 0f;
     }
 
-    private void HealthController_OnHealthChanged(int _, int healthDelta)
+    private void HealthController_OnHealthChangedByAmount(int healthDelta)
     {
         if (healthDelta < 0)
         {

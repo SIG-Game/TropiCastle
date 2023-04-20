@@ -23,7 +23,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         hoveringOverAutoHealButton = false;
 
-        playerHealthController.OnHealthChanged += HealthController_OnHealthChanged;
+        playerHealthController.OnHealthSet += HealthController_OnHealthSet;
         playerInventory.ChangedItemAtIndex += PlayerInventory_ChangedItemAtIndex;
     }
 
@@ -36,7 +36,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (playerHealthController != null)
         {
-            playerHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
+            playerHealthController.OnHealthSet -= HealthController_OnHealthSet;
         }
 
         if (playerInventory != null)
@@ -64,7 +64,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    private void HealthController_OnHealthChanged(int _, int _1)
+    private void HealthController_OnHealthSet(int _)
     {
         autoHealButton.interactable = !playerHealthController.AtMaxHealth();
 

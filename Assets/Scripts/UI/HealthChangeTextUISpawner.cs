@@ -7,18 +7,18 @@ public class HealthChangeTextUISpawner : MonoBehaviour
 
     private void Awake()
     {
-        targetHealthController.OnHealthChanged += HealthController_OnHealthChanged;
+        targetHealthController.OnHealthChangedByAmount += HealthController_OnHealthChangedByAmount;
     }
 
     private void OnDestroy()
     {
         if (targetHealthController != null)
         {
-            targetHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
+            targetHealthController.OnHealthChangedByAmount -= HealthController_OnHealthChangedByAmount;
         }
     }
 
-    private void HealthController_OnHealthChanged(int newHealth, int healthDelta)
+    private void HealthController_OnHealthChangedByAmount(int healthDelta)
     {
         if (healthDelta != 0 && !PauseController.Instance.GamePaused)
         {

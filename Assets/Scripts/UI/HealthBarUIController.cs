@@ -17,7 +17,7 @@ public class HealthBarUIController : MonoBehaviour
         currentFillXScale = 1f;
         targetFillXScale = 1f;
 
-        targetHealthController.OnHealthChanged += HealthController_OnHealthChanged;
+        targetHealthController.OnHealthSet += HealthController_OnHealthSet;
     }
 
     private void Update()
@@ -37,11 +37,11 @@ public class HealthBarUIController : MonoBehaviour
     {
         if (targetHealthController != null)
         {
-            targetHealthController.OnHealthChanged -= HealthController_OnHealthChanged;
+            targetHealthController.OnHealthSet -= HealthController_OnHealthSet;
         }
     }
 
-    private void HealthController_OnHealthChanged(int newHealth, int _)
+    private void HealthController_OnHealthSet(int newHealth)
     {
         targetFillXScale = newHealth / targetMaxHealthFloat;
     }

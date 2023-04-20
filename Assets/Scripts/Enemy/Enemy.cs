@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
 
         StartCoroutine(InitialWaitBeforeChillingCoroutine());
 
-        healthController.OnHealthChanged += HealthController_OnHealthChanged;
+        healthController.OnHealthSet += HealthController_OnHealthSet;
     }
 
     private void Start()
@@ -119,11 +119,11 @@ public class Enemy : MonoBehaviour
     {
         if (healthController != null)
         {
-            healthController.OnHealthChanged -= HealthController_OnHealthChanged;
+            healthController.OnHealthSet -= HealthController_OnHealthSet;
         }
     }
 
-    private void HealthController_OnHealthChanged(int newHealth, int _)
+    private void HealthController_OnHealthSet(int newHealth)
     {
         if (newHealth <= 0)
         {
