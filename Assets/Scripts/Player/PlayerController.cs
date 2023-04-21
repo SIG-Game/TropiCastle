@@ -27,9 +27,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool IsAttacking { get; private set; }
+    public bool IsAttacking
+    {
+        get => isAttacking;
+        set
+        {
+            isAttacking = value;
+            OnIsAttackingSet(isAttacking);
+        }
+    }
 
     public event Action OnFishingRodUsed = delegate { };
+    public event Action<bool> OnIsAttackingSet = delegate { };
 
     private static bool actionDisablingUIOpen;
 
@@ -61,6 +70,7 @@ public class PlayerController : MonoBehaviour
     private WeaponItemScriptableObject strongestWeaponInInventory;
     private LayerMask interactableMask;
     private LayerMask waterMask;
+    private bool isAttacking;
 
     private void Awake()
     {

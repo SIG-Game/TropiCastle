@@ -4,6 +4,7 @@ public class CursorController : MonoBehaviour
 {
     [SerializeField] private Sprite defaultCursorSprite;
     [SerializeField] private GameObject cursorBackground;
+    [SerializeField] private PlayerController playerController;
 
     private SpriteRenderer cursorSpriteRenderer;
     private SpriteRenderer cursorBackgroundSpriteRenderer;
@@ -18,11 +19,14 @@ public class CursorController : MonoBehaviour
         PauseController.OnGamePaused += PauseController_OnGamePaused;
         PauseController.OnGameUnpaused += PauseController_OnGameUnpaused;
         PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
+
+        playerController.OnIsAttackingSet += PlayerController_OnIsAttackingSet;
     }
 
     private void Update()
     {
-        if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen)
+        if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen ||
+            playerController.IsAttacking)
         {
             return;
         }
@@ -41,6 +45,11 @@ public class CursorController : MonoBehaviour
         PauseController.OnGamePaused -= PauseController_OnGamePaused;
         PauseController.OnGameUnpaused -= PauseController_OnGameUnpaused;
         PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
+
+        if (playerController != null)
+        {
+            playerController.OnIsAttackingSet -= PlayerController_OnIsAttackingSet;
+        }
     }
 
     public void SetCursorSprite(Sprite sprite)
@@ -89,6 +98,18 @@ public class CursorController : MonoBehaviour
     private void PlayerController_OnActionDisablingUIOpenSet(bool actionDisablingUIOpen)
     {
         if (actionDisablingUIOpen)
+        {
+            HideCursor();
+        }
+        else
+        {
+            UseDefaultCursor();
+        }
+    }
+
+    private void PlayerController_OnIsAttackingSet(bool isAttacking)
+    {
+        if (isAttacking)
         {
             HideCursor();
         }

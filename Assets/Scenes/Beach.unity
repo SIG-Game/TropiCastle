@@ -41285,6 +41285,7 @@ MonoBehaviour:
   defaultCursorSprite: {fileID: 21300000, guid: 0929b51125d2e3c49938b7eec30601ee,
     type: 3}
   cursorBackground: {fileID: 1944580653}
+  playerController: {fileID: 572276101}
 --- !u!212 &1812985304
 SpriteRenderer:
   m_ObjectHideFlags: 0
