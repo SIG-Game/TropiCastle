@@ -36,12 +36,15 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
 
     private void UseInputForPickup()
     {
-        if (Input.GetMouseButtonDown(1))
+        bool holdingRightClickAndNotPlacingItem = Input.GetMouseButton(1) &&
+            !itemPickupAndPlacement.PlacingItem();
+
+        if (Input.GetMouseButtonDown(1) || holdingRightClickAndNotPlacingItem)
         {
             itemPickupAndPlacement.PickUpHoveredItem();
 
-            // Prevent item placement on right-click release from using
-            // the same click as item pickup on right-click press
+            // Prevent item placement on right-click release from using the same
+            // click as item pickup on right-click press or right-click hold
             itemPickupAndPlacement.WaitingForRightClickReleaseBeforePlacement = true;
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
