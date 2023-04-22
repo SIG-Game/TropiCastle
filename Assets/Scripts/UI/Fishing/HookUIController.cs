@@ -28,11 +28,19 @@ public class HookUIController : MonoBehaviour
     {
         Vector3 newPosition = transform.localPosition + Vector3.right * xVelocity * Time.deltaTime;
 
-        bool hookMovedPastXPositionLimit = newPosition.x <= hookXPositionRange.x ||
-            newPosition.x >= hookXPositionRange.y;
-        if (hookMovedPastXPositionLimit)
+        if (newPosition.x <= hookXPositionRange.x)
         {
-            newPosition.x = Mathf.Clamp(newPosition.x, hookXPositionRange.x, hookXPositionRange.y);
+            float distanceOverLimit = hookXPositionRange.x - newPosition.x;
+
+            newPosition.x = hookXPositionRange.x + distanceOverLimit;
+
+            xVelocity *= -1f;
+        }
+        else if (newPosition.x >= hookXPositionRange.y)
+        {
+            float distanceOverLimit = newPosition.x - hookXPositionRange.y;
+
+            newPosition.x = hookXPositionRange.y - distanceOverLimit;
 
             xVelocity *= -1f;
         }
