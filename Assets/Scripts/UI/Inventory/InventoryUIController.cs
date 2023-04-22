@@ -113,18 +113,6 @@ public class InventoryUIController : ItemSlotContainerController
         }
 
         inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
-
-        bool hoveredItemPotentiallyChanged = HoveredItemIndex == swapItemIndex ||
-            HoveredItemIndex == numberKeyIndex;
-        if (hoveredItemPotentiallyChanged)
-        {
-            UpdateInventoryTooltipAtIndex(HoveredItemIndex);
-        }
-    }
-
-    public void UpdateInventoryTooltipAtIndex(int itemIndex)
-    {
-        (itemSlotControllers[itemIndex] as InventoryUIItemSlotController).ResetSlotTooltipText();
     }
 
     [ContextMenu("Set Inventory UI Item Slot Indexes")]
@@ -149,6 +137,11 @@ public class InventoryUIController : ItemSlotContainerController
         Sprite changedItemSprite = item.itemData.sprite;
 
         SetSpriteAtSlotIndex(changedItemSprite, index);
+
+        if (InventoryUIOpen && index == HoveredItemIndex)
+        {
+            (itemSlotControllers[index] as InventoryUIItemSlotController).ResetSlotTooltipText();
+        }
     }
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)

@@ -78,8 +78,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
         else
         {
             inventory.SwapItemsAt(heldItemIndex, itemIndex);
-
-            inventoryUIController.UpdateInventoryTooltipAtIndex(itemIndex);
         }
 
         HideHeldItem();
