@@ -1,10 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ItemPlacementState : BaseItemPickupAndPlacementState
 {
-    public ItemPlacementState(ItemPickupAndPlacement itemPickupAndPlacement) :
+    private InputAction itemPickupAndPlacementAction;
+
+    public ItemPlacementState(ItemPickupAndPlacement itemPickupAndPlacement,
+        InputAction itemPickupAndPlacementAction) :
         base(itemPickupAndPlacement)
     {
+        this.itemPickupAndPlacementAction = itemPickupAndPlacementAction;
     }
 
     public override void StateEnter()
@@ -26,7 +31,7 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
         {
             itemPickupAndPlacement.ResetCursorAndPlayerItem();
 
-            if (Input.GetMouseButtonUp(1))
+            if (itemPickupAndPlacementAction.WasReleasedThisFrame())
             {
                 itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
             }
@@ -36,7 +41,7 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
 
         itemPickupAndPlacement.UsePlacementCursorAndPlayerItem();
 
-        if (Input.GetMouseButtonUp(1))
+        if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
             if (itemPickupAndPlacement.CanPlaceItemAtMousePosition())
             {
@@ -52,7 +57,7 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
         if (itemPickupAndPlacement.PlacingItem() &&
             InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
         {
-            itemPickupAndPlacement.WaitingForRightClickReleaseBeforePlacement = true;
+            itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ItemPickupAndPlacement : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private Color canPlaceCursorBackgroundColor;
     [SerializeField] private Color cannotPlaceCursorBackgroundColor;
 
-    public bool WaitingForRightClickReleaseBeforePlacement { get; set; }
+    public bool WaitingForInputReleaseBeforePlacement { get; set; }
 
     public DefaultItemPickupAndPlacementState DefaultState { get; private set; }
     public ItemPickupState PickupState { get; private set; }
@@ -20,33 +21,36 @@ public class ItemPickupAndPlacement : MonoBehaviour
     private Inventory playerInventory;
     private Vector2 mouseWorldPoint;
     private ItemWorld hoveredItemWorld;
+    private InputAction itemPickupAndPlacementAction;
     private bool canPlaceItemAtMousePosition;
     private bool mouseIsOverItemWorld;
     private bool placingItem;
 
     private void Awake()
     {
-        WaitingForRightClickReleaseBeforePlacement = false;
+        WaitingForInputReleaseBeforePlacement = false;
+    }
+
+    private void Start()
+    {
+        playerInventory = player.GetInventory();
+
+        itemPickupAndPlacementAction = InputManager.Instance.GetAction("Item Pickup and Placement");
 
         DefaultState = new DefaultItemPickupAndPlacementState(this);
-        PickupState = new ItemPickupState(this);
-        PlacementState = new ItemPlacementState(this);
+        PickupState = new ItemPickupState(this, itemPickupAndPlacementAction);
+        PlacementState = new ItemPlacementState(this, itemPickupAndPlacementAction);
 
         currentState = DefaultState;
 
         currentState.StateEnter();
     }
 
-    private void Start()
-    {
-        playerInventory = player.GetInventory();
-    }
-
     private void Update()
     {
-        if (Input.GetMouseButtonUp(1))
+        if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
-            WaitingForRightClickReleaseBeforePlacement = false;
+            WaitingForInputReleaseBeforePlacement = false;
         }
 
         if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen ||
@@ -150,8 +154,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
         canPlaceItemAtMousePosition =
              SpawnColliderHelper.CanSpawnColliderAtPosition(mouseWorldPoint, selectedItemColliderExtents);
 
-        placingItem = Input.GetMouseButton(1) && !WaitingForRightClickReleaseBeforePlacement
-            && selectedItemData.name != "Empty";
+        placingItem = itemPickupAndPlacementAction.IsPressed() &&
+            !WaitingForInputReleaseBeforePlacement && selectedItemData.name != "Empty";
     }
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)

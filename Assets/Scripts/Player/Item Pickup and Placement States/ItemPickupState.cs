@@ -1,10 +1,14 @@
-using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ItemPickupState : BaseItemPickupAndPlacementState
 {
-    public ItemPickupState(ItemPickupAndPlacement itemPickupAndPlacement) :
+    private InputAction itemPickupAndPlacementAction;
+
+    public ItemPickupState(ItemPickupAndPlacement itemPickupAndPlacement,
+        InputAction itemPickupAndPlacementAction) :
         base(itemPickupAndPlacement)
     {
+        this.itemPickupAndPlacementAction = itemPickupAndPlacementAction;
     }
 
     public override void StateEnter()
@@ -36,20 +40,21 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
 
     private void UseInputForPickup()
     {
-        bool holdingRightClickAndNotPlacingItem = Input.GetMouseButton(1) &&
+        bool holdingPickupInputAndNotPlacingItem = itemPickupAndPlacementAction.IsPressed() &&
             !itemPickupAndPlacement.PlacingItem();
 
-        if (Input.GetMouseButtonDown(1) || holdingRightClickAndNotPlacingItem)
+        if (itemPickupAndPlacementAction.WasPressedThisFrame() ||
+            holdingPickupInputAndNotPlacingItem)
         {
             itemPickupAndPlacement.PickUpHoveredItem();
 
-            // Prevent item placement on right-click release from using the same
-            // click as item pickup on right-click press or right-click hold
-            itemPickupAndPlacement.WaitingForRightClickReleaseBeforePlacement = true;
+            // Prevent item placement on input release from using the
+            // same press as item pickup on input press or input hold
+            itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
             itemPickupAndPlacement.PickUpHoveredItem();
 
