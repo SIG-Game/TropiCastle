@@ -25,6 +25,8 @@ public class InventoryUIController : ItemSlotContainerController
 
     private void Awake()
     {
+        HoveredItemIndex = -1;
+
         inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
@@ -65,6 +67,8 @@ public class InventoryUIController : ItemSlotContainerController
 
             if (!InventoryUIOpen)
             {
+                HoveredItemIndex = -1;
+
                 OnInventoryClosed();
             }
         }
