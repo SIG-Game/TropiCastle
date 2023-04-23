@@ -228,6 +228,8 @@ public class PlayerController : MonoBehaviour
 
     private void AttackWithWeapon(WeaponItemScriptableObject weaponItemData)
     {
+        animator.SetFloat("Swing Speed Multiplier", weaponItemData.swingSpeed);
+
         weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
         weaponController.Damage = weaponItemData.damage;
         weaponController.EnemyKnockbackForce = weaponItemData.knockback;

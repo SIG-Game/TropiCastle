@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Stick
   sprite: {fileID: 21300000, guid: 3e72a515fa2652440983168014fa75f8, type: 3}
+  hasCustomColliderSize: 0
+  customColliderSize: {x: 0, y: 0}
   weaponSprite: {fileID: 21300000, guid: 636204c6013ed2148807b75a92e563ea, type: 3}
   damage: 40
   knockback: 2.5
+  swingSpeed: 1
