@@ -2,12 +2,14 @@
 
 public class EnemySpawner : PrefabSpawner
 {
-    [SerializeField] private Transform player;
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Inventory playerInventory;
 
     protected override void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
     {
         Enemy spawnedEnemy = spawnedPrefab.GetComponent<Enemy>();
 
-        spawnedEnemy.SetPlayerTransform(player);
+        spawnedEnemy.SetPlayerTransform(playerTransform);
+        spawnedEnemy.SetPlayerInventory(playerInventory);
     }
 }

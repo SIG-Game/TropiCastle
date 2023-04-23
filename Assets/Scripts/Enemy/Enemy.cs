@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float fadeOutSpeed;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private Inventory playerInventory;
     [SerializeField] private List<ItemWithAmount> droppedLoot;
 
     private Rigidbody2D rb2d;
@@ -90,7 +91,16 @@ public class Enemy : MonoBehaviour
                 // This should be revisited if stackable items get added
                 foreach (ItemWithAmount loot in droppedLoot)
                 {
-                    ItemWorldPrefabInstanceFactory.Instance.DropItem(transform.position, loot);
+                    if (playerInventory.IsFull())
+                    {
+                        InventoryFullUIController.Instance.ShowInventoryFullText();
+
+                        ItemWorldPrefabInstanceFactory.Instance.DropItem(transform.position, loot);
+                    }
+                    else
+                    {
+                        playerInventory.AddItem(loot);
+                    }
                 }
 
                 Destroy(gameObject);
@@ -200,5 +210,10 @@ public class Enemy : MonoBehaviour
     public void SetPlayerTransform(Transform playerTransform)
     {
         this.playerTransform = playerTransform;
+    }
+
+    public void SetPlayerInventory(Inventory playerInventory)
+    {
+        this.playerInventory = playerInventory;
     }
 }
