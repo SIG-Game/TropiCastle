@@ -77,6 +77,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
         if (playerInventory.IsFull())
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
+
+            return;
         }
 
         playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItemWorld.item,
