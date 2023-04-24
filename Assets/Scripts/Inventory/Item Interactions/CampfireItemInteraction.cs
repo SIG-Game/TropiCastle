@@ -1,7 +1,16 @@
+using System;
 using UnityEngine;
 
 public class CampfireItemInteraction : IItemInteraction
 {
+    private Lazy<ItemScriptableObject> lazyCookedCrabMeat;
+
+    public CampfireItemInteraction()
+    {
+        lazyCookedCrabMeat =
+            new Lazy<ItemScriptableObject>(LoadCookedCrabMeatItemScriptableObject);
+    }
+
     public void Interact(PlayerController playerController)
     {
         Inventory playerInventory = playerController.GetInventory();
@@ -12,7 +21,10 @@ public class CampfireItemInteraction : IItemInteraction
         if (rawCrabMeatIndex != -1)
         {
             playerInventory.RemoveItemAtIndex(rawCrabMeatIndex);
-            playerInventory.AddItem(Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat"), 1);
+            playerInventory.AddItem(lazyCookedCrabMeat.Value, 1);
         }
     }
+
+    private ItemScriptableObject LoadCookedCrabMeatItemScriptableObject() =>
+        Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat");
 }
