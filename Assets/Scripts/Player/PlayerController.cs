@@ -228,13 +228,15 @@ public class PlayerController : MonoBehaviour
 
     private void AttackWithWeapon(WeaponItemScriptableObject weaponItemData)
     {
-        animator.SetFloat("Swing Speed Multiplier", weaponItemData.swingSpeed);
+        animator.SetFloat("Attack Speed Multiplier", weaponItemData.attackSpeed);
 
         weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
         weaponController.Damage = weaponItemData.damage;
         weaponController.EnemyKnockbackForce = weaponItemData.knockback;
 
-        animator.Play($"Swing {lastDirection}");
+        string attackTypeString = weaponItemData.attackType.ToString();
+
+        animator.Play($"{attackTypeString} {lastDirection}");
     }
 
     private void Fish()

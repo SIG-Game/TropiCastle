@@ -17,6 +17,7 @@ MonoBehaviour:
   hasCustomColliderSize: 0
   customColliderSize: {x: 0, y: 0}
   weaponSprite: {fileID: 21300000, guid: 349d3eb683eac8a4097352ae27210a1e, type: 3}
+  attackType: 1
   damage: 60
   knockback: 3
-  swingSpeed: 0.9
+  attackSpeed: 2
