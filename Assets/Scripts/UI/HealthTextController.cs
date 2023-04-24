@@ -1,16 +1,24 @@
-﻿using TMPro;
+﻿using System.Text;
+using TMPro;
 using UnityEngine;
 
 public class HealthTextController : MonoBehaviour
 {
     [SerializeField] private HealthController targetHealthController;
     [SerializeField] private bool displayHealthPrefix;
+    [SerializeField] private bool displayMaxHealth;
 
     private TMP_Text healthText;
+    private int targetMaxHealth;
 
     private void Awake()
     {
         healthText = GetComponent<TMP_Text>();
+
+        if (displayMaxHealth)
+        {
+            targetMaxHealth = targetHealthController.GetMaxHealth();
+        }
 
         targetHealthController.OnHealthSet += HealthController_OnHealthSet;
     }
@@ -25,13 +33,20 @@ public class HealthTextController : MonoBehaviour
 
     private void HealthController_OnHealthSet(int newHealth)
     {
+        StringBuilder healthTextStringBuilder = new StringBuilder();
+
         if (displayHealthPrefix)
         {
-            healthText.text = "Health: " + newHealth;
+            healthTextStringBuilder.Append("Health: ");
         }
-        else
+
+        healthTextStringBuilder.Append(newHealth);
+
+        if (displayMaxHealth)
         {
-            healthText.text = newHealth.ToString();
+            healthTextStringBuilder.Append($" / {targetMaxHealth}");
         }
+
+        healthText.text = healthTextStringBuilder.ToString();
     }
 }
