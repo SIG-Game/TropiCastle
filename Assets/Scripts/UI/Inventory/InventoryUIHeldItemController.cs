@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,9 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private int heldItemIndex;
 
     public static InventoryUIHeldItemController Instance;
+
+    public static event Action OnStartedHoldingItem = delegate { };
+    public static event Action OnStoppedHoldingItem = delegate { };
 
     private void Awake()
     {
@@ -44,6 +48,9 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private void OnDestroy()
     {
         Instance = null;
+
+        OnStartedHoldingItem = delegate { };
+        OnStoppedHoldingItem = delegate { };
 
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
@@ -93,6 +100,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
         tooltipTextWithPriority = new Tooltip(
             InventoryUITooltipController.GetItemTooltipText(itemData), 1);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
+
+        OnStartedHoldingItem();
     }
 
     private void InventoryUIController_OnInventoryClosed()
@@ -117,6 +126,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemImage.sprite = transparentSprite;
 
         InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
+
+        OnStoppedHoldingItem();
     }
 
     public bool HoldingItem() => heldItemImage.sprite != transparentSprite;

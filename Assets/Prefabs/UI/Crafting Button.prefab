@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d12ee05e3b19154d851ddb641e887a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crafting: {fileID: 0}
+  craftingButton: {fileID: 6009137097597202573}
+  craftingButtonDependencies: {fileID: 0}
   craftingRecipe: {fileID: 0}
-  craftingButtonText: {fileID: 0}
   craftingButtonImage: {fileID: 2692672177494040863}
