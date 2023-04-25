@@ -53,9 +53,9 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
             return;
         }
 
-        // Cancel item placement when left-click is pressed while placing an item
+        // Cancel item placement when use item button is pressed while placing an item
         if (itemPickupAndPlacement.PlacingItem() &&
-            InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
+            InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame())
         {
             itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;
 

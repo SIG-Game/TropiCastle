@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (InputManager.Instance.GetLeftClickDownIfUnusedThisFrame())
+        if (InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame())
         {
             UseItem(GetSelectedItem());
 

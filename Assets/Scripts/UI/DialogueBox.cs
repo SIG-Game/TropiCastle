@@ -37,10 +37,10 @@ public class DialogueBox : MonoBehaviour
         if (canAdvanceDialogue)
         {
             // Get both inputs so that neither can be used elsewhere
-            bool leftClickInput = InputManager.Instance.GetLeftClickDownIfUnusedThisFrame();
+            bool useItemButtonInput = InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame();
             bool interactButtonInput = InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
 
-            bool advanceDialogueInputPressedThisFrame = leftClickInput || interactButtonInput;
+            bool advanceDialogueInputPressedThisFrame = useItemButtonInput || interactButtonInput;
             if (advanceDialogueInputPressedThisFrame)
             {
                 AdvanceDialogue();

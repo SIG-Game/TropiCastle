@@ -46,10 +46,10 @@ public class FishingUIController : MonoBehaviour
         }
 
         // Get both inputs so that neither can be used elsewhere
-        bool leftClickInput = InputManager.Instance.GetLeftClickDownIfUnusedThisFrame();
+        bool useItemButtonInput = InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame();
         bool fishButtonInput = InputManager.Instance.GetFishButtonDownIfUnusedThisFrame();
 
-        if ((leftClickInput || fishButtonInput) && !catchFailedAnimationStarted)
+        if ((useItemButtonInput || fishButtonInput) && !catchFailedAnimationStarted)
         {
             AttemptToCatchFish();
         }

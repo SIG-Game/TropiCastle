@@ -10,10 +10,11 @@ public class InputManager : MonoBehaviour
 
     private PlayerInput playerInput;
 
+    private InputAction useItemAction;
     private InputAction interactAction;
     private InputAction fishAction;
     private bool numberKeyUsedThisFrame;
-    private bool leftClickDownUsedThisFrame;
+    private bool useItemButtonDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
     private bool fishButtonDownUsedThisFrame;
 
@@ -26,6 +27,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
+        useItemAction = GetAction("Use Item");
         interactAction = GetAction("Interact");
         fishAction = GetAction("Fish");
     }
@@ -36,7 +38,7 @@ public class InputManager : MonoBehaviour
         EscapeKeyUsedThisFrame = false;
 
         numberKeyUsedThisFrame = false;
-        leftClickDownUsedThisFrame = false;
+        useItemButtonDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;
         fishButtonDownUsedThisFrame = false;
     }
@@ -96,8 +98,8 @@ public class InputManager : MonoBehaviour
         return numberKeyIndex;
     }
 
-    public bool GetLeftClickDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => Input.GetMouseButtonDown(0), ref leftClickDownUsedThisFrame);
+    public bool GetUseItemButtonDownIfUnusedThisFrame() =>
+        GetInputIfUnusedThisFrame(() => useItemAction.WasPressedThisFrame(), ref useItemButtonDownUsedThisFrame);
 
     public bool GetInteractButtonDownIfUnusedThisFrame() =>
         GetInputIfUnusedThisFrame(() => interactAction.WasPressedThisFrame(), ref interactButtonDownUsedThisFrame);
