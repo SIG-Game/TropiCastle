@@ -101,7 +101,7 @@ public class InventoryUITooltipController : MonoBehaviour
                 $"{item.name}\nHeals {healingItem.healAmount} Health",
             WeaponItemScriptableObject weaponItem => $"{item.name}\n" +
                 $"Deals {weaponItem.damage} Damage\n{weaponItem.knockback} Knockback\n" +
-                $"{weaponItem.swingSpeed} Swing Speed",
+                $"{weaponItem.attackSpeed} Attack Speed",
             { name: "Empty" } => string.Empty,
             _ => item.name
         };
@@ -109,7 +109,7 @@ public class InventoryUITooltipController : MonoBehaviour
     private void UpdateInventoryTooltipPosition()
     {
         Vector2 newAnchoredPosition =
-            MouseCanvasPositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
+            MousePositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
 
         float rightEdgeXPosition = newAnchoredPosition.x +
             tooltipBackgroundRectTransform.rect.xMax;

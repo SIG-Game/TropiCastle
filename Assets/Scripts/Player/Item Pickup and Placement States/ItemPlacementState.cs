@@ -27,18 +27,6 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
             return;
         }
 
-        if (!MouseIsOnScreen())
-        {
-            itemPickupAndPlacement.ResetCursorAndPlayerItem();
-
-            if (itemPickupAndPlacementAction.WasReleasedThisFrame())
-            {
-                itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
-            }
-
-            return;
-        }
-
         itemPickupAndPlacement.UsePlacementCursorAndPlayerItem();
 
         if (itemPickupAndPlacementAction.WasReleasedThisFrame())
@@ -68,16 +56,5 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
     public override void StateExit()
     {
         itemPickupAndPlacement.ResetCursorAndPlayerItem();
-    }
-
-    private bool MouseIsOnScreen()
-    {
-        float mouseXPosition = Input.mousePosition.x;
-        float mouseYPosition = Input.mousePosition.y;
-
-        bool mouseIsOnScreen = mouseXPosition >= 0f && mouseXPosition <= Screen.width &&
-            mouseYPosition >= 0f && mouseYPosition <= Screen.height;
-
-        return mouseIsOnScreen;
     }
 }

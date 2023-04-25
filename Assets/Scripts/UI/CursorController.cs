@@ -31,11 +31,8 @@ public class CursorController : MonoBehaviour
             return;
         }
 
-        Vector2 mousePositionClampedToScreen = new Vector2(
-            Mathf.Clamp(Input.mousePosition.x, 0f, Screen.width),
-            Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height));
-
-        Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(mousePositionClampedToScreen);
+        Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(
+            MousePositionHelper.GetMousePositionClampedToScreen());
 
         transform.position = mouseWorldPoint;
     }

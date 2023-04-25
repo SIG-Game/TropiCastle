@@ -133,7 +133,9 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void UpdateInstanceVariables()
     {
-        mouseWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPoint = Camera.main.ScreenToWorldPoint(
+            MousePositionHelper.GetMousePositionClampedToScreen());
+
         Collider2D mouseOverlapCollider = Physics2D.OverlapPoint(mouseWorldPoint);
 
         bool mouseIsOverCollider = mouseOverlapCollider != null;

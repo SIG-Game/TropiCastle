@@ -58,7 +58,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private void UpdateHeldItemPosition()
     {
         heldItemRectTransform.anchoredPosition =
-            MouseCanvasPositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
+            MousePositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
     }
 
     public void LeftClickedItemAtIndex(int clickedItemIndex)
