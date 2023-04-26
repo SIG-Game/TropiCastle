@@ -22,7 +22,6 @@ public class Enemy : MonoBehaviour
     private new Collider2D collider2D;
     private SpriteRenderer spriteRenderer;
     private HealthController healthController;
-    private Vector2 velocityDirection;
     private Vector2 playerColliderOffset;
     private EnemyState state;
 
@@ -54,8 +53,6 @@ public class Enemy : MonoBehaviour
     {
         if (state == EnemyState.Chilling)
         {
-            velocityDirection = Vector2.zero;
-
             if (Vector2.Distance(transform.position, GetPlayerColliderPosition()) <= maxStartChasingDistanceToPlayer)
             {
                 state = EnemyState.Chasing;
@@ -71,11 +68,6 @@ public class Enemy : MonoBehaviour
             if (distanceToPlayer >= minStopChasingDistanceToPlayer)
             {
                 state = EnemyState.Chilling;
-            }
-            else
-            {
-                Vector2 directionToPlayer = fromEnemyToPlayerPosition.normalized;
-                velocityDirection = directionToPlayer;
             }
         }
 
@@ -119,9 +111,10 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (velocityDirection != Vector2.zero)
+        if (state == EnemyState.Chasing)
         {
-            rb2d.MovePosition((Vector2)transform.position + velocityDirection * speed);
+            rb2d.MovePosition(Vector2.MoveTowards(transform.position,
+                GetPlayerColliderPosition(), speed));
         }
     }
 
@@ -169,8 +162,6 @@ public class Enemy : MonoBehaviour
         {
             rb2d.velocity = Vector2.zero;
         }
-
-        velocityDirection = Vector2.zero;
 
         if (state != EnemyState.FadingOut)
         {
