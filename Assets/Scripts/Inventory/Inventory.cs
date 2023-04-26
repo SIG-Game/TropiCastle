@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     private int firstEmptyIndex;
 
     public event Action<ItemWithAmount, int> ChangedItemAtIndex = delegate { };
+    public event Action<ItemWithAmount> OnItemAdded = delegate { };
 
     // Every empty item slot points to this instance
     private static ItemWithAmount emptyItemInstance;
@@ -76,6 +77,8 @@ public class Inventory : MonoBehaviour
         SetItemAtIndex(newItem, firstEmptyIndex);
 
         firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
+
+        OnItemAdded(newItem);
     }
 
     public void AddItemAtIndexWithFallbackToFirstEmptyIndex(ItemWithAmount newItem, int index)
@@ -84,6 +87,8 @@ public class Inventory : MonoBehaviour
         {
             SetItemAtIndex(newItem, index);
             firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
+
+            OnItemAdded(newItem);
         }
         else
         {
