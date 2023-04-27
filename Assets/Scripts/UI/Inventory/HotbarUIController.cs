@@ -11,7 +11,7 @@ public class HotbarUIController : ItemSlotContainerController
 
     private void Awake()
     {
-        inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
+        inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
@@ -24,7 +24,7 @@ public class HotbarUIController : ItemSlotContainerController
 
     private void OnDestroy()
     {
-        inventory.ChangedItemAtIndex -= Inventory_ChangedItemAtIndex;
+        inventory.OnItemChangedAtIndex -= Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex -= ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex -= ItemSelectionController_OnItemDeselectedAtIndex;
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;

@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         ActionDisablingUIOpen = false;
 
         healthController.OnHealthSet += HealthController_OnHealthSet;
-        inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
+        inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
     }
 
     private void Start()
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour
 
         if (inventory != null)
         {
-            inventory.ChangedItemAtIndex -= Inventory_ChangedItemAtIndex;
+            inventory.OnItemChangedAtIndex -= Inventory_ChangedItemAtIndex;
         }
 
         OnPlayerDied = delegate { };

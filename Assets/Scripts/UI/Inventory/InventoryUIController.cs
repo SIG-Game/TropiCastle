@@ -27,7 +27,7 @@ public class InventoryUIController : ItemSlotContainerController
     {
         HoveredItemIndex = -1;
 
-        inventory.ChangedItemAtIndex += Inventory_ChangedItemAtIndex;
+        inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
     }
@@ -81,7 +81,7 @@ public class InventoryUIController : ItemSlotContainerController
 
     private void OnDestroy()
     {
-        inventory.ChangedItemAtIndex -= Inventory_ChangedItemAtIndex;
+        inventory.OnItemChangedAtIndex -= Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex -= ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex -= ItemSelectionController_OnItemDeselectedAtIndex;
     }

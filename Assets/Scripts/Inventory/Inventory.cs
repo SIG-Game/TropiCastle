@@ -9,10 +9,10 @@ public class Inventory : MonoBehaviour
     private List<ItemWithAmount> itemList;
     private int firstEmptyIndex;
 
-    public event Action<ItemWithAmount, int> ChangedItemAtIndex = delegate { };
+    public event Action<ItemWithAmount, int> OnItemChangedAtIndex = delegate { };
     public event Action<ItemWithAmount> OnItemAdded = delegate { };
 
-    // Every empty item slot points to this instance
+    // Every empty item slot references this instance
     private static ItemWithAmount emptyItemInstance;
 
     private void Awake()
@@ -38,23 +38,6 @@ public class Inventory : MonoBehaviour
         firstEmptyIndex = 0;
     }
 
-    [ContextMenu("Fill Inventory")]
-    private void FillInventory()
-    {
-        ItemScriptableObject coconutItemInfo = Resources.Load<ItemScriptableObject>("Items/Coconut");
-
-        ItemWithAmount coconutItem = new ItemWithAmount
-        {
-            itemData = coconutItemInfo,
-            amount = 1
-        };
-
-        while (!IsFull())
-        {
-            AddItem(coconutItem);
-        }
-    }
-
     public void AddItem(ItemScriptableObject info, int amount)
     {
         ItemWithAmount newItem = new ItemWithAmount
@@ -74,21 +57,14 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        SetItemAtIndex(newItem, firstEmptyIndex);
-
-        firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
-
-        OnItemAdded(newItem);
+        AddItemAtIndex(newItem, firstEmptyIndex);
     }
 
     public void AddItemAtIndexWithFallbackToFirstEmptyIndex(ItemWithAmount newItem, int index)
     {
         if (itemList[index].itemData.name == "Empty")
         {
-            SetItemAtIndex(newItem, index);
-            firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
-
-            OnItemAdded(newItem);
+            AddItemAtIndex(newItem, index);
         }
         else
         {
@@ -108,7 +84,7 @@ public class Inventory : MonoBehaviour
         SetItemAtIndex(itemList[index2], index1);
         SetItemAtIndex(itemAtIndex1BeforeSwap, index2);
 
-        firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
+        SetFirstEmptyIndex();
     }
 
     public void RemoveItemAtIndex(int index)
@@ -129,15 +105,49 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private void SetFirstEmptyIndex()
+    {
+        firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
+    }
+
+    private void AddItemAtIndex(ItemWithAmount newItem, int index)
+    {
+        SetItemAtIndex(newItem, index);
+
+        OnItemAdded(newItem);
+
+        if (index == firstEmptyIndex)
+        {
+            SetFirstEmptyIndex();
+        }
+    }
+
+    private void SetItemAtIndex(ItemWithAmount item, int index)
+    {
+        itemList[index] = item;
+        OnItemChangedAtIndex(item, index);
+    }
+
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
 
     public List<ItemWithAmount> GetItemList() => itemList;
 
     public bool IsFull() => firstEmptyIndex == -1;
 
-    private void SetItemAtIndex(ItemWithAmount item, int index)
+    [ContextMenu("Fill Inventory")]
+    private void FillInventory()
     {
-        itemList[index] = item;
-        ChangedItemAtIndex(item, index);
+        ItemScriptableObject coconutItemInfo = Resources.Load<ItemScriptableObject>("Items/Coconut");
+
+        ItemWithAmount coconutItem = new ItemWithAmount
+        {
+            itemData = coconutItemInfo,
+            amount = 1
+        };
+
+        while (!IsFull())
+        {
+            AddItem(coconutItem);
+        }
     }
 }
