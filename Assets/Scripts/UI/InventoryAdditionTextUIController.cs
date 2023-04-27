@@ -5,22 +5,41 @@ using UnityEngine;
 public class InventoryAdditionTextUIController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI inventoryAdditionText;
-    [SerializeField] private float waitTimeBeforeDespawnSeconds;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private float waitTimeBeforeFadeOutSeconds;
+    [SerializeField] private float alphaChangeSpeed;
 
-    private WaitForSeconds beforeDespawnWaitForSeconds;
+    private WaitForSeconds beforeFadeOutWaitForSeconds;
+    private float targetAlpha;
 
     private void Awake()
     {
-        beforeDespawnWaitForSeconds = new WaitForSeconds(waitTimeBeforeDespawnSeconds);
+        beforeFadeOutWaitForSeconds = new WaitForSeconds(waitTimeBeforeFadeOutSeconds);
 
-        StartCoroutine(WaitThenDespawn());
+        StartCoroutine(WaitThenStartFadingOut());
+
+        targetAlpha = 1f;
     }
 
-    private IEnumerator WaitThenDespawn()
+    private void Update()
     {
-        yield return beforeDespawnWaitForSeconds;
+        if (canvasGroup.alpha != targetAlpha)
+        {
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha,
+                alphaChangeSpeed * Time.deltaTime);
 
-        Destroy(gameObject);
+            if (canvasGroup.alpha == 0f && canvasGroup.alpha == targetAlpha)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private IEnumerator WaitThenStartFadingOut()
+    {
+        yield return beforeFadeOutWaitForSeconds;
+
+        targetAlpha = 0f;
     }
 
     public void SetText(string text)

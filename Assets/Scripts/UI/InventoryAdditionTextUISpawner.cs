@@ -28,6 +28,8 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
 
         spawnedInventoryAdditionText.GetComponent<InventoryAdditionTextUIController>()
             .SetText($"+{item.amount} {item.itemData.name}");
+
+        Debug.Log("spawned");
     }
 
     private void MoveChildInventoryAdditionTextUp()
