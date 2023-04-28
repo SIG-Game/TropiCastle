@@ -51,6 +51,13 @@ public class ItemPickupAndPlacement : MonoBehaviour
         if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
             WaitingForInputReleaseBeforePlacement = false;
+
+            if (PickupState.ResetCursorOnPickupInputRelease)
+            {
+                ResetCursor();
+
+                PickupState.ResetCursorOnPickupInputRelease = false;
+            }
         }
 
         if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen ||

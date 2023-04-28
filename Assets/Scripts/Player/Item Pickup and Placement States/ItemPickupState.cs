@@ -4,6 +4,8 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
 {
     private InputAction itemPickupAndPlacementAction;
 
+    public bool ResetCursorOnPickupInputRelease { get; set; }
+
     public ItemPickupState(ItemPickupAndPlacement itemPickupAndPlacement,
         InputAction itemPickupAndPlacementAction) :
         base(itemPickupAndPlacement)
@@ -64,6 +66,16 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
 
     public override void StateExit()
     {
-        itemPickupAndPlacement.ResetCursor();
+        bool placingItemOrNotHoldingPickup = itemPickupAndPlacement.PlacingItem() ||
+            !itemPickupAndPlacementAction.IsPressed();
+
+        if (placingItemOrNotHoldingPickup)
+        {
+            itemPickupAndPlacement.ResetCursor();
+        }
+        else
+        {
+            ResetCursorOnPickupInputRelease = true;
+        }
     }
 }
