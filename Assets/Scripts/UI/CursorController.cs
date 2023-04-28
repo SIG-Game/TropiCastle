@@ -70,16 +70,11 @@ public class CursorController : MonoBehaviour
         cursorBackground.transform.localScale = localScale;
     }
 
-    private void HideCursor()
-    {
-        cursorSpriteRenderer.sprite = null;
-        cursorBackgroundSpriteRenderer.color = Color.clear;
-    }
-
     private void PauseController_OnGamePaused()
     {
         Cursor.visible = true;
-        HideCursor();
+
+        gameObject.SetActive(false);
     }
 
     private void PauseController_OnGameUnpaused()
@@ -88,31 +83,17 @@ public class CursorController : MonoBehaviour
 
         if (!PlayerController.ActionDisablingUIOpen)
         {
-            UseDefaultCursor();
+            gameObject.SetActive(true);
         }
     }
 
     private void PlayerController_OnActionDisablingUIOpenSet(bool actionDisablingUIOpen)
     {
-        if (actionDisablingUIOpen)
-        {
-            HideCursor();
-        }
-        else
-        {
-            UseDefaultCursor();
-        }
+        gameObject.SetActive(!actionDisablingUIOpen);
     }
 
     private void PlayerController_OnIsAttackingSet(bool isAttacking)
     {
-        if (isAttacking)
-        {
-            HideCursor();
-        }
-        else
-        {
-            UseDefaultCursor();
-        }
+        gameObject.SetActive(!isAttacking);
     }
 }
