@@ -4,6 +4,7 @@ using UnityEngine;
 public class Crafting : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
+    [SerializeField] private bool verboseLogging;
 
     public void CraftItem(CraftingRecipeScriptableObject craftingRecipe)
     {
@@ -25,21 +26,34 @@ public class Crafting : MonoBehaviour
                 {
                     inventoryIngredientItem = currentItem;
                     itemsToRemoveIndexes.Add(i);
-                    Debug.Log("Found ingredient " + ingredient.itemData.name);
+
+                    if (verboseLogging)
+                    {
+                        Debug.Log("Found ingredient " + ingredient.itemData.name);
+                    }
+
                     break;
                 }
             }
 
             if (inventoryIngredientItem == null)
             {
-                Debug.Log("Ingredient " + ingredient.itemData.name + " not found");
+                if (verboseLogging)
+                {
+                    Debug.Log("Ingredient " + ingredient.itemData.name + " not found");
+                }
+
                 return;
             }
         }
 
         foreach (int itemIndex in itemsToRemoveIndexes)
         {
-            Debug.Log("Using ingredient " + itemList[itemIndex].itemData.name);
+            if (verboseLogging)
+            {
+                Debug.Log("Using ingredient " + itemList[itemIndex].itemData.name);
+            }
+
             inventory.RemoveItemAtIndex(itemIndex);
         }
 
