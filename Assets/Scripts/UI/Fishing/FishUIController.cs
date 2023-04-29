@@ -22,23 +22,28 @@ public class FishUIController : MonoBehaviour
     {
         float fishXDirection = transform.localScale.x;
         float fishXSpeed = Speed * Time.deltaTime;
-        transform.localPosition += Vector3.right * fishXDirection * fishXSpeed;
 
-        bool fishMovedPastXPositionLimit = transform.localPosition.x <= fishXPositionRange.x ||
-            transform.localPosition.x >= fishXPositionRange.y;
-        if (fishMovedPastXPositionLimit)
+        Vector3 newPosition = transform.localPosition +
+            Vector3.right * fishXDirection * fishXSpeed;
+
+        if (newPosition.x <= fishXPositionRange.x)
         {
-            ClampFishXPositionToLimit();
+            float distanceOverLimit = fishXPositionRange.x - newPosition.x;
+
+            newPosition.x = fishXPositionRange.x + distanceOverLimit;
+
             ChangeFishDirection();
         }
-    }
+        else if (newPosition.x >= fishXPositionRange.y)
+        {
+            float distanceOverLimit = newPosition.x - fishXPositionRange.y;
 
-    private void ClampFishXPositionToLimit()
-    {
-        float clampedFishXPosition = Mathf.Clamp(transform.localPosition.x,
-            fishXPositionRange.x, fishXPositionRange.y);
-        transform.localPosition = new Vector3(clampedFishXPosition,
-                transform.localPosition.y, transform.localPosition.z);
+            newPosition.x = fishXPositionRange.y - distanceOverLimit;
+
+            ChangeFishDirection();
+        }
+
+        transform.localPosition = newPosition;
     }
 
     private void ChangeFishDirection()
