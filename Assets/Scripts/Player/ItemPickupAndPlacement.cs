@@ -19,11 +19,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private BaseItemPickupAndPlacementState currentState;
     private Inventory playerInventory;
-    private Vector2 mouseWorldPoint;
+    private Vector2 cursorPoint;
     private ItemWorld hoveredItemWorld;
     private InputAction itemPickupAndPlacementAction;
-    private bool canPlaceItemAtMousePosition;
-    private bool mouseIsOverItemWorld;
+    private bool canPlaceItemAtCursorPosition;
+    private bool cursorIsOverItemWorld;
     private bool placingItem;
 
     private void Awake()
@@ -93,14 +93,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
         Destroy(hoveredItemWorld.gameObject);
     }
 
-    public void PlaceSelectedPlayerHotbarItemAtMousePosition()
+    public void PlaceSelectedPlayerHotbarItemAtCursorPosition()
     {
         ItemWithAmount itemToPlace = player.GetSelectedItem();
         int itemToPlaceIndex = player.GetSelectedItemIndex();
 
         if (itemToPlace.itemData.name != "Empty")
         {
-            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(mouseWorldPoint, itemToPlace);
+            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(cursorPoint, itemToPlace);
             playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
         }
     }
@@ -132,7 +132,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
         cursorController.SetCursorBackgroundLocalScale(selectedItemColliderSize);
 
         cursorController.SetCursorSprite(selectedItemData.sprite);
-        cursorController.SetCursorBackgroundColor(canPlaceItemAtMousePosition ?
+        cursorController.SetCursorBackgroundColor(canPlaceItemAtCursorPosition ?
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
 
         playerItemInWorld.ShowPlayerItemInWorld(selectedItemData.sprite);
@@ -140,17 +140,16 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void UpdateInstanceVariables()
     {
-        mouseWorldPoint = Camera.main.ScreenToWorldPoint(
-            MousePositionHelper.GetMousePositionClampedToScreen());
+        cursorPoint = cursorController.GetPosition();
 
-        Collider2D mouseOverlapCollider = Physics2D.OverlapPoint(mouseWorldPoint);
+        Collider2D cursorOverlapCollider = Physics2D.OverlapPoint(cursorPoint);
 
-        bool mouseIsOverCollider = mouseOverlapCollider != null;
-        mouseIsOverItemWorld = mouseIsOverCollider && mouseOverlapCollider.CompareTag("Item World");
+        bool cursorIsOverCollider = cursorOverlapCollider != null;
+        cursorIsOverItemWorld = cursorIsOverCollider && cursorOverlapCollider.CompareTag("Item World");
 
-        if (mouseIsOverItemWorld)
+        if (cursorIsOverItemWorld)
         {
-            hoveredItemWorld = mouseOverlapCollider.GetComponent<ItemWorld>();
+            hoveredItemWorld = cursorOverlapCollider.GetComponent<ItemWorld>();
         }
         else
         {
@@ -162,8 +161,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
         Vector2 selectedItemColliderExtents =
             ItemWorldPrefabInstanceFactory.GetItemColliderExtents(selectedItemData);
 
-        canPlaceItemAtMousePosition =
-             SpawnColliderHelper.CanSpawnColliderAtPosition(mouseWorldPoint, selectedItemColliderExtents);
+        canPlaceItemAtCursorPosition =
+             SpawnColliderHelper.CanSpawnColliderAtPosition(cursorPoint, selectedItemColliderExtents);
 
         placingItem = itemPickupAndPlacementAction.IsPressed() &&
             !WaitingForInputReleaseBeforePlacement && selectedItemData.name != "Empty";
@@ -176,9 +175,9 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState.StateEnter();
     }
 
-    public bool CanPlaceItemAtMousePosition() => canPlaceItemAtMousePosition;
+    public bool CanPlaceItemAtCursorPosition() => canPlaceItemAtCursorPosition;
 
-    public bool MouseIsOverItemWorld() => mouseIsOverItemWorld;
+    public bool CursorIsOverItemWorld() => cursorIsOverItemWorld;
 
     public bool PlacingItem() => placingItem;
 }

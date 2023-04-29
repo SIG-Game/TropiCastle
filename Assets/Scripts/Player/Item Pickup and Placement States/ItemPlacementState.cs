@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ItemPlacementState : BaseItemPickupAndPlacementState
@@ -20,7 +19,7 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
 
     public override void StateUpdate()
     {
-        if (itemPickupAndPlacement.MouseIsOverItemWorld())
+        if (itemPickupAndPlacement.CursorIsOverItemWorld())
         {
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PickupState);
 
@@ -31,9 +30,9 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
 
         if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
-            if (itemPickupAndPlacement.CanPlaceItemAtMousePosition())
+            if (itemPickupAndPlacement.CanPlaceItemAtCursorPosition())
             {
-                itemPickupAndPlacement.PlaceSelectedPlayerHotbarItemAtMousePosition();
+                itemPickupAndPlacement.PlaceSelectedPlayerHotbarItemAtCursorPosition();
             }
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);

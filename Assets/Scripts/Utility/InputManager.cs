@@ -108,4 +108,6 @@ public class InputManager : MonoBehaviour
         GetInputIfUnusedThisFrame(() => fishAction.WasPressedThisFrame(), ref fishButtonDownUsedThisFrame);
 
     public InputAction GetAction(string actionName) => playerInput.currentActionMap[actionName];
+
+    public string GetCurrentControlScheme() => playerInput.currentControlScheme;
 }

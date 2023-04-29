@@ -11,7 +11,7 @@ public class DefaultItemPickupAndPlacementState : BaseItemPickupAndPlacementStat
 
     public override void StateUpdate()
     {
-        if (itemPickupAndPlacement.MouseIsOverItemWorld())
+        if (itemPickupAndPlacement.CursorIsOverItemWorld())
         {
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PickupState);
         }

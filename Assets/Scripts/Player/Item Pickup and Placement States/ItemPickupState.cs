@@ -23,7 +23,7 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
 
     public override void StateUpdate()
     {
-        if (!itemPickupAndPlacement.MouseIsOverItemWorld())
+        if (!itemPickupAndPlacement.CursorIsOverItemWorld())
         {
             if (itemPickupAndPlacement.PlacingItem())
             {
