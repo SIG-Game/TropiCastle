@@ -22,6 +22,7 @@ public class CursorController : MonoBehaviour
         PauseController.OnGamePaused += PauseController_OnGamePaused;
         PauseController.OnGameUnpaused += PauseController_OnGameUnpaused;
         PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
+        CameraFollow.OnCameraMovedBy += CameraFollow_OnCameraMovedBy;
 
         playerController.OnIsAttackingSet += PlayerController_OnIsAttackingSet;
     }
@@ -64,6 +65,7 @@ public class CursorController : MonoBehaviour
         PauseController.OnGamePaused -= PauseController_OnGamePaused;
         PauseController.OnGameUnpaused -= PauseController_OnGameUnpaused;
         PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
+        CameraFollow.OnCameraMovedBy -= CameraFollow_OnCameraMovedBy;
 
         if (playerController != null)
         {
@@ -135,6 +137,14 @@ public class CursorController : MonoBehaviour
     private void PlayerController_OnIsAttackingSet(bool isAttacking)
     {
         gameObject.SetActive(!isAttacking);
+    }
+
+    private void CameraFollow_OnCameraMovedBy(Vector3 cameraPositionDelta)
+    {
+        if (InputManager.Instance.GetCurrentControlScheme() == "Gamepad")
+        {
+            transform.position = ClampToScreen(transform.position + cameraPositionDelta);
+        }
     }
 
     public Vector2 GetPosition() => transform.position;

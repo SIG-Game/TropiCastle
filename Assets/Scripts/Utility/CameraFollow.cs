@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private Tilemap tilemap;
+
+    public static event Action<Vector3> OnCameraMovedBy = delegate { };
 
     private new Camera camera;
 
@@ -38,6 +41,19 @@ public class CameraFollow : MonoBehaviour
         float newYPosition = Mathf.Clamp(target.position.y, minCameraY, maxCameraY);
 
         Vector3 newPosition = new Vector3(newXPosition, newYPosition, transform.position.z);
+
+        Vector3 cameraPositionDelta = newPosition - transform.position;
+
+        if (cameraPositionDelta != Vector3.zero)
+        {
+            OnCameraMovedBy(cameraPositionDelta);
+        }
+
         transform.position = newPosition;
+    }
+
+    private void OnDestroy()
+    {
+        OnCameraMovedBy = delegate { };
     }
 }
