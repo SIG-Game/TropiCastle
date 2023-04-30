@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
@@ -6,6 +7,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private InputAction pauseInputAction;
+    [SerializeField] private GameObject resumeButton;
 
     private void Start()
     {
@@ -31,5 +33,18 @@ public class PauseMenu : MonoBehaviour
         PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
         pauseMenuUI.SetActive(PauseController.Instance.GamePaused);
         playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        if (PauseController.Instance.GamePaused)
+        {
+            EventSystemDefaultGameObjectSelector.Instance
+                .SetDefaultSelectedGameObject(resumeButton);
+        }
+        else
+        {
+            EventSystemDefaultGameObjectSelector.Instance
+                .SetDefaultSelectedGameObject(null);
+
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
 }

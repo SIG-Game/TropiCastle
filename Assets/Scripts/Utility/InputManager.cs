@@ -110,4 +110,6 @@ public class InputManager : MonoBehaviour
     public InputAction GetAction(string actionName) => playerInput.currentActionMap[actionName];
 
     public string GetCurrentControlScheme() => playerInput.currentControlScheme;
+
+    public PlayerInput GetPlayerInput() => playerInput;
 }
