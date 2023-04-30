@@ -21,6 +21,11 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
 
     private void TargetInventory_OnItemAdded(ItemWithAmount item)
     {
+        if (PauseController.Instance.GamePaused)
+        {
+            return;
+        }
+
         MoveChildInventoryAdditionTextUp();
 
         GameObject spawnedInventoryAdditionText =
@@ -28,8 +33,6 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
 
         spawnedInventoryAdditionText.GetComponent<InventoryAdditionTextUIController>()
             .SetText($"+{item.amount} {item.itemData.name}");
-
-        Debug.Log("spawned");
     }
 
     private void MoveChildInventoryAdditionTextUp()
