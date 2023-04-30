@@ -211,9 +211,6 @@ public class PlayerController : MonoBehaviour
             case { name: "Fishing Rod" }:
                 Fish();
                 break;
-            default:
-                Debug.Log($"Used item named {item.itemData.name}, which has no usage defined.");
-                break;
         }
     }
 
