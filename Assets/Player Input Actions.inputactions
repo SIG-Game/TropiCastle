@@ -103,6 +103,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Select Left Item",
+                    "type": "Button",
+                    "id": "afcfa99d-ce03-4915-9b0f-244df6a5fd52",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Select Right Item",
+                    "type": "Button",
+                    "id": "c13afc40-6421-4dfb-b309-928a18007810",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -433,6 +451,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Move Cursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "62cde301-1ea7-4bef-8f30-b8ae6eff3189",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Select Left Item",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e60777a-b92b-4832-afef-0f3bda274f42",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Select Right Item",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

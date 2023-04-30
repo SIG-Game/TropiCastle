@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ItemSelectionController : MonoBehaviour
 {
     [SerializeField] private int onePlusMaxSelectedItemIndex;
 
+    private InputAction selectLeftItemAction;
+    private InputAction selectRightItemAction;
     private int selectedItemIndex;
 
     public int SelectedItemIndex
@@ -29,6 +32,9 @@ public class ItemSelectionController : MonoBehaviour
 
     private void Start()
     {
+        selectLeftItemAction = InputManager.Instance.GetAction("Select Left Item");
+        selectRightItemAction = InputManager.Instance.GetAction("Select Right Item");
+
         selectedItemIndex = 0;
         OnItemSelectedAtIndex(selectedItemIndex);
 
@@ -48,12 +54,7 @@ public class ItemSelectionController : MonoBehaviour
         {
             int newSelectedItemIndex = SelectedItemIndex - (int)Mathf.Sign(Input.mouseScrollDelta.y);
 
-            if (newSelectedItemIndex == onePlusMaxSelectedItemIndex)
-                newSelectedItemIndex = 0;
-            else if (newSelectedItemIndex == -1)
-                newSelectedItemIndex = onePlusMaxSelectedItemIndex - 1;
-
-            SelectedItemIndex = newSelectedItemIndex;
+            SelectedItemIndex = ClampSelectedItemIndex(newSelectedItemIndex);
         }
 
         int numberKeyIndex = InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
@@ -63,5 +64,35 @@ public class ItemSelectionController : MonoBehaviour
         {
             SelectedItemIndex = numberKeyIndex;
         }
+
+        if (selectLeftItemAction.WasPerformedThisFrame())
+        {
+            SelectedItemIndex = ClampSelectedItemIndex(SelectedItemIndex - 1);
+        }
+
+        if (selectRightItemAction.WasPerformedThisFrame())
+        {
+            SelectedItemIndex = ClampSelectedItemIndex(SelectedItemIndex + 1);
+        }
+    }
+
+    private int ClampSelectedItemIndex(int selectedItemIndex)
+    {
+        int clampedSelectedItemIndex;
+
+        if (selectedItemIndex >= onePlusMaxSelectedItemIndex)
+        {
+            clampedSelectedItemIndex = 0;
+        }
+        else if (selectedItemIndex < 0)
+        {
+            clampedSelectedItemIndex = onePlusMaxSelectedItemIndex - 1;
+        }
+        else
+        {
+            clampedSelectedItemIndex = selectedItemIndex;
+        }
+
+        return clampedSelectedItemIndex;
     }
 }
