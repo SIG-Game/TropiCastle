@@ -1,6 +1,9 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class CraftingButtonGenerator : MonoBehaviour
 {
@@ -8,11 +11,14 @@ public class CraftingButtonGenerator : MonoBehaviour
     [SerializeField] private GameObject craftingButtonPrefab;
     [SerializeField] private Transform craftingButtonsParentTransform;
 
+    private GameObject prefabRoot;
+    private CraftingButtonGenerator prefabCraftingButtonGenerator;
+    private Transform prefabCraftingButtonsParent;
+    private string prefabAssetPath;
+
     [ContextMenu("Regenerate Crafting Buttons")]
     private void RegenerateCraftingButtons()
     {
-        string prefabAssetPath;
-
         PrefabStage currentPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
 
         bool inPrefabMode = currentPrefabStage != null;
@@ -25,33 +31,56 @@ public class CraftingButtonGenerator : MonoBehaviour
             prefabAssetPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
         }
 
-        GameObject prefabRoot = PrefabUtility.LoadPrefabContents(prefabAssetPath);
+        prefabRoot = PrefabUtility.LoadPrefabContents(prefabAssetPath);
 
-        CraftingButtonGenerator prefabCraftingButtonGenerator =
+        prefabCraftingButtonGenerator =
             prefabRoot.GetComponent<CraftingButtonGenerator>();
 
-        Transform prefabCraftingButtonsParent =
+        prefabCraftingButtonsParent =
             prefabCraftingButtonGenerator.craftingButtonsParentTransform;
 
         DeleteCraftingButtons(prefabCraftingButtonsParent);
 
-        CraftingRecipeScriptableObject[] craftingRecipes =
-            Resources.LoadAll<CraftingRecipeScriptableObject>("Crafting Recipes");
+        var craftingRecipeScriptableObjectsLoadHandle =
+            Addressables.LoadAssetsAsync<CraftingRecipeScriptableObject>("crafting recipe", null);
+
+        craftingRecipeScriptableObjectsLoadHandle.Completed +=
+            CraftingRecipeScriptableObjectsLoadHandle_Completed;
+    }
+
+    private void CraftingRecipeScriptableObjectsLoadHandle_Completed(
+        AsyncOperationHandle<IList<CraftingRecipeScriptableObject>>
+        craftingRecipesAsyncOperationHandle)
+    {
+        if (craftingRecipesAsyncOperationHandle.Status != AsyncOperationStatus.Succeeded)
+        {
+            Debug.LogError($"{nameof(CraftingRecipeScriptableObject)}s not loaded in " +
+                $"{nameof(CraftingButtonGenerator)}.");
+
+            Addressables.Release(craftingRecipesAsyncOperationHandle);
+
+            return;
+        }
+
+        IList<CraftingRecipeScriptableObject> craftingRecipes =
+            craftingRecipesAsyncOperationHandle.Result;
 
         // Apply changes to prefab
-        for (int i = 0; i < craftingRecipes.Length; ++i)
+        foreach (CraftingRecipeScriptableObject craftingRecipe in craftingRecipes)
         {
             GameObject craftingButton = PrefabUtility.InstantiatePrefab(craftingButtonPrefab,
                 prefabCraftingButtonsParent) as GameObject;
-            craftingButton.name = $"Craft {craftingRecipes[i].name} Button";
+            craftingButton.name = $"Craft {craftingRecipe.name} Button";
 
             craftingButton.GetComponent<CraftingButton>().SetUpCraftingButton(
-                prefabCraftingButtonGenerator.craftingButtonDependencies, craftingRecipes[i]);
+                prefabCraftingButtonGenerator.craftingButtonDependencies, craftingRecipe);
         }
 
         PrefabUtility.RecordPrefabInstancePropertyModifications(prefabRoot);
         PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabAssetPath);
         PrefabUtility.UnloadPrefabContents(prefabRoot);
+
+        Addressables.Release(craftingRecipesAsyncOperationHandle);
     }
 
     private void DeleteCraftingButtons(Transform prefabCraftingButtonsParent)

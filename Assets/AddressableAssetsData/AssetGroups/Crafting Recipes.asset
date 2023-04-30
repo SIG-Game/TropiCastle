@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Crafting Recipes
+  m_EditorClassIdentifier: 
+  m_GroupName: Crafting Recipes
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 2e96b53bb6317ae419553c3e003b586a
+  m_SerializeEntries:
+  - m_GUID: 09e607d20b1c12f40b262c3063fe9430
+    m_Address: Assets/Crafting Recipes
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - crafting recipe
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: edb73a2364990aa47a457b58d8d58896, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9d1bc3dd8a1ce2244b6f298d4abe8a41, type: 2}
+    - {fileID: 11400000, guid: 7f9ce02d856aa914da3573d4637cc840, type: 2}
