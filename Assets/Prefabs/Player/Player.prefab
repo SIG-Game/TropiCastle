@@ -570,6 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onePlusMaxSelectedItemIndex: 10
+  selectInputRepeatTimeSeconds: 0.25
 --- !u!95 &8669891105156055949
 Animator:
   serializedVersion: 4
