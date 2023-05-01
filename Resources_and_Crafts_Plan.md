@@ -48,3 +48,10 @@ Resources / Obtained How / Use (if applicable)
   - Crafted
   - Can be used to get fish from the ocean
 
+Crafting Recipes
+- Chest - 10 sticks & 2 vines
+- Spear - 3 sticks & 1 vine & 1 rock
+- Shelter - 20 sticks & 10 vines
+- Fire - 5 sticks & 2 rocks
+- Bucket - 4 sticks & 10 leaves & 4 vines
+- Fishing pole with bait - 1 stick & 1 vine & 1 crab meat
