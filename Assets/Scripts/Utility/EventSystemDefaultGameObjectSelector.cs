@@ -55,4 +55,12 @@ public class EventSystemDefaultGameObjectSelector : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(defaultSelectedGameObject);
         }
     }
+
+    public void SelectGameObjectIfSubmitPressedThisFrame(GameObject selectedGameObject)
+    {
+        if (submitAction.WasPressedThisFrame())
+        {
+            EventSystem.current.SetSelectedGameObject(selectedGameObject);
+        }
+    }
 }
