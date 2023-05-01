@@ -7,7 +7,7 @@ public class EnemySpawner : PrefabSpawner
 
     protected override void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
     {
-        Enemy spawnedEnemy = spawnedPrefab.GetComponent<Enemy>();
+        EnemyController spawnedEnemy = spawnedPrefab.GetComponent<EnemyController>();
 
         spawnedEnemy.SetPlayerTransform(playerTransform);
         spawnedEnemy.SetPlayerInventory(playerInventory);

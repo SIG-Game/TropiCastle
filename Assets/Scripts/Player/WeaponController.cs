@@ -15,7 +15,7 @@ public class WeaponController : MonoBehaviour
             return;
         }
 
-        Enemy hitEnemy = other.GetComponent<Enemy>();
+        EnemyController hitEnemy = other.GetComponent<EnemyController>();
 
         if (hitEnemy != null && hitEnemy.LastHitTime + minTimeBetweenHits <= Time.time)
         {
