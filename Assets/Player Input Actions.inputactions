@@ -448,7 +448,7 @@
                     "id": "f029c1ee-3373-4ead-ba2b-fe0a72a5576d",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": "Gamepad",
                     "action": "Move Cursor",
                     "isComposite": false,
