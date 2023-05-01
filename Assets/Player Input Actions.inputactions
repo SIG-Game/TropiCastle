@@ -445,11 +445,11 @@
                 },
                 {
                     "name": "",
-                    "id": "f029c1ee-3373-4ead-ba2b-fe0a72a5576d",
-                    "path": "<Gamepad>/rightStick",
+                    "id": "19ebb899-fe5d-4537-b28b-c6b6635fe0a3",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
-                    "processors": "StickDeadzone",
-                    "groups": "Gamepad",
+                    "processors": "",
+                    "groups": "Mouse and Keyboard",
                     "action": "Move Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -473,6 +473,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Select Right Item",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f029c1ee-3373-4ead-ba2b-fe0a72a5576d",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "Gamepad",
+                    "action": "Move Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

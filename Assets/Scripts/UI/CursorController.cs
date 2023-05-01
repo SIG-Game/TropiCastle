@@ -6,6 +6,7 @@ public class CursorController : MonoBehaviour
     [SerializeField] private Sprite defaultCursorSprite;
     [SerializeField] private GameObject cursorBackground;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private float mouseSensitivity;
     [SerializeField] private float gamepadSensitivity;
 
     private SpriteRenderer cursorSpriteRenderer;
@@ -15,6 +16,7 @@ public class CursorController : MonoBehaviour
     private void Awake()
     {
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         cursorSpriteRenderer = GetComponent<SpriteRenderer>();
         cursorBackgroundSpriteRenderer = cursorBackground.GetComponent<SpriteRenderer>();
@@ -42,17 +44,22 @@ public class CursorController : MonoBehaviour
             return;
         }
 
-        if (InputManager.Instance.GetCurrentControlScheme() == "Mouse and Keyboard")
-        {
-            Vector2 mouseWorldPoint = Camera.main.ScreenToWorldPoint(
-                MousePositionHelper.GetMousePositionClampedToScreen());
+        Vector2 moveCursorActionValue = moveCursorAction.ReadValue<Vector2>();
 
-            transform.position = mouseWorldPoint;
-        }
-        else
+        if (moveCursorActionValue != Vector2.zero)
         {
-            Vector2 cursorDelta =
-                moveCursorAction.ReadValue<Vector2>() * Time.deltaTime * gamepadSensitivity;
+            Vector2 cursorDelta = moveCursorActionValue;
+
+            if (InputManager.Instance.GetCurrentControlScheme() == "Mouse and Keyboard")
+            {
+                // Movement distance using mouse delta is not multiplied by Time.deltaTime
+                // because doing that would make the movement distance vary with the frame rate.
+                cursorDelta *= mouseSensitivity;
+            }
+            else
+            {
+                cursorDelta *= Time.deltaTime * gamepadSensitivity;
+            }
 
             Vector3 newPosition = ClampToScreen(transform.position + (Vector3)cursorDelta);
 
@@ -115,6 +122,7 @@ public class CursorController : MonoBehaviour
     private void PauseController_OnGamePaused()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
         gameObject.SetActive(false);
     }
@@ -122,6 +130,7 @@ public class CursorController : MonoBehaviour
     private void PauseController_OnGameUnpaused()
     {
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         if (!PlayerController.ActionDisablingUIOpen)
         {
@@ -141,10 +150,7 @@ public class CursorController : MonoBehaviour
 
     private void CameraFollow_OnCameraMovedBy(Vector3 cameraPositionDelta)
     {
-        if (InputManager.Instance.GetCurrentControlScheme() == "Gamepad")
-        {
-            transform.position = ClampToScreen(transform.position + cameraPositionDelta);
-        }
+        transform.position = ClampToScreen(transform.position + cameraPositionDelta);
     }
 
     public Vector2 GetPosition() => transform.position;

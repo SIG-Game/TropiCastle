@@ -35093,6 +35093,7 @@ MonoBehaviour:
     type: 3}
   cursorBackground: {fileID: 1944580653}
   playerController: {fileID: 572276101}
+  mouseSensitivity: 0.01
   gamepadSensitivity: 5
 --- !u!212 &1812985304
 SpriteRenderer:
