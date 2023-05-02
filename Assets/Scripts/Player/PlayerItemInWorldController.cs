@@ -18,9 +18,9 @@ public class PlayerItemInWorldController : MonoBehaviour
 
     public void ShowPlayerItemInWorld(Sprite playerItemSprite)
     {
-        Vector3 itemInWorldOffset = itemInWorldOffsets[(int)playerController.LastDirection];
+        Vector3 itemInWorldOffset = itemInWorldOffsets[(int)playerController.Direction];
 
-        if (playerController.LastDirection == CharacterDirection.Up)
+        if (playerController.Direction == CharacterDirection.Up)
             itemSpriteRenderer.sortingOrder = -1;
         else
             itemSpriteRenderer.sortingOrder = 1;

@@ -78,12 +78,12 @@ public class Chimp : NPCInteractable
             {
                 foreach (CharacterDirection direction in spinDirections)
                 {
-                    SetDirectionAndUpdateSprite(direction);
+                    directionController.Direction = direction;
                     yield return new WaitForSeconds(0.175f);
                 }
             }
 
-            SetDirectionAndUpdateSprite(CharacterDirection.Down);
+            directionController.Direction = CharacterDirection.Down;
 
             float waitBeforeSpinningSeconds = Random.Range(timeBetweenSpinsSecondsRange.x,
                 timeBetweenSpinsSecondsRange.y);
@@ -109,9 +109,10 @@ public class Chimp : NPCInteractable
 
     private void ShowItemToGiveInWorld()
     {
-        Vector3 itemToGiveInWorldOffset = itemToGiveInWorldOffsets[(int)currentDirection];
+        Vector3 itemToGiveInWorldOffset =
+            itemToGiveInWorldOffsets[(int)directionController.Direction];
 
-        if (currentDirection == CharacterDirection.Up)
+        if (directionController.Direction == CharacterDirection.Up)
             itemToGiveInWorldSpriteRenderer.sortingOrder = -1;
         else
             itemToGiveInWorldSpriteRenderer.sortingOrder = 1;

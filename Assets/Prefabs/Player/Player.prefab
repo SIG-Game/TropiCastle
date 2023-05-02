@@ -371,6 +371,7 @@ GameObject:
   - component: {fileID: 3015389456133774718}
   - component: {fileID: 856750480813842556}
   - component: {fileID: 8536875563149633422}
+  - component: {fileID: 5613604618592605289}
   - component: {fileID: 8669891105156055949}
   - component: {fileID: 3827053378170763305}
   m_Layer: 0
@@ -511,10 +512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8534eeeaa4c8abc4ca8b2eaf577070c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  front: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
   overlaySpriteMask: {fileID: 7652320630200294286}
 --- !u!114 &2526882180276161147
 MonoBehaviour:
@@ -571,6 +568,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onePlusMaxSelectedItemIndex: 10
   selectInputRepeatTimeSeconds: 0.25
+--- !u!114 &5613604618592605289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288355818519944996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e72cf51700a9c48ad0af8562d44fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  front: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  defaultDirection: 1
 --- !u!95 &8669891105156055949
 Animator:
   serializedVersion: 4

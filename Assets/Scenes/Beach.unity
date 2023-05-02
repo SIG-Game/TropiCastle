@@ -28360,6 +28360,7 @@ GameObject:
   - component: {fileID: 1005135637}
   - component: {fileID: 1005135639}
   - component: {fileID: 1005135638}
+  - component: {fileID: 1005135640}
   m_Layer: 8
   m_Name: Chimp
   m_TagString: Untagged
@@ -28474,11 +28475,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcddf3dff77da643950b9f25f035654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  front: {fileID: -1438307777634969595, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
-  back: {fileID: -8782420528491673401, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
-  left: {fileID: -2894374843917858475, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
-  right: {fileID: -4276444356177666921, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
-  defaultDirection: 1
   dialogueLines:
   - mmmmmmmmm...
   - (Placeholder for dialogue line in "Item To Give Dialogue Lines".)
@@ -28516,6 +28512,23 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1005135640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005135634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e72cf51700a9c48ad0af8562d44fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  front: {fileID: -1438307777634969595, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
+  back: {fileID: -8782420528491673401, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
+  left: {fileID: -2894374843917858475, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
+  right: {fileID: -4276444356177666921, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
+  defaultDirection: 1
 --- !u!1 &1045173058
 GameObject:
   m_ObjectHideFlags: 0
@@ -29564,6 +29577,7 @@ GameObject:
   - component: {fileID: 1554715251}
   - component: {fileID: 1554715250}
   - component: {fileID: 1554715249}
+  - component: {fileID: 1554715253}
   m_Layer: 8
   m_Name: NPC Test
   m_TagString: Untagged
@@ -29636,11 +29650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c50979a2f034d41ae5453a08dd8e2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  front: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  defaultDirection: 1
   dialogueLines:
   - Hello.
   - Welcome to the island!
@@ -29685,6 +29694,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1554715253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554715248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e72cf51700a9c48ad0af8562d44fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  front: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  defaultDirection: 1
 --- !u!1 &1648846680
 GameObject:
   m_ObjectHideFlags: 0

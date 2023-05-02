@@ -4,24 +4,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Sprite front, back, left, right;
     [SerializeField] private SpriteMask overlaySpriteMask;
 
-    public CharacterDirection LastDirection
+    public CharacterDirection Direction
     {
-        get => lastDirection;
+        get => directionController.Direction;
         set
         {
-            lastDirection = value;
-
-            spriteRenderer.sprite = lastDirection switch
-            {
-                CharacterDirection.Up => back,
-                CharacterDirection.Down => front,
-                CharacterDirection.Left => left,
-                CharacterDirection.Right => right,
-                _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
-            };
+            directionController.Direction = value;
 
             overlaySpriteMask.sprite = spriteRenderer.sprite;
         }
@@ -62,9 +52,9 @@ public class PlayerController : MonoBehaviour
     private Inventory inventory;
     private ItemSelectionController itemSelectionController;
     private SpriteRenderer spriteRenderer;
+    private CharacterDirectionController directionController;
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
-    private CharacterDirection lastDirection;
     private InputAction attackInputAction;
     private InputAction healInputAction;
     private WeaponItemScriptableObject strongestWeaponInInventory;
@@ -80,6 +70,7 @@ public class PlayerController : MonoBehaviour
         inventory = GetComponent<Inventory>();
         itemSelectionController = GetComponent<ItemSelectionController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        directionController = GetComponent<CharacterDirectionController>();
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
@@ -88,8 +79,6 @@ public class PlayerController : MonoBehaviour
         waterMask = LayerMask.GetMask("Water");
 
         IsAttacking = false;
-
-        LastDirection = CharacterDirection.Down;
 
         ActionDisablingUIOpen = false;
 
@@ -170,13 +159,13 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 GetInteractionDirection()
     {
-        Vector2 interactionDirection = lastDirection switch
+        Vector2 interactionDirection = Direction switch
         {
             CharacterDirection.Up => Vector2.up,
             CharacterDirection.Down => Vector2.down,
             CharacterDirection.Left => Vector2.left,
             CharacterDirection.Right => Vector2.right,
-            _ => throw new ArgumentOutOfRangeException(nameof(lastDirection))
+            _ => throw new ArgumentOutOfRangeException(nameof(Direction))
         };
         return interactionDirection;
     }
@@ -233,7 +222,7 @@ public class PlayerController : MonoBehaviour
 
         string attackTypeString = weaponItemData.attackType.ToString();
 
-        animator.Play($"{attackTypeString} {lastDirection}");
+        animator.Play($"{attackTypeString} {Direction}");
     }
 
     private void Fish()

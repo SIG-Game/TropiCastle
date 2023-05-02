@@ -65,22 +65,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (inputVector.y > 0f)
                 {
-                    playerController.LastDirection = CharacterDirection.Up;
+                    playerController.Direction = CharacterDirection.Up;
                 }
                 else
                 {
-                    playerController.LastDirection = CharacterDirection.Down;
+                    playerController.Direction = CharacterDirection.Down;
                 }
             }
             else
             {
                 if (inputVector.x > 0f)
                 {
-                    playerController.LastDirection = CharacterDirection.Right;
+                    playerController.Direction = CharacterDirection.Right;
                 }
                 else
                 {
-                    playerController.LastDirection = CharacterDirection.Left;
+                    playerController.Direction = CharacterDirection.Left;
                 }
             }
         }
