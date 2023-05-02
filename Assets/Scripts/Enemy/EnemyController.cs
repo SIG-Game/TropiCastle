@@ -53,59 +53,17 @@ public class EnemyController : MonoBehaviour
     {
         if (state == EnemyState.Chilling)
         {
-            if (Vector2.Distance(transform.position, GetPlayerColliderPosition()) <= maxStartChasingDistanceToPlayer)
-            {
-                state = EnemyState.Chasing;
-            }
+            StartChasingPlayerIfPlayerInRange();
         }
 
         if (state == EnemyState.Chasing)
         {
-            Vector2 fromEnemyToPlayerPosition = GetPlayerColliderPosition() - (Vector2)transform.position;
-
-            float distanceToPlayer = fromEnemyToPlayerPosition.magnitude;
-
-            if (distanceToPlayer >= minStopChasingDistanceToPlayer)
-            {
-                state = EnemyState.Chilling;
-            }
+            StopChasingPlayerIfPlayerOutOfRange();
         }
 
         if (state == EnemyState.FadingOut)
         {
-            float newAlpha = spriteRenderer.color.a - fadeOutSpeed * Time.deltaTime;
-
-            if (newAlpha <= 0f)
-            {
-                newAlpha = 0f;
-
-                // TODO: This doesn't work properly for loot items with amount value > 1
-                // This should be revisited if stackable items get added
-                foreach (ItemWithAmount loot in droppedLoot)
-                {
-                    if (playerInventory.IsFull())
-                    {
-                        InventoryFullUIController.Instance.ShowInventoryFullText();
-
-                        ItemWorldPrefabInstanceFactory.Instance.DropItem(transform.position, loot);
-                    }
-                    else
-                    {
-                        playerInventory.AddItem(loot);
-                    }
-                }
-
-                Destroy(gameObject);
-            }
-
-            spriteRenderer.color = new Color(spriteRenderer.color.r,
-                spriteRenderer.color.g, spriteRenderer.color.b, newAlpha);
-
-            if (healthText != null)
-            {
-                healthText.color = new Color(healthText.color.r,
-                    healthText.color.g, healthText.color.b, newAlpha);
-            }
+            FadeOut();
         }
     }
 
@@ -124,6 +82,64 @@ public class EnemyController : MonoBehaviour
         {
             healthController.OnHealthSet -= HealthController_OnHealthSet;
         }
+    }
+
+    private void StartChasingPlayerIfPlayerInRange()
+    {
+        if (GetDistanceToPlayerCollider() <= maxStartChasingDistanceToPlayer)
+        {
+            state = EnemyState.Chasing;
+        }
+    }
+
+    private void StopChasingPlayerIfPlayerOutOfRange()
+    {
+        if (GetDistanceToPlayerCollider() >= minStopChasingDistanceToPlayer)
+        {
+            state = EnemyState.Chilling;
+        }
+    }
+
+    private void FadeOut()
+    {
+        float newAlpha = spriteRenderer.color.a - fadeOutSpeed * Time.deltaTime;
+
+        if (newAlpha <= 0f)
+        {
+            newAlpha = 0f;
+
+            EnemyDeath();
+        }
+
+        spriteRenderer.color = new Color(spriteRenderer.color.r,
+            spriteRenderer.color.g, spriteRenderer.color.b, newAlpha);
+
+        if (healthText != null)
+        {
+            healthText.color = new Color(healthText.color.r,
+                healthText.color.g, healthText.color.b, newAlpha);
+        }
+    }
+
+    private void EnemyDeath()
+    {
+        // TODO: This doesn't work properly for loot items with amount value > 1
+        // This should be revisited if stackable items get added
+        foreach (ItemWithAmount loot in droppedLoot)
+        {
+            if (playerInventory.IsFull())
+            {
+                InventoryFullUIController.Instance.ShowInventoryFullText();
+
+                ItemWorldPrefabInstanceFactory.Instance.DropItem(transform.position, loot);
+            }
+            else
+            {
+                playerInventory.AddItem(loot);
+            }
+        }
+
+        Destroy(gameObject);
     }
 
     private void HealthController_OnHealthSet(int newHealth)
@@ -192,11 +208,11 @@ public class EnemyController : MonoBehaviour
         transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
-    private Vector2 GetPlayerColliderPosition()
-    {
-        Vector2 playerColliderPosition = (Vector2)playerTransform.position + playerColliderOffset;
-        return playerColliderPosition;
-    }
+    private Vector2 GetPlayerColliderPosition() =>
+        (Vector2)playerTransform.position + playerColliderOffset;
+
+    private float GetDistanceToPlayerCollider() =>
+        Vector2.Distance(transform.position, GetPlayerColliderPosition());
 
     public void SetPlayerTransform(Transform playerTransform)
     {
