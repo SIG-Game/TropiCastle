@@ -26,7 +26,7 @@ public class HookUIController : MonoBehaviour
 
     private void Update()
     {
-        Vector3 newPosition = transform.localPosition + Vector3.right * xVelocity * Time.deltaTime;
+        Vector3 newPosition = transform.localPosition + xVelocity * Time.deltaTime * Vector3.right;
 
         if (newPosition.x <= hookXPositionRange.x)
         {

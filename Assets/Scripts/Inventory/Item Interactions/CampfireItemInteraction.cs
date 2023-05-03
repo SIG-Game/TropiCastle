@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CampfireItemInteraction : IItemInteraction
 {
-    private Lazy<ItemScriptableObject> lazyCookedCrabMeat;
+    private readonly Lazy<ItemScriptableObject> lazyCookedCrabMeat;
 
     public CampfireItemInteraction()
     {

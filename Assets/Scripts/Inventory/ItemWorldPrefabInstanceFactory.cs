@@ -38,7 +38,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity, itemWorldParent);
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
-        spawnedItemWorld.item = itemToSpawn;
+        spawnedItemWorld.SetItem(itemToSpawn);
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)

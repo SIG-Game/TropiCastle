@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -86,11 +85,11 @@ public class FishingUIController : MonoBehaviour
 
         playerItemInWorld.ShowPlayerItemInWorld(caughtFishItem.sprite);
 
-        Action afterCatchDialogueAction = () =>
+        void afterCatchDialogueAction()
         {
             playerInventory.AddItem(caughtFishItem, 1);
             playerItemInWorld.HidePlayerItemInWorld();
-        };
+        }
 
         DialogueBox.Instance.PlayDialogue($"You caught a {selectedFish.species.ToLowerInvariant()}!\n" +
             $"{selectedFish.description}", afterCatchDialogueAction);

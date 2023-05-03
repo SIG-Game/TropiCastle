@@ -24,7 +24,7 @@ public class FishUIController : MonoBehaviour
         float fishXSpeed = Speed * Time.deltaTime;
 
         Vector3 newPosition = transform.localPosition +
-            Vector3.right * fishXDirection * fishXSpeed;
+            fishXDirection * fishXSpeed * Vector3.right;
 
         if (newPosition.x <= fishXPositionRange.x)
         {

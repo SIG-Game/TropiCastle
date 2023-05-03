@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class ItemWorld : Interactable
 {
-    [SerializeField] public ItemWithAmount item;
+    [SerializeField] private ItemWithAmount item;
     [SerializeField] private bool logOnInteract;
 
     private IItemInteraction itemInteraction;
 
-    private static Dictionary<string, IItemInteraction> itemNameToInteraction =
+    private static readonly Dictionary<string, IItemInteraction> itemNameToInteraction =
         new Dictionary<string, IItemInteraction>
     {
         { "Campfire", new CampfireItemInteraction() }
@@ -20,7 +20,8 @@ public class ItemWorld : Interactable
     {
         GetComponent<SpriteRenderer>().sprite = item.itemData.sprite;
 
-        if (item.itemData.hasCustomColliderSize) {
+        if (item.itemData.hasCustomColliderSize)
+        {
             GetComponent<BoxCollider2D>().size = item.itemData.customColliderSize;
         }
 
@@ -40,5 +41,12 @@ public class ItemWorld : Interactable
 
             itemInteraction.Interact(player);
         }
+    }
+
+    public ItemWithAmount GetItem() => item;
+
+    public void SetItem(ItemWithAmount item)
+    {
+        this.item = item;
     }
 }
