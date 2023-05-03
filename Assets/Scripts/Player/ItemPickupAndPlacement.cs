@@ -8,6 +8,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private PlayerItemInWorldController playerItemInWorld;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Sprite itemPickupArrow;
+    [SerializeField] private Sprite itemPickupArrowInventoryFull;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
     [SerializeField] private Color cannotPlaceCursorBackgroundColor;
 
@@ -44,6 +45,9 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState = DefaultState;
 
         currentState.StateEnter();
+
+        playerInventory.OnItemAdded += PlayerInventory_OnItemAdded;
+        playerInventory.OnItemRemoved += PlayerInventory_OnItemRemoved;
     }
 
     private void Update()
@@ -75,8 +79,15 @@ public class ItemPickupAndPlacement : MonoBehaviour
         UpdateInstanceVariables();
 
         currentState.StateUpdate();
+    }
 
-        return;
+    private void OnDestroy()
+    {
+        if (playerInventory != null)
+        {
+            playerInventory.OnItemAdded -= PlayerInventory_OnItemAdded;
+            playerInventory.OnItemRemoved -= PlayerInventory_OnItemRemoved;
+        }
     }
 
     public void PickUpHoveredItem()
@@ -118,7 +129,15 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePickupCursor()
     {
-        cursorController.SetCursorSprite(itemPickupArrow);
+        if (playerInventory.IsFull())
+        {
+            cursorController.SetCursorSprite(itemPickupArrowInventoryFull);
+        }
+        else
+        {
+            cursorController.SetCursorSprite(itemPickupArrow);
+        }
+
         cursorController.SetCursorBackgroundColor(Color.clear);
     }
 
@@ -173,6 +192,23 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState.StateExit();
         currentState = newState;
         currentState.StateEnter();
+    }
+
+    private void PlayerInventory_OnItemAdded(ItemWithAmount _)
+    {
+        if (playerInventory.IsFull() &&
+            cursorController.GetCursorSprite() == itemPickupArrow)
+        {
+            cursorController.SetCursorSprite(itemPickupArrowInventoryFull);
+        }
+    }
+
+    private void PlayerInventory_OnItemRemoved(ItemWithAmount _)
+    {
+        if (cursorController.GetCursorSprite() == itemPickupArrowInventoryFull)
+        {
+            cursorController.SetCursorSprite(itemPickupArrow);
+        }
     }
 
     public bool CanPlaceItemAtCursorPosition() => canPlaceItemAtCursorPosition;

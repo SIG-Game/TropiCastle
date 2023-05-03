@@ -154,4 +154,6 @@ public class CursorController : MonoBehaviour
     }
 
     public Vector2 GetPosition() => transform.position;
+
+    public Sprite GetCursorSprite() => cursorSpriteRenderer.sprite;
 }

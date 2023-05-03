@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
 
     public event Action<ItemWithAmount, int> OnItemChangedAtIndex = delegate { };
     public event Action<ItemWithAmount> OnItemAdded = delegate { };
+    public event Action<ItemWithAmount> OnItemRemoved = delegate { };
 
     // Every empty item slot references this instance
     private static ItemWithAmount emptyItemInstance;
@@ -103,6 +104,8 @@ public class Inventory : MonoBehaviour
         {
             firstEmptyIndex = index;
         }
+
+        OnItemRemoved(itemAtIndex);
     }
 
     private void SetFirstEmptyIndex()
@@ -114,12 +117,12 @@ public class Inventory : MonoBehaviour
     {
         SetItemAtIndex(newItem, index);
 
-        OnItemAdded(newItem);
-
         if (index == firstEmptyIndex)
         {
             SetFirstEmptyIndex();
         }
+
+        OnItemAdded(newItem);
     }
 
     private void SetItemAtIndex(ItemWithAmount item, int index)
