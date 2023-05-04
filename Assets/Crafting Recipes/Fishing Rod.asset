@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d85f03e2abd17a4681b4d6ec1113743, type: 3}
+  m_Name: Fishing Rod
+  m_EditorClassIdentifier: 
+  ingredients:
+  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+    amount: 1
+  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
+    amount: 1
+  - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
+    amount: 1
+  resultItem:
+    itemData: {fileID: 11400000, guid: d02252380b58b91449f08b6b2b552303, type: 2}
+    amount: 1
