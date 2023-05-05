@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     private InputAction attackInputAction;
     private InputAction healInputAction;
     private WeaponItemScriptableObject strongestWeaponInInventory;
+    private ItemWithAmount bucketOfWaterItem;
     private LayerMask interactableMask;
     private LayerMask waterMask;
     private bool isAttacking;
@@ -74,6 +75,11 @@ public class PlayerController : MonoBehaviour
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
+
+        bucketOfWaterItem = new ItemWithAmount {
+            itemData = Resources.Load<ItemScriptableObject>("Items/BucketOfWater"),
+            amount = 1
+        };
 
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
@@ -200,6 +206,9 @@ public class PlayerController : MonoBehaviour
             case { name: "Fishing Rod" }:
                 Fish();
                 break;
+            case { name: "Bucket" }:
+                UseBucket();
+                break;
         }
     }
 
@@ -234,6 +243,18 @@ public class PlayerController : MonoBehaviour
         }
 
         OnFishingRodUsed();
+    }
+
+    private void UseBucket()
+    {
+        if (InteractionCast(waterMask, 0.25f).collider != null)
+        {
+            int selectedItemIndex = GetSelectedItemIndex();
+
+            inventory.RemoveItemAtIndex(selectedItemIndex);
+            inventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
+                bucketOfWaterItem, selectedItemIndex);
+        }
     }
 
     private void PlayerDeath()
