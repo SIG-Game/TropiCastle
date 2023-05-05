@@ -30,12 +30,15 @@ public class ItemPickupAndPlacement : MonoBehaviour
     private void Awake()
     {
         WaitingForInputReleaseBeforePlacement = false;
+
+        playerInventory = player.GetInventory();
+
+        playerInventory.OnItemAdded += PlayerInventory_OnItemAdded;
+        playerInventory.OnItemRemoved += PlayerInventory_OnItemRemoved;
     }
 
     private void Start()
     {
-        playerInventory = player.GetInventory();
-
         itemPickupAndPlacementAction = InputManager.Instance.GetAction("Item Pickup and Placement");
 
         DefaultState = new DefaultItemPickupAndPlacementState(this);
@@ -45,9 +48,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState = DefaultState;
 
         currentState.StateEnter();
-
-        playerInventory.OnItemAdded += PlayerInventory_OnItemAdded;
-        playerInventory.OnItemRemoved += PlayerInventory_OnItemRemoved;
     }
 
     private void Update()

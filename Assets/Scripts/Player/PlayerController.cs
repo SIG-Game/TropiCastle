@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Inventory inventory;
     [SerializeField] private SpriteMask overlaySpriteMask;
 
     public CharacterDirection Direction
@@ -49,7 +50,6 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private BoxCollider2D boxCollider;
     private HealthController healthController;
-    private Inventory inventory;
     private ItemSelectionController itemSelectionController;
     private SpriteRenderer spriteRenderer;
     private CharacterDirectionController directionController;
@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         healthController = GetComponent<HealthController>();
-        inventory = GetComponent<Inventory>();
         itemSelectionController = GetComponent<ItemSelectionController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         directionController = GetComponent<CharacterDirectionController>();

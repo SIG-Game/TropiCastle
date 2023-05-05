@@ -512,6 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8534eeeaa4c8abc4ca8b2eaf577070c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 856750480813842556}
   overlaySpriteMask: {fileID: 7652320630200294286}
 --- !u!114 &2526882180276161147
 MonoBehaviour:

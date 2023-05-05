@@ -26,15 +26,12 @@ public class FishingUIController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
+        playerInventory = player.GetInventory();
+
         fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
         fishScriptableObjects = fishScriptableObjectsLoadHandle.WaitForCompletion();
 
         player.OnFishingRodUsed += StartFishing;
-    }
-
-    private void Start()
-    {
-        playerInventory = player.GetInventory();
     }
 
     private void Update()
