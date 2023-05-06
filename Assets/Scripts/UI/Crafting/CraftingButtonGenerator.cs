@@ -46,6 +46,9 @@ public class CraftingButtonGenerator : MonoBehaviour
 
         craftingRecipeScriptableObjectsLoadHandle.Completed +=
             CraftingRecipeScriptableObjectsLoadHandle_Completed;
+
+        // Crafting button regeneration is slow without this method call
+        craftingRecipeScriptableObjectsLoadHandle.WaitForCompletion();
     }
 
     private void CraftingRecipeScriptableObjectsLoadHandle_Completed(
