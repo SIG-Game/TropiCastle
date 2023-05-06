@@ -29032,6 +29032,26 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 572276101}
+    - target: {fileID: 5393617638099213333, guid: 4593a323c2f6746f09fbd8e821b68017,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 5393617638099213333, guid: 4593a323c2f6746f09fbd8e821b68017,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SaveInventoryToFile
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393617638099213333, guid: 4593a323c2f6746f09fbd8e821b68017,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Inventory, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5393617638099213333, guid: 4593a323c2f6746f09fbd8e821b68017,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7201862458469688702, guid: 4593a323c2f6746f09fbd8e821b68017,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

@@ -11,15 +11,12 @@ public class HotbarUIController : ItemSlotContainerController
 
     private void Awake()
     {
+        hotbarSize = GetItemSlotCount();
+
         inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
-    }
-
-    private void Start()
-    {
-        hotbarSize = GetItemSlotCount();
     }
 
     private void OnDestroy()
