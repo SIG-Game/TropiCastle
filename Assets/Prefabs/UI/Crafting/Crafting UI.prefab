@@ -29,9 +29,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4985622677349875922}
-  - {fileID: 5577858576226643332}
-  - {fileID: 6675577954354633263}
+  - {fileID: 8026947080067310093}
+  - {fileID: 1315510751774871028}
+  - {fileID: 5545018149051708743}
+  - {fileID: 3602836845473795485}
   m_Father: {fileID: 3872985727311164804}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -271,7 +272,7 @@ MonoBehaviour:
   craftingButtonPrefab: {fileID: 6009137097597202608, guid: 466a4b07e1998a740a8b182a342903dd,
     type: 3}
   craftingButtonsParentTransform: {fileID: 3872985726266844870}
---- !u!1001 &1135140880686754464
+--- !u!1001 &2276396964884317640
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -282,13 +283,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1,
+      objectReference: {fileID: 21300000, guid: 7411f00792f59ca4986386c5aa708369,
         type: 3}
     - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: craftingRecipe
       value: 
-      objectReference: {fileID: 11400000, guid: 46d2472a2843f104d899177307cb20df,
+      objectReference: {fileID: 11400000, guid: bc744e9066fa8ff40afbc26dbcf74d3a,
         type: 2}
     - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
@@ -403,17 +404,159 @@ PrefabInstance:
     - target: {fileID: 6009137097597202608, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_Name
-      value: Craft Spear Button
+      value: Craft Fishing Rod Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
---- !u!224 &6675577954354633263 stripped
+--- !u!224 &5545018149051708743 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
     type: 3}
-  m_PrefabInstance: {fileID: 1135140880686754464}
+  m_PrefabInstance: {fileID: 2276396964884317640}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1609125589740253277
+--- !u!1001 &4323965321861026434
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3872985726266844870}
+    m_Modifications:
+    - target: {fileID: 2692672177494040863, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7baa11755009b614cb1b36b3e3910e15,
+        type: 3}
+    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: craftingRecipe
+      value: 
+      objectReference: {fileID: 11400000, guid: 09eea8ca27b54864d8cf9cd6d8f58400,
+        type: 2}
+    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: craftingButtonDependencies
+      value: 
+      objectReference: {fileID: 8455560938854511820}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6009137097597202608, guid: 466a4b07e1998a740a8b182a342903dd,
+        type: 3}
+      propertyPath: m_Name
+      value: Craft Bucket Button
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
+--- !u!224 &8026947080067310093 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 4323965321861026434}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4694189338762198395
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -450,7 +593,7 @@ PrefabInstance:
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
@@ -549,13 +692,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
---- !u!224 &4985622677349875922 stripped
+--- !u!224 &1315510751774871028 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
     type: 3}
-  m_PrefabInstance: {fileID: 1609125589740253277}
+  m_PrefabInstance: {fileID: 4694189338762198395}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2165165481818709259
+--- !u!1001 &7105386497154530578
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -566,13 +709,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 7411f00792f59ca4986386c5aa708369,
+      objectReference: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1,
         type: 3}
     - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: craftingRecipe
       value: 
-      objectReference: {fileID: 11400000, guid: bc744e9066fa8ff40afbc26dbcf74d3a,
+      objectReference: {fileID: 11400000, guid: 46d2472a2843f104d899177307cb20df,
         type: 2}
     - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
@@ -592,7 +735,7 @@ PrefabInstance:
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
@@ -687,13 +830,13 @@ PrefabInstance:
     - target: {fileID: 6009137097597202608, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_Name
-      value: Craft Fishing Rod Button
+      value: Craft Spear Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
---- !u!224 &5577858576226643332 stripped
+--- !u!224 &3602836845473795485 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
     type: 3}
-  m_PrefabInstance: {fileID: 2165165481818709259}
+  m_PrefabInstance: {fileID: 7105386497154530578}
   m_PrefabAsset: {fileID: 0}
