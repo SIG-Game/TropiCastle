@@ -35489,6 +35489,11 @@ PrefabInstance:
       objectReference: {fileID: 837265633}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
+      propertyPath: cursorController
+      value: 
+      objectReference: {fileID: 1812985303}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
       propertyPath: hotbarUIController
       value: 
       objectReference: {fileID: 1304918691}

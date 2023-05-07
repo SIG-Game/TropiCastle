@@ -33,12 +33,14 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
     }
 
-    public void SpawnItemWorld(Vector3 position, ItemWithAmount itemToSpawn)
+    public ItemWorld SpawnItemWorld(Vector3 position, ItemWithAmount itemToSpawn)
     {
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity, itemWorldParent);
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
         spawnedItemWorld.SetItem(itemToSpawn);
+
+        return spawnedItemWorld;
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)
@@ -59,7 +61,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         if (SpawnColliderHelper.TryGetSpawnPositionOutsideColliders(spawnPositionGenerator, itemColliderExtents,
             maxDropSpawnAttempts, out Vector2 spawnPosition))
         {
-            SpawnItemWorld(spawnPosition, itemToDrop);
+            _ = SpawnItemWorld(spawnPosition, itemToDrop);
         }
 
         // Dropped items currently don't move

@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private SpriteMask overlaySpriteMask;
+    [SerializeField] private CursorController cursorController;
 
     public CharacterDirection Direction
     {
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         new Dictionary<string, IItemUsage>
     {
         { "Bucket", new BucketItemUsage() },
+        { "Coconut", new CoconutItemUsage() },
         { "Fishing Rod", new FishingRodItemUsage() }
     };
 
@@ -88,6 +90,8 @@ public class PlayerController : MonoBehaviour
         IsAttacking = false;
 
         ActionDisablingUIOpen = false;
+
+        ((CoconutItemUsage)itemNameToUsage["Coconut"]).SetCursorController(cursorController);
 
         healthController.OnHealthSet += HealthController_OnHealthSet;
         inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;

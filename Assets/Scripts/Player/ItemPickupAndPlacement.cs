@@ -111,7 +111,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         if (itemToPlace.itemData.name != "Empty")
         {
-            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(cursorPoint, itemToPlace);
+            _ =ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(cursorPoint, itemToPlace);
             playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
         }
     }
