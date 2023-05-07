@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,6 +32,13 @@ public class PlayerController : MonoBehaviour
     public event Action OnFishingRodUsed = delegate { };
     public event Action<bool> OnIsAttackingSet = delegate { };
 
+    private static readonly Dictionary<string, IItemUsage> itemNameToUsage =
+        new Dictionary<string, IItemUsage>
+    {
+        { "Bucket", new BucketItemUsage() },
+        { "Fishing Rod", new FishingRodItemUsage() }
+    };
+
     private static bool actionDisablingUIOpen;
 
     // Not used for pausing menu
@@ -58,7 +66,6 @@ public class PlayerController : MonoBehaviour
     private InputAction attackInputAction;
     private InputAction healInputAction;
     private WeaponItemScriptableObject strongestWeaponInInventory;
-    private ItemWithAmount bucketOfWaterItem;
     private LayerMask interactableMask;
     private LayerMask waterMask;
     private bool isAttacking;
@@ -74,11 +81,6 @@ public class PlayerController : MonoBehaviour
 
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
-
-        bucketOfWaterItem = new ItemWithAmount {
-            itemData = Resources.Load<ItemScriptableObject>("Items/BucketOfWater"),
-            amount = 1
-        };
 
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
@@ -175,7 +177,7 @@ public class PlayerController : MonoBehaviour
         return interactionDirection;
     }
 
-    private RaycastHit2D InteractionCast(LayerMask mask, float boxCastDistance)
+    public RaycastHit2D InteractionCast(LayerMask mask, float boxCastDistance)
     {
         Vector2 interactionDirection = GetInteractionDirection();
 
@@ -202,11 +204,11 @@ public class PlayerController : MonoBehaviour
             case WeaponItemScriptableObject weaponItemData:
                 AttackWithWeapon(weaponItemData);
                 break;
-            case { name: "Fishing Rod" }:
-                Fish();
-                break;
-            case { name: "Bucket" }:
-                UseBucket();
+            default:
+                if (itemNameToUsage.TryGetValue(item.itemData.name, out IItemUsage itemUsage))
+                {
+                    itemUsage.UseItem(this);
+                }
                 break;
         }
     }
@@ -233,7 +235,7 @@ public class PlayerController : MonoBehaviour
         animator.Play($"{attackTypeString} {Direction}");
     }
 
-    private void Fish()
+    public void Fish()
     {
         if (InteractionCast(waterMask, 0.5f).collider == null)
         {
@@ -242,18 +244,6 @@ public class PlayerController : MonoBehaviour
         }
 
         OnFishingRodUsed();
-    }
-
-    private void UseBucket()
-    {
-        if (InteractionCast(waterMask, 0.25f).collider != null)
-        {
-            int selectedItemIndex = GetSelectedItemIndex();
-
-            inventory.RemoveItemAtIndex(selectedItemIndex);
-            inventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
-                bucketOfWaterItem, selectedItemIndex);
-        }
     }
 
     private void PlayerDeath()
