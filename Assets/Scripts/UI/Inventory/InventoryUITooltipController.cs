@@ -100,8 +100,8 @@ public class InventoryUITooltipController : MonoBehaviour
             HealingItemScriptableObject healingItem =>
                 $"{item.name}\nHeals {healingItem.healAmount} Health",
             WeaponItemScriptableObject weaponItem => $"{item.name}\n" +
-                $"Deals {weaponItem.damage} Damage\n{weaponItem.knockback} Knockback\n" +
-                $"{weaponItem.attackSpeed} Attack Speed",
+                $"{weaponItem.attackType} Attack\nDeals {weaponItem.damage} Damage\n" +
+                $"{weaponItem.knockback} Knockback\n{weaponItem.attackSpeed} Attack Speed",
             { name: "Empty" } => string.Empty,
             _ => item.name
         };
