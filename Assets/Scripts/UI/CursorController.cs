@@ -9,14 +9,22 @@ public class CursorController : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float gamepadSensitivity;
 
+    public Sprite Sprite
+    {
+        get => cursorSpriteRenderer.sprite;
+        set
+        {
+            cursorSpriteRenderer.sprite = value;
+        }
+    }
+
     private SpriteRenderer cursorSpriteRenderer;
     private SpriteRenderer cursorBackgroundSpriteRenderer;
     private InputAction moveCursorAction;
 
     private void Awake()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        HideAndLockMouseCursor();
 
         cursorSpriteRenderer = GetComponent<SpriteRenderer>();
         cursorBackgroundSpriteRenderer = cursorBackground.GetComponent<SpriteRenderer>();
@@ -38,32 +46,24 @@ public class CursorController : MonoBehaviour
     // because that script uses the position of the in-game cursor
     private void Update()
     {
-        if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen ||
-            playerController.IsAttacking)
-        {
-            return;
-        }
+        Vector2 moveCursorInput = moveCursorAction.ReadValue<Vector2>();
 
-        Vector2 moveCursorActionValue = moveCursorAction.ReadValue<Vector2>();
-
-        if (moveCursorActionValue != Vector2.zero)
+        if (moveCursorInput != Vector2.zero)
         {
-            Vector2 cursorDelta = moveCursorActionValue;
+            Vector2 cursorDelta = moveCursorInput;
 
             if (InputManager.Instance.GetCurrentControlScheme() == "Mouse and Keyboard")
             {
                 // Movement distance using mouse delta is not multiplied by Time.deltaTime
-                // because doing that would make the movement distance vary with the frame rate.
+                // because doing that would make the movement distance vary with the frame rate
                 cursorDelta *= mouseSensitivity;
             }
             else
             {
-                cursorDelta *= Time.deltaTime * gamepadSensitivity;
+                cursorDelta *= gamepadSensitivity * Time.deltaTime;
             }
 
-            Vector3 newPosition = ClampToScreen(transform.position + (Vector3)cursorDelta);
-
-            transform.position = newPosition;
+            transform.position = ClampToScreen(transform.position + (Vector3)cursorDelta);
         }
     }
 
@@ -80,11 +80,6 @@ public class CursorController : MonoBehaviour
         }
     }
 
-    public void SetCursorSprite(Sprite sprite)
-    {
-        cursorSpriteRenderer.sprite = sprite;
-    }
-
     public void SetCursorBackgroundColor(Color cursorBackgroundColor)
     {
         cursorBackgroundSpriteRenderer.color = cursorBackgroundColor;
@@ -92,8 +87,8 @@ public class CursorController : MonoBehaviour
 
     public void UseDefaultCursor()
     {
-        cursorSpriteRenderer.sprite = defaultCursorSprite;
-        cursorBackgroundSpriteRenderer.color = Color.clear;
+        Sprite = defaultCursorSprite;
+        SetCursorBackgroundColor(Color.clear);
     }
 
     public void SetCursorBackgroundLocalScale(Vector3 localScale)
@@ -119,18 +114,28 @@ public class CursorController : MonoBehaviour
         return clampedInput;
     }
 
-    private void PauseController_OnGamePaused()
+    private void HideAndLockMouseCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void ShowAndUnlockMouseCursor()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void PauseController_OnGamePaused()
+    {
+        ShowAndUnlockMouseCursor();
 
         gameObject.SetActive(false);
     }
 
     private void PauseController_OnGameUnpaused()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        HideAndLockMouseCursor();
 
         if (!PlayerController.ActionDisablingUIOpen)
         {
@@ -154,6 +159,4 @@ public class CursorController : MonoBehaviour
     }
 
     public Vector2 GetPosition() => transform.position;
-
-    public Sprite GetCursorSprite() => cursorSpriteRenderer.sprite;
 }

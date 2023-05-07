@@ -131,11 +131,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         if (playerInventory.IsFull())
         {
-            cursorController.SetCursorSprite(itemPickupArrowInventoryFull);
+            cursorController.Sprite = itemPickupArrowInventoryFull;
         }
         else
         {
-            cursorController.SetCursorSprite(itemPickupArrow);
+            cursorController.Sprite = itemPickupArrow;
         }
 
         cursorController.SetCursorBackgroundColor(Color.clear);
@@ -150,7 +150,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         cursorController.SetCursorBackgroundLocalScale(selectedItemColliderSize);
 
-        cursorController.SetCursorSprite(selectedItemData.sprite);
+        cursorController.Sprite = selectedItemData.sprite;
         cursorController.SetCursorBackgroundColor(canPlaceItemAtCursorPosition ?
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
 
@@ -197,17 +197,17 @@ public class ItemPickupAndPlacement : MonoBehaviour
     private void PlayerInventory_OnItemAdded(ItemWithAmount _)
     {
         if (playerInventory.IsFull() &&
-            cursorController.GetCursorSprite() == itemPickupArrow)
+            cursorController.Sprite == itemPickupArrow)
         {
-            cursorController.SetCursorSprite(itemPickupArrowInventoryFull);
+            cursorController.Sprite = itemPickupArrowInventoryFull;
         }
     }
 
     private void PlayerInventory_OnItemRemoved(ItemWithAmount _)
     {
-        if (cursorController.GetCursorSprite() == itemPickupArrowInventoryFull)
+        if (cursorController.Sprite == itemPickupArrowInventoryFull)
         {
-            cursorController.SetCursorSprite(itemPickupArrow);
+            cursorController.Sprite = itemPickupArrow;
         }
     }
 
