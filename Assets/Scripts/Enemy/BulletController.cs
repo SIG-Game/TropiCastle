@@ -4,9 +4,13 @@ public class BulletController : MonoBehaviour
 {
     [SerializeField] private float speed;
 
-    private void Update()
+    private Rigidbody2D rb2d;
+
+    private void Awake()
     {
-        transform.Translate(speed * Time.deltaTime * Vector3.up);
+        rb2d = GetComponent<Rigidbody2D>();
+
+        rb2d.velocity = speed * transform.up;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

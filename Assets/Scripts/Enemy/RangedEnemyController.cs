@@ -17,10 +17,11 @@ public class RangedEnemyController : MonoBehaviour
 
     private void Update()
     {
-        Vector2 direction = new Vector2(player.position.x - transform.position.x, player.position.y - transform.position.y);
-        transform.up = direction;
+        Vector2 directionToPlayer = player.position - transform.position;
+        transform.up = directionToPlayer;
 
-        if (Vector3.Distance(transform.position, player.position) <= targetRange && Time.time >= shootTime)
+        if (Vector3.Distance(transform.position, player.position) <= targetRange &&
+            Time.time >= shootTime)
         {
             Instantiate(bullet, transform.position, transform.rotation);
             shootTime = Time.time + timeBetweenShotsSeconds;
