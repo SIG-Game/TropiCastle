@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -9,10 +7,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private int inventorySize;
 
     private List<ItemWithAmount> itemList;
-    private string inventoryFilePath;
     private int firstEmptyIndex;
-
-    private const string inventoryFileName = "inventory.json";
 
     public event Action<ItemWithAmount, int> OnItemChangedAtIndex = delegate { };
     public event Action<ItemWithAmount> OnItemAdded = delegate { };
@@ -41,15 +36,7 @@ public class Inventory : MonoBehaviour
             itemList.Add(emptyItemInstance);
         }
 
-        inventoryFilePath = Application.persistentDataPath +
-            Path.DirectorySeparatorChar + inventoryFileName;
-
         firstEmptyIndex = 0;
-    }
-
-    private void Start()
-    {
-        LoadInventoryFromFile();
     }
 
     public void AddItem(ItemScriptableObject info, int amount)
@@ -150,52 +137,7 @@ public class Inventory : MonoBehaviour
 
     public bool IsFull() => firstEmptyIndex == -1;
 
-    public void SaveInventoryToFile()
-    {
-        IEnumerable<SerializableInventoryItem> serializableInventoryItems =
-            itemList.Select(x => new SerializableInventoryItem
-            {
-                // Use ScriptableObject name and not item display name
-                ItemName = ((ScriptableObject)x.itemData).name,
-                Amount = x.amount
-            });
-
-        var serializableInventory = new SerializableInventory
-        {
-            SerializableItemList = serializableInventoryItems.ToList()
-        };
-
-        string serializableInventoryJson = JsonUtility.ToJson(serializableInventory);
-
-        using (var streamWriter = new StreamWriter(inventoryFilePath))
-        {
-            streamWriter.Write(serializableInventoryJson);
-        }
-    }
-
-    private void LoadInventoryFromFile()
-    {
-        if (!File.Exists(inventoryFilePath))
-        {
-            return;
-        }
-
-        using (var streamReader = new StreamReader(inventoryFilePath))
-        {
-            string inventoryJson = streamReader.ReadToEnd();
-
-            var serializableInventory = new SerializableInventory();
-
-            serializableInventory = JsonUtility
-                .FromJson<SerializableInventory>(inventoryJson);
-
-            SetInventoryFromSerializableInventory(serializableInventory);
-
-            SetFirstEmptyIndex();
-        }
-    }
-
-    private void SetInventoryFromSerializableInventory(
+    public void SetInventoryFromSerializableInventory(
         SerializableInventory serializableInventory)
     {
         for (int i = 0; i < serializableInventory.SerializableItemList.Count; ++i)
@@ -215,16 +157,18 @@ public class Inventory : MonoBehaviour
 
             SetItemAtIndex(item, i);
         }
+
+        SetFirstEmptyIndex();
     }
 
     [Serializable]
-    private class SerializableInventory
+    public class SerializableInventory
     {
         public List<SerializableInventoryItem> SerializableItemList;
     }
 
     [Serializable]
-    private class SerializableInventoryItem
+    public class SerializableInventoryItem
     {
         public string ItemName;
         public int Amount;
