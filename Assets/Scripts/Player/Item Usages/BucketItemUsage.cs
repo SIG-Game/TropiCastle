@@ -1,17 +1,23 @@
 using UnityEngine;
 
-public class BucketItemUsage : IItemUsage
+public class BucketItemUsage : MonoBehaviour, IItemUsage
 {
     private ItemWithAmount bucketOfWaterItem;
     private LayerMask waterMask;
 
+    private void Awake()
+    {
+        bucketOfWaterItem = new ItemWithAmount
+        {
+            itemData = Resources.Load<ItemScriptableObject>("Items/BucketOfWater"),
+            amount = 1
+        };
+
+        waterMask = LayerMask.GetMask("Water");
+    }
+
     public void UseItem(PlayerController playerController)
     {
-        if (bucketOfWaterItem == null && waterMask == 0)
-        {
-            SetUpBucketItemUsage();
-        }
-
         if (playerController.InteractionCast(waterMask, 0.25f).collider != null)
         {
             Inventory playerInventory = playerController.GetInventory();
@@ -22,18 +28,5 @@ public class BucketItemUsage : IItemUsage
             playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
                 bucketOfWaterItem, selectedItemIndex);
         }
-    }
-
-    private void SetUpBucketItemUsage()
-    {
-        // Resources.Load cannot be called in the BucketItemUsage constructor
-        bucketOfWaterItem = new ItemWithAmount
-        {
-            itemData = Resources.Load<ItemScriptableObject>("Items/BucketOfWater"),
-            amount = 1
-        };
-
-        // LayerMask.GetMask cannot be called in the BucketItemUsage constructor
-        waterMask = LayerMask.GetMask("Water");
     }
 }

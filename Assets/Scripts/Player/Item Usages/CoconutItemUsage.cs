@@ -1,23 +1,22 @@
 using UnityEngine;
 
-public class CoconutItemUsage : IItemUsage
+public class CoconutItemUsage : MonoBehaviour, IItemUsage
 {
+    [SerializeField] private CursorController cursorController;
+
     private ItemWithAmount coconutItem;
-    private CursorController cursorController;
 
-    public void SetCursorController(CursorController cursorController)
-    {
-        this.cursorController = cursorController;
-    }
-
-    public void UseItem(PlayerController playerController)
+    private void Awake()
     {
         coconutItem = new ItemWithAmount
         {
             itemData = Resources.Load<ItemScriptableObject>("Items/Coconut"),
             amount = 1
         };
+    }
 
+    public void UseItem(PlayerController playerController)
+    {
         Vector3 coconutStartPosition =
             playerController.transform.position + new Vector3(0f, 0.3f, 0f);
 

@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteMask overlaySpriteMask;
     [SerializeField] private CursorController cursorController;
 
+    [Header("Item Usages")]
+    [SerializeField] private BucketItemUsage bucketItemUsage;
+    [SerializeField] private CoconutItemUsage coconutItemUsage;
+    [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
+
     public CharacterDirection Direction
     {
         get => directionController.Direction;
@@ -33,13 +38,7 @@ public class PlayerController : MonoBehaviour
     public event Action OnFishingRodUsed = delegate { };
     public event Action<bool> OnIsAttackingSet = delegate { };
 
-    private static readonly Dictionary<string, IItemUsage> itemNameToUsage =
-        new Dictionary<string, IItemUsage>
-    {
-        { "Bucket", new BucketItemUsage() },
-        { "Coconut", new CoconutItemUsage() },
-        { "Fishing Rod", new FishingRodItemUsage() }
-    };
+    private Dictionary<string, IItemUsage> itemNameToUsage;
 
     private static bool actionDisablingUIOpen;
 
@@ -91,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
         ActionDisablingUIOpen = false;
 
-        ((CoconutItemUsage)itemNameToUsage["Coconut"]).SetCursorController(cursorController);
+        SetItemNameToUsageDictionary();
 
         healthController.OnHealthSet += HealthController_OnHealthSet;
         inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
@@ -301,6 +300,16 @@ public class PlayerController : MonoBehaviour
                 strongestWeaponInInventory = weapon;
             }
         }
+    }
+
+    private void SetItemNameToUsageDictionary()
+    {
+        itemNameToUsage = new Dictionary<string, IItemUsage>
+        {
+            { "Bucket", bucketItemUsage },
+            { "Coconut", coconutItemUsage },
+            { "Fishing Rod", fishingRodItemUsage }
+        };
     }
 
     private void AttackStartedAnimationEvent()

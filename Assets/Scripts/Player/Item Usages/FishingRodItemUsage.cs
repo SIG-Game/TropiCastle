@@ -1,4 +1,6 @@
-public class FishingRodItemUsage : IItemUsage
+using UnityEngine;
+
+public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 {
     public void UseItem(PlayerController playerController)
     {
