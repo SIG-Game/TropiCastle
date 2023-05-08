@@ -230,8 +230,7 @@ public class Inventory : MonoBehaviour
         public int Amount;
     }
 
-    [ContextMenu("Fill Inventory")]
-    private void FillInventory()
+    public void FillInventory()
     {
         ItemScriptableObject coconutItemInfo = Resources.Load<ItemScriptableObject>("Items/Coconut");
 
@@ -245,5 +244,11 @@ public class Inventory : MonoBehaviour
         {
             AddItem(coconutItem);
         }
+    }
+
+    [ContextMenu("Fill Inventory")]
+    private void FillInventoryContextMenuCommand()
+    {
+        FillInventory();
     }
 }
