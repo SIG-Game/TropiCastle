@@ -1,17 +1,12 @@
 using System;
 using UnityEngine;
 
-public class CampfireItemInteraction : IItemInteraction
+public class CampfireItemInteractable : Interactable
 {
-    private readonly Lazy<ItemScriptableObject> lazyCookedCrabMeat;
+    private static readonly Lazy<ItemScriptableObject> lazyCookedCrabMeat =
+        new Lazy<ItemScriptableObject>(LoadCookedCrabMeatItemScriptableObject);
 
-    public CampfireItemInteraction()
-    {
-        lazyCookedCrabMeat =
-            new Lazy<ItemScriptableObject>(LoadCookedCrabMeatItemScriptableObject);
-    }
-
-    public void Interact(PlayerController playerController)
+    public override void Interact(PlayerController playerController)
     {
         Inventory playerInventory = playerController.GetInventory();
 
@@ -25,6 +20,6 @@ public class CampfireItemInteraction : IItemInteraction
         }
     }
 
-    private ItemScriptableObject LoadCookedCrabMeatItemScriptableObject() =>
+    private static ItemScriptableObject LoadCookedCrabMeatItemScriptableObject() =>
         Resources.Load<ItemScriptableObject>("Items/CookedCrabMeat");
 }

@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemWorld : Interactable
+public class ItemWorld : MonoBehaviour
 {
     [SerializeField] private ItemWithAmount item;
     [SerializeField] private bool logOnInteract;
 
-    private IItemInteraction itemInteraction;
-
-    private static readonly Dictionary<string, IItemInteraction> itemNameToInteraction =
-        new Dictionary<string, IItemInteraction>
+    private static readonly Dictionary<string, Type> itemNameToInteractableType =
+        new Dictionary<string, Type>
     {
-        { "Campfire", new CampfireItemInteraction() }
+        { "Campfire", typeof(CampfireItemInteractable) }
     };
 
     // These operations must be in the Start method because the Awake
@@ -25,22 +24,15 @@ public class ItemWorld : Interactable
             GetComponent<BoxCollider2D>().size = item.itemData.customColliderSize;
         }
 
-        itemInteraction = itemNameToInteraction.GetValueOrDefault(item.itemData.name);
+        if (itemNameToInteractableType.TryGetValue(item.itemData.name,
+            out Type itemInteractableType))
+        {
+            gameObject.AddComponent(itemInteractableType);
+
+            gameObject.layer = LayerMask.NameToLayer("Interactable");
+        }
 
         name = $"{item.itemData.name} ItemWorld";
-    }
-
-    public override void Interact(PlayerController player)
-    {
-        if (itemInteraction != null)
-        {
-            if (logOnInteract)
-            {
-                Debug.Log("Item interaction with item interaction type " + itemInteraction.GetType().Name);
-            }
-
-            itemInteraction.Interact(player);
-        }
     }
 
     public ItemWithAmount GetItem() => item;
