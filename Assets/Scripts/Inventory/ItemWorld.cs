@@ -10,7 +10,8 @@ public class ItemWorld : MonoBehaviour
     private static readonly Dictionary<string, Type> itemNameToInteractableType =
         new Dictionary<string, Type>
     {
-        { "Campfire", typeof(CampfireItemInteractable) }
+        { "Campfire", typeof(CampfireItemInteractable) },
+        { "Chest", typeof(ChestItemInteractable) }
     };
 
     // These operations must be in the Start method because the Awake

@@ -158,5 +158,10 @@ public class InventoryUIController : ItemSlotContainerController
         UnhighlightSlotAtIndex(index);
     }
 
+    public void InvokeOnInventoryUIClosedEvent()
+    {
+        OnInventoryClosed();
+    }
+
     public Inventory GetInventory() => inventory;
 }

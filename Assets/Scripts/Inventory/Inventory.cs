@@ -29,6 +29,11 @@ public class Inventory : MonoBehaviour
             };
         }
 
+        InitializeItemListWithSize(inventorySize);
+    }
+
+    public void InitializeItemListWithSize(int inventorySize)
+    {
         itemList = new List<ItemWithAmount>(inventorySize);
 
         for (int i = 0; i < inventorySize; ++i)
@@ -86,6 +91,18 @@ public class Inventory : MonoBehaviour
         SetItemAtIndex(itemAtIndex1BeforeSwap, index2);
 
         SetFirstEmptyIndex();
+    }
+
+    public void SwapItemsBetweenInventories(int index, Inventory otherInventory,
+        int otherInventoryIndex)
+    {
+        ItemWithAmount itemAtIndexBeforeSwap = itemList[index];
+
+        SetItemAtIndex(otherInventory.GetItemList()[otherInventoryIndex], index);
+        otherInventory.SetItemAtIndex(itemAtIndexBeforeSwap, otherInventoryIndex);
+
+        SetFirstEmptyIndex();
+        otherInventory.SetFirstEmptyIndex();
     }
 
     public void RemoveItemAtIndex(int index)

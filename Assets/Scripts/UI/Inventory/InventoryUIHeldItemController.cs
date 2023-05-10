@@ -9,7 +9,9 @@ public class InventoryUIHeldItemController : MonoBehaviour
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Sprite transparentSprite;
 
-    private Inventory inventory;
+    private Inventory clickedInventory;
+    private Inventory heldItemInventory;
+    private InventoryUIItemSlotController heldItemSlot;
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
     private Tooltip tooltipTextWithPriority;
@@ -26,8 +28,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
         heldItemRectTransform = heldItemUI.GetComponent<RectTransform>();
         heldItemImage = heldItemUI.GetComponent<Image>();
-
-        inventory = inventoryUIController.GetInventory();
 
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
     }
@@ -61,9 +61,13 @@ public class InventoryUIHeldItemController : MonoBehaviour
             MousePositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
     }
 
-    public void LeftClickedItemAtIndex(int clickedItemIndex)
+    public void LeftClickedItemAtIndex(Inventory clickedInventory,
+        int clickedItemIndex, InventoryUIItemSlotController clickedItemSlot)
     {
-        ItemScriptableObject clickedItemData = inventory.GetItemAtIndex(clickedItemIndex).itemData;
+        this.clickedInventory = clickedInventory;
+
+        ItemScriptableObject clickedItemData =
+            clickedInventory.GetItemAtIndex(clickedItemIndex).itemData;
 
         if (HoldingItem())
         {
@@ -71,28 +75,39 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
         else if (clickedItemData.name != "Empty")
         {
-            HoldItem(clickedItemIndex, clickedItemData);
+            HoldItem(clickedInventory, clickedItemIndex,
+                clickedItemSlot, clickedItemData);
         }
     }
 
     private void PlaceHeldItem(int itemIndex, ItemScriptableObject itemData)
     {
-        bool shouldPutHeldItemBack = itemIndex == heldItemIndex;
+        bool shouldPutHeldItemBack = clickedInventory == heldItemInventory &&
+            itemIndex == heldItemIndex;
         if (shouldPutHeldItemBack)
         {
             inventoryUIController.SetSpriteAtSlotIndex(itemData.sprite, itemIndex);
         }
+        else if (clickedInventory == heldItemInventory)
+        {
+            clickedInventory.SwapItemsAt(heldItemIndex, itemIndex);
+        }
         else
         {
-            inventory.SwapItemsAt(heldItemIndex, itemIndex);
+            heldItemInventory.SwapItemsBetweenInventories(heldItemIndex,
+                clickedInventory, itemIndex);
         }
 
         HideHeldItem();
     }
 
-    private void HoldItem(int itemIndex, ItemScriptableObject itemData)
+    private void HoldItem(Inventory inventory, int itemIndex,
+        InventoryUIItemSlotController itemSlot, ItemScriptableObject itemData)
     {
-        inventoryUIController.SetSpriteAtSlotIndex(transparentSprite, itemIndex);
+        heldItemInventory = inventory;
+        heldItemSlot = itemSlot;
+
+        heldItemSlot.SetSprite(transparentSprite);
 
         heldItemIndex = itemIndex;
         heldItemImage.sprite = itemData.sprite;
@@ -113,9 +128,9 @@ public class InventoryUIHeldItemController : MonoBehaviour
     {
         if (HoldingItem())
         {
-            ItemWithAmount heldItem = inventory.GetItemAtIndex(heldItemIndex);
+            ItemWithAmount heldItem = heldItemInventory.GetItemAtIndex(heldItemIndex);
 
-            inventoryUIController.SetSpriteAtSlotIndex(heldItem.itemData.sprite, heldItemIndex);
+            heldItemSlot.SetSprite(heldItem.itemData.sprite);
 
             HideHeldItem();
         }

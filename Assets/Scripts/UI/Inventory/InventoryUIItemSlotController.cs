@@ -12,7 +12,11 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        inventoryUIController.HoveredItemIndex = slotItemIndex;
+        if (inventoryUIController != null)
+        {
+            inventoryUIController.HoveredItemIndex = slotItemIndex;
+        }
+
         SetSlotTooltipText();
     }
 
@@ -20,13 +24,18 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            InventoryUIHeldItemController.Instance.LeftClickedItemAtIndex(slotItemIndex);
+            InventoryUIHeldItemController.Instance.LeftClickedItemAtIndex(
+                inventory, slotItemIndex, this);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        inventoryUIController.HoveredItemIndex = -1;
+        if (inventoryUIController != null)
+        {
+            inventoryUIController.HoveredItemIndex = -1;
+        }
+
         InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
@@ -54,6 +63,11 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
         ItemScriptableObject slotItemData = inventory.GetItemAtIndex(slotItemIndex).itemData;
 
         return InventoryUITooltipController.GetItemTooltipText(slotItemData);
+    }
+
+    public void SetInventory(Inventory inventory)
+    {
+        this.inventory = inventory;
     }
 
     public void SetSlotItemIndex(int slotItemIndex)
