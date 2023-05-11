@@ -10,53 +10,100 @@ public class Crafting : MonoBehaviour
     {
         List<ItemWithAmount> itemList = inventory.GetItemList();
 
-        // Add indexes of items to remove to a list so that items aren't removed when crafting fails
-        List<int> itemsToRemoveIndexes = new List<int>();
+        Dictionary<int, int> itemIndexToRemoveAmount = new Dictionary<int, int>();
 
-        // This approach must change when inventory item stacking is added
         foreach (ItemWithAmount ingredient in craftingRecipe.ingredients)
         {
-            ItemWithAmount inventoryIngredientItem = null;
-
-            for (int i = 0; i < itemList.Count; ++i)
-            {
-                ItemWithAmount currentItem = itemList[i];
-
-                if (currentItem.itemData.name == ingredient.itemData.name && !itemsToRemoveIndexes.Contains(i))
-                {
-                    inventoryIngredientItem = currentItem;
-                    itemsToRemoveIndexes.Add(i);
-
-                    if (verboseLogging)
-                    {
-                        Debug.Log("Found ingredient " + ingredient.itemData.name);
-                    }
-
-                    break;
-                }
-            }
-
-            if (inventoryIngredientItem == null)
+            if (!TryFindIngredient(itemList, itemIndexToRemoveAmount, ingredient))
             {
                 if (verboseLogging)
                 {
-                    Debug.Log("Ingredient " + ingredient.itemData.name + " not found");
+                    Debug.Log($"{ingredient.amount} {ingredient.itemData.name} not found");
                 }
 
                 return;
             }
         }
 
-        foreach (int itemIndex in itemsToRemoveIndexes)
+        foreach (var itemIndexAndRemoveAmount in itemIndexToRemoveAmount)
         {
+            ItemWithAmount itemToRemove = itemList[itemIndexAndRemoveAmount.Key];
+
             if (verboseLogging)
             {
-                Debug.Log("Using ingredient " + itemList[itemIndex].itemData.name);
+                Debug.Log($"Using {itemIndexAndRemoveAmount.Value} " +
+                    $"{itemToRemove.itemData.name} from index " +
+                    itemIndexAndRemoveAmount.Key);
             }
 
-            inventory.RemoveItemAtIndex(itemIndex);
+            inventory.RemoveItemAtIndex(itemIndexAndRemoveAmount.Key);
+
+            int amountLeft = itemToRemove.amount - itemIndexAndRemoveAmount.Value;
+
+            if (amountLeft != 0)
+            {
+                ItemWithAmount itemToAddBack = new ItemWithAmount
+                {
+                    itemData = itemToRemove.itemData,
+                    amount = amountLeft
+                };
+
+                inventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAddBack,
+                    itemIndexAndRemoveAmount.Key);
+            }
         }
 
         inventory.AddItem(craftingRecipe.resultItem);
+    }
+
+    private bool TryFindIngredient(List<ItemWithAmount> itemList,
+        Dictionary<int, int> itemIndexToRemoveAmount, ItemWithAmount ingredient)
+    {
+        int amountRemoved = 0;
+
+        for (int i = 0; i < itemList.Count; ++i)
+        {
+            ItemWithAmount currentItem = itemList[i];
+
+            if (currentItem.itemData.name == ingredient.itemData.name)
+            {
+                int currentItemAmount = currentItem.amount;
+
+                if (itemIndexToRemoveAmount.ContainsKey(i))
+                {
+                    currentItemAmount -= itemIndexToRemoveAmount[i];
+                }
+
+                if (currentItemAmount + amountRemoved >= ingredient.amount)
+                {
+                    AddToDictionaryOrIncreaseValue(itemIndexToRemoveAmount,
+                        i, ingredient.amount - amountRemoved);
+
+                    return true;
+                }
+                else
+                {
+                    AddToDictionaryOrIncreaseValue(itemIndexToRemoveAmount,
+                        i, currentItemAmount);
+
+                    amountRemoved += currentItemAmount;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void AddToDictionaryOrIncreaseValue(Dictionary<int, int> dictionary,
+        int key, int value)
+    {
+        if (dictionary.ContainsKey(key))
+        {
+            dictionary[key] += value;
+        }
+        else
+        {
+            dictionary.Add(key, value);
+        }
     }
 }
