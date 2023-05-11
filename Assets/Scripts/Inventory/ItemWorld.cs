@@ -7,6 +7,15 @@ public class ItemWorld : MonoBehaviour
     [SerializeField] private ItemWithAmount item;
     [SerializeField] private bool logOnInteract;
 
+    public ItemWithAmount Item
+    {
+        get => item;
+        set
+        {
+            item = value;
+        }
+    }
+
     private static readonly Dictionary<string, Type> itemNameToInteractableType =
         new Dictionary<string, Type>
     {
@@ -34,12 +43,5 @@ public class ItemWorld : MonoBehaviour
         }
 
         name = $"{item.itemData.name} ItemWorld";
-    }
-
-    public ItemWithAmount GetItem() => item;
-
-    public void SetItem(ItemWithAmount item)
-    {
-        this.item = item;
     }
 }

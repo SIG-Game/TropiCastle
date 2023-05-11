@@ -8,6 +8,6 @@ public class ItemSpawner : PrefabSpawner
     {
         ItemWorld spawnedItemWorld = spawnedPrefab.GetComponent<ItemWorld>();
 
-        spawnedItemWorld.SetItem(itemToSpawn);
+        spawnedItemWorld.Item = itemToSpawn;
     }
 }

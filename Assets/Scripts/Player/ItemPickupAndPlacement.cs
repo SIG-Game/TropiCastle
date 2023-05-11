@@ -99,7 +99,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             return;
         }
 
-        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItemWorld.GetItem(),
+        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItemWorld.Item,
             itemSelectionController.SelectedItemIndex);
         Destroy(hoveredItemWorld.gameObject);
     }
