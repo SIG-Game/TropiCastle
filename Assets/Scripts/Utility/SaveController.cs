@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 using static Inventory;
 using static PlayerController;
@@ -10,38 +9,59 @@ public class SaveController : MonoBehaviour
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private PlayerController playerController;
 
-    private string inventoryFilePath;
-    private string playerFilePath;
+    private string saveDataFilePath;
 
-    private const string inventoryFileName = "inventory.json";
-    private const string playerFileName = "player.json";
+    private const string saveDataFileName = "save_data.json";
 
     private void Awake()
     {
-        inventoryFilePath = Application.persistentDataPath +
-            Path.DirectorySeparatorChar + inventoryFileName;
-
-        playerFilePath = Application.persistentDataPath +
-            Path.DirectorySeparatorChar + playerFileName;
+        saveDataFilePath = Application.persistentDataPath +
+            Path.DirectorySeparatorChar + saveDataFileName;
     }
 
     private void Start()
     {
         // This method call must be in the Start method so that it runs
         // after events in the Inventory class have been subscribed to
-        LoadInventoryFromFile();
-
-        LoadPlayerPropertiesFromFile();
+        LoadFromFile();
     }
 
-    public void SaveInventoryToFile()
+    public void SaveToFile()
+    {
+        var saveData = new SaveData
+        {
+            SerializableInventory = GetSerializableInventory(),
+            SerializablePlayerProperties = GetSerializablePlayerProperties()
+        };
+
+        WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
+    }
+
+    private void LoadFromFile()
+    {
+        if (!File.Exists(saveDataFilePath))
+        {
+            return;
+        }
+
+        var saveData =
+            GetSerializableObjectFromJsonFile<SaveData>(saveDataFilePath);
+
+        playerInventory
+            .SetInventoryFromSerializableInventory(saveData.SerializableInventory);
+
+        playerController
+            .SetPropertiesFromSerializablePlayerProperties(saveData.SerializablePlayerProperties);
+    }
+
+    public SerializableInventory GetSerializableInventory()
     {
         var serializableInventory = playerInventory.GetSerializableInventory();
 
-        WriteSerializableObjectAsJsonToFile(serializableInventory, inventoryFilePath);
+        return serializableInventory;
     }
 
-    public void SavePlayerPropertiesToFile()
+    public SerializablePlayerProperties GetSerializablePlayerProperties()
     {
         Vector2 playerPosition = playerController.transform.position;
         int playerDirection = (int)playerController.Direction;
@@ -52,34 +72,7 @@ public class SaveController : MonoBehaviour
             PlayerDirection = playerDirection
         };
 
-        WriteSerializableObjectAsJsonToFile(serializablePlayerProperties, playerFilePath);
-    }
-
-    private void LoadInventoryFromFile()
-    {
-        if (!File.Exists(inventoryFilePath))
-        {
-            return;
-        }
-
-        var serializableInventory =
-            GetSerializableObjectFromJsonFile<SerializableInventory>(inventoryFilePath);
-
-        playerInventory.SetInventoryFromSerializableInventory(serializableInventory);
-    }
-
-    private void LoadPlayerPropertiesFromFile()
-    {
-        if (!File.Exists(playerFilePath))
-        {
-            return;
-        }
-
-        var serializablePlayerProperties =
-            GetSerializableObjectFromJsonFile<SerializablePlayerProperties>(playerFilePath);
-
-        playerController
-            .SetPropertiesFromSerializablePlayerProperties(serializablePlayerProperties);
+        return serializablePlayerProperties;
     }
 
     private void WriteSerializableObjectAsJsonToFile(object serializableObject, string filePath)
@@ -106,5 +99,12 @@ public class SaveController : MonoBehaviour
         }
 
         return serializableObject;
+    }
+
+    [Serializable]
+    private class SaveData
+    {
+        public SerializableInventory SerializableInventory;
+        public SerializablePlayerProperties SerializablePlayerProperties;
     }
 }
