@@ -44,4 +44,15 @@ public class ItemWorld : MonoBehaviour
 
         name = $"{item.itemData.name} ItemWorld";
     }
+
+    public void UpdateItemInstanceProperties()
+    {
+        if (item.itemData.name == "Chest")
+        {
+            item.instanceProperties = new ChestItemInstanceProperties
+            {
+                SerializableInventory = GetComponent<Inventory>().GetSerializableInventory()
+            };
+        }
+    }
 }

@@ -10,7 +10,6 @@ public class SaveController : MonoBehaviour
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private PlayerController playerController;
 
-    private List<ItemWithAmount> playerInventoryItemList;
     private string inventoryFilePath;
     private string playerFilePath;
 
@@ -28,8 +27,6 @@ public class SaveController : MonoBehaviour
 
     private void Start()
     {
-        playerInventoryItemList = playerInventory.GetItemList();
-
         // This method call must be in the Start method so that it runs
         // after events in the Inventory class have been subscribed to
         LoadInventoryFromFile();
@@ -39,18 +36,7 @@ public class SaveController : MonoBehaviour
 
     public void SaveInventoryToFile()
     {
-        IEnumerable<SerializableInventoryItem> serializableInventoryItems =
-            playerInventoryItemList.Select(x => new SerializableInventoryItem
-            {
-                // Use ScriptableObject name and not item display name
-                ItemName = ((ScriptableObject)x.itemData).name,
-                Amount = x.amount
-            });
-
-        var serializableInventory = new SerializableInventory
-        {
-            SerializableItemList = serializableInventoryItems.ToList()
-        };
+        var serializableInventory = playerInventory.GetSerializableInventory();
 
         WriteSerializableObjectAsJsonToFile(serializableInventory, inventoryFilePath);
     }

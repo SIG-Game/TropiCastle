@@ -9,6 +9,15 @@ public class ChestItemInteractable : Interactable
         inventory = gameObject.AddComponent<Inventory>();
 
         inventory.InitializeItemListWithSize(chestInventorySize);
+
+        ItemWorld itemWorld = GetComponent<ItemWorld>();
+
+        if (itemWorld.Item.instanceProperties != null)
+        {
+            inventory.SetInventoryFromSerializableInventory(
+                ((ChestItemInstanceProperties)itemWorld.Item
+                .instanceProperties).SerializableInventory);
+        }
     }
 
     public override void Interact(PlayerController playerController)

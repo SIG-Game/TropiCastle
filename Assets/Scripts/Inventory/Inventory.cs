@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -154,6 +155,25 @@ public class Inventory : MonoBehaviour
 
     public bool IsFull() => firstEmptyIndex == -1;
 
+    public SerializableInventory GetSerializableInventory()
+    {
+        IEnumerable<SerializableInventoryItem> serializableInventoryItems =
+            itemList.Select(x => new SerializableInventoryItem
+            {
+                // Use ScriptableObject name and not item display name
+                ItemName = ((ScriptableObject)x.itemData).name,
+                Amount = x.amount,
+                InstanceProperties = x.instanceProperties
+            });
+
+        var serializableInventory = new SerializableInventory
+        {
+            SerializableItemList = serializableInventoryItems.ToList()
+        };
+
+        return serializableInventory;
+    }
+
     public void SetInventoryFromSerializableInventory(
         SerializableInventory serializableInventory)
     {
@@ -169,7 +189,8 @@ public class Inventory : MonoBehaviour
             ItemWithAmount item = new ItemWithAmount
             {
                 itemData = itemScriptableObject,
-                amount = serializableInventoryItem.Amount
+                amount = serializableInventoryItem.Amount,
+                instanceProperties = serializableInventoryItem.InstanceProperties
             };
 
             SetItemAtIndex(item, i);
@@ -189,6 +210,9 @@ public class Inventory : MonoBehaviour
     {
         public string ItemName;
         public int Amount;
+
+        [SerializeReference]
+        public object InstanceProperties;
     }
 
     public void FillInventory()
