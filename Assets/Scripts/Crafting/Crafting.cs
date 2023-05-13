@@ -48,6 +48,8 @@ public class Crafting : MonoBehaviour
                     amount = amountLeft
                 };
 
+                itemToAddBack.SetItemInstanceProperties();
+
                 inventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAddBack,
                     itemIndexAndRemoveAmount.Key);
             }

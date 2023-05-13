@@ -53,6 +53,8 @@ public class Inventory : MonoBehaviour
             amount = amount
         };
 
+        newItem.SetItemInstanceProperties();
+
         AddItem(newItem);
     }
 

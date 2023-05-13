@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -13,6 +14,8 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private PlayerItemInWorldController playerItemInWorld;
     [SerializeField] private Vector2 catchFishXPositionRange;
     [SerializeField] private bool logSelectedFish;
+
+    public event Action OnFishingStopped = delegate { };
 
     private Animator animator;
     private FishScriptableObject selectedFish;
@@ -56,6 +59,8 @@ public class FishingUIController : MonoBehaviour
         Addressables.Release(fishScriptableObjectsLoadHandle);
 
         player.OnFishingRodUsed -= StartFishing;
+
+        OnFishingStopped = delegate { };
     }
 
     private void AttemptToCatchFish()
@@ -74,6 +79,8 @@ public class FishingUIController : MonoBehaviour
             animator.SetTrigger("Catch Failed");
             catchFailedAnimationStarted = true;
         }
+
+        OnFishingStopped();
     }
 
     private void CatchFish()
