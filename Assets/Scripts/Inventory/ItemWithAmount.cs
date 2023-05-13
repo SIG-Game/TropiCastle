@@ -9,7 +9,11 @@ public class ItemWithAmount
 
     public void SetItemInstanceProperties()
     {
-        if (itemData.name == "Fishing Rod")
+        if (itemData.name == "Chest")
+        {
+            instanceProperties = new ChestItemInstanceProperties();
+        }
+        else if (itemData.name == "Fishing Rod")
         {
             instanceProperties = new FishingRodItemInstanceProperties();
         }

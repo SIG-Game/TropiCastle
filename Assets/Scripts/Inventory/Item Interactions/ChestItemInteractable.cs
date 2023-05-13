@@ -1,16 +1,17 @@
 public class ChestItemInteractable : Interactable
 {
     private Inventory inventory;
+    private ItemWorld itemWorld;
 
-    private const int chestInventorySize = 10;
 
     private void Awake()
     {
         inventory = gameObject.AddComponent<Inventory>();
+        itemWorld = GetComponent<ItemWorld>();
 
-        inventory.InitializeItemListWithSize(chestInventorySize);
+        inventory.InitializeItemListWithSize(ChestItemInstanceProperties.ChestInventorySize);
 
-        ItemWorld itemWorld = GetComponent<ItemWorld>();
+        inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
 
         if (itemWorld.Item.instanceProperties != null)
         {
@@ -18,6 +19,20 @@ public class ChestItemInteractable : Interactable
                 ((ChestItemInstanceProperties)itemWorld.Item
                 .instanceProperties).SerializableInventory);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (inventory != null)
+        {
+            inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
+        }
+    }
+
+    private void Inventory_OnItemChangedAtIndex(ItemWithAmount _, int _1)
+    {
+        ((ChestItemInstanceProperties)itemWorld.Item
+            .instanceProperties).UpdateSerializableInventory(inventory);
     }
 
     public override void Interact(PlayerController playerController)

@@ -99,8 +99,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
             return;
         }
 
-        hoveredItemWorld.UpdateItemInstanceProperties();
-
         playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItemWorld.Item,
             itemSelectionController.SelectedItemIndex);
         Destroy(hoveredItemWorld.gameObject);
