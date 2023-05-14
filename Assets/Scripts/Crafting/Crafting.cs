@@ -58,10 +58,10 @@ public class Crafting : MonoBehaviour
         inventory.AddItem(craftingRecipe.resultItem);
     }
 
-    private bool TryFindIngredient(List<ItemWithAmount> itemList,
-        Dictionary<int, int> itemIndexToRemoveAmount, ItemWithAmount ingredient)
+    public bool TryFindIngredient(List<ItemWithAmount> itemList,
+        Dictionary<int, int> itemIndexToExcludeAmount, ItemWithAmount ingredient)
     {
-        int amountRemoved = 0;
+        int amountExcluded = 0;
 
         for (int i = 0; i < itemList.Count; ++i)
         {
@@ -71,24 +71,24 @@ public class Crafting : MonoBehaviour
             {
                 int currentItemAmount = currentItem.amount;
 
-                if (itemIndexToRemoveAmount.ContainsKey(i))
+                if (itemIndexToExcludeAmount.ContainsKey(i))
                 {
-                    currentItemAmount -= itemIndexToRemoveAmount[i];
+                    currentItemAmount -= itemIndexToExcludeAmount[i];
                 }
 
-                if (currentItemAmount + amountRemoved >= ingredient.amount)
+                if (currentItemAmount + amountExcluded >= ingredient.amount)
                 {
-                    AddToDictionaryOrIncreaseValue(itemIndexToRemoveAmount,
-                        i, ingredient.amount - amountRemoved);
+                    AddToDictionaryOrIncreaseValue(itemIndexToExcludeAmount,
+                        i, ingredient.amount - amountExcluded);
 
                     return true;
                 }
                 else
                 {
-                    AddToDictionaryOrIncreaseValue(itemIndexToRemoveAmount,
+                    AddToDictionaryOrIncreaseValue(itemIndexToExcludeAmount,
                         i, currentItemAmount);
 
-                    amountRemoved += currentItemAmount;
+                    amountExcluded += currentItemAmount;
                 }
             }
         }

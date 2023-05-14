@@ -14,41 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredients:
   - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    amount: 1
+    amount: 4
   - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
-    amount: 1
+    amount: 10
   - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
-    amount: 1
-  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
-    amount: 1
+    amount: 4
   resultItem:
     itemData: {fileID: 11400000, guid: ff5ad683dada4cc4898b1ce215b1b30e, type: 2}
     amount: 1

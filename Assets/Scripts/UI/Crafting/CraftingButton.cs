@@ -71,28 +71,15 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         List<ItemWithAmount> playerInventoryItemList =
             craftingButtonDependencies.GetPlayerInventory().GetItemList();
 
-        // Get indexes of inventory items used when checking if the player's inventory has an ingredient
-        // so that an inventory item is not reused when multiple ingredients have the same item name
-        List<int> itemIndexesUsed = new List<int>();
+        Dictionary<int, int> itemIndexToUsedAmount = new Dictionary<int, int>();
 
         foreach (ItemWithAmount ingredient in craftingRecipe.ingredients)
         {
-            bool playerHasIngredient = false;
-
-            for (int i = 0; i < playerInventoryItemList.Count; ++i)
-            {
-                ItemWithAmount currentItem = playerInventoryItemList[i];
-
-                if (currentItem.itemData.name == ingredient.itemData.name && !itemIndexesUsed.Contains(i))
-                {
-                    playerHasIngredient = true;
-                    itemIndexesUsed.Add(i);
-                    break;
-                }
-            }
+            bool playerHasIngredient = craftingButtonDependencies.GetCrafting()
+                .TryFindIngredient(playerInventoryItemList, itemIndexToUsedAmount, ingredient);
 
             ingredientsStringBuilder.Append(playerHasIngredient ? "<color=#00FF00>" : "<color=#FF0000>");
-            ingredientsStringBuilder.Append($"- {ingredient.itemData.name}: ");
+            ingredientsStringBuilder.Append($"- {ingredient.amount} {ingredient.itemData.name}: ");
             ingredientsStringBuilder.Append(playerHasIngredient ? "Y" : "N");
             ingredientsStringBuilder.Append("</color>");
             ingredientsStringBuilder.AppendLine();
