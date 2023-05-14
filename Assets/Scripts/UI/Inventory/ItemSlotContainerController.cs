@@ -42,6 +42,11 @@ public abstract class ItemSlotContainerController : MonoBehaviour
         itemSlotControllers[slotIndex].SetSprite(sprite);
     }
 
+    public void SetAmountTextAtSlotIndex(int amount, int slotIndex)
+    {
+        itemSlotControllers[slotIndex].SetAmountText(amount);
+    }
+
     public void HighlightSlotAtIndex(int slotIndex)
     {
         itemSlotControllers[slotIndex].SetBackgroundColor(highlightedSlotColor);

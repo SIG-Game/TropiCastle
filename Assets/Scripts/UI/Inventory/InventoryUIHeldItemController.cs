@@ -66,12 +66,13 @@ public class InventoryUIHeldItemController : MonoBehaviour
     {
         this.clickedInventory = clickedInventory;
 
-        ItemScriptableObject clickedItemData =
-            clickedInventory.GetItemAtIndex(clickedItemIndex).itemData;
+        ItemWithAmount clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
+
+        ItemScriptableObject clickedItemData = clickedItem.itemData;
 
         if (HoldingItem())
         {
-            PlaceHeldItem(clickedItemIndex, clickedItemData);
+            PlaceHeldItem(clickedItemIndex, clickedItem);
         }
         else if (clickedItemData.name != "Empty")
         {
@@ -80,13 +81,16 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
     }
 
-    private void PlaceHeldItem(int itemIndex, ItemScriptableObject itemData)
+    private void PlaceHeldItem(int itemIndex, ItemWithAmount clickedItem)
     {
         bool shouldPutHeldItemBack = clickedInventory == heldItemInventory &&
             itemIndex == heldItemIndex;
         if (shouldPutHeldItemBack)
         {
-            inventoryUIController.SetSpriteAtSlotIndex(itemData.sprite, itemIndex);
+            inventoryUIController.SetSpriteAtSlotIndex(
+                clickedItem.itemData.sprite, itemIndex);
+            inventoryUIController.SetAmountTextAtSlotIndex(
+                clickedItem.amount, itemIndex);
         }
         else if (clickedInventory == heldItemInventory)
         {
@@ -108,6 +112,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemSlot = itemSlot;
 
         heldItemSlot.SetSprite(transparentSprite);
+        heldItemSlot.SetAmountText(0);
 
         heldItemIndex = itemIndex;
         heldItemImage.sprite = itemData.sprite;
@@ -131,6 +136,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
             ItemWithAmount heldItem = heldItemInventory.GetItemAtIndex(heldItemIndex);
 
             heldItemSlot.SetSprite(heldItem.itemData.sprite);
+            heldItemSlot.SetAmountText(heldItem.amount);
 
             HideHeldItem();
         }

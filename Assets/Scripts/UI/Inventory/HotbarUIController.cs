@@ -37,6 +37,7 @@ public class HotbarUIController : ItemSlotContainerController
         Sprite changedItemSprite = item.itemData.sprite;
 
         SetSpriteAtSlotIndex(changedItemSprite, index);
+        SetAmountTextAtSlotIndex(item.amount, index);
     }
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
@@ -61,17 +62,18 @@ public class HotbarUIController : ItemSlotContainerController
 
     private void InventoryUIController_OnInventoryClosed()
     {
-        UpdateSpritesInAllHotbarSlots();
+        UpdateAllHotbarSlots();
         UpdateHotbarHighlightedItemSlot();
     }
 
-    private void UpdateSpritesInAllHotbarSlots()
+    private void UpdateAllHotbarSlots()
     {
         for (int i = 0; i < hotbarSize; ++i)
         {
-            Sprite itemSpriteAtCurrentIndex = inventory.GetItemAtIndex(i).itemData.sprite;
+            ItemWithAmount currentItem = inventory.GetItemAtIndex(i);
 
-            SetSpriteAtSlotIndex(itemSpriteAtCurrentIndex, i);
+            SetSpriteAtSlotIndex(currentItem.itemData.sprite, i);
+            SetAmountTextAtSlotIndex(currentItem.amount, i);
         }
     }
 

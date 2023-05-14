@@ -103,24 +103,26 @@ public class ChestUIController : MonoBehaviour
         for (int i = 0; i < itemList.Count; ++i)
         {
             itemSlots[i].SetSprite(itemList[i].itemData.sprite);
+            itemSlots[i].SetAmountText(itemList[i].amount);
         }
     }
 
     private void ChestInventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
-        SetItemSlotSpriteAtIndex(chestItemSlots, index, item);
+        UpdateItemSlotAtIndex(chestItemSlots, index, item);
     }
 
     private void PlayerInventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
-        SetItemSlotSpriteAtIndex(playerItemSlots, index, item);
+        UpdateItemSlotAtIndex(playerItemSlots, index, item);
     }
 
-    private void SetItemSlotSpriteAtIndex(List<InventoryUIItemSlotController> itemSlots,
+    private void UpdateItemSlotAtIndex(List<InventoryUIItemSlotController> itemSlots,
         int index, ItemWithAmount item)
     {
         Sprite changedItemSprite = item.itemData.sprite;
 
         itemSlots[index].SetSprite(changedItemSprite);
+        itemSlots[index].SetAmountText(item.amount);
     }
 }
