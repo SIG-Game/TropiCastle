@@ -102,9 +102,7 @@ public class ChestUIController : MonoBehaviour
 
         for (int i = 0; i < itemList.Count; ++i)
         {
-            itemSlots[i].SetSprite(itemList[i].itemData.sprite);
-            itemSlots[i].SetAmountText(itemList[i].amount);
-            itemSlots[i].SetItemInstanceProperties(itemList[i].instanceProperties);
+            itemSlots[i].UpdateUsingItem(itemList[i]);
         }
     }
 
@@ -121,10 +119,6 @@ public class ChestUIController : MonoBehaviour
     private void UpdateItemSlotAtIndex(List<InventoryUIItemSlotController> itemSlots,
         int index, ItemWithAmount item)
     {
-        Sprite changedItemSprite = item.itemData.sprite;
-
-        itemSlots[index].SetSprite(changedItemSprite);
-        itemSlots[index].SetAmountText(item.amount);
-        itemSlots[index].SetItemInstanceProperties(item.instanceProperties);
+        itemSlots[index].UpdateUsingItem(item);
     }
 }

@@ -138,11 +138,7 @@ public class InventoryUIController : ItemSlotContainerController
 
     private void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
-        Sprite changedItemSprite = item.itemData.sprite;
-
-        SetSpriteAtSlotIndex(changedItemSprite, index);
-        SetAmountTextAtSlotIndex(item.amount, index);
-        SetItemInstancePropertiesAtSlotIndex(item.instanceProperties, index);
+        UpdateSlotAtIndexUsingItem(index, item);
 
         if (InventoryUIOpen && index == HoveredItemIndex)
         {

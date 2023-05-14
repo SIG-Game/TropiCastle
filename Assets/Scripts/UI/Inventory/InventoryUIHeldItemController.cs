@@ -87,12 +87,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
             itemIndex == heldItemIndex;
         if (shouldPutHeldItemBack)
         {
-            inventoryUIController.SetSpriteAtSlotIndex(
-                clickedItem.itemData.sprite, itemIndex);
-            inventoryUIController.SetAmountTextAtSlotIndex(
-                clickedItem.amount, itemIndex);
-            inventoryUIController.SetItemInstancePropertiesAtSlotIndex(
-                clickedItem.instanceProperties, itemIndex);
+            inventoryUIController.UpdateSlotAtIndexUsingItem(itemIndex, clickedItem);
         }
         else if (clickedInventory == heldItemInventory)
         {
@@ -138,9 +133,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         {
             ItemWithAmount heldItem = heldItemInventory.GetItemAtIndex(heldItemIndex);
 
-            heldItemSlot.SetSprite(heldItem.itemData.sprite);
-            heldItemSlot.SetAmountText(heldItem.amount);
-            heldItemSlot.SetItemInstanceProperties(heldItem.instanceProperties);
+            heldItemSlot.UpdateUsingItem(heldItem);
 
             HideHeldItem();
         }

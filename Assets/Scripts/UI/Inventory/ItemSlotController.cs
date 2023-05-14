@@ -50,4 +50,11 @@ public class ItemSlotController : MonoBehaviour
                 durabilityMeter.localScale.y, durabilityMeter.localScale.z);
         }
     }
+
+    public void UpdateUsingItem(ItemWithAmount item)
+    {
+        SetSprite(item.itemData.sprite);
+        SetAmountText(item.amount);
+        SetItemInstanceProperties(item.instanceProperties);
+    }
 }

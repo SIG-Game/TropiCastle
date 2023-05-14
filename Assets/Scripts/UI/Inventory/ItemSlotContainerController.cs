@@ -37,20 +37,9 @@ public abstract class ItemSlotContainerController : MonoBehaviour
         }
     }
 
-    public void SetSpriteAtSlotIndex(Sprite sprite, int slotIndex)
+    public void UpdateSlotAtIndexUsingItem(int slotIndex, ItemWithAmount item)
     {
-        itemSlotControllers[slotIndex].SetSprite(sprite);
-    }
-
-    public void SetAmountTextAtSlotIndex(int amount, int slotIndex)
-    {
-        itemSlotControllers[slotIndex].SetAmountText(amount);
-    }
-
-    public void SetItemInstancePropertiesAtSlotIndex(object itemInstanceProperties,
-        int slotIndex)
-    {
-        itemSlotControllers[slotIndex].SetItemInstanceProperties(itemInstanceProperties);
+        itemSlotControllers[slotIndex].UpdateUsingItem(item);
     }
 
     public void HighlightSlotAtIndex(int slotIndex)
