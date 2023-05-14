@@ -1,4 +1,4 @@
 public interface IItemUsage
 {
-    public void UseItem(PlayerController playerController);
+    public void UseItem();
 }

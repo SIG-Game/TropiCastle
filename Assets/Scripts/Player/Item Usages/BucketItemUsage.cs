@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class BucketItemUsage : MonoBehaviour, IItemUsage
 {
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private Inventory playerInventory;
+
     private ItemWithAmount bucketOfWaterItem;
     private LayerMask waterMask;
 
@@ -16,12 +19,10 @@ public class BucketItemUsage : MonoBehaviour, IItemUsage
         waterMask = LayerMask.GetMask("Water");
     }
 
-    public void UseItem(PlayerController playerController)
+    public void UseItem()
     {
         if (playerController.InteractionCast(waterMask, 0.25f).collider != null)
         {
-            Inventory playerInventory = playerController.GetInventory();
-
             int selectedItemIndex = playerController.GetSelectedItemIndex();
 
             playerInventory.RemoveItemAtIndex(selectedItemIndex);

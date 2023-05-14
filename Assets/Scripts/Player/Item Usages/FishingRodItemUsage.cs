@@ -2,25 +2,19 @@ using UnityEngine;
 
 public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 {
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private Inventory playerInventory;
     [SerializeField] private FishingUIController fishingUIController;
 
-    private PlayerController playerController;
-
-    public void UseItem(PlayerController playerController)
+    public void UseItem()
     {
-        if (this.playerController == null)
-        {
-            this.playerController = playerController;
-        }
-
         playerController.Fish();
 
         fishingUIController.OnFishingStopped += FishingUIController_OnFishingStopped;
     }
 
-    private void DecreaseFishingRodDurability(PlayerController playerController)
+    private void DecreaseFishingRodDurability()
     {
-        Inventory playerInventory = playerController.GetInventory();
         int fishingRodItemIndex = playerController.GetSelectedItemIndex();
         ItemWithAmount fishingRodItem = playerInventory.GetItemAtIndex(fishingRodItemIndex);
 
@@ -42,7 +36,7 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 
     private void FishingUIController_OnFishingStopped()
     {
-        DecreaseFishingRodDurability(playerController);
+        DecreaseFishingRodDurability();
 
         fishingUIController.OnFishingStopped -= FishingUIController_OnFishingStopped;
     }

@@ -715,6 +715,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35604bad60694ba4dbb0dfd8f409c2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 5288355818519945016}
+  playerInventory: {fileID: 856750480813842556}
 --- !u!114 &1546214460106165925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,6 +729,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897ab6de3182768448dcac574c578940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 5288355818519945016}
+  playerInventory: {fileID: 856750480813842556}
   cursorController: {fileID: 0}
 --- !u!114 &8293061806737836654
 MonoBehaviour:
@@ -740,6 +744,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa60774dffda5342bae0ed6e4fa6691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 5288355818519945016}
+  playerInventory: {fileID: 856750480813842556}
+  fishingUIController: {fileID: 0}
 --- !u!1 &7366555624248805215
 GameObject:
   m_ObjectHideFlags: 0

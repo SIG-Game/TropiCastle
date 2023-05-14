@@ -210,7 +210,7 @@ public class PlayerController : MonoBehaviour
             default:
                 if (itemNameToUsage.TryGetValue(item.itemData.name, out IItemUsage itemUsage))
                 {
-                    itemUsage.UseItem(this);
+                    itemUsage.UseItem();
                 }
                 break;
         }

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CoconutItemUsage : MonoBehaviour, IItemUsage
 {
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private Inventory playerInventory;
     [SerializeField] private CursorController cursorController;
 
     private ItemWithAmount coconutItem;
@@ -15,7 +17,7 @@ public class CoconutItemUsage : MonoBehaviour, IItemUsage
         };
     }
 
-    public void UseItem(PlayerController playerController)
+    public void UseItem()
     {
         Vector3 coconutStartPosition =
             playerController.transform.position + new Vector3(0f, 0.3f, 0f);
@@ -32,7 +34,6 @@ public class CoconutItemUsage : MonoBehaviour, IItemUsage
 
         thrownCoconutItemWorld.SetUpThrownCoconutItemWorld(coconutThrowDirection);
 
-        playerController.GetInventory()
-            .RemoveItemAtIndex(playerController.GetSelectedItemIndex());
+        playerInventory.RemoveItemAtIndex(playerController.GetSelectedItemIndex());
     }
 }
