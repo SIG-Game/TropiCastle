@@ -104,6 +104,7 @@ public class ChestUIController : MonoBehaviour
         {
             itemSlots[i].SetSprite(itemList[i].itemData.sprite);
             itemSlots[i].SetAmountText(itemList[i].amount);
+            itemSlots[i].SetItemInstanceProperties(itemList[i].instanceProperties);
         }
     }
 
@@ -124,5 +125,6 @@ public class ChestUIController : MonoBehaviour
 
         itemSlots[index].SetSprite(changedItemSprite);
         itemSlots[index].SetAmountText(item.amount);
+        itemSlots[index].SetItemInstanceProperties(item.instanceProperties);
     }
 }

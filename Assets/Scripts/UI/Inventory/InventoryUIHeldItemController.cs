@@ -91,6 +91,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
                 clickedItem.itemData.sprite, itemIndex);
             inventoryUIController.SetAmountTextAtSlotIndex(
                 clickedItem.amount, itemIndex);
+            inventoryUIController.SetItemInstancePropertiesAtSlotIndex(
+                clickedItem.instanceProperties, itemIndex);
         }
         else if (clickedInventory == heldItemInventory)
         {
@@ -113,6 +115,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
         heldItemSlot.SetSprite(transparentSprite);
         heldItemSlot.SetAmountText(0);
+        heldItemSlot.SetItemInstanceProperties(null);
 
         heldItemIndex = itemIndex;
         heldItemImage.sprite = itemData.sprite;
@@ -137,6 +140,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
             heldItemSlot.SetSprite(heldItem.itemData.sprite);
             heldItemSlot.SetAmountText(heldItem.amount);
+            heldItemSlot.SetItemInstanceProperties(heldItem.instanceProperties);
 
             HideHeldItem();
         }

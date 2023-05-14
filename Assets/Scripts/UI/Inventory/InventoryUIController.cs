@@ -142,6 +142,7 @@ public class InventoryUIController : ItemSlotContainerController
 
         SetSpriteAtSlotIndex(changedItemSprite, index);
         SetAmountTextAtSlotIndex(item.amount, index);
+        SetItemInstancePropertiesAtSlotIndex(item.instanceProperties, index);
 
         if (InventoryUIOpen && index == HoveredItemIndex)
         {

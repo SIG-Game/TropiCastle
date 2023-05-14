@@ -153,6 +153,7 @@ MonoBehaviour:
   itemSlotImage: {fileID: 415455371632956867}
   itemSlotBackgroundImage: {fileID: 415455371410550688}
   amountText: {fileID: 4273917025913859715}
+  durabilityMeter: {fileID: 2764729046646946350}
   inventoryUIController: {fileID: 0}
   inventory: {fileID: 0}
   slotItemIndex: 0
@@ -168,6 +169,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2764729046646946350 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1527584890185770894, guid: 41b1c1a20cea77944a32a62a21f6716c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3705715058460761504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4273917025913859715 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 593728386246406947, guid: 41b1c1a20cea77944a32a62a21f6716c,

@@ -20,7 +20,9 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 
     private void DecreaseFishingRodDurability(PlayerController playerController)
     {
-        ItemWithAmount fishingRodItem = playerController.GetSelectedItem();
+        Inventory playerInventory = playerController.GetInventory();
+        int fishingRodItemIndex = playerController.GetSelectedItemIndex();
+        ItemWithAmount fishingRodItem = playerInventory.GetItemAtIndex(fishingRodItemIndex);
 
         var fishingRodItemInstanceProperties =
             ((FishingRodItemInstanceProperties)fishingRodItem.instanceProperties);
@@ -29,9 +31,12 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 
         if (fishingRodItemInstanceProperties.Durability == 0)
         {
-            Inventory playerInventory = playerController.GetInventory();
-
-            playerInventory.RemoveItemAtIndex(playerController.GetSelectedItemIndex());
+            playerInventory.RemoveItemAtIndex(fishingRodItemIndex);
+        }
+        else
+        {
+            // Refresh durability meter
+            playerInventory.InvokeOnItemChangedAtIndexEvent(fishingRodItem, fishingRodItemIndex);
         }
     }
 

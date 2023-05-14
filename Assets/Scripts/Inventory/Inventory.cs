@@ -151,6 +151,11 @@ public class Inventory : MonoBehaviour
         OnItemChangedAtIndex(item, index);
     }
 
+    public void InvokeOnItemChangedAtIndexEvent(ItemWithAmount item, int index)
+    {
+        OnItemChangedAtIndex(item, index);
+    }
+
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
 
     public List<ItemWithAmount> GetItemList() => itemList;
