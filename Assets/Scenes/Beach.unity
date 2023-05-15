@@ -34959,6 +34959,11 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3740355406363932092, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: cursorController
+      value: 
+      objectReference: {fileID: 1812985303}
     - target: {fileID: 3770808729768230584, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: m_Offset.x

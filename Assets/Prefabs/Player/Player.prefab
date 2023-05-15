@@ -519,6 +519,7 @@ MonoBehaviour:
   bucketItemUsage: {fileID: 1346236021351400951}
   coconutItemUsage: {fileID: 1546214460106165925}
   fishingRodItemUsage: {fileID: 8293061806737836654}
+  rockItemUsage: {fileID: 3740355406363932092}
 --- !u!114 &2526882180276161147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,6 +682,7 @@ GameObject:
   - component: {fileID: 1346236021351400951}
   - component: {fileID: 1546214460106165925}
   - component: {fileID: 8293061806737836654}
+  - component: {fileID: 3740355406363932092}
   m_Layer: 0
   m_Name: Item Usages
   m_TagString: Untagged
@@ -732,6 +734,7 @@ MonoBehaviour:
   playerController: {fileID: 5288355818519945016}
   playerInventory: {fileID: 856750480813842556}
   cursorController: {fileID: 0}
+  damage: 20
 --- !u!114 &8293061806737836654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,6 +750,22 @@ MonoBehaviour:
   playerController: {fileID: 5288355818519945016}
   playerInventory: {fileID: 856750480813842556}
   fishingUIController: {fileID: 0}
+--- !u!114 &3740355406363932092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7191733551750576650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fde37359452c434489ead06a3a396a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 5288355818519945016}
+  playerInventory: {fileID: 856750480813842556}
+  cursorController: {fileID: 0}
+  damage: 30
 --- !u!1 &7366555624248805215
 GameObject:
   m_ObjectHideFlags: 0

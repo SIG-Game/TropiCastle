@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BucketItemUsage bucketItemUsage;
     [SerializeField] private CoconutItemUsage coconutItemUsage;
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
+    [SerializeField] private RockItemUsage rockItemUsage;
 
     public CharacterDirection Direction
     {
@@ -308,7 +309,8 @@ public class PlayerController : MonoBehaviour
         {
             { "Bucket", bucketItemUsage },
             { "Coconut", coconutItemUsage },
-            { "Fishing Rod", fishingRodItemUsage }
+            { "Fishing Rod", fishingRodItemUsage },
+            { "Rock", rockItemUsage }
         };
     }
 
