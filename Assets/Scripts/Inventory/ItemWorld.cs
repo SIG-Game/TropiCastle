@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ItemWorld : MonoBehaviour
 {
     [SerializeField] private ItemWithAmount item;
+    [SerializeField] private TMP_Text amountText;
     [SerializeField] private bool logOnInteract;
 
     public ItemWithAmount Item
@@ -43,5 +45,7 @@ public class ItemWorld : MonoBehaviour
         }
 
         name = $"{item.itemData.name} ItemWorld";
+
+        amountText.text = item.amount.ToString();
     }
 }
