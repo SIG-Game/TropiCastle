@@ -2550,7 +2550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e2b170c833af04dbf86953972e1f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInventory: {fileID: 0}
+  inventoryUIController: {fileID: 8774762380487729170}
 --- !u!1 &8774762380581182759
 GameObject:
   m_ObjectHideFlags: 0
