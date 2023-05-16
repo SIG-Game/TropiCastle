@@ -54,7 +54,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             if (playerInventoryItemList[i].itemData is HealingItemScriptableObject healingItem)
             {
                 playerHealthController.IncreaseHealth(healingItem.healAmount);
-                playerInventory.RemoveItemAtIndex(i);
+                playerInventory.DecrementItemStackAtIndex(i);
 
                 if (playerHealthController.AtMaxHealth())
                 {

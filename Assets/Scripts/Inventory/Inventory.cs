@@ -123,6 +123,24 @@ public class Inventory : MonoBehaviour
         otherInventory.SetFirstEmptyIndex();
     }
 
+    public void DecrementItemStackAtIndex(int stackIndex)
+    {
+        ItemWithAmount itemAtStackIndex = itemList[stackIndex];
+
+        if (itemAtStackIndex.amount == 1)
+        {
+            RemoveItemAtIndex(stackIndex);
+
+            OnItemRemoved(itemAtStackIndex);
+        }
+        else
+        {
+            itemAtStackIndex.amount -= 1;
+        }
+
+        OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
+    }
+
     public void RemoveItemAtIndex(int index)
     {
         ItemWithAmount itemAtIndex = itemList[index];

@@ -222,7 +222,7 @@ public class PlayerController : MonoBehaviour
         if (!healthController.AtMaxHealth())
         {
             healthController.IncreaseHealth(amountToHeal);
-            inventory.RemoveItemAtIndex(itemIndex);
+            inventory.DecrementItemStackAtIndex(itemIndex);
         }
     }
 
