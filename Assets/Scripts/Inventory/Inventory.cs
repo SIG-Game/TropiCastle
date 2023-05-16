@@ -66,12 +66,27 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        AddItemAtIndex(newItem, firstEmptyIndex);
+        int stackIndex = FindStackIndex(newItem);
+
+        if (stackIndex != -1)
+        {
+            AddItemToStackAtIndex(newItem, stackIndex);
+        }
+        else
+        {
+            AddItemAtIndex(newItem, firstEmptyIndex);
+        }
     }
 
     public void AddItemAtIndexWithFallbackToFirstEmptyIndex(ItemWithAmount newItem, int index)
     {
-        if (itemList[index].itemData.name == "Empty")
+        int stackIndex = FindStackIndex(newItem);
+
+        if (stackIndex != -1)
+        {
+            AddItemToStackAtIndex(newItem, stackIndex);
+        }
+        else if (itemList[index].itemData.name == "Empty")
         {
             AddItemAtIndex(newItem, index);
         }
@@ -133,16 +148,34 @@ public class Inventory : MonoBehaviour
         firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
     }
 
+    private void AddItemToStackAtIndex(ItemWithAmount newItem, int stackIndex)
+    {
+        ItemWithAmount itemAtStackIndex = itemList[stackIndex];
+
+        itemAtStackIndex.amount += newItem.amount;
+
+        OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
+        OnItemAdded(newItem);
+    }
+
     private void AddItemAtIndex(ItemWithAmount newItem, int index)
     {
-        SetItemAtIndex(newItem, index);
+        // Prevent newItem from being modified
+        ItemWithAmount newItemCopy = new ItemWithAmount
+        {
+            itemData = newItem.itemData,
+            amount = newItem.amount,
+            instanceProperties = newItem.instanceProperties
+        };
+
+        SetItemAtIndex(newItemCopy, index);
 
         if (index == firstEmptyIndex)
         {
             SetFirstEmptyIndex();
         }
 
-        OnItemAdded(newItem);
+        OnItemAdded(newItemCopy);
     }
 
     private void SetItemAtIndex(ItemWithAmount item, int index)
@@ -155,6 +188,9 @@ public class Inventory : MonoBehaviour
     {
         OnItemChangedAtIndex(item, index);
     }
+
+    private int FindStackIndex(ItemWithAmount item) =>
+        itemList.FindIndex(x => x.itemData.name == item.itemData.name);
 
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
 
