@@ -208,7 +208,8 @@ public class Inventory : MonoBehaviour
     }
 
     private int FindStackIndex(ItemWithAmount item) =>
-        itemList.FindIndex(x => x.itemData.name == item.itemData.name);
+        itemList.FindIndex(x => x.itemData.name == item.itemData.name &&
+            x.amount < x.itemData.stackSize);
 
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
 
