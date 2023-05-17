@@ -26,7 +26,7 @@ public abstract class ThrowableItemUsage : MonoBehaviour,IItemUsage
 
         thrownItemWorldComponent.SetUpThrownItemWorld(throwDirection);
 
-        playerInventory.RemoveItemAtIndex(playerController.GetSelectedItemIndex());
+        playerInventory.DecrementItemStackAtIndex(playerController.GetSelectedItemIndex());
     }
 
     protected abstract ItemWithAmount GetItemToThrow();

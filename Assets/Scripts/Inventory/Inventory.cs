@@ -130,15 +130,13 @@ public class Inventory : MonoBehaviour
         if (itemAtStackIndex.amount == 1)
         {
             RemoveItemAtIndex(stackIndex);
-
-            OnItemRemoved(itemAtStackIndex);
         }
         else
         {
             itemAtStackIndex.amount -= 1;
-        }
 
-        OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
+            OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
+        }
     }
 
     public void RemoveItemAtIndex(int index)
