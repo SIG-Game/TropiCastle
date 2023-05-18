@@ -53,12 +53,17 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             if (playerInventoryItemList[i].itemData is HealingItemScriptableObject healingItem)
             {
-                playerHealthController.IncreaseHealth(healingItem.healAmount);
-                playerInventory.DecrementItemStackAtIndex(i);
+                int initialHealingItemAmount = playerInventoryItemList[i].amount;
 
-                if (playerHealthController.AtMaxHealth())
+                for (int j = 0; j < initialHealingItemAmount; ++j)
                 {
-                    return;
+                    playerHealthController.IncreaseHealth(healingItem.healAmount);
+                    playerInventory.DecrementItemStackAtIndex(i);
+
+                    if (playerHealthController.AtMaxHealth())
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -144,11 +149,24 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             if (playerInventoryItemList[i].itemData is HealingItemScriptableObject healingItem)
             {
-                healingItemsToConsumeStringBuilder.AppendLine($"- {healingItem.name}");
+                int amountToUse = 0;
+                bool maxHealthReached = false;
 
-                healthFromItemsToConsume += healingItem.healAmount;
+                for (int j = 0; j < playerInventoryItemList[i].amount; ++j)
+                {
+                    ++amountToUse;
 
-                bool maxHealthReached = healthFromItemsToConsume >= healthBelowMax;
+                    healthFromItemsToConsume += healingItem.healAmount;
+
+                    maxHealthReached = healthFromItemsToConsume >= healthBelowMax;
+                    if (maxHealthReached)
+                    {
+                        break;
+                    }
+                }
+
+                healingItemsToConsumeStringBuilder.AppendLine($"- {amountToUse} {healingItem.name}");
+
                 if (maxHealthReached)
                 {
                     break;
