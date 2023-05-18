@@ -21,7 +21,7 @@ public class ItemSlotController : MonoBehaviour
 
     public void SetAmountText(int amount)
     {
-        if (amount == 0)
+        if (amount <= 1)
         {
             amountText.text = string.Empty;
         }

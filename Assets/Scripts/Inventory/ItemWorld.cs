@@ -46,6 +46,9 @@ public class ItemWorld : MonoBehaviour
 
         name = $"{item.itemData.name} ItemWorld";
 
-        amountText.text = item.amount.ToString();
+        if (item.amount > 1)
+        {
+            amountText.text = item.amount.ToString();
+        }
     }
 }
