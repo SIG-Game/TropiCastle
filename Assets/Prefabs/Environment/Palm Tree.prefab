@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
+  timeBeforeFirstSpawnRange: {x: 2, y: 5}
   timeBetweenSpawns: 20
   maxSpawnedPrefabs: 1
   minSpawnPosition: {x: -0.5, y: -0.3}

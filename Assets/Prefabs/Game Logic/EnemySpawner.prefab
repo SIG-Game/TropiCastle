@@ -46,10 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 1376027503358213722, guid: 14eafeb4364c04735ba4669ae2166aa2,
     type: 3}
+  timeBeforeFirstSpawnRange: {x: 4, y: 11}
   timeBetweenSpawns: 5
   maxSpawnedPrefabs: 2
   minSpawnPosition: {x: -8, y: -3}
   maxSpawnPosition: {x: 8, y: 4}
   logOnSpawn: 0
   drawSpawnArea: 0
-  player: {fileID: 0}
+  drawnSpawnAreaColor: {r: 0, g: 0, b: 0, a: 1}
+  playerTransform: {fileID: 0}
+  playerInventory: {fileID: 0}

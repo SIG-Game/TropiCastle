@@ -34531,6 +34531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
+  timeBeforeFirstSpawnRange: {x: 1, y: 3}
   timeBetweenSpawns: 15
   maxSpawnedPrefabs: 1
   minSpawnPosition: {x: -8, y: -1}
@@ -34899,6 +34900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
+  timeBeforeFirstSpawnRange: {x: 0, y: 0}
   timeBetweenSpawns: 4
   maxSpawnedPrefabs: 1
   minSpawnPosition: {x: -6, y: -2}

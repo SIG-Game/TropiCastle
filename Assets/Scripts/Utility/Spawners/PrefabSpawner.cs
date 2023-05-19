@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class PrefabSpawner : MonoBehaviour
 {
     [SerializeField] protected GameObject prefabToSpawn;
+    [SerializeField] private Vector2 timeBeforeFirstSpawnRange;
     [SerializeField] private float timeBetweenSpawns;
     [SerializeField] private int maxSpawnedPrefabs;
     [SerializeField] private Vector2 minSpawnPosition;
@@ -14,12 +16,14 @@ public class PrefabSpawner : MonoBehaviour
 
     private int numPrefabs;
     private float spawnTimer;
+    private bool waitBeforeFirstSpawnCompleted;
     private Vector3 topLeftCornerSpawnArea;
     private Vector3 topRightCornerSpawnArea;
     private Vector3 bottomLeftCornerSpawnArea;
     private Vector3 bottomRightCornerSpawnArea;
     private BoxCollider2D prefabToSpawnBoxCollider;
     private Vector2 prefabToSpawnColliderExtents;
+    private WaitForSeconds beforeFirstSpawnWaitForSeconds;
 
     private const int maxSpawnAttempts = 20;
 
@@ -43,13 +47,12 @@ public class PrefabSpawner : MonoBehaviour
 
     private void Start()
     {
-        numPrefabs = 0;
-        spawnTimer = 0f;
+        float beforeFirstSpawnWait = Random.Range(timeBeforeFirstSpawnRange.x,
+            timeBeforeFirstSpawnRange.y);
 
-        if (numPrefabs < maxSpawnedPrefabs)
-        {
-            SpawnPrefab();
-        }
+        beforeFirstSpawnWaitForSeconds = new WaitForSeconds(beforeFirstSpawnWait);
+
+        StartCoroutine(WaitBeforeFirstSpawn());
     }
 
     private void Update()
@@ -62,7 +65,7 @@ public class PrefabSpawner : MonoBehaviour
             Debug.DrawLine(bottomLeftCornerSpawnArea, topLeftCornerSpawnArea, drawnSpawnAreaColor);
         }
 
-        if (numPrefabs >= maxSpawnedPrefabs)
+        if (numPrefabs >= maxSpawnedPrefabs || !waitBeforeFirstSpawnCompleted)
         {
             return;
         }
@@ -108,6 +111,21 @@ public class PrefabSpawner : MonoBehaviour
         }
 
         numPrefabs++;
+    }
+
+    private IEnumerator WaitBeforeFirstSpawn()
+    {
+        yield return beforeFirstSpawnWaitForSeconds;
+
+        waitBeforeFirstSpawnCompleted = true;
+
+        numPrefabs = 0;
+        spawnTimer = 0f;
+
+        if (numPrefabs < maxSpawnedPrefabs)
+        {
+            SpawnPrefab();
+        }
     }
 
     protected virtual void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
