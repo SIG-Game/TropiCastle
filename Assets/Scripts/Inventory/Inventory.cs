@@ -168,10 +168,45 @@ public class Inventory : MonoBehaviour
     {
         ItemWithAmount itemAtStackIndex = itemList[stackIndex];
 
-        itemAtStackIndex.amount += newItem.amount;
+        int itemStackSize = newItem.itemData.stackSize;
 
-        OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
-        OnItemAdded(newItem);
+        int combinedAmount = itemAtStackIndex.amount + newItem.amount;
+
+        if (combinedAmount <= itemStackSize)
+        {
+            itemAtStackIndex.amount = combinedAmount;
+
+            OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
+            OnItemAdded(newItem);
+        }
+        else
+        {
+            int amountToAdd = itemStackSize - itemAtStackIndex.amount;
+
+            itemAtStackIndex.amount = itemStackSize;
+
+            OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
+
+            ItemWithAmount itemWithAmountAdded = new ItemWithAmount
+            {
+                itemData = newItem.itemData,
+                amount = amountToAdd,
+                instanceProperties = newItem.instanceProperties
+            };
+
+            OnItemAdded(itemWithAmountAdded);
+
+            int amountRemaining = combinedAmount - itemStackSize;
+
+            ItemWithAmount itemWithAmountRemaining = new ItemWithAmount
+            {
+                itemData = newItem.itemData,
+                amount = amountRemaining,
+                instanceProperties = newItem.instanceProperties
+            };
+
+            AddItem(itemWithAmountRemaining);
+        }
     }
 
     private void AddItemAtIndex(ItemWithAmount newItem, int index)
