@@ -1,10 +1,12 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUIHeldItemController : MonoBehaviour
 {
     [SerializeField] private GameObject heldItemUI;
+    [SerializeField] private TextMeshProUGUI heldItemAmountText;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Sprite transparentSprite;
@@ -68,16 +70,14 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
         ItemWithAmount clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
 
-        ItemScriptableObject clickedItemData = clickedItem.itemData;
-
         if (HoldingItem())
         {
             PlaceHeldItem(clickedItemIndex, clickedItem);
         }
-        else if (clickedItemData.name != "Empty")
+        else if (clickedItem.itemData.name != "Empty")
         {
             HoldItem(clickedInventory, clickedItemIndex,
-                clickedItemSlot, clickedItemData);
+                clickedItemSlot, clickedItem);
         }
     }
 
@@ -103,7 +103,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     }
 
     private void HoldItem(Inventory inventory, int itemIndex,
-        InventoryUIItemSlotController itemSlot, ItemScriptableObject itemData)
+        InventoryUIItemSlotController itemSlot, ItemWithAmount item)
     {
         heldItemInventory = inventory;
         heldItemSlot = itemSlot;
@@ -113,10 +113,15 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemSlot.SetItemInstanceProperties(null);
 
         heldItemIndex = itemIndex;
-        heldItemImage.sprite = itemData.sprite;
+        heldItemImage.sprite = item.itemData.sprite;
+
+        if (item.amount > 1)
+        {
+            heldItemAmountText.text = item.amount.ToString();
+        }
 
         tooltipTextWithPriority = new Tooltip(
-            InventoryUITooltipController.GetItemTooltipText(itemData), 1);
+            InventoryUITooltipController.GetItemTooltipText(item.itemData), 1);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
 
         OnStartedHoldingItem();
@@ -142,6 +147,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     public void HideHeldItem()
     {
         heldItemImage.sprite = transparentSprite;
+        heldItemAmountText.text = string.Empty;
 
         InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
 
