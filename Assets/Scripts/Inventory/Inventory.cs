@@ -23,11 +23,7 @@ public class Inventory : MonoBehaviour
         {
             ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
 
-            emptyItemInstance = new ItemWithAmount
-            {
-                itemData = emptyItemInfo,
-                amount = 0
-            };
+            emptyItemInstance = new ItemWithAmount(emptyItemInfo, 0);
         }
 
         InitializeItemListWithSize(inventorySize);
@@ -47,11 +43,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemScriptableObject info, int amount)
     {
-        ItemWithAmount newItem = new ItemWithAmount
-        {
-            itemData = info,
-            amount = amount
-        };
+        ItemWithAmount newItem = new ItemWithAmount(info, amount);
 
         newItem.SetItemInstanceProperties();
 
@@ -187,23 +179,15 @@ public class Inventory : MonoBehaviour
 
             OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
 
-            ItemWithAmount itemWithAmountAdded = new ItemWithAmount
-            {
-                itemData = newItem.itemData,
-                amount = amountToAdd,
-                instanceProperties = newItem.instanceProperties
-            };
+            ItemWithAmount itemWithAmountAdded = new ItemWithAmount(newItem.itemData,
+                amountToAdd, newItem.instanceProperties);
 
             OnItemAdded(itemWithAmountAdded);
 
             int amountRemaining = combinedAmount - itemStackSize;
 
-            ItemWithAmount itemWithAmountRemaining = new ItemWithAmount
-            {
-                itemData = newItem.itemData,
-                amount = amountRemaining,
-                instanceProperties = newItem.instanceProperties
-            };
+            ItemWithAmount itemWithAmountRemaining = new ItemWithAmount(newItem.itemData,
+                amountRemaining, newItem.instanceProperties);
 
             AddItem(itemWithAmountRemaining);
         }
@@ -212,12 +196,8 @@ public class Inventory : MonoBehaviour
     private void AddItemAtIndex(ItemWithAmount newItem, int index)
     {
         // Prevent newItem from being modified
-        ItemWithAmount newItemCopy = new ItemWithAmount
-        {
-            itemData = newItem.itemData,
-            amount = newItem.amount,
-            instanceProperties = newItem.instanceProperties
-        };
+        ItemWithAmount newItemCopy = new ItemWithAmount(newItem.itemData, newItem.amount,
+            newItem.instanceProperties);
 
         SetItemAtIndex(newItemCopy, index);
 
@@ -334,12 +314,9 @@ public class Inventory : MonoBehaviour
                 Resources.Load<ItemScriptableObject>(
                     $"Items/{serializableInventoryItem.ItemName}");
 
-            ItemWithAmount item = new ItemWithAmount
-            {
-                itemData = itemScriptableObject,
-                amount = serializableInventoryItem.Amount,
-                instanceProperties = serializableInventoryItem.InstanceProperties
-            };
+            ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
+                serializableInventoryItem.Amount,
+                serializableInventoryItem.InstanceProperties);
 
             SetItemAtIndex(item, i);
         }
@@ -367,11 +344,7 @@ public class Inventory : MonoBehaviour
     {
         ItemScriptableObject coconutItemInfo = Resources.Load<ItemScriptableObject>("Items/Coconut");
 
-        ItemWithAmount coconutItem = new ItemWithAmount
-        {
-            itemData = coconutItemInfo,
-            amount = 1
-        };
+        ItemWithAmount coconutItem = new ItemWithAmount(coconutItemInfo, 1);
 
         while (CanAddItem(coconutItem))
         {

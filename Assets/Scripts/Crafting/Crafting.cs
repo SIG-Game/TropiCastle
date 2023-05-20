@@ -42,11 +42,8 @@ public class Crafting : MonoBehaviour
 
             if (amountLeft != 0)
             {
-                ItemWithAmount itemToAddBack = new ItemWithAmount
-                {
-                    itemData = itemToRemove.itemData,
-                    amount = amountLeft
-                };
+                ItemWithAmount itemToAddBack = new ItemWithAmount(itemToRemove.itemData,
+                    amountLeft);
 
                 itemToAddBack.SetItemInstanceProperties();
 

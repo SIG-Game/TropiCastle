@@ -7,6 +7,14 @@ public class ItemWithAmount
     public int amount;
     public object instanceProperties;
 
+    public ItemWithAmount(ItemScriptableObject itemData, int amount,
+        object instanceProperties = null)
+    {
+        this.itemData = itemData;
+        this.amount = amount;
+        this.instanceProperties = instanceProperties;
+    }
+
     public void SetItemInstanceProperties()
     {
         if (itemData.name == "Chest")

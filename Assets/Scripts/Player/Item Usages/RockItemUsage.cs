@@ -6,11 +6,8 @@ public class RockItemUsage : ThrowableItemUsage
 
     private void Awake()
     {
-        rockItem = new ItemWithAmount
-        {
-            itemData = Resources.Load<ItemScriptableObject>("Items/Rock"),
-            amount = 1
-        };
+        rockItem = new ItemWithAmount(
+            Resources.Load<ItemScriptableObject>("Items/Rock"), 1);
     }
 
     protected override ItemWithAmount GetItemToThrow() => rockItem;

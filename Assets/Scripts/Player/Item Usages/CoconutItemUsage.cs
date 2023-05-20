@@ -6,11 +6,8 @@ public class CoconutItemUsage : ThrowableItemUsage
 
     private void Awake()
     {
-        coconutItem = new ItemWithAmount
-        {
-            itemData = Resources.Load<ItemScriptableObject>("Items/Coconut"),
-            amount = 1
-        };
+        coconutItem = new ItemWithAmount(
+            Resources.Load<ItemScriptableObject>("Items/Coconut"), 1);
     }
 
     protected override ItemWithAmount GetItemToThrow() => coconutItem;

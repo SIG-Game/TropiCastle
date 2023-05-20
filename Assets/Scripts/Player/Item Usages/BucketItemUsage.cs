@@ -10,11 +10,8 @@ public class BucketItemUsage : MonoBehaviour, IItemUsage
 
     private void Awake()
     {
-        bucketOfWaterItem = new ItemWithAmount
-        {
-            itemData = Resources.Load<ItemScriptableObject>("Items/BucketOfWater"),
-            amount = 1
-        };
+        bucketOfWaterItem = new ItemWithAmount(
+            Resources.Load<ItemScriptableObject>("Items/BucketOfWater"), 1);
 
         waterMask = LayerMask.GetMask("Water");
     }
