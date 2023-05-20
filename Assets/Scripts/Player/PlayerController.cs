@@ -234,6 +234,10 @@ public class PlayerController : MonoBehaviour
         weaponController.Damage = weaponItemData.damage;
         weaponController.EnemyKnockbackForce = weaponItemData.knockback;
 
+        IsAttacking = true;
+
+        itemSelectionController.CanSelect = false;
+
         string attackTypeString = weaponItemData.attackType.ToString();
 
         animator.Play($"{attackTypeString} {Direction}");
@@ -312,13 +316,6 @@ public class PlayerController : MonoBehaviour
             { "Fishing Rod", fishingRodItemUsage },
             { "Rock", rockItemUsage }
         };
-    }
-
-    private void AttackStartedAnimationEvent()
-    {
-        IsAttacking = true;
-
-        itemSelectionController.CanSelect = false;
     }
 
     private void AttackEndedAnimationEvent()
