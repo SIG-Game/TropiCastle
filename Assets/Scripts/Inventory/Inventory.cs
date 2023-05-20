@@ -60,13 +60,13 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemWithAmount newItem)
     {
-        if (IsFull())
+        int stackIndex = FindStackIndex(newItem);
+
+        if (HasNoEmptySlots() && stackIndex == -1)
         {
             Debug.LogWarning("Attempted to add an item to a full inventory");
             return;
         }
-
-        int stackIndex = FindStackIndex(newItem);
 
         if (stackIndex != -1)
         {
@@ -151,7 +151,7 @@ public class Inventory : MonoBehaviour
 
         SetItemAtIndex(emptyItemInstance, index);
 
-        if (index < firstEmptyIndex || IsFull())
+        if (index < firstEmptyIndex || HasNoEmptySlots())
         {
             firstEmptyIndex = index;
         }
@@ -244,11 +244,64 @@ public class Inventory : MonoBehaviour
         itemList.FindIndex(x => x.itemData.name == item.itemData.name &&
             x.amount < x.itemData.stackSize);
 
+    public bool CanAddItem(ItemWithAmount newItem)
+    {
+        HashSet<int> itemSlotsFilled = new HashSet<int>();
+
+        int amountToAdd = newItem.amount;
+
+        while (amountToAdd > 0)
+        {
+            int stackIndex = -1;
+
+            for (int i = 0; i < itemList.Count; ++i)
+            {
+                if (itemSlotsFilled.Contains(i))
+                {
+                    continue;
+                }
+
+                ItemWithAmount currentItem = itemList[i];
+
+                if ((currentItem.itemData.name == newItem.itemData.name &&
+                    currentItem.amount < currentItem.itemData.stackSize) ||
+                    currentItem.itemData.name == "Empty") {
+                    stackIndex = i;
+
+                    break;
+                }
+            }
+
+            if (stackIndex == -1)
+            {
+                return false;
+            }
+
+            ItemWithAmount itemAtStackIndex = itemList[stackIndex];
+
+            int amountToReachStackSizeLimit =
+                itemAtStackIndex.itemData.stackSize - itemAtStackIndex.amount;
+
+            if (amountToReachStackSizeLimit < amountToAdd)
+            {
+                itemSlotsFilled.Add(stackIndex);
+
+                amountToAdd -= amountToReachStackSizeLimit;
+            }
+            else
+            {
+                amountToAdd = 0;
+            }
+        }
+
+        return true;
+    }
+
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
 
     public List<ItemWithAmount> GetItemList() => itemList;
 
-    public bool IsFull() => firstEmptyIndex == -1;
+    public bool HasNoEmptySlots() => firstEmptyIndex == -1;
 
     public SerializableInventory GetSerializableInventory()
     {
@@ -320,7 +373,7 @@ public class Inventory : MonoBehaviour
             amount = 1
         };
 
-        while (!IsFull())
+        while (CanAddItem(coconutItem))
         {
             AddItem(coconutItem);
         }

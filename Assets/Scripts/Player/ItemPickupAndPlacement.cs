@@ -92,7 +92,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PickUpHoveredItem()
     {
-        if (playerInventory.IsFull())
+        if (playerInventory.HasNoEmptySlots())
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
 
@@ -129,7 +129,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePickupCursor()
     {
-        if (playerInventory.IsFull())
+        if (playerInventory.HasNoEmptySlots())
         {
             cursorController.Sprite = itemPickupArrowInventoryFull;
         }
@@ -196,7 +196,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void PlayerInventory_OnItemAdded(ItemWithAmount _)
     {
-        if (playerInventory.IsFull() &&
+        if (playerInventory.HasNoEmptySlots() &&
             cursorController.Sprite == itemPickupArrow)
         {
             cursorController.Sprite = itemPickupArrowInventoryFull;

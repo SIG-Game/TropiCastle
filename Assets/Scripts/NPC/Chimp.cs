@@ -45,7 +45,7 @@ public class Chimp : NPCInteractable
         bool giveItem = lastGiveTimeSeconds + timeSecondsUntilNextGive <= Time.time;
         if (giveItem)
         {
-            if (player.GetInventory().IsFull())
+            if (player.GetInventory().HasNoEmptySlots())
             {
                 dialogueLines[1] = playerInventoryFullDialogueLine;
                 giveItem = false;

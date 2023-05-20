@@ -127,7 +127,7 @@ public class EnemyController : MonoBehaviour
         // This should be revisited if stackable items get added
         foreach (ItemWithAmount loot in droppedLoot)
         {
-            if (playerInventory.IsFull())
+            if (playerInventory.HasNoEmptySlots())
             {
                 InventoryFullUIController.Instance.ShowInventoryFullText();
 

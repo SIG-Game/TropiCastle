@@ -103,7 +103,7 @@ public class FishingUIController : MonoBehaviour
 
     private void StartFishing()
     {
-        if (playerInventory.IsFull())
+        if (playerInventory.HasNoEmptySlots())
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
             return;
