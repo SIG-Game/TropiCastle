@@ -197,7 +197,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private void EmptyHeldItemSlotUI()
     {
         heldItemSlot.SetSprite(transparentSprite);
-        heldItemSlot.SetAmountText(0);
+        heldItemSlot.SetAmountText(string.Empty);
         heldItemSlot.SetItemInstanceProperties(null);
     }
 
@@ -205,10 +205,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     {
         heldItemImage.sprite = heldItem.itemData.sprite;
 
-        if (heldItem.amount > 1)
-        {
-            heldItemAmountText.text = heldItem.amount.ToString();
-        }
+        heldItemAmountText.text = heldItem.GetAmountText();
     }
 
     private void ResetHeldItem()

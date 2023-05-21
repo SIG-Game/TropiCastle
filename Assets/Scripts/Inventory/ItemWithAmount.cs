@@ -31,4 +31,6 @@ public class ItemWithAmount
             instanceProperties = Activator.CreateInstance(itemInstancePropertiesType);
         }
     }
+
+    public string GetAmountText() => amount > 1 ? amount.ToString() : string.Empty;
 }

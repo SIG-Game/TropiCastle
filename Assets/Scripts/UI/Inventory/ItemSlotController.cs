@@ -19,16 +19,9 @@ public class ItemSlotController : MonoBehaviour
         itemSlotBackgroundImage.color = color;
     }
 
-    public void SetAmountText(int amount)
+    public void SetAmountText(string text)
     {
-        if (amount <= 1)
-        {
-            amountText.text = string.Empty;
-        }
-        else
-        {
-            amountText.text = amount.ToString();
-        }
+        amountText.text = text;
     }
 
     public void SetItemInstanceProperties(object itemInstanceProperties)
@@ -54,7 +47,7 @@ public class ItemSlotController : MonoBehaviour
     public void UpdateUsingItem(ItemWithAmount item)
     {
         SetSprite(item.itemData.sprite);
-        SetAmountText(item.amount);
+        SetAmountText(item.GetAmountText());
         SetItemInstanceProperties(item.instanceProperties);
     }
 }
