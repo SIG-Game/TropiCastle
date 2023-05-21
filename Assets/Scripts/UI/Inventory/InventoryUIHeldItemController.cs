@@ -90,22 +90,22 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
     }
 
-    private void PlaceHeldItem(int itemIndex, ItemWithAmount clickedItem)
+    private void PlaceHeldItem(int clickedItemIndex, ItemWithAmount clickedItem)
     {
         bool shouldPutHeldItemBack = clickedInventory == heldItemInventory &&
-            itemIndex == heldItemIndex;
+            clickedItemIndex == heldItemIndex;
         if (shouldPutHeldItemBack)
         {
-            inventoryUIController.UpdateSlotAtIndexUsingItem(itemIndex, clickedItem);
+            heldItemInventory.InvokeOnItemChangedAtIndexEvent(clickedItem, clickedItemIndex);
         }
         else if (clickedInventory == heldItemInventory)
         {
-            clickedInventory.SwapItemsAt(heldItemIndex, itemIndex);
+            clickedInventory.SwapItemsAt(heldItemIndex, clickedItemIndex);
         }
         else
         {
             heldItemInventory.SwapItemsBetweenInventories(heldItemIndex,
-                clickedInventory, itemIndex);
+                clickedInventory, clickedItemIndex);
         }
 
         HideHeldItem();
@@ -117,7 +117,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
             clickedItemIndex == heldItemIndex;
         if (shouldPutHeldItemBack)
         {
-            inventoryUIController.UpdateSlotAtIndexUsingItem(clickedItemIndex, clickedItem);
+            heldItemInventory.InvokeOnItemChangedAtIndexEvent(clickedItem, clickedItemIndex);
 
             HideHeldItem();
         }
