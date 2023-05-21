@@ -363,7 +363,13 @@ public class Inventory : MonoBehaviour
 
     public void ClearInventory()
     {
-        InitializeItemListWithSize(inventorySize);
+        for (int i = 0; i < itemList.Count; ++i)
+        {
+            if (itemList[i].itemData.name != "Empty")
+            {
+                RemoveItemAtIndex(i);
+            }
+        }
     }
 
     [ContextMenu("Fill Inventory")]
