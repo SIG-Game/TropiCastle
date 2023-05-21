@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class ItemWithAmount
@@ -6,6 +7,13 @@ public class ItemWithAmount
     public ItemScriptableObject itemData;
     public int amount;
     public object instanceProperties;
+
+    private static readonly Dictionary<string, Type> itemNameToInstancePropertiesType =
+        new Dictionary<string, Type>
+    {
+        { "Chest", typeof(ChestItemInstanceProperties) },
+        { "Fishing Rod", typeof(FishingRodItemInstanceProperties) }
+    };
 
     public ItemWithAmount(ItemScriptableObject itemData, int amount,
         object instanceProperties = null)
@@ -15,15 +23,12 @@ public class ItemWithAmount
         this.instanceProperties = instanceProperties;
     }
 
-    public void SetItemInstanceProperties()
+    public void InitializeItemInstanceProperties()
     {
-        if (itemData.name == "Chest")
+        if (itemNameToInstancePropertiesType.TryGetValue(itemData.name,
+            out Type itemInstancePropertiesType))
         {
-            instanceProperties = new ChestItemInstanceProperties();
-        }
-        else if (itemData.name == "Fishing Rod")
-        {
-            instanceProperties = new FishingRodItemInstanceProperties();
+            instanceProperties = Activator.CreateInstance(itemInstancePropertiesType);
         }
     }
 }

@@ -45,7 +45,7 @@ public class Inventory : MonoBehaviour
     {
         ItemWithAmount newItem = new ItemWithAmount(info, amount);
 
-        newItem.SetItemInstanceProperties();
+        newItem.InitializeItemInstanceProperties();
 
         AddItem(newItem);
     }

@@ -45,7 +45,7 @@ public class Crafting : MonoBehaviour
                 ItemWithAmount itemToAddBack = new ItemWithAmount(itemToRemove.itemData,
                     amountLeft);
 
-                itemToAddBack.SetItemInstanceProperties();
+                itemToAddBack.InitializeItemInstanceProperties();
 
                 inventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAddBack,
                     itemIndexAndRemoveAmount.Key);
