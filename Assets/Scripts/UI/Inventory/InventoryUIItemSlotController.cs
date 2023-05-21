@@ -27,6 +27,11 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
             InventoryUIHeldItemController.Instance.LeftClickedItemAtIndex(
                 inventory, slotItemIndex, this);
         }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            InventoryUIHeldItemController.Instance.RightClickedItemAtIndex(
+                inventory, slotItemIndex, this);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

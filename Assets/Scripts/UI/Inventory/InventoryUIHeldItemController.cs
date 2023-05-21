@@ -39,11 +39,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
         if (HoldingItem())
         {
             UpdateHeldItemPosition();
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                ResetHeldItem();
-            }
         }
     }
 
@@ -81,6 +76,19 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
     }
 
+    public void RightClickedItemAtIndex(Inventory clickedInventory,
+        int clickedItemIndex, InventoryUIItemSlotController clickedItemSlot)
+    {
+        this.clickedInventory = clickedInventory;
+
+        ItemWithAmount clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
+
+        if (HoldingItem())
+        {
+            PlaceOneOfHeldItem(clickedItemIndex, clickedItem);
+        }
+    }
+
     private void PlaceHeldItem(int itemIndex, ItemWithAmount clickedItem)
     {
         bool shouldPutHeldItemBack = clickedInventory == heldItemInventory &&
@@ -102,23 +110,77 @@ public class InventoryUIHeldItemController : MonoBehaviour
         HideHeldItem();
     }
 
+    private void PlaceOneOfHeldItem(int clickedItemIndex, ItemWithAmount clickedItem)
+    {
+        ItemWithAmount heldItem = heldItemInventory.GetItemList()[heldItemIndex];
+
+        bool shouldPutHeldItemBack = clickedInventory == heldItemInventory &&
+            clickedItemIndex == heldItemIndex;
+        if (shouldPutHeldItemBack)
+        {
+            inventoryUIController.UpdateSlotAtIndexUsingItem(clickedItemIndex, clickedItem);
+
+            HideHeldItem();
+        }
+        else if (clickedItem.itemData.name == heldItem.itemData.name &&
+            clickedItem.amount < clickedItem.itemData.stackSize)
+        {
+            bool hideHeldItem = heldItem.amount == 1;
+
+            clickedInventory.IncrementItemStackAtIndex(clickedItemIndex);
+
+            heldItemInventory.DecrementItemStackAtIndex(heldItemIndex);
+
+            EmptyHeldItemSlotUI();
+
+            if (hideHeldItem)
+            {
+                HideHeldItem();
+            }
+            else
+            {
+                heldItem = heldItemInventory.GetItemList()[heldItemIndex];
+
+                UpdateHeldItemUI(heldItem);
+            }
+        }
+        else if (clickedItem.itemData.name == "Empty")
+        {
+            bool hideHeldItem = heldItem.amount == 1;
+
+            ItemWithAmount oneOfHeldItem = new ItemWithAmount(heldItem.itemData,
+                1, heldItem.instanceProperties);
+
+            clickedInventory.AddItemAtIndex(oneOfHeldItem, clickedItemIndex);
+
+            heldItemInventory.DecrementItemStackAtIndex(heldItemIndex);
+
+            EmptyHeldItemSlotUI();
+
+            if (hideHeldItem)
+            {
+                HideHeldItem();
+            }
+            else
+            {
+                heldItem = heldItemInventory.GetItemList()[heldItemIndex];
+
+                UpdateHeldItemUI(heldItem);
+            }
+        }
+    }
+
     private void HoldItem(Inventory inventory, int itemIndex,
         InventoryUIItemSlotController itemSlot, ItemWithAmount item)
     {
         heldItemInventory = inventory;
         heldItemSlot = itemSlot;
 
-        heldItemSlot.SetSprite(transparentSprite);
-        heldItemSlot.SetAmountText(0);
-        heldItemSlot.SetItemInstanceProperties(null);
+        EmptyHeldItemSlotUI();
 
         heldItemIndex = itemIndex;
-        heldItemImage.sprite = item.itemData.sprite;
 
-        if (item.amount > 1)
-        {
-            heldItemAmountText.text = item.amount.ToString();
-        }
+        UpdateHeldItemUI(item);
 
         tooltipTextWithPriority = new Tooltip(
             InventoryUITooltipController.GetItemTooltipText(item.itemData), 1);
@@ -130,6 +192,23 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private void InventoryUIController_OnInventoryClosed()
     {
         ResetHeldItem();
+    }
+
+    private void EmptyHeldItemSlotUI()
+    {
+        heldItemSlot.SetSprite(transparentSprite);
+        heldItemSlot.SetAmountText(0);
+        heldItemSlot.SetItemInstanceProperties(null);
+    }
+
+    private void UpdateHeldItemUI(ItemWithAmount heldItem)
+    {
+        heldItemImage.sprite = heldItem.itemData.sprite;
+
+        if (heldItem.amount > 1)
+        {
+            heldItemAmountText.text = heldItem.amount.ToString();
+        }
     }
 
     private void ResetHeldItem()

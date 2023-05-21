@@ -131,6 +131,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void IncrementItemStackAtIndex(int stackIndex)
+    {
+        ItemWithAmount itemAtStackIndex = itemList[stackIndex];
+
+        itemAtStackIndex.amount += 1;
+
+        OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
+    }
+
     public void RemoveItemAtIndex(int index)
     {
         ItemWithAmount itemAtIndex = itemList[index];
@@ -193,7 +202,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void AddItemAtIndex(ItemWithAmount newItem, int index)
+    public void AddItemAtIndex(ItemWithAmount newItem, int index)
     {
         // Prevent newItem from being modified
         ItemWithAmount newItemCopy = new ItemWithAmount(newItem.itemData, newItem.amount,
