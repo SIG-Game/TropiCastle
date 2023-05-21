@@ -352,9 +352,20 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void ClearInventory()
+    {
+        InitializeItemListWithSize(inventorySize);
+    }
+
     [ContextMenu("Fill Inventory")]
     private void FillInventoryContextMenuCommand()
     {
         FillInventory();
+    }
+
+    [ContextMenu("Clear Inventory")]
+    private void ClearInventoryContextMenuCommand()
+    {
+        ClearInventory();
     }
 }
