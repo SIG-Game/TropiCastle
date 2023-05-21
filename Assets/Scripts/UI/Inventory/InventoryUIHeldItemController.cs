@@ -13,6 +13,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
     private Inventory clickedInventory;
     private Inventory heldItemInventory;
+    private ItemWithAmount heldItem;
     private InventoryUIItemSlotController heldItemSlot;
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
@@ -112,8 +113,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
     private void PlaceOneOfHeldItem(int clickedItemIndex, ItemWithAmount clickedItem)
     {
-        ItemWithAmount heldItem = heldItemInventory.GetItemList()[heldItemIndex];
-
         bool shouldPutHeldItemBack = clickedInventory == heldItemInventory &&
             clickedItemIndex == heldItemIndex;
         if (shouldPutHeldItemBack)
@@ -125,7 +124,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         else if (clickedItem.itemData.name == heldItem.itemData.name &&
             clickedItem.amount < clickedItem.itemData.stackSize)
         {
-            bool hideHeldItem = heldItem.amount == 1;
+            bool placingLastItemInHeldStack = heldItem.amount == 1;
 
             clickedInventory.IncrementItemStackAtIndex(clickedItemIndex);
 
@@ -133,20 +132,20 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
             EmptyHeldItemSlotUI();
 
-            if (hideHeldItem)
+            if (placingLastItemInHeldStack)
             {
                 HideHeldItem();
             }
             else
             {
-                heldItem = heldItemInventory.GetItemList()[heldItemIndex];
+                RefreshHeldItem();
 
-                UpdateHeldItemUI(heldItem);
+                UpdateHeldItemUI();
             }
         }
         else if (clickedItem.itemData.name == "Empty")
         {
-            bool hideHeldItem = heldItem.amount == 1;
+            bool placingLastItemInHeldStack = heldItem.amount == 1;
 
             ItemWithAmount oneOfHeldItem = new ItemWithAmount(heldItem.itemData,
                 1, heldItem.instanceProperties);
@@ -157,15 +156,15 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
             EmptyHeldItemSlotUI();
 
-            if (hideHeldItem)
+            if (placingLastItemInHeldStack)
             {
                 HideHeldItem();
             }
             else
             {
-                heldItem = heldItemInventory.GetItemList()[heldItemIndex];
+                RefreshHeldItem();
 
-                UpdateHeldItemUI(heldItem);
+                UpdateHeldItemUI();
             }
         }
     }
@@ -179,8 +178,9 @@ public class InventoryUIHeldItemController : MonoBehaviour
         EmptyHeldItemSlotUI();
 
         heldItemIndex = itemIndex;
+        heldItem = item;
 
-        UpdateHeldItemUI(item);
+        UpdateHeldItemUI();
 
         tooltipTextWithPriority = new Tooltip(
             InventoryUITooltipController.GetItemTooltipText(item.itemData), 1);
@@ -201,7 +201,12 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemSlot.SetItemInstanceProperties(null);
     }
 
-    private void UpdateHeldItemUI(ItemWithAmount heldItem)
+    private void RefreshHeldItem()
+    {
+        heldItem = heldItemInventory.GetItemList()[heldItemIndex];
+    }
+
+    private void UpdateHeldItemUI()
     {
         heldItemImage.sprite = heldItem.itemData.sprite;
 
@@ -212,8 +217,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
     {
         if (HoldingItem())
         {
-            ItemWithAmount heldItem = heldItemInventory.GetItemAtIndex(heldItemIndex);
-
             heldItemSlot.UpdateUsingItem(heldItem);
 
             HideHeldItem();
