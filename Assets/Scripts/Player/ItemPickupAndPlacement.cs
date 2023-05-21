@@ -92,7 +92,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PickUpHoveredItem()
     {
-        if (playerInventory.HasNoEmptySlots())
+        if (!playerInventory.CanAddItem(hoveredItemWorld.Item))
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
 
