@@ -205,8 +205,7 @@ public class Inventory : MonoBehaviour
     public void AddItemAtIndex(ItemWithAmount newItem, int index)
     {
         // Prevent newItem from being modified
-        ItemWithAmount newItemCopy = new ItemWithAmount(newItem.itemData, newItem.amount,
-            newItem.instanceProperties);
+        ItemWithAmount newItemCopy = new ItemWithAmount(newItem);
 
         SetItemAtIndex(newItemCopy, index);
 

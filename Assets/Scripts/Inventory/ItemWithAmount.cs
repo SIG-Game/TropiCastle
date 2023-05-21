@@ -23,6 +23,15 @@ public class ItemWithAmount
         this.instanceProperties = instanceProperties;
     }
 
+    public ItemWithAmount(ItemWithAmount item)
+    {
+        itemData = item.itemData;
+        amount = item.amount;
+
+        // TODO: Use a deep copy of item.instanceProperties
+        instanceProperties = item.instanceProperties;
+    }
+
     public void InitializeItemInstanceProperties()
     {
         if (itemNameToInstancePropertiesType.TryGetValue(itemData.name,
