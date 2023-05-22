@@ -98,6 +98,13 @@ public class InventoryUIHeldItemController : MonoBehaviour
         {
             heldItemInventory.InvokeOnItemChangedAtIndexEvent(clickedItem, clickedItemIndex);
         }
+        else if (clickedItem.itemData.name == heldItem.itemData.name &&
+            clickedItem.amount < clickedItem.itemData.stackSize)
+        {
+            CombineHeldItemStackWithClickedItemStack(clickedItemIndex, clickedItem);
+
+            return;
+        }
         else if (clickedInventory == heldItemInventory)
         {
             clickedInventory.SwapItemsAt(heldItemIndex, clickedItemIndex);
@@ -109,6 +116,30 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
 
         HideHeldItem();
+    }
+
+    private void CombineHeldItemStackWithClickedItemStack(int clickedItemIndex,
+        ItemWithAmount clickedItem)
+    {
+        int amountToMove = Math.Min(heldItem.amount,
+            clickedItem.itemData.stackSize - clickedItem.amount);
+
+        clickedItem.amount += amountToMove;
+
+        clickedInventory.InvokeOnItemChangedAtIndexEvent(clickedItem, clickedItemIndex);
+
+        if (heldItem.amount == amountToMove)
+        {
+            heldItemInventory.RemoveItemAtIndex(heldItemIndex);
+
+            HideHeldItem();
+        }
+        else
+        {
+            heldItem.amount -= amountToMove;
+
+            UpdateHeldItemUI();
+        }
     }
 
     private void PlaceOneOfHeldItem(int clickedItemIndex, ItemWithAmount clickedItem)
