@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
 
         if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
         {
-            RaycastHit2D hit = InteractionCast(interactableMask, 0.15f);
+            RaycastHit2D hit = InteractionCast(interactableMask, 0.15f, 0.12f);
 
             if (hit.collider != null)
             {
@@ -181,7 +181,8 @@ public class PlayerController : MonoBehaviour
         return interactionDirection;
     }
 
-    public RaycastHit2D InteractionCast(LayerMask mask, float boxCastDistance)
+    public RaycastHit2D InteractionCast(LayerMask mask, float horizontalBoxCastDistance,
+        float verticalBoxCastDistance)
     {
         Vector2 interactionDirection = GetInteractionDirection();
 
@@ -189,9 +190,19 @@ public class PlayerController : MonoBehaviour
         raycastOrigin.x += boxCollider.offset.x;
         raycastOrigin.y += boxCollider.offset.y;
 
-        // TODO: Shorten length and change length based on direction
-        RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin,
-            boxCollider.size, 0f, interactionDirection, boxCastDistance, mask);
+        float boxCastDistance;
+
+        if (Direction == CharacterDirection.Left || Direction == CharacterDirection.Right)
+        {
+            boxCastDistance = horizontalBoxCastDistance;
+        }
+        else
+        {
+            boxCastDistance = verticalBoxCastDistance;
+        }
+
+        RaycastHit2D hit = Physics2D.BoxCast(raycastOrigin, boxCollider.size,
+            0f, interactionDirection, boxCastDistance, mask);
 
         // Debug.DrawRay(raycastOrigin, interactionDirection * 0.25f, Color.red);
 
@@ -245,7 +256,7 @@ public class PlayerController : MonoBehaviour
 
     public void Fish()
     {
-        if (InteractionCast(waterMask, 0.5f).collider == null)
+        if (InteractionCast(waterMask, 0.5f, 0.4f).collider == null)
         {
             DialogueBox.Instance.PlayDialogue("You must be facing water to fish.");
             return;

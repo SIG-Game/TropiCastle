@@ -18,7 +18,7 @@ public class BucketItemUsage : MonoBehaviour, IItemUsage
 
     public void UseItem()
     {
-        if (playerController.InteractionCast(waterMask, 0.25f).collider != null)
+        if (playerController.InteractionCast(waterMask, 0.25f, 0.2f).collider != null)
         {
             int selectedItemIndex = playerController.GetSelectedItemIndex();
 
