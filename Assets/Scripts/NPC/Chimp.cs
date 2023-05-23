@@ -45,15 +45,16 @@ public class Chimp : NPCInteractable
         bool giveItem = lastGiveTimeSeconds + timeSecondsUntilNextGive <= Time.time;
         if (giveItem)
         {
-            if (player.GetInventory().HasNoEmptySlots())
+            int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
+            itemToGive = potentialItemsToGive[itemToGiveIndex];
+
+            if (!player.GetInventory().CanAddItem(itemToGive))
             {
                 dialogueLines[1] = playerInventoryFullDialogueLine;
                 giveItem = false;
             }
             else
             {
-                int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
-                itemToGive = potentialItemsToGive[itemToGiveIndex];
                 dialogueLines[1] = itemToGiveDialogueLines[itemToGiveIndex];
                 ShowItemToGiveInWorld();
             }
