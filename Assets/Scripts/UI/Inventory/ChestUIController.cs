@@ -30,8 +30,12 @@ public class ChestUIController : MonoBehaviour
     // input press for closing the chest UI is not reused to open the inventory UI
     private void Update()
     {
-        bool closeChestUI = (inventoryAction.WasPressedThisFrame() ||
-            Input.GetKeyDown(KeyCode.Escape)) && chestUI.activeInHierarchy;
+        bool closeChestInputPressed = inventoryAction.WasPressedThisFrame() ||
+            Input.GetKeyDown(KeyCode.Escape) ||
+            InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
+
+        bool closeChestUI = closeChestInputPressed
+            && chestUI.activeInHierarchy;
         if (closeChestUI)
         {
             InventoryUIController.InventoryUIOpen = false;
