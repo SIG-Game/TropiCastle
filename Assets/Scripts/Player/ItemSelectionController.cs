@@ -18,7 +18,7 @@ public class ItemSelectionController : MonoBehaviour
     public int SelectedItemIndex
     {
         get => selectedItemIndex;
-        private set
+        set
         {
             if (selectedItemIndex != value)
             {

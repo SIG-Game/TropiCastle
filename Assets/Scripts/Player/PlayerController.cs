@@ -341,6 +341,7 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = serializablePlayerProperties.PlayerPosition;
         Direction = (CharacterDirection)serializablePlayerProperties.PlayerDirection;
+        itemSelectionController.SelectedItemIndex = serializablePlayerProperties.SelectedItemIndex;
     }
 
     [Serializable]
@@ -348,6 +349,7 @@ public class PlayerController : MonoBehaviour
     {
         public Vector2 PlayerPosition;
         public int PlayerDirection;
+        public int SelectedItemIndex;
     }
 
     public bool CanMove() => !IsAttacking && !PauseController.Instance.GamePaused && !ActionDisablingUIOpen;

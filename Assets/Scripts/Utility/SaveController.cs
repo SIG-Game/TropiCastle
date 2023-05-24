@@ -65,11 +65,13 @@ public class SaveController : MonoBehaviour
     {
         Vector2 playerPosition = playerController.transform.position;
         int playerDirection = (int)playerController.Direction;
+        int selectedItemIndex = playerController.GetSelectedItemIndex();
 
         var serializablePlayerProperties = new SerializablePlayerProperties
         {
             PlayerPosition = playerPosition,
-            PlayerDirection = playerDirection
+            PlayerDirection = playerDirection,
+            SelectedItemIndex = selectedItemIndex
         };
 
         return serializablePlayerProperties;
