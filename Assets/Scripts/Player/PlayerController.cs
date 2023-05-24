@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         SetItemNameToUsageDictionary();
 
-        healthController.OnHealthSet += HealthController_OnHealthSet;
+        healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
         inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
     }
 
@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
     {
         if (healthController != null)
         {
-            healthController.OnHealthSet -= HealthController_OnHealthSet;
+            healthController.OnHealthSetToZero -= HealthController_OnHealthSetToZero;
         }
 
         if (inventory != null)
@@ -284,12 +284,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HealthController_OnHealthSet(int newHealth)
+    private void HealthController_OnHealthSetToZero()
     {
-        if (newHealth == 0)
-        {
-            PlayerDeath();
-        }
+        PlayerDeath();
     }
 
     private void Inventory_ChangedItemAtIndex(ItemWithAmount _, int _1)

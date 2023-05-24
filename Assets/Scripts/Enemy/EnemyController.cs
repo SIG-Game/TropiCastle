@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
 
         StartCoroutine(InitialWaitBeforeChillingCoroutine());
 
-        healthController.OnHealthSet += HealthController_OnHealthSet;
+        healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
     }
 
     private void Start()
@@ -80,7 +80,7 @@ public class EnemyController : MonoBehaviour
     {
         if (healthController != null)
         {
-            healthController.OnHealthSet -= HealthController_OnHealthSet;
+            healthController.OnHealthSetToZero -= HealthController_OnHealthSetToZero;
         }
     }
 
@@ -142,14 +142,11 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void HealthController_OnHealthSet(int newHealth)
+    private void HealthController_OnHealthSetToZero()
     {
-        if (newHealth <= 0)
-        {
-            state = EnemyState.FadingOut;
+        state = EnemyState.FadingOut;
 
-            collider2D.enabled = false;
-        }
+        collider2D.enabled = false;
     }
 
     //gets knockback when in contact with player

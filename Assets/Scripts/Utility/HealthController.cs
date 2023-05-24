@@ -9,6 +9,7 @@ public class HealthController : MonoBehaviour
 
     public event Action<int> OnHealthSet = delegate { };
     public event Action<int> OnHealthChangedByAmount = delegate { };
+    public event Action OnHealthSetToZero = delegate { };
 
     private void Awake()
     {
@@ -46,6 +47,8 @@ public class HealthController : MonoBehaviour
         if (currentHealth < 0)
         {
             currentHealth = 0;
+
+            OnHealthSetToZero();
         }
 
         int healthDelta = currentHealth - initialHealth;
