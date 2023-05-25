@@ -123,11 +123,9 @@ public class EnemyController : MonoBehaviour
 
     private void EnemyDeath()
     {
-        // TODO: This doesn't work properly for loot items with amount value > 1
-        // This should be revisited if stackable items get added
         foreach (ItemWithAmount loot in droppedLoot)
         {
-            if (playerInventory.HasNoEmptySlots())
+            if (!playerInventory.CanAddItem(loot))
             {
                 InventoryFullUIController.Instance.ShowInventoryFullText();
 
