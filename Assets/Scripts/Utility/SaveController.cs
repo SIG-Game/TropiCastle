@@ -30,8 +30,8 @@ public class SaveController : MonoBehaviour
     {
         var saveData = new SaveData
         {
-            SerializableInventory = GetSerializableInventory(),
-            SerializablePlayerProperties = GetSerializablePlayerProperties()
+            SerializableInventory = playerInventory.GetSerializableInventory(),
+            SerializablePlayerProperties = playerController.GetSerializablePlayerProperties()
         };
 
         WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
@@ -52,29 +52,6 @@ public class SaveController : MonoBehaviour
 
         playerController
             .SetPropertiesFromSerializablePlayerProperties(saveData.SerializablePlayerProperties);
-    }
-
-    public SerializableInventory GetSerializableInventory()
-    {
-        var serializableInventory = playerInventory.GetSerializableInventory();
-
-        return serializableInventory;
-    }
-
-    public SerializablePlayerProperties GetSerializablePlayerProperties()
-    {
-        Vector2 playerPosition = playerController.transform.position;
-        int playerDirection = (int)playerController.Direction;
-        int selectedItemIndex = playerController.GetSelectedItemIndex();
-
-        var serializablePlayerProperties = new SerializablePlayerProperties
-        {
-            PlayerPosition = playerPosition,
-            PlayerDirection = playerDirection,
-            SelectedItemIndex = selectedItemIndex
-        };
-
-        return serializablePlayerProperties;
     }
 
     private void WriteSerializableObjectAsJsonToFile(object serializableObject, string filePath)

@@ -333,6 +333,22 @@ public class PlayerController : MonoBehaviour
         itemSelectionController.CanSelect = true;
     }
 
+    public SerializablePlayerProperties GetSerializablePlayerProperties()
+    {
+        Vector2 playerPosition = transform.position;
+        int playerDirection = (int)Direction;
+        int selectedItemIndex = GetSelectedItemIndex();
+
+        var serializablePlayerProperties = new SerializablePlayerProperties
+        {
+            PlayerPosition = playerPosition,
+            PlayerDirection = playerDirection,
+            SelectedItemIndex = selectedItemIndex
+        };
+
+        return serializablePlayerProperties;
+    }
+
     public void SetPropertiesFromSerializablePlayerProperties(
         SerializablePlayerProperties serializablePlayerProperties)
     {
