@@ -22,7 +22,7 @@ public abstract class ThrowableItemUsage : MonoBehaviour,IItemUsage
         thrownItemWorldComponent.SetDamage(damage);
 
         Vector3 throwDirection =
-            ((Vector3)cursorController.GetPosition() - thrownItemStartPosition).normalized;
+            ((Vector3)cursorController.GetWorldPosition() - thrownItemStartPosition).normalized;
 
         thrownItemWorldComponent.SetUpThrownItemWorld(throwDirection);
 

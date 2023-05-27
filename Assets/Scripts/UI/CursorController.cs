@@ -5,6 +5,7 @@ public class CursorController : MonoBehaviour
 {
     [SerializeField] private Sprite defaultCursorSprite;
     [SerializeField] private GameObject cursorBackground;
+    [SerializeField] private Camera cursorCamera;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float gamepadSensitivity;
@@ -21,6 +22,9 @@ public class CursorController : MonoBehaviour
     private SpriteRenderer cursorSpriteRenderer;
     private SpriteRenderer cursorBackgroundSpriteRenderer;
     private InputAction moveCursorAction;
+    private Vector2 cursorWorldPosition;
+    private Vector2 horizontalCameraBounds;
+    private Vector2 verticalCameraBounds;
 
     private void Awake()
     {
@@ -29,10 +33,19 @@ public class CursorController : MonoBehaviour
         cursorSpriteRenderer = GetComponent<SpriteRenderer>();
         cursorBackgroundSpriteRenderer = cursorBackground.GetComponent<SpriteRenderer>();
 
+        cursorWorldPosition = Vector2.zero;
+
+        float halfCameraHeight = cursorCamera.orthographicSize;
+        float halfCameraWidth = cursorCamera.orthographicSize * cursorCamera.aspect;
+
+        horizontalCameraBounds = new Vector2(cursorCamera.transform.position.x - halfCameraWidth,
+            cursorCamera.transform.position.x + halfCameraWidth);
+        verticalCameraBounds = new Vector2(cursorCamera.transform.position.y - halfCameraHeight,
+            cursorCamera.transform.position.y + halfCameraHeight);
+
         PauseController.OnGamePaused += PauseController_OnGamePaused;
         PauseController.OnGameUnpaused += PauseController_OnGameUnpaused;
         PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
-        CameraFollow.OnCameraMovedBy += CameraFollow_OnCameraMovedBy;
 
         playerController.OnIsAttackingSet += PlayerController_OnIsAttackingSet;
     }
@@ -64,6 +77,8 @@ public class CursorController : MonoBehaviour
             }
 
             transform.position = ClampToScreen(transform.position + (Vector3)cursorDelta);
+
+            UpdateCursorWorldPosition();
         }
     }
 
@@ -72,7 +87,6 @@ public class CursorController : MonoBehaviour
         PauseController.OnGamePaused -= PauseController_OnGamePaused;
         PauseController.OnGameUnpaused -= PauseController_OnGameUnpaused;
         PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
-        CameraFollow.OnCameraMovedBy -= CameraFollow_OnCameraMovedBy;
 
         if (playerController != null)
         {
@@ -98,20 +112,17 @@ public class CursorController : MonoBehaviour
 
     private Vector3 ClampToScreen(Vector3 input)
     {
-        float halfCameraHeight = Camera.main.orthographicSize;
-        float halfCameraWidth = Camera.main.orthographicSize * Camera.main.aspect;
-
-        Vector2 horizontalCameraBounds = new Vector2(Camera.main.transform.position.x - halfCameraWidth,
-            Camera.main.transform.position.x + halfCameraWidth);
-        Vector2 verticalCameraBounds = new Vector2(Camera.main.transform.position.y - halfCameraHeight,
-            Camera.main.transform.position.y + halfCameraHeight);
-
         Vector2 clampedInput = new Vector3(
             Mathf.Clamp(input.x, horizontalCameraBounds.x, horizontalCameraBounds.y),
             Mathf.Clamp(input.y, verticalCameraBounds.x, verticalCameraBounds.y),
             input.z);
 
         return clampedInput;
+    }
+
+    private void UpdateCursorWorldPosition()
+    {
+        cursorWorldPosition = Camera.main.transform.position + transform.position;
     }
 
     private void HideAndLockMouseCursor()
@@ -153,10 +164,5 @@ public class CursorController : MonoBehaviour
         gameObject.SetActive(!isAttacking);
     }
 
-    private void CameraFollow_OnCameraMovedBy(Vector3 cameraPositionDelta)
-    {
-        transform.position = ClampToScreen(transform.position + cameraPositionDelta);
-    }
-
-    public Vector2 GetPosition() => transform.position;
+    public Vector2 GetWorldPosition() => cursorWorldPosition;
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 987879900132414898}
   - component: {fileID: 987879900132414899}
   - component: {fileID: 987879900132414908}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 987879900663517765}
   - component: {fileID: 987879900663517764}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cursor Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}

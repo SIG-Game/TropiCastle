@@ -159,7 +159,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void UpdateInstanceVariables()
     {
-        cursorPoint = cursorController.GetPosition();
+        cursorPoint = cursorController.GetWorldPosition();
 
         Collider2D cursorOverlapCollider = Physics2D.OverlapPoint(cursorPoint);
 
