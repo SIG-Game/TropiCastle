@@ -7,6 +7,7 @@ public class ItemSlotController : MonoBehaviour
     [SerializeField] private Image itemSlotImage;
     [SerializeField] private Image itemSlotBackgroundImage;
     [SerializeField] private TextMeshProUGUI amountText;
+    [SerializeField] private GameObject durabilityMeterBackground;
     [SerializeField] private RectTransform durabilityMeter;
 
     public void SetSprite(Sprite sprite)
@@ -31,16 +32,17 @@ public class ItemSlotController : MonoBehaviour
             var fishingRodProperties =
                 itemInstanceProperties as FishingRodItemInstanceProperties;
 
+            durabilityMeterBackground.SetActive(true);
+
             float durabilityMeterXScale = (float)fishingRodProperties.Durability /
                 FishingRodItemInstanceProperties.InitialDurability;
 
             durabilityMeter.localScale = new Vector3(durabilityMeterXScale,
                 durabilityMeter.localScale.y, durabilityMeter.localScale.z);
         }
-        else if (durabilityMeter.localScale.x != 0f)
+        else if (durabilityMeterBackground.activeSelf)
         {
-            durabilityMeter.localScale = new Vector3(0f,
-                durabilityMeter.localScale.y, durabilityMeter.localScale.z);
+            durabilityMeterBackground.SetActive(false);
         }
     }
 
