@@ -35,6 +35,12 @@ public class ItemSelectionController : MonoBehaviour
     public event Action<int> OnItemSelectedAtIndex = delegate { };
     public event Action<int> OnItemDeselectedAtIndex = delegate { };
 
+    private void Awake()
+    {
+        selectedItemIndex = 0;
+    }
+
+    // Runs after SaveController loads saved game data, which can change selectedItemIndex
     private void Start()
     {
         selectLeftItemAction = InputManager.Instance.GetAction("Select Left Item");
@@ -42,7 +48,6 @@ public class ItemSelectionController : MonoBehaviour
 
         selectInputRepeatWaitForSeconds = new WaitForSeconds(selectInputRepeatTimeSeconds);
 
-        selectedItemIndex = 0;
         OnItemSelectedAtIndex(selectedItemIndex);
 
         CanScroll = true;
