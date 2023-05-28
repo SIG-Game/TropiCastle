@@ -19,7 +19,8 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // This could be changed to not be set at runtime
         // It this wasn't set at runtime, an old item tooltip format might get cached
         resultItemTooltipText = $"Result:\n" +
-            $"{InventoryUITooltipController.GetItemTooltipText(craftingRecipe.resultItem.itemData)}";
+            InventoryUITooltipController.GetItemScriptableObjectTooltipText(
+                craftingRecipe.resultItem.itemData);
 
         InventoryUIHeldItemController.OnStartedHoldingItem +=
             InventoryUIHeldItemController_OnStartedHoldingItem;

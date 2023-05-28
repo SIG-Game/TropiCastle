@@ -65,9 +65,9 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
 
     private string GetSlotItemTooltipText()
     {
-        ItemScriptableObject slotItemData = inventory.GetItemAtIndex(slotItemIndex).itemData;
+        ItemWithAmount slotItem = inventory.GetItemAtIndex(slotItemIndex);
 
-        return InventoryUITooltipController.GetItemTooltipText(slotItemData);
+        return InventoryUITooltipController.GetItemTooltipText(slotItem);
     }
 
     public void SetInventory(Inventory inventory)
