@@ -19,6 +19,7 @@ public class FishingUIController : MonoBehaviour
 
     private Animator animator;
     private FishScriptableObject selectedFish;
+    private ItemWithAmount selectedFishItem;
     private Inventory playerInventory;
     private bool catchFailedAnimationStarted;
 
@@ -85,15 +86,13 @@ public class FishingUIController : MonoBehaviour
 
     private void CatchFish()
     {
-        ItemScriptableObject caughtFishItem = Resources.Load<ItemScriptableObject>("Items/" + selectedFish.name);
-
-        playerItemInWorld.ShowPlayerItemInWorld(caughtFishItem.sprite);
+        playerItemInWorld.ShowPlayerItemInWorld(selectedFishItem.itemData.sprite);
 
         HideFishingUI();
 
         void afterCatchDialogueAction()
         {
-            playerInventory.AddItem(caughtFishItem, 1);
+            playerInventory.AddItem(selectedFishItem);
             playerItemInWorld.HidePlayerItemInWorld();
         }
 
@@ -103,15 +102,17 @@ public class FishingUIController : MonoBehaviour
 
     private void StartFishing()
     {
-        if (playerInventory.HasNoEmptySlots())
-        {
-            InventoryFullUIController.Instance.ShowInventoryFullText();
-            return;
-        }
-
         if (fishingUI.activeSelf)
         {
             Debug.LogWarning($"{nameof(StartFishing)} called with {nameof(fishingUI)} active");
+            return;
+        }
+
+        SelectRandomFish();
+
+        if (!playerInventory.CanAddItem(selectedFishItem))
+        {
+            InventoryFullUIController.Instance.ShowInventoryFullText();
             return;
         }
 
@@ -121,8 +122,6 @@ public class FishingUIController : MonoBehaviour
 
         fishUI.ResetFishUIImage();
         fishUI.SetFishUIPositionAndDirection();
-
-        SelectRandomFish();
 
         fishingUI.SetActive(true);
         fishUI.gameObject.SetActive(true);
@@ -134,6 +133,9 @@ public class FishingUIController : MonoBehaviour
         selectedFish = fishScriptableObjects[selectedFishIndex];
         fishUI.Speed = selectedFish.speed;
         fishUI.SetColor(selectedFish.fishUIColor);
+
+        selectedFishItem = new ItemWithAmount(Resources.Load<ItemScriptableObject>(
+            "Items/" + selectedFish.name), 1);
 
         if (logSelectedFish)
         {
