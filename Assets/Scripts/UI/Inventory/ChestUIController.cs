@@ -80,11 +80,13 @@ public class ChestUIController : MonoBehaviour
 
         List<ItemWithAmount> chestItemList = chestInventory.GetItemList();
 
-        SetInventorySlotSprites(chestInventory, chestItemSlots);
-
-        foreach (var chestItemSlot in chestItemSlots)
+        for (int i = 0; i < chestItemSlots.Count; ++i)
         {
+            var chestItemSlot = chestItemSlots[i];
+            var chestItem = chestItemList[i];
+
             chestItemSlot.SetInventory(chestInventory);
+            chestItemSlot.UpdateUsingItem(chestItem);
         }
 
         chestInventory.OnItemChangedAtIndex += ChestInventory_OnItemChangedAtIndex;
