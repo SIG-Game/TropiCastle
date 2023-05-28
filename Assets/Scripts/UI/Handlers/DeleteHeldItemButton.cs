@@ -1,27 +1,25 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DeleteHeldItemButton : MonoBehaviour
 {
-    [SerializeField] private Button deleteHeldItemButton;
     [SerializeField] private InventoryUIController inventoryUIController;
 
+    private InventoryUIHeldItemController heldItemController;
     private Inventory inventory;
 
-    private void Awake()
+    private void Start()
     {
+        heldItemController = InventoryUIHeldItemController.Instance;
         inventory = inventoryUIController.GetInventory();
     }
 
     public void DeleteHeldItemButton_OnClick()
     {
-        if (!InventoryUIHeldItemController.Instance.HoldingItem())
+        if (heldItemController.HoldingItem())
         {
-            return;
+            heldItemController.HideHeldItem();
+
+            inventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
         }
-
-        InventoryUIHeldItemController.Instance.HideHeldItem();
-
-        inventory.RemoveItemAtIndex(InventoryUIHeldItemController.Instance.GetHeldItemIndex());
     }
 }
