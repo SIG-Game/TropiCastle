@@ -89,6 +89,8 @@ public class FishingUIController : MonoBehaviour
 
         playerItemInWorld.ShowPlayerItemInWorld(caughtFishItem.sprite);
 
+        HideFishingUI();
+
         void afterCatchDialogueAction()
         {
             playerInventory.AddItem(caughtFishItem, 1);
@@ -97,8 +99,6 @@ public class FishingUIController : MonoBehaviour
 
         DialogueBox.Instance.PlayDialogue($"You caught a {selectedFish.species.ToLowerInvariant()}!\n" +
             $"{selectedFish.description}", afterCatchDialogueAction);
-
-        HideFishingUI();
     }
 
     private void StartFishing()
