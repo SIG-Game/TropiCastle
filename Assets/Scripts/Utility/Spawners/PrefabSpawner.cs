@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -47,12 +48,15 @@ public class PrefabSpawner : MonoBehaviour
 
     private void Start()
     {
-        float beforeFirstSpawnWait = Random.Range(timeBeforeFirstSpawnRange.x,
+        if (!waitBeforeFirstSpawnCompleted)
+        {
+            float beforeFirstSpawnWait = Random.Range(timeBeforeFirstSpawnRange.x,
             timeBeforeFirstSpawnRange.y);
 
-        beforeFirstSpawnWaitForSeconds = new WaitForSeconds(beforeFirstSpawnWait);
+            beforeFirstSpawnWaitForSeconds = new WaitForSeconds(beforeFirstSpawnWait);
 
-        StartCoroutine(WaitBeforeFirstSpawn());
+            StartCoroutine(WaitBeforeFirstSpawn());
+        }
     }
 
     private void Update()
@@ -135,5 +139,32 @@ public class PrefabSpawner : MonoBehaviour
     public void SpawnedPrefabDestroyed()
     {
         numPrefabs--;
+    }
+
+    public SerializableSpawnerState GetSerializableSpawnerState()
+    {
+        var state = new SerializableSpawnerState
+        {
+            NumberOfSpawnedPrefabs = numPrefabs,
+            SpawnTimer = spawnTimer,
+            WaitBeforeFirstSpawnCompleted = waitBeforeFirstSpawnCompleted
+        };
+
+        return state;
+    }
+
+    public void SetStateFromSerializableState(SerializableSpawnerState state)
+    {
+        numPrefabs = state.NumberOfSpawnedPrefabs;
+        spawnTimer = state.SpawnTimer;
+        waitBeforeFirstSpawnCompleted = state.WaitBeforeFirstSpawnCompleted;
+    }
+
+    [Serializable]
+    public class SerializableSpawnerState
+    {
+        public int NumberOfSpawnedPrefabs;
+        public float SpawnTimer;
+        public bool WaitBeforeFirstSpawnCompleted;
     }
 }

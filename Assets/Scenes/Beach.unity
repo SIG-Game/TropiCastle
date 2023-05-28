@@ -34505,6 +34505,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 80058269}
     m_Modifications:
+    - target: {fileID: 2723333428368442622, guid: f036df1040be00b48b945a9ed433d135,
+        type: 3}
+      propertyPath: m_Name
+      value: Leaf Spawner (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 4842603464928017008, guid: f036df1040be00b48b945a9ed433d135,
         type: 3}
       propertyPath: m_Name
@@ -35089,6 +35094,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 80058269}
     m_Modifications:
+    - target: {fileID: 2723333428368442622, guid: f036df1040be00b48b945a9ed433d135,
+        type: 3}
+      propertyPath: m_Name
+      value: Leaf Spawner (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 4842603464928017008, guid: f036df1040be00b48b945a9ed433d135,
         type: 3}
       propertyPath: m_Name
