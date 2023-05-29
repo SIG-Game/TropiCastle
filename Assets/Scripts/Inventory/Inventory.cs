@@ -352,11 +352,25 @@ public class Inventory : MonoBehaviour
     {
         ItemScriptableObject coconutItemInfo = Resources.Load<ItemScriptableObject>("Items/Coconut");
 
-        ItemWithAmount coconutItem = new ItemWithAmount(coconutItemInfo, 1);
+        ItemWithAmount coconutItemWithMaxAmount = new ItemWithAmount(coconutItemInfo,
+            coconutItemInfo.stackSize);
 
-        while (CanAddItem(coconutItem))
+        for (int i = 0; i < itemList.Count; ++i)
         {
-            AddItem(coconutItem);
+            ItemWithAmount currentItem = itemList[i];
+
+            if (currentItem.itemData.name == "Coconut")
+            {
+                currentItem.amount = coconutItemInfo.stackSize;
+
+                OnItemChangedAtIndex(currentItem, i);
+            }
+            else if (currentItem.itemData.name == "Empty")
+            {
+                currentItem = coconutItemWithMaxAmount;
+
+                OnItemChangedAtIndex(currentItem, i);
+            }
         }
     }
 
