@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static Inventory;
 
 public class ItemWorld : MonoBehaviour
 {
@@ -47,5 +48,33 @@ public class ItemWorld : MonoBehaviour
         name = $"{item.itemData.name} ItemWorld";
 
         amountText.text = item.GetAmountText();
+    }
+
+    public SerializableItemWorldState GetSerializableState()
+    {
+        var serializableItem = new SerializableInventoryItem
+        {
+            // Use ScriptableObject name and not item display name
+            ItemName = ((ScriptableObject)item.itemData).name,
+            Amount = item.amount,
+            InstanceProperties = item.instanceProperties
+        };
+
+        var serializableState = new SerializableItemWorldState
+        {
+            Item = serializableItem,
+            Position = transform.position,
+            GameObjectName = gameObject.name
+        };
+
+        return serializableState;
+    }
+
+    [Serializable]
+    public class SerializableItemWorldState
+    {
+        public SerializableInventoryItem Item;
+        public Vector2 Position;
+        public string GameObjectName;
     }
 }
