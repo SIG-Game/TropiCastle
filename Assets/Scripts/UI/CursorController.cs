@@ -77,9 +77,9 @@ public class CursorController : MonoBehaviour
             }
 
             transform.position = ClampToScreen(transform.position + (Vector3)cursorDelta);
-
-            UpdateCursorWorldPosition();
         }
+
+        UpdateCursorWorldPosition();
     }
 
     private void OnDestroy()
