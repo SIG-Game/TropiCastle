@@ -338,12 +338,14 @@ public class PlayerController : MonoBehaviour
         Vector2 playerPosition = transform.position;
         int playerDirection = (int)Direction;
         int selectedItemIndex = GetSelectedItemIndex();
+        int health = healthController.GetCurrentHealth();
 
         var serializablePlayerProperties = new SerializablePlayerProperties
         {
             PlayerPosition = playerPosition,
             PlayerDirection = playerDirection,
-            SelectedItemIndex = selectedItemIndex
+            SelectedItemIndex = selectedItemIndex,
+            Health = health
         };
 
         return serializablePlayerProperties;
@@ -355,6 +357,7 @@ public class PlayerController : MonoBehaviour
         transform.position = serializablePlayerProperties.PlayerPosition;
         Direction = (CharacterDirection)serializablePlayerProperties.PlayerDirection;
         itemSelectionController.SelectedItemIndex = serializablePlayerProperties.SelectedItemIndex;
+        healthController.SetCurrentHealth(serializablePlayerProperties.Health);
     }
 
     [Serializable]
@@ -363,6 +366,7 @@ public class PlayerController : MonoBehaviour
         public Vector2 PlayerPosition;
         public int PlayerDirection;
         public int SelectedItemIndex;
+        public int Health;
     }
 
     public bool CanMove() => !IsAttacking && !PauseController.Instance.GamePaused && !ActionDisablingUIOpen;

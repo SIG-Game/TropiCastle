@@ -62,6 +62,13 @@ public class HealthController : MonoBehaviour
         return currentHealth >= maxHealth;
     }
 
+    public void SetCurrentHealth(int currentHealth)
+    {
+        this.currentHealth = currentHealth;
+
+        OnHealthSet(currentHealth);
+    }
+
     public int GetCurrentHealth() => currentHealth;
 
     public int GetMaxHealth() => maxHealth;
