@@ -229,7 +229,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     {
         heldItemSlot.SetSprite(transparentSprite);
         heldItemSlot.SetAmountText(string.Empty);
-        heldItemSlot.SetItemInstanceProperties(null);
+        heldItemSlot.SetItemInstanceProperties(null, null);
     }
 
     private void RefreshHeldItem()

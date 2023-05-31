@@ -19,7 +19,7 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
         ItemWithAmount fishingRodItem = playerInventory.GetItemAtIndex(fishingRodItemIndex);
 
         var fishingRodItemInstanceProperties =
-            ((FishingRodItemInstanceProperties)fishingRodItem.instanceProperties);
+            ((BreakableItemInstanceProperties)fishingRodItem.instanceProperties);
 
         fishingRodItemInstanceProperties.Durability--;
 

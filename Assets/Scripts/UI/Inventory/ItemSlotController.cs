@@ -25,17 +25,19 @@ public class ItemSlotController : MonoBehaviour
         amountText.text = text;
     }
 
-    public void SetItemInstanceProperties(object itemInstanceProperties)
+    public void SetItemInstanceProperties(object itemInstanceProperties,
+        ItemScriptableObject itemScriptableObject)
     {
-        if (itemInstanceProperties is FishingRodItemInstanceProperties)
+        if (itemInstanceProperties is BreakableItemInstanceProperties
+            breakableItemInstanceProperties)
         {
             var fishingRodProperties =
-                itemInstanceProperties as FishingRodItemInstanceProperties;
+                itemInstanceProperties as BreakableItemInstanceProperties;
 
             durabilityMeterBackground.SetActive(true);
 
             float durabilityMeterXScale = (float)fishingRodProperties.Durability /
-                FishingRodItemInstanceProperties.InitialDurability;
+                ((BreakableItemScriptableObject)itemScriptableObject).InitialDurability;
 
             durabilityMeter.localScale = new Vector3(durabilityMeterXScale,
                 durabilityMeter.localScale.y, durabilityMeter.localScale.z);
@@ -50,6 +52,6 @@ public class ItemSlotController : MonoBehaviour
     {
         SetSprite(item.itemData.sprite);
         SetAmountText(item.GetAmountText());
-        SetItemInstanceProperties(item.instanceProperties);
+        SetItemInstanceProperties(item.instanceProperties, item.itemData);
     }
 }

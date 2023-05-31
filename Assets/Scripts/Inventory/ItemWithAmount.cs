@@ -11,8 +11,7 @@ public class ItemWithAmount
     private static readonly Dictionary<string, Type> itemNameToInstancePropertiesType =
         new Dictionary<string, Type>
     {
-        { "Chest", typeof(ChestItemInstanceProperties) },
-        { "Fishing Rod", typeof(FishingRodItemInstanceProperties) }
+        { "Chest", typeof(ChestItemInstanceProperties) }
     };
 
     public ItemWithAmount(ItemScriptableObject itemData, int amount,
@@ -34,7 +33,12 @@ public class ItemWithAmount
 
     public void InitializeItemInstanceProperties()
     {
-        if (itemNameToInstancePropertiesType.TryGetValue(itemData.name,
+        if (itemData is BreakableItemScriptableObject breakableItemScriptableObject)
+        {
+            instanceProperties = new BreakableItemInstanceProperties(
+                breakableItemScriptableObject.InitialDurability);
+        }
+        else if (itemNameToInstancePropertiesType.TryGetValue(itemData.name,
             out Type itemInstancePropertiesType))
         {
             instanceProperties = Activator.CreateInstance(itemInstancePropertiesType);

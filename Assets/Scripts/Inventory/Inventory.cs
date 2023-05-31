@@ -45,8 +45,6 @@ public class Inventory : MonoBehaviour
     {
         ItemWithAmount newItem = new ItemWithAmount(info, amount);
 
-        newItem.InitializeItemInstanceProperties();
-
         AddItem(newItem);
     }
 
@@ -206,6 +204,11 @@ public class Inventory : MonoBehaviour
     {
         // Prevent newItem from being modified
         ItemWithAmount newItemCopy = new ItemWithAmount(newItem);
+
+        if (newItemCopy.instanceProperties == null)
+        {
+            newItemCopy.InitializeItemInstanceProperties();
+        }
 
         SetItemAtIndex(newItemCopy, index);
 

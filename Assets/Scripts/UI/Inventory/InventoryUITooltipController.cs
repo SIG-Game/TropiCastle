@@ -102,17 +102,17 @@ public class InventoryUITooltipController : MonoBehaviour
             WeaponItemScriptableObject weaponItem => $"{itemData.name}\n" +
                 $"{weaponItem.attackType} Attack\nDeals {weaponItem.damage} Damage\n" +
                 $"{weaponItem.knockback} Knockback\n{weaponItem.attackSpeed} Attack Speed",
-            { name: "Fishing Rod" } => $"{itemData.name}\n" +
-                $"Durability: {FishingRodItemInstanceProperties.InitialDurability}",
+            BreakableItemScriptableObject breakableItem => $"{itemData.name}\n" +
+                $"Durability: {breakableItem.InitialDurability}",
             { name: "Empty" } => string.Empty,
             _ => itemData.name
         };
 
     public static string GetItemTooltipText(ItemWithAmount item) =>
         item switch {
-            { instanceProperties: FishingRodItemInstanceProperties fishingRodProperties } =>
+            { instanceProperties: BreakableItemInstanceProperties fishingRodProperties } =>
                 $"{item.itemData.name}\nDurability: {fishingRodProperties.Durability} " +
-                $"/ {FishingRodItemInstanceProperties.InitialDurability}",
+                $"/ {((BreakableItemScriptableObject)item.itemData).InitialDurability}",
             _ => GetItemScriptableObjectTooltipText(item.itemData)
         };
 
