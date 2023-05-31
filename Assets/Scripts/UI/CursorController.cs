@@ -25,6 +25,8 @@ public class CursorController : MonoBehaviour
     private Vector2 cursorWorldPosition;
     private Vector2 horizontalCameraBounds;
     private Vector2 verticalCameraBounds;
+    private float previousCameraOrthographicSize;
+    private float previousCameraAspect;
 
     private void Awake()
     {
@@ -34,14 +36,6 @@ public class CursorController : MonoBehaviour
         cursorBackgroundSpriteRenderer = cursorBackground.GetComponent<SpriteRenderer>();
 
         cursorWorldPosition = Vector2.zero;
-
-        float halfCameraHeight = cursorCamera.orthographicSize;
-        float halfCameraWidth = cursorCamera.orthographicSize * cursorCamera.aspect;
-
-        horizontalCameraBounds = new Vector2(cursorCamera.transform.position.x - halfCameraWidth,
-            cursorCamera.transform.position.x + halfCameraWidth);
-        verticalCameraBounds = new Vector2(cursorCamera.transform.position.y - halfCameraHeight,
-            cursorCamera.transform.position.y + halfCameraHeight);
 
         PauseController.OnGamePaused += PauseController_OnGamePaused;
         PauseController.OnGameUnpaused += PauseController_OnGameUnpaused;
@@ -59,6 +53,14 @@ public class CursorController : MonoBehaviour
     // because that script uses the position of the in-game cursor
     private void Update()
     {
+        bool cameraSizeChanged =
+            cursorCamera.orthographicSize != previousCameraOrthographicSize ||
+            cursorCamera.aspect != previousCameraAspect;
+        if (cameraSizeChanged)
+        {
+            UpdateCameraBounds();
+        }
+
         Vector2 moveCursorInput = moveCursorAction.ReadValue<Vector2>();
 
         if (moveCursorInput != Vector2.zero)
@@ -78,8 +80,15 @@ public class CursorController : MonoBehaviour
 
             transform.position = ClampToScreen(transform.position + (Vector3)cursorDelta);
         }
+        else if (cameraSizeChanged)
+        {
+            transform.position = ClampToScreen(transform.position);
+        }
 
         UpdateCursorWorldPosition();
+
+        previousCameraOrthographicSize = cursorCamera.orthographicSize;
+        previousCameraAspect = cursorCamera.aspect;
     }
 
     private void OnDestroy()
@@ -108,6 +117,17 @@ public class CursorController : MonoBehaviour
     public void SetCursorBackgroundLocalScale(Vector3 localScale)
     {
         cursorBackground.transform.localScale = localScale;
+    }
+
+    private void UpdateCameraBounds()
+    {
+        float halfCameraHeight = cursorCamera.orthographicSize;
+        float halfCameraWidth = cursorCamera.orthographicSize * cursorCamera.aspect;
+
+        horizontalCameraBounds = new Vector2(cursorCamera.transform.position.x - halfCameraWidth,
+            cursorCamera.transform.position.x + halfCameraWidth);
+        verticalCameraBounds = new Vector2(cursorCamera.transform.position.y - halfCameraHeight,
+            cursorCamera.transform.position.y + halfCameraHeight);
     }
 
     private Vector3 ClampToScreen(Vector3 input)
