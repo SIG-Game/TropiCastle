@@ -139,7 +139,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         StringBuilder healingItemsToConsumeStringBuilder = new StringBuilder();
 
         int healthBelowMax = playerHealthController.GetMaxHealth() -
-            playerHealthController.GetCurrentHealth();
+            playerHealthController.CurrentHealth;
 
         int healthFromItemsToConsume = 0;
 

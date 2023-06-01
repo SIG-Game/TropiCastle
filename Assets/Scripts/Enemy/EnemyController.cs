@@ -225,7 +225,7 @@ public class EnemyController : MonoBehaviour
         var serializableState = new SerializableEnemyState
         {
             Position = transform.position,
-            Health = healthController.GetCurrentHealth()
+            Health = healthController.CurrentHealth
         };
 
         return serializableState;

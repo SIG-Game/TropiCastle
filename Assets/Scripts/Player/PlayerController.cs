@@ -338,7 +338,7 @@ public class PlayerController : MonoBehaviour
         Vector2 playerPosition = transform.position;
         int playerDirection = (int)Direction;
         int selectedItemIndex = GetSelectedItemIndex();
-        int health = healthController.GetCurrentHealth();
+        int health = healthController.CurrentHealth;
 
         var serializablePlayerProperties = new SerializablePlayerProperties
         {
@@ -357,7 +357,7 @@ public class PlayerController : MonoBehaviour
         transform.position = serializablePlayerProperties.PlayerPosition;
         Direction = (CharacterDirection)serializablePlayerProperties.PlayerDirection;
         itemSelectionController.SelectedItemIndex = serializablePlayerProperties.SelectedItemIndex;
-        healthController.SetCurrentHealth(serializablePlayerProperties.Health);
+        healthController.CurrentHealth = serializablePlayerProperties.Health;
     }
 
     [Serializable]

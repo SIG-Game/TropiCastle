@@ -7,6 +7,22 @@ public class HealthController : MonoBehaviour
 
     private int currentHealth;
 
+    public int CurrentHealth
+    {
+        get => currentHealth;
+        set
+        {
+            currentHealth = value;
+
+            OnHealthSet(currentHealth);
+
+            if (currentHealth == 0)
+            {
+                OnHealthSetToZero();
+            }
+        }
+    }
+
     public event Action<int> OnHealthSet = delegate { };
     public event Action<int> OnHealthChangedByAmount = delegate { };
     public event Action OnHealthSetToZero = delegate { };
@@ -16,6 +32,9 @@ public class HealthController : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    // currentHealth can be set by another script between the execution of Awake
+    // and Start, and OnHealthSet should not be raised in Awake because other
+    // scripts may have not yet subscribed to that event at that time
     private void Start()
     {
         OnHealthSet(currentHealth);
@@ -23,53 +42,37 @@ public class HealthController : MonoBehaviour
 
     public void IncreaseHealth(int amount)
     {
-        int initialHealth = currentHealth;
+        int newHealth = CurrentHealth + amount;
 
-        currentHealth += amount;
-
-        if (currentHealth > maxHealth)
+        if (newHealth > maxHealth)
         {
-            currentHealth = maxHealth;
+            newHealth = maxHealth;
         }
 
-        int healthDelta = currentHealth - initialHealth;
+        int healthDelta = newHealth - CurrentHealth;
 
-        OnHealthSet(currentHealth);
+        CurrentHealth = newHealth;
+
         OnHealthChangedByAmount(healthDelta);
     }
 
     public void DecreaseHealth(int amount)
     {
-        int initialHealth = currentHealth;
+        int newHealth = CurrentHealth - amount;
 
-        currentHealth -= amount;
-
-        if (currentHealth <= 0)
+        if (newHealth <= 0)
         {
-            currentHealth = 0;
-
-            OnHealthSetToZero();
+            newHealth = 0;
         }
 
-        int healthDelta = currentHealth - initialHealth;
+        int healthDelta = newHealth - CurrentHealth;
 
-        OnHealthSet(currentHealth);
+        CurrentHealth = newHealth;
+
         OnHealthChangedByAmount(healthDelta);
     }
 
-    public bool AtMaxHealth()
-    {
-        return currentHealth >= maxHealth;
-    }
-
-    public void SetCurrentHealth(int currentHealth)
-    {
-        this.currentHealth = currentHealth;
-
-        OnHealthSet(currentHealth);
-    }
-
-    public int GetCurrentHealth() => currentHealth;
+    public bool AtMaxHealth() => CurrentHealth >= maxHealth;
 
     public int GetMaxHealth() => maxHealth;
 }
