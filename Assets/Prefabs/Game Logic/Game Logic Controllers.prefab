@@ -37,9 +37,97 @@ Transform:
   - {fileID: 4785022138774550670}
   - {fileID: 7712983792469735924}
   - {fileID: 4821036963231356901}
+  - {fileID: 7754744547119392942}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &414053978873449506
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3823451490873777939}
+    m_Modifications:
+    - target: {fileID: 1571438441844635341, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_Name
+      value: Enemy Save Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c, type: 3}
+--- !u!114 &1780375086519093215 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2092531513885969405, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+    type: 3}
+  m_PrefabInstance: {fileID: 414053978873449506}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f905d04751eed4c86d7b51d97c5de5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &7754744547119392942 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7935730611680191628, guid: 4ff4a4e1a2ea0f049a8b59784dc0f37c,
+    type: 3}
+  m_PrefabInstance: {fileID: 414053978873449506}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &534780890208632583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -272,6 +360,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3823451490873777939}
     m_Modifications:
+    - target: {fileID: 1760163904208803323, guid: 07a1f4486535b52458a665f92d54711f,
+        type: 3}
+      propertyPath: enemySaveManager
+      value: 
+      objectReference: {fileID: 1780375086519093215}
     - target: {fileID: 1760163904208803323, guid: 07a1f4486535b52458a665f92d54711f,
         type: 3}
       propertyPath: spawnerSaveManager

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -217,5 +218,23 @@ public class EnemyController : MonoBehaviour
     public void SetPlayerInventory(Inventory playerInventory)
     {
         this.playerInventory = playerInventory;
+    }
+
+    public SerializableEnemyState GetSerializableState()
+    {
+        var serializableState = new SerializableEnemyState
+        {
+            Position = transform.position,
+            Health = healthController.GetCurrentHealth()
+        };
+
+        return serializableState;
+    }
+
+    [Serializable]
+    public class SerializableEnemyState
+    {
+        public Vector2 Position;
+        public int Health;
     }
 }

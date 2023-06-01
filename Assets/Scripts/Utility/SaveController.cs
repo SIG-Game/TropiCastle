@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using static EnemyController;
 using static Inventory;
 using static ItemWorld;
 using static PlayerController;
@@ -12,6 +13,7 @@ public class SaveController : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private SpawnerSaveManager spawnerSaveManager;
     [SerializeField] private ItemWorldSaveManager itemWorldSaveManager;
+    [SerializeField] private EnemySaveManager enemySaveManager;
 
     private string saveDataFilePath;
 
@@ -37,7 +39,8 @@ public class SaveController : MonoBehaviour
             SerializableInventory = playerInventory.GetSerializableInventory(),
             SerializablePlayerProperties = playerController.GetSerializablePlayerProperties(),
             SpawnerSaveEntries = spawnerSaveManager.GetSpawnerSaveEntries(),
-            itemWorldStates = itemWorldSaveManager.GetItemWorldStates()
+            itemWorldStates = itemWorldSaveManager.GetItemWorldStates(),
+            enemyStates = enemySaveManager.GetEnemyStates()
         };
 
         WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
@@ -62,6 +65,8 @@ public class SaveController : MonoBehaviour
         spawnerSaveManager.SetSpawnerStates(saveData.SpawnerSaveEntries);
 
         itemWorldSaveManager.CreateItemWorldsFromStates(saveData.itemWorldStates);
+
+        enemySaveManager.CreateEnemiesFromStates(saveData.enemyStates);
     }
 
     private void WriteSerializableObjectAsJsonToFile(object serializableObject, string filePath)
@@ -97,5 +102,6 @@ public class SaveController : MonoBehaviour
         public SerializablePlayerProperties SerializablePlayerProperties;
         public SpawnerSaveEntry[] SpawnerSaveEntries;
         public SerializableItemWorldState[] itemWorldStates;
+        public SerializableEnemyState[] enemyStates;
     }
 }
