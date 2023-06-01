@@ -52,13 +52,7 @@ public class ItemWorld : MonoBehaviour
 
     public SerializableItemWorldState GetSerializableState()
     {
-        var serializableItem = new SerializableInventoryItem
-        {
-            // Use ScriptableObject name and not item display name
-            ItemName = ((ScriptableObject)item.itemData).name,
-            Amount = item.amount,
-            InstanceProperties = item.instanceProperties
-        };
+        var serializableItem = new SerializableInventoryItem(item);
 
         var serializableState = new SerializableItemWorldState
         {

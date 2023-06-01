@@ -297,13 +297,7 @@ public class Inventory : MonoBehaviour
     public SerializableInventory GetSerializableInventory()
     {
         IEnumerable<SerializableInventoryItem> serializableInventoryItems =
-            itemList.Select(x => new SerializableInventoryItem
-            {
-                // Use ScriptableObject name and not item display name
-                ItemName = ((ScriptableObject)x.itemData).name,
-                Amount = x.amount,
-                InstanceProperties = x.instanceProperties
-            });
+            itemList.Select(x => new SerializableInventoryItem(x));
 
         var serializableInventory = new SerializableInventory
         {
@@ -349,6 +343,18 @@ public class Inventory : MonoBehaviour
 
         [SerializeReference]
         public object InstanceProperties;
+
+        public SerializableInventoryItem()
+        {
+        }
+
+        public SerializableInventoryItem(ItemWithAmount item)
+        {
+            // Use ScriptableObject name and not item display name
+            ItemName = ((ScriptableObject)item.itemData).name;
+            Amount = item.amount;
+            InstanceProperties = item.instanceProperties;
+        }
     }
 
     public void FillInventory()
