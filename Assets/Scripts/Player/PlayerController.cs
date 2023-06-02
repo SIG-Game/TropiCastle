@@ -132,9 +132,9 @@ public class PlayerController : MonoBehaviour
         // Do not check for fish input on the same frame that an item is used
         else if (InputManager.Instance.GetFishButtonDownIfUnusedThisFrame() &&
             !ActionDisablingUIOpen &&
-            inventory.GetItemList().FindIndex(x => x.itemData.name == "Fishing Rod") != -1)
+            TryGetFishingRodItemIndex(out int fishingRodItemIndex))
         {
-            Fish();
+            fishingRodItemUsage.UseItem(fishingRodItemIndex);
         }
         else if (healInputAction.WasPressedThisFrame())
         {
@@ -282,6 +282,14 @@ public class PlayerController : MonoBehaviour
 
             ConsumeHealingItem(healingItemIndex, healingItem.healAmount);
         }
+    }
+
+    private bool TryGetFishingRodItemIndex(out int fishingRodItemIndex)
+    {
+        fishingRodItemIndex = inventory.GetItemList()
+            .FindIndex(x => x.itemData.name == "Fishing Rod");
+
+        return fishingRodItemIndex != -1;
     }
 
     private void HealthController_OnHealthSetToZero()

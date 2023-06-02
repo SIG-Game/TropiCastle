@@ -6,7 +6,23 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private FishingUIController fishingUIController;
 
+    private int fishingRodItemIndex;
+
     public void UseItem()
+    {
+        fishingRodItemIndex = playerController.GetSelectedItemIndex();
+
+        StartFishing();
+    }
+
+    public void UseItem(int fishingRodItemIndex)
+    {
+        this.fishingRodItemIndex = fishingRodItemIndex;
+
+        StartFishing();
+    }
+
+    private void StartFishing()
     {
         playerController.Fish();
 
@@ -15,7 +31,6 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 
     private void DecreaseFishingRodDurability()
     {
-        int fishingRodItemIndex = playerController.GetSelectedItemIndex();
         ItemWithAmount fishingRodItem = playerInventory.GetItemAtIndex(fishingRodItemIndex);
 
         var fishingRodItemInstanceProperties =
