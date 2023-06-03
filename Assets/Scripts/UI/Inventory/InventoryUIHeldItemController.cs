@@ -7,6 +7,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
 {
     [SerializeField] private GameObject heldItemUI;
     [SerializeField] private TextMeshProUGUI heldItemAmountText;
+    [SerializeField] private GameObject heldItemDurabilityMeterBackground;
+    [SerializeField] private RectTransform heldItemDurabilityMeter;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private Sprite transparentSprite;
@@ -242,6 +244,18 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemImage.sprite = heldItem.itemData.sprite;
 
         heldItemAmountText.text = heldItem.GetAmountText();
+
+        if (heldItem.instanceProperties is
+            BreakableItemInstanceProperties breakableItemInstanceProperties)
+        {
+            heldItemDurabilityMeterBackground.SetActive(true);
+
+            float durabilityMeterXScale = (float)breakableItemInstanceProperties.Durability /
+                ((BreakableItemScriptableObject)heldItem.itemData).InitialDurability;
+
+            heldItemDurabilityMeter.localScale = new Vector3(durabilityMeterXScale,
+                heldItemDurabilityMeter.localScale.y, heldItemDurabilityMeter.localScale.z);
+        }
     }
 
     private void ResetHeldItem()
@@ -258,6 +272,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
     {
         heldItemImage.sprite = transparentSprite;
         heldItemAmountText.text = string.Empty;
+
+        heldItemDurabilityMeterBackground.SetActive(false);
 
         InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
 
