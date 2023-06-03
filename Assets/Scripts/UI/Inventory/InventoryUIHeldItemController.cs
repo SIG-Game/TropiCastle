@@ -42,6 +42,11 @@ public class InventoryUIHeldItemController : MonoBehaviour
         if (HoldingItem())
         {
             UpdateHeldItemPosition();
+
+            if (Input.GetMouseButtonDown(1) && inventoryUIController.HoveredItemIndex == -1)
+            {
+                ResetHeldItem();
+            }
         }
     }
 

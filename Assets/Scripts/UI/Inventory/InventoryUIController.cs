@@ -12,7 +12,7 @@ public class InventoryUIController : ItemSlotContainerController
 
     private InputAction inventoryAction;
 
-    public int HoveredItemIndex { private get; set; }
+    public int HoveredItemIndex { get; set; }
 
     public event Action OnInventoryClosed = delegate { };
 
