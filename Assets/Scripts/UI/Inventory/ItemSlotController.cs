@@ -7,8 +7,7 @@ public class ItemSlotController : MonoBehaviour
     [SerializeField] private Image itemSlotImage;
     [SerializeField] private Image itemSlotBackgroundImage;
     [SerializeField] private TextMeshProUGUI amountText;
-    [SerializeField] private GameObject durabilityMeterBackground;
-    [SerializeField] private RectTransform durabilityMeter;
+    [SerializeField] private ItemDurabilityMeterController durabilityMeter;
 
     public void SetSprite(Sprite sprite)
     {
@@ -25,33 +24,15 @@ public class ItemSlotController : MonoBehaviour
         amountText.text = text;
     }
 
-    public void SetItemInstanceProperties(object itemInstanceProperties,
-        ItemScriptableObject itemScriptableObject)
+    public void HideDurabilityMeter()
     {
-        if (itemInstanceProperties is BreakableItemInstanceProperties
-            breakableItemInstanceProperties)
-        {
-            var fishingRodProperties =
-                itemInstanceProperties as BreakableItemInstanceProperties;
-
-            durabilityMeterBackground.SetActive(true);
-
-            float durabilityMeterXScale = (float)fishingRodProperties.Durability /
-                ((BreakableItemScriptableObject)itemScriptableObject).InitialDurability;
-
-            durabilityMeter.localScale = new Vector3(durabilityMeterXScale,
-                durabilityMeter.localScale.y, durabilityMeter.localScale.z);
-        }
-        else if (durabilityMeterBackground.activeSelf)
-        {
-            durabilityMeterBackground.SetActive(false);
-        }
+        durabilityMeter.HideMeter();
     }
 
     public void UpdateUsingItem(ItemWithAmount item)
     {
         SetSprite(item.itemData.sprite);
         SetAmountText(item.GetAmountText());
-        SetItemInstanceProperties(item.instanceProperties, item.itemData);
+        durabilityMeter.UpdateUsingItem(item);
     }
 }
