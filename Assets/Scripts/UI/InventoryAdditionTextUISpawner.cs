@@ -4,7 +4,6 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
 {
     [SerializeField] private GameObject inventoryAdditionText;
     [SerializeField] private Inventory targetInventory;
-    [SerializeField] private float verticalSpacing;
 
     private void Awake()
     {
@@ -26,22 +25,13 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
             return;
         }
 
-        MoveChildInventoryAdditionTextUp();
-
         GameObject spawnedInventoryAdditionText =
             Instantiate(inventoryAdditionText, transform);
 
         spawnedInventoryAdditionText.GetComponent<InventoryAdditionTextUIController>()
             .SetText($"+{item.amount} {item.itemData.name}");
-    }
 
-    private void MoveChildInventoryAdditionTextUp()
-    {
-        foreach (RectTransform childInventoryAdditionText in transform)
-        {
-            childInventoryAdditionText.anchoredPosition =
-                new Vector2(childInventoryAdditionText.anchoredPosition.x,
-                    childInventoryAdditionText.anchoredPosition.y + verticalSpacing);
-        }
+        // Ensure spawned inventory addition text is at the bottom of the inventory addition UI
+        spawnedInventoryAdditionText.transform.SetAsFirstSibling();
     }
 }
