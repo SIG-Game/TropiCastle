@@ -7,13 +7,13 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance;
 
     public bool EscapeKeyUsedThisFrame { get; set; }
+    public bool NumberKeyUsedThisFrame { private get; set; }
 
     private PlayerInput playerInput;
 
     private InputAction useItemAction;
     private InputAction interactAction;
     private InputAction fishAction;
-    private bool numberKeyUsedThisFrame;
     private bool useItemButtonDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
     private bool fishButtonDownUsedThisFrame;
@@ -36,8 +36,8 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         EscapeKeyUsedThisFrame = false;
+        NumberKeyUsedThisFrame = false;
 
-        numberKeyUsedThisFrame = false;
         useItemButtonDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;
         fishButtonDownUsedThisFrame = false;
@@ -65,7 +65,7 @@ public class InputManager : MonoBehaviour
 
     public int GetNumberKeyIndexIfUnusedThisFrame()
     {
-        if (numberKeyUsedThisFrame)
+        if (NumberKeyUsedThisFrame)
         {
             return -1;
         }
@@ -93,7 +93,7 @@ public class InputManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha0))
             numberKeyIndex = 9;
 
-        numberKeyUsedThisFrame = true;
+        NumberKeyUsedThisFrame = true;
 
         return numberKeyIndex;
     }
