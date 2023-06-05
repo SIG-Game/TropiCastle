@@ -38,13 +38,6 @@ public class SpawnerSaveManager : MonoBehaviour
             State = spawner.GetSerializableSpawnerState()
         };
 
-        // Because GameObjects with a Spawnable component are not saved, NumberOfSpawnedPrefabs
-        // needs to be set to 0 so that counts of spawned GameObjects for spawners are accurate
-        // after loading a save.
-        // TODO: Remove when GameObjects with Spawnable components are saved and associated with
-        // spawners in the scene in the save data
-        spawnerSaveEntry.State.NumberOfSpawnedPrefabs = 0;
-
         return spawnerSaveEntry;
     }
 

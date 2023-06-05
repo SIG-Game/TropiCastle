@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
     private new Collider2D collider2D;
     private SpriteRenderer spriteRenderer;
     private HealthController healthController;
+    private Spawnable spawnable;
     private Vector2 playerColliderOffset;
     private EnemyState state;
 
@@ -36,6 +37,7 @@ public class EnemyController : MonoBehaviour
         collider2D = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         healthController = GetComponent<HealthController>();
+        spawnable = GetComponent<Spawnable>();
 
         state = EnemyState.Initial;
 
@@ -225,7 +227,8 @@ public class EnemyController : MonoBehaviour
         var serializableState = new SerializableEnemyState
         {
             Position = transform.position,
-            Health = healthController.CurrentHealth
+            Health = healthController.CurrentHealth,
+            SpawnerGameObjectName = spawnable.GetSpawnerGameObjectName()
         };
 
         return serializableState;
@@ -236,5 +239,6 @@ public class EnemyController : MonoBehaviour
     {
         public Vector2 Position;
         public int Health;
+        public string SpawnerGameObjectName;
     }
 }

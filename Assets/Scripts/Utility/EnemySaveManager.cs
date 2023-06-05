@@ -30,6 +30,15 @@ public class EnemySaveManager : MonoBehaviour
 
             spawnedEnemyController.SetPlayerTransform(playerTransform);
             spawnedEnemyController.SetPlayerInventory(playerInventory);
+
+            if (!string.IsNullOrEmpty(enemyState.SpawnerGameObjectName))
+            {
+                GameObject enemySpawnerGameObject =
+                    GameObject.Find(enemyState.SpawnerGameObjectName);
+
+                spawnedEnemy.GetComponent<Spawnable>()
+                    .SetSpawner(enemySpawnerGameObject.GetComponent<PrefabSpawner>());
+            }
         }
     }
 }

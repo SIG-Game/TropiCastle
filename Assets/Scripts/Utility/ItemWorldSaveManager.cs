@@ -30,6 +30,15 @@ public class ItemWorldSaveManager : MonoBehaviour
                 itemWorldState.Position, item);
 
             spawnedItemWorld.gameObject.name = itemWorldState.GameObjectName;
+
+            if (!string.IsNullOrEmpty(itemWorldState.SpawnerGameObjectName))
+            {
+                GameObject itemWorldSpawnerGameObject =
+                    GameObject.Find(itemWorldState.SpawnerGameObjectName);
+
+                spawnedItemWorld.GetComponent<Spawnable>()
+                    .SetSpawner(itemWorldSpawnerGameObject.GetComponent<PrefabSpawner>());
+            }
         }
     }
 }

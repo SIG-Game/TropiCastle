@@ -26,6 +26,13 @@ public class ItemWorld : MonoBehaviour
         { "Chest", typeof(ChestItemInteractable) }
     };
 
+    private Spawnable spawnable;
+
+    private void Awake()
+    {
+        spawnable = GetComponent<Spawnable>();
+    }
+
     // These operations must be in the Start method because the Awake
     // method runs before ItemWorldPrefabInstanceFactory sets item
     private void Start()
@@ -58,7 +65,8 @@ public class ItemWorld : MonoBehaviour
         {
             Item = serializableItem,
             Position = transform.position,
-            GameObjectName = gameObject.name
+            GameObjectName = gameObject.name,
+            SpawnerGameObjectName = spawnable.GetSpawnerGameObjectName()
         };
 
         return serializableState;
@@ -70,5 +78,6 @@ public class ItemWorld : MonoBehaviour
         public SerializableInventoryItem Item;
         public Vector2 Position;
         public string GameObjectName;
+        public string SpawnerGameObjectName;
     }
 }
