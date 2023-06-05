@@ -26,5 +26,13 @@ public class DebugAddItemDropdownController : MonoBehaviour
         ScrollRectVerticalNormalizedPosition = 1f;
     }
 
+    private void Start()
+    {
+        if (!DebugModeController.DebugModeEnabled)
+        {
+            dropdown.gameObject.SetActive(false);
+        }
+    }
+
     public ItemScriptableObject GetSelectedItemScriptableObject() => itemScriptableObjects[dropdown.value];
 }

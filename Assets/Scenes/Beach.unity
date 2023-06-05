@@ -37802,6 +37802,11 @@ PrefabInstance:
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 8774762380487729168, guid: aed0fde4b0ab92c40899e678ccf7f384,
+        type: 3}
+      propertyPath: debugAddItemButton
+      value: 
+      objectReference: {fileID: 8774762378825284408}
     - target: {fileID: 8774762380487729170, guid: aed0fde4b0ab92c40899e678ccf7f384,
         type: 3}
       propertyPath: inventory
@@ -37974,6 +37979,12 @@ PrefabInstance:
       objectReference: {fileID: 1982112582}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed0fde4b0ab92c40899e678ccf7f384, type: 3}
+--- !u!1 &8774762378825284408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8774762379322580868, guid: aed0fde4b0ab92c40899e678ccf7f384,
+    type: 3}
+  m_PrefabInstance: {fileID: 8774762378825284407}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9220680043645559524
 PrefabInstance:
   m_ObjectHideFlags: 0
