@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +6,7 @@ public class CursorController : MonoBehaviour
 {
     [SerializeField] private Sprite defaultCursorSprite;
     [SerializeField] private GameObject cursorBackground;
+    [SerializeField] private TMP_Text amountText;
     [SerializeField] private Camera cursorCamera;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private float mouseSensitivity;
@@ -108,10 +110,16 @@ public class CursorController : MonoBehaviour
         cursorBackgroundSpriteRenderer.color = cursorBackgroundColor;
     }
 
+    public void SetAmountText(string text)
+    {
+        amountText.text = text;
+    }
+
     public void UseDefaultCursor()
     {
         Sprite = defaultCursorSprite;
         SetCursorBackgroundColor(Color.clear);
+        SetAmountText(string.Empty);
     }
 
     public void SetCursorBackgroundLocalScale(Vector3 localScale)
