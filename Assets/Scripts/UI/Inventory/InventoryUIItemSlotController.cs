@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHandler,
+public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private InventoryUIController inventoryUIController;
@@ -18,9 +18,15 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
         }
 
         SetSlotTooltipText();
+
+        if (Input.GetMouseButton(1))
+        {
+            InventoryUIHeldItemController.Instance.HeldRightClickOverItemAtIndex(
+                inventory, slotItemIndex);
+        }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
@@ -30,7 +36,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerClickHa
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             InventoryUIHeldItemController.Instance.RightClickedItemAtIndex(
-                inventory, slotItemIndex, this);
+                inventory, slotItemIndex);
         }
     }
 

@@ -84,7 +84,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     }
 
     public void RightClickedItemAtIndex(Inventory clickedInventory,
-        int clickedItemIndex, InventoryUIItemSlotController clickedItemSlot)
+        int clickedItemIndex)
     {
         this.clickedInventory = clickedInventory;
 
@@ -94,6 +94,12 @@ public class InventoryUIHeldItemController : MonoBehaviour
         {
             PlaceOneOfHeldItem(clickedItemIndex, clickedItem);
         }
+    }
+
+    public void HeldRightClickOverItemAtIndex(Inventory clickedInventory,
+        int clickedItemIndex)
+    {
+        RightClickedItemAtIndex(clickedInventory, clickedItemIndex);
     }
 
     private void PlaceHeldItem(int clickedItemIndex, ItemWithAmount clickedItem)
