@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryAdditionTextUISpawner : MonoBehaviour
@@ -5,8 +6,12 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
     [SerializeField] private GameObject inventoryAdditionText;
     [SerializeField] private Inventory targetInventory;
 
+    private Dictionary<string, InventoryAdditionTextUIController> itemNameToAdditionText;
+
     private void Awake()
     {
+        itemNameToAdditionText = new Dictionary<string, InventoryAdditionTextUIController>();
+
         targetInventory.OnItemAdded += TargetInventory_OnItemAdded;
     }
 
@@ -25,13 +30,31 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
             return;
         }
 
-        GameObject spawnedInventoryAdditionText =
-            Instantiate(inventoryAdditionText, transform);
+        if (itemNameToAdditionText.TryGetValue(item.itemData.name,
+            out InventoryAdditionTextUIController additionTextController))
+        {
+            additionTextController.AddAmount(item.amount);
+        }
+        else
+        {
+            GameObject spawnedAdditionText = Instantiate(inventoryAdditionText, transform);
 
-        spawnedInventoryAdditionText.GetComponent<InventoryAdditionTextUIController>()
-            .SetText($"+{item.amount} {item.itemData.name}");
+            InventoryAdditionTextUIController spawnedAdditionTextController =
+                spawnedAdditionText.GetComponent<InventoryAdditionTextUIController>();
 
-        // Ensure spawned inventory addition text is at the bottom of the inventory addition UI
-        spawnedInventoryAdditionText.transform.SetAsFirstSibling();
+            spawnedAdditionTextController.UpdateWithItem(item);
+            spawnedAdditionTextController.SetSpawner(this);
+
+            // Ensure spawned inventory addition text is at the
+            // bottom of the inventory addition UI
+            spawnedAdditionText.transform.SetAsFirstSibling();
+
+            itemNameToAdditionText.Add(item.itemData.name, spawnedAdditionTextController);
+        }
+    }
+
+    public void OnAdditionTextDestroyed(string itemName)
+    {
+        itemNameToAdditionText.Remove(itemName);
     }
 }

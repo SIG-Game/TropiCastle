@@ -9,14 +9,18 @@ public class InventoryAdditionTextUIController : MonoBehaviour
     [SerializeField] private float waitTimeBeforeFadeOutSeconds;
     [SerializeField] private float alphaChangeSpeed;
 
+    private InventoryAdditionTextUISpawner spawner;
+    private Coroutine waitThenStartFadingOutCoroutineObject;
     private WaitForSeconds beforeFadeOutWaitForSeconds;
     private float targetAlpha;
+    private string itemName;
+    private int itemAmount;
 
     private void Awake()
     {
         beforeFadeOutWaitForSeconds = new WaitForSeconds(waitTimeBeforeFadeOutSeconds);
 
-        StartCoroutine(WaitThenStartFadingOut());
+        waitThenStartFadingOutCoroutineObject = StartCoroutine(WaitThenStartFadingOut());
 
         targetAlpha = 1f;
     }
@@ -35,6 +39,11 @@ public class InventoryAdditionTextUIController : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        spawner.OnAdditionTextDestroyed(itemName);
+    }
+
     private IEnumerator WaitThenStartFadingOut()
     {
         yield return beforeFadeOutWaitForSeconds;
@@ -42,8 +51,42 @@ public class InventoryAdditionTextUIController : MonoBehaviour
         targetAlpha = 0f;
     }
 
-    public void SetText(string text)
+    public void UpdateWithItem(ItemWithAmount item)
     {
-        inventoryAdditionText.text = text;
+        itemName = item.itemData.name;
+        itemAmount = item.amount;
+
+        UpdateText();
+    }
+
+    public void AddAmount(int amount)
+    {
+        itemAmount += amount;
+
+        UpdateText();
+
+        ResetFadeOut();
+    }
+
+    private void UpdateText()
+    {
+        inventoryAdditionText.text = $"+{itemAmount} {itemName}";
+    }
+
+    private void ResetFadeOut()
+    {
+        if (waitThenStartFadingOutCoroutineObject != null)
+        {
+            StopCoroutine(waitThenStartFadingOutCoroutineObject);
+        }
+
+        waitThenStartFadingOutCoroutineObject = StartCoroutine(WaitThenStartFadingOut());
+
+        targetAlpha = 1f;
+    }
+
+    public void SetSpawner(InventoryAdditionTextUISpawner spawner)
+    {
+        this.spawner = spawner;
     }
 }
