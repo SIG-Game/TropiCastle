@@ -105,6 +105,8 @@ MonoBehaviour:
   amountText: {fileID: 3313270605559872021}
   cursorCamera: {fileID: 0}
   playerController: {fileID: 0}
+  moveCursorActionReference: {fileID: 5188215401280149152, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
   mouseSensitivity: 0.01
   gamepadSensitivity: 5
 --- !u!1 &987879900663517766

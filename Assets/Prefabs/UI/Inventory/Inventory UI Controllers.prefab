@@ -3016,6 +3016,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   itemSelectionController: {fileID: 0}
+  inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
 --- !u!114 &8774762380487729183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3030,8 +3032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heldItemUI: {fileID: 0}
   heldItemAmountText: {fileID: 0}
-  heldItemDurabilityMeterBackground: {fileID: 0}
-  heldItemDurabilityMeter: {fileID: 0}
+  durabilityMeter: {fileID: 0}
   canvasRectTransform: {fileID: 0}
   inventoryUIController: {fileID: 8774762380487729170}
   transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
@@ -3060,9 +3061,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d172bec39132f0245bf1817806fb3536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugAddItemButton: {fileID: 0}
   addItemDropdownController: {fileID: 8774762380487729169}
   amountInputField: {fileID: 1558176768086040830}
   playerInventory: {fileID: 0}
+  itemSelectionController: {fileID: 0}
 --- !u!114 &7299807784899514083
 MonoBehaviour:
   m_ObjectHideFlags: 0

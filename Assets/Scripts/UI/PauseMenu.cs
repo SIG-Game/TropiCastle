@@ -6,12 +6,14 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private InputAction pauseInputAction;
     [SerializeField] private GameObject resumeButton;
+    [SerializeField] private InputActionReference pauseActionReference;
 
-    private void Start()
+    private InputAction pauseAction;
+
+    private void Awake()
     {
-        pauseInputAction = InputManager.Instance.GetAction("Pause");
+        pauseAction = pauseActionReference.action;
     }
 
     private void Update()
@@ -21,7 +23,7 @@ public class PauseMenu : MonoBehaviour
             return;
         }
 
-        if (pauseInputAction.WasPressedThisFrame() &&
+        if (pauseAction.WasPressedThisFrame() &&
             (!PauseController.Instance.GamePaused || pauseMenuUI.activeInHierarchy))
         {
             TogglePauseMenu();

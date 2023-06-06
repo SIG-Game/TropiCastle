@@ -11,6 +11,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private Sprite itemPickupArrowInventoryFull;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
     [SerializeField] private Color cannotPlaceCursorBackgroundColor;
+    [SerializeField] private InputActionReference itemPickupAndPlacementActionReference;
 
     public bool WaitingForInputReleaseBeforePlacement { get; set; }
 
@@ -33,14 +34,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         playerInventory = player.GetInventory();
 
+        itemPickupAndPlacementAction = itemPickupAndPlacementActionReference.action;
+
         playerInventory.OnItemAdded += PlayerInventory_OnItemAdded;
         playerInventory.OnItemRemoved += PlayerInventory_OnItemRemoved;
     }
 
     private void Start()
     {
-        itemPickupAndPlacementAction = InputManager.Instance.GetAction("Item Pickup and Placement");
-
         DefaultState = new DefaultItemPickupAndPlacementState(this);
         PickupState = new ItemPickupState(this, itemPickupAndPlacementAction);
         PlacementState = new ItemPlacementState(this, itemPickupAndPlacementAction);

@@ -516,6 +516,10 @@ MonoBehaviour:
   inventory: {fileID: 856750480813842556}
   overlaySpriteMask: {fileID: 7652320630200294286}
   cursorController: {fileID: 0}
+  attackActionReference: {fileID: -3758019864443385551, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
+  healActionReference: {fileID: 5534942449988417204, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
   bucketItemUsage: {fileID: 1346236021351400951}
   coconutItemUsage: {fileID: 1546214460106165925}
   fishingRodItemUsage: {fileID: 8293061806737836654}
@@ -532,6 +536,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d6e4425242c9c40911e4240e8885e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveActionReference: {fileID: 5834383540026693495, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
+  sprintActionReference: {fileID: -973148186856446988, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
   movementSpeed: 0.06
   sprintSpeedMultiplier: 1.25
   waterSpeedMultiplier: 0.5
@@ -573,6 +581,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed13da0dcf91d1545a3989c6e551e94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectLeftItemActionReference: {fileID: -766893524004852649, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
+  selectRightItemActionReference: {fileID: 3435081143351072354, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
   onePlusMaxSelectedItemIndex: 10
   selectInputRepeatTimeSeconds: 0.25
 --- !u!114 &5613604618592605289

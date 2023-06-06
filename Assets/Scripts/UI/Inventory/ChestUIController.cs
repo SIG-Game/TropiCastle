@@ -9,6 +9,7 @@ public class ChestUIController : MonoBehaviour
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private List<InventoryUIItemSlotController> chestItemSlots;
     [SerializeField] private List<InventoryUIItemSlotController> playerItemSlots;
+    [SerializeField] private InputActionReference inventoryActionReference;
 
     private Inventory chestInventory;
     private Inventory playerInventory;
@@ -19,11 +20,8 @@ public class ChestUIController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
 
-    private void Start()
-    {
-        inventoryAction = InputManager.Instance.GetAction("Inventory");
+        inventoryAction = inventoryActionReference.action;
     }
 
     // Must run after the InventoryUIController Update method so that the inventory

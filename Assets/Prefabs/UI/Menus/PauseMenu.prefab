@@ -1733,16 +1733,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 8471863251377667687}
   playerController: {fileID: 0}
-  pauseInputAction:
-    m_Name: Pause Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 31e70ec9-52ab-46d2-9072-ded0e36d6b26
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   resumeButton: {fileID: 7201862457689763602}
+  pauseActionReference: {fileID: 3111250234772231522, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
 --- !u!114 &2160573628843243474
 MonoBehaviour:
   m_ObjectHideFlags: 0

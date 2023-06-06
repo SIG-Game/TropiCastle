@@ -9,6 +9,7 @@ public class InventoryUIController : ItemSlotContainerController
     [SerializeField] private Inventory inventory;
     [SerializeField] private List<GameObject> inventoryUIGameObjects;
     [SerializeField] private ItemSelectionController itemSelectionController;
+    [SerializeField] private InputActionReference inventoryActionReference;
 
     private InputAction inventoryAction;
 
@@ -25,16 +26,13 @@ public class InventoryUIController : ItemSlotContainerController
 
     private void Awake()
     {
+        inventoryAction = inventoryActionReference.action;
+
         HoveredItemIndex = -1;
 
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
-    }
-
-    private void Start()
-    {
-        inventoryAction = InputManager.Instance.GetAction("Inventory");
     }
 
     // Must run after any script Update methods that can set ActionDisablingUIOpen to true to

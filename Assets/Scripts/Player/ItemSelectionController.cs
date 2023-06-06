@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class ItemSelectionController : MonoBehaviour
 {
+    [SerializeField] private InputActionReference selectLeftItemActionReference;
+    [SerializeField] private InputActionReference selectRightItemActionReference;
     [SerializeField] private int onePlusMaxSelectedItemIndex;
     [SerializeField] private float selectInputRepeatTimeSeconds;
 
@@ -37,15 +39,15 @@ public class ItemSelectionController : MonoBehaviour
 
     private void Awake()
     {
+        selectLeftItemAction = selectLeftItemActionReference.action;
+        selectRightItemAction = selectRightItemActionReference.action;
+
         selectedItemIndex = 0;
     }
 
     // Runs after SaveController loads saved game data, which can change selectedItemIndex
     private void Start()
     {
-        selectLeftItemAction = InputManager.Instance.GetAction("Select Left Item");
-        selectRightItemAction = InputManager.Instance.GetAction("Select Right Item");
-
         selectInputRepeatWaitForSeconds = new WaitForSeconds(selectInputRepeatTimeSeconds);
 
         OnItemSelectedAtIndex(selectedItemIndex);

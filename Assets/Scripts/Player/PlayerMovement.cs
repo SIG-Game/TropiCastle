@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private InputActionReference moveActionReference;
+    [SerializeField] private InputActionReference sprintActionReference;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float sprintSpeedMultiplier;
     [SerializeField] private float waterSpeedMultiplier;
@@ -22,15 +24,12 @@ public class PlayerMovement : MonoBehaviour
 
         velocity = Vector2.zero;
 
+        moveAction = moveActionReference.action;
+        sprintAction = sprintActionReference.action;
+
         inWater = false;
 
         waterLayer = LayerMask.NameToLayer("Water");
-    }
-
-    private void Start()
-    {
-        moveAction = InputManager.Instance.GetAction("Move");
-        sprintAction = InputManager.Instance.GetAction("Sprint");
     }
 
     private void Update()

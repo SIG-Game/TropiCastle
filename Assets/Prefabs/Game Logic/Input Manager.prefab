@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b895e4d0d0a534f945065c2c047b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useItemActionReference: {fileID: 3888655578164574335, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
+  interactActionReference: {fileID: -7349196762525343770, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
+  fishActionReference: {fileID: 2727089031427943020, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
 --- !u!114 &4078219768602616832
 MonoBehaviour:
   m_ObjectHideFlags: 0

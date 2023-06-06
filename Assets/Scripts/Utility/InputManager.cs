@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private InputActionReference useItemActionReference;
+    [SerializeField] private InputActionReference interactActionReference;
+    [SerializeField] private InputActionReference fishActionReference;
+
     public static InputManager Instance;
 
     public bool EscapeKeyUsedThisFrame { get; set; }
@@ -23,13 +27,10 @@ public class InputManager : MonoBehaviour
         Instance = this;
 
         playerInput = GetComponent<PlayerInput>();
-    }
 
-    private void Start()
-    {
-        useItemAction = GetAction("Use Item");
-        interactAction = GetAction("Interact");
-        fishAction = GetAction("Fish");
+        useItemAction = useItemActionReference.action;
+        interactAction = interactActionReference.action;
+        fishAction = fishActionReference.action;
     }
 
     // Has to run before any scripts that use IfUnusedThisFrame methods
@@ -106,8 +107,6 @@ public class InputManager : MonoBehaviour
 
     public bool GetFishButtonDownIfUnusedThisFrame() =>
         GetInputIfUnusedThisFrame(() => fishAction.WasPressedThisFrame(), ref fishButtonDownUsedThisFrame);
-
-    public InputAction GetAction(string actionName) => playerInput.currentActionMap[actionName];
 
     public string GetCurrentControlScheme() => playerInput.currentControlScheme;
 

@@ -683,6 +683,8 @@ MonoBehaviour:
   - {fileID: 6696742860766728138}
   - {fileID: 6696742861422036601}
   - {fileID: 6696742860794454346}
+  inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
 --- !u!1 &6696742861595086468
 GameObject:
   m_ObjectHideFlags: 0

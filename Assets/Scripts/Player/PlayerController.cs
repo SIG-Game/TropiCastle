@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private SpriteMask overlaySpriteMask;
     [SerializeField] private CursorController cursorController;
+    [SerializeField] private InputActionReference attackActionReference;
+    [SerializeField] private InputActionReference healActionReference;
 
     [Header("Item Usages")]
     [SerializeField] private BucketItemUsage bucketItemUsage;
@@ -65,8 +67,8 @@ public class PlayerController : MonoBehaviour
     private CharacterDirectionController directionController;
     private SpriteRenderer weaponSpriteRenderer;
     private WeaponController weaponController;
-    private InputAction attackInputAction;
-    private InputAction healInputAction;
+    private InputAction attackAction;
+    private InputAction healAction;
     private WeaponItemScriptableObject strongestWeaponInInventory;
     private LayerMask interactableMask;
     private LayerMask waterMask;
@@ -84,6 +86,9 @@ public class PlayerController : MonoBehaviour
         weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         weaponController = transform.GetChild(0).GetComponent<WeaponController>();
 
+        attackAction = attackActionReference.action;
+        healAction = healActionReference.action;
+
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
 
@@ -97,17 +102,11 @@ public class PlayerController : MonoBehaviour
         inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
     }
 
-    private void Start()
-    {
-        attackInputAction = InputManager.Instance.GetAction("Attack");
-        healInputAction = InputManager.Instance.GetAction("Heal");
-    }
-
     private void Update()
     {
         if (PauseController.Instance.GamePaused)
         {
-            if (healInputAction.WasPressedThisFrame() && InventoryUIController.InventoryUIOpen)
+            if (healAction.WasPressedThisFrame() && InventoryUIController.InventoryUIOpen)
             {
                 ConsumeFirstHealingItemInInventory();
             }
@@ -125,7 +124,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
-        else if (attackInputAction.WasPressedThisFrame() && strongestWeaponInInventory != null)
+        else if (attackAction.WasPressedThisFrame() && strongestWeaponInInventory != null)
         {
             AttackWithWeapon(strongestWeaponInInventory);
         }
@@ -136,7 +135,7 @@ public class PlayerController : MonoBehaviour
         {
             fishingRodItemUsage.UseItem(fishingRodItemIndex);
         }
-        else if (healInputAction.WasPressedThisFrame())
+        else if (healAction.WasPressedThisFrame())
         {
             ConsumeFirstHealingItemInInventory();
         }

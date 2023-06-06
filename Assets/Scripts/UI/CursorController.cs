@@ -9,6 +9,7 @@ public class CursorController : MonoBehaviour
     [SerializeField] private TMP_Text amountText;
     [SerializeField] private Camera cursorCamera;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private InputActionReference moveCursorActionReference;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float gamepadSensitivity;
 
@@ -37,6 +38,8 @@ public class CursorController : MonoBehaviour
         cursorSpriteRenderer = GetComponent<SpriteRenderer>();
         cursorBackgroundSpriteRenderer = cursorBackground.GetComponent<SpriteRenderer>();
 
+        moveCursorAction = moveCursorActionReference.action;
+
         cursorWorldPosition = Vector2.zero;
 
         PauseController.OnGamePaused += PauseController_OnGamePaused;
@@ -44,11 +47,6 @@ public class CursorController : MonoBehaviour
         PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
 
         playerController.OnIsAttackingSet += PlayerController_OnIsAttackingSet;
-    }
-
-    private void Start()
-    {
-        moveCursorAction = InputManager.Instance.GetAction("Move Cursor");
     }
 
     // Needs to run before Update method in ItemPickupAndPlacement.cs
