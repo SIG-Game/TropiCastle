@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using static Chimp;
 using static EnemyController;
 using static Inventory;
 using static ItemWorld;
@@ -14,6 +15,7 @@ public class SaveController : MonoBehaviour
     [SerializeField] private SpawnerSaveManager spawnerSaveManager;
     [SerializeField] private ItemWorldSaveManager itemWorldSaveManager;
     [SerializeField] private EnemySaveManager enemySaveManager;
+    [SerializeField] private Chimp chimp;
 
     private string saveDataFilePath;
 
@@ -40,7 +42,8 @@ public class SaveController : MonoBehaviour
             SerializablePlayerProperties = playerController.GetSerializablePlayerProperties(),
             SpawnerSaveEntries = spawnerSaveManager.GetSpawnerSaveEntries(),
             itemWorldStates = itemWorldSaveManager.GetItemWorldStates(),
-            enemyStates = enemySaveManager.GetEnemyStates()
+            enemyStates = enemySaveManager.GetEnemyStates(),
+            chimpState = chimp.GetSerializableChimpState()
         };
 
         WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
@@ -67,6 +70,8 @@ public class SaveController : MonoBehaviour
         itemWorldSaveManager.CreateItemWorldsFromStates(saveData.itemWorldStates);
 
         enemySaveManager.CreateEnemiesFromStates(saveData.enemyStates);
+
+        chimp.SetPropertiesFromSerializableChimpState(saveData.chimpState);
     }
 
     private void WriteSerializableObjectAsJsonToFile(object serializableObject, string filePath)
@@ -103,5 +108,6 @@ public class SaveController : MonoBehaviour
         public SpawnerSaveEntry[] SpawnerSaveEntries;
         public SerializableItemWorldState[] itemWorldStates;
         public SerializableEnemyState[] enemyStates;
+        public SerializableChimpState chimpState;
     }
 }

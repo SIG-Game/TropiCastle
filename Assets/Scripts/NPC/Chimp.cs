@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Chimp : NPCInteractable
 {
@@ -21,10 +23,12 @@ public class Chimp : NPCInteractable
     private SpriteRenderer itemToGiveInWorldSpriteRenderer;
     private ItemWithAmount itemToGive;
     private float lastGiveTimeSeconds;
-    private float timeSecondsUntilNextGive;
+    private float timeBetweenGivesSeconds;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         spinDirections = new List<CharacterDirection> { CharacterDirection.Down,
             CharacterDirection.Left, CharacterDirection.Up, CharacterDirection.Right };
 
@@ -33,7 +37,7 @@ public class Chimp : NPCInteractable
         itemToGiveInWorldSpriteRenderer = itemToGiveInWorld.GetComponent<SpriteRenderer>();
 
         lastGiveTimeSeconds = 0f;
-        timeSecondsUntilNextGive = 0f;
+        timeBetweenGivesSeconds = 0f;
     }
 
     public override void Interact(PlayerController player)
@@ -42,7 +46,7 @@ public class Chimp : NPCInteractable
 
         FacePlayer(player);
 
-        bool giveItem = lastGiveTimeSeconds + timeSecondsUntilNextGive <= Time.time;
+        bool giveItem = ItemGiveAvailable();
         if (giveItem)
         {
             int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
@@ -102,7 +106,7 @@ public class Chimp : NPCInteractable
             HideItemToGiveInWorld();
 
             lastGiveTimeSeconds = Time.time;
-            timeSecondsUntilNextGive = GetRandomTimeSecondsUntilNextGive();
+            timeBetweenGivesSeconds = GetRandomTimeBetweenGivesSeconds();
         }
 
         spinCoroutine = StartCoroutine(SpinCoroutine());
@@ -127,6 +131,44 @@ public class Chimp : NPCInteractable
         itemToGiveInWorldSpriteRenderer.sprite = null;
     }
 
-    private float GetRandomTimeSecondsUntilNextGive() =>
+    private float GetRandomTimeBetweenGivesSeconds() =>
         Random.Range(timeBetweenGivesSecondsRange.x, timeBetweenGivesSecondsRange.y);
+
+    private bool ItemGiveAvailable() =>
+        lastGiveTimeSeconds + timeBetweenGivesSeconds <= Time.time;
+
+    public SerializableChimpState GetSerializableChimpState()
+    {
+        float timeUntilNextGiveSeconds;
+
+        if (ItemGiveAvailable())
+        {
+            timeUntilNextGiveSeconds = 0f;
+        }
+        else
+        {
+            float nextGiveTimeSeconds = lastGiveTimeSeconds + timeBetweenGivesSeconds;
+
+            timeUntilNextGiveSeconds = nextGiveTimeSeconds - Time.time;
+        }
+
+        var serializableChimpState = new SerializableChimpState
+        {
+            TimeSecondsUntilNextGive = timeUntilNextGiveSeconds
+        };
+
+        return serializableChimpState;
+    }
+
+    public void SetPropertiesFromSerializableChimpState(
+        SerializableChimpState serializableChimpState)
+    {
+        timeBetweenGivesSeconds = serializableChimpState.TimeSecondsUntilNextGive;
+    }
+
+    [Serializable]
+    public class SerializableChimpState
+    {
+        public float TimeSecondsUntilNextGive;
+    }
 }

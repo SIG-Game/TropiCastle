@@ -516,6 +516,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &295679833 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6226198124874704995, guid: 3575553e460267e42948f49db8775401,
+    type: 3}
+  m_PrefabInstance: {fileID: 6226198124461100917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcddf3dff77da643950b9f25f035654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &303969647 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
@@ -35856,6 +35868,11 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 572276104}
+    - target: {fileID: 3629262306849807461, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
+      propertyPath: chimp
+      value: 
+      objectReference: {fileID: 295679833}
     - target: {fileID: 3629262306849807461, guid: 0b10992830a0ba7439705a4db0804f24,
         type: 3}
       propertyPath: playerInventory

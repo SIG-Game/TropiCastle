@@ -8,7 +8,7 @@ public class NPCInteractable : Interactable
 
     protected CharacterDirectionController directionController;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         directionController = GetComponent<CharacterDirectionController>();
     }
