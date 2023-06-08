@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
+  m_Script: {fileID: 11500000, guid: f1696b37e7b37eb48bf64ddc139d7890, type: 3}
   m_Name: Rock
   m_EditorClassIdentifier: 
   name: Rock
   sprite: {fileID: 21300000, guid: f3c7db8102c0d3a49b43b081d1cf8315, type: 3}
+  stackSize: 99
+  hasCustomColliderSize: 0
+  customColliderSize: {x: 0, y: 0}
+  damage: 30

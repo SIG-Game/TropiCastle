@@ -13,9 +13,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Item Usages")]
     [SerializeField] private BucketItemUsage bucketItemUsage;
-    [SerializeField] private CoconutItemUsage coconutItemUsage;
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
-    [SerializeField] private RockItemUsage rockItemUsage;
+    [SerializeField] private ThrowableItemUsage throwableItemUsage;
 
     public CharacterDirection Direction
     {
@@ -218,6 +217,9 @@ public class PlayerController : MonoBehaviour
             case WeaponItemScriptableObject weaponItemData:
                 AttackWithWeapon(weaponItemData);
                 break;
+            case ThrowableItemScriptableObject:
+                throwableItemUsage.UseItem();
+                break;
             default:
                 if (itemNameToUsage.TryGetValue(item.itemData.name, out IItemUsage itemUsage))
                 {
@@ -327,9 +329,7 @@ public class PlayerController : MonoBehaviour
         itemNameToUsage = new Dictionary<string, IItemUsage>
         {
             { "Bucket", bucketItemUsage },
-            { "Coconut", coconutItemUsage },
-            { "Fishing Rod", fishingRodItemUsage },
-            { "Rock", rockItemUsage }
+            { "Fishing Rod", fishingRodItemUsage }
         };
     }
 

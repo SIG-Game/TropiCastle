@@ -35024,6 +35024,11 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5567921040364044053, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: cursorController
+      value: 
+      objectReference: {fileID: 1812985303}
     - target: {fileID: 8293061806737836654, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: fishingUIController

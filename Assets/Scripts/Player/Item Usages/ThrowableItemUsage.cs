@@ -1,20 +1,24 @@
 using UnityEngine;
 
-public abstract class ThrowableItemUsage : MonoBehaviour,IItemUsage
+public class ThrowableItemUsage : MonoBehaviour, IItemUsage
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CursorController cursorController;
-    [SerializeField] private int damage;
 
     public void UseItem()
     {
+        ItemWithAmount itemToThrow = new ItemWithAmount(playerController.GetSelectedItem());
+        itemToThrow.amount = 1;
+
+        int damage = ((ThrowableItemScriptableObject)itemToThrow.itemData).damage;
+
         Vector3 thrownItemStartPosition =
             playerController.transform.position + new Vector3(0f, 0.3f, 0f);
 
         ItemWorld thrownItemWorld =
             ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(
-                thrownItemStartPosition, GetItemToThrow());
+                thrownItemStartPosition, itemToThrow);
 
         ThrownItemWorld thrownItemWorldComponent =
             thrownItemWorld.gameObject.AddComponent<ThrownItemWorld>();
@@ -28,6 +32,4 @@ public abstract class ThrowableItemUsage : MonoBehaviour,IItemUsage
 
         playerInventory.DecrementItemStackAtIndex(playerController.GetSelectedItemIndex());
     }
-
-    protected abstract ItemWithAmount GetItemToThrow();
 }
