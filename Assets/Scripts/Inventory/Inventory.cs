@@ -376,9 +376,7 @@ public class Inventory : MonoBehaviour
             }
             else if (currentItem.itemData.name == "Empty")
             {
-                currentItem = coconutItemWithMaxAmount;
-
-                OnItemChangedAtIndex(currentItem, i);
+                AddItemAtIndex(coconutItemWithMaxAmount, i);
             }
         }
     }
