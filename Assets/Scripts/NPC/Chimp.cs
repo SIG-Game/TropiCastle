@@ -32,12 +32,15 @@ public class Chimp : NPCInteractable
         spinDirections = new List<CharacterDirection> { CharacterDirection.Down,
             CharacterDirection.Left, CharacterDirection.Up, CharacterDirection.Right };
 
-        spinCoroutine = StartCoroutine(SpinCoroutine());
-
         itemToGiveInWorldSpriteRenderer = itemToGiveInWorld.GetComponent<SpriteRenderer>();
 
         lastGiveTimeSeconds = 0f;
         timeBetweenGivesSeconds = 0f;
+    }
+
+    private void Start()
+    {
+        spinCoroutine = StartCoroutine(SpinCoroutine());
     }
 
     public override void Interact(PlayerController player)
