@@ -523,6 +523,7 @@ MonoBehaviour:
   bucketItemUsage: {fileID: 1346236021351400951}
   fishingRodItemUsage: {fileID: 8293061806737836654}
   throwableItemUsage: {fileID: 5567921040364044053}
+  weaponItemUsage: {fileID: 2485764338336164774}
 --- !u!114 &2526882180276161147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,6 +694,7 @@ GameObject:
   - component: {fileID: 1346236021351400951}
   - component: {fileID: 8293061806737836654}
   - component: {fileID: 5567921040364044053}
+  - component: {fileID: 2485764338336164774}
   m_Layer: 0
   m_Name: Item Usages
   m_TagString: Untagged
@@ -759,6 +761,22 @@ MonoBehaviour:
   playerController: {fileID: 5288355818519945016}
   playerInventory: {fileID: 856750480813842556}
   cursorController: {fileID: 0}
+--- !u!114 &2485764338336164774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7191733551750576650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c008e29e5a1a43f45837ae49b41e617b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 5288355818519945016}
+  playerAnimator: {fileID: 8669891105156055949}
+  weaponController: {fileID: 981241631752593405}
+  weaponSpriteRenderer: {fileID: 2130907984869856252}
 --- !u!1 &7366555624248805215
 GameObject:
   m_ObjectHideFlags: 0

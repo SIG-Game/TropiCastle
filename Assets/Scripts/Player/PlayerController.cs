@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BucketItemUsage bucketItemUsage;
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
     [SerializeField] private ThrowableItemUsage throwableItemUsage;
+    [SerializeField] private WeaponItemUsage weaponItemUsage;
 
     public CharacterDirection Direction
     {
@@ -58,14 +59,11 @@ public class PlayerController : MonoBehaviour
     public static event Action OnPlayerDied = delegate { };
     public static event Action<bool> OnActionDisablingUIOpenSet = delegate { };
 
-    private Animator animator;
     private BoxCollider2D boxCollider;
     private HealthController healthController;
     private ItemSelectionController itemSelectionController;
     private SpriteRenderer spriteRenderer;
     private CharacterDirectionController directionController;
-    private SpriteRenderer weaponSpriteRenderer;
-    private WeaponController weaponController;
     private InputAction attackAction;
     private InputAction healAction;
     private WeaponItemScriptableObject strongestWeaponInInventory;
@@ -75,15 +73,11 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         healthController = GetComponent<HealthController>();
         itemSelectionController = GetComponent<ItemSelectionController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         directionController = GetComponent<CharacterDirectionController>();
-
-        weaponSpriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        weaponController = transform.GetChild(0).GetComponent<WeaponController>();
 
         attackAction = attackActionReference.action;
         healAction = healActionReference.action;
@@ -125,7 +119,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (attackAction.WasPressedThisFrame() && strongestWeaponInInventory != null)
         {
-            AttackWithWeapon(strongestWeaponInInventory);
+            weaponItemUsage.AttackWithWeapon(strongestWeaponInInventory);
         }
         // Do not check for fish input on the same frame that an item is used
         else if (InputManager.Instance.GetFishButtonDownIfUnusedThisFrame() &&
@@ -214,11 +208,11 @@ public class PlayerController : MonoBehaviour
             case HealingItemScriptableObject healingItemData:
                 ConsumeHealingItem(GetSelectedItemIndex(), healingItemData.healAmount);
                 break;
-            case WeaponItemScriptableObject weaponItemData:
-                AttackWithWeapon(weaponItemData);
-                break;
             case ThrowableItemScriptableObject:
                 throwableItemUsage.UseItem();
+                break;
+            case WeaponItemScriptableObject:
+                weaponItemUsage.UseItem();
                 break;
             default:
                 if (itemNameToUsage.TryGetValue(item.itemData.name, out IItemUsage itemUsage))
@@ -236,23 +230,6 @@ public class PlayerController : MonoBehaviour
             healthController.IncreaseHealth(amountToHeal);
             inventory.DecrementItemStackAtIndex(itemIndex);
         }
-    }
-
-    private void AttackWithWeapon(WeaponItemScriptableObject weaponItemData)
-    {
-        animator.SetFloat("Attack Speed Multiplier", weaponItemData.attackSpeed);
-
-        weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
-        weaponController.Damage = weaponItemData.damage;
-        weaponController.EnemyKnockbackForce = weaponItemData.knockback;
-
-        IsAttacking = true;
-
-        itemSelectionController.CanSelect = false;
-
-        string attackTypeString = weaponItemData.attackType.ToString();
-
-        animator.Play($"{attackTypeString} {Direction}");
     }
 
     public void Fish()
@@ -338,6 +315,11 @@ public class PlayerController : MonoBehaviour
         IsAttacking = false;
 
         itemSelectionController.CanSelect = true;
+    }
+
+    public void DisableItemSelection()
+    {
+        itemSelectionController.CanSelect = false;
     }
 
     public SerializablePlayerProperties GetSerializablePlayerProperties()
