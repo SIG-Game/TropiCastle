@@ -32,4 +32,11 @@ public class WeaponController : MonoBehaviour
             }
         }
     }
+
+    public void SetUpUsingScriptableObject(
+        WeaponItemScriptableObject weaponItemScriptableObject)
+    {
+        Damage = weaponItemScriptableObject.damage;
+        EnemyKnockbackForce = weaponItemScriptableObject.knockback;
+    }
 }
