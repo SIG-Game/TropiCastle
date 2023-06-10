@@ -7,10 +7,9 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
     [SerializeField] private WeaponController weaponController;
     [SerializeField] private SpriteRenderer weaponSpriteRenderer;
 
-    public void UseItem()
+    public void UseItem(ItemWithAmount item, int _)
     {
-        AttackWithWeapon((WeaponItemScriptableObject)
-            playerController.GetSelectedItem().itemData);
+        AttackWithWeapon((WeaponItemScriptableObject)item.itemData);
     }
 
     public void AttackWithWeapon(WeaponItemScriptableObject weaponItemData)

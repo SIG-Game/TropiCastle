@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         if (InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame())
         {
-            UseItem(GetSelectedItem());
+            UseItem(GetSelectedItem(), GetSelectedItemIndex());
 
             // Prevent doing other actions on the frame an attack starts
             if (IsAttacking)
@@ -126,7 +126,9 @@ public class PlayerController : MonoBehaviour
             !ActionDisablingUIOpen &&
             TryGetFishingRodItemIndex(out int fishingRodItemIndex))
         {
-            fishingRodItemUsage.UseItem(fishingRodItemIndex);
+            ItemWithAmount fishingRodItem = inventory.GetItemList()[fishingRodItemIndex];
+
+            fishingRodItemUsage.UseItem(fishingRodItem, fishingRodItemIndex);
         }
         else if (healAction.WasPressedThisFrame())
         {
@@ -201,7 +203,7 @@ public class PlayerController : MonoBehaviour
         return hit;
     }
 
-    private void UseItem(ItemWithAmount item)
+    private void UseItem(ItemWithAmount item, int itemIndex)
     {
         switch (item.itemData)
         {
@@ -209,15 +211,15 @@ public class PlayerController : MonoBehaviour
                 ConsumeHealingItem(GetSelectedItemIndex(), healingItemData.healAmount);
                 break;
             case ThrowableItemScriptableObject:
-                throwableItemUsage.UseItem();
+                throwableItemUsage.UseItem(item, itemIndex);
                 break;
             case WeaponItemScriptableObject:
-                weaponItemUsage.UseItem();
+                weaponItemUsage.UseItem(item, itemIndex);
                 break;
             default:
                 if (itemNameToUsage.TryGetValue(item.itemData.name, out IItemUsage itemUsage))
                 {
-                    itemUsage.UseItem();
+                    itemUsage.UseItem(item, itemIndex);
                 }
                 break;
         }

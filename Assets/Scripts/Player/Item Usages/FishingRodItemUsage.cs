@@ -8,22 +8,10 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 
     private int fishingRodItemIndex;
 
-    public void UseItem()
+    public void UseItem(ItemWithAmount _, int itemIndex)
     {
-        fishingRodItemIndex = playerController.GetSelectedItemIndex();
+        fishingRodItemIndex = itemIndex;
 
-        StartFishing();
-    }
-
-    public void UseItem(int fishingRodItemIndex)
-    {
-        this.fishingRodItemIndex = fishingRodItemIndex;
-
-        StartFishing();
-    }
-
-    private void StartFishing()
-    {
         playerController.Fish();
 
         fishingUIController.OnFishingStopped += FishingUIController_OnFishingStopped;

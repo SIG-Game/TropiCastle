@@ -6,9 +6,9 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CursorController cursorController;
 
-    public void UseItem()
+    public void UseItem(ItemWithAmount item, int itemIndex)
     {
-        ItemWithAmount itemToThrow = new ItemWithAmount(playerController.GetSelectedItem());
+        ItemWithAmount itemToThrow = new ItemWithAmount(item);
         itemToThrow.amount = 1;
 
         int damage = ((ThrowableItemScriptableObject)itemToThrow.itemData).damage;
@@ -30,6 +30,6 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
 
         thrownItemWorldComponent.SetUpThrownItemWorld(throwDirection);
 
-        playerInventory.DecrementItemStackAtIndex(playerController.GetSelectedItemIndex());
+        playerInventory.DecrementItemStackAtIndex(itemIndex);
     }
 }

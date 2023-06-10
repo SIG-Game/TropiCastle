@@ -16,15 +16,13 @@ public class BucketItemUsage : MonoBehaviour, IItemUsage
         waterMask = LayerMask.GetMask("Water");
     }
 
-    public void UseItem()
+    public void UseItem(ItemWithAmount _, int itemIndex)
     {
         if (playerController.InteractionCast(waterMask, 0.25f, 0.2f).collider != null)
         {
-            int selectedItemIndex = playerController.GetSelectedItemIndex();
-
-            playerInventory.RemoveItemAtIndex(selectedItemIndex);
+            playerInventory.RemoveItemAtIndex(itemIndex);
             playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
-                bucketOfWaterItem, selectedItemIndex);
+                bucketOfWaterItem, itemIndex);
         }
     }
 }
