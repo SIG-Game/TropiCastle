@@ -23,7 +23,7 @@ public class NPCInteractable : Interactable
 
     public void FacePlayer(PlayerController player)
     {
-        CharacterDirection newDirection = player.Direction switch
+        directionController.Direction = player.Direction switch
         {
             CharacterDirection.Up => CharacterDirection.Down,
             CharacterDirection.Down => CharacterDirection.Up,
@@ -31,7 +31,5 @@ public class NPCInteractable : Interactable
             CharacterDirection.Right => CharacterDirection.Left,
             _ => throw new ArgumentOutOfRangeException(nameof(player.Direction))
         };
-
-        directionController.Direction = newDirection;
     }
 }
