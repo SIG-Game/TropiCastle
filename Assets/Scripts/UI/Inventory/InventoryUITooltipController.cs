@@ -104,6 +104,8 @@ public class InventoryUITooltipController : MonoBehaviour
                 $"{weaponItem.knockback} Knockback\n{weaponItem.attackSpeed} Attack Speed",
             BreakableItemScriptableObject breakableItem => $"{itemData.name}\n" +
                 $"Durability: {breakableItem.InitialDurability}",
+            ThrowableItemScriptableObject throwableItem => $"{itemData.name}\n" +
+                $"Throwable\nDeals {throwableItem.damage} Damage",
             { name: "Empty" } => string.Empty,
             _ => itemData.name
         };
