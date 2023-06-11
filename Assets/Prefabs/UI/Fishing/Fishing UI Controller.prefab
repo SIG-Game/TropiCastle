@@ -92,7 +92,8 @@ MonoBehaviour:
   fishingUI: {fileID: 24094386154538983}
   fishUI: {fileID: 6030874414711316719}
   hookTransform: {fileID: 1938744877893344358}
-  player: {fileID: 0}
+  fishingRodItemUsage: {fileID: 0}
+  playerInventory: {fileID: 0}
   playerItemInWorld: {fileID: 0}
   catchFishXPositionRange: {x: -50, y: 50}
   logSelectedFish: 0

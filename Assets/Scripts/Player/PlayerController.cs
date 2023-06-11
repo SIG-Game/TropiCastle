@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public event Action OnFishingRodUsed = delegate { };
     public event Action<bool> OnIsAttackingSet = delegate { };
 
     private Dictionary<string, IItemUsage> itemNameToUsage;
@@ -232,17 +231,6 @@ public class PlayerController : MonoBehaviour
             healthController.IncreaseHealth(amountToHeal);
             inventory.DecrementItemStackAtIndex(itemIndex);
         }
-    }
-
-    public void Fish()
-    {
-        if (InteractionCast(waterMask, 0.5f, 0.4f).collider == null)
-        {
-            DialogueBox.Instance.PlayDialogue("You must be facing water to fish.");
-            return;
-        }
-
-        OnFishingRodUsed();
     }
 
     private void PlayerDeath()

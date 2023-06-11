@@ -10,7 +10,8 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private GameObject fishingUI;
     [SerializeField] private FishUIController fishUI;
     [SerializeField] private Transform hookTransform;
-    [SerializeField] private PlayerController player;
+    [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
+    [SerializeField] private Inventory playerInventory;
     [SerializeField] private PlayerItemInWorldController playerItemInWorld;
     [SerializeField] private Vector2 catchFishXPositionRange;
     [SerializeField] private bool logSelectedFish;
@@ -20,7 +21,6 @@ public class FishingUIController : MonoBehaviour
     private Animator animator;
     private FishScriptableObject selectedFish;
     private ItemWithAmount selectedFishItem;
-    private Inventory playerInventory;
     private bool catchFailedAnimationStarted;
 
     private AsyncOperationHandle<IList<FishScriptableObject>> fishScriptableObjectsLoadHandle;
@@ -30,12 +30,10 @@ public class FishingUIController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        playerInventory = player.GetInventory();
-
         fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
         fishScriptableObjects = fishScriptableObjectsLoadHandle.WaitForCompletion();
 
-        player.OnFishingRodUsed += StartFishing;
+        fishingRodItemUsage.OnFishingRodUsed += StartFishing;
     }
 
     private void Update()
@@ -59,7 +57,7 @@ public class FishingUIController : MonoBehaviour
     {
         Addressables.Release(fishScriptableObjectsLoadHandle);
 
-        player.OnFishingRodUsed -= StartFishing;
+        fishingRodItemUsage.OnFishingRodUsed -= StartFishing;
 
         OnFishingStopped = delegate { };
     }
