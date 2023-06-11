@@ -20,7 +20,7 @@ public class BucketItemUsage : MonoBehaviour, IItemUsage
     {
         if (playerController.InteractionCast(waterMask, 0.25f, 0.2f).collider != null)
         {
-            playerInventory.RemoveItemAtIndex(itemIndex);
+            playerInventory.DecrementItemStackAtIndex(itemIndex);
             playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
                 bucketOfWaterItem, itemIndex);
         }
