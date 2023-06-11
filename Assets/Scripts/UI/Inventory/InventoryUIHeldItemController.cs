@@ -96,6 +96,40 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
     }
 
+    public void HeldLeftClickOverItemAtIndex(Inventory clickedInventory,
+        int clickedItemIndex)
+    {
+        if (!HoldingItem() || heldItemIndex == clickedItemIndex)
+        {
+            return;
+        }
+
+        ItemWithAmount clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
+
+        if (heldItem.itemData.name == clickedItem.itemData.name
+            && heldItem.amount < heldItem.itemData.stackSize)
+        {
+            int combinedAmount = heldItem.amount + clickedItem.amount;
+
+            if (combinedAmount <= heldItem.itemData.stackSize)
+            {
+                clickedInventory.RemoveItemAtIndex(clickedItemIndex);
+
+                heldItem.amount = combinedAmount;
+            }
+            else
+            {
+                clickedItem.amount = combinedAmount - heldItem.itemData.stackSize;
+
+                clickedInventory.InvokeOnItemChangedAtIndexEvent(clickedItem, clickedItemIndex);
+
+                heldItem.amount = heldItem.itemData.stackSize;
+            }
+
+            UpdateHeldItemUI();
+        }
+    }
+
     public void HeldRightClickOverItemAtIndex(Inventory clickedInventory,
         int clickedItemIndex)
     {

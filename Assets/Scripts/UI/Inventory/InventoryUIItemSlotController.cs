@@ -19,7 +19,12 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
 
         SetSlotTooltipText();
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(0))
+        {
+            InventoryUIHeldItemController.Instance.HeldLeftClickOverItemAtIndex(
+                inventory, slotItemIndex);
+        }
+        else if (Input.GetMouseButton(1))
         {
             InventoryUIHeldItemController.Instance.HeldRightClickOverItemAtIndex(
                 inventory, slotItemIndex);
