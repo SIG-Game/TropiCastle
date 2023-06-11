@@ -36000,6 +36000,16 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 7162425380252286773, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 7162425380252286773, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 572276104}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b10992830a0ba7439705a4db0804f24, type: 3}
 --- !u!114 &6628131629790253056 stripped
