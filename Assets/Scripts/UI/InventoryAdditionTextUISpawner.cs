@@ -34,6 +34,8 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
             out InventoryAdditionTextUIController additionTextController))
         {
             additionTextController.AddAmount(item.amount);
+
+            additionTextController.transform.SetAsFirstSibling();
         }
         else
         {
