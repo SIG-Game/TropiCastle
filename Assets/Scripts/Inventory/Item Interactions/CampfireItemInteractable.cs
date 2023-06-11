@@ -1,17 +1,23 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class CampfireItemInteractable : Interactable
 {
-    private static readonly Lazy<ItemWithAmount> lazyCookedCrabMeat =
-        new Lazy<ItemWithAmount>(() =>
-            new ItemWithAmount(LoadItemScriptableObject("CookedCrabMeat"), 1));
+    private static IList<CampfireRecipeScriptableObject> campfireRecipes;
 
-    private static List<CampfireRecipe> campfireRecipes = new List<CampfireRecipe>
+    private void Awake()
     {
-        new CampfireRecipe("Raw Crab Meat", lazyCookedCrabMeat)
-    };
+        if (campfireRecipes == null)
+        {
+            var campfireRecipesLoadHandle =
+                Addressables.LoadAssetsAsync<CampfireRecipeScriptableObject>(
+                    "campfire recipe", null);
+
+            campfireRecipes = campfireRecipesLoadHandle.WaitForCompletion();
+
+            Addressables.Release(campfireRecipesLoadHandle);
+        }
+    }
 
     public override void Interact(PlayerController playerController)
     {
@@ -20,10 +26,10 @@ public class CampfireItemInteractable : Interactable
 
         bool showInventoryFullText = false;
 
-        foreach (CampfireRecipe campfireRecipe in campfireRecipes)
+        foreach (CampfireRecipeScriptableObject campfireRecipe in campfireRecipes)
         {
             int inputItemIndex = playerInventoryItemList
-                .FindIndex(x => x.itemData.name == campfireRecipe.InputItemName);
+                .FindIndex(x => x.itemData.name == campfireRecipe.inputItem.name);
 
             if (inputItemIndex == -1)
             {
@@ -31,7 +37,7 @@ public class CampfireItemInteractable : Interactable
             }
 
             ItemWithAmount inputItem = playerInventoryItemList[inputItemIndex];
-            ItemWithAmount resultItem = campfireRecipe.LazyResultItem.Value;
+            ItemWithAmount resultItem = campfireRecipe.resultItem;
 
             bool inputItemSlotEmptied = inputItem.amount == 1;
 
@@ -54,21 +60,6 @@ public class CampfireItemInteractable : Interactable
         if (showInventoryFullText)
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
-        }
-    }
-
-    private static ItemScriptableObject LoadItemScriptableObject(string name) =>
-        Resources.Load<ItemScriptableObject>($"Items/{name}");
-
-    private class CampfireRecipe
-    {
-        public string InputItemName;
-        public Lazy<ItemWithAmount> LazyResultItem;
-
-        public CampfireRecipe(string inputItemName, Lazy<ItemWithAmount> lazyResultItem)
-        {
-            InputItemName = inputItemName;
-            LazyResultItem = lazyResultItem;
         }
     }
 }

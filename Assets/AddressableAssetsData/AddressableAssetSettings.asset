@@ -44,6 +44,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f18c38c7e20466f4796d0abe2d6dc7f4, type: 2}
   - {fileID: 11400000, guid: 6f87cc5d90cc72b4987516659ddeb35a, type: 2}
   - {fileID: 11400000, guid: e301a1dc16e9d1545bce6ef1a62c77a8, type: 2}
+  - {fileID: 11400000, guid: b870c6dac3565b542931ddc09aec67de, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -87,6 +88,7 @@ MonoBehaviour:
     - default
     - fish
     - crafting recipe
+    - campfire recipe
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9e6fe3bca18276a40a75c7e2c368c30a, type: 2}
