@@ -655,6 +655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6318584335636495810, guid: f036df1040be00b48b945a9ed433d135,
         type: 3}
+      propertyPath: spawnerId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318584335636495810, guid: f036df1040be00b48b945a9ed433d135,
+        type: 3}
       propertyPath: maxSpawnPosition.x
       value: 5
       objectReference: {fileID: 0}
@@ -28471,6 +28476,11 @@ PrefabInstance:
       objectReference: {fileID: 572276104}
     - target: {fileID: 7958139642870328749, guid: bfaf9ae57760545859b01d4467686f5b,
         type: 3}
+      propertyPath: spawnerId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958139642870328749, guid: bfaf9ae57760545859b01d4467686f5b,
+        type: 3}
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1982112582}
@@ -34394,6 +34404,7 @@ MonoBehaviour:
   maxSpawnedPrefabs: 1
   minSpawnPosition: {x: -8, y: -1}
   maxSpawnPosition: {x: -5, y: 4}
+  spawnerId: 5
   logOnSpawn: 0
   drawSpawnArea: 0
   drawnSpawnAreaColor: {r: 0, g: 0, b: 0, a: 1}
@@ -34626,6 +34637,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6318584335636495810, guid: f036df1040be00b48b945a9ed433d135,
         type: 3}
+      propertyPath: spawnerId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318584335636495810, guid: f036df1040be00b48b945a9ed433d135,
+        type: 3}
       propertyPath: maxSpawnPosition.x
       value: -6
       objectReference: {fileID: 0}
@@ -34768,6 +34784,7 @@ MonoBehaviour:
   maxSpawnedPrefabs: 1
   minSpawnPosition: {x: -6, y: -2}
   maxSpawnPosition: {x: 6, y: 4}
+  spawnerId: 0
   logOnSpawn: 0
   drawSpawnArea: 0
   drawnSpawnAreaColor: {r: 0, g: 0, b: 0, a: 1}
@@ -35229,6 +35246,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6318584335636495810, guid: f036df1040be00b48b945a9ed433d135,
+        type: 3}
+      propertyPath: spawnerId
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6318584335636495810, guid: f036df1040be00b48b945a9ed433d135,
         type: 3}

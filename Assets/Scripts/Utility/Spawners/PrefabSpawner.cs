@@ -11,6 +11,7 @@ public class PrefabSpawner : MonoBehaviour
     [SerializeField] private int maxSpawnedPrefabs;
     [SerializeField] private Vector2 minSpawnPosition;
     [SerializeField] private Vector2 maxSpawnPosition;
+    [SerializeField] private int spawnerId;
     [SerializeField] private bool logOnSpawn;
     [SerializeField] private bool drawSpawnArea;
     [SerializeField] private Color drawnSpawnAreaColor = Color.black;
@@ -140,6 +141,8 @@ public class PrefabSpawner : MonoBehaviour
     {
         numPrefabs--;
     }
+
+    public int GetSpawnerId() => spawnerId;
 
     public SerializableSpawnerState GetSerializableSpawnerState()
     {

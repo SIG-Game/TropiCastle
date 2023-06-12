@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -21,12 +22,14 @@ public class SpawnerSaveManager : MonoBehaviour
 
     public void SetSpawnerStates(SpawnerSaveEntry[] spawnerSaveEntries)
     {
+        List<PrefabSpawner> spawners = FindObjectsOfType<PrefabSpawner>().ToList();
+
         foreach (var spawnerSaveEntry in spawnerSaveEntries)
         {
-            GameObject spawner = GameObject.Find(spawnerSaveEntry.SpawnerName);
+            PrefabSpawner spawner = spawners.Find(
+                x => x.GetSpawnerId() == spawnerSaveEntry.SpawnerId);
 
-            spawner.GetComponent<PrefabSpawner>()
-                .SetStateFromSerializableState(spawnerSaveEntry.State);
+            spawner.SetStateFromSerializableState(spawnerSaveEntry.State);
         }
     }
 
@@ -34,7 +37,7 @@ public class SpawnerSaveManager : MonoBehaviour
     {
         var spawnerSaveEntry = new SpawnerSaveEntry
         {
-            SpawnerName = spawner.gameObject.name,
+            SpawnerId = spawner.GetSpawnerId(),
             State = spawner.GetSerializableSpawnerState()
         };
 
@@ -44,7 +47,7 @@ public class SpawnerSaveManager : MonoBehaviour
     [Serializable]
     public class SpawnerSaveEntry
     {
-        public string SpawnerName;
+        public int SpawnerId;
         public PrefabSpawner.SerializableSpawnerState State;
     }
 }
