@@ -21,6 +21,8 @@ public class FishingUIController : MonoBehaviour
     private Animator animator;
     private FishScriptableObject selectedFish;
     private ItemWithAmount selectedFishItem;
+    private List<float> fishProbabilityWeights;
+    private float fishProbabilityWeightSum;
     private bool catchFailedAnimationStarted;
 
     private AsyncOperationHandle<IList<FishScriptableObject>> fishScriptableObjectsLoadHandle;
@@ -32,6 +34,15 @@ public class FishingUIController : MonoBehaviour
 
         fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
         fishScriptableObjects = fishScriptableObjectsLoadHandle.WaitForCompletion();
+
+        fishProbabilityWeights = new List<float>();
+        fishProbabilityWeightSum = 0f;
+
+        foreach (var fishScriptableObject in fishScriptableObjects)
+        {
+            fishProbabilityWeights.Add(fishScriptableObject.probabilityWeight);
+            fishProbabilityWeightSum += fishScriptableObject.probabilityWeight;
+        }
 
         fishingRodItemUsage.OnFishingRodUsed += StartFishing;
     }
@@ -127,7 +138,22 @@ public class FishingUIController : MonoBehaviour
 
     private void SelectRandomFish()
     {
-        int selectedFishIndex = Random.Range(0, fishScriptableObjects.Count);
+        int selectedFishIndex = -1;
+        float fishSelector = Random.Range(0f, fishProbabilityWeightSum);
+        float fishSelectionLowerBound = 0f;
+
+        for (int i = 0; i < fishProbabilityWeights.Count; ++i)
+        {
+            if (fishSelector >= fishSelectionLowerBound &&
+                fishSelector <= fishSelectionLowerBound + fishProbabilityWeights[i])
+            {
+                selectedFishIndex = i;
+                break;
+            }
+
+            fishSelectionLowerBound += fishProbabilityWeights[i];
+        }
+
         selectedFish = fishScriptableObjects[selectedFishIndex];
         fishUI.Speed = selectedFish.speed;
         fishUI.SetColor(selectedFish.fishUIColor);

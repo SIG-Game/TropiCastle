@@ -15,4 +15,5 @@ MonoBehaviour:
   species: Pufferfish
   description: A very prickly fish.
   speed: 176
+  probabilityWeight: 0.35
   fishUIColor: {r: 1, g: 0.9346504, b: 0.30566037, a: 1}

@@ -15,4 +15,5 @@ MonoBehaviour:
   species: Marlin
   description: Quite the nose on this one.
   speed: 440
+  probabilityWeight: 0.2
   fishUIColor: {r: 0, g: 0.655246, b: 1, a: 1}
