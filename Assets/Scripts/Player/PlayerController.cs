@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [Header("Item Usages")]
     [SerializeField] private BucketItemUsage bucketItemUsage;
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
+    [SerializeField] private HealingItemUsage healingItemUsage;
     [SerializeField] private ThrowableItemUsage throwableItemUsage;
     [SerializeField] private WeaponItemUsage weaponItemUsage;
 
@@ -100,7 +101,7 @@ public class PlayerController : MonoBehaviour
         {
             if (healAction.WasPressedThisFrame() && InventoryUIController.InventoryUIOpen)
             {
-                ConsumeFirstHealingItemInInventory();
+                healingItemUsage.ConsumeFirstHealingItemInPlayerInventory();
             }
 
             return;
@@ -131,7 +132,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (healAction.WasPressedThisFrame())
         {
-            ConsumeFirstHealingItemInInventory();
+            healingItemUsage.ConsumeFirstHealingItemInPlayerInventory();
         }
 
         if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
@@ -206,8 +207,8 @@ public class PlayerController : MonoBehaviour
     {
         switch (item.itemData)
         {
-            case HealingItemScriptableObject healingItemData:
-                ConsumeHealingItem(GetSelectedItemIndex(), healingItemData.healAmount);
+            case HealingItemScriptableObject:
+                healingItemUsage.UseItem(item, itemIndex);
                 break;
             case ThrowableItemScriptableObject:
                 throwableItemUsage.UseItem(item, itemIndex);
@@ -224,32 +225,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ConsumeHealingItem(int itemIndex, int amountToHeal)
-    {
-        if (!healthController.AtMaxHealth())
-        {
-            healthController.IncreaseHealth(amountToHeal);
-            inventory.DecrementItemStackAtIndex(itemIndex);
-        }
-    }
-
     private void PlayerDeath()
     {
         PauseController.Instance.GamePaused = true;
         OnPlayerDied();
-    }
-
-    public void ConsumeFirstHealingItemInInventory()
-    {
-        int healingItemIndex = inventory.GetItemList().FindIndex(x => x.itemData is HealingItemScriptableObject);
-
-        if (healingItemIndex != -1)
-        {
-            HealingItemScriptableObject healingItem = inventory.GetItemAtIndex(healingItemIndex).itemData
-                as HealingItemScriptableObject;
-
-            ConsumeHealingItem(healingItemIndex, healingItem.healAmount);
-        }
     }
 
     private bool TryGetFishingRodItemIndex(out int fishingRodItemIndex)
