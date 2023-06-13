@@ -10,4 +10,6 @@ public class ItemScriptableObject : ScriptableObject
     public Vector2 customColliderSize;
 
     private const int defaultStackSize = 99;
+
+    public virtual string GetTooltipText() => name != "Empty" ? name : string.Empty;
 }

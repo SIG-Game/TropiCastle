@@ -78,7 +78,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
     {
         ItemWithAmount slotItem = inventory.GetItemAtIndex(slotItemIndex);
 
-        return InventoryUITooltipController.GetItemTooltipText(slotItem);
+        return slotItem.GetTooltipText();
     }
 
     public void SetInventory(Inventory inventory)

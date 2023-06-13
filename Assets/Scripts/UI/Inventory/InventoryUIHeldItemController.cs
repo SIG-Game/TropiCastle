@@ -259,8 +259,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
         UpdateHeldItemUI();
 
-        tooltipTextWithPriority = new Tooltip(
-            InventoryUITooltipController.GetItemTooltipText(item), 1);
+        tooltipTextWithPriority = new Tooltip(item.GetTooltipText(), 1);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
 
         OnStartedHoldingItem();

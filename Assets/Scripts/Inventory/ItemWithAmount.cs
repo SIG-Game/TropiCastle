@@ -45,5 +45,19 @@ public class ItemWithAmount
         }
     }
 
+    public string GetTooltipText()
+    {
+        if (instanceProperties is BreakableItemInstanceProperties breakableItemProperties &&
+            itemData is BreakableItemScriptableObject breakableItemScriptableObject)
+        {
+            return $"{itemData.name}\nDurability: {breakableItemProperties.Durability} " +
+                $"/ {breakableItemScriptableObject.InitialDurability}";
+        }
+        else
+        {
+            return itemData.GetTooltipText();
+        }
+    }
+
     public string GetAmountText() => amount > 1 ? amount.ToString() : string.Empty;
 }

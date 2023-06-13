@@ -94,30 +94,6 @@ public class InventoryUITooltipController : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(tooltipBackgroundRectTransform);
     }
 
-    public static string GetItemScriptableObjectTooltipText(ItemScriptableObject itemData) =>
-        itemData switch
-        {
-            HealingItemScriptableObject healingItem =>
-                $"{itemData.name}\nHeals {healingItem.healAmount} Health",
-            WeaponItemScriptableObject weaponItem => $"{itemData.name}\n" +
-                $"{weaponItem.attackType} Attack\nDeals {weaponItem.damage} Damage\n" +
-                $"{weaponItem.knockback} Knockback\n{weaponItem.attackSpeed} Attack Speed",
-            BreakableItemScriptableObject breakableItem => $"{itemData.name}\n" +
-                $"Durability: {breakableItem.InitialDurability}",
-            ThrowableItemScriptableObject throwableItem => $"{itemData.name}\n" +
-                $"Throwable\nDeals {throwableItem.damage} Damage",
-            { name: "Empty" } => string.Empty,
-            _ => itemData.name
-        };
-
-    public static string GetItemTooltipText(ItemWithAmount item) =>
-        item switch {
-            { instanceProperties: BreakableItemInstanceProperties fishingRodProperties } =>
-                $"{item.itemData.name}\nDurability: {fishingRodProperties.Durability} " +
-                $"/ {((BreakableItemScriptableObject)item.itemData).InitialDurability}",
-            _ => GetItemScriptableObjectTooltipText(item.itemData)
-        };
-
     private void UpdateInventoryTooltipPosition()
     {
         Vector2 newAnchoredPosition =
