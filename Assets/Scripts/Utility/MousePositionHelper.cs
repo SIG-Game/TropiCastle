@@ -2,15 +2,6 @@ using UnityEngine;
 
 public static class MousePositionHelper
 {
-    public static Vector2 GetMousePositionClampedToScreen()
-    {
-        Vector2 mousePositionClampedToScreen = new Vector2(
-            Mathf.Clamp(Input.mousePosition.x, 0f, Screen.width),
-            Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height));
-
-        return mousePositionClampedToScreen;
-    }
-
     public static Vector2 GetClampedMouseCanvasPosition(RectTransform canvasRectTransform)
     {
         Vector2 mouseCanvasPosition = ScreenPositionToCanvasPosition(Input.mousePosition, canvasRectTransform);
