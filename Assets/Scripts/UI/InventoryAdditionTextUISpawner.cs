@@ -4,6 +4,7 @@ using UnityEngine;
 public class InventoryAdditionTextUISpawner : MonoBehaviour
 {
     [SerializeField] private GameObject inventoryAdditionText;
+    [SerializeField] private CanvasGroup inventoryAdditionUICanvasGroup;
     [SerializeField] private Inventory targetInventory;
 
     private Dictionary<string, InventoryAdditionTextUIController> itemNameToAdditionText;
@@ -13,6 +14,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
         itemNameToAdditionText = new Dictionary<string, InventoryAdditionTextUIController>();
 
         targetInventory.OnItemAdded += TargetInventory_OnItemAdded;
+        PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
     }
 
     private void OnDestroy()
@@ -21,6 +23,8 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
         {
             targetInventory.OnItemAdded -= TargetInventory_OnItemAdded;
         }
+
+        PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
     }
 
     private void TargetInventory_OnItemAdded(ItemWithAmount item)
@@ -53,6 +57,11 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
 
             itemNameToAdditionText.Add(item.itemData.name, spawnedAdditionTextController);
         }
+    }
+
+    private void PlayerController_OnActionDisablingUIOpenSet(bool actionDisablingUIOpen)
+    {
+        inventoryAdditionUICanvasGroup.alpha = actionDisablingUIOpen ? 0f : 1f;
     }
 
     public void OnAdditionTextDestroyed(string itemName)

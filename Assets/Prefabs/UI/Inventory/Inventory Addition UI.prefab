@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7110977384160313531}
   - component: {fileID: 7110977384160313529}
   - component: {fileID: 2092278022876667161}
+  - component: {fileID: 5554275537585671391}
   m_Layer: 5
   m_Name: Inventory Addition UI
   m_TagString: Untagged
@@ -52,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryAdditionText: {fileID: 8307171221807753259, guid: 9843e697f9b21ec448d956302b8f8737,
     type: 3}
+  inventoryAdditionUICanvasGroup: {fileID: 5554275537585671391}
   targetInventory: {fileID: 0}
 --- !u!114 &2092278022876667161
 MonoBehaviour:
@@ -77,3 +79,15 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 1
+--- !u!225 &5554275537585671391
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7110977384160313528}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
