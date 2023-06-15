@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public event Action<bool> OnIsAttackingSet = delegate { };
 
     private Dictionary<string, IItemUsage> itemNameToUsage;
+    private Dictionary<Type, IItemUsage> itemScriptableObjectTypeToUsage;
 
     private static bool actionDisablingUIOpen;
 
@@ -89,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
         ActionDisablingUIOpen = false;
 
-        SetItemNameToUsageDictionary();
+        SetItemUsageDictionaries();
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
         inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
@@ -205,25 +206,15 @@ public class PlayerController : MonoBehaviour
 
     private void UseItem(ItemWithAmount item, int itemIndex)
     {
-        switch (item.itemData)
+        if (TryGetItemUsage(item, out IItemUsage itemUsage))
         {
-            case HealingItemScriptableObject:
-                healingItemUsage.UseItem(item, itemIndex);
-                break;
-            case ThrowableItemScriptableObject:
-                throwableItemUsage.UseItem(item, itemIndex);
-                break;
-            case WeaponItemScriptableObject:
-                weaponItemUsage.UseItem(item, itemIndex);
-                break;
-            default:
-                if (itemNameToUsage.TryGetValue(item.itemData.name, out IItemUsage itemUsage))
-                {
-                    itemUsage.UseItem(item, itemIndex);
-                }
-                break;
+            itemUsage.UseItem(item, itemIndex);
         }
     }
+
+    private bool TryGetItemUsage(ItemWithAmount item, out IItemUsage itemUsage) =>
+        itemNameToUsage.TryGetValue(item.itemData.name, out itemUsage) ||
+        itemScriptableObjectTypeToUsage.TryGetValue(item.itemData.GetType(), out itemUsage);
 
     private void PlayerDeath()
     {
@@ -270,12 +261,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SetItemNameToUsageDictionary()
+    private void SetItemUsageDictionaries()
     {
         itemNameToUsage = new Dictionary<string, IItemUsage>
         {
             { "Bucket", bucketItemUsage },
             { "Fishing Rod", fishingRodItemUsage }
+        };
+
+        itemScriptableObjectTypeToUsage = new Dictionary<Type, IItemUsage>
+        {
+            { typeof(HealingItemScriptableObject), healingItemUsage },
+            { typeof(ThrowableItemScriptableObject), throwableItemUsage },
+            { typeof(WeaponItemScriptableObject), weaponItemUsage }
         };
     }
 
