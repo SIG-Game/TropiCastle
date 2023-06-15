@@ -47,15 +47,32 @@ public class ItemWithAmount
 
     public string GetTooltipText()
     {
-        if (instanceProperties is BreakableItemInstanceProperties breakableItemProperties &&
-            itemData is BreakableItemScriptableObject breakableItemScriptableObject)
+        if (TryGetDurabilityProperties(out int durability, out int initialDurability))
         {
-            return $"{itemData.name}\nDurability: {breakableItemProperties.Durability} " +
-                $"/ {breakableItemScriptableObject.InitialDurability}";
+            return $"{itemData.name}\nDurability: {durability} / {initialDurability}";
         }
         else
         {
             return itemData.GetTooltipText();
+        }
+    }
+
+    public bool TryGetDurabilityProperties(out int durability, out int initialDurability)
+    {
+        if (instanceProperties is BreakableItemInstanceProperties breakableItemProperties &&
+            itemData is BreakableItemScriptableObject breakableItemScriptableObject)
+        {
+            durability = breakableItemProperties.Durability;
+            initialDurability = breakableItemScriptableObject.InitialDurability;
+
+            return true;
+        }
+        else
+        {
+            durability = -1;
+            initialDurability = -1;
+
+            return false;
         }
     }
 

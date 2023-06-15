@@ -7,14 +7,9 @@ public class ItemDurabilityMeterController : MonoBehaviour
 
     public void UpdateUsingItem(ItemWithAmount item)
     {
-        if (item.instanceProperties is BreakableItemInstanceProperties
-            breakableItemInstanceProperties &&
-            item.itemData is BreakableItemScriptableObject
-            breakableItemScriptableObject)
+        if (item.TryGetDurabilityProperties(out int durability, out int initialDurability))
         {
-            UpdateDurabilityMeter(
-                breakableItemInstanceProperties.Durability,
-                breakableItemScriptableObject.InitialDurability);
+            UpdateDurabilityMeter(durability, initialDurability);
         }
         else if (MeterIsActive())
         {
