@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] private Tilemap boundingTilemap;
 
     private new Camera camera;
 
@@ -17,30 +17,40 @@ public class CameraFollow : MonoBehaviour
     {
         camera = GetComponent<Camera>();
 
-        tilemapMinX = tilemap.localBounds.min.x;
-        tilemapMaxX = tilemap.localBounds.max.x;
-        tilemapMinY = tilemap.localBounds.min.y;
-        tilemapMaxY = tilemap.localBounds.max.y;
+        tilemapMinX = boundingTilemap.localBounds.min.x;
+        tilemapMaxX = boundingTilemap.localBounds.max.x;
+        tilemapMinY = boundingTilemap.localBounds.min.y;
+        tilemapMaxY = boundingTilemap.localBounds.max.y;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        float halfCameraHeight = camera.orthographicSize;
+        transform.position = new Vector3(GetNewXPosition(),
+            GetNewYPosition(), transform.position.z);
+    }
+
+    private float GetNewXPosition()
+    {
         float halfCameraWidth = camera.orthographicSize * camera.aspect;
 
-        float minCameraX = tilemapMinX + halfCameraWidth;
-        float maxCameraX = tilemapMaxX - halfCameraWidth;
+        return GetNewPositionOnOneAxis(target.position.x,
+            tilemapMinX, tilemapMaxX, halfCameraWidth);
+    }
 
-        float minCameraY = tilemapMinY + halfCameraHeight;
-        float maxCameraY = tilemapMaxY - halfCameraHeight;
+    private float GetNewYPosition()
+    {
+        float halfCameraHeight = camera.orthographicSize;
 
-        float newXPosition = Mathf.Clamp(target.position.x, minCameraX, maxCameraX);
-        float newYPosition = Mathf.Clamp(target.position.y, minCameraY, maxCameraY);
+        return GetNewPositionOnOneAxis(target.position.y,
+            tilemapMinY, tilemapMaxY, halfCameraHeight);
+    }
 
-        Vector3 newPosition = new Vector3(newXPosition, newYPosition, transform.position.z);
+    private float GetNewPositionOnOneAxis(float targetPosition,
+        float tilemapMin, float tilemapMax, float halfCameraDimension)
+    {
+        float cameraMin = tilemapMin + halfCameraDimension;
+        float cameraMax = tilemapMax - halfCameraDimension;
 
-        Vector3 cameraPositionDelta = newPosition - transform.position;
-
-        transform.position = newPosition;
+        return Mathf.Clamp(targetPosition, cameraMin, cameraMax);
     }
 }

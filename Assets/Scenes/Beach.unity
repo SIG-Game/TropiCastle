@@ -17934,7 +17934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 572276104}
-  tilemap: {fileID: 385991233}
+  boundingTilemap: {fileID: 385991233}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
