@@ -4,8 +4,6 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
 {
     private InputAction itemPickupAndPlacementAction;
 
-    public bool ResetCursorOnPickupInputRelease { get; set; }
-
     public ItemPickupState(ItemPickupAndPlacement itemPickupAndPlacement,
         InputAction itemPickupAndPlacementAction) :
         base(itemPickupAndPlacement)
@@ -17,30 +15,26 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
     {
         itemPickupAndPlacement.UsePickupCursor();
 
-        // Pick up hovered item on state entry if needed
-        UseInputForPickup();
+        PickUpHoveredItemUsingInput();
     }
 
     public override void StateUpdate()
     {
-        if (!itemPickupAndPlacement.CursorIsOverItemWorld())
+        if (itemPickupAndPlacement.CursorIsOverItemWorld())
         {
-            if (itemPickupAndPlacement.PlacingItem())
-            {
-                itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PlacementState);
-            }
-            else
-            {
-                itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
-            }
-
-            return;
+            PickUpHoveredItemUsingInput();
         }
-
-        UseInputForPickup();
+        else if (itemPickupAndPlacement.PlacingItem())
+        {
+            itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PlacementState);
+        }
+        else if (!itemPickupAndPlacementAction.IsPressed())
+        {
+            itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
+        }
     }
 
-    private void UseInputForPickup()
+    private void PickUpHoveredItemUsingInput()
     {
         bool holdingPickupInputAndNotPlacingItem = itemPickupAndPlacementAction.IsPressed() &&
             !itemPickupAndPlacement.PlacingItem();
@@ -50,11 +44,8 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
         {
             itemPickupAndPlacement.PickUpHoveredItem();
 
-            // Prevent item placement on input release from using the
-            // same press as item pickup on input press or input hold
+            // Prevent held input from being used for item placement
             itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;
-
-            itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
         }
         else if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
@@ -66,16 +57,6 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
 
     public override void StateExit()
     {
-        bool placingItemOrNotHoldingPickup = itemPickupAndPlacement.PlacingItem() ||
-            !itemPickupAndPlacementAction.IsPressed();
-
-        if (placingItemOrNotHoldingPickup)
-        {
-            itemPickupAndPlacement.ResetCursor();
-        }
-        else
-        {
-            ResetCursorOnPickupInputRelease = true;
-        }
+        itemPickupAndPlacement.ResetCursor();
     }
 }
