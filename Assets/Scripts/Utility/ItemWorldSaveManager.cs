@@ -18,27 +18,7 @@ public class ItemWorldSaveManager : MonoBehaviour
     {
         foreach (SerializableItemWorldState itemWorldState in itemWorldStates)
         {
-            ItemScriptableObject itemScriptableObject =
-                Resources.Load<ItemScriptableObject>(
-                    $"Items/{itemWorldState.Item.ItemName}");
-
-            ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
-                itemWorldState.Item.Amount,
-                itemWorldState.Item.InstanceProperties);
-
-            ItemWorld spawnedItemWorld = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(
-                itemWorldState.Position, item);
-
-            spawnedItemWorld.gameObject.name = itemWorldState.GameObjectName;
-
-            if (!string.IsNullOrEmpty(itemWorldState.SpawnerGameObjectName))
-            {
-                GameObject itemWorldSpawnerGameObject =
-                    GameObject.Find(itemWorldState.SpawnerGameObjectName);
-
-                spawnedItemWorld.GetComponent<Spawnable>()
-                    .SetSpawner(itemWorldSpawnerGameObject.GetComponent<PrefabSpawner>());
-            }
+            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorldFromState(itemWorldState);
         }
     }
 }

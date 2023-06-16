@@ -1,6 +1,7 @@
 ﻿using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static ItemWorld;
 using Random = UnityEngine.Random;
 
 public class ItemWorldPrefabInstanceFactory : MonoBehaviour
@@ -41,6 +42,29 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         spawnedItemWorld.Item = itemToSpawn;
 
         return spawnedItemWorld;
+    }
+
+    public void SpawnItemWorldFromState(SerializableItemWorldState itemWorldState)
+    {
+        ItemScriptableObject itemScriptableObject =
+            Resources.Load<ItemScriptableObject>($"Items/{itemWorldState.Item.ItemName}");
+
+        ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
+            itemWorldState.Item.Amount,
+            itemWorldState.Item.InstanceProperties);
+
+        ItemWorld spawnedItemWorld = SpawnItemWorld(itemWorldState.Position, item);
+
+        spawnedItemWorld.gameObject.name = itemWorldState.GameObjectName;
+
+        if (!string.IsNullOrEmpty(itemWorldState.SpawnerGameObjectName))
+        {
+            GameObject itemWorldSpawnerGameObject =
+                GameObject.Find(itemWorldState.SpawnerGameObjectName);
+
+            spawnedItemWorld.GetComponent<Spawnable>()
+                .SetSpawner(itemWorldSpawnerGameObject.GetComponent<PrefabSpawner>());
+        }
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)
