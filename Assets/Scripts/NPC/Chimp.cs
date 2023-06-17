@@ -17,7 +17,6 @@ public class Chimp : NPCInteractable
 
     private List<CharacterDirection> spinDirections;
     private Coroutine spinCoroutine;
-    private ItemWithAmount itemToGive;
     private float lastGiveTimeSeconds;
     private float timeBetweenGivesSeconds;
 
@@ -43,8 +42,9 @@ public class Chimp : NPCInteractable
 
         FacePlayer(player);
 
-        bool giveItem = ItemGiveAvailable();
-        if (giveItem)
+        ItemWithAmount itemToGive = null;
+
+        if (ItemGiveAvailable())
         {
             int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
             itemToGive = potentialItemsToGive[itemToGiveIndex];
@@ -52,7 +52,7 @@ public class Chimp : NPCInteractable
             if (!player.GetInventory().CanAddItem(itemToGive))
             {
                 dialogueLines[1] = playerInventoryFullDialogueLine;
-                giveItem = false;
+                itemToGive = null;
             }
             else
             {
@@ -66,7 +66,7 @@ public class Chimp : NPCInteractable
         }
 
         DialogueBox.Instance.PlayDialogue(dialogueLines,
-            () => Chimp_AfterDialogueAction(player, giveItem));
+            () => Chimp_AfterDialogueAction(player, itemToGive));
     }
 
     private IEnumerator SpinCoroutine()
@@ -94,9 +94,9 @@ public class Chimp : NPCInteractable
         }
     }
 
-    private void Chimp_AfterDialogueAction(PlayerController player, bool giveItem)
+    private void Chimp_AfterDialogueAction(PlayerController player, ItemWithAmount itemToGive)
     {
-        if (giveItem)
+        if (itemToGive != null)
         {
             player.GetInventory().AddItem(itemToGive);
 
