@@ -416,7 +416,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerFishItemInWorld
       value: 
-      objectReference: {fileID: 1982112584}
+      objectReference: {fileID: 0}
     - target: {fileID: 4788721817516295151, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: inventoryFullUIController
@@ -35101,14 +35101,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &1982112584 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6075103288335445172, guid: 055035cc7ee7c8646858260629418a55,
+  m_CorrespondingSourceObject: {fileID: 7444738456759016709, guid: 055035cc7ee7c8646858260629418a55,
     type: 3}
   m_PrefabInstance: {fileID: 1982112580}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c317ac53ba80c514085ea765906772f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d8ad8bba97e63e4694a8a9e4aa36d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1982112585 stripped

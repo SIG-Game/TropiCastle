@@ -5,7 +5,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
     [SerializeField] private ItemSelectionController itemSelectionController;
-    [SerializeField] private PlayerItemInWorldController playerItemInWorld;
+    [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private Sprite itemPickupArrow;
     [SerializeField] private Sprite itemPickupArrowInventoryFull;
@@ -118,7 +118,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public void ResetCursorAndPlayerItem()
     {
         ResetCursor();
-        playerItemInWorld.HidePlayerItemInWorld();
+        playerItemInWorld.HideCharacterItemInWorld();
     }
 
     public void UsePickupCursor()
@@ -148,7 +148,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
         cursorController.SetAmountText(selectedItem.GetAmountText());
 
-        playerItemInWorld.ShowPlayerItemInWorld(selectedItemData.sprite);
+        playerItemInWorld.ShowCharacterItemInWorld(selectedItemData.sprite);
     }
 
     private void UpdateInstanceVariables()

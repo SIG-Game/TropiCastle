@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8753312123131854772}
   - component: {fileID: 6612598337352294783}
-  - component: {fileID: 6075103288335445172}
+  - component: {fileID: 7444738456759016709}
   m_Layer: 8
   m_Name: Item
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6075103288335445172
+--- !u!114 &7444738456759016709
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,11 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2260776210221837018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c317ac53ba80c514085ea765906772f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d8ad8bba97e63e4694a8a9e4aa36d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 5288355818519945016}
-  playerTransform: {fileID: 5288355818519945019}
+  characterDirectionController: {fileID: 5613604618592605289}
+  characterTransform: {fileID: 5288355818519945019}
   itemInWorldOffsets:
   - {x: 0, y: 0.35, z: 0}
   - {x: 0, y: 0.3, z: 0}

@@ -13,14 +13,10 @@ public class Chimp : NPCInteractable
     [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
     [SerializeField] private Vector2Int spinsBeforeWaitRange;
     [SerializeField] private Vector2 timeBetweenSpinsSecondsRange;
-    [SerializeField] private Transform itemToGiveInWorld;
-
-    // Direction order for this variable is up, down, left, right
-    [SerializeField] private List<Vector3> itemToGiveInWorldOffsets;
+    [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
 
     private List<CharacterDirection> spinDirections;
     private Coroutine spinCoroutine;
-    private SpriteRenderer itemToGiveInWorldSpriteRenderer;
     private ItemWithAmount itemToGive;
     private float lastGiveTimeSeconds;
     private float timeBetweenGivesSeconds;
@@ -31,8 +27,6 @@ public class Chimp : NPCInteractable
 
         spinDirections = new List<CharacterDirection> { CharacterDirection.Down,
             CharacterDirection.Left, CharacterDirection.Up, CharacterDirection.Right };
-
-        itemToGiveInWorldSpriteRenderer = itemToGiveInWorld.GetComponent<SpriteRenderer>();
 
         lastGiveTimeSeconds = 0f;
         timeBetweenGivesSeconds = 0f;
@@ -63,7 +57,7 @@ public class Chimp : NPCInteractable
             else
             {
                 dialogueLines[1] = itemToGiveDialogueLines[itemToGiveIndex];
-                ShowItemToGiveInWorld();
+                chimpItemInWorld.ShowCharacterItemInWorld(itemToGive.itemData.sprite);
             }
         }
         else
@@ -106,32 +100,13 @@ public class Chimp : NPCInteractable
         {
             player.GetInventory().AddItem(itemToGive);
 
-            HideItemToGiveInWorld();
+            chimpItemInWorld.HideCharacterItemInWorld();
 
             lastGiveTimeSeconds = Time.time;
             timeBetweenGivesSeconds = GetRandomTimeBetweenGivesSeconds();
         }
 
         spinCoroutine = StartCoroutine(SpinCoroutine());
-    }
-
-    private void ShowItemToGiveInWorld()
-    {
-        Vector3 itemToGiveInWorldOffset =
-            itemToGiveInWorldOffsets[(int)directionController.Direction];
-
-        if (directionController.Direction == CharacterDirection.Up)
-            itemToGiveInWorldSpriteRenderer.sortingOrder = -1;
-        else
-            itemToGiveInWorldSpriteRenderer.sortingOrder = 1;
-
-        itemToGiveInWorld.localPosition = itemToGiveInWorldOffset;
-        itemToGiveInWorldSpriteRenderer.sprite = itemToGive.itemData.sprite;
-    }
-
-    private void HideItemToGiveInWorld()
-    {
-        itemToGiveInWorldSpriteRenderer.sprite = null;
     }
 
     private float GetRandomTimeBetweenGivesSeconds() =>

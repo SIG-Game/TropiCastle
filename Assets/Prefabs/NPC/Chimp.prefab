@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6226198123078384704}
   - component: {fileID: 6226198123078384707}
+  - component: {fileID: 5168677056278632683}
   m_Layer: 8
   m_Name: Item To Give
   m_TagString: Untagged
@@ -84,6 +85,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5168677056278632683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6226198123078384705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8ad8bba97e63e4694a8a9e4aa36d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterDirectionController: {fileID: 6226198124874705005}
+  characterTransform: {fileID: 6226198124874704993}
+  itemInWorldOffsets:
+  - {x: 0, y: 0.25, z: 0}
+  - {x: 0, y: 0.3, z: 0}
+  - {x: -0.09, y: 0.25, z: 0}
+  - {x: 0.09, y: 0.25, z: 0}
 --- !u!1 &6226198124874704999
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,12 +263,7 @@ MonoBehaviour:
   timeBetweenGivesSecondsRange: {x: 5, y: 10}
   spinsBeforeWaitRange: {x: 2, y: 5}
   timeBetweenSpinsSecondsRange: {x: 0.5, y: 3}
-  itemToGiveInWorld: {fileID: 6226198123078384704}
-  itemToGiveInWorldOffsets:
-  - {x: 0, y: 0.25, z: 0}
-  - {x: 0, y: 0.3, z: 0}
-  - {x: -0.09, y: 0.25, z: 0}
-  - {x: 0.09, y: 0.25, z: 0}
+  chimpItemInWorld: {fileID: 5168677056278632683}
 --- !u!114 &6226198124874705005
 MonoBehaviour:
   m_ObjectHideFlags: 0

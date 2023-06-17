@@ -12,7 +12,7 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private Transform hookTransform;
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private PlayerItemInWorldController playerItemInWorld;
+    [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private Vector2 catchFishXPositionRange;
     [SerializeField] private bool logSelectedFish;
 
@@ -95,14 +95,14 @@ public class FishingUIController : MonoBehaviour
 
     private void CatchFish()
     {
-        playerItemInWorld.ShowPlayerItemInWorld(selectedFishItem.itemData.sprite);
+        playerItemInWorld.ShowCharacterItemInWorld(selectedFishItem.itemData.sprite);
 
         HideFishingUI();
 
         void afterCatchDialogueAction()
         {
             playerInventory.AddItem(selectedFishItem);
-            playerItemInWorld.HidePlayerItemInWorld();
+            playerItemInWorld.HideCharacterItemInWorld();
         }
 
         DialogueBox.Instance.PlayDialogue($"You caught a {selectedFish.species.ToLowerInvariant()}!\n" +
