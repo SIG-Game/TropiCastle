@@ -42,8 +42,7 @@ public class CursorController : MonoBehaviour
 
         cursorWorldPosition = Vector2.zero;
 
-        PauseController.OnGamePaused += PauseController_OnGamePaused;
-        PauseController.OnGameUnpaused += PauseController_OnGameUnpaused;
+        PauseController.OnGamePausedSet += PauseController_OnGamePausedSet;
         PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
 
         playerController.OnIsAttackingSet += PlayerController_OnIsAttackingSet;
@@ -93,8 +92,7 @@ public class CursorController : MonoBehaviour
 
     private void OnDestroy()
     {
-        PauseController.OnGamePaused -= PauseController_OnGamePaused;
-        PauseController.OnGameUnpaused -= PauseController_OnGameUnpaused;
+        PauseController.OnGamePausedSet -= PauseController_OnGamePausedSet;
         PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
 
         if (playerController != null)
@@ -163,20 +161,22 @@ public class CursorController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    private void PauseController_OnGamePaused()
+    private void PauseController_OnGamePausedSet(bool gamePaused)
     {
-        ShowAndUnlockMouseCursor();
-
-        gameObject.SetActive(false);
-    }
-
-    private void PauseController_OnGameUnpaused()
-    {
-        HideAndLockMouseCursor();
-
-        if (!PlayerController.ActionDisablingUIOpen)
+        if (gamePaused)
         {
-            gameObject.SetActive(true);
+            ShowAndUnlockMouseCursor();
+
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            HideAndLockMouseCursor();
+
+            if (!PlayerController.ActionDisablingUIOpen)
+            {
+                gameObject.SetActive(true);
+            }
         }
     }
 
