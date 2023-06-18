@@ -156,23 +156,10 @@ public class PlayerController : MonoBehaviour
         OnActionDisablingUIOpenSet = delegate { };
     }
 
-    private Vector2 GetInteractionDirection()
-    {
-        Vector2 interactionDirection = Direction switch
-        {
-            CharacterDirection.Up => Vector2.up,
-            CharacterDirection.Down => Vector2.down,
-            CharacterDirection.Left => Vector2.left,
-            CharacterDirection.Right => Vector2.right,
-            _ => throw new ArgumentOutOfRangeException(nameof(Direction))
-        };
-        return interactionDirection;
-    }
-
     public RaycastHit2D InteractionCast(LayerMask mask, float horizontalBoxCastDistance,
         float verticalBoxCastDistance)
     {
-        Vector2 interactionDirection = GetInteractionDirection();
+        Vector2 interactionDirection = directionController.GetDirectionVector();
 
         Vector3 raycastOrigin = transform.position;
         raycastOrigin.x += boxCollider.offset.x;

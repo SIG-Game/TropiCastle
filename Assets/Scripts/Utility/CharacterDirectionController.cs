@@ -38,4 +38,14 @@ public class CharacterDirectionController : MonoBehaviour
     {
         Direction = defaultDirection;
     }
+
+    public Vector2 GetDirectionVector() =>
+        Direction switch
+        {
+            CharacterDirection.Up => Vector2.up,
+            CharacterDirection.Down => Vector2.down,
+            CharacterDirection.Left => Vector2.left,
+            CharacterDirection.Right => Vector2.right,
+            _ => throw new ArgumentOutOfRangeException(nameof(Direction))
+        };
 }
