@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour
     private InputAction attackAction;
     private InputAction healAction;
     private LayerMask interactableMask;
-    private LayerMask waterMask;
     private bool isAttacking;
 
     private void Awake()
@@ -83,7 +82,6 @@ public class PlayerController : MonoBehaviour
         healAction = healActionReference.action;
 
         interactableMask = LayerMask.GetMask("Interactable");
-        waterMask = LayerMask.GetMask("Water");
 
         IsAttacking = false;
 
