@@ -11,8 +11,6 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
         ItemWithAmount itemToThrow = new ItemWithAmount(item);
         itemToThrow.amount = 1;
 
-        int damage = ((ThrowableItemScriptableObject)itemToThrow.itemData).damage;
-
         Vector3 thrownItemStartPosition =
             playerController.transform.position + new Vector3(0f, 0.3f, 0f);
 
@@ -23,12 +21,11 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
         ThrownItemWorld thrownItemWorldComponent =
             thrownItemWorld.gameObject.AddComponent<ThrownItemWorld>();
 
-        thrownItemWorldComponent.SetDamage(damage);
-
         Vector3 throwDirection =
             ((Vector3)cursorController.GetWorldPosition() - thrownItemStartPosition).normalized;
 
-        thrownItemWorldComponent.SetUpThrownItemWorld(throwDirection);
+        thrownItemWorldComponent.SetUpThrownItemWorld(throwDirection,
+            (ThrowableItemScriptableObject)itemToThrow.itemData);
 
         playerInventory.DecrementItemStackAtIndex(itemIndex);
     }

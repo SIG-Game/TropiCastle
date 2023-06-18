@@ -18,3 +18,4 @@ MonoBehaviour:
   hasCustomColliderSize: 0
   customColliderSize: {x: 0, y: 0}
   damage: 20
+  knockback: 2.5

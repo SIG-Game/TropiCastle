@@ -7,7 +7,6 @@ public class ThrownItemWorld : MonoBehaviour
     private WeaponController spawnedWeaponController;
 
     private const float speed = 5f;
-    private const float enemyKnockbackForce = 2.5f;
     private const float maxStopVelocitySqrMagnitude = 0.001f;
 
     private void Awake()
@@ -21,8 +20,6 @@ public class ThrownItemWorld : MonoBehaviour
         spawnedCollider2D.isTrigger = true;
 
         spawnedWeaponController = gameObject.AddComponent<WeaponController>();
-
-        spawnedWeaponController.EnemyKnockbackForce = enemyKnockbackForce;
     }
 
     private void Update()
@@ -38,13 +35,12 @@ public class ThrownItemWorld : MonoBehaviour
         }
     }
 
-    public void SetUpThrownItemWorld(Vector3 velocityDirection)
+    public void SetUpThrownItemWorld(Vector3 velocityDirection,
+        ThrowableItemScriptableObject throwableItemScriptableObject)
     {
         spawnedRigidbody2D.velocity = speed * velocityDirection;
-    }
 
-    public void SetDamage(int damage)
-    {
-        spawnedWeaponController.Damage = damage;
+        spawnedWeaponController.Damage = throwableItemScriptableObject.damage;
+        spawnedWeaponController.EnemyKnockbackForce = throwableItemScriptableObject.knockback;
     }
 }
