@@ -28,8 +28,7 @@ public class EnemySaveManager : MonoBehaviour
             EnemyController spawnedEnemyController =
                 spawnedEnemy.GetComponent<EnemyController>();
 
-            spawnedEnemyController.SetPlayerTransform(playerTransform);
-            spawnedEnemyController.SetPlayerInventory(playerInventory);
+            spawnedEnemyController.SetUpEnemy(playerTransform, playerInventory);
 
             if (!string.IsNullOrEmpty(enemyState.SpawnerGameObjectName))
             {

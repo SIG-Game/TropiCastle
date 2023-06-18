@@ -9,7 +9,6 @@ public class EnemySpawner : PrefabSpawner
     {
         EnemyController spawnedEnemy = spawnedPrefab.GetComponent<EnemyController>();
 
-        spawnedEnemy.SetPlayerTransform(playerTransform);
-        spawnedEnemy.SetPlayerInventory(playerInventory);
+        spawnedEnemy.SetUpEnemy(playerTransform, playerInventory);
     }
 }

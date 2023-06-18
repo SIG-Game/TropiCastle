@@ -212,13 +212,9 @@ public class EnemyController : MonoBehaviour
     private float GetDistanceToPlayerCollider() =>
         Vector2.Distance(transform.position, GetPlayerColliderPosition());
 
-    public void SetPlayerTransform(Transform playerTransform)
+    public void SetUpEnemy(Transform playerTransform, Inventory playerInventory)
     {
         this.playerTransform = playerTransform;
-    }
-
-    public void SetPlayerInventory(Inventory playerInventory)
-    {
         this.playerInventory = playerInventory;
     }
 
