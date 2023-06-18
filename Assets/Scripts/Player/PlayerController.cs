@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
     private CharacterDirectionController directionController;
     private InputAction attackAction;
     private InputAction healAction;
-    private WeaponItemScriptableObject strongestWeaponInInventory;
     private LayerMask interactableMask;
     private LayerMask waterMask;
     private bool isAttacking;
@@ -93,7 +92,6 @@ public class PlayerController : MonoBehaviour
         SetItemUsageDictionaries();
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
-        inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
     }
 
     private void Update()
@@ -118,9 +116,9 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
-        else if (attackAction.WasPressedThisFrame() && strongestWeaponInInventory != null)
+        else if (attackAction.WasPressedThisFrame() && weaponItemUsage.PlayerHasWeapon())
         {
-            weaponItemUsage.AttackWithWeapon(strongestWeaponInInventory);
+            weaponItemUsage.AttackWithStrongestWeaponInInventory();
         }
         // Do not check for fish input on the same frame that an item is used
         else if (InputManager.Instance.GetFishButtonDownIfUnusedThisFrame() &&
@@ -152,11 +150,6 @@ public class PlayerController : MonoBehaviour
         if (healthController != null)
         {
             healthController.OnHealthSetToZero -= HealthController_OnHealthSetToZero;
-        }
-
-        if (inventory != null)
-        {
-            inventory.OnItemChangedAtIndex -= Inventory_ChangedItemAtIndex;
         }
 
         OnPlayerDied = delegate { };
@@ -233,32 +226,6 @@ public class PlayerController : MonoBehaviour
     private void HealthController_OnHealthSetToZero()
     {
         PlayerDeath();
-    }
-
-    private void Inventory_ChangedItemAtIndex(ItemWithAmount _, int _1)
-    {
-        UpdateStrongestWeaponInInventory();
-    }
-
-    private void UpdateStrongestWeaponInInventory()
-    {
-        strongestWeaponInInventory = null;
-
-        foreach (ItemWithAmount item in inventory.GetItemList())
-        {
-            if (item.itemData is not WeaponItemScriptableObject)
-            {
-                continue;
-            }
-
-            WeaponItemScriptableObject weapon = item.itemData as WeaponItemScriptableObject;
-
-            if (strongestWeaponInInventory == null ||
-                weapon.damage > strongestWeaponInInventory.damage)
-            {
-                strongestWeaponInInventory = weapon;
-            }
-        }
     }
 
     private void SetItemUsageDictionaries()
