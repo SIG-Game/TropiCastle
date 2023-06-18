@@ -6,10 +6,9 @@ using Random = UnityEngine.Random;
 
 public class Chimp : NPCInteractable
 {
+    [SerializeField] private List<string> notGivingItemDialogueLines;
+    [SerializeField] private List<string> playerInventoryFullDialogueLines;
     [SerializeField] private List<ItemWithAmount> potentialItemsToGive;
-    [SerializeField] private List<string> itemToGiveDialogueLines;
-    [SerializeField] private string notGivingItemDialogueLine;
-    [SerializeField] private string playerInventoryFullDialogueLine;
     [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
     [SerializeField] private Vector2Int spinsBeforeWaitRange;
     [SerializeField] private Vector2 timeBetweenSpinsSecondsRange;
@@ -43,6 +42,7 @@ public class Chimp : NPCInteractable
         FacePlayer(player);
 
         ItemWithAmount itemToGive = null;
+        List<string> dialogueLinesToPlay = null;
 
         if (ItemGiveAvailable())
         {
@@ -51,21 +51,21 @@ public class Chimp : NPCInteractable
 
             if (!player.GetInventory().CanAddItem(itemToGive))
             {
-                dialogueLines[1] = playerInventoryFullDialogueLine;
+                dialogueLinesToPlay = playerInventoryFullDialogueLines;
                 itemToGive = null;
             }
             else
             {
-                dialogueLines[1] = itemToGiveDialogueLines[itemToGiveIndex];
+                dialogueLinesToPlay = dialogueLines;
                 chimpItemInWorld.ShowCharacterItemInWorld(itemToGive.itemData.sprite);
             }
         }
         else
         {
-            dialogueLines[1] = notGivingItemDialogueLine;
+            dialogueLinesToPlay = notGivingItemDialogueLines;
         }
 
-        DialogueBox.Instance.PlayDialogue(dialogueLines,
+        DialogueBox.Instance.PlayDialogue(dialogueLinesToPlay,
             () => Chimp_AfterDialogueAction(player, itemToGive));
     }
 

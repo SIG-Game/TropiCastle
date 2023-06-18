@@ -245,7 +245,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueLines:
   - mmmmmmmmm...
-  - (Placeholder for dialogue line in "Item To Give Dialogue Lines".)
+  notGivingItemDialogueLines:
+  - (The chimp stares at you and smiles.)
+  playerInventoryFullDialogueLines:
+  - (The chimp is eager to give you something but can sense that your inventory is
+    full.)
   potentialItemsToGive:
   - itemData: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
     amount: 1
@@ -253,13 +257,6 @@ MonoBehaviour:
     amount: 1
   - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
     amount: 1
-  itemToGiveDialogueLines:
-  - (The benevolent chimp hands you a delicious red apple.)
-  - (The kind chimp hands you a stick.)
-  - (The gracious chimp hands you a vine.)
-  notGivingItemDialogueLine: (The chimp stares at you and smiles.)
-  playerInventoryFullDialogueLine: (The chimp is eager to give you something but
-    can sense that your inventory is full.)
   timeBetweenGivesSecondsRange: {x: 5, y: 10}
   spinsBeforeWaitRange: {x: 2, y: 5}
   timeBetweenSpinsSecondsRange: {x: 0.5, y: 3}
