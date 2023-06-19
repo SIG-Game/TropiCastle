@@ -16,6 +16,8 @@ public class ItemWorld : MonoBehaviour
         set
         {
             item = value;
+
+            SetUpUsingItem();
         }
     }
 
@@ -33,9 +35,7 @@ public class ItemWorld : MonoBehaviour
         spawnable = GetComponent<Spawnable>();
     }
 
-    // These operations must be in the Start method because the Awake
-    // method runs before ItemWorldPrefabInstanceFactory sets item
-    private void Start()
+    private void SetUpUsingItem()
     {
         GetComponent<SpriteRenderer>().sprite = item.itemData.sprite;
 
