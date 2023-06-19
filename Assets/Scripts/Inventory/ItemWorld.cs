@@ -66,7 +66,7 @@ public class ItemWorld : MonoBehaviour
             Item = serializableItem,
             Position = transform.position,
             GameObjectName = gameObject.name,
-            SpawnerGameObjectName = spawnable.GetSpawnerGameObjectName()
+            SpawnerId = spawnable.GetSpawnerId()
         };
 
         return serializableState;
@@ -78,6 +78,6 @@ public class ItemWorld : MonoBehaviour
         public SerializableInventoryItem Item;
         public Vector2 Position;
         public string GameObjectName;
-        public string SpawnerGameObjectName;
+        public int SpawnerId;
     }
 }

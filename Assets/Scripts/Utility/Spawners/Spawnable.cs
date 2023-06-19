@@ -17,6 +17,6 @@ public class Spawnable : MonoBehaviour
         this.spawner = spawner;
     }
 
-    public string GetSpawnerGameObjectName() =>
-        spawner != null ? spawner.gameObject.name : string.Empty;
+    public int GetSpawnerId() =>
+        spawner != null ? spawner.GetInstanceID() : -1;
 }

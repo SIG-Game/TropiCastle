@@ -224,7 +224,7 @@ public class EnemyController : MonoBehaviour
         {
             Position = transform.position,
             Health = healthController.CurrentHealth,
-            SpawnerGameObjectName = spawnable.GetSpawnerGameObjectName()
+            SpawnerId = spawnable.GetSpawnerId()
         };
 
         return serializableState;
@@ -235,6 +235,6 @@ public class EnemyController : MonoBehaviour
     {
         public Vector2 Position;
         public int Health;
-        public string SpawnerGameObjectName;
+        public int SpawnerId;
     }
 }
