@@ -78,6 +78,11 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
         else if (clickedItem.itemData.name != "Empty")
         {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                clickedInventory.ConsolidateItemsToIndex(clickedItemIndex);
+            }
+
             HoldItem(clickedInventory, clickedItemIndex,
                 clickedItemSlot, clickedItem);
         }

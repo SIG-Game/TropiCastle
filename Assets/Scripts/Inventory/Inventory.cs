@@ -288,6 +288,48 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+    public void ConsolidateItemsToIndex(int targetItemIndex)
+    {
+        ItemWithAmount targetItem = itemList[targetItemIndex];
+
+        if (targetItem.itemData.name == "Empty")
+        {
+            return;
+        }
+
+        for (int i = 0; i < itemList.Count; ++i)
+        {
+            if (i == targetItemIndex)
+            {
+                continue;
+            }
+
+            ItemWithAmount currentItem = itemList[i];
+
+            if (targetItem.itemData.name == currentItem.itemData.name)
+            {
+                int combinedAmount = targetItem.amount + currentItem.amount;
+
+                if (combinedAmount <= targetItem.itemData.stackSize)
+                {
+                    targetItem.amount = combinedAmount;
+
+                    RemoveItemAtIndex(i);
+                }
+                else
+                {
+                    targetItem.amount = targetItem.itemData.stackSize;
+
+                    currentItem.amount = combinedAmount - targetItem.itemData.stackSize;
+
+                    OnItemChangedAtIndex(currentItem, i);
+                }
+
+                OnItemChangedAtIndex(targetItem, targetItemIndex);
+            }
+        }
+    }
+
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
 
     public List<ItemWithAmount> GetItemList() => itemList;
