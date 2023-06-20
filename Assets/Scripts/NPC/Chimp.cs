@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Chimp : NPCInteractable
 {
+    [SerializeField] private List<string> givingItemDialogueLines;
     [SerializeField] private List<string> notGivingItemDialogueLines;
     [SerializeField] private List<string> playerInventoryFullDialogueLines;
     [SerializeField] private List<ItemWithAmount> potentialItemsToGive;
@@ -56,7 +57,7 @@ public class Chimp : NPCInteractable
             }
             else
             {
-                dialogueLinesToPlay = dialogueLines;
+                dialogueLinesToPlay = givingItemDialogueLines;
                 chimpItemInWorld.ShowCharacterItemInWorld(itemToGive.itemData.sprite);
             }
         }

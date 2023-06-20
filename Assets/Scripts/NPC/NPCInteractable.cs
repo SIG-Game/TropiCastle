@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class NPCInteractable : Interactable
+public abstract class NPCInteractable : Interactable
 {
-    [SerializeField] protected List<string> dialogueLines;
-
     protected CharacterDirectionController directionController;
 
     protected virtual void Awake()
     {
         directionController = GetComponent<CharacterDirectionController>();
-    }
-
-    public override void Interact(PlayerController player)
-    {
-        FacePlayer(player);
-
-        Action afterDialogueAction = directionController.UseDefaultDirection;
-        DialogueBox.Instance.PlayDialogue(dialogueLines, afterDialogueAction);
     }
 
     public void FacePlayer(PlayerController player)

@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcddf3dff77da643950b9f25f035654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueLines:
+  givingItemDialogueLines:
   - mmmmmmmmm...
   notGivingItemDialogueLines:
   - (The chimp stares at you and smiles.)
