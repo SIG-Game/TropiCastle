@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 public class ItemPickupState : BaseItemPickupAndPlacementState
 {
     private InputAction itemPickupAndPlacementAction;
+    private ItemWorld previousHoveredItemWorld;
 
     public ItemPickupState(ItemPickupAndPlacement itemPickupAndPlacement,
         InputAction itemPickupAndPlacementAction) :
@@ -16,10 +17,17 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
         itemPickupAndPlacement.UsePickupCursor();
 
         PickUpHoveredItemUsingInput();
+
+        previousHoveredItemWorld = itemPickupAndPlacement.GetHoveredItemWorld();
     }
 
     public override void StateUpdate()
     {
+        if (itemPickupAndPlacement.GetHoveredItemWorld() != previousHoveredItemWorld)
+        {
+            itemPickupAndPlacement.UsePickupCursor();
+        }
+
         if (itemPickupAndPlacement.CursorIsOverItemWorld())
         {
             PickUpHoveredItemUsingInput();
@@ -32,6 +40,8 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
         {
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
         }
+
+        previousHoveredItemWorld = itemPickupAndPlacement.GetHoveredItemWorld();
     }
 
     private void PickUpHoveredItemUsingInput()

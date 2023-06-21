@@ -35,9 +35,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
         playerInventory = player.GetInventory();
 
         itemPickupAndPlacementAction = itemPickupAndPlacementActionReference.action;
-
-        playerInventory.OnItemAdded += PlayerInventory_OnItemAdded;
-        playerInventory.OnItemRemoved += PlayerInventory_OnItemRemoved;
     }
 
     private void Start()
@@ -73,15 +70,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
         UpdateInstanceVariables();
 
         currentState.StateUpdate();
-    }
-
-    private void OnDestroy()
-    {
-        if (playerInventory != null)
-        {
-            playerInventory.OnItemAdded -= PlayerInventory_OnItemAdded;
-            playerInventory.OnItemRemoved -= PlayerInventory_OnItemRemoved;
-        }
     }
 
     public void PickUpHoveredItem()
@@ -123,7 +111,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePickupCursor()
     {
-        if (playerInventory.HasNoEmptySlots())
+        if (hoveredItemWorld != null &&
+            !playerInventory.CanAddItem(hoveredItemWorld.Item))
         {
             cursorController.Sprite = itemPickupArrowInventoryFull;
         }
@@ -188,26 +177,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState.StateEnter();
     }
 
-    private void PlayerInventory_OnItemAdded(ItemWithAmount _)
-    {
-        if (playerInventory.HasNoEmptySlots() &&
-            cursorController.Sprite == itemPickupArrow)
-        {
-            cursorController.Sprite = itemPickupArrowInventoryFull;
-        }
-    }
-
-    private void PlayerInventory_OnItemRemoved(ItemWithAmount _)
-    {
-        if (cursorController.Sprite == itemPickupArrowInventoryFull)
-        {
-            cursorController.Sprite = itemPickupArrow;
-        }
-    }
-
     public bool CanPlaceItemAtCursorPosition() => canPlaceItemAtCursorPosition;
 
     public bool CursorIsOverItemWorld() => cursorIsOverItemWorld;
 
     public bool PlacingItem() => placingItem;
+
+    public ItemWorld GetHoveredItemWorld() => hoveredItemWorld;
 }
