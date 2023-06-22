@@ -20,6 +20,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private Image heldItemImage;
     private Tooltip tooltipTextWithPriority;
     private int heldItemIndex;
+    private bool rightClickToResetEnabled;
 
     public static InventoryUIHeldItemController Instance;
 
@@ -33,6 +34,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemRectTransform = heldItemUI.GetComponent<RectTransform>();
         heldItemImage = heldItemUI.GetComponent<Image>();
 
+        rightClickToResetEnabled = true;
+
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
     }
 
@@ -42,7 +45,9 @@ public class InventoryUIHeldItemController : MonoBehaviour
         {
             UpdateHeldItemPosition();
 
-            if (Input.GetMouseButtonDown(1) && inventoryUIController.HoveredItemIndex == -1)
+            if (rightClickToResetEnabled &&
+                Input.GetMouseButtonDown(1) &&
+                inventoryUIController.HoveredItemIndex == -1)
             {
                 ResetHeldItem();
             }
@@ -306,6 +311,22 @@ public class InventoryUIHeldItemController : MonoBehaviour
         }
     }
 
+    public void DecrementHeldItemStack()
+    {
+        heldItemInventory.DecrementItemStackAtIndex(heldItemIndex);
+
+        if (heldItemInventory.GetItemAtIndex(heldItemIndex).amount == 0)
+        {
+            HideHeldItem();
+        }
+        else
+        {
+            UpdateHeldItemUI();
+
+            EmptyHeldItemSlotUI();
+        }
+    }
+
     public void HideHeldItem()
     {
         heldItemImage.sprite = transparentSprite;
@@ -316,6 +337,11 @@ public class InventoryUIHeldItemController : MonoBehaviour
         InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
 
         OnStoppedHoldingItem();
+    }
+
+    public void SetRightClickToResetEnabled(bool rightClickToResetEnabled)
+    {
+        this.rightClickToResetEnabled = rightClickToResetEnabled;
     }
 
     public bool HoldingItem() => heldItemImage.sprite != transparentSprite;

@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class DeleteHeldItemButton : MonoBehaviour
+public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
+    IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private InventoryUIController inventoryUIController;
 
@@ -13,13 +15,33 @@ public class DeleteHeldItemButton : MonoBehaviour
         inventory = inventoryUIController.GetInventory();
     }
 
-    public void DeleteHeldItemButton_OnClick()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (heldItemController.HoldingItem())
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            heldItemController.HideHeldItem();
+            if (heldItemController.HoldingItem())
+            {
+                heldItemController.HideHeldItem();
 
-            inventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
+                inventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
+            }
         }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (heldItemController.HoldingItem())
+            {
+                heldItemController.DecrementHeldItemStack();
+            }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData _)
+    {
+        heldItemController.SetRightClickToResetEnabled(false);
+    }
+
+    public void OnPointerExit(PointerEventData _)
+    {
+        heldItemController.SetRightClickToResetEnabled(true);
     }
 }
