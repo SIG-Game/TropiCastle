@@ -235,6 +235,20 @@ public class Inventory : MonoBehaviour
         itemList.FindIndex(x => x.itemData.name == item.itemData.name &&
             x.amount < x.itemData.stackSize);
 
+    public void SetItemAmountAtIndex(int amount, int index)
+    {
+        ItemWithAmount itemAtIndex = itemList[index];
+
+        if (itemAtIndex.itemData.name == "Empty")
+        {
+            return;
+        }
+
+        itemAtIndex.amount = amount;
+
+        OnItemChangedAtIndex(itemAtIndex, index);
+    }
+
     public bool CanAddItem(ItemWithAmount newItem)
     {
         HashSet<int> itemSlotsFilled = new HashSet<int>();

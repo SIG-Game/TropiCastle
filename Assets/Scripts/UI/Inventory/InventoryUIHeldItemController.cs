@@ -129,9 +129,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
             }
             else
             {
-                clickedItem.amount = combinedAmount - heldItem.itemData.stackSize;
-
-                clickedInventory.InvokeOnItemChangedAtIndexEvent(clickedItem, clickedItemIndex);
+                clickedInventory.SetItemAmountAtIndex(
+                    combinedAmount - heldItem.itemData.stackSize, clickedItemIndex);
 
                 heldItem.amount = heldItem.itemData.stackSize;
             }
@@ -180,9 +179,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
         int amountToMove = Math.Min(heldItem.amount,
             clickedItem.itemData.stackSize - clickedItem.amount);
 
-        clickedItem.amount += amountToMove;
-
-        clickedInventory.InvokeOnItemChangedAtIndexEvent(clickedItem, clickedItemIndex);
+        clickedInventory.SetItemAmountAtIndex(clickedItem.amount + amountToMove,
+            clickedItemIndex);
 
         if (heldItem.amount == amountToMove)
         {
