@@ -6,7 +6,6 @@ public class ThrownItemWorld : MonoBehaviour
     private Collider2D spawnedCollider2D;
     private WeaponController spawnedWeaponController;
 
-    private const float speed = 5f;
     private const float maxStopVelocitySqrMagnitude = 0.001f;
 
     private void Awake()
@@ -38,7 +37,7 @@ public class ThrownItemWorld : MonoBehaviour
     public void SetUpThrownItemWorld(Vector3 velocityDirection,
         ThrowableItemScriptableObject throwableItemScriptableObject)
     {
-        spawnedRigidbody2D.velocity = speed * velocityDirection;
+        spawnedRigidbody2D.velocity = throwableItemScriptableObject.speed * velocityDirection;
 
         spawnedWeaponController.Damage = throwableItemScriptableObject.damage;
         spawnedWeaponController.EnemyKnockbackForce = throwableItemScriptableObject.knockback;
