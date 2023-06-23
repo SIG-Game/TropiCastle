@@ -14,6 +14,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
         itemNameToAdditionText = new Dictionary<string, InventoryAdditionTextUIController>();
 
         targetInventory.OnItemAdded += TargetInventory_OnItemAdded;
+        targetInventory.OnItemRemoved += TargetInventory_OnItemRemoved;
         PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
     }
 
@@ -22,6 +23,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
         if (targetInventory != null)
         {
             targetInventory.OnItemAdded -= TargetInventory_OnItemAdded;
+            targetInventory.OnItemRemoved -= TargetInventory_OnItemRemoved;
         }
 
         PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
@@ -56,6 +58,20 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
             spawnedAdditionText.transform.SetAsFirstSibling();
 
             itemNameToAdditionText.Add(item.itemData.name, spawnedAdditionTextController);
+        }
+    }
+
+    private void TargetInventory_OnItemRemoved(ItemWithAmount item)
+    {
+        if (PauseController.Instance.GamePaused)
+        {
+            return;
+        }
+
+        if (itemNameToAdditionText.TryGetValue(item.itemData.name,
+            out InventoryAdditionTextUIController additionTextController))
+        {
+            additionTextController.RemoveAmount(item.amount);
         }
     }
 

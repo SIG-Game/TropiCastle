@@ -68,6 +68,18 @@ public class InventoryAdditionTextUIController : MonoBehaviour
         ResetFadeOut();
     }
 
+    public void RemoveAmount(int amount)
+    {
+        itemAmount -= amount;
+
+        if (itemAmount < 0)
+        {
+            itemAmount = 0;
+        }
+
+        UpdateText();
+    }
+
     private void UpdateText()
     {
         inventoryAdditionText.text = $"+{itemAmount} {itemName}";
