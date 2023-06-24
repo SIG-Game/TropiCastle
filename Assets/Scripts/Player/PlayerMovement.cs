@@ -40,9 +40,9 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        Vector2 inputVector = moveAction.ReadValue<Vector2>();
+        Vector2 movementInput = moveAction.ReadValue<Vector2>();
 
-        Vector2 newVelocity = movementSpeed * inputVector;
+        Vector2 newVelocity = movementSpeed * movementInput;
 
         if (sprintAction.IsPressed())
         {
@@ -56,33 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
         velocity = newVelocity;
 
-        if (inputVector != Vector2.zero)
-        {
-            // If the magnitude of the input's y component is greater than the magnitude of the
-            // input's x component, then set the sprite based only on the input's y component
-            if (Mathf.Abs(inputVector.y) > Mathf.Abs(inputVector.x))
-            {
-                if (inputVector.y > 0f)
-                {
-                    playerController.Direction = CharacterDirection.Up;
-                }
-                else
-                {
-                    playerController.Direction = CharacterDirection.Down;
-                }
-            }
-            else
-            {
-                if (inputVector.x > 0f)
-                {
-                    playerController.Direction = CharacterDirection.Right;
-                }
-                else
-                {
-                    playerController.Direction = CharacterDirection.Left;
-                }
-            }
-        }
+        UpdateDirection(movementInput);
     }
 
     private void FixedUpdate()
@@ -90,17 +64,36 @@ public class PlayerMovement : MonoBehaviour
         rb2d.MovePosition(transform.position + (Vector3)velocity);
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void UpdateDirection(Vector2 movementInput)
     {
-        if (col.gameObject.layer == waterLayer)
+        if (movementInput != Vector2.zero)
+        {
+            // If the magnitude of the input's y component is greater than the
+            // magnitude of the input's x component, then use a vertical direction
+            if (Mathf.Abs(movementInput.y) > Mathf.Abs(movementInput.x))
+            {
+                playerController.Direction = movementInput.y > 0f ?
+                    CharacterDirection.Up : CharacterDirection.Down;
+            }
+            else
+            {
+                playerController.Direction = movementInput.x > 0f ?
+                    CharacterDirection.Right : CharacterDirection.Left;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == waterLayer)
         {
             inWater = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D col)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (col.gameObject.layer == waterLayer)
+        if (other.gameObject.layer == waterLayer)
         {
             inWater = false;
         }
