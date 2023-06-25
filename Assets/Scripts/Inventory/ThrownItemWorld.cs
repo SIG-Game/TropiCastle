@@ -5,6 +5,7 @@ public class ThrownItemWorld : MonoBehaviour
     private Rigidbody2D spawnedRigidbody2D;
     private Collider2D spawnedCollider2D;
     private WeaponController spawnedWeaponController;
+    private Collider2D playerCollider2D;
 
     private const float maxStopVelocitySqrMagnitude = 0.001f;
 
@@ -16,7 +17,6 @@ public class ThrownItemWorld : MonoBehaviour
         spawnedRigidbody2D.bodyType = RigidbodyType2D.Dynamic;
         spawnedRigidbody2D.gravityScale = 0f;
         spawnedRigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
-        spawnedCollider2D.isTrigger = true;
 
         spawnedWeaponController = gameObject.AddComponent<WeaponController>();
     }
@@ -27,7 +27,8 @@ public class ThrownItemWorld : MonoBehaviour
         {
             spawnedRigidbody2D.bodyType = RigidbodyType2D.Static;
             spawnedRigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
-            spawnedCollider2D.isTrigger = false;
+
+            Physics2D.IgnoreCollision(playerCollider2D, spawnedCollider2D, false);
 
             Destroy(spawnedWeaponController);
             Destroy(this);
@@ -35,11 +36,16 @@ public class ThrownItemWorld : MonoBehaviour
     }
 
     public void SetUpThrownItemWorld(Vector3 velocityDirection,
-        ThrowableItemScriptableObject throwableItemScriptableObject)
+        ThrowableItemScriptableObject throwableItemScriptableObject,
+        Collider2D playerCollider2D)
     {
         spawnedRigidbody2D.velocity = throwableItemScriptableObject.speed * velocityDirection;
 
         spawnedWeaponController.Damage = throwableItemScriptableObject.damage;
         spawnedWeaponController.EnemyKnockbackForce = throwableItemScriptableObject.knockback;
+
+        this.playerCollider2D = playerCollider2D;
+
+        Physics2D.IgnoreCollision(playerCollider2D, spawnedCollider2D);
     }
 }

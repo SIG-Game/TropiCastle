@@ -4,6 +4,7 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Inventory playerInventory;
+    [SerializeField] private Collider2D playerCollider2D;
     [SerializeField] private CursorController cursorController;
 
     public void UseItem(ItemWithAmount item, int itemIndex)
@@ -25,7 +26,7 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
             ((Vector3)cursorController.GetWorldPosition() - thrownItemStartPosition).normalized;
 
         thrownItemWorldComponent.SetUpThrownItemWorld(throwDirection,
-            (ThrowableItemScriptableObject)itemToThrow.itemData);
+            (ThrowableItemScriptableObject)itemToThrow.itemData, playerCollider2D);
 
         playerInventory.DecrementItemStackAtIndex(itemIndex);
     }
