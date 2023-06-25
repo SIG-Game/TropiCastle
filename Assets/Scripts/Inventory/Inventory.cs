@@ -249,6 +249,26 @@ public class Inventory : MonoBehaviour
         OnItemChangedAtIndex(itemAtIndex, index);
     }
 
+    public void DecrementItemDurabilityAtIndex(int index)
+    {
+        ItemWithAmount breakableItem = GetItemAtIndex(index);
+
+        if (breakableItem.instanceProperties is
+            BreakableItemInstanceProperties breakableItemInstanceProperties)
+        {
+            breakableItemInstanceProperties.Durability--;
+
+            if (breakableItemInstanceProperties.Durability == 0)
+            {
+                RemoveItemAtIndex(index);
+            }
+            else
+            {
+                OnItemChangedAtIndex(breakableItem, index);
+            }
+        }
+    }
+
     public bool CanAddItem(ItemWithAmount newItem)
     {
         HashSet<int> itemSlotsFilled = new HashSet<int>();

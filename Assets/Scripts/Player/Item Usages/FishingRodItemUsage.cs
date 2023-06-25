@@ -37,29 +37,9 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
         OnFishingRodUsed();
     }
 
-    private void DecreaseFishingRodDurability()
-    {
-        ItemWithAmount fishingRodItem = playerInventory.GetItemAtIndex(fishingRodItemIndex);
-
-        var fishingRodItemInstanceProperties =
-            ((BreakableItemInstanceProperties)fishingRodItem.instanceProperties);
-
-        fishingRodItemInstanceProperties.Durability--;
-
-        if (fishingRodItemInstanceProperties.Durability == 0)
-        {
-            playerInventory.RemoveItemAtIndex(fishingRodItemIndex);
-        }
-        else
-        {
-            // Refresh durability meter
-            playerInventory.InvokeOnItemChangedAtIndexEvent(fishingRodItem, fishingRodItemIndex);
-        }
-    }
-
     private void FishingUIController_OnFishingStopped()
     {
-        DecreaseFishingRodDurability();
+        playerInventory.DecrementItemDurabilityAtIndex(fishingRodItemIndex);
 
         fishingUIController.OnFishingStopped -= FishingUIController_OnFishingStopped;
     }
