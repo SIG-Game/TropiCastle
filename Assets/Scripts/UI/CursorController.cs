@@ -173,7 +173,8 @@ public class CursorController : MonoBehaviour
         {
             HideAndLockMouseCursor();
 
-            if (!PlayerController.ActionDisablingUIOpen)
+            if (!PlayerController.ActionDisablingUIOpen &&
+                !playerController.IsAttacking)
             {
                 gameObject.SetActive(true);
             }
@@ -182,11 +183,21 @@ public class CursorController : MonoBehaviour
 
     private void PlayerController_OnActionDisablingUIOpenSet(bool actionDisablingUIOpen)
     {
+        if (PauseController.Instance.GamePaused)
+        {
+            return;
+        }
+
         gameObject.SetActive(!actionDisablingUIOpen);
     }
 
     private void PlayerController_OnIsAttackingSet(bool isAttacking)
     {
+        if (PauseController.Instance.GamePaused)
+        {
+            return;
+        }
+
         gameObject.SetActive(!isAttacking);
     }
 
