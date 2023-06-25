@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HealingItemUsage : MonoBehaviour, IItemUsage
@@ -28,5 +29,49 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
 
             UseItem(healingItem, healingItemIndex);
         }
+    }
+
+    public void UseHealingItemsUntilMaxHealthReached()
+    {
+        List<ItemWithAmount> playerInventoryItemList = playerInventory.GetItemList();
+
+        for (int i = 0; i < playerInventoryItemList.Count; ++i)
+        {
+            if (playerInventoryItemList[i].itemData is HealingItemScriptableObject)
+            {
+                UseHealingItemStackAtIndex(i, out bool maxHealthReached);
+
+                if (maxHealthReached)
+                {
+                    return;
+                }
+            }
+        }
+    }
+
+    private void UseHealingItemStackAtIndex(int healingItemStackIndex,
+        out bool maxHealthReached)
+    {
+        ItemWithAmount healingItem =
+            playerInventory.GetItemAtIndex(healingItemStackIndex);
+
+        int initialHealingItemAmount = healingItem.amount;
+
+        int itemHealAmount =
+            (healingItem.itemData as HealingItemScriptableObject).healAmount;
+
+        for (int i = 0; i < initialHealingItemAmount; ++i)
+        {
+            playerHealthController.IncreaseHealth(itemHealAmount);
+            playerInventory.DecrementItemStackAtIndex(healingItemStackIndex);
+
+            if (playerHealthController.AtMaxHealth())
+            {
+                maxHealthReached = true;
+                return;
+            }
+        }
+
+        maxHealthReached = false;
     }
 }

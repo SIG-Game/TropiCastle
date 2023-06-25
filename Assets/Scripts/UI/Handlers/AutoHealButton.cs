@@ -9,6 +9,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField] private Button autoHealButton;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private HealthController playerHealthController;
+    [SerializeField] private HealingItemUsage healingItemUsage;
 
     private Tooltip currentTooltip;
     private Tooltip atMaxHealthTooltip;
@@ -47,26 +48,7 @@ public class AutoHealButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void AutoHealButton_OnClick()
     {
-        List<ItemWithAmount> playerInventoryItemList = playerInventory.GetItemList();
-
-        for (int i = 0; i < playerInventoryItemList.Count; ++i)
-        {
-            if (playerInventoryItemList[i].itemData is HealingItemScriptableObject healingItem)
-            {
-                int initialHealingItemAmount = playerInventoryItemList[i].amount;
-
-                for (int j = 0; j < initialHealingItemAmount; ++j)
-                {
-                    playerHealthController.IncreaseHealth(healingItem.healAmount);
-                    playerInventory.DecrementItemStackAtIndex(i);
-
-                    if (playerHealthController.AtMaxHealth())
-                    {
-                        return;
-                    }
-                }
-            }
-        }
+        healingItemUsage.UseHealingItemsUntilMaxHealthReached();
     }
 
     private void HealthController_OnHealthSet(int _)
