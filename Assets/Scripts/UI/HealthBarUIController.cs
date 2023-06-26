@@ -9,6 +9,7 @@ public class HealthBarUIController : MonoBehaviour
     private float targetMaxHealthFloat;
     private float currentFillXScale;
     private float targetFillXScale;
+    private bool initialHealthSet;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class HealthBarUIController : MonoBehaviour
 
         currentFillXScale = 1f;
         targetFillXScale = 1f;
+        initialHealthSet = false;
 
         targetHealthController.OnHealthSet += HealthController_OnHealthSet;
     }
@@ -28,8 +30,7 @@ public class HealthBarUIController : MonoBehaviour
             currentFillXScale = Mathf.MoveTowards(currentFillXScale, targetFillXScale,
                 fillChangeSpeed * Time.unscaledDeltaTime);
 
-            healthBarFill.localScale = new Vector3(currentFillXScale,
-                healthBarFill.localScale.y, healthBarFill.localScale.z);
+            SetHealthBarFillXScale(currentFillXScale);
         }
     }
 
@@ -41,8 +42,23 @@ public class HealthBarUIController : MonoBehaviour
         }
     }
 
+    private void SetHealthBarFillXScale(float xScale)
+    {
+        healthBarFill.localScale = new Vector3(xScale,
+            healthBarFill.localScale.y, healthBarFill.localScale.z);
+    }
+
     private void HealthController_OnHealthSet(int newHealth)
     {
+        if (!initialHealthSet)
+        {
+            currentFillXScale = newHealth / targetMaxHealthFloat;
+
+            SetHealthBarFillXScale(currentFillXScale);
+
+            initialHealthSet = true;
+        }
+
         targetFillXScale = newHealth / targetMaxHealthFloat;
     }
 }
