@@ -10,7 +10,6 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private GameObject fishingUI;
     [SerializeField] private FishUIController fishUI;
     [SerializeField] private Transform hookTransform;
-    [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private Vector2 catchFishXPositionRange;
@@ -43,8 +42,6 @@ public class FishingUIController : MonoBehaviour
             fishProbabilityWeights.Add(fishScriptableObject.probabilityWeight);
             fishProbabilityWeightSum += fishScriptableObject.probabilityWeight;
         }
-
-        fishingRodItemUsage.OnFishingRodUsed += StartFishing;
     }
 
     private void Update()
@@ -67,8 +64,6 @@ public class FishingUIController : MonoBehaviour
     private void OnDestroy()
     {
         Addressables.Release(fishScriptableObjectsLoadHandle);
-
-        fishingRodItemUsage.OnFishingRodUsed -= StartFishing;
 
         OnFishingStopped = delegate { };
     }
@@ -109,7 +104,7 @@ public class FishingUIController : MonoBehaviour
             $"{selectedFish.description}", afterCatchDialogueAction);
     }
 
-    private void StartFishing()
+    public void StartFishing()
     {
         if (fishingUI.activeSelf)
         {
