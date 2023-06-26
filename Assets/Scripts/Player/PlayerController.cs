@@ -83,13 +83,16 @@ public class PlayerController : MonoBehaviour
 
         interactableMask = LayerMask.GetMask("Interactable");
 
-        IsAttacking = false;
-
-        ActionDisablingUIOpen = false;
-
         SetItemUsageDictionaries();
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
+    }
+
+    private void Start()
+    {
+        IsAttacking = false;
+
+        ActionDisablingUIOpen = false;
     }
 
     private void Update()
