@@ -187,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetHealthController: {fileID: 5115571631946345362}
   displayHealthPrefix: 0
+  displayMaxHealth: 0
 --- !u!1 &1376027503358213722
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,11 +343,12 @@ MonoBehaviour:
   playerKnockbackForce: 1.5
   maxStartChasingDistanceToPlayer: 2.5
   minStopChasingDistanceToPlayer: 3.75
-  initialWaitTimeBeforeChilling: 1.5
+  initialWaitTimeBeforeIdle: 1.5
   waitTimeAfterKnockback: 0.6
   fadeOutSpeed: 3.5
   healthText: {fileID: 9101218326862731885}
   playerTransform: {fileID: 0}
+  playerInventory: {fileID: 0}
   droppedLoot:
   - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
     amount: 1

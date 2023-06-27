@@ -1,7 +1,7 @@
 public enum EnemyState
 {
     Initial,
-    Chilling,
+    Idle,
     Chasing,
     KnockedBack,
     FadingOut
