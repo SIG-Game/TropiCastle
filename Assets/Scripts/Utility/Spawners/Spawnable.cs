@@ -18,5 +18,5 @@ public class Spawnable : MonoBehaviour
     }
 
     public int GetSpawnerId() =>
-        spawner != null ? spawner.GetInstanceID() : -1;
+        spawner != null ? spawner.GetSpawnerId() : -1;
 }

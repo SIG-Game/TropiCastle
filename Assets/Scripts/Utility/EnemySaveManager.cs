@@ -35,7 +35,7 @@ public class EnemySaveManager : MonoBehaviour
             if (enemyState.SpawnerId != -1)
             {
                 EnemySpawner enemySpawner = enemySpawners.FirstOrDefault(
-                    x => x.GetInstanceID() == enemyState.SpawnerId);
+                    x => x.GetSpawnerId() == enemyState.SpawnerId);
 
                 if (enemySpawner != null)
                 {

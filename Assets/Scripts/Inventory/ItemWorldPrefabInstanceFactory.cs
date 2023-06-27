@@ -68,7 +68,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
             }
 
             ItemSpawner itemSpawner = itemSpawners.FirstOrDefault(
-                x => x.GetInstanceID() == itemWorldState.SpawnerId);
+                x => x.GetSpawnerId() == itemWorldState.SpawnerId);
 
             if (itemSpawner != null)
             {
