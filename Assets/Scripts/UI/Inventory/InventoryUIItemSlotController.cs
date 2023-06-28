@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
 
@@ -12,9 +12,9 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (inventoryUIController != null)
+        if (hoveredItemSlotManager != null)
         {
-            inventoryUIController.HoveredItemIndex = slotItemIndex;
+            hoveredItemSlotManager.HoveredItemIndex = slotItemIndex;
         }
 
         SetSlotTooltipText();
@@ -47,9 +47,9 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (inventoryUIController != null)
+        if (hoveredItemSlotManager != null)
         {
-            inventoryUIController.HoveredItemIndex = -1;
+            hoveredItemSlotManager.HoveredItemIndex = -1;
         }
 
         InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);

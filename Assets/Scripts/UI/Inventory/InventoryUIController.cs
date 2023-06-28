@@ -9,11 +9,10 @@ public class InventoryUIController : ItemSlotContainerController
     [SerializeField] private Inventory inventory;
     [SerializeField] private List<GameObject> inventoryUIGameObjects;
     [SerializeField] private ItemSelectionController itemSelectionController;
+    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private InputActionReference inventoryActionReference;
 
     private InputAction inventoryAction;
-
-    public int HoveredItemIndex { get; set; }
 
     public event Action OnInventoryClosed = delegate { };
 
@@ -27,8 +26,6 @@ public class InventoryUIController : ItemSlotContainerController
     private void Awake()
     {
         inventoryAction = inventoryActionReference.action;
-
-        HoveredItemIndex = -1;
 
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
         itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
@@ -63,7 +60,7 @@ public class InventoryUIController : ItemSlotContainerController
 
             if (!InventoryUIOpen)
             {
-                HoveredItemIndex = -1;
+                hoveredItemSlotManager.HoveredItemIndex = -1;
 
                 OnInventoryClosed();
             }
@@ -98,7 +95,7 @@ public class InventoryUIController : ItemSlotContainerController
     {
         UpdateSlotAtIndexUsingItem(index, item);
 
-        if (InventoryUIOpen && index == HoveredItemIndex)
+        if (InventoryUIOpen && index == hoveredItemSlotManager.HoveredItemIndex)
         {
             (itemSlotControllers[index] as InventoryUIItemSlotController).ResetSlotTooltipText();
         }

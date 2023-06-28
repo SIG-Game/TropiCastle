@@ -2934,6 +2934,7 @@ GameObject:
   - component: {fileID: 8774762380487729171}
   - component: {fileID: 8774762380487729170}
   - component: {fileID: 8774762380487729183}
+  - component: {fileID: 4477077557678837287}
   - component: {fileID: 3413011963817745242}
   - component: {fileID: 8774762380487729169}
   - component: {fileID: 8774762380487729168}
@@ -3018,6 +3019,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   itemSelectionController: {fileID: 0}
+  hoveredItemSlotManager: {fileID: 4477077557678837287}
   inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
 --- !u!114 &8774762380487729183
@@ -3037,7 +3039,20 @@ MonoBehaviour:
   durabilityMeter: {fileID: 0}
   canvasRectTransform: {fileID: 0}
   inventoryUIController: {fileID: 8774762380487729170}
+  hoveredItemSlotManager: {fileID: 4477077557678837287}
   transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
+--- !u!114 &4477077557678837287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8774762380487729172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84e4f9e35f6a014db80747fc8f489ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3413011963817745242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3052,6 +3067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
   inventoryUIController: {fileID: 8774762380487729170}
+  hoveredItemSlotManager: {fileID: 4477077557678837287}
 --- !u!114 &8774762380487729169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3435,6 +3451,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -3591,6 +3611,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -3749,6 +3773,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -3905,6 +3933,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -4063,6 +4095,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -4219,6 +4255,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -4377,6 +4417,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -4533,6 +4577,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -4691,6 +4739,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -4847,6 +4899,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -5005,6 +5061,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -5161,6 +5221,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -5319,6 +5383,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -5475,6 +5543,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -5633,6 +5705,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -5789,6 +5865,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -5947,6 +6027,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -6103,6 +6187,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -6261,6 +6349,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -6417,6 +6509,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -6575,6 +6671,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -6731,6 +6831,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -6889,6 +6993,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -7045,6 +7153,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -7203,6 +7315,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -7359,6 +7475,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -7517,6 +7637,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -7673,6 +7797,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
@@ -7831,6 +7959,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8774762380487729170}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 
       objectReference: {fileID: 0}
@@ -7987,6 +8119,10 @@ PrefabInstance:
       propertyPath: inventoryUIController
       value: 
       objectReference: {fileID: 8774762380487729170}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 4477077557678837287}
     - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
       propertyPath: inventoryUIItemSlotContainer
       value: 

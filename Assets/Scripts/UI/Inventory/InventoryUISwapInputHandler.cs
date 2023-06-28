@@ -4,6 +4,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
 
     private InventoryUIHeldItemController heldItemController;
 
@@ -25,7 +26,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
     private void SwapItemsUsingNumberKeyInput()
     {
         bool canSwapItems = heldItemController.HoldingItem() ||
-            inventoryUIController.HoveredItemIndex != -1;
+            hoveredItemSlotManager.HoveredItemIndex != -1;
         if (!canSwapItems)
         {
             return;
@@ -49,7 +50,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
         }
         else
         {
-            swapItemIndex = inventoryUIController.HoveredItemIndex;
+            swapItemIndex = hoveredItemSlotManager.HoveredItemIndex;
         }
 
         inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);

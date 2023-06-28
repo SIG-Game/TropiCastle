@@ -10,6 +10,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     [SerializeField] private ItemDurabilityMeterController durabilityMeter;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private Sprite transparentSprite;
 
     private Inventory clickedInventory;
@@ -47,7 +48,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
             if (rightClickToResetEnabled &&
                 Input.GetMouseButtonDown(1) &&
-                inventoryUIController.HoveredItemIndex == -1)
+                hoveredItemSlotManager.HoveredItemIndex == -1)
             {
                 ResetHeldItem();
             }
