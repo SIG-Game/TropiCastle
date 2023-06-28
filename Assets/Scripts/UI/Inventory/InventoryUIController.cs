@@ -37,8 +37,6 @@ public class InventoryUIController : ItemSlotContainerController
 
     // Must run after any script Update methods that can set ActionDisablingUIOpen to true to
     // prevent an action disabling UI from opening on the same frame that the inventory UI is opened
-    // Must run before ItemSelectionController Update method so that using number keys to swap items
-    // in inventory UI takes priority over using number keys to select an item
     private void Update()
     {
         if (PlayerController.ActionDisablingUIOpen)
@@ -70,11 +68,6 @@ public class InventoryUIController : ItemSlotContainerController
                 OnInventoryClosed();
             }
         }
-
-        if (InventoryUIOpen)
-        {
-            SwapItemsUsingNumberKeyInput();
-        }
     }
 
     private void OnDestroy()
@@ -82,39 +75,6 @@ public class InventoryUIController : ItemSlotContainerController
         inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
         itemSelectionController.OnItemSelectedAtIndex -= ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex -= ItemSelectionController_OnItemDeselectedAtIndex;
-    }
-
-    private void SwapItemsUsingNumberKeyInput()
-    {
-        bool canSwapItems = InventoryUIHeldItemController.Instance.HoldingItem() ||
-            HoveredItemIndex != -1;
-        if (!canSwapItems)
-        {
-            return;
-        }
-
-        int numberKeyIndex = InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
-
-        bool numberKeyInputAvailable = numberKeyIndex != -1;
-        if (!numberKeyInputAvailable)
-        {
-            return;
-        }
-
-        int swapItemIndex;
-
-        if (InventoryUIHeldItemController.Instance.HoldingItem())
-        {
-            swapItemIndex = InventoryUIHeldItemController.Instance.GetHeldItemIndex();
-
-            InventoryUIHeldItemController.Instance.HideHeldItem();
-        }
-        else
-        {
-            swapItemIndex = HoveredItemIndex;
-        }
-
-        inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
     }
 
     [ContextMenu("Set Inventory UI Item Slot Indexes")]

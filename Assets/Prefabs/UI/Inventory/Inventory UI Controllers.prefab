@@ -2934,6 +2934,7 @@ GameObject:
   - component: {fileID: 8774762380487729171}
   - component: {fileID: 8774762380487729170}
   - component: {fileID: 8774762380487729183}
+  - component: {fileID: 3413011963817745242}
   - component: {fileID: 8774762380487729169}
   - component: {fileID: 8774762380487729168}
   - component: {fileID: 2573907101034950635}
@@ -3037,6 +3038,20 @@ MonoBehaviour:
   canvasRectTransform: {fileID: 0}
   inventoryUIController: {fileID: 8774762380487729170}
   transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
+--- !u!114 &3413011963817745242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8774762380487729172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1587849b73232c4e9fac2eb6105099a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  inventoryUIController: {fileID: 8774762380487729170}
 --- !u!114 &8774762380487729169
 MonoBehaviour:
   m_ObjectHideFlags: 0
