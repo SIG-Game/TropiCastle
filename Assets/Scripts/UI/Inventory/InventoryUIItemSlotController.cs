@@ -15,6 +15,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
         if (hoveredItemSlotManager != null)
         {
             hoveredItemSlotManager.HoveredItemIndex = slotItemIndex;
+            hoveredItemSlotManager.HoveredInventory = inventory;
         }
 
         SetSlotTooltipText();

@@ -7,6 +7,7 @@ public class ChestUIController : MonoBehaviour
 {
     [SerializeField] private GameObject chestUI;
     [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private List<InventoryUIItemSlotController> chestItemSlots;
     [SerializeField] private List<InventoryUIItemSlotController> playerItemSlots;
     [SerializeField] private InputActionReference inventoryActionReference;
@@ -16,6 +17,12 @@ public class ChestUIController : MonoBehaviour
     private InputAction inventoryAction;
 
     public static ChestUIController Instance;
+    public static bool ChestUIOpen;
+
+    static ChestUIController()
+    {
+        ChestUIOpen = false;
+    }
 
     private void Awake()
     {
@@ -36,7 +43,7 @@ public class ChestUIController : MonoBehaviour
             && chestUI.activeInHierarchy;
         if (closeChestUI)
         {
-            InventoryUIController.InventoryUIOpen = false;
+            ChestUIOpen = false;
             PauseController.Instance.GamePaused = false;
 
             chestUI.SetActive(false);
@@ -67,6 +74,7 @@ public class ChestUIController : MonoBehaviour
 
     public void ShowChestUI()
     {
+        ChestUIOpen = true;
         PauseController.Instance.GamePaused = true;
 
         chestUI.SetActive(true);
@@ -113,11 +121,23 @@ public class ChestUIController : MonoBehaviour
     private void ChestInventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
         UpdateItemSlotAtIndex(chestItemSlots, index, item);
+
+        if (ChestUIOpen && chestInventory == hoveredItemSlotManager.HoveredInventory &&
+            index == hoveredItemSlotManager.HoveredItemIndex)
+        {
+            chestItemSlots[index].ResetSlotTooltipText();
+        }
     }
 
     private void PlayerInventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
         UpdateItemSlotAtIndex(playerItemSlots, index, item);
+
+        if (ChestUIOpen && playerInventory == hoveredItemSlotManager.HoveredInventory &&
+            index == hoveredItemSlotManager.HoveredItemIndex)
+        {
+            playerItemSlots[index].ResetSlotTooltipText();
+        }
     }
 
     private void UpdateItemSlotAtIndex(List<InventoryUIItemSlotController> itemSlots,

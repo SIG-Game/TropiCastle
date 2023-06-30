@@ -346,4 +346,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
     public bool HoldingItem() => heldItemImage.sprite != transparentSprite;
 
     public int GetHeldItemIndex() => heldItemIndex;
+
+    public Inventory GetHeldItemInventory() => heldItemInventory;
 }

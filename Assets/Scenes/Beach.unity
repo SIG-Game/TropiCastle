@@ -34577,6 +34577,11 @@ PrefabInstance:
       propertyPath: hoveredItemSlotManager
       value: 
       objectReference: {fileID: 6847651757298814664}
+    - target: {fileID: 6847651757743611969, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 6847651757298814664}
     - target: {fileID: 6847651757761020761, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
