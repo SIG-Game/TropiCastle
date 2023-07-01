@@ -16,7 +16,7 @@ public class CharacterItemInWorldController : MonoBehaviour
         itemSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void ShowCharacterItemInWorld(Sprite itemSprite)
+    public void ShowCharacterItemInWorld(ItemWithAmount item)
     {
         Vector3 itemInWorldOffset =
             itemInWorldOffsets[(int)characterDirectionController.Direction];
@@ -31,7 +31,7 @@ public class CharacterItemInWorldController : MonoBehaviour
         }
 
         transform.localPosition = itemInWorldOffset;
-        itemSpriteRenderer.sprite = itemSprite;
+        itemSpriteRenderer.sprite = item.itemData.sprite;
     }
 
     public void HideCharacterItemInWorld()

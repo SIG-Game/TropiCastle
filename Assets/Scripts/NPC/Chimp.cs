@@ -58,7 +58,7 @@ public class Chimp : NPCInteractable
             else
             {
                 dialogueLinesToPlay = givingItemDialogueLines;
-                chimpItemInWorld.ShowCharacterItemInWorld(itemToGive.itemData.sprite);
+                chimpItemInWorld.ShowCharacterItemInWorld(itemToGive);
             }
         }
         else

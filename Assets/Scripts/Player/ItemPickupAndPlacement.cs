@@ -137,7 +137,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
         cursorController.SetAmountText(selectedItem.GetAmountText());
 
-        playerItemInWorld.ShowCharacterItemInWorld(selectedItemData.sprite);
+        playerItemInWorld.ShowCharacterItemInWorld(selectedItem);
     }
 
     private void UpdateInstanceVariables()

@@ -90,7 +90,7 @@ public class FishingUIController : MonoBehaviour
 
     private void CatchFish()
     {
-        playerItemInWorld.ShowCharacterItemInWorld(selectedFishItem.itemData.sprite);
+        playerItemInWorld.ShowCharacterItemInWorld(selectedFishItem);
 
         HideFishingUI();
 
