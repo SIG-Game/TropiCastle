@@ -271,6 +271,11 @@ public class Inventory : MonoBehaviour
 
     public bool CanAddItem(ItemWithAmount newItem)
     {
+        if (firstEmptyIndex != -1)
+        {
+            return true;
+        }
+
         HashSet<int> itemSlotsFilled = new HashSet<int>();
 
         int amountToAdd = newItem.amount;
