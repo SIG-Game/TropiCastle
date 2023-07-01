@@ -5,5 +5,5 @@ public class BreakableItemScriptableObject : ItemScriptableObject
 {
     public int InitialDurability;
 
-    public override string GetTooltipText() => $"{name}\nDurability: {InitialDurability}";
+    public override string GetAdditionalInfo() => $"\nDurability: {InitialDurability}";
 }

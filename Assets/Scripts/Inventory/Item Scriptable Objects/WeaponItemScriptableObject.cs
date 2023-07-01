@@ -9,6 +9,6 @@ public class WeaponItemScriptableObject : ItemScriptableObject
     public float knockback;
     public float attackSpeed;
 
-    public override string GetTooltipText() => $"{name}\n{attackType} Attack\n" +
+    public override string GetAdditionalInfo() => $"\n{attackType} Attack\n" +
         $"Deals {damage} Damage\n{knockback} Knockback\n{attackSpeed} Attack Speed";
 }

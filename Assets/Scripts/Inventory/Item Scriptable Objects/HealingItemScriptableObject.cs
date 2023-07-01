@@ -5,5 +5,5 @@ public class HealingItemScriptableObject : ItemScriptableObject
 {
     public int healAmount;
 
-    public override string GetTooltipText() => $"{name}\nHeals {healAmount} Health";
+    public override string GetAdditionalInfo() => $"\nHeals {healAmount} Health";
 }

@@ -11,5 +11,8 @@ public class ItemScriptableObject : ScriptableObject
 
     private const int defaultStackSize = 99;
 
-    public virtual string GetTooltipText() => name != "Empty" ? name : string.Empty;
+    public string GetTooltipText() => name != "Empty" ?
+        string.Concat(name, GetAdditionalInfo()) : string.Empty;
+
+    public virtual string GetAdditionalInfo() => string.Empty;
 }
