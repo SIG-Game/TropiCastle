@@ -17,7 +17,8 @@ public class InventoryUISwapInputHandler : MonoBehaviour
     // swap items in inventory UI takes priority over using number keys to select an item
     private void Update()
     {
-        if (InventoryUIController.InventoryUIOpen)
+        if (InventoryUIController.InventoryUIOpen ||
+            ChestUIController.ChestUIOpen)
         {
             SwapItemsUsingNumberKeyInput();
         }
@@ -41,18 +42,29 @@ public class InventoryUISwapInputHandler : MonoBehaviour
         }
 
         int swapItemIndex;
+        Inventory swapInventory;
 
         if (heldItemController.HoldingItem())
         {
             swapItemIndex = heldItemController.GetHeldItemIndex();
+            swapInventory = heldItemController.GetHeldItemInventory();
 
             heldItemController.HideHeldItem();
         }
         else
         {
             swapItemIndex = hoveredItemSlotManager.HoveredItemIndex;
+            swapInventory = hoveredItemSlotManager.HoveredInventory;
         }
 
-        inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
+        if (inventory == swapInventory)
+        {
+            inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
+        }
+        else
+        {
+            inventory.SwapItemsBetweenInventories(numberKeyIndex,
+                swapInventory, swapItemIndex);
+        }
     }
 }
