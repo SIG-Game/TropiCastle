@@ -49,7 +49,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
             swapItemIndex = heldItemController.GetHeldItemIndex();
             swapInventory = heldItemController.GetHeldItemInventory();
 
-            heldItemController.HideHeldItem();
+            heldItemController.ResetHeldItem();
         }
         else
         {

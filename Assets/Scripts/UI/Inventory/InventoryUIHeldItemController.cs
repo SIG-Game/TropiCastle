@@ -300,7 +300,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         durabilityMeter.UpdateUsingItem(heldItem);
     }
 
-    private void ResetHeldItem()
+    public void ResetHeldItem()
     {
         if (HoldingItem())
         {
