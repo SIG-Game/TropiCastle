@@ -2,62 +2,52 @@
 
 public class HotbarUIController : ItemSlotContainerController
 {
-    [SerializeField] private Inventory inventory;
-    [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private InventoryUIController inventoryUIController;
 
     private int hotbarSize;
     private int hotbarHighlightedItemSlotIndex;
 
-    private void Awake()
+    protected override void Awake()
     {
-        hotbarSize = GetItemSlotCount();
+        base.Awake();
 
-        inventory.OnItemChangedAtIndex += Inventory_ChangedItemAtIndex;
-        itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
-        itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
+        hotbarSize = itemSlotControllers.Count;
+
         inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
-        inventory.OnItemChangedAtIndex -= Inventory_ChangedItemAtIndex;
-        itemSelectionController.OnItemSelectedAtIndex -= ItemSelectionController_OnItemSelectedAtIndex;
-        itemSelectionController.OnItemDeselectedAtIndex -= ItemSelectionController_OnItemDeselectedAtIndex;
+        base.OnDestroy();
+
         inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
     }
 
-    private void Inventory_ChangedItemAtIndex(ItemWithAmount item, int index)
+    protected override void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
-        if (index >= hotbarSize || InventoryUIController.InventoryUIOpen
-            || ChestUIController.ChestUIOpen)
+        if (index < hotbarSize && !InventoryUIController.InventoryUIOpen
+            && !ChestUIController.ChestUIOpen)
         {
-            return;
+            base.Inventory_OnItemChangedAtIndex(item, index);
         }
-
-        UpdateSlotAtIndexUsingItem(index, item);
     }
 
-    private void ItemSelectionController_OnItemSelectedAtIndex(int index)
+    protected override void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        if (InventoryUIController.InventoryUIOpen ||
-            ChestUIController.ChestUIOpen)
+        if (!InventoryUIController.InventoryUIOpen &&
+            !ChestUIController.ChestUIOpen)
         {
-            return;
+            HighlightHotbarItemSlotAtIndex(index);
         }
-
-        HighlightHotbarItemSlotAtIndex(index);
     }
 
-    private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
+    protected override void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        if (InventoryUIController.InventoryUIOpen ||
-            ChestUIController.ChestUIOpen)
+        if (!InventoryUIController.InventoryUIOpen &&
+            !ChestUIController.ChestUIOpen)
         {
-            return;
+            base.ItemSelectionController_OnItemDeselectedAtIndex(index);
         }
-
-        UnhighlightSlotAtIndex(index);
     }
 
     private void InventoryUIController_OnInventoryClosed()

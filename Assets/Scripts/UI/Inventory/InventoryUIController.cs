@@ -6,9 +6,7 @@ using UnityEngine.InputSystem;
 
 public class InventoryUIController : ItemSlotContainerController
 {
-    [SerializeField] private Inventory inventory;
     [SerializeField] private List<GameObject> inventoryUIGameObjects;
-    [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private InputActionReference inventoryActionReference;
 
@@ -23,13 +21,11 @@ public class InventoryUIController : ItemSlotContainerController
         InventoryUIOpen = false;
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        inventoryAction = inventoryActionReference.action;
+        base.Awake();
 
-        inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
-        itemSelectionController.OnItemSelectedAtIndex += ItemSelectionController_OnItemSelectedAtIndex;
-        itemSelectionController.OnItemDeselectedAtIndex += ItemSelectionController_OnItemDeselectedAtIndex;
+        inventoryAction = inventoryActionReference.action;
     }
 
     // Must run after any script Update methods that can set ActionDisablingUIOpen to true to
@@ -67,12 +63,22 @@ public class InventoryUIController : ItemSlotContainerController
         }
     }
 
-    private void OnDestroy()
+    protected override void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
-        inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
-        itemSelectionController.OnItemSelectedAtIndex -= ItemSelectionController_OnItemSelectedAtIndex;
-        itemSelectionController.OnItemDeselectedAtIndex -= ItemSelectionController_OnItemDeselectedAtIndex;
+        base.Inventory_OnItemChangedAtIndex(item, index);
+
+        if (InventoryUIOpen && index == hoveredItemSlotManager.HoveredItemIndex)
+        {
+            (itemSlotControllers[index] as InventoryUIItemSlotController).ResetSlotTooltipText();
+        }
     }
+
+    public void InvokeOnInventoryUIClosedEvent()
+    {
+        OnInventoryClosed();
+    }
+
+    public Inventory GetInventory() => inventory;
 
     [ContextMenu("Set Inventory UI Item Slot Indexes")]
     private void SetInventoryUIItemSlotIndexes()
@@ -90,31 +96,4 @@ public class InventoryUIController : ItemSlotContainerController
             ++currentSlotItemIndex;
         }
     }
-
-    private void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
-    {
-        UpdateSlotAtIndexUsingItem(index, item);
-
-        if (InventoryUIOpen && index == hoveredItemSlotManager.HoveredItemIndex)
-        {
-            (itemSlotControllers[index] as InventoryUIItemSlotController).ResetSlotTooltipText();
-        }
-    }
-
-    private void ItemSelectionController_OnItemSelectedAtIndex(int index)
-    {
-        HighlightSlotAtIndex(index);
-    }
-
-    private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
-    {
-        UnhighlightSlotAtIndex(index);
-    }
-
-    public void InvokeOnInventoryUIClosedEvent()
-    {
-        OnInventoryClosed();
-    }
-
-    public Inventory GetInventory() => inventory;
 }
