@@ -4,12 +4,11 @@ using UnityEngine.UI;
 public class FishUIController : MonoBehaviour
 {
     [SerializeField] private Image fishUIImage;
+    [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private RectTransform fishUIImageRectTransform;
     [SerializeField] private Vector2 fishXPositionRange;
     [SerializeField] private Vector2 fishStartAbsXPositionRange;
     [SerializeField] private bool logStartPosition;
-
-    private RectTransform rectTransform;
-    private RectTransform fishUIImageRectTransform;
 
     public float Speed { private get; set; }
 
@@ -54,11 +53,6 @@ public class FishUIController : MonoBehaviour
 
     public void SetFishUIPositionAndDirection()
     {
-        if (rectTransform == null)
-        {
-            rectTransform = GetComponent<RectTransform>();
-        }
-
         rectTransform.anchoredPosition = new Vector3(GetRandomFishXPosition(), 0f, 0f);
 
         if (logStartPosition)
@@ -73,11 +67,6 @@ public class FishUIController : MonoBehaviour
 
     public void ResetFishUIImage()
     {
-        if (fishUIImageRectTransform == null)
-        {
-            fishUIImageRectTransform = fishUIImage.GetComponent<RectTransform>();
-        }
-
         fishUIImageRectTransform.localScale = Vector3.one;
 
         fishUIImage.color = new Color(fishUIImage.color.r,

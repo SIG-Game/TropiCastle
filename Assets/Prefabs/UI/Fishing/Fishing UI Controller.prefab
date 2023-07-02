@@ -92,7 +92,6 @@ MonoBehaviour:
   fishingUI: {fileID: 24094386154538983}
   fishUI: {fileID: 6030874414711316719}
   hookTransform: {fileID: 1938744877893344358}
-  fishingRodItemUsage: {fileID: 0}
   playerInventory: {fileID: 0}
   playerItemInWorld: {fileID: 0}
   catchFishXPositionRange: {x: -50, y: 50}
@@ -486,6 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishUIImage: {fileID: 4788721818253555063}
+  rectTransform: {fileID: 4788721819336372576}
+  fishUIImageRectTransform: {fileID: 4788721818253555018}
   fishXPositionRange: {x: -200, y: 200}
   fishStartAbsXPositionRange: {x: 80, y: 190}
   logStartPosition: 0
