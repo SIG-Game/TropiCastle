@@ -60,8 +60,8 @@ public class ItemSelectionController : MonoBehaviour
     {
         StopRepeatSelectCoroutinesIfNeeded();
 
-        if ((PauseController.Instance.GamePaused && !InventoryUIController.InventoryUIOpen) ||
-            !CanSelect)
+        if ((PauseController.Instance.GamePaused && !InventoryUIController.InventoryUIOpen &&
+            !ChestUIController.ChestUIOpen) || !CanSelect)
         {
             return;
         }

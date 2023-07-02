@@ -29,7 +29,8 @@ public class HotbarUIController : ItemSlotContainerController
 
     private void Inventory_ChangedItemAtIndex(ItemWithAmount item, int index)
     {
-        if (index >= hotbarSize || InventoryUIController.InventoryUIOpen)
+        if (index >= hotbarSize || InventoryUIController.InventoryUIOpen
+            || ChestUIController.ChestUIOpen)
         {
             return;
         }
@@ -39,7 +40,8 @@ public class HotbarUIController : ItemSlotContainerController
 
     private void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        if (InventoryUIController.InventoryUIOpen)
+        if (InventoryUIController.InventoryUIOpen ||
+            ChestUIController.ChestUIOpen)
         {
             return;
         }
@@ -49,7 +51,8 @@ public class HotbarUIController : ItemSlotContainerController
 
     private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        if (InventoryUIController.InventoryUIOpen)
+        if (InventoryUIController.InventoryUIOpen ||
+            ChestUIController.ChestUIOpen)
         {
             return;
         }

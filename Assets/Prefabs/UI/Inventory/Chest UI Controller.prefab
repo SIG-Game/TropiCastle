@@ -641,6 +641,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestUI: {fileID: 6696742860742474237}
   inventoryUIController: {fileID: 0}
+  hoveredItemSlotManager: {fileID: 0}
+  itemSelectionController: {fileID: 0}
   chestItemSlots:
   - {fileID: 6696742861987086594}
   - {fileID: 6696742860359927567}
@@ -685,6 +687,8 @@ MonoBehaviour:
   - {fileID: 6696742860794454346}
   inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
+  highlightedSlotColor: {r: 0.41568628, g: 0.61960787, b: 0.68235296, a: 1}
+  unhighlightedSlotColor: {r: 0.5529412, g: 0.79607844, b: 0.8666667, a: 1}
 --- !u!1 &6696742861595086468
 GameObject:
   m_ObjectHideFlags: 0

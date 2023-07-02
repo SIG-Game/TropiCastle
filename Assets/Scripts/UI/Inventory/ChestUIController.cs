@@ -8,9 +8,12 @@ public class ChestUIController : MonoBehaviour
     [SerializeField] private GameObject chestUI;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
+    [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private List<InventoryUIItemSlotController> chestItemSlots;
     [SerializeField] private List<InventoryUIItemSlotController> playerItemSlots;
     [SerializeField] private InputActionReference inventoryActionReference;
+    [SerializeField] private Color highlightedSlotColor;
+    [SerializeField] private Color unhighlightedSlotColor;
 
     private Inventory chestInventory;
     private Inventory playerInventory;
@@ -29,6 +32,11 @@ public class ChestUIController : MonoBehaviour
         Instance = this;
 
         inventoryAction = inventoryActionReference.action;
+
+        itemSelectionController.OnItemSelectedAtIndex +=
+            ItemSelectionController_OnItemSelectedAtIndex;
+        itemSelectionController.OnItemDeselectedAtIndex +=
+            ItemSelectionController_OnItemDeselectedAtIndex;
     }
 
     // Must run after the InventoryUIController Update method so that the inventory
@@ -68,6 +76,11 @@ public class ChestUIController : MonoBehaviour
         {
             playerInventory.OnItemChangedAtIndex -= PlayerInventory_OnItemChangedAtIndex;
         }
+
+        itemSelectionController.OnItemSelectedAtIndex -=
+            ItemSelectionController_OnItemSelectedAtIndex;
+        itemSelectionController.OnItemDeselectedAtIndex -=
+            ItemSelectionController_OnItemDeselectedAtIndex;
 
         Instance = null;
     }
@@ -144,5 +157,25 @@ public class ChestUIController : MonoBehaviour
         int index, ItemWithAmount item)
     {
         itemSlots[index].UpdateUsingItem(item);
+    }
+
+    private void ItemSelectionController_OnItemSelectedAtIndex(int index)
+    {
+        HighlightSlotAtIndex(index);
+    }
+
+    private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
+    {
+        UnhighlightSlotAtIndex(index);
+    }
+
+    private void HighlightSlotAtIndex(int slotIndex)
+    {
+        playerItemSlots[slotIndex].SetBackgroundColor(highlightedSlotColor);
+    }
+
+    private void UnhighlightSlotAtIndex(int slotIndex)
+    {
+        playerItemSlots[slotIndex].SetBackgroundColor(unhighlightedSlotColor);
     }
 }
