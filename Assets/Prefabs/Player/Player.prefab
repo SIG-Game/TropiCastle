@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 5613604618592605289}
   - component: {fileID: 8669891105156055949}
   - component: {fileID: 3827053378170763305}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -778,6 +778,7 @@ MonoBehaviour:
   playerInventory: {fileID: 856750480813842556}
   playerCollider2D: {fileID: 5288355818519945018}
   cursorController: {fileID: 0}
+  canThrowBoxCastDistance: 0.5
 --- !u!114 &2485764338336164774
 MonoBehaviour:
   m_ObjectHideFlags: 0
