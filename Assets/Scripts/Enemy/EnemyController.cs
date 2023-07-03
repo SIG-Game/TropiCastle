@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float initialWaitTimeBeforeIdle;
     [SerializeField] private float waitTimeAfterKnockback;
     [SerializeField] private float fadeOutSpeed;
-    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private CanvasGroup healthBarCanvasGroup;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private List<ItemWithAmount> droppedLoot;
@@ -121,10 +121,9 @@ public class EnemyController : MonoBehaviour
         spriteRenderer.color = new Color(spriteRenderer.color.r,
             spriteRenderer.color.g, spriteRenderer.color.b, alpha);
 
-        if (healthText != null)
+        if (healthBarCanvasGroup != null)
         {
-            healthText.color = new Color(healthText.color.r,
-                healthText.color.g, healthText.color.b, alpha);
+            healthBarCanvasGroup.alpha = alpha;
         }
     }
 
