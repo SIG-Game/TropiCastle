@@ -7,6 +7,7 @@ public class ThrownItemWorld : MonoBehaviour
     private WeaponController spawnedWeaponController;
     private Collider2D playerCollider2D;
 
+    private const float stopDamagingMaxVelocitySqrMagnitude = 1f;
     private const float maxStopVelocitySqrMagnitude = 0.001f;
 
     private void Awake()
@@ -23,6 +24,11 @@ public class ThrownItemWorld : MonoBehaviour
 
     private void Update()
     {
+        if (spawnedRigidbody2D.velocity.sqrMagnitude <= stopDamagingMaxVelocitySqrMagnitude)
+        {
+            Destroy(spawnedWeaponController);
+        }
+
         if (spawnedRigidbody2D.velocity.sqrMagnitude <= maxStopVelocitySqrMagnitude)
         {
             spawnedRigidbody2D.bodyType = RigidbodyType2D.Static;
@@ -30,7 +36,6 @@ public class ThrownItemWorld : MonoBehaviour
 
             Physics2D.IgnoreCollision(playerCollider2D, spawnedCollider2D, false);
 
-            Destroy(spawnedWeaponController);
             Destroy(this);
         }
     }
