@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7db07be4d873d9941b096853887749be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hookXPositionRange: {x: -70, y: 70}
+  xPositionRange: {x: -70, y: 70}
   xSpeed: 150
 --- !u!1 &1938744878196299697
 GameObject:
@@ -484,9 +484,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af1584e9adacdb4fa4d5328a2f3fd4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xPositionRange: {x: -200, y: 200}
   fishUIImage: {fileID: 4788721818253555063}
   rectTransform: {fileID: 4788721819336372576}
   fishUIImageRectTransform: {fileID: 4788721818253555018}
-  fishXPositionRange: {x: -200, y: 200}
   fishStartAbsXPositionRange: {x: 80, y: 190}
   logStartPosition: 0

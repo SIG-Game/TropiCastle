@@ -125,7 +125,9 @@ public class FishingUIController : MonoBehaviour
         catchFailedAnimationStarted = false;
 
         fishUI.ResetFishUIImage();
-        fishUI.SetFishUIPositionAndDirection();
+        fishUI.SetRandomXPosition();
+        fishUI.SetRandomXDirection();
+        fishUI.UpdateXVelocity();
 
         fishingUI.SetActive(true);
         fishUI.gameObject.SetActive(true);

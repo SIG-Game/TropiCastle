@@ -1,57 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FishUIController : MonoBehaviour
+public class FishUIController : HorizontalMover
 {
     [SerializeField] private Image fishUIImage;
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private RectTransform fishUIImageRectTransform;
-    [SerializeField] private Vector2 fishXPositionRange;
     [SerializeField] private Vector2 fishStartAbsXPositionRange;
     [SerializeField] private bool logStartPosition;
 
     public float Speed { private get; set; }
 
-    private void Update()
-    {
-        UpdateFishPosition();
-    }
-
-    private void UpdateFishPosition()
-    {
-        float fishXDirection = transform.localScale.x;
-        float fishXSpeed = Speed * Time.deltaTime;
-
-        Vector3 newPosition = transform.localPosition +
-            fishXDirection * fishXSpeed * Vector3.right;
-
-        if (newPosition.x <= fishXPositionRange.x)
-        {
-            float distanceOverLimit = fishXPositionRange.x - newPosition.x;
-
-            newPosition.x = fishXPositionRange.x + distanceOverLimit;
-
-            ChangeFishDirection();
-        }
-        else if (newPosition.x >= fishXPositionRange.y)
-        {
-            float distanceOverLimit = newPosition.x - fishXPositionRange.y;
-
-            newPosition.x = fishXPositionRange.y - distanceOverLimit;
-
-            ChangeFishDirection();
-        }
-
-        transform.localPosition = newPosition;
-    }
-
-    private void ChangeFishDirection()
-    {
-        transform.localScale = new Vector3(-transform.localScale.x,
-            transform.localScale.y, transform.localScale.z);
-    }
-
-    public void SetFishUIPositionAndDirection()
+    public void SetRandomXPosition()
     {
         rectTransform.anchoredPosition = new Vector3(GetRandomFishXPosition(), 0f, 0f);
 
@@ -59,10 +19,18 @@ public class FishUIController : MonoBehaviour
         {
             Debug.Log("Set fish UI x position to: " + transform.localPosition.x);
         }
+    }
 
+    public void SetRandomXDirection()
+    {
         float randomFishXDirection = GetRandomSign();
         transform.localScale = new Vector3(randomFishXDirection,
             transform.localScale.y, transform.localScale.z);
+    }
+
+    public void UpdateXVelocity()
+    {
+        xVelocity = Speed * transform.localScale.x;
     }
 
     public void ResetFishUIImage()
@@ -77,6 +45,14 @@ public class FishUIController : MonoBehaviour
         fishStartAbsXPositionRange.y) * GetRandomSign();
 
     private float GetRandomSign() => Random.Range(0, 2) == 0 ? 1f : -1f;
+
+    protected override void FlipXVelocityDirection()
+    {
+        base.FlipXVelocityDirection();
+
+        transform.localScale = new Vector3(-transform.localScale.x,
+            transform.localScale.y, transform.localScale.z);
+    }
 
     public void SetColor(Color color)
     {

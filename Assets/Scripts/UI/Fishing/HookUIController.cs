@@ -1,12 +1,10 @@
 using UnityEngine;
 
-public class HookUIController : MonoBehaviour
+public class HookUIController : HorizontalMover
 {
-    [SerializeField] private Vector2 hookXPositionRange;
     [SerializeField] private float xSpeed;
 
     private Vector3 initialPosition;
-    private float xVelocity;
 
     private void Awake()
     {
@@ -15,36 +13,12 @@ public class HookUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        float randomXPosition = Random.Range(hookXPositionRange.x, hookXPositionRange.y);
+        float randomXPosition = Random.Range(xPositionRange.x, xPositionRange.y);
 
         transform.localPosition = new Vector3(randomXPosition, initialPosition.y, initialPosition.z);
 
         float randomXVelocityDirection = Random.Range(0, 2) == 0 ? 1f : -1f;
 
         xVelocity = xSpeed * randomXVelocityDirection;
-    }
-
-    private void Update()
-    {
-        Vector3 newPosition = transform.localPosition + xVelocity * Time.deltaTime * Vector3.right;
-
-        if (newPosition.x <= hookXPositionRange.x)
-        {
-            float distanceOverLimit = hookXPositionRange.x - newPosition.x;
-
-            newPosition.x = hookXPositionRange.x + distanceOverLimit;
-
-            xVelocity *= -1f;
-        }
-        else if (newPosition.x >= hookXPositionRange.y)
-        {
-            float distanceOverLimit = newPosition.x - hookXPositionRange.y;
-
-            newPosition.x = hookXPositionRange.y - distanceOverLimit;
-
-            xVelocity *= -1f;
-        }
-
-        transform.localPosition = newPosition;
     }
 }
