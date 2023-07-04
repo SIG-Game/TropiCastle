@@ -34172,6 +34172,16 @@ PrefabInstance:
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 3729050351029151765, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 3729050351029151765, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: itemSelectionController
+      value: 
+      objectReference: {fileID: 1982112583}
     - target: {fileID: 4443076731647371254, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: targetInventory

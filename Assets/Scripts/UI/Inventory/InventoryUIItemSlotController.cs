@@ -82,6 +82,16 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
         return slotItem.GetTooltipText();
     }
 
+    public override void UpdateUsingItem(ItemWithAmount item)
+    {
+        base.UpdateUsingItem(item);
+
+        if (InventoryUITooltipController.Instance.TooltipListContains(tooltipTextWithPriority))
+        {
+            ResetSlotTooltipText();
+        }
+    }
+
     public void SetInventory(Inventory inventory)
     {
         this.inventory = inventory;

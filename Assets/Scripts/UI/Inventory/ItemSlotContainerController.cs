@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public abstract class ItemSlotContainerController : MonoBehaviour
+public class ItemSlotContainerController : MonoBehaviour
 {
     [SerializeField] protected Inventory inventory;
     [SerializeField] protected ItemSelectionController itemSelectionController;

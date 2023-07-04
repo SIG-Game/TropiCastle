@@ -63,16 +63,6 @@ public class InventoryUIController : ItemSlotContainerController
         }
     }
 
-    protected override void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
-    {
-        base.Inventory_OnItemChangedAtIndex(item, index);
-
-        if (InventoryUIOpen && index == hoveredItemSlotManager.HoveredItemIndex)
-        {
-            (itemSlotControllers[index] as InventoryUIItemSlotController).ResetSlotTooltipText();
-        }
-    }
-
     public void InvokeOnInventoryUIClosedEvent()
     {
         OnInventoryClosed();

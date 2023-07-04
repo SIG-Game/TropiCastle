@@ -29,7 +29,7 @@ public class ItemSlotController : MonoBehaviour
         durabilityMeter.HideMeter();
     }
 
-    public void UpdateUsingItem(ItemWithAmount item)
+    public virtual void UpdateUsingItem(ItemWithAmount item)
     {
         SetSprite(item.itemData.sprite);
         SetAmountText(item.GetAmountText());

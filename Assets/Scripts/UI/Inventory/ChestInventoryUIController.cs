@@ -36,16 +36,4 @@ public class ChestInventoryUIController : ItemSlotContainerController
 
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
     }
-
-    protected override void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
-    {
-        base.Inventory_OnItemChangedAtIndex(item, index);
-
-        if (ChestUIController.ChestUIOpen &&
-            inventory == hoveredItemSlotManager.HoveredInventory &&
-            index == hoveredItemSlotManager.HoveredItemIndex)
-        {
-            (itemSlotControllers[index] as InventoryUIItemSlotController).ResetSlotTooltipText();
-        }
-    }
 }
