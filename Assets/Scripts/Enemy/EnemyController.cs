@@ -24,10 +24,12 @@ public class EnemyController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private HealthController healthController;
     private Spawnable spawnable;
+    private Coroutine initialWaitTimeBeforeIdleCoroutine;
     private WaitForSeconds beforeIdleWaitForSecondsObject;
     private WaitForSeconds afterKnockbackWaitForSecondsObject;
     private Vector2 playerColliderOffset;
     private EnemyState state;
+    private bool initialWaitOccurring;
 
     public float LastHitTime { get; set; }
 
@@ -48,7 +50,8 @@ public class EnemyController : MonoBehaviour
         afterKnockbackWaitForSecondsObject =
             new WaitForSeconds(waitTimeAfterKnockback);
 
-        StartCoroutine(InitialWaitBeforeIdleCoroutine());
+        initialWaitTimeBeforeIdleCoroutine =
+            StartCoroutine(InitialWaitBeforeIdleCoroutine());
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
     }
@@ -170,6 +173,11 @@ public class EnemyController : MonoBehaviour
 
     public void ApplyKnockback(Vector2 normalizedDirection, float force)
     {
+        if (initialWaitOccurring)
+        {
+            StopCoroutine(initialWaitTimeBeforeIdleCoroutine);
+        }
+
         if (state == EnemyState.KnockedBack)
         {
             rb2d.velocity = Vector2.zero;
@@ -187,8 +195,12 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator InitialWaitBeforeIdleCoroutine()
     {
+        initialWaitOccurring = true;
+
         yield return beforeIdleWaitForSecondsObject;
         state = EnemyState.Idle;
+
+        initialWaitOccurring = false;
     }
 
     private IEnumerator WaitAfterKnockbackCoroutine()
