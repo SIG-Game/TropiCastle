@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,17 +5,10 @@ using UnityEngine.InputSystem;
 public class ChestUIController : MonoBehaviour
 {
     [SerializeField] private GameObject chestUI;
+    [SerializeField] private ChestInventoryUIController chestInventoryUIController;
     [SerializeField] private InventoryUIController inventoryUIController;
-    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
-    [SerializeField] private ItemSelectionController itemSelectionController;
-    [SerializeField] private List<InventoryUIItemSlotController> chestItemSlots;
-    [SerializeField] private List<InventoryUIItemSlotController> playerItemSlots;
     [SerializeField] private InputActionReference inventoryActionReference;
-    [SerializeField] private Color highlightedSlotColor;
-    [SerializeField] private Color unhighlightedSlotColor;
 
-    private Inventory chestInventory;
-    private Inventory playerInventory;
     private InputAction inventoryAction;
 
     public static ChestUIController Instance;
@@ -32,11 +24,6 @@ public class ChestUIController : MonoBehaviour
         Instance = this;
 
         inventoryAction = inventoryActionReference.action;
-
-        itemSelectionController.OnItemSelectedAtIndex +=
-            ItemSelectionController_OnItemSelectedAtIndex;
-        itemSelectionController.OnItemDeselectedAtIndex +=
-            ItemSelectionController_OnItemDeselectedAtIndex;
     }
 
     // Must run after the InventoryUIController Update method so that the inventory
@@ -67,21 +54,6 @@ public class ChestUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (chestInventory != null)
-        {
-            chestInventory.OnItemChangedAtIndex -= ChestInventory_OnItemChangedAtIndex;
-        }
-
-        if (playerInventory != null)
-        {
-            playerInventory.OnItemChangedAtIndex -= PlayerInventory_OnItemChangedAtIndex;
-        }
-
-        itemSelectionController.OnItemSelectedAtIndex -=
-            ItemSelectionController_OnItemSelectedAtIndex;
-        itemSelectionController.OnItemDeselectedAtIndex -=
-            ItemSelectionController_OnItemDeselectedAtIndex;
-
         Instance = null;
     }
 
@@ -95,87 +67,6 @@ public class ChestUIController : MonoBehaviour
 
     public void SetChestInventory(Inventory chestInventory)
     {
-        this.chestInventory = chestInventory;
-
-        List<ItemWithAmount> chestItemList = chestInventory.GetItemList();
-
-        for (int i = 0; i < chestItemSlots.Count; ++i)
-        {
-            var chestItemSlot = chestItemSlots[i];
-            var chestItem = chestItemList[i];
-
-            chestItemSlot.SetInventory(chestInventory);
-            chestItemSlot.UpdateUsingItem(chestItem);
-        }
-
-        chestInventory.OnItemChangedAtIndex += ChestInventory_OnItemChangedAtIndex;
-    }
-
-    public void SetPlayerInventory(Inventory playerInventory)
-    {
-        this.playerInventory = playerInventory;
-
-        SetInventorySlotSprites(playerInventory, playerItemSlots);
-
-        playerInventory.OnItemChangedAtIndex += PlayerInventory_OnItemChangedAtIndex;
-    }
-
-    private void SetInventorySlotSprites(Inventory inventory,
-        List<InventoryUIItemSlotController> itemSlots)
-    {
-        List<ItemWithAmount> itemList = inventory.GetItemList();
-
-        for (int i = 0; i < itemList.Count; ++i)
-        {
-            itemSlots[i].UpdateUsingItem(itemList[i]);
-        }
-    }
-
-    private void ChestInventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
-    {
-        UpdateItemSlotAtIndex(chestItemSlots, index, item);
-
-        if (ChestUIOpen && chestInventory == hoveredItemSlotManager.HoveredInventory &&
-            index == hoveredItemSlotManager.HoveredItemIndex)
-        {
-            chestItemSlots[index].ResetSlotTooltipText();
-        }
-    }
-
-    private void PlayerInventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
-    {
-        UpdateItemSlotAtIndex(playerItemSlots, index, item);
-
-        if (ChestUIOpen && playerInventory == hoveredItemSlotManager.HoveredInventory &&
-            index == hoveredItemSlotManager.HoveredItemIndex)
-        {
-            playerItemSlots[index].ResetSlotTooltipText();
-        }
-    }
-
-    private void UpdateItemSlotAtIndex(List<InventoryUIItemSlotController> itemSlots,
-        int index, ItemWithAmount item)
-    {
-        itemSlots[index].UpdateUsingItem(item);
-    }
-
-    private void ItemSelectionController_OnItemSelectedAtIndex(int index)
-    {
-        HighlightSlotAtIndex(index);
-    }
-
-    private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
-    {
-        UnhighlightSlotAtIndex(index);
-    }
-
-    private void HighlightSlotAtIndex(int slotIndex)
-    {
-        playerItemSlots[slotIndex].SetBackgroundColor(highlightedSlotColor);
-    }
-
-    private void UnhighlightSlotAtIndex(int slotIndex)
-    {
-        playerItemSlots[slotIndex].SetBackgroundColor(unhighlightedSlotColor);
+        chestInventoryUIController.SetInventory(chestInventory);
     }
 }

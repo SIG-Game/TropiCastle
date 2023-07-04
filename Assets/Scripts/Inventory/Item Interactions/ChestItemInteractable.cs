@@ -35,10 +35,9 @@ public class ChestItemInteractable : Interactable
             .instanceProperties).UpdateSerializableInventory(inventory);
     }
 
-    public override void Interact(PlayerController playerController)
+    public override void Interact(PlayerController _)
     {
         ChestUIController.Instance.SetChestInventory(inventory);
-        ChestUIController.Instance.SetPlayerInventory(playerController.GetInventory());
 
         ChestUIController.Instance.ShowChestUI();
     }

@@ -599,6 +599,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6696742861436794999}
   - component: {fileID: 6696742861436794996}
+  - component: {fileID: 7038787280515652132}
+  - component: {fileID: 18872256902586899}
   m_Layer: 5
   m_Name: Chest UI Controller
   m_TagString: Untagged
@@ -640,10 +642,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestUI: {fileID: 6696742860742474237}
+  chestInventoryUIController: {fileID: 7038787280515652132}
   inventoryUIController: {fileID: 0}
-  hoveredItemSlotManager: {fileID: 0}
+  inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
+--- !u!114 &7038787280515652132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696742861436794998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a4ff57a9be07f45b9bc5bd9de19767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
   itemSelectionController: {fileID: 0}
-  chestItemSlots:
+  highlightedSlotColor: {r: 0, g: 0, b: 0, a: 0}
+  unhighlightedSlotColor: {r: 0, g: 0, b: 0, a: 0}
+  itemSlotControllers:
   - {fileID: 6696742861987086594}
   - {fileID: 6696742860359927567}
   - {fileID: 6696742861257747454}
@@ -654,7 +673,24 @@ MonoBehaviour:
   - {fileID: 6696742861728095444}
   - {fileID: 6696742861007732932}
   - {fileID: 6696742861866472650}
-  playerItemSlots:
+  hoveredItemSlotManager: {fileID: 0}
+--- !u!114 &18872256902586899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696742861436794998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308feb4e037589240b63bcd062f4f830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  itemSelectionController: {fileID: 0}
+  highlightedSlotColor: {r: 0.41568628, g: 0.61960787, b: 0.68235296, a: 1}
+  unhighlightedSlotColor: {r: 0.5529412, g: 0.79607844, b: 0.8666667, a: 1}
+  itemSlotControllers:
   - {fileID: 6696742860762769143}
   - {fileID: 6696742860555976972}
   - {fileID: 6696742861079556771}
@@ -685,10 +721,7 @@ MonoBehaviour:
   - {fileID: 6696742860766728138}
   - {fileID: 6696742861422036601}
   - {fileID: 6696742860794454346}
-  inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
-    type: 3}
-  highlightedSlotColor: {r: 0.41568628, g: 0.61960787, b: 0.68235296, a: 1}
-  unhighlightedSlotColor: {r: 0.5529412, g: 0.79607844, b: 0.8666667, a: 1}
+  hoveredItemSlotManager: {fileID: 0}
 --- !u!1 &6696742861595086468
 GameObject:
   m_ObjectHideFlags: 0

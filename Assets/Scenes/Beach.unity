@@ -34127,6 +34127,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 264356607922043430, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 264356607922043430, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 6847651757298814664}
+    - target: {fileID: 264356607922043430, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: itemSelectionController
+      value: 
+      objectReference: {fileID: 1982112583}
     - target: {fileID: 692706992488476330, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -34857,6 +34872,11 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 7081604086325166609, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 6847651757298814664}
     - target: {fileID: 7139093755093260092, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: targetHealthController
