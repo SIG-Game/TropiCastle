@@ -4,15 +4,16 @@ public class GameOverUIController : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverUIToActivateOnPlayerDeath;
     [SerializeField] private GameObject reloadButton;
+    [SerializeField] private PlayerController playerController;
 
     private void Awake()
     {
-        PlayerController.OnPlayerDied += PlayerController_OnPlayerDied;
+        playerController.OnPlayerDied += PlayerController_OnPlayerDied;
     }
 
     private void OnDestroy()
     {
-        PlayerController.OnPlayerDied -= PlayerController_OnPlayerDied;
+        playerController.OnPlayerDied -= PlayerController_OnPlayerDied;
     }
 
     private void PlayerController_OnPlayerDied()

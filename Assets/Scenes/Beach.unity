@@ -34639,6 +34639,11 @@ PrefabInstance:
       propertyPath: hoveredItemSlotManager
       value: 
       objectReference: {fileID: 6847651757298814664}
+    - target: {fileID: 6847651758260162643, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 572276101}
     - target: {fileID: 6847651758268619063, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: hoveredItemSlotManager

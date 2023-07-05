@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public event Action<bool> OnIsAttackingSet = delegate { };
+    public event Action OnPlayerDied = delegate { };
 
     private Dictionary<string, IItemUsage> itemNameToUsage;
     private Dictionary<Type, IItemUsage> itemScriptableObjectTypeToUsage;
@@ -57,7 +58,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public static event Action OnPlayerDied = delegate { };
     public static event Action<bool> OnActionDisablingUIOpenSet = delegate { };
 
     private BoxCollider2D boxCollider;
@@ -153,7 +153,6 @@ public class PlayerController : MonoBehaviour
             healthController.OnHealthSetToZero -= HealthController_OnHealthSetToZero;
         }
 
-        OnPlayerDied = delegate { };
         OnActionDisablingUIOpenSet = delegate { };
     }
 
