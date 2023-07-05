@@ -33888,6 +33888,16 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 572276104}
+    - target: {fileID: 3441817848861255927, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
+      propertyPath: itemDropdown
+      value: 
+      objectReference: {fileID: 6847651757298814665}
+    - target: {fileID: 3441817848861255927, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
+      propertyPath: amountInputField
+      value: 
+      objectReference: {fileID: 6847651757298814666}
     - target: {fileID: 3629262306849807461, guid: 0b10992830a0ba7439705a4db0804f24,
         type: 3}
       propertyPath: chimp
@@ -35016,6 +35026,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e84e4f9e35f6a014db80747fc8f489ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6847651757298814665 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6847651758515210805, guid: cb76167790ad17b418442606107678be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6847651757298814663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6847651757298814666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3701475767561966862, guid: cb76167790ad17b418442606107678be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6847651757298814663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7286120659257435029
