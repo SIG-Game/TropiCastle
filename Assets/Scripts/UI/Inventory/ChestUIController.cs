@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class ChestUIController : MonoBehaviour
 {
     [SerializeField] private GameObject chestUI;
-    [SerializeField] private ChestInventoryUIController chestInventoryUIController;
+    [SerializeField] private ItemSlotContainerController chestItemSlotContainerController;
     [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private InputActionReference inventoryActionReference;
 
@@ -67,6 +67,6 @@ public class ChestUIController : MonoBehaviour
 
     public void SetChestInventory(Inventory chestInventory)
     {
-        chestInventoryUIController.SetInventory(chestInventory);
+        chestItemSlotContainerController.SetInventory(chestInventory);
     }
 }

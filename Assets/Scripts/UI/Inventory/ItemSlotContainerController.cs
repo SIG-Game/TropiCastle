@@ -14,7 +14,10 @@ public class ItemSlotContainerController : MonoBehaviour
 
     protected virtual void Awake()
     {
-        inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
+        if (inventory != null)
+        {
+            inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
+        }
 
         if (itemSelectionController != null)
         {
@@ -27,7 +30,10 @@ public class ItemSlotContainerController : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
+        if (inventory != null)
+        {
+            inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
+        }
 
         if (itemSelectionController != null)
         {
@@ -66,6 +72,25 @@ public class ItemSlotContainerController : MonoBehaviour
     public void UnhighlightSlotAtIndex(int slotIndex)
     {
         itemSlotControllers[slotIndex].SetBackgroundColor(unhighlightedSlotColor);
+    }
+
+    public void SetInventory(Inventory inventory)
+    {
+        this.inventory = inventory;
+
+        List<ItemWithAmount> itemList = inventory.GetItemList();
+
+        for (int i = 0; i < itemSlotControllers.Count; ++i)
+        {
+            InventoryUIItemSlotController itemSlotController =
+                itemSlotControllers[i] as InventoryUIItemSlotController;
+            ItemWithAmount item = itemList[i];
+
+            itemSlotController.SetInventory(inventory);
+            itemSlotController.UpdateUsingItem(item);
+        }
+
+        inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
     }
 
     [ContextMenu("Set Item Slot Controllers")]
