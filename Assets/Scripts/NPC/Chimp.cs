@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,12 +10,9 @@ public class Chimp : NPCInteractable
     [SerializeField] private List<string> playerInventoryFullDialogueLines;
     [SerializeField] private List<ItemWithAmount> potentialItemsToGive;
     [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
-    [SerializeField] private Vector2Int spinsBeforeWaitRange;
-    [SerializeField] private Vector2 timeBetweenSpinsSecondsRange;
+    [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
 
-    private List<CharacterDirection> spinDirections;
-    private Coroutine spinCoroutine;
     private float lastGiveTimeSeconds;
     private float timeBetweenGivesSeconds;
 
@@ -24,21 +20,18 @@ public class Chimp : NPCInteractable
     {
         base.Awake();
 
-        spinDirections = new List<CharacterDirection> { CharacterDirection.Down,
-            CharacterDirection.Left, CharacterDirection.Up, CharacterDirection.Right };
-
         lastGiveTimeSeconds = 0f;
         timeBetweenGivesSeconds = 0f;
     }
 
     private void Start()
     {
-        spinCoroutine = StartCoroutine(SpinCoroutine());
+        chimpSpinner.StartSpinning();
     }
 
     public override void Interact(PlayerController player)
     {
-        StopCoroutine(spinCoroutine);
+        chimpSpinner.StopSpinning();
 
         FacePlayer(player);
 
@@ -70,31 +63,6 @@ public class Chimp : NPCInteractable
             () => Chimp_AfterDialogueAction(player, itemToGive));
     }
 
-    private IEnumerator SpinCoroutine()
-    {
-        while (true)
-        {
-            int numberOfSpinsBeforeWait = Random.Range(spinsBeforeWaitRange.x,
-                spinsBeforeWaitRange.y + 1);
-
-            for (int i = 0; i < numberOfSpinsBeforeWait; ++i)
-            {
-                foreach (CharacterDirection direction in spinDirections)
-                {
-                    directionController.Direction = direction;
-                    yield return new WaitForSeconds(0.175f);
-                }
-            }
-
-            directionController.Direction = CharacterDirection.Down;
-
-            float waitBeforeSpinningSeconds = Random.Range(timeBetweenSpinsSecondsRange.x,
-                timeBetweenSpinsSecondsRange.y);
-
-            yield return new WaitForSeconds(waitBeforeSpinningSeconds);
-        }
-    }
-
     private void Chimp_AfterDialogueAction(PlayerController player, ItemWithAmount itemToGive)
     {
         if (itemToGive != null)
@@ -107,7 +75,7 @@ public class Chimp : NPCInteractable
             timeBetweenGivesSeconds = GetRandomTimeBetweenGivesSeconds();
         }
 
-        spinCoroutine = StartCoroutine(SpinCoroutine());
+        chimpSpinner.StartSpinning();
     }
 
     private float GetRandomTimeBetweenGivesSeconds() =>

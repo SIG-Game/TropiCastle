@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 6226198124874704992}
   - component: {fileID: 6226198124874704994}
   - component: {fileID: 6226198124874704995}
+  - component: {fileID: 856391509901689041}
   - component: {fileID: 6226198124874705005}
   m_Layer: 8
   m_Name: Chimp
@@ -258,9 +259,23 @@ MonoBehaviour:
   - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
     amount: 1
   timeBetweenGivesSecondsRange: {x: 5, y: 10}
+  chimpSpinner: {fileID: 856391509901689041}
+  chimpItemInWorld: {fileID: 5168677056278632683}
+--- !u!114 &856391509901689041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6226198124874704999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0401d7181b06ac41bc6ddf3ec731102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionController: {fileID: 6226198124874705005}
   spinsBeforeWaitRange: {x: 2, y: 5}
   timeBetweenSpinsSecondsRange: {x: 0.5, y: 3}
-  chimpItemInWorld: {fileID: 5168677056278632683}
 --- !u!114 &6226198124874705005
 MonoBehaviour:
   m_ObjectHideFlags: 0
