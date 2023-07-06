@@ -57,6 +57,13 @@ public class ItemWorld : MonoBehaviour
         amountText.text = item.GetAmountText();
     }
 
+    public void SetItemAmount(int amount)
+    {
+        Item.amount = amount;
+
+        amountText.text = item.GetAmountText();
+    }
+
     public SerializableItemWorldState GetSerializableState()
     {
         var serializableItem = new SerializableInventoryItem(item);

@@ -74,16 +74,32 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PickUpHoveredItem()
     {
-        if (!playerInventory.CanAddItem(hoveredItemWorld.Item))
+        bool canAddItem =
+            playerInventory.CanAddItem(hoveredItemWorld.Item, out int canAddAmount);
+
+        if (canAddItem)
+        {
+            playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItemWorld.Item,
+                itemSelectionController.SelectedItemIndex);
+
+            Destroy(hoveredItemWorld.gameObject);
+        }
+        else if (canAddAmount != 0)
+        {
+            ItemWithAmount itemToAdd = new ItemWithAmount(hoveredItemWorld.Item.itemData,
+                canAddAmount, hoveredItemWorld.Item.instanceProperties);
+
+            playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAdd,
+                itemSelectionController.SelectedItemIndex);
+
+            hoveredItemWorld.SetItemAmount(hoveredItemWorld.Item.amount - canAddAmount);
+        }
+        else
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
 
             return;
         }
-
-        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItemWorld.Item,
-            itemSelectionController.SelectedItemIndex);
-        Destroy(hoveredItemWorld.gameObject);
     }
 
     public void PlaceSelectedPlayerHotbarItemAtCursorPosition()
@@ -112,7 +128,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public void UsePickupCursor()
     {
         if (hoveredItemWorld != null &&
-            !playerInventory.CanAddItem(hoveredItemWorld.Item))
+            !playerInventory.CanAddItem(hoveredItemWorld.Item, out int canAddAmount) &&
+            canAddAmount == 0)
         {
             cursorController.Sprite = itemPickupArrowInventoryFull;
         }

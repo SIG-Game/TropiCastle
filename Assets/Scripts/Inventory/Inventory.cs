@@ -276,10 +276,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool CanAddItem(ItemWithAmount newItem)
+    public bool CanAddItem(ItemWithAmount newItem) => CanAddItem(newItem, out _);
+
+    public bool CanAddItem(ItemWithAmount newItem, out int canAddAmount)
     {
         if (firstEmptyIndex != -1)
         {
+            canAddAmount = newItem.amount;
             return true;
         }
 
@@ -311,6 +314,7 @@ public class Inventory : MonoBehaviour
 
             if (stackIndex == -1)
             {
+                canAddAmount = newItem.amount - amountToAdd;
                 return false;
             }
 
@@ -331,6 +335,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        canAddAmount = newItem.amount;
         return true;
     }
 
