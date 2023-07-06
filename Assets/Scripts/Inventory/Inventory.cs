@@ -244,9 +244,16 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        itemAtIndex.amount = amount;
+        if (amount != 0)
+        {
+            itemAtIndex.amount = amount;
 
-        OnItemChangedAtIndex(itemAtIndex, index);
+            OnItemChangedAtIndex(itemAtIndex, index);
+        }
+        else
+        {
+            RemoveItemAtIndex(index);
+        }
     }
 
     public void DecrementItemDurabilityAtIndex(int index)

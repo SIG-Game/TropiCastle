@@ -36,18 +36,8 @@ public class Crafting : MonoBehaviour
                     itemIndexAndRemoveAmount.Key);
             }
 
-            inventory.RemoveItemAtIndex(itemIndexAndRemoveAmount.Key);
-
-            int amountLeft = itemToRemove.amount - itemIndexAndRemoveAmount.Value;
-
-            if (amountLeft != 0)
-            {
-                ItemWithAmount itemToAddBack = new ItemWithAmount(itemToRemove.itemData,
-                    amountLeft);
-
-                inventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAddBack,
-                    itemIndexAndRemoveAmount.Key);
-            }
+            int newItemAmount = itemToRemove.amount - itemIndexAndRemoveAmount.Value;
+            inventory.SetItemAmountAtIndex(newItemAmount, itemIndexAndRemoveAmount.Key);
         }
 
         inventory.AddItem(craftingRecipe.resultItem);
