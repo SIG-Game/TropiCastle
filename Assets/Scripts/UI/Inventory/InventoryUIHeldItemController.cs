@@ -216,7 +216,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
             heldItemInventory.DecrementItemStackAtIndex(heldItemIndex);
 
-            EmptyHeldItemSlotUI();
+            heldItemSlot.Clear();
 
             if (placingLastItemInHeldStack)
             {
@@ -240,7 +240,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
             heldItemInventory.DecrementItemStackAtIndex(heldItemIndex);
 
-            EmptyHeldItemSlotUI();
+            heldItemSlot.Clear();
 
             if (placingLastItemInHeldStack)
             {
@@ -261,7 +261,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemInventory = inventory;
         heldItemSlot = itemSlot;
 
-        EmptyHeldItemSlotUI();
+        heldItemSlot.Clear();
 
         heldItemIndex = itemIndex;
         heldItem = item;
@@ -277,13 +277,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private void InventoryUIController_OnInventoryClosed()
     {
         ResetHeldItem();
-    }
-
-    private void EmptyHeldItemSlotUI()
-    {
-        heldItemSlot.SetSprite(transparentSprite);
-        heldItemSlot.SetAmountText(string.Empty);
-        heldItemSlot.HideDurabilityMeter();
     }
 
     private void RefreshHeldItem()
@@ -322,7 +315,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         {
             UpdateHeldItemUI();
 
-            EmptyHeldItemSlotUI();
+            heldItemSlot.Clear();
         }
     }
 

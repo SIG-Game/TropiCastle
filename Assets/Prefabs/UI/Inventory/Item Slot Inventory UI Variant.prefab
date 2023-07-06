@@ -154,7 +154,8 @@ MonoBehaviour:
   itemSlotBackgroundImage: {fileID: 415455371410550688}
   amountText: {fileID: 4273917025913859715}
   durabilityMeter: {fileID: 4559145478903878071}
-  inventoryUIController: {fileID: 0}
+  transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
+  hoveredItemSlotManager: {fileID: 0}
   inventory: {fileID: 0}
   slotItemIndex: 0
 --- !u!114 &415455371632956867 stripped
