@@ -220,7 +220,7 @@ public class Inventory : MonoBehaviour
         OnItemAdded(newItemCopy);
     }
 
-    private void SetItemAtIndex(ItemWithAmount item, int index)
+    public void SetItemAtIndex(ItemWithAmount item, int index)
     {
         itemList[index] = item;
         OnItemChangedAtIndex(item, index);

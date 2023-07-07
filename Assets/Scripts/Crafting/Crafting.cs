@@ -25,22 +25,40 @@ public class Crafting : MonoBehaviour
             }
         }
 
+        Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval =
+            new Dictionary<int, ItemWithAmount>();
+
         foreach (var itemIndexAndRemoveAmount in itemIndexToRemoveAmount)
         {
-            ItemWithAmount itemToRemove = itemList[itemIndexAndRemoveAmount.Key];
+            int itemToRemoveIndex = itemIndexAndRemoveAmount.Key;
+            int itemAmountToRemove = itemIndexAndRemoveAmount.Value;
+
+            ItemWithAmount itemToRemove = itemList[itemToRemoveIndex];
+
+            if (!itemIndexToItemBeforeRemoval.ContainsKey(itemToRemoveIndex))
+            {
+                itemIndexToItemBeforeRemoval.Add(itemToRemoveIndex,
+                    new ItemWithAmount(itemToRemove));
+            }
 
             if (verboseLogging)
             {
-                Debug.Log($"Using {itemIndexAndRemoveAmount.Value} " +
-                    $"{itemToRemove.itemData.name} from index " +
-                    itemIndexAndRemoveAmount.Key);
+                Debug.Log($"Using {itemAmountToRemove} {itemToRemove.itemData.name} " +
+                    $"from index {itemToRemoveIndex}");
             }
 
-            int newItemAmount = itemToRemove.amount - itemIndexAndRemoveAmount.Value;
-            inventory.SetItemAmountAtIndex(newItemAmount, itemIndexAndRemoveAmount.Key);
+            int newItemAmount = itemToRemove.amount - itemAmountToRemove;
+            inventory.SetItemAmountAtIndex(newItemAmount, itemToRemoveIndex);
         }
 
-        inventory.AddItem(craftingRecipe.resultItem);
+        if (inventory.CanAddItem(craftingRecipe.resultItem))
+        {
+            inventory.AddItem(craftingRecipe.resultItem);
+        }
+        else
+        {
+            RevertItemRemoval(itemIndexToItemBeforeRemoval);
+        }
     }
 
     public bool TryFindIngredient(List<ItemWithAmount> itemList,
@@ -91,6 +109,18 @@ public class Crafting : MonoBehaviour
         else
         {
             dictionary.Add(key, value);
+        }
+    }
+
+    private void RevertItemRemoval(
+        Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval)
+    {
+        foreach (var itemIndexAndItemRemoved in itemIndexToItemBeforeRemoval)
+        {
+            int removedItemIndex = itemIndexAndItemRemoved.Key;
+            ItemWithAmount removedItem = itemIndexAndItemRemoved.Value;
+
+            inventory.SetItemAtIndex(removedItem, removedItemIndex);
         }
     }
 }
