@@ -39,7 +39,14 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (!InventoryUIHeldItemController.Instance.HoldingItem())
         {
-            craftingButtonDependencies.GetCrafting().CraftItem(craftingRecipe);
+            bool craftingSucceeded =
+                craftingButtonDependencies.GetCrafting().TryCraftItem(craftingRecipe);
+            if (craftingSucceeded)
+            {
+                InventoryUITooltipController.Instance
+                    .RemoveTooltipTextWithPriority(tooltipTextWithPriority);
+                AddCraftingButtonTooltip();
+            }
         }
     }
 
@@ -54,14 +61,24 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        string craftingButtonTooltipText = GetIngredientsAsString();
-        tooltipTextWithPriority = new Tooltip(craftingButtonTooltipText, resultItemTooltipText, 0);
-        InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
+        AddCraftingButtonTooltip();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
+        InventoryUITooltipController.Instance
+            .RemoveTooltipTextWithPriority(tooltipTextWithPriority);
+    }
+
+    private void AddCraftingButtonTooltip()
+    {
+        string craftingButtonTooltipText = GetIngredientsAsString();
+
+        tooltipTextWithPriority =
+            new Tooltip(craftingButtonTooltipText, resultItemTooltipText, 0);
+
+        InventoryUITooltipController.Instance
+            .AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
     private string GetIngredientsAsString()

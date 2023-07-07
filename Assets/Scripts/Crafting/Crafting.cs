@@ -6,7 +6,7 @@ public class Crafting : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private bool verboseLogging;
 
-    public void CraftItem(CraftingRecipeScriptableObject craftingRecipe)
+    public bool TryCraftItem(CraftingRecipeScriptableObject craftingRecipe)
     {
         List<ItemWithAmount> itemList = inventory.GetItemList();
 
@@ -21,7 +21,7 @@ public class Crafting : MonoBehaviour
                     Debug.Log($"{ingredient.amount} {ingredient.itemData.name} not found");
                 }
 
-                return;
+                return false;
             }
         }
 
@@ -54,10 +54,14 @@ public class Crafting : MonoBehaviour
         if (inventory.CanAddItem(craftingRecipe.resultItem))
         {
             inventory.AddItem(craftingRecipe.resultItem);
+
+            return true;
         }
         else
         {
             RevertItemRemoval(itemIndexToItemBeforeRemoval);
+
+            return false;
         }
     }
 
