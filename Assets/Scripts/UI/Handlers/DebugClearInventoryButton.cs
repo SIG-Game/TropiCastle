@@ -14,5 +14,10 @@ public class DebugClearInventoryButton : MonoBehaviour
     public void DebugClearInventoryButton_OnClick()
     {
         playerInventory.ClearInventory();
+
+        if (InventoryUIHeldItemController.Instance.HoldingItem())
+        {
+            InventoryUIHeldItemController.Instance.HideHeldItem();
+        }
     }
 }
