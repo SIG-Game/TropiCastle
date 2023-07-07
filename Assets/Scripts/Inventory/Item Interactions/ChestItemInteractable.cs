@@ -1,43 +1,41 @@
 public class ChestItemInteractable : Interactable
 {
-    private Inventory inventory;
-    private ItemWorld itemWorld;
-
+    private Inventory chestInventory;
+    private ItemWorld chestItemWorld;
+    private ChestItemInstanceProperties chestItemInstanceProperties;
 
     private void Awake()
     {
-        inventory = gameObject.AddComponent<Inventory>();
-        itemWorld = GetComponent<ItemWorld>();
+        chestInventory = gameObject.AddComponent<Inventory>();
+        chestItemWorld = GetComponent<ItemWorld>();
+        chestItemInstanceProperties =
+            (ChestItemInstanceProperties)chestItemWorld.Item.instanceProperties;
 
-        inventory.InitializeItemListWithSize(ChestItemInstanceProperties.ChestInventorySize);
+        chestInventory.InitializeItemListWithSize(
+            ChestItemInstanceProperties.ChestInventorySize);
 
-        inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
-
-        if (itemWorld.Item.instanceProperties != null)
+        if (chestItemInstanceProperties != null)
         {
-            inventory.SetInventoryFromSerializableInventory(
-                ((ChestItemInstanceProperties)itemWorld.Item
-                .instanceProperties).SerializableInventory);
+            chestInventory.SetInventoryFromSerializableInventory(
+                chestItemInstanceProperties.SerializableInventory);
         }
+
+        chestInventory.OnItemChangedAtIndex += ChestInventory_OnItemChangedAtIndex;
     }
 
     private void OnDestroy()
     {
-        if (inventory != null)
-        {
-            inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
-        }
+        chestInventory.OnItemChangedAtIndex -= ChestInventory_OnItemChangedAtIndex;
     }
 
-    private void Inventory_OnItemChangedAtIndex(ItemWithAmount _, int _1)
+    private void ChestInventory_OnItemChangedAtIndex(ItemWithAmount _, int _1)
     {
-        ((ChestItemInstanceProperties)itemWorld.Item
-            .instanceProperties).UpdateSerializableInventory(inventory);
+        chestItemInstanceProperties.UpdateSerializableInventory(chestInventory);
     }
 
     public override void Interact(PlayerController _)
     {
-        ChestUIController.Instance.SetChestInventory(inventory);
+        ChestUIController.Instance.SetChestInventory(chestInventory);
 
         ChestUIController.Instance.ShowChestUI();
     }
