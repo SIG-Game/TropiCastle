@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerInventoryUIController : ItemSlotContainerController
 {
     [SerializeField] private List<GameObject> inventoryUIGameObjects;
-    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InputActionReference inventoryActionReference;
 
@@ -48,8 +47,6 @@ public class PlayerInventoryUIController : ItemSlotContainerController
 
             if (!InventoryUIManager.InventoryUIOpen)
             {
-                hoveredItemSlotManager.HoveredItemIndex = -1;
-
                 inventoryUIManager.InvokeOnInventoryUIClosedEvent();
             }
         }
