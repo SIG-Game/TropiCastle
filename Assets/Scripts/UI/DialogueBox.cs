@@ -13,8 +13,8 @@ public class DialogueBox : MonoBehaviour
 
     private IEnumerator<string> linesEnumerator;
     private Action afterDialogueAction;
-    private Coroutine displayScrollingTextCoroutineObject;
-    private WaitForSeconds characterScrollWaitForSecondsObject;
+    private Coroutine displayScrollingTextCoroutine;
+    private WaitForSeconds characterScrollWaitForSeconds;
     private bool textScrolling;
 
     public static DialogueBox Instance { get; private set; }
@@ -24,8 +24,7 @@ public class DialogueBox : MonoBehaviour
         Instance = this;
 
         linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
-        afterDialogueAction = null;
-        characterScrollWaitForSecondsObject = new WaitForSeconds(characterScrollWaitSeconds);
+        characterScrollWaitForSeconds = new WaitForSeconds(characterScrollWaitSeconds);
         textScrolling = false;
     }
 
@@ -37,10 +36,13 @@ public class DialogueBox : MonoBehaviour
         if (canAdvanceDialogue)
         {
             // Get both inputs so that neither can be used elsewhere
-            bool useItemButtonInput = InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame();
-            bool interactButtonInput = InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
+            bool useItemButtonInput =
+                InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame();
+            bool interactButtonInput =
+                InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
 
-            bool advanceDialogueInputPressedThisFrame = useItemButtonInput || interactButtonInput;
+            bool advanceDialogueInputPressedThisFrame =
+                useItemButtonInput || interactButtonInput;
             if (advanceDialogueInputPressedThisFrame)
             {
                 AdvanceDialogue();
@@ -77,7 +79,11 @@ public class DialogueBox : MonoBehaviour
             return;
         }
 
-        PlayDialogue(new[] { line }, afterDialogueAction);
+        linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
+
+        this.afterDialogueAction = afterDialogueAction;
+
+        PlayFirstDialogueLine(line);
     }
 
     public void PlayDialogue(IEnumerable<string> lines, Action afterDialogueAction = null)
@@ -92,15 +98,20 @@ public class DialogueBox : MonoBehaviour
 
         this.afterDialogueAction = afterDialogueAction;
 
-        DisplayScrollingText(linesEnumerator.Current);
+        PlayFirstDialogueLine(linesEnumerator.Current);
+    }
+
+    private void PlayFirstDialogueLine(string line)
+    {
+        DisplayScrollingText(line);
         dialogueBoxUI.SetActive(true);
         PlayerController.ActionDisablingUIOpen = true;
     }
 
     private void DisplayScrollingText(string text)
     {
-        StopDisplayScrollingTextCoroutineIfNotNull();
-        displayScrollingTextCoroutineObject = StartCoroutine(DisplayScrollingTextCoroutine(text));
+        StopDisplayScrollingTextCoroutine();
+        displayScrollingTextCoroutine = StartCoroutine(DisplayScrollingTextCoroutine(text));
     }
 
     private IEnumerator DisplayScrollingTextCoroutine(string text)
@@ -113,7 +124,7 @@ public class DialogueBox : MonoBehaviour
         {
             dialogueText.maxVisibleCharacters = visibleCharacters;
 
-            yield return characterScrollWaitForSecondsObject;
+            yield return characterScrollWaitForSeconds;
         }
 
         dialogueText.maxVisibleCharacters = text.Length;
@@ -123,23 +134,23 @@ public class DialogueBox : MonoBehaviour
 
     private void SkipTextScrolling()
     {
-        StopDisplayScrollingTextCoroutineIfNotNull();
+        StopDisplayScrollingTextCoroutine();
         textScrolling = false;
         dialogueText.maxVisibleCharacters = dialogueText.text.Length;
     }
 
     private void CloseDialogueBox()
     {
-        afterDialogueAction?.Invoke(); // afterDialogueAction may be null
+        afterDialogueAction?.Invoke();
         dialogueBoxUI.SetActive(false);
         PlayerController.ActionDisablingUIOpen = false;
     }
 
-    private void StopDisplayScrollingTextCoroutineIfNotNull()
+    private void StopDisplayScrollingTextCoroutine()
     {
-        if (displayScrollingTextCoroutineObject != null)
+        if (displayScrollingTextCoroutine != null)
         {
-            StopCoroutine(displayScrollingTextCoroutineObject);
+            StopCoroutine(displayScrollingTextCoroutine);
         }
     }
 
