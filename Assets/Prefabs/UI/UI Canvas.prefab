@@ -1128,11 +1128,6 @@ PrefabInstance:
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2573907101034950635, guid: aed0fde4b0ab92c40899e678ccf7f384,
-        type: 3}
-      propertyPath: playerInventoryUIController
-      value: 
-      objectReference: {fileID: 6847651757852005858}
     - target: {fileID: 4477077557678837287, guid: aed0fde4b0ab92c40899e678ccf7f384,
         type: 3}
       propertyPath: inventoryUIManager
@@ -1143,16 +1138,6 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 5985516102755725556, guid: aed0fde4b0ab92c40899e678ccf7f384,
-        type: 3}
-      propertyPath: playerInventoryUIController
-      value: 
-      objectReference: {fileID: 6847651757852005858}
-    - target: {fileID: 7232540075815826542, guid: aed0fde4b0ab92c40899e678ccf7f384,
-        type: 3}
-      propertyPath: playerInventoryUIController
-      value: 
-      objectReference: {fileID: 6847651757852005858}
     - target: {fileID: 8774762378518457703, guid: aed0fde4b0ab92c40899e678ccf7f384,
         type: 3}
       propertyPath: inventory

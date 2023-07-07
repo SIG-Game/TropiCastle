@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8cbcedb61c2d4746bbcd9d6d8d93260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUIController: {fileID: 8774762380487729170}
+  playerInventoryUIController: {fileID: 8774762380487729170}
 --- !u!1 &3317635100332304921
 GameObject:
   m_ObjectHideFlags: 0
@@ -3019,7 +3019,7 @@ MonoBehaviour:
   - {fileID: 8774762379877637705}
   - {fileID: 0}
   - {fileID: 0}
-  hoveredItemSlotManager: {fileID: 4477077557678837287}
+  inventoryUIManager: {fileID: 0}
   inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
 --- !u!114 &8774762380487729183
@@ -3038,7 +3038,7 @@ MonoBehaviour:
   heldItemAmountText: {fileID: 0}
   durabilityMeter: {fileID: 0}
   canvasRectTransform: {fileID: 0}
-  inventoryUIController: {fileID: 8774762380487729170}
+  inventoryUIManager: {fileID: 0}
   hoveredItemSlotManager: {fileID: 4477077557678837287}
   transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
 --- !u!114 &4477077557678837287
@@ -3053,6 +3053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84e4f9e35f6a014db80747fc8f489ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryUIManager: {fileID: 0}
 --- !u!114 &3413011963817745242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3066,7 +3067,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  inventoryUIController: {fileID: 8774762380487729170}
   hoveredItemSlotManager: {fileID: 4477077557678837287}
 --- !u!114 &8774762380487729169
 MonoBehaviour:
@@ -3110,7 +3110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e2b170c833af04dbf86953972e1f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUIController: {fileID: 8774762380487729170}
+  playerInventoryUIController: {fileID: 8774762380487729170}
 --- !u!114 &7232540075815826542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3123,7 +3123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa546d9b9ae79ab4c9b5d4777d06dd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUIController: {fileID: 8774762380487729170}
+  playerInventoryUIController: {fileID: 8774762380487729170}
 --- !u!1 &8774762380595416324
 GameObject:
   m_ObjectHideFlags: 0
