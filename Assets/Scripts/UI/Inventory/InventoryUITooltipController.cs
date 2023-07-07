@@ -14,7 +14,7 @@ public class InventoryUITooltipController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI alternateTooltipText;
     [SerializeField] private RectTransform tooltipBackgroundRectTransform;
     [SerializeField] private RectTransform canvasRectTransform;
-    [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private bool logTooltipList;
 
     private List<Tooltip> tooltipTextsWithPriority;
@@ -31,7 +31,7 @@ public class InventoryUITooltipController : MonoBehaviour
 
         rectTransform = GetComponent<RectTransform>();
 
-        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
+        inventoryUIManager.OnInventoryUIClosed += InventoryUIManager_OnInventoryUIClosed;
     }
 
     private void Update()
@@ -46,7 +46,7 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         Instance = null;
 
-        inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
+        inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
     }
 
     public void AddTooltipTextWithPriority(Tooltip textWithPriority)
@@ -121,7 +121,7 @@ public class InventoryUITooltipController : MonoBehaviour
         rectTransform.anchoredPosition = newAnchoredPosition;
     }
 
-    private void InventoryUIController_OnInventoryClosed()
+    private void InventoryUIManager_OnInventoryUIClosed()
     {
         tooltipTextsWithPriority.Clear();
         tooltipText.text = string.Empty;

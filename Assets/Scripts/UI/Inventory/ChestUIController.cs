@@ -1,23 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// TODO: Better integrate this class with InventoryUIController
 public class ChestUIController : MonoBehaviour
 {
     [SerializeField] private GameObject chestUI;
     [SerializeField] private ItemSlotContainerController chestItemSlotContainerController;
-    [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InputActionReference inventoryActionReference;
 
     private InputAction inventoryAction;
 
     public static ChestUIController Instance;
-    public static bool ChestUIOpen;
-
-    static ChestUIController()
-    {
-        ChestUIOpen = false;
-    }
 
     private void Awake()
     {
@@ -38,12 +31,12 @@ public class ChestUIController : MonoBehaviour
             && chestUI.activeInHierarchy;
         if (closeChestUI)
         {
-            ChestUIOpen = false;
+            InventoryUIManager.InventoryUIOpen = false;
             PauseController.Instance.GamePaused = false;
 
             chestUI.SetActive(false);
 
-            inventoryUIController.InvokeOnInventoryUIClosedEvent();
+            inventoryUIManager.InvokeOnInventoryUIClosedEvent();
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -59,7 +52,7 @@ public class ChestUIController : MonoBehaviour
 
     public void ShowChestUI()
     {
-        ChestUIOpen = true;
+        InventoryUIManager.InventoryUIOpen = true;
         PauseController.Instance.GamePaused = true;
 
         chestUI.SetActive(true);

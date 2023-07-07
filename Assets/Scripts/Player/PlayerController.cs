@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PauseController.Instance.GamePaused)
         {
-            if (healAction.WasPressedThisFrame() && InventoryUIController.InventoryUIOpen)
+            if (healAction.WasPressedThisFrame() && InventoryUIManager.InventoryUIOpen)
             {
                 healingItemUsage.ConsumeFirstHealingItemInPlayerInventory();
             }

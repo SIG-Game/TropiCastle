@@ -9,7 +9,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI heldItemAmountText;
     [SerializeField] private ItemDurabilityMeterController durabilityMeter;
     [SerializeField] private RectTransform canvasRectTransform;
-    [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private Sprite transparentSprite;
 
@@ -37,7 +37,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
         rightClickToResetEnabled = true;
 
-        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
+        inventoryUIManager.OnInventoryUIClosed += InventoryUIManager_OnInventoryUIClosed;
     }
 
     private void Update()
@@ -62,7 +62,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         OnStartedHoldingItem = delegate { };
         OnStoppedHoldingItem = delegate { };
 
-        inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
+        inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
     }
 
     private void UpdateHeldItemPosition()
@@ -274,7 +274,7 @@ public class InventoryUIHeldItemController : MonoBehaviour
         OnStartedHoldingItem();
     }
 
-    private void InventoryUIController_OnInventoryClosed()
+    private void InventoryUIManager_OnInventoryUIClosed()
     {
         ResetHeldItem();
     }

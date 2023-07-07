@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InventoryUIController : ItemSlotContainerController
+public class PlayerInventoryUIController : ItemSlotContainerController
 {
     [SerializeField] private List<GameObject> inventoryUIGameObjects;
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
+    [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InputActionReference inventoryActionReference;
 
     private InputAction inventoryAction;
-
-    public event Action OnInventoryClosed = delegate { };
-
-    public static bool InventoryUIOpen;
-
-    static InventoryUIController()
-    {
-        InventoryUIOpen = false;
-    }
 
     protected override void Awake()
     {
@@ -37,35 +28,31 @@ public class InventoryUIController : ItemSlotContainerController
             return;
         }
 
-        bool closeInventoryUI = Input.GetKeyDown(KeyCode.Escape) && InventoryUIOpen;
-
+        bool closeInventoryUI = Input.GetKeyDown(KeyCode.Escape) &&
+            InventoryUIManager.InventoryUIOpen;
         if (closeInventoryUI)
         {
             InputManager.Instance.EscapeKeyUsedThisFrame = true;
         }
 
         bool toggleInventoryUI = (inventoryAction.WasPressedThisFrame() &&
-            (!PauseController.Instance.GamePaused || InventoryUIOpen)) ||
+            (!PauseController.Instance.GamePaused || InventoryUIManager.InventoryUIOpen)) ||
             closeInventoryUI;
         if (toggleInventoryUI)
         {
-            InventoryUIOpen = !InventoryUIOpen;
-            PauseController.Instance.GamePaused = InventoryUIOpen;
+            InventoryUIManager.InventoryUIOpen = !InventoryUIManager.InventoryUIOpen;
+            PauseController.Instance.GamePaused = InventoryUIManager.InventoryUIOpen;
 
-            inventoryUIGameObjects.ForEach(x => x.SetActive(InventoryUIOpen));
+            inventoryUIGameObjects.ForEach(
+                x => x.SetActive(InventoryUIManager.InventoryUIOpen));
 
-            if (!InventoryUIOpen)
+            if (!InventoryUIManager.InventoryUIOpen)
             {
                 hoveredItemSlotManager.HoveredItemIndex = -1;
 
-                OnInventoryClosed();
+                inventoryUIManager.InvokeOnInventoryUIClosedEvent();
             }
         }
-    }
-
-    public void InvokeOnInventoryUIClosedEvent()
-    {
-        OnInventoryClosed();
     }
 
     public Inventory GetInventory() => inventory;

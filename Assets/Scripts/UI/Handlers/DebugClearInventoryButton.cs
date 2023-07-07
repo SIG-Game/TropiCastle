@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class DebugClearInventoryButton : MonoBehaviour
 {
-    [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private PlayerInventoryUIController playerInventoryUIController;
 
     private Inventory playerInventory;
 
     private void Awake()
     {
-        playerInventory = inventoryUIController.GetInventory();
+        playerInventory = playerInventoryUIController.GetInventory();
     }
 
     public void DebugClearInventoryButton_OnClick()

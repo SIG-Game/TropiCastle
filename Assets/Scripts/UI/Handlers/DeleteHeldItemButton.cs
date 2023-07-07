@@ -4,15 +4,15 @@ using UnityEngine.EventSystems;
 public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private PlayerInventoryUIController playerInventoryUIController;
 
     private InventoryUIHeldItemController heldItemController;
-    private Inventory inventory;
+    private Inventory playerInventory;
 
     private void Start()
     {
         heldItemController = InventoryUIHeldItemController.Instance;
-        inventory = inventoryUIController.GetInventory();
+        playerInventory = playerInventoryUIController.GetInventory();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -23,7 +23,7 @@ public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
             {
                 heldItemController.HideHeldItem();
 
-                inventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
+                playerInventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)

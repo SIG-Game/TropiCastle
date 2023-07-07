@@ -3,7 +3,6 @@ using UnityEngine;
 public class InventoryUISwapInputHandler : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
-    [SerializeField] private InventoryUIController inventoryUIController;
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
 
     private InventoryUIHeldItemController heldItemController;
@@ -17,8 +16,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
     // swap items in inventory UI takes priority over using number keys to select an item
     private void Update()
     {
-        if (InventoryUIController.InventoryUIOpen ||
-            ChestUIController.ChestUIOpen)
+        if (InventoryUIManager.InventoryUIOpen)
         {
             SwapItemsUsingNumberKeyInput();
         }

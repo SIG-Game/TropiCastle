@@ -2,7 +2,7 @@
 
 public class HotbarUIController : ItemSlotContainerController
 {
-    [SerializeField] private InventoryUIController inventoryUIController;
+    [SerializeField] private InventoryUIManager inventoryUIManager;
 
     private int hotbarSize;
     private int hotbarHighlightedItemSlotIndex;
@@ -13,20 +13,19 @@ public class HotbarUIController : ItemSlotContainerController
 
         hotbarSize = itemSlotControllers.Count;
 
-        inventoryUIController.OnInventoryClosed += InventoryUIController_OnInventoryClosed;
+        inventoryUIManager.OnInventoryUIClosed += InventoryUIManager_OnInventoryUIClosed;
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
 
-        inventoryUIController.OnInventoryClosed -= InventoryUIController_OnInventoryClosed;
+        inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
     }
 
     protected override void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
-        if (index < hotbarSize && !InventoryUIController.InventoryUIOpen
-            && !ChestUIController.ChestUIOpen)
+        if (index < hotbarSize && !InventoryUIManager.InventoryUIOpen)
         {
             base.Inventory_OnItemChangedAtIndex(item, index);
         }
@@ -34,8 +33,7 @@ public class HotbarUIController : ItemSlotContainerController
 
     protected override void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        if (!InventoryUIController.InventoryUIOpen &&
-            !ChestUIController.ChestUIOpen)
+        if (!InventoryUIManager.InventoryUIOpen)
         {
             HighlightHotbarItemSlotAtIndex(index);
         }
@@ -43,14 +41,13 @@ public class HotbarUIController : ItemSlotContainerController
 
     protected override void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        if (!InventoryUIController.InventoryUIOpen &&
-            !ChestUIController.ChestUIOpen)
+        if (!InventoryUIManager.InventoryUIOpen)
         {
             base.ItemSelectionController_OnItemDeselectedAtIndex(index);
         }
     }
 
-    private void InventoryUIController_OnInventoryClosed()
+    private void InventoryUIManager_OnInventoryUIClosed()
     {
         UpdateAllHotbarSlots();
         UpdateHotbarHighlightedItemSlot();

@@ -2941,7 +2941,7 @@ GameObject:
   - component: {fileID: 2573907101034950635}
   - component: {fileID: 7232540075815826542}
   m_Layer: 5
-  m_Name: Inventory UI Controllers
+  m_Name: Player Inventory UI Controllers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2980,6 +2980,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954349676e9910b4380b29a8abadb35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  itemSelectionController: {fileID: 0}
   highlightedSlotColor: {r: 0.41568628, g: 0.61960787, b: 0.68235296, a: 1}
   unhighlightedSlotColor: {r: 0.551869, g: 0.7941783, b: 0.8679245, a: 1}
   itemSlotControllers:
@@ -3013,12 +3015,10 @@ MonoBehaviour:
   - {fileID: 8774762379956196400}
   - {fileID: 8774762379505792207}
   - {fileID: 8774762378629927820}
-  inventory: {fileID: 0}
   inventoryUIGameObjects:
   - {fileID: 8774762379877637705}
   - {fileID: 0}
   - {fileID: 0}
-  itemSelectionController: {fileID: 0}
   hoveredItemSlotManager: {fileID: 4477077557678837287}
   inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
