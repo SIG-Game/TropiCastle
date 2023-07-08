@@ -31,12 +31,10 @@ public class ChestUIController : MonoBehaviour
             && chestUI.activeInHierarchy;
         if (closeChestUI)
         {
-            InventoryUIManager.InventoryUIOpen = false;
+            inventoryUIManager.InventoryUIOpen = false;
             PauseController.Instance.GamePaused = false;
 
             chestUI.SetActive(false);
-
-            inventoryUIManager.InvokeOnInventoryUIClosedEvent();
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -52,7 +50,7 @@ public class ChestUIController : MonoBehaviour
 
     public void ShowChestUI()
     {
-        InventoryUIManager.InventoryUIOpen = true;
+        inventoryUIManager.InventoryUIOpen = true;
         PauseController.Instance.GamePaused = true;
 
         chestUI.SetActive(true);

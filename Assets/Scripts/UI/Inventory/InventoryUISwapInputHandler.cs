@@ -4,6 +4,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
+    [SerializeField] private InventoryUIManager inventoryUIManager;
 
     private InventoryUIHeldItemController heldItemController;
 
@@ -16,7 +17,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
     // swap items in inventory UI takes priority over using number keys to select an item
     private void Update()
     {
-        if (InventoryUIManager.InventoryUIOpen)
+        if (inventoryUIManager.InventoryUIOpen)
         {
             SwapItemsUsingNumberKeyInput();
         }

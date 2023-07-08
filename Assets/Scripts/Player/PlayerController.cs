@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private SpriteMask overlaySpriteMask;
     [SerializeField] private CursorController cursorController;
+    [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InputActionReference attackActionReference;
     [SerializeField] private InputActionReference healActionReference;
 
@@ -99,7 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PauseController.Instance.GamePaused)
         {
-            if (healAction.WasPressedThisFrame() && InventoryUIManager.InventoryUIOpen)
+            if (healAction.WasPressedThisFrame() && inventoryUIManager.InventoryUIOpen)
             {
                 healingItemUsage.ConsumeFirstHealingItemInPlayerInventory();
             }

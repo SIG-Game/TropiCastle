@@ -1128,6 +1128,11 @@ PrefabInstance:
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3413011963817745242, guid: aed0fde4b0ab92c40899e678ccf7f384,
+        type: 3}
+      propertyPath: inventoryUIManager
+      value: 
+      objectReference: {fileID: 4365771476343332667}
     - target: {fileID: 4477077557678837287, guid: aed0fde4b0ab92c40899e678ccf7f384,
         type: 3}
       propertyPath: inventoryUIManager

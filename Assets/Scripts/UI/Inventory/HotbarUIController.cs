@@ -25,7 +25,7 @@ public class HotbarUIController : ItemSlotContainerController
 
     protected override void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
     {
-        if (index < hotbarSize && !InventoryUIManager.InventoryUIOpen)
+        if (index < hotbarSize && !inventoryUIManager.InventoryUIOpen)
         {
             base.Inventory_OnItemChangedAtIndex(item, index);
         }
@@ -33,7 +33,7 @@ public class HotbarUIController : ItemSlotContainerController
 
     protected override void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        if (!InventoryUIManager.InventoryUIOpen)
+        if (!inventoryUIManager.InventoryUIOpen)
         {
             HighlightHotbarItemSlotAtIndex(index);
         }
@@ -41,7 +41,7 @@ public class HotbarUIController : ItemSlotContainerController
 
     protected override void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        if (!InventoryUIManager.InventoryUIOpen)
+        if (!inventoryUIManager.InventoryUIOpen)
         {
             base.ItemSelectionController_OnItemDeselectedAtIndex(index);
         }

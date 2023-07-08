@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class ItemSelectionController : MonoBehaviour
 {
+    [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InputActionReference selectLeftItemActionReference;
     [SerializeField] private InputActionReference selectRightItemActionReference;
     [SerializeField] private int onePlusMaxSelectedItemIndex;
@@ -61,7 +62,7 @@ public class ItemSelectionController : MonoBehaviour
         StopRepeatSelectCoroutinesIfNeeded();
 
         if ((PauseController.Instance.GamePaused &&
-            !InventoryUIManager.InventoryUIOpen) ||
+            !inventoryUIManager.InventoryUIOpen) ||
             !CanSelect)
         {
             return;

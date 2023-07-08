@@ -3,18 +3,26 @@ using UnityEngine;
 
 public class InventoryUIManager : MonoBehaviour
 {
-    public event Action OnInventoryUIClosed = delegate { };
-
-    // TODO: Make non-static
-    public static bool InventoryUIOpen;
-
-    static InventoryUIManager()
+    public bool InventoryUIOpen
     {
-        InventoryUIOpen = false;
+        get => inventoryUIOpen;
+        set
+        {
+            inventoryUIOpen = value;
+
+            if (!inventoryUIOpen)
+            {
+                OnInventoryUIClosed();
+            }
+        }
     }
 
-    public void InvokeOnInventoryUIClosedEvent()
+    public event Action OnInventoryUIClosed = delegate { };
+
+    private bool inventoryUIOpen;
+
+    private void Awake()
     {
-        OnInventoryUIClosed();
+        inventoryUIOpen = false;
     }
 }

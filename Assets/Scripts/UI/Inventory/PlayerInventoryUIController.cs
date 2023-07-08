@@ -28,27 +28,22 @@ public class PlayerInventoryUIController : ItemSlotContainerController
         }
 
         bool closeInventoryUI = Input.GetKeyDown(KeyCode.Escape) &&
-            InventoryUIManager.InventoryUIOpen;
+            inventoryUIManager.InventoryUIOpen;
         if (closeInventoryUI)
         {
             InputManager.Instance.EscapeKeyUsedThisFrame = true;
         }
 
         bool toggleInventoryUI = (inventoryAction.WasPressedThisFrame() &&
-            (!PauseController.Instance.GamePaused || InventoryUIManager.InventoryUIOpen)) ||
+            (!PauseController.Instance.GamePaused || inventoryUIManager.InventoryUIOpen)) ||
             closeInventoryUI;
         if (toggleInventoryUI)
         {
-            InventoryUIManager.InventoryUIOpen = !InventoryUIManager.InventoryUIOpen;
-            PauseController.Instance.GamePaused = InventoryUIManager.InventoryUIOpen;
+            inventoryUIManager.InventoryUIOpen = !inventoryUIManager.InventoryUIOpen;
+            PauseController.Instance.GamePaused = inventoryUIManager.InventoryUIOpen;
 
             inventoryUIGameObjects.ForEach(
-                x => x.SetActive(InventoryUIManager.InventoryUIOpen));
-
-            if (!InventoryUIManager.InventoryUIOpen)
-            {
-                inventoryUIManager.InvokeOnInventoryUIClosedEvent();
-            }
+                x => x.SetActive(inventoryUIManager.InventoryUIOpen));
         }
     }
 
