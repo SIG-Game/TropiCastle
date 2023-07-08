@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEditor.SceneManagement;
+﻿using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static ItemWorld;
@@ -10,8 +9,6 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
     [SerializeField] private GameObject itemWorldPrefab;
     [SerializeField] private Transform itemWorldParent;
     [SerializeField] private Vector2 itemWorldPrefabColliderExtents;
-
-    private ItemSpawner[] itemSpawners;
 
     private const int maxDropSpawnAttempts = 20;
 
@@ -60,21 +57,8 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
         spawnedItemWorld.gameObject.name = itemWorldState.GameObjectName;
 
-        if (itemWorldState.SpawnerId != -1)
-        {
-            if (itemSpawners == null)
-            {
-                itemSpawners = FindObjectsOfType<ItemSpawner>();
-            }
-
-            ItemSpawner itemSpawner = itemSpawners.FirstOrDefault(
-                x => x.GetSpawnerId() == itemWorldState.SpawnerId);
-
-            if (itemSpawner != null)
-            {
-                spawnedItemWorld.GetComponent<Spawnable>().SetSpawner(itemSpawner);
-            }
-        }
+        spawnedItemWorld.GetComponent<Spawnable>()
+            .SetSpawnerUsingId<ItemSpawner>(itemWorldState.SpawnerId);
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)

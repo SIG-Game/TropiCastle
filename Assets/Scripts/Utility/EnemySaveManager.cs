@@ -20,8 +20,6 @@ public class EnemySaveManager : MonoBehaviour
 
     public void CreateEnemiesFromStates(SerializableEnemyState[] enemyStates)
     {
-        EnemySpawner[] enemySpawners = FindObjectsOfType<EnemySpawner>();
-
         foreach (SerializableEnemyState enemyState in enemyStates)
         {
             GameObject spawnedEnemy =
@@ -32,16 +30,8 @@ public class EnemySaveManager : MonoBehaviour
 
             spawnedEnemyController.SetUpEnemy(playerTransform, playerInventory);
 
-            if (enemyState.SpawnerId != -1)
-            {
-                EnemySpawner enemySpawner = enemySpawners.FirstOrDefault(
-                    x => x.GetSpawnerId() == enemyState.SpawnerId);
-
-                if (enemySpawner != null)
-                {
-                    spawnedEnemy.GetComponent<Spawnable>().SetSpawner(enemySpawner);
-                }
-            }
+            spawnedEnemy.GetComponent<Spawnable>()
+                .SetSpawnerUsingId<EnemySpawner>(enemyState.SpawnerId);
         }
     }
 }
