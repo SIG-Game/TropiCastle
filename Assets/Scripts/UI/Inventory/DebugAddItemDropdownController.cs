@@ -5,6 +5,7 @@ using UnityEngine;
 public class DebugAddItemDropdownController : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown dropdown;
+    [SerializeField] private DebugAddItemAmountInputField debugAddItemAmountInputField;
 
     private List<ItemScriptableObject> itemScriptableObjects;
 
@@ -32,6 +33,11 @@ public class DebugAddItemDropdownController : MonoBehaviour
         {
             dropdown.gameObject.SetActive(false);
         }
+    }
+
+    public void AddItemDropdown_OnValueChanged(int _)
+    {
+        debugAddItemAmountInputField.ClampAmountToStackSize();
     }
 
     public ItemScriptableObject GetSelectedItemScriptableObject() => itemScriptableObjects[dropdown.value];

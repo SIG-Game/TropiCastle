@@ -14,15 +14,6 @@ public class DebugAddItemButton : MonoBehaviour
         if (!DebugModeController.DebugModeEnabled)
         {
             debugAddItemButton.SetActive(false);
-            amountInputField.gameObject.SetActive(false);
-        }
-    }
-
-    private void Update()
-    {
-        if (amountInputField.isFocused)
-        {
-            InputManager.Instance.NumberKeyUsedThisFrame = true;
         }
     }
 
