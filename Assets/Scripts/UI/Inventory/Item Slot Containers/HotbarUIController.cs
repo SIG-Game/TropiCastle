@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class HotbarUIController : ItemSlotContainerController
+public class HotbarUIController : InventoryUIWithSelectionController
 {
     [SerializeField] private InventoryUIManager inventoryUIManager;
 

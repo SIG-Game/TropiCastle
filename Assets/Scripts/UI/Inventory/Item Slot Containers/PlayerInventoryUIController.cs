@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerInventoryUIController : ItemSlotContainerController
+public class PlayerInventoryUIController : InventoryUIWithSelectionController
 {
     [SerializeField] private List<GameObject> playerInventoryUIGameObjects;
     [SerializeField] private InventoryUIManager inventoryUIManager;

@@ -4,7 +4,7 @@ using UnityEngine;
 public class ChestUIController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> chestUIGameObjects;
-    [SerializeField] private ItemSlotContainerController chestItemSlotContainerController;
+    [SerializeField] private InventoryUIController chestInventoryUIController;
     [SerializeField] private InventoryUIManager inventoryUIManager;
 
     public static ChestUIController Instance;
@@ -28,6 +28,6 @@ public class ChestUIController : MonoBehaviour
 
     public void SetChestInventory(Inventory chestInventory)
     {
-        chestItemSlotContainerController.SetInventory(chestInventory);
+        chestInventoryUIController.SetInventory(chestInventory);
     }
 }
