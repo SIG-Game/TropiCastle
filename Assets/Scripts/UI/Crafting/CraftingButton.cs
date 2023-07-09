@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CraftingButton : MonoBehaviour, IElementWithTooltip
 {
     [SerializeField] private Button craftingButton;
     [SerializeField] private CraftingButtonDependencies craftingButtonDependencies;
     [SerializeField] private CraftingRecipeScriptableObject craftingRecipe;
     [SerializeField] private Image craftingButtonImage;
 
-    private Tooltip tooltipTextWithPriority;
     private string resultItemTooltipText;
 
     private void Awake()
@@ -32,14 +30,7 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (!InventoryUIHeldItemController.Instance.HoldingItem())
         {
-            bool craftingSucceeded =
-                craftingButtonDependencies.GetCrafting().TryCraftItem(craftingRecipe);
-            if (craftingSucceeded)
-            {
-                InventoryUITooltipController.Instance
-                    .RemoveTooltipTextWithPriority(tooltipTextWithPriority);
-                AddCraftingButtonTooltip();
-            }
+            craftingButtonDependencies.GetCrafting().CraftItem(craftingRecipe);
         }
     }
 
@@ -50,28 +41,6 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         this.craftingRecipe = craftingRecipe;
 
         craftingButtonImage.sprite = craftingRecipe.resultItem.itemData.sprite;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        AddCraftingButtonTooltip();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        InventoryUITooltipController.Instance
-            .RemoveTooltipTextWithPriority(tooltipTextWithPriority);
-    }
-
-    private void AddCraftingButtonTooltip()
-    {
-        string craftingButtonTooltipText = GetIngredientsAsString();
-
-        tooltipTextWithPriority =
-            new Tooltip(craftingButtonTooltipText, resultItemTooltipText, 0);
-
-        InventoryUITooltipController.Instance
-            .AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
     private string GetIngredientsAsString()
@@ -97,4 +66,8 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         return ingredientsStringBuilder.ToString();
     }
+
+    public string GetTooltipText() => GetIngredientsAsString();
+
+    public string GetAlternateTooltipText() => resultItemTooltipText;
 }

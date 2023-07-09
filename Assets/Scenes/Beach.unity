@@ -33826,6 +33826,11 @@ PrefabInstance:
       propertyPath: hoveredItemSlotManager
       value: 
       objectReference: {fileID: 6847651757298814664}
+    - target: {fileID: 6847651756692092134, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: eventSystem
+      value: 
+      objectReference: {fileID: 8494658916821513171}
     - target: {fileID: 6847651756731039574, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -34716,6 +34721,16 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 572276101}
+    - target: {fileID: 8711815962510170113, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 8711815962510170113, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerHealthController
+      value: 
+      objectReference: {fileID: 1982112581}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb76167790ad17b418442606107678be, type: 3}
 --- !u!114 &6847651757298814664 stripped
@@ -34914,3 +34929,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 559fb8c14ac19b34091355c72e5b7c5a, type: 3}
+--- !u!114 &8494658916821513171 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8494658916369790388, guid: 559fb8c14ac19b34091355c72e5b7c5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8494658916821513170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

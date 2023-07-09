@@ -1,23 +1,19 @@
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
 
 public class InventoryUITooltipController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tooltipText;
     [SerializeField] private TextMeshProUGUI alternateTooltipText;
     [SerializeField] private RectTransform tooltipBackgroundRectTransform;
+    [SerializeField] private GraphicRaycaster graphicRaycaster;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIManager inventoryUIManager;
+    [SerializeField] private EventSystem eventSystem;
     [SerializeField] private bool logTooltipList;
-
-    private List<Tooltip> tooltipTextsWithPriority;
 
     private RectTransform rectTransform;
 
@@ -27,15 +23,27 @@ public class InventoryUITooltipController : MonoBehaviour
     {
         Instance = this;
 
-        tooltipTextsWithPriority = new List<Tooltip>();
-
         rectTransform = GetComponent<RectTransform>();
 
         inventoryUIManager.OnInventoryUIClosed += InventoryUIManager_OnInventoryUIClosed;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
+        if (!inventoryUIManager.InventoryUIOpen)
+        {
+            return;
+        }
+
+        if (InventoryUIHeldItemController.Instance.HoldingItem())
+        {
+            SetTooltipText(InventoryUIHeldItemController.Instance);
+        }
+        else
+        {
+            UpdateTooltipTextUsingRaycast();
+        }
+
         if (!string.IsNullOrEmpty(tooltipText.text))
         {
             UpdateInventoryTooltipPosition();
@@ -49,49 +57,53 @@ public class InventoryUITooltipController : MonoBehaviour
         inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
     }
 
-    public void AddTooltipTextWithPriority(Tooltip textWithPriority)
+    private void UpdateTooltipTextUsingRaycast()
     {
-        tooltipTextsWithPriority.Add(textWithPriority);
+        PointerEventData pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = Input.mousePosition;
 
-        LogTooltipListAfterTooltipOperation("adding");
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
 
-        UpdateTooltipText();
-        UpdateInventoryTooltipPosition();
-    }
+        graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-    public void RemoveTooltipTextWithPriority(Tooltip textWithPriority)
-    {
-        tooltipTextsWithPriority.Remove(textWithPriority);
-
-        LogTooltipListAfterTooltipOperation("removing");
-
-        UpdateTooltipText();
-        UpdateInventoryTooltipPosition();
-    }
-
-    private void UpdateTooltipText()
-    {
-        string tooltipTextWithHighestPriority = string.Empty;
-        string alternateTooltipTextWithHighestPriority = string.Empty;
-
-        if (tooltipTextsWithPriority.Count > 0)
+        foreach (RaycastResult result in raycastResults)
         {
-            var tooltipWithHighestPriority = tooltipTextsWithPriority.Aggregate((max, next) =>
-                next.Priority > max.Priority ? next : max);
-            tooltipTextWithHighestPriority = tooltipWithHighestPriority.Text;
-
-            if (tooltipWithHighestPriority.AlternateText != null)
+            if (result.gameObject.TryGetComponent(out IElementWithTooltip elementWithTooltip))
             {
-                alternateTooltipTextWithHighestPriority =
-                    tooltipWithHighestPriority.AlternateText;
+                SetTooltipText(elementWithTooltip);
+
+                break;
+            }
+            else
+            {
+                ClearTooltipText();
             }
         }
 
-        tooltipText.text = tooltipTextWithHighestPriority;
-        alternateTooltipText.text = alternateTooltipTextWithHighestPriority;
+        if (raycastResults.Count == 0)
+        {
+            ClearTooltipText();
+        }
+    }
+
+    private void SetTooltipText(IElementWithTooltip elementWithTooltip)
+    {
+        SetTooltipText(elementWithTooltip.GetTooltipText(),
+            elementWithTooltip.GetAlternateTooltipText());
+    }
+
+    private void SetTooltipText(string tooltipTextString, string alternateTooltipTextString)
+    {
+        tooltipText.text = tooltipTextString;
+        alternateTooltipText.text = alternateTooltipTextString;
 
         // Refresh tooltipText and alternateTooltipText preferred sizes
         LayoutRebuilder.ForceRebuildLayoutImmediate(tooltipBackgroundRectTransform);
+    }
+
+    private void ClearTooltipText()
+    {
+        SetTooltipText(string.Empty, string.Empty);
     }
 
     private void UpdateInventoryTooltipPosition()
@@ -123,42 +135,6 @@ public class InventoryUITooltipController : MonoBehaviour
 
     private void InventoryUIManager_OnInventoryUIClosed()
     {
-        tooltipTextsWithPriority.Clear();
-        tooltipText.text = string.Empty;
-        alternateTooltipText.text = string.Empty;
+        ClearTooltipText();
     }
-
-    private void LogTooltipList()
-    {
-        var tooltipListStringBuilder = new StringBuilder();
-
-        foreach (Tooltip textWithPriority in tooltipTextsWithPriority)
-        {
-            string textWithoutNewlines = textWithPriority.Text.Replace("\n", string.Empty);
-            tooltipListStringBuilder.Append($"\"{textWithoutNewlines}\": {textWithPriority.Priority}, ");
-        }
-
-        Debug.Log(tooltipListStringBuilder.ToString());
-    }
-
-    private void LogTooltipListAfterTooltipOperation(string operationName)
-    {
-        if (logTooltipList)
-        {
-            // callingMethod is the method that called the method
-            // that called LogTooltipListAfterTooltipOperation
-            MethodBase callingMethod = new StackFrame(2).GetMethod();
-
-            string callingMethodName = callingMethod.Name;
-            string callingType = callingMethod.DeclaringType.Name;
-
-            Debug.Log($"Tooltip list after {operationName} called from " +
-                $"{callingMethodName} in {callingType}:");
-
-            LogTooltipList();
-        }
-    }
-
-    public bool TooltipListContains(Tooltip textWithPriority) =>
-        tooltipTextsWithPriority.Contains(textWithPriority);
 }

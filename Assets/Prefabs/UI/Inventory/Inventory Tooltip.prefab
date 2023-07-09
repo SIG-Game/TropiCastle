@@ -443,6 +443,8 @@ MonoBehaviour:
   tooltipText: {fileID: 8220138900870296236}
   alternateTooltipText: {fileID: 8220138900457743379}
   tooltipBackgroundRectTransform: {fileID: 8220138900881955955}
+  graphicRaycaster: {fileID: 0}
   canvasRectTransform: {fileID: 0}
-  inventoryUIController: {fileID: 0}
+  inventoryUIManager: {fileID: 0}
+  eventSystem: {fileID: 0}
   logTooltipList: 0

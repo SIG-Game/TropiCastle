@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryUIHeldItemController : MonoBehaviour
+public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 {
     [SerializeField] private GameObject heldItemUI;
     [SerializeField] private TextMeshProUGUI heldItemAmountText;
@@ -19,7 +19,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private InventoryUIItemSlotController heldItemSlot;
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
-    private Tooltip tooltipTextWithPriority;
     private int heldItemIndex;
     private bool rightClickToResetEnabled;
 
@@ -261,9 +260,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItem = item;
 
         UpdateHeldItemUI();
-
-        tooltipTextWithPriority = new Tooltip(item.GetTooltipText(), 1);
-        InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
     private void InventoryUIManager_OnInventoryUIClosed()
@@ -317,8 +313,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
         heldItemAmountText.text = string.Empty;
 
         durabilityMeter.HideMeter();
-
-        InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
     public void SetRightClickToResetEnabled(bool rightClickToResetEnabled)
@@ -331,4 +325,8 @@ public class InventoryUIHeldItemController : MonoBehaviour
     public int GetHeldItemIndex() => heldItemIndex;
 
     public Inventory GetHeldItemInventory() => heldItemInventory;
+
+    public string GetTooltipText() => heldItem.GetTooltipText();
+
+    public string GetAlternateTooltipText() => string.Empty;
 }

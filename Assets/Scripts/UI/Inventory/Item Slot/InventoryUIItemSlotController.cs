@@ -1,14 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHandler,
-    IPointerEnterHandler, IPointerExitHandler
+public class InventoryUIItemSlotController : ItemSlotController, IElementWithTooltip,
+    IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
-
-    private Tooltip tooltipTextWithPriority;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -17,8 +15,6 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
             hoveredItemSlotManager.HoveredItemIndex = slotItemIndex;
             hoveredItemSlotManager.HoveredInventory = inventory;
         }
-
-        SetSlotTooltipText();
 
         if (Input.GetMouseButton(0))
         {
@@ -52,27 +48,6 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
         {
             hoveredItemSlotManager.HoveredItemIndex = -1;
         }
-
-        InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
-    }
-
-    public void ResetSlotTooltipText()
-    {
-        InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
-        SetSlotTooltipText();
-    }
-
-    private void SetSlotTooltipText()
-    {
-        if (InventoryUITooltipController.Instance.TooltipListContains(tooltipTextWithPriority))
-        {
-            InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
-            Debug.Log("Attempted to add tooltip to tooltip list when a tooltip for " +
-                "this item slot already existed in that list");
-        }
-
-        tooltipTextWithPriority = new Tooltip(GetSlotItemTooltipText(), 0);
-        InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
     }
 
     private string GetSlotItemTooltipText()
@@ -80,16 +55,6 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
         ItemWithAmount slotItem = inventory.GetItemAtIndex(slotItemIndex);
 
         return slotItem.GetTooltipText();
-    }
-
-    public override void UpdateUsingItem(ItemWithAmount item)
-    {
-        base.UpdateUsingItem(item);
-
-        if (InventoryUITooltipController.Instance.TooltipListContains(tooltipTextWithPriority))
-        {
-            ResetSlotTooltipText();
-        }
     }
 
     public void SetInventory(Inventory inventory)
@@ -101,4 +66,8 @@ public class InventoryUIItemSlotController : ItemSlotController, IPointerDownHan
     {
         this.slotItemIndex = slotItemIndex;
     }
+
+    public string GetTooltipText() => GetSlotItemTooltipText();
+
+    public string GetAlternateTooltipText() => string.Empty;
 }

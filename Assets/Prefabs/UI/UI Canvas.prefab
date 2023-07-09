@@ -1748,6 +1748,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8220138901426017184, guid: 30808bde98eba564d86145adacbba1b1,
         type: 3}
+      propertyPath: graphicRaycaster
+      value: 
+      objectReference: {fileID: 6847651757014132813}
+    - target: {fileID: 8220138901426017184, guid: 30808bde98eba564d86145adacbba1b1,
+        type: 3}
       propertyPath: inventoryUIManager
       value: 
       objectReference: {fileID: 4365771476343332667}
