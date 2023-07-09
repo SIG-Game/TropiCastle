@@ -142,17 +142,16 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public void UsePlacementCursorAndPlayerItem()
     {
         ItemWithAmount selectedItem = player.GetSelectedItem();
-        ItemScriptableObject selectedItemData = selectedItem.itemData;
+
+        Color cursorBackgroundColor = canPlaceItemAtCursorPosition ?
+            canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor;
 
         Vector2 selectedItemColliderSize =
-            ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItemData);
+            ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItem.itemData);
 
-        cursorController.SetCursorBackgroundLocalScale(selectedItemColliderSize);
-
-        cursorController.Sprite = selectedItemData.sprite;
-        cursorController.SetCursorBackgroundColor(canPlaceItemAtCursorPosition ?
-            canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor);
-        cursorController.SetAmountText(selectedItem.GetAmountText());
+        cursorController.UpdateUsingItem(selectedItem);
+        cursorController.UpdateCursorBackground(cursorBackgroundColor,
+            selectedItemColliderSize);
 
         playerItemInWorld.ShowCharacterItemInWorld(selectedItem);
     }

@@ -101,26 +101,24 @@ public class CursorController : MonoBehaviour
         }
     }
 
-    public void SetCursorBackgroundColor(Color cursorBackgroundColor)
+    public void UpdateUsingItem(ItemWithAmount item)
     {
-        cursorBackgroundSpriteRenderer.color = cursorBackgroundColor;
+        Sprite = item.itemData.sprite;
+        amountText.text = item.GetAmountText();
     }
 
-    public void SetAmountText(string text)
+    public void UpdateCursorBackground(Color backgroundColor,
+        Vector3 backgroundLocalScale)
     {
-        amountText.text = text;
+        cursorBackgroundSpriteRenderer.color = backgroundColor;
+        cursorBackground.transform.localScale = backgroundLocalScale;
     }
 
     public void UseDefaultCursor()
     {
         Sprite = defaultCursorSprite;
-        SetCursorBackgroundColor(Color.clear);
-        SetAmountText(string.Empty);
-    }
-
-    public void SetCursorBackgroundLocalScale(Vector3 localScale)
-    {
-        cursorBackground.transform.localScale = localScale;
+        amountText.text = string.Empty;
+        UpdateCursorBackground(Color.clear, Vector3.zero);
     }
 
     private void UpdateCameraBounds()
