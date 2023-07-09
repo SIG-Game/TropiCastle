@@ -641,11 +641,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c399adf6ab9794597b2e36496eda2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestUI: {fileID: 6696742860742474237}
+  chestUIGameObjects:
+  - {fileID: 6696742860742474237}
   chestItemSlotContainerController: {fileID: 2446165521011752754}
-  inventoryUIController: {fileID: 0}
-  inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
-    type: 3}
+  inventoryUIManager: {fileID: 0}
 --- !u!1 &6696742861595086468
 GameObject:
   m_ObjectHideFlags: 0

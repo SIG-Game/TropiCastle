@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField] private InputActionReference useItemActionReference;
     [SerializeField] private InputActionReference interactActionReference;
+    [SerializeField] private InputActionReference inventoryActionReference;
     [SerializeField] private InputActionReference fishActionReference;
 
     public static InputManager Instance;
@@ -17,9 +18,11 @@ public class InputManager : MonoBehaviour
 
     private InputAction useItemAction;
     private InputAction interactAction;
+    private InputAction inventoryAction;
     private InputAction fishAction;
     private bool useItemButtonDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
+    private bool inventoryButtonDownUsedThisFrame;
     private bool fishButtonDownUsedThisFrame;
 
     private void Awake()
@@ -30,6 +33,7 @@ public class InputManager : MonoBehaviour
 
         useItemAction = useItemActionReference.action;
         interactAction = interactActionReference.action;
+        inventoryAction = inventoryActionReference.action;
         fishAction = fishActionReference.action;
     }
 
@@ -41,6 +45,7 @@ public class InputManager : MonoBehaviour
 
         useItemButtonDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;
+        inventoryButtonDownUsedThisFrame = false;
         fishButtonDownUsedThisFrame = false;
     }
 
@@ -100,13 +105,20 @@ public class InputManager : MonoBehaviour
     }
 
     public bool GetUseItemButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => useItemAction.WasPressedThisFrame(), ref useItemButtonDownUsedThisFrame);
+        GetInputIfUnusedThisFrame(() => useItemAction.WasPressedThisFrame(),
+            ref useItemButtonDownUsedThisFrame);
 
     public bool GetInteractButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => interactAction.WasPressedThisFrame(), ref interactButtonDownUsedThisFrame);
+        GetInputIfUnusedThisFrame(() => interactAction.WasPressedThisFrame(),
+            ref interactButtonDownUsedThisFrame);
+
+    public bool GetInventoryButtonDownIfUnusedThisFrame() =>
+        GetInputIfUnusedThisFrame(() => inventoryAction.WasPressedThisFrame(),
+            ref inventoryButtonDownUsedThisFrame);
 
     public bool GetFishButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => fishAction.WasPressedThisFrame(), ref fishButtonDownUsedThisFrame);
+        GetInputIfUnusedThisFrame(() => fishAction.WasPressedThisFrame(),
+            ref fishButtonDownUsedThisFrame);
 
     public string GetCurrentControlScheme() => playerInput.currentControlScheme;
 

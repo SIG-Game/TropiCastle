@@ -1,25 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerInventoryUIController : ItemSlotContainerController
 {
-    [SerializeField] private List<GameObject> inventoryUIGameObjects;
+    [SerializeField] private List<GameObject> playerInventoryUIGameObjects;
     [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private InputActionReference inventoryActionReference;
 
-    private InputAction inventoryAction;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        inventoryAction = inventoryActionReference.action;
-    }
-
-    // Must run after any script Update methods that can set ActionDisablingUIOpen to true to
-    // prevent an action disabling UI from opening on the same frame that the inventory UI is opened
+    // Must run after any script Update methods that can set ActionDisablingUIOpen
+    // to true to prevent an action disabling UI from opening on the same frame
+    // that the player inventory UI is opened
     private void Update()
     {
         if (PlayerController.ActionDisablingUIOpen)
@@ -27,23 +17,14 @@ public class PlayerInventoryUIController : ItemSlotContainerController
             return;
         }
 
-        bool closeInventoryUI = Input.GetKeyDown(KeyCode.Escape) &&
-            inventoryUIManager.InventoryUIOpen;
-        if (closeInventoryUI)
+        bool openPlayerInventoryUI =
+            !PauseController.Instance.GamePaused &&
+            InputManager.Instance.GetInventoryButtonDownIfUnusedThisFrame();
+        if (openPlayerInventoryUI)
         {
-            InputManager.Instance.EscapeKeyUsedThisFrame = true;
-        }
-
-        bool toggleInventoryUI = (inventoryAction.WasPressedThisFrame() &&
-            (!PauseController.Instance.GamePaused || inventoryUIManager.InventoryUIOpen)) ||
-            closeInventoryUI;
-        if (toggleInventoryUI)
-        {
-            inventoryUIManager.InventoryUIOpen = !inventoryUIManager.InventoryUIOpen;
-            PauseController.Instance.GamePaused = inventoryUIManager.InventoryUIOpen;
-
-            inventoryUIGameObjects.ForEach(
-                x => x.SetActive(inventoryUIManager.InventoryUIOpen));
+            inventoryUIManager.SetCurrentInventoryUIGameObjects(playerInventoryUIGameObjects);
+            inventoryUIManager.SetCanCloseUsingInteractAction(false);
+            inventoryUIManager.EnableCurrentInventoryUI();
         }
     }
 

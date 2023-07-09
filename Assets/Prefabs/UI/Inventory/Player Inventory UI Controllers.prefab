@@ -3040,13 +3040,11 @@ MonoBehaviour:
   - {fileID: 8774762379956196400}
   - {fileID: 8774762379505792207}
   - {fileID: 8774762378629927820}
-  inventoryUIGameObjects:
+  playerInventoryUIGameObjects:
   - {fileID: 8774762379877637705}
   - {fileID: 0}
   - {fileID: 0}
   inventoryUIManager: {fileID: 0}
-  inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
-    type: 3}
 --- !u!114 &8774762380487729183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3093,6 +3091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
   hoveredItemSlotManager: {fileID: 4477077557678837287}
+  inventoryUIManager: {fileID: 0}
 --- !u!114 &5322188097645069079
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1318,6 +1318,16 @@ PrefabInstance:
       propertyPath: inventoryUIGameObjects.Array.data[2]
       value: 
       objectReference: {fileID: 6847651757004564238}
+    - target: {fileID: 8774762380487729170, guid: aed0fde4b0ab92c40899e678ccf7f384,
+        type: 3}
+      propertyPath: playerInventoryUIGameObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 6847651757722132896}
+    - target: {fileID: 8774762380487729170, guid: aed0fde4b0ab92c40899e678ccf7f384,
+        type: 3}
+      propertyPath: playerInventoryUIGameObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 6847651757004564238}
     - target: {fileID: 8774762380487729171, guid: aed0fde4b0ab92c40899e678ccf7f384,
         type: 3}
       propertyPath: m_Pivot.x

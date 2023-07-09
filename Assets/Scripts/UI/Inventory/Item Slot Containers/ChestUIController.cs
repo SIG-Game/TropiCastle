@@ -1,46 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ChestUIController : MonoBehaviour
 {
-    [SerializeField] private GameObject chestUI;
+    [SerializeField] private List<GameObject> chestUIGameObjects;
     [SerializeField] private ItemSlotContainerController chestItemSlotContainerController;
     [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private InputActionReference inventoryActionReference;
-
-    private InputAction inventoryAction;
 
     public static ChestUIController Instance;
 
     private void Awake()
     {
         Instance = this;
-
-        inventoryAction = inventoryActionReference.action;
-    }
-
-    // Must run after the InventoryUIController Update method so that the inventory
-    // input press for closing the chest UI is not reused to open the inventory UI
-    private void Update()
-    {
-        bool closeChestInputPressed = inventoryAction.WasPressedThisFrame() ||
-            Input.GetKeyDown(KeyCode.Escape) ||
-            InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
-
-        bool closeChestUI = closeChestInputPressed
-            && chestUI.activeInHierarchy;
-        if (closeChestUI)
-        {
-            inventoryUIManager.InventoryUIOpen = false;
-            PauseController.Instance.GamePaused = false;
-
-            chestUI.SetActive(false);
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                InputManager.Instance.EscapeKeyUsedThisFrame = true;
-            }
-        }
     }
 
     private void OnDestroy()
@@ -50,10 +21,9 @@ public class ChestUIController : MonoBehaviour
 
     public void ShowChestUI()
     {
-        inventoryUIManager.InventoryUIOpen = true;
-        PauseController.Instance.GamePaused = true;
-
-        chestUI.SetActive(true);
+        inventoryUIManager.SetCurrentInventoryUIGameObjects(chestUIGameObjects);
+        inventoryUIManager.SetCanCloseUsingInteractAction(true);
+        inventoryUIManager.EnableCurrentInventoryUI();
     }
 
     public void SetChestInventory(Inventory chestInventory)
