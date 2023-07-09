@@ -20,19 +20,12 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // It this wasn't set at runtime, an old item tooltip format might get cached
         resultItemTooltipText = $"Result:\n" +
             craftingRecipe.resultItem.itemData.GetTooltipText();
-
-        InventoryUIHeldItemController.OnStartedHoldingItem +=
-            InventoryUIHeldItemController_OnStartedHoldingItem;
-        InventoryUIHeldItemController.OnStoppedHoldingItem +=
-            InventoryUIHeldItemController_OnStoppedHoldingItem;
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        InventoryUIHeldItemController.OnStartedHoldingItem -=
-            InventoryUIHeldItemController_OnStartedHoldingItem;
-        InventoryUIHeldItemController.OnStoppedHoldingItem -=
-            InventoryUIHeldItemController_OnStoppedHoldingItem;
+        craftingButton.interactable =
+            !InventoryUIHeldItemController.Instance.HoldingItem();
     }
 
     public void CraftingButton_OnClick()
@@ -103,15 +96,5 @@ public class CraftingButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         return ingredientsStringBuilder.ToString();
-    }
-
-    private void InventoryUIHeldItemController_OnStartedHoldingItem()
-    {
-        craftingButton.interactable = false;
-    }
-
-    private void InventoryUIHeldItemController_OnStoppedHoldingItem()
-    {
-        craftingButton.interactable = true;
     }
 }

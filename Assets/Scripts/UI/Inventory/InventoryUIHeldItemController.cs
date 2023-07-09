@@ -25,9 +25,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
     public static InventoryUIHeldItemController Instance;
 
-    public static event Action OnStartedHoldingItem = delegate { };
-    public static event Action OnStoppedHoldingItem = delegate { };
-
     private void Awake()
     {
         Instance = this;
@@ -58,9 +55,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
     private void OnDestroy()
     {
         Instance = null;
-
-        OnStartedHoldingItem = delegate { };
-        OnStoppedHoldingItem = delegate { };
 
         inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
     }
@@ -270,8 +264,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
 
         tooltipTextWithPriority = new Tooltip(item.GetTooltipText(), 1);
         InventoryUITooltipController.Instance.AddTooltipTextWithPriority(tooltipTextWithPriority);
-
-        OnStartedHoldingItem();
     }
 
     private void InventoryUIManager_OnInventoryUIClosed()
@@ -327,8 +319,6 @@ public class InventoryUIHeldItemController : MonoBehaviour
         durabilityMeter.HideMeter();
 
         InventoryUITooltipController.Instance.RemoveTooltipTextWithPriority(tooltipTextWithPriority);
-
-        OnStoppedHoldingItem();
     }
 
     public void SetRightClickToResetEnabled(bool rightClickToResetEnabled)
