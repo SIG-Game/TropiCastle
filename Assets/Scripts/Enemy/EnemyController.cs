@@ -134,11 +134,23 @@ public class EnemyController : MonoBehaviour
     {
         foreach (ItemWithAmount loot in droppedLoot)
         {
-            if (!playerInventory.CanAddItem(loot))
+            if (!playerInventory.CanAddItem(loot, out int canAddAmount))
             {
                 InventoryFullUIController.Instance.ShowInventoryFullText();
 
-                ItemWorldPrefabInstanceFactory.Instance.DropItem(transform.position, loot);
+                if (canAddAmount != 0)
+                {
+                    ItemWithAmount itemToAdd = new ItemWithAmount(loot.itemData,
+                        canAddAmount, loot.instanceProperties);
+
+                    playerInventory.AddItem(itemToAdd);
+                }
+
+                ItemWithAmount itemToDrop = new ItemWithAmount(loot.itemData,
+                    loot.amount - canAddAmount, loot.instanceProperties);
+
+                ItemWorldPrefabInstanceFactory.Instance.DropItem(
+                    transform.position, itemToDrop);
             }
             else
             {
