@@ -68,6 +68,4 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
     }
 
     public string GetTooltipText() => GetSlotItemTooltipText();
-
-    public string GetAlternateTooltipText() => string.Empty;
 }

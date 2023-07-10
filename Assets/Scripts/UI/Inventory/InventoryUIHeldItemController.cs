@@ -327,6 +327,4 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     public Inventory GetHeldItemInventory() => heldItemInventory;
 
     public string GetTooltipText() => heldItem.GetTooltipText();
-
-    public string GetAlternateTooltipText() => string.Empty;
 }

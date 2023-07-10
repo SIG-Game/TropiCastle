@@ -3,7 +3,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CraftingButton : MonoBehaviour, IElementWithTooltip
+public class CraftingButton : MonoBehaviour, IElementWithMultiTextTooltip
 {
     [SerializeField] private Button craftingButton;
     [SerializeField] private CraftingButtonDependencies craftingButtonDependencies;

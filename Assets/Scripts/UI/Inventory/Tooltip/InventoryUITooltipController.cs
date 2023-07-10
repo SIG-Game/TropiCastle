@@ -88,8 +88,16 @@ public class InventoryUITooltipController : MonoBehaviour
 
     private void SetTooltipText(IElementWithTooltip elementWithTooltip)
     {
-        SetTooltipText(elementWithTooltip.GetTooltipText(),
-            elementWithTooltip.GetAlternateTooltipText());
+        if (elementWithTooltip is
+            IElementWithMultiTextTooltip elementWithMultiTextTooltip)
+        {
+            SetTooltipText(elementWithMultiTextTooltip.GetTooltipText(),
+                elementWithMultiTextTooltip.GetAlternateTooltipText());
+        }
+        else
+        {
+            SetTooltipText(elementWithTooltip.GetTooltipText(), string.Empty);
+        }
     }
 
     private void SetTooltipText(string tooltipTextString, string alternateTooltipTextString)

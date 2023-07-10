@@ -76,6 +76,4 @@ public class AutoHealButtonTooltipController : MonoBehaviour, IElementWithToolti
             }
         }
     }
-
-    public string GetAlternateTooltipText() => string.Empty;
 }
