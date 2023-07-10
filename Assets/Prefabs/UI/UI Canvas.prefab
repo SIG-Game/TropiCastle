@@ -1485,6 +1485,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed0fde4b0ab92c40899e678ccf7f384, type: 3}
+--- !u!114 &1792519838596709335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4477077557678837287, guid: aed0fde4b0ab92c40899e678ccf7f384,
+    type: 3}
+  m_PrefabInstance: {fileID: 2792663991816009200}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84e4f9e35f6a014db80747fc8f489ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6847651756953594484 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8774762379322580868, guid: aed0fde4b0ab92c40899e678ccf7f384,
@@ -3157,6 +3169,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6847651757014132810}
     m_Modifications:
+    - target: {fileID: -358174219911384032, guid: cd01aa14f2ebd8e4582e713c365aea01,
+        type: 3}
+      propertyPath: inventoryUIManager
+      value: 
+      objectReference: {fileID: 4365771476343332667}
+    - target: {fileID: -358174219911384032, guid: cd01aa14f2ebd8e4582e713c365aea01,
+        type: 3}
+      propertyPath: canvasRectTransform
+      value: 
+      objectReference: {fileID: 6847651757014132810}
+    - target: {fileID: -358174219911384032, guid: cd01aa14f2ebd8e4582e713c365aea01,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
     - target: {fileID: 4118985589945290419, guid: cd01aa14f2ebd8e4582e713c365aea01,
         type: 3}
       propertyPath: m_Pivot.x

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 {
-    [SerializeField] private GameObject heldItemUI;
     [SerializeField] private TextMeshProUGUI heldItemAmountText;
     [SerializeField] private ItemDurabilityMeterController durabilityMeter;
     [SerializeField] private RectTransform canvasRectTransform;
@@ -28,8 +27,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     {
         Instance = this;
 
-        heldItemRectTransform = heldItemUI.GetComponent<RectTransform>();
-        heldItemImage = heldItemUI.GetComponent<Image>();
+        heldItemRectTransform = GetComponent<RectTransform>();
+        heldItemImage = GetComponent<Image>();
 
         rightClickToResetEnabled = true;
 
