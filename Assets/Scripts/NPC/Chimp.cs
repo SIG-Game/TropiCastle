@@ -16,6 +16,8 @@ public class Chimp : NPCInteractable
     private float lastGiveTimeSeconds;
     private float timeBetweenGivesSeconds;
 
+    private const string chimpCharacterName = "Chimp";
+
     protected override void Awake()
     {
         base.Awake();
@@ -59,6 +61,7 @@ public class Chimp : NPCInteractable
             dialogueLinesToPlay = notGivingItemDialogueLines;
         }
 
+        DialogueBox.Instance.SetCharacterName(chimpCharacterName);
         DialogueBox.Instance.PlayDialogue(dialogueLinesToPlay,
             () => Chimp_AfterDialogueAction(player, itemToGive));
     }
