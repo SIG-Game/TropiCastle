@@ -32598,6 +32598,18 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1654789940 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6628131630819411239, guid: 0b10992830a0ba7439705a4db0804f24,
+    type: 3}
+  m_PrefabInstance: {fileID: 6628131629790253055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74733bf8d687694f8e0e0018723c827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1696361835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3895392963248142505, guid: bfaf9ae57760545859b01d4467686f5b,
@@ -33492,6 +33504,11 @@ PrefabInstance:
       propertyPath: cursorCamera
       value: 
       objectReference: {fileID: 210157792}
+    - target: {fileID: 987879900132414908, guid: 1618a20a205e6e64e8cf9c6a051be3a0,
+        type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
     - target: {fileID: 987879900132414908, guid: 1618a20a205e6e64e8cf9c6a051be3a0,
         type: 3}
       propertyPath: playerController

@@ -8,6 +8,7 @@ public class CursorController : MonoBehaviour
     [SerializeField] private GameObject cursorBackground;
     [SerializeField] private TMP_Text amountText;
     [SerializeField] private Camera cursorCamera;
+    [SerializeField] private PauseController pauseController;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private InputActionReference moveCursorActionReference;
     [SerializeField] private float mouseSensitivity;
@@ -42,9 +43,9 @@ public class CursorController : MonoBehaviour
 
         cursorWorldPosition = Vector2.zero;
 
-        PauseController.OnGamePausedSet += PauseController_OnGamePausedSet;
         PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
 
+        pauseController.OnGamePausedSet += PauseController_OnGamePausedSet;
         playerController.OnIsAttackingSet += PlayerController_OnIsAttackingSet;
     }
 
@@ -92,8 +93,9 @@ public class CursorController : MonoBehaviour
 
     private void OnDestroy()
     {
-        PauseController.OnGamePausedSet -= PauseController_OnGamePausedSet;
         PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
+
+        pauseController.OnGamePausedSet -= PauseController_OnGamePausedSet;
 
         if (playerController != null)
         {
@@ -159,9 +161,9 @@ public class CursorController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    private void PauseController_OnGamePausedSet(bool gamePaused)
+    private void PauseController_OnGamePausedSet()
     {
-        if (gamePaused)
+        if (PauseController.Instance.GamePaused)
         {
             ShowAndUnlockMouseCursor();
 

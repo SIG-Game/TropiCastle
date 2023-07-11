@@ -13,13 +13,13 @@ public class PauseController : MonoBehaviour
             gamePaused = value;
             Time.timeScale = gamePaused ? 0f : 1f;
 
-            OnGamePausedSet(gamePaused);
+            OnGamePausedSet();
         }
     }
 
-    public static PauseController Instance;
+    public event Action OnGamePausedSet = delegate { };
 
-    public static event Action<bool> OnGamePausedSet = delegate { };
+    public static PauseController Instance;
 
     private void Awake()
     {
@@ -31,7 +31,5 @@ public class PauseController : MonoBehaviour
     private void OnDestroy()
     {
         Instance = null;
-
-        OnGamePausedSet = delegate { };
     }
 }
