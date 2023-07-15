@@ -7,6 +7,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private CursorController cursorController;
+    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private Sprite itemPickupArrow;
     [SerializeField] private Sprite itemPickupArrowInventoryFull;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
@@ -55,8 +56,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
             WaitingForInputReleaseBeforePlacement = false;
         }
 
-        if (PauseController.Instance.GamePaused || PlayerController.ActionDisablingUIOpen ||
-            player.IsAttacking)
+        if (PauseController.Instance.GamePaused ||
+            playerActionDisablingUIManager.ActionDisablingUIOpen || player.IsAttacking)
         {
             bool shouldCancelPlacement = currentState == PlacementState;
             if (shouldCancelPlacement)

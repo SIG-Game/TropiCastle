@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
+    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private SpriteMask overlaySpriteMask;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private InventoryUIManager inventoryUIManager;
@@ -46,21 +47,6 @@ public class PlayerController : MonoBehaviour
     private Dictionary<string, IItemUsage> itemNameToUsage;
     private Dictionary<Type, IItemUsage> itemScriptableObjectTypeToUsage;
 
-    private static bool actionDisablingUIOpen;
-
-    // Not used for pausing menu
-    public static bool ActionDisablingUIOpen
-    {
-        get => actionDisablingUIOpen;
-        set
-        {
-            actionDisablingUIOpen = value;
-            OnActionDisablingUIOpenSet(actionDisablingUIOpen);
-        }
-    }
-
-    public static event Action<bool> OnActionDisablingUIOpenSet = delegate { };
-
     private BoxCollider2D boxCollider;
     private HealthController healthController;
     private ItemSelectionController itemSelectionController;
@@ -92,8 +78,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         IsAttacking = false;
-
-        ActionDisablingUIOpen = false;
     }
 
     private void Update()
@@ -124,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
         // Do not check for fish input on the same frame that an item is used
         else if (InputManager.Instance.GetFishButtonDownIfUnusedThisFrame() &&
-            !ActionDisablingUIOpen &&
+            !playerActionDisablingUIManager.ActionDisablingUIOpen &&
             TryGetFishingRodItemIndex(out int fishingRodItemIndex))
         {
             ItemWithAmount fishingRodItem = inventory.GetItemList()[fishingRodItemIndex];
@@ -153,8 +137,6 @@ public class PlayerController : MonoBehaviour
         {
             healthController.OnHealthSetToZero -= HealthController_OnHealthSetToZero;
         }
-
-        OnActionDisablingUIOpenSet = delegate { };
     }
 
     public RaycastHit2D InteractionCast(LayerMask mask, float horizontalBoxCastDistance,
@@ -280,7 +262,8 @@ public class PlayerController : MonoBehaviour
         public int Health;
     }
 
-    public bool CanMove() => !IsAttacking && !PauseController.Instance.GamePaused && !ActionDisablingUIOpen;
+    public bool CanMove() => !IsAttacking && !PauseController.Instance.GamePaused &&
+        !playerActionDisablingUIManager.ActionDisablingUIOpen;
 
     public int GetSelectedItemIndex() => itemSelectionController.SelectedItemIndex;
 

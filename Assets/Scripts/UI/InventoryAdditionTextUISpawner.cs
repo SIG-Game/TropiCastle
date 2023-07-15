@@ -6,6 +6,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
     [SerializeField] private GameObject inventoryAdditionText;
     [SerializeField] private CanvasGroup inventoryAdditionUICanvasGroup;
     [SerializeField] private Inventory targetInventory;
+    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
 
     private Dictionary<string, InventoryAdditionTextUIController> itemNameToAdditionText;
 
@@ -13,20 +14,22 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
     {
         itemNameToAdditionText = new Dictionary<string, InventoryAdditionTextUIController>();
 
+        playerActionDisablingUIManager.OnActionDisablingUIOpenSet +=
+            PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet;
         targetInventory.OnItemAdded += TargetInventory_OnItemAdded;
         targetInventory.OnItemRemoved += TargetInventory_OnItemRemoved;
-        PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
     }
 
     private void OnDestroy()
     {
+        playerActionDisablingUIManager.OnActionDisablingUIOpenSet -=
+            PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet;
+
         if (targetInventory != null)
         {
             targetInventory.OnItemAdded -= TargetInventory_OnItemAdded;
             targetInventory.OnItemRemoved -= TargetInventory_OnItemRemoved;
         }
-
-        PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
     }
 
     private void TargetInventory_OnItemAdded(ItemWithAmount item)
@@ -75,9 +78,10 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
         }
     }
 
-    private void PlayerController_OnActionDisablingUIOpenSet(bool actionDisablingUIOpen)
+    private void PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet()
     {
-        inventoryAdditionUICanvasGroup.alpha = actionDisablingUIOpen ? 0f : 1f;
+        inventoryAdditionUICanvasGroup.alpha =
+            playerActionDisablingUIManager.ActionDisablingUIOpen ? 0f : 1f;
     }
 
     public void OnAdditionTextDestroyed(string itemName)

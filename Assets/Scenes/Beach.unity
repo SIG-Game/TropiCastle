@@ -33268,6 +33268,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8ad8bba97e63e4694a8a9e4aa36d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1982112585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 534933106481965837, guid: 055035cc7ee7c8646858260629418a55,
+    type: 3}
+  m_PrefabInstance: {fileID: 1982112580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de47d73493498c469fdee263b82fdb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1987957654
 GameObject:
   m_ObjectHideFlags: 0
@@ -33514,6 +33526,11 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 572276101}
+    - target: {fileID: 987879900132414908, guid: 1618a20a205e6e64e8cf9c6a051be3a0,
+        type: 3}
+      propertyPath: playerActionDisablingUIManager
+      value: 
+      objectReference: {fileID: 1982112585}
     - target: {fileID: 987879900132414909, guid: 1618a20a205e6e64e8cf9c6a051be3a0,
         type: 3}
       propertyPath: m_Name
@@ -33712,6 +33729,11 @@ PrefabInstance:
       propertyPath: itemSelectionController
       value: 
       objectReference: {fileID: 1982112583}
+    - target: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
+      propertyPath: playerActionDisablingUIManager
+      value: 
+      objectReference: {fileID: 1982112585}
     - target: {fileID: 6628131630734585793, guid: 0b10992830a0ba7439705a4db0804f24,
         type: 3}
       propertyPath: itemWorldParent
@@ -33788,6 +33810,11 @@ PrefabInstance:
       propertyPath: playerItemInWorld
       value: 
       objectReference: {fileID: 1982112584}
+    - target: {fileID: 2122123279961665939, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerActionDisablingUIManager
+      value: 
+      objectReference: {fileID: 1982112585}
     - target: {fileID: 2216432832818686640, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -33823,6 +33850,11 @@ PrefabInstance:
       propertyPath: targetInventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 4443076731647371254, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerActionDisablingUIManager
+      value: 
+      objectReference: {fileID: 1982112585}
     - target: {fileID: 6847651756572252548, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -34308,6 +34340,11 @@ PrefabInstance:
       propertyPath: itemSelectionController
       value: 
       objectReference: {fileID: 1982112583}
+    - target: {fileID: 6847651757852005858, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerActionDisablingUIManager
+      value: 
+      objectReference: {fileID: 1982112585}
     - target: {fileID: 6847651757883871217, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -34353,6 +34390,11 @@ PrefabInstance:
       propertyPath: hoveredItemSlotManager
       value: 
       objectReference: {fileID: 6847651757298814664}
+    - target: {fileID: 6847651758018855121, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerActionDisablingUIManager
+      value: 
+      objectReference: {fileID: 1982112585}
     - target: {fileID: 6847651758042199459, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory

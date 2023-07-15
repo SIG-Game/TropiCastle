@@ -10,6 +10,7 @@ public class CursorController : MonoBehaviour
     [SerializeField] private Camera cursorCamera;
     [SerializeField] private PauseController pauseController;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InputActionReference moveCursorActionReference;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float gamepadSensitivity;
@@ -43,9 +44,9 @@ public class CursorController : MonoBehaviour
 
         cursorWorldPosition = Vector2.zero;
 
-        PlayerController.OnActionDisablingUIOpenSet += PlayerController_OnActionDisablingUIOpenSet;
-
         pauseController.OnGamePausedSet += PauseController_OnGamePausedSet;
+        playerActionDisablingUIManager.OnActionDisablingUIOpenSet +=
+            PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet;
         playerController.OnIsAttackingSet += PlayerController_OnIsAttackingSet;
     }
 
@@ -93,9 +94,9 @@ public class CursorController : MonoBehaviour
 
     private void OnDestroy()
     {
-        PlayerController.OnActionDisablingUIOpenSet -= PlayerController_OnActionDisablingUIOpenSet;
-
         pauseController.OnGamePausedSet -= PauseController_OnGamePausedSet;
+        playerActionDisablingUIManager.OnActionDisablingUIOpenSet -=
+            PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet;
 
         if (playerController != null)
         {
@@ -173,7 +174,7 @@ public class CursorController : MonoBehaviour
         {
             HideAndLockMouseCursor();
 
-            if (!PlayerController.ActionDisablingUIOpen &&
+            if (!playerActionDisablingUIManager.ActionDisablingUIOpen &&
                 !playerController.IsAttacking)
             {
                 gameObject.SetActive(true);
@@ -181,14 +182,14 @@ public class CursorController : MonoBehaviour
         }
     }
 
-    private void PlayerController_OnActionDisablingUIOpenSet(bool actionDisablingUIOpen)
+    private void PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet()
     {
         if (PauseController.Instance.GamePaused)
         {
             return;
         }
 
-        gameObject.SetActive(!actionDisablingUIOpen);
+        gameObject.SetActive(!playerActionDisablingUIManager.ActionDisablingUIOpen);
     }
 
     private void PlayerController_OnIsAttackingSet(bool isAttacking)
