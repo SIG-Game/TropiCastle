@@ -18,11 +18,6 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (InputManager.Instance.EscapeKeyUsedThisFrame)
-        {
-            return;
-        }
-
         if (pauseAction.WasPressedThisFrame() &&
             (!PauseController.Instance.GamePaused || pauseMenuUI.activeInHierarchy))
         {

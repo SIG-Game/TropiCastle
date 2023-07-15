@@ -29,6 +29,8 @@ public class InventoryUIManager : MonoBehaviour
         inventoryUIOpen = false;
     }
 
+    // Must run after the PauseMenu Update method so that an Escape key press
+    // used to close an inventory UI isn't reused to open the pause menu
     private void Update()
     {
         if (InventoryUIOpen && CloseInventoryUIInputPressed())
@@ -40,10 +42,6 @@ public class InventoryUIManager : MonoBehaviour
     private bool CloseInventoryUIInputPressed()
     {
         bool closeUsingEscapeKey = Input.GetKeyDown(KeyCode.Escape);
-        if (closeUsingEscapeKey)
-        {
-            InputManager.Instance.EscapeKeyUsedThisFrame = true;
-        }
 
         bool closeUsingInteractAction = canCloseUsingInteractAction &&
             InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();

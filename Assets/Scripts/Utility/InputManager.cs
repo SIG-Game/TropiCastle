@@ -11,7 +11,6 @@ public class InputManager : MonoBehaviour
 
     public static InputManager Instance;
 
-    public bool EscapeKeyUsedThisFrame { get; set; }
     public bool NumberKeyUsedThisFrame { private get; set; }
 
     private PlayerInput playerInput;
@@ -40,7 +39,6 @@ public class InputManager : MonoBehaviour
     // Has to run before any scripts that use IfUnusedThisFrame methods
     private void Update()
     {
-        EscapeKeyUsedThisFrame = false;
         NumberKeyUsedThisFrame = false;
 
         useItemButtonDownUsedThisFrame = false;
