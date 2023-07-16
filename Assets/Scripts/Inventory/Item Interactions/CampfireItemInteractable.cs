@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.AddressableAssets;
 
 public class CampfireItemInteractable : Interactable
@@ -21,43 +22,31 @@ public class CampfireItemInteractable : Interactable
 
     public override void Interact(PlayerController playerController)
     {
-        Inventory playerInventory = playerController.GetInventory();
-        List<ItemWithAmount> playerInventoryItemList = playerInventory.GetItemList();
+        ItemWithAmount selectedItem = playerController.GetSelectedItem();
 
-        bool showInventoryFullText = false;
+        CampfireRecipeScriptableObject selectedItemCampfireRecipe =
+            campfireRecipes.FirstOrDefault(
+                x => x.inputItem.name == selectedItem.itemData.name);
 
-        foreach (CampfireRecipeScriptableObject campfireRecipe in campfireRecipes)
+        if (selectedItemCampfireRecipe == null)
         {
-            int inputItemIndex = playerInventoryItemList
-                .FindIndex(x => x.itemData.name == campfireRecipe.inputItem.name);
-
-            if (inputItemIndex == -1)
-            {
-                continue;
-            }
-
-            ItemWithAmount inputItem = playerInventoryItemList[inputItemIndex];
-            ItemWithAmount resultItem = campfireRecipe.resultItem;
-
-            bool inputItemSlotEmptied = inputItem.amount == 1;
-
-            if (inputItemSlotEmptied || playerInventory.CanAddItem(resultItem))
-            {
-                playerInventory.DecrementItemStackAtIndex(inputItemIndex);
-
-                playerInventory.AddItem(resultItem);
-
-                showInventoryFullText = false;
-
-                break;
-            }
-            else
-            {
-                showInventoryFullText = true;
-            }
+            return;
         }
 
-        if (showInventoryFullText)
+        Inventory playerInventory = playerController.GetInventory();
+        ItemWithAmount resultItem = selectedItemCampfireRecipe.resultItem;
+
+        bool inputItemSlotWillBeEmptied = selectedItem.amount == 1;
+        if (inputItemSlotWillBeEmptied || playerInventory.CanAddItem(resultItem))
+        {
+            int selectedItemIndex = playerController.GetSelectedItemIndex();
+
+            playerInventory.DecrementItemStackAtIndex(selectedItemIndex);
+
+            playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
+                resultItem, selectedItemIndex);
+        }
+        else
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
         }
