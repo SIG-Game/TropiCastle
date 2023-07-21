@@ -1,34 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class InventoryFullUIController : MonoBehaviour
+public class InventoryFullUIController : CanvasGroupAlphaInterpolator
 {
-    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float visibleTimeSeconds;
-    [SerializeField] private float alphaChangeSpeed;
 
     private Coroutine startFadingOutAfterWaitCoroutineObject;
     private WaitForSeconds visibleWaitForSeconds;
-    private float targetAlpha;
 
     public static InventoryFullUIController Instance;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         Instance = this;
 
         visibleWaitForSeconds = new WaitForSeconds(visibleTimeSeconds);
-
-        targetAlpha = 0f;
-    }
-
-    private void Update()
-    {
-        if (canvasGroup.alpha != targetAlpha)
-        {
-            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha,
-                alphaChangeSpeed * Time.deltaTime);
-        }
     }
 
     private void OnDestroy()
@@ -40,7 +28,7 @@ public class InventoryFullUIController : MonoBehaviour
     {
         yield return visibleWaitForSeconds;
 
-        targetAlpha = 0f;
+        TargetAlpha = 0f;
     }
 
     public void ShowInventoryFullText()
@@ -50,7 +38,7 @@ public class InventoryFullUIController : MonoBehaviour
             StopCoroutine(startFadingOutAfterWaitCoroutineObject);
         }
 
-        targetAlpha = 1f;
+        TargetAlpha = 1f;
 
         startFadingOutAfterWaitCoroutineObject =
             StartCoroutine(StartFadingOutAfterWaitCoroutine());

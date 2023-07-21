@@ -2,40 +2,35 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class InventoryAdditionTextUIController : MonoBehaviour
+public class InventoryAdditionTextUIController : CanvasGroupAlphaInterpolator
 {
     [SerializeField] private TextMeshProUGUI inventoryAdditionText;
-    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float waitTimeBeforeFadeOutSeconds;
-    [SerializeField] private float alphaChangeSpeed;
 
     private InventoryAdditionTextUISpawner spawner;
     private Coroutine waitThenStartFadingOutCoroutineObject;
     private WaitForSeconds beforeFadeOutWaitForSeconds;
-    private float targetAlpha;
     private string itemName;
     private int itemAmount;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         beforeFadeOutWaitForSeconds = new WaitForSeconds(waitTimeBeforeFadeOutSeconds);
 
         waitThenStartFadingOutCoroutineObject = StartCoroutine(WaitThenStartFadingOut());
 
-        targetAlpha = 1f;
+        TargetAlpha = 1f;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if (canvasGroup.alpha != targetAlpha)
-        {
-            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha,
-                alphaChangeSpeed * Time.deltaTime);
+        base.Update();
 
-            if (canvasGroup.alpha == 0f && canvasGroup.alpha == targetAlpha)
-            {
-                Destroy(gameObject);
-            }
+        if (canvasGroup.alpha == 0f && canvasGroup.alpha == TargetAlpha)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -48,7 +43,7 @@ public class InventoryAdditionTextUIController : MonoBehaviour
     {
         yield return beforeFadeOutWaitForSeconds;
 
-        targetAlpha = 0f;
+        TargetAlpha = 0f;
     }
 
     public void UpdateWithItem(ItemWithAmount item)
@@ -94,7 +89,7 @@ public class InventoryAdditionTextUIController : MonoBehaviour
 
         waitThenStartFadingOutCoroutineObject = StartCoroutine(WaitThenStartFadingOut());
 
-        targetAlpha = 1f;
+        TargetAlpha = 1f;
     }
 
     public void SetSpawner(InventoryAdditionTextUISpawner spawner)
