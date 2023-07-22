@@ -75,12 +75,10 @@ public class ItemSelectionController : MonoBehaviour
             SelectedItemIndex = ClampSelectedItemIndex(newSelectedItemIndex);
         }
 
-        int numberKeyIndex = InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
-
-        bool numberKeyInputAvailable = numberKeyIndex != -1;
-        if (numberKeyInputAvailable)
+        int? numberKeyIndex = InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
+        if (numberKeyIndex.HasValue)
         {
-            SelectedItemIndex = numberKeyIndex;
+            SelectedItemIndex = numberKeyIndex.Value;
         }
 
         if (selectLeftItemAction.IsPressed() && repeatSelectLeftItemCoroutine == null)

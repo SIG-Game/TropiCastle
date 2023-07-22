@@ -11,14 +11,13 @@ public class InputManager : MonoBehaviour
 
     public static InputManager Instance;
 
-    public bool NumberKeyUsedThisFrame { private get; set; }
-
     private PlayerInput playerInput;
 
     private InputAction useItemAction;
     private InputAction interactAction;
     private InputAction inventoryAction;
     private InputAction fishAction;
+    private bool numberKeyUsedThisFrame;
     private bool useItemButtonDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
     private bool inventoryButtonDownUsedThisFrame;
@@ -39,8 +38,7 @@ public class InputManager : MonoBehaviour
     // Has to run before any scripts that use IfUnusedThisFrame methods
     private void Update()
     {
-        NumberKeyUsedThisFrame = false;
-
+        numberKeyUsedThisFrame = false;
         useItemButtonDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;
         inventoryButtonDownUsedThisFrame = false;
@@ -67,14 +65,16 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public int GetNumberKeyIndexIfUnusedThisFrame()
+    public int? GetNumberKeyIndexIfUnusedThisFrame()
     {
-        if (NumberKeyUsedThisFrame)
+        if (numberKeyUsedThisFrame)
         {
-            return -1;
+            return null;
         }
 
-        int numberKeyIndex = -1;
+        numberKeyUsedThisFrame = true;
+
+        int? numberKeyIndex;
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
             numberKeyIndex = 0;
@@ -96,10 +96,15 @@ public class InputManager : MonoBehaviour
             numberKeyIndex = 8;
         else if (Input.GetKeyDown(KeyCode.Alpha0))
             numberKeyIndex = 9;
-
-        NumberKeyUsedThisFrame = true;
+        else
+            numberKeyIndex = null;
 
         return numberKeyIndex;
+    }
+
+    public void DisableGettingNumberKeyInputThisFrame()
+    {
+        numberKeyUsedThisFrame = true;
     }
 
     public bool GetUseItemButtonDownIfUnusedThisFrame() =>

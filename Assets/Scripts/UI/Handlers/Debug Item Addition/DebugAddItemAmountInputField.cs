@@ -18,7 +18,7 @@ public class DebugAddItemAmountInputField : MonoBehaviour
     {
         if (amountInputField.isFocused)
         {
-            InputManager.Instance.NumberKeyUsedThisFrame = true;
+            InputManager.Instance.DisableGettingNumberKeyInputThisFrame();
         }
     }
 

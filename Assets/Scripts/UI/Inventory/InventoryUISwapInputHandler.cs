@@ -32,10 +32,9 @@ public class InventoryUISwapInputHandler : MonoBehaviour
             return;
         }
 
-        int numberKeyIndex = InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
-
-        bool numberKeyInputAvailable = numberKeyIndex != -1;
-        if (!numberKeyInputAvailable)
+        int? numberKeyIndex =
+            InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
+        if (!numberKeyIndex.HasValue)
         {
             return;
         }
@@ -58,11 +57,11 @@ public class InventoryUISwapInputHandler : MonoBehaviour
 
         if (inventory == swapInventory)
         {
-            inventory.SwapItemsAt(swapItemIndex, numberKeyIndex);
+            inventory.SwapItemsAt(swapItemIndex, numberKeyIndex.Value);
         }
         else
         {
-            inventory.SwapItemsBetweenInventories(numberKeyIndex,
+            inventory.SwapItemsBetweenInventories(numberKeyIndex.Value,
                 swapInventory, swapItemIndex);
         }
     }
