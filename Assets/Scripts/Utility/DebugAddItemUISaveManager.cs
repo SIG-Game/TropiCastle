@@ -2,27 +2,28 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class DebugAddItemUISaveManager : MonoBehaviour
+public class DebugAddItemUISaveManager : MonoBehaviour,
+    ISavable<DebugAddItemUISaveManager.SerializableDebugAddItemUIState>
 {
     [SerializeField] private TMP_InputField amountInputField;
     [SerializeField] private TMP_Dropdown itemDropdown;
 
-    public SerializableDebugAddItemUIState GetSerializableDebugAddItemUIState()
+    public SerializableDebugAddItemUIState GetSerializableState()
     {
-        var debugAddItemUIState = new SerializableDebugAddItemUIState
+        var serializableState = new SerializableDebugAddItemUIState
         {
             AmountInputFieldText = amountInputField.text,
             ItemDropdownValue = itemDropdown.value
         };
 
-        return debugAddItemUIState;
+        return serializableState;
     }
 
-    public void UpdateDebugAddItemUIUsingState(
-        SerializableDebugAddItemUIState debugAddItemUIState)
+    public void SetPropertiesFromSerializableState(
+        SerializableDebugAddItemUIState serializableState)
     {
-        amountInputField.text = debugAddItemUIState.AmountInputFieldText;
-        itemDropdown.value = debugAddItemUIState.ItemDropdownValue;
+        amountInputField.text = serializableState.AmountInputFieldText;
+        itemDropdown.value = serializableState.ItemDropdownValue;
     }
 
     [Serializable]

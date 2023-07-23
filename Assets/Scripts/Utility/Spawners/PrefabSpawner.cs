@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PrefabSpawner : MonoBehaviour
+public class PrefabSpawner : MonoBehaviour,
+    ISavable<PrefabSpawner.SerializableSpawnerState>
 {
     [SerializeField] protected GameObject prefabToSpawn;
     [SerializeField] private Vector2 timeBeforeFirstSpawnRange;
@@ -144,23 +145,24 @@ public class PrefabSpawner : MonoBehaviour
 
     public int GetSpawnerId() => spawnerId;
 
-    public SerializableSpawnerState GetSerializableSpawnerState()
+    public SerializableSpawnerState GetSerializableState()
     {
-        var state = new SerializableSpawnerState
+        var serializableState = new SerializableSpawnerState
         {
             NumberOfSpawnedPrefabs = numPrefabs,
             SpawnTimer = spawnTimer,
             WaitBeforeFirstSpawnCompleted = waitBeforeFirstSpawnCompleted
         };
 
-        return state;
+        return serializableState;
     }
 
-    public void SetStateFromSerializableState(SerializableSpawnerState state)
+    public void SetPropertiesFromSerializableState(
+        SerializableSpawnerState serializableState)
     {
-        numPrefabs = state.NumberOfSpawnedPrefabs;
-        spawnTimer = state.SpawnTimer;
-        waitBeforeFirstSpawnCompleted = state.WaitBeforeFirstSpawnCompleted;
+        numPrefabs = serializableState.NumberOfSpawnedPrefabs;
+        spawnTimer = serializableState.SpawnTimer;
+        waitBeforeFirstSpawnCompleted = serializableState.WaitBeforeFirstSpawnCompleted;
     }
 
     [Serializable]

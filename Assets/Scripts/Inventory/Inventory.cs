@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory>
 {
     [SerializeField] private int inventorySize;
 
@@ -387,26 +387,26 @@ public class Inventory : MonoBehaviour
 
     public bool HasNoEmptySlots() => firstEmptyIndex == -1;
 
-    public SerializableInventory GetSerializableInventory()
+    public SerializableInventory GetSerializableState()
     {
         IEnumerable<SerializableInventoryItem> serializableInventoryItems =
             itemList.Select(x => new SerializableInventoryItem(x));
 
-        var serializableInventory = new SerializableInventory
+        var serializableState = new SerializableInventory
         {
             SerializableItemList = serializableInventoryItems.ToList()
         };
 
-        return serializableInventory;
+        return serializableState;
     }
 
-    public void SetInventoryFromSerializableInventory(
-        SerializableInventory serializableInventory)
+    public void SetPropertiesFromSerializableState(
+        SerializableInventory serializableState)
     {
-        for (int i = 0; i < serializableInventory.SerializableItemList.Count; ++i)
+        for (int i = 0; i < serializableState.SerializableItemList.Count; ++i)
         {
             SerializableInventoryItem serializableInventoryItem =
-                serializableInventory.SerializableItemList[i];
+                serializableState.SerializableItemList[i];
 
             ItemScriptableObject itemScriptableObject =
                 Resources.Load<ItemScriptableObject>(

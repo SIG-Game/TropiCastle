@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Chimp : NPCInteractable
+public class Chimp : NPCInteractable, ISavable<Chimp.SerializableChimpState>
 {
     [SerializeField] private List<string> givingItemDialogueLines;
     [SerializeField] private List<string> notGivingItemDialogueLines;
@@ -87,7 +87,7 @@ public class Chimp : NPCInteractable
     private bool ItemGiveAvailable() =>
         lastGiveTimeSeconds + timeBetweenGivesSeconds <= Time.time;
 
-    public SerializableChimpState GetSerializableChimpState()
+    public SerializableChimpState GetSerializableState()
     {
         float timeUntilNextGiveSeconds;
 
@@ -102,18 +102,18 @@ public class Chimp : NPCInteractable
             timeUntilNextGiveSeconds = nextGiveTimeSeconds - Time.time;
         }
 
-        var serializableChimpState = new SerializableChimpState
+        var serializableState = new SerializableChimpState
         {
             TimeSecondsUntilNextGive = timeUntilNextGiveSeconds
         };
 
-        return serializableChimpState;
+        return serializableState;
     }
 
-    public void SetPropertiesFromSerializableChimpState(
-        SerializableChimpState serializableChimpState)
+    public void SetPropertiesFromSerializableState(
+        SerializableChimpState serializableState)
     {
-        timeBetweenGivesSeconds = serializableChimpState.TimeSecondsUntilNextGive;
+        timeBetweenGivesSeconds = serializableState.TimeSecondsUntilNextGive;
     }
 
     [Serializable]

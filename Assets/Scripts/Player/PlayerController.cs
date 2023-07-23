@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour,
+    ISavable<PlayerController.SerializablePlayerProperties>
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
@@ -226,14 +227,14 @@ public class PlayerController : MonoBehaviour
         itemSelectionController.CanSelect = false;
     }
 
-    public SerializablePlayerProperties GetSerializablePlayerProperties()
+    public SerializablePlayerProperties GetSerializableState()
     {
         Vector2 playerPosition = transform.position;
         int playerDirection = (int)Direction;
         int selectedItemIndex = GetSelectedItemIndex();
         int health = healthController.CurrentHealth;
 
-        var serializablePlayerProperties = new SerializablePlayerProperties
+        var serializableState = new SerializablePlayerProperties
         {
             PlayerPosition = playerPosition,
             PlayerDirection = playerDirection,
@@ -241,16 +242,16 @@ public class PlayerController : MonoBehaviour
             Health = health
         };
 
-        return serializablePlayerProperties;
+        return serializableState;
     }
 
-    public void SetPropertiesFromSerializablePlayerProperties(
-        SerializablePlayerProperties serializablePlayerProperties)
+    public void SetPropertiesFromSerializableState(
+        SerializablePlayerProperties serializableState)
     {
-        transform.position = serializablePlayerProperties.PlayerPosition;
-        Direction = (CharacterDirection)serializablePlayerProperties.PlayerDirection;
-        itemSelectionController.SelectedItemIndex = serializablePlayerProperties.SelectedItemIndex;
-        healthController.CurrentHealth = serializablePlayerProperties.Health;
+        transform.position = serializableState.PlayerPosition;
+        Direction = (CharacterDirection)serializableState.PlayerDirection;
+        itemSelectionController.SelectedItemIndex = serializableState.SelectedItemIndex;
+        healthController.CurrentHealth = serializableState.Health;
     }
 
     [Serializable]

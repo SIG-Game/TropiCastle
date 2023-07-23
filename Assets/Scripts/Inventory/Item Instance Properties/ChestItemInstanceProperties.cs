@@ -31,6 +31,6 @@ public class ChestItemInstanceProperties
 
     public void UpdateSerializableInventory(Inventory inventory)
     {
-        SerializableInventory = inventory.GetSerializableInventory();
+        SerializableInventory = inventory.GetSerializableState();
     }
 }

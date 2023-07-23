@@ -29,7 +29,7 @@ public class SpawnerSaveManager : MonoBehaviour
             PrefabSpawner spawner = spawners.Find(
                 x => x.GetSpawnerId() == spawnerSaveEntry.SpawnerId);
 
-            spawner.SetStateFromSerializableState(spawnerSaveEntry.State);
+            spawner.SetPropertiesFromSerializableState(spawnerSaveEntry.State);
         }
     }
 
@@ -38,7 +38,7 @@ public class SpawnerSaveManager : MonoBehaviour
         var spawnerSaveEntry = new SpawnerSaveEntry
         {
             SpawnerId = spawner.GetSpawnerId(),
-            State = spawner.GetSerializableSpawnerState()
+            State = spawner.GetSerializableState()
         };
 
         return spawnerSaveEntry;

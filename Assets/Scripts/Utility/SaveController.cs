@@ -40,13 +40,13 @@ public class SaveController : MonoBehaviour
     {
         var saveData = new SaveData
         {
-            SerializableInventory = playerInventory.GetSerializableInventory(),
-            SerializablePlayerProperties = playerController.GetSerializablePlayerProperties(),
+            SerializableInventory = playerInventory.GetSerializableState(),
+            SerializablePlayerProperties = playerController.GetSerializableState(),
             SpawnerSaveEntries = spawnerSaveManager.GetSpawnerSaveEntries(),
             ItemWorldStates = itemWorldSaveManager.GetItemWorldStates(),
             EnemyStates = enemySaveManager.GetEnemyStates(),
-            DebugAddItemUIState = debugAddItemUISaveManager.GetSerializableDebugAddItemUIState(),
-            ChimpState = chimp.GetSerializableChimpState()
+            DebugAddItemUIState = debugAddItemUISaveManager.GetSerializableState(),
+            ChimpState = chimp.GetSerializableState()
         };
 
         WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
@@ -63,10 +63,10 @@ public class SaveController : MonoBehaviour
             GetSerializableObjectFromJsonFile<SaveData>(saveDataFilePath);
 
         playerInventory
-            .SetInventoryFromSerializableInventory(saveData.SerializableInventory);
+            .SetPropertiesFromSerializableState(saveData.SerializableInventory);
 
         playerController
-            .SetPropertiesFromSerializablePlayerProperties(saveData.SerializablePlayerProperties);
+            .SetPropertiesFromSerializableState(saveData.SerializablePlayerProperties);
 
         spawnerSaveManager.SetSpawnerStates(saveData.SpawnerSaveEntries);
 
@@ -74,9 +74,10 @@ public class SaveController : MonoBehaviour
 
         enemySaveManager.CreateEnemiesFromStates(saveData.EnemyStates);
 
-        debugAddItemUISaveManager.UpdateDebugAddItemUIUsingState(saveData.DebugAddItemUIState);
+        debugAddItemUISaveManager
+            .SetPropertiesFromSerializableState(saveData.DebugAddItemUIState);
 
-        chimp.SetPropertiesFromSerializableChimpState(saveData.ChimpState);
+        chimp.SetPropertiesFromSerializableState(saveData.ChimpState);
     }
 
     private void WriteSerializableObjectAsJsonToFile(object serializableObject, string filePath)
