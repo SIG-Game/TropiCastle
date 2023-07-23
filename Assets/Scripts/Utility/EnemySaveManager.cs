@@ -30,6 +30,9 @@ public class EnemySaveManager : MonoBehaviour
 
             spawnedEnemyController.SetUpEnemy(playerTransform, playerInventory);
 
+            spawnedEnemy.GetComponent<HealthController>()
+                .CurrentHealth = enemyState.Health;
+
             spawnedEnemy.GetComponent<Spawnable>()
                 .SetSpawnerUsingId<EnemySpawner>(enemyState.SpawnerId);
         }
