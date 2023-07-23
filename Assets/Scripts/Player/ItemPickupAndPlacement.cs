@@ -75,25 +75,27 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PickUpHoveredItem()
     {
+        ItemWithAmount hoveredItem = hoveredItemWorld.GetItem();
+
         bool canAddItem =
-            playerInventory.CanAddItem(hoveredItemWorld.Item, out int canAddAmount);
+            playerInventory.CanAddItem(hoveredItem, out int canAddAmount);
 
         if (canAddItem)
         {
-            playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItemWorld.Item,
+            playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItem,
                 itemSelectionController.SelectedItemIndex);
 
             Destroy(hoveredItemWorld.gameObject);
         }
         else if (canAddAmount != 0)
         {
-            ItemWithAmount itemToAdd = new ItemWithAmount(hoveredItemWorld.Item.itemData,
-                canAddAmount, hoveredItemWorld.Item.instanceProperties);
+            ItemWithAmount itemToAdd = new ItemWithAmount(hoveredItem.itemData,
+                canAddAmount, hoveredItem.instanceProperties);
 
             playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAdd,
                 itemSelectionController.SelectedItemIndex);
 
-            hoveredItemWorld.SetItemAmount(hoveredItemWorld.Item.amount - canAddAmount);
+            hoveredItemWorld.SetItemAmount(hoveredItem.amount - canAddAmount);
         }
         else
         {
@@ -129,7 +131,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public void UsePickupCursor()
     {
         if (hoveredItemWorld != null &&
-            !playerInventory.CanAddItem(hoveredItemWorld.Item, out int canAddAmount) &&
+            !playerInventory.CanAddItem(hoveredItemWorld.GetItem(), out int canAddAmount) &&
             canAddAmount == 0)
         {
             cursorController.Sprite = itemPickupArrowInventoryFull;

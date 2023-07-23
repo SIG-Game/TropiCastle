@@ -10,17 +10,6 @@ public class ItemWorld : MonoBehaviour
     [SerializeField] private TMP_Text amountText;
     [SerializeField] private bool logOnInteract;
 
-    public ItemWithAmount Item
-    {
-        get => item;
-        set
-        {
-            item = value;
-
-            SetUpUsingItem();
-        }
-    }
-
     private static readonly Dictionary<string, Type> itemNameToInteractableType =
         new Dictionary<string, Type>
     {
@@ -35,8 +24,11 @@ public class ItemWorld : MonoBehaviour
         spawnable = GetComponent<Spawnable>();
     }
 
-    private void SetUpUsingItem()
+    public void SetUpItemWorld(ItemWithAmount item,
+        ItemInteractableDependencies itemInteractableDependencies)
     {
+        this.item = item;
+
         GetComponent<SpriteRenderer>().sprite = item.itemData.sprite;
 
         if (item.itemData.hasCustomColliderSize)
@@ -49,6 +41,9 @@ public class ItemWorld : MonoBehaviour
         {
             gameObject.AddComponent(itemInteractableType);
 
+            GetComponent<ItemInteractable>()
+                .SetUpUsingDependencies(itemInteractableDependencies);
+
             gameObject.layer = LayerMask.NameToLayer("Interactable");
         }
 
@@ -59,10 +54,12 @@ public class ItemWorld : MonoBehaviour
 
     public void SetItemAmount(int amount)
     {
-        Item.amount = amount;
+        item.amount = amount;
 
         amountText.text = item.GetAmountText();
     }
+
+    public ItemWithAmount GetItem() => item;
 
     public SerializableItemWorldState GetSerializableState()
     {

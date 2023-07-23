@@ -1,15 +1,16 @@
-public class ChestItemInteractable : Interactable
+public class ChestItemInteractable : ItemInteractable
 {
     private Inventory chestInventory;
     private ItemWorld chestItemWorld;
     private ChestItemInstanceProperties chestItemInstanceProperties;
+    private ChestUIController chestUIController;
 
     private void Awake()
     {
         chestInventory = gameObject.AddComponent<Inventory>();
         chestItemWorld = GetComponent<ItemWorld>();
         chestItemInstanceProperties =
-            (ChestItemInstanceProperties)chestItemWorld.Item.instanceProperties;
+            (ChestItemInstanceProperties)chestItemWorld.GetItem().instanceProperties;
 
         chestInventory.InitializeItemListWithSize(
             ChestItemInstanceProperties.ChestInventorySize);
@@ -35,8 +36,15 @@ public class ChestItemInteractable : Interactable
 
     public override void Interact(PlayerController _)
     {
-        ChestUIController.Instance.SetChestInventory(chestInventory);
+        chestUIController.SetChestInventory(chestInventory);
 
-        ChestUIController.Instance.ShowChestUI();
+        chestUIController.ShowChestUI();
+    }
+
+    public override void SetUpUsingDependencies(
+        ItemInteractableDependencies itemInteractableDependencies)
+    {
+        chestUIController =
+            itemInteractableDependencies.GetChestUIController();
     }
 }

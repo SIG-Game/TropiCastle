@@ -7,18 +7,6 @@ public class ChestUIController : MonoBehaviour
     [SerializeField] private InventoryUIController chestInventoryUIController;
     [SerializeField] private InventoryUIManager inventoryUIManager;
 
-    public static ChestUIController Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    private void OnDestroy()
-    {
-        Instance = null;
-    }
-
     public void ShowChestUI()
     {
         inventoryUIManager.SetCurrentInventoryUIGameObjects(chestUIGameObjects);

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.AddressableAssets;
 
-public class CampfireItemInteractable : Interactable
+public class CampfireItemInteractable : ItemInteractable
 {
     private static IList<CampfireRecipeScriptableObject> campfireRecipes;
 
@@ -50,5 +50,10 @@ public class CampfireItemInteractable : Interactable
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
         }
+    }
+
+    public override void SetUpUsingDependencies(
+        ItemInteractableDependencies itemInteractableDependencies)
+    {
     }
 }

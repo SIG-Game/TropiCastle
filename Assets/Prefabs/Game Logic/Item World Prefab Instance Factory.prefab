@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1002700859095869323}
   - component: {fileID: 1002700859095869322}
+  - component: {fileID: 5010759513266974344}
   m_Layer: 0
   m_Name: Item World Prefab Instance Factory
   m_TagString: Untagged
@@ -46,5 +47,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemWorldPrefab: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
+  itemInteractableDependencies: {fileID: 5010759513266974344}
   itemWorldParent: {fileID: 0}
   itemWorldPrefabColliderExtents: {x: 0.2, y: 0.2}
+--- !u!114 &5010759513266974344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002700859095869321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b37e229d02c26464eba1245ee962ac7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chestUIController: {fileID: 0}
