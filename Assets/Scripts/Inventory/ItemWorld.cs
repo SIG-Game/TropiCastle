@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using static Inventory;
 
-public class ItemWorld : MonoBehaviour
+public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorldState>
 {
     [SerializeField] private ItemWithAmount item;
     [SerializeField] private TMP_Text amountText;
@@ -17,6 +17,7 @@ public class ItemWorld : MonoBehaviour
         { "Chest", typeof(ChestItemInteractable) }
     };
 
+    private ItemInteractableDependencies itemInteractableDependencies;
     private Spawnable spawnable;
 
     private void Awake()
@@ -26,6 +27,25 @@ public class ItemWorld : MonoBehaviour
 
     public void SetUpItemWorld(ItemWithAmount item,
         ItemInteractableDependencies itemInteractableDependencies)
+    {
+        SetItemInteractableDependencies(itemInteractableDependencies);
+        SetItem(item);
+    }
+
+    public void SetItemAmount(int amount)
+    {
+        item.amount = amount;
+
+        amountText.text = item.GetAmountText();
+    }
+
+    public void SetItemInteractableDependencies(
+        ItemInteractableDependencies itemInteractableDependencies)
+    {
+        this.itemInteractableDependencies = itemInteractableDependencies;
+    }
+
+    private void SetItem(ItemWithAmount item)
     {
         this.item = item;
 
@@ -52,13 +72,6 @@ public class ItemWorld : MonoBehaviour
         amountText.text = item.GetAmountText();
     }
 
-    public void SetItemAmount(int amount)
-    {
-        item.amount = amount;
-
-        amountText.text = item.GetAmountText();
-    }
-
     public ItemWithAmount GetItem() => item;
 
     public SerializableItemWorldState GetSerializableState()
@@ -74,6 +87,26 @@ public class ItemWorld : MonoBehaviour
         };
 
         return serializableState;
+    }
+
+    public void SetPropertiesFromSerializableState(
+        SerializableItemWorldState serializableState)
+    {
+        transform.position = serializableState.Position;
+
+        ItemScriptableObject itemScriptableObject =
+            Resources.Load<ItemScriptableObject>($"Items/{serializableState.Item.ItemName}");
+
+        ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
+            serializableState.Item.Amount,
+            serializableState.Item.InstanceProperties);
+
+        SetItem(item);
+
+        gameObject.name = serializableState.GameObjectName;
+
+        GetComponent<Spawnable>()
+            .SetSpawnerUsingId<ItemSpawner>(serializableState.SpawnerId);
     }
 
     [Serializable]

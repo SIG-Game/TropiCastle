@@ -47,19 +47,11 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
     public void SpawnItemWorldFromState(SerializableItemWorldState itemWorldState)
     {
-        ItemScriptableObject itemScriptableObject =
-            Resources.Load<ItemScriptableObject>($"Items/{itemWorldState.Item.ItemName}");
+        GameObject spawnedGameObject = Instantiate(itemWorldPrefab, itemWorldParent);
+        ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
-        ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
-            itemWorldState.Item.Amount,
-            itemWorldState.Item.InstanceProperties);
-
-        ItemWorld spawnedItemWorld = SpawnItemWorld(itemWorldState.Position, item);
-
-        spawnedItemWorld.gameObject.name = itemWorldState.GameObjectName;
-
-        spawnedItemWorld.GetComponent<Spawnable>()
-            .SetSpawnerUsingId<ItemSpawner>(itemWorldState.SpawnerId);
+        spawnedItemWorld.SetItemInteractableDependencies(itemInteractableDependencies);
+        spawnedItemWorld.SetPropertiesFromSerializableState(itemWorldState);
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)
