@@ -178,8 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc31599282b18304680eaba8ac3df522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightedSlotColor: {r: 0.41568628, g: 0.61960787, b: 0.68235296, a: 1}
-  unhighlightedSlotColor: {r: 0.551869, g: 0.7941783, b: 0.8679245, a: 1}
+  inventory: {fileID: 0}
   itemSlotControllers:
   - {fileID: 1933860604167188834}
   - {fileID: 1933860605139370521}
@@ -191,9 +190,10 @@ MonoBehaviour:
   - {fileID: 1933860603442842140}
   - {fileID: 1933860603901713551}
   - {fileID: 1933860605246012561}
-  inventory: {fileID: 0}
   itemSelectionController: {fileID: 0}
-  inventoryUIController: {fileID: 0}
+  highlightedSlotColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
+  unhighlightedSlotColor: {r: 1, g: 1, b: 1, a: 1}
+  inventoryUIManager: {fileID: 0}
 --- !u!1001 &7402690958086517192
 PrefabInstance:
   m_ObjectHideFlags: 0

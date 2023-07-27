@@ -3037,13 +3037,14 @@ MonoBehaviour:
   - {fileID: 8774762379505792207}
   - {fileID: 8774762378629927820}
   itemSelectionController: {fileID: 0}
-  highlightedSlotColor: {r: 0.41568628, g: 0.61960787, b: 0.68235296, a: 1}
-  unhighlightedSlotColor: {r: 0.551869, g: 0.7941783, b: 0.8679245, a: 1}
+  highlightedSlotColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
+  unhighlightedSlotColor: {r: 1, g: 1, b: 1, a: 1}
   playerInventoryUIGameObjects:
   - {fileID: 8774762379877637705}
   - {fileID: 0}
   - {fileID: 0}
   inventoryUIManager: {fileID: 0}
+  playerActionDisablingUIManager: {fileID: 0}
 --- !u!114 &4477077557678837287
 MonoBehaviour:
   m_ObjectHideFlags: 0

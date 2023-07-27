@@ -1069,8 +1069,8 @@ MonoBehaviour:
   - {fileID: 6696742861422036601}
   - {fileID: 6696742860794454346}
   itemSelectionController: {fileID: 0}
-  highlightedSlotColor: {r: 0.41568628, g: 0.61960787, b: 0.68235296, a: 1}
-  unhighlightedSlotColor: {r: 0.5529412, g: 0.79607844, b: 0.8666667, a: 1}
+  highlightedSlotColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
+  unhighlightedSlotColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &7030300117724083227
 GameObject:
   m_ObjectHideFlags: 0
