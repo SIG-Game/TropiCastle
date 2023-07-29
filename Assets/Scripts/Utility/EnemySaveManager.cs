@@ -2,28 +2,29 @@ using System.Linq;
 using UnityEngine;
 using static EnemyController;
 
-public class EnemySaveManager : MonoBehaviour
+public class EnemySaveManager : MonoBehaviour,
+    ISaveManager<SerializableEnemyState>
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
 
-    public SerializableEnemyState[] GetEnemyStates()
+    public SerializableEnemyState[] GetStates()
     {
         EnemyController[] enemyControllers = FindObjectsOfType<EnemyController>();
 
-        SerializableEnemyState[] enemyStates =
+        SerializableEnemyState[] states =
             enemyControllers.Select(x => x.GetSerializableState()).ToArray();
 
-        return enemyStates;
+        return states;
     }
 
-    public void CreateEnemiesFromStates(SerializableEnemyState[] enemyStates)
+    public void CreateObjectsFromStates(SerializableEnemyState[] states)
     {
-        foreach (SerializableEnemyState enemyState in enemyStates)
+        foreach (SerializableEnemyState state in states)
         {
             GameObject spawnedEnemy =
-                Instantiate(enemyPrefab, enemyState.Position, Quaternion.identity);
+                Instantiate(enemyPrefab, state.Position, Quaternion.identity);
 
             EnemyController spawnedEnemyController =
                 spawnedEnemy.GetComponent<EnemyController>();
@@ -31,10 +32,10 @@ public class EnemySaveManager : MonoBehaviour
             spawnedEnemyController.SetUpEnemy(playerTransform, playerInventory);
 
             spawnedEnemy.GetComponent<HealthController>()
-                .CurrentHealth = enemyState.Health;
+                .CurrentHealth = state.Health;
 
             spawnedEnemy.GetComponent<Spawnable>()
-                .SetSpawnerUsingId<EnemySpawner>(enemyState.SpawnerId);
+                .SetSpawnerUsingId<EnemySpawner>(state.SpawnerId);
         }
     }
 }

@@ -43,8 +43,8 @@ public class SaveController : MonoBehaviour
             SerializableInventory = playerInventory.GetSerializableState(),
             SerializablePlayerProperties = playerController.GetSerializableState(),
             SpawnerSaveEntries = spawnerSaveManager.GetSpawnerSaveEntries(),
-            ItemWorldStates = itemWorldSaveManager.GetItemWorldStates(),
-            EnemyStates = enemySaveManager.GetEnemyStates(),
+            ItemWorldStates = itemWorldSaveManager.GetStates(),
+            EnemyStates = enemySaveManager.GetStates(),
             DebugAddItemUIState = debugAddItemUISaveManager.GetSerializableState(),
             ChimpState = chimp.GetSerializableState()
         };
@@ -70,9 +70,9 @@ public class SaveController : MonoBehaviour
 
         spawnerSaveManager.SetSpawnerStates(saveData.SpawnerSaveEntries);
 
-        itemWorldSaveManager.CreateItemWorldsFromStates(saveData.ItemWorldStates);
+        itemWorldSaveManager.CreateObjectsFromStates(saveData.ItemWorldStates);
 
-        enemySaveManager.CreateEnemiesFromStates(saveData.EnemyStates);
+        enemySaveManager.CreateObjectsFromStates(saveData.EnemyStates);
 
         debugAddItemUISaveManager
             .SetPropertiesFromSerializableState(saveData.DebugAddItemUIState);

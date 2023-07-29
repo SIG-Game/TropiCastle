@@ -2,23 +2,24 @@ using System.Linq;
 using UnityEngine;
 using static ItemWorld;
 
-public class ItemWorldSaveManager : MonoBehaviour
+public class ItemWorldSaveManager : MonoBehaviour,
+    ISaveManager<SerializableItemWorldState>
 {
-    public SerializableItemWorldState[] GetItemWorldStates()
+    public SerializableItemWorldState[] GetStates()
     {
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
 
-        SerializableItemWorldState[] itemWorldStates =
+        SerializableItemWorldState[] states =
             itemWorlds.Select(x => x.GetSerializableState()).ToArray();
 
-        return itemWorldStates;
+        return states;
     }
 
-    public void CreateItemWorldsFromStates(SerializableItemWorldState[] itemWorldStates)
+    public void CreateObjectsFromStates(SerializableItemWorldState[] states)
     {
-        foreach (SerializableItemWorldState itemWorldState in itemWorldStates)
+        foreach (SerializableItemWorldState state in states)
         {
-            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorldFromState(itemWorldState);
+            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorldFromState(state);
         }
     }
 }
