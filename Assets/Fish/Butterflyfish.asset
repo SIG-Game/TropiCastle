@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Butterflyfish
   m_EditorClassIdentifier: 
   species: Butterflyfish
-  description: 
+  description: This fish is bugging me...
   speed: 270
   probabilityWeight: 0.25
   fishUIColor: {r: 1, g: 0.8, b: 0.09803922, a: 1}
