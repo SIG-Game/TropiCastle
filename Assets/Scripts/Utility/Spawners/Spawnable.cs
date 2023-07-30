@@ -7,13 +7,6 @@ public class Spawnable : MonoBehaviour
 {
     private PrefabSpawner spawner;
 
-    private static readonly Dictionary<Type, PrefabSpawner[]> spawnerCache;
-
-    static Spawnable()
-    {
-        spawnerCache = new Dictionary<Type, PrefabSpawner[]>();
-    }
-
     private void OnDestroy()
     {
         if (spawner != null)
@@ -35,12 +28,7 @@ public class Spawnable : MonoBehaviour
             return;
         }
 
-        if (!spawnerCache.ContainsKey(typeof(TSpawner)))
-        {
-            spawnerCache[typeof(TSpawner)] = FindObjectsOfType<TSpawner>();
-        }
-
-        PrefabSpawner[] spawners = spawnerCache[typeof(TSpawner)];
+        PrefabSpawner[] spawners = FindObjectsOfType<TSpawner>();
 
         PrefabSpawner spawner = spawners.FirstOrDefault(
             x => x.GetSpawnerId() == spawnerId);
@@ -48,6 +36,11 @@ public class Spawnable : MonoBehaviour
         if (spawner != null)
         {
             SetSpawner(spawner);
+        }
+        else
+        {
+            Debug.LogWarning($"Spawner of type {typeof(TSpawner).Name} " +
+                $"with spawner ID {spawnerId} not found");
         }
     }
 
