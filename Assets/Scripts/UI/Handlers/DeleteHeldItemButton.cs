@@ -21,7 +21,7 @@ public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
         {
             if (heldItemController.HoldingItem())
             {
-                heldItemController.HideHeldItem();
+                heldItemController.HideHeldItemUI();
 
                 playerInventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
             }

@@ -226,11 +226,6 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
         OnItemChangedAtIndex(item, index);
     }
 
-    public void InvokeOnItemChangedAtIndexEvent(ItemWithAmount item, int index)
-    {
-        OnItemChangedAtIndex(item, index);
-    }
-
     private int FindStackIndex(ItemWithAmount item) =>
         itemList.FindIndex(x => x.itemData.name == item.itemData.name &&
             x.amount < x.itemData.stackSize);

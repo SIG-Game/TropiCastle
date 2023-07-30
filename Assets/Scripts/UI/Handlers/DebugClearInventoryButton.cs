@@ -17,7 +17,7 @@ public class DebugClearInventoryButton : MonoBehaviour
 
         if (InventoryUIHeldItemController.Instance.HoldingItem())
         {
-            InventoryUIHeldItemController.Instance.HideHeldItem();
+            InventoryUIHeldItemController.Instance.HideHeldItemUI();
         }
     }
 }
