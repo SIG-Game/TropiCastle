@@ -23,19 +23,14 @@ public class EnemySaveManager : MonoBehaviour,
     {
         foreach (SerializableEnemyState state in states)
         {
-            GameObject spawnedEnemy =
-                Instantiate(enemyPrefab, state.Position, Quaternion.identity);
+            GameObject spawnedEnemy = Instantiate(enemyPrefab);
 
             EnemyController spawnedEnemyController =
                 spawnedEnemy.GetComponent<EnemyController>();
 
             spawnedEnemyController.SetUpEnemy(playerTransform, playerInventory);
 
-            spawnedEnemy.GetComponent<HealthController>()
-                .CurrentHealth = state.Health;
-
-            spawnedEnemy.GetComponent<Spawnable>()
-                .SetSpawnerUsingId<EnemySpawner>(state.SpawnerId);
+            spawnedEnemyController.SetPropertiesFromSerializableState(state);
         }
     }
 }

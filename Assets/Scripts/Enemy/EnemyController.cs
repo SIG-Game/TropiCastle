@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour,
+    ISavable<EnemyController.SerializableEnemyState>
 {
     [SerializeField] private float speed;
     [SerializeField] private int playerDamageAmount;
@@ -254,6 +254,17 @@ public class EnemyController : MonoBehaviour
         };
 
         return serializableState;
+    }
+
+    public void SetPropertiesFromSerializableState(
+        SerializableEnemyState serializableState)
+    {
+        transform.position = serializableState.Position;
+
+        healthController.CurrentHealth = serializableState.Health;
+
+        GetComponent<Spawnable>()
+            .SetSpawnerUsingId<EnemySpawner>(serializableState.SpawnerId);
     }
 
     [Serializable]
