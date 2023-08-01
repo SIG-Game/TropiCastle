@@ -11,11 +11,11 @@ public class DefaultItemPickupAndPlacementState : BaseItemPickupAndPlacementStat
 
     public override void StateUpdate()
     {
-        if (itemPickupAndPlacement.CursorIsOverItemWorld())
+        if (itemPickupAndPlacement.CursorIsOverItemWorld)
         {
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PickupState);
         }
-        else if (itemPickupAndPlacement.PlacingItem())
+        else if (itemPickupAndPlacement.PlacingItem)
         {
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PlacementState);
         }

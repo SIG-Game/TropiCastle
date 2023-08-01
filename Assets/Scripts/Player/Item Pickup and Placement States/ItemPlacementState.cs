@@ -19,7 +19,7 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
 
     public override void StateUpdate()
     {
-        if (itemPickupAndPlacement.CursorIsOverItemWorld())
+        if (itemPickupAndPlacement.CursorIsOverItemWorld)
         {
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PickupState);
 
@@ -30,9 +30,9 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
 
         if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
-            if (itemPickupAndPlacement.CanPlaceItemAtCursorPosition())
+            if (itemPickupAndPlacement.CanPlaceItemAtCursorPosition)
             {
-                itemPickupAndPlacement.PlaceSelectedPlayerHotbarItemAtCursorPosition();
+                itemPickupAndPlacement.PlaceSelectedItemAtCursorPosition();
             }
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
@@ -41,7 +41,7 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
         }
 
         // Cancel item placement when use item button is pressed while placing an item
-        if (itemPickupAndPlacement.PlacingItem() &&
+        if (itemPickupAndPlacement.PlacingItem &&
             InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame())
         {
             itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;

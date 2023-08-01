@@ -33956,6 +33956,11 @@ PrefabInstance:
       objectReference: {fileID: 572276101}
     - target: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
         type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
       propertyPath: cursorController
       value: 
       objectReference: {fileID: 1812985303}

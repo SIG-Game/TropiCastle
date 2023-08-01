@@ -18,21 +18,21 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
 
         PickUpHoveredItemUsingInput();
 
-        previousHoveredItemWorld = itemPickupAndPlacement.GetHoveredItemWorld();
+        previousHoveredItemWorld = itemPickupAndPlacement.HoveredItemWorld;
     }
 
     public override void StateUpdate()
     {
-        if (itemPickupAndPlacement.GetHoveredItemWorld() != previousHoveredItemWorld)
+        if (itemPickupAndPlacement.HoveredItemWorld != previousHoveredItemWorld)
         {
             itemPickupAndPlacement.UsePickupCursor();
         }
 
-        if (itemPickupAndPlacement.CursorIsOverItemWorld())
+        if (itemPickupAndPlacement.CursorIsOverItemWorld)
         {
             PickUpHoveredItemUsingInput();
         }
-        else if (itemPickupAndPlacement.PlacingItem())
+        else if (itemPickupAndPlacement.PlacingItem)
         {
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PlacementState);
         }
@@ -41,25 +41,25 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
         }
 
-        previousHoveredItemWorld = itemPickupAndPlacement.GetHoveredItemWorld();
+        previousHoveredItemWorld = itemPickupAndPlacement.HoveredItemWorld;
     }
 
     private void PickUpHoveredItemUsingInput()
     {
         bool holdingPickupInputAndNotPlacingItem = itemPickupAndPlacementAction.IsPressed() &&
-            !itemPickupAndPlacement.PlacingItem();
+            !itemPickupAndPlacement.PlacingItem;
 
         if (itemPickupAndPlacementAction.WasPressedThisFrame() ||
             holdingPickupInputAndNotPlacingItem)
         {
-            itemPickupAndPlacement.PickUpHoveredItem();
+            itemPickupAndPlacement.AttemptToPickUpHoveredItem();
 
             // Prevent held input from being used for item placement
             itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;
         }
         else if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
-            itemPickupAndPlacement.PickUpHoveredItem();
+            itemPickupAndPlacement.AttemptToPickUpHoveredItem();
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
         }

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class ItemPickupAndPlacement : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
+    [SerializeField] private Inventory playerInventory;
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private CursorController cursorController;
@@ -15,25 +16,22 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private InputActionReference itemPickupAndPlacementActionReference;
 
     public bool WaitingForInputReleaseBeforePlacement { get; set; }
+    public ItemWorld HoveredItemWorld { get; private set; }
+    public bool CanPlaceItemAtCursorPosition { get; private set; }
+    public bool CursorIsOverItemWorld { get; private set; }
+    public bool PlacingItem { get; private set; }
 
     public DefaultItemPickupAndPlacementState DefaultState { get; private set; }
     public ItemPickupState PickupState { get; private set; }
     public ItemPlacementState PlacementState { get; private set; }
 
     private BaseItemPickupAndPlacementState currentState;
-    private Inventory playerInventory;
     private Vector2 cursorPoint;
-    private ItemWorld hoveredItemWorld;
     private InputAction itemPickupAndPlacementAction;
-    private bool canPlaceItemAtCursorPosition;
-    private bool cursorIsOverItemWorld;
-    private bool placingItem;
 
     private void Awake()
     {
         WaitingForInputReleaseBeforePlacement = false;
-
-        playerInventory = player.GetInventory();
 
         itemPickupAndPlacementAction = itemPickupAndPlacementActionReference.action;
     }
@@ -68,44 +66,38 @@ public class ItemPickupAndPlacement : MonoBehaviour
             return;
         }
 
-        UpdateInstanceVariables();
+        cursorPoint = cursorController.GetWorldPosition();
+        UpdateHoveredItemWorld();
+        UpdateCanPlaceItemAtCursorPosition();
+        UpdatePlacingItem();
 
         currentState.StateUpdate();
     }
 
-    public void PickUpHoveredItem()
+    public void AttemptToPickUpHoveredItem()
     {
-        ItemWithAmount hoveredItem = hoveredItemWorld.GetItem();
+        ItemWithAmount hoveredItem = HoveredItemWorld.GetItem();
 
         bool canAddItem =
             playerInventory.CanAddItem(hoveredItem, out int canAddAmount);
+        bool canPartiallyAddItemStack = canAddAmount != 0;
 
         if (canAddItem)
         {
-            playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(hoveredItem,
-                itemSelectionController.SelectedItemIndex);
-
-            Destroy(hoveredItemWorld.gameObject);
+            AddItemWorldToPlayerInventory(HoveredItemWorld);
         }
-        else if (canAddAmount != 0)
+        else if (canPartiallyAddItemStack)
         {
-            ItemWithAmount itemToAdd = new ItemWithAmount(hoveredItem.itemData,
-                canAddAmount, hoveredItem.instanceProperties);
-
-            playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAdd,
-                itemSelectionController.SelectedItemIndex);
-
-            hoveredItemWorld.SetItemAmount(hoveredItem.amount - canAddAmount);
+            PartiallyAddItemWorldStackToPlayerInventory(
+                HoveredItemWorld, canAddAmount);
         }
         else
         {
             InventoryFullUIController.Instance.ShowInventoryFullText();
-
-            return;
         }
     }
 
-    public void PlaceSelectedPlayerHotbarItemAtCursorPosition()
+    public void PlaceSelectedItemAtCursorPosition()
     {
         ItemWithAmount itemToPlace = player.GetSelectedItem();
         int itemToPlaceIndex = player.GetSelectedItemIndex();
@@ -130,8 +122,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePickupCursor()
     {
-        if (hoveredItemWorld != null &&
-            !playerInventory.CanAddItem(hoveredItemWorld.GetItem(), out int canAddAmount) &&
+        if (HoveredItemWorld != null &&
+            !playerInventory.CanAddItem(HoveredItemWorld.GetItem(), out int canAddAmount) &&
             canAddAmount == 0)
         {
             cursorController.Sprite = itemPickupArrowInventoryFull;
@@ -146,7 +138,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         ItemWithAmount selectedItem = player.GetSelectedItem();
 
-        Color cursorBackgroundColor = canPlaceItemAtCursorPosition ?
+        Color cursorBackgroundColor = CanPlaceItemAtCursorPosition ?
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor;
 
         Vector2 selectedItemColliderSize =
@@ -159,34 +151,62 @@ public class ItemPickupAndPlacement : MonoBehaviour
         playerItemInWorld.ShowCharacterItemInWorld(selectedItem);
     }
 
-    private void UpdateInstanceVariables()
+    private void UpdateHoveredItemWorld()
     {
-        cursorPoint = cursorController.GetWorldPosition();
-
         Collider2D cursorOverlapCollider = Physics2D.OverlapPoint(cursorPoint);
 
         bool cursorIsOverCollider = cursorOverlapCollider != null;
-        cursorIsOverItemWorld = cursorIsOverCollider && cursorOverlapCollider.CompareTag("Item World");
+        CursorIsOverItemWorld = cursorIsOverCollider && cursorOverlapCollider.CompareTag("Item World");
 
-        if (cursorIsOverItemWorld)
+        if (CursorIsOverItemWorld)
         {
-            hoveredItemWorld = cursorOverlapCollider.GetComponent<ItemWorld>();
+            HoveredItemWorld = cursorOverlapCollider.GetComponent<ItemWorld>();
         }
         else
         {
-            hoveredItemWorld = null;
+            HoveredItemWorld = null;
         }
+    }
 
+    private void UpdateCanPlaceItemAtCursorPosition()
+    {
         ItemScriptableObject selectedItemData = player.GetSelectedItem().itemData;
 
         Vector2 selectedItemColliderExtents =
             ItemWorldPrefabInstanceFactory.GetItemColliderExtents(selectedItemData);
 
-        canPlaceItemAtCursorPosition =
-             SpawnColliderHelper.CanSpawnColliderAtPosition(cursorPoint, selectedItemColliderExtents);
+        CanPlaceItemAtCursorPosition = SpawnColliderHelper.CanSpawnColliderAtPosition(
+            cursorPoint, selectedItemColliderExtents);
+    }
 
-        placingItem = itemPickupAndPlacementAction.IsPressed() &&
+    private void UpdatePlacingItem()
+    {
+        ItemScriptableObject selectedItemData = player.GetSelectedItem().itemData;
+
+        PlacingItem = itemPickupAndPlacementAction.IsPressed() &&
             !WaitingForInputReleaseBeforePlacement && selectedItemData.name != "Empty";
+    }
+
+    private void AddItemWorldToPlayerInventory(ItemWorld itemWorld)
+    {
+        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
+            itemWorld.GetItem(), itemSelectionController.SelectedItemIndex);
+
+        Destroy(itemWorld.gameObject);
+    }
+
+    private void PartiallyAddItemWorldStackToPlayerInventory(
+        ItemWorld itemWorld, int amountToAdd)
+    {
+        ItemWithAmount item = itemWorld.GetItem();
+
+        ItemWithAmount itemToAdd = new ItemWithAmount(item.itemData,
+            amountToAdd, item.instanceProperties);
+
+        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAdd,
+            itemSelectionController.SelectedItemIndex);
+
+        itemWorld.SetItemAmount(item.amount - amountToAdd);
     }
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)
@@ -195,12 +215,4 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState = newState;
         currentState.StateEnter();
     }
-
-    public bool CanPlaceItemAtCursorPosition() => canPlaceItemAtCursorPosition;
-
-    public bool CursorIsOverItemWorld() => cursorIsOverItemWorld;
-
-    public bool PlacingItem() => placingItem;
-
-    public ItemWorld GetHoveredItemWorld() => hoveredItemWorld;
 }
