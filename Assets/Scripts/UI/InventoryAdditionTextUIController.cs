@@ -2,9 +2,11 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class InventoryAdditionTextUIController : CanvasGroupAlphaInterpolator
+public class InventoryAdditionTextUIController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI inventoryAdditionText;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private CanvasGroupAlphaInterpolator canvasGroupAlphaInterpolator;
     [SerializeField] private float waitTimeBeforeFadeOutSeconds;
 
     private InventoryAdditionTextUISpawner spawner;
@@ -13,22 +15,25 @@ public class InventoryAdditionTextUIController : CanvasGroupAlphaInterpolator
     private string itemName;
     private int itemAmount;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        beforeFadeOutWaitForSeconds =
+            new WaitForSeconds(waitTimeBeforeFadeOutSeconds);
 
-        beforeFadeOutWaitForSeconds = new WaitForSeconds(waitTimeBeforeFadeOutSeconds);
+        waitThenStartFadingOutCoroutineObject =
+            StartCoroutine(WaitThenStartFadingOutCoroutine());
 
-        waitThenStartFadingOutCoroutineObject = StartCoroutine(WaitThenStartFadingOut());
-
-        TargetAlpha = 1f;
+        canvasGroupAlphaInterpolator.TargetAlpha = 1f;
     }
 
-    protected override void Update()
+    // Must run before CanvasGroupAlphaInterpolator Update method to
+    // prevent gameObject from being destroyed on the frame that
+    // canvasGroupAlphaInterpolator.TargetAlpha is set to 0f
+    private void Update()
     {
-        base.Update();
-
-        if (canvasGroup.alpha == 0f && canvasGroup.alpha == TargetAlpha)
+        bool fadedOut = canvasGroup.alpha == 0f &&
+            canvasGroup.alpha == canvasGroupAlphaInterpolator.TargetAlpha;
+        if (fadedOut)
         {
             Destroy(gameObject);
         }
@@ -39,11 +44,11 @@ public class InventoryAdditionTextUIController : CanvasGroupAlphaInterpolator
         spawner.OnAdditionTextDestroyed(itemName);
     }
 
-    private IEnumerator WaitThenStartFadingOut()
+    private IEnumerator WaitThenStartFadingOutCoroutine()
     {
         yield return beforeFadeOutWaitForSeconds;
 
-        TargetAlpha = 0f;
+        canvasGroupAlphaInterpolator.TargetAlpha = 0f;
     }
 
     public void UpdateWithItem(ItemWithAmount item)
@@ -87,9 +92,10 @@ public class InventoryAdditionTextUIController : CanvasGroupAlphaInterpolator
             StopCoroutine(waitThenStartFadingOutCoroutineObject);
         }
 
-        waitThenStartFadingOutCoroutineObject = StartCoroutine(WaitThenStartFadingOut());
+        waitThenStartFadingOutCoroutineObject =
+            StartCoroutine(WaitThenStartFadingOutCoroutine());
 
-        TargetAlpha = 1f;
+        canvasGroupAlphaInterpolator.TargetAlpha = 1f;
     }
 
     public void SetSpawner(InventoryAdditionTextUISpawner spawner)

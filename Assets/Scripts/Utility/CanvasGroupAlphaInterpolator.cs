@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class CanvasGroupAlphaInterpolator : MonoBehaviour
 {
-    [SerializeField] protected CanvasGroup canvasGroup;
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float alphaChangeSpeed;
 
-    protected float TargetAlpha { get; set; }
+    public float TargetAlpha { get; set; }
 
-    protected virtual void Awake()
+    private void Awake()
     {
         TargetAlpha = canvasGroup.alpha;
     }
 
-    protected virtual void Update()
+    private void Update()
     {
         if (canvasGroup.alpha != TargetAlpha)
         {

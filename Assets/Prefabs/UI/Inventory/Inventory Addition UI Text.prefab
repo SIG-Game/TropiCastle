@@ -264,6 +264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7270180041224996939}
   - component: {fileID: 4731664206800806952}
+  - component: {fileID: 7118268095899399866}
   - component: {fileID: 7721384998528140196}
   m_Layer: 5
   m_Name: Inventory Addition UI Text
@@ -307,7 +308,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryAdditionText: {fileID: 7844876365473165838}
   canvasGroup: {fileID: 7721384998528140196}
+  canvasGroupAlphaInterpolator: {fileID: 7118268095899399866}
   waitTimeBeforeFadeOutSeconds: 2
+--- !u!114 &7118268095899399866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8307171221807753259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa0092cb5d464a44b4ab441afb8fcb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 7721384998528140196}
   alphaChangeSpeed: 8
 --- !u!225 &7721384998528140196
 CanvasGroup:
