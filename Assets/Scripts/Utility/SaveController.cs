@@ -7,7 +7,7 @@ using static EnemyController;
 using static Inventory;
 using static ItemWorld;
 using static PlayerController;
-using static SpawnerSaveManager;
+using static PrefabSpawner;
 
 public class SaveController : MonoBehaviour
 {
@@ -42,7 +42,7 @@ public class SaveController : MonoBehaviour
         {
             SerializableInventory = playerInventory.GetSerializableState(),
             SerializablePlayerProperties = playerController.GetSerializableState(),
-            SpawnerSaveEntries = spawnerSaveManager.GetSpawnerSaveEntries(),
+            SpawnerStates = spawnerSaveManager.GetStates(),
             ItemWorldStates = itemWorldSaveManager.GetStates(),
             EnemyStates = enemySaveManager.GetStates(),
             DebugAddItemUIState = debugAddItemUISaveManager.GetSerializableState(),
@@ -68,7 +68,7 @@ public class SaveController : MonoBehaviour
         playerController
             .SetPropertiesFromSerializableState(saveData.SerializablePlayerProperties);
 
-        spawnerSaveManager.SetSpawnerStates(saveData.SpawnerSaveEntries);
+        spawnerSaveManager.CreateObjectsFromStates(saveData.SpawnerStates);
 
         itemWorldSaveManager.CreateObjectsFromStates(saveData.ItemWorldStates);
 
@@ -111,7 +111,7 @@ public class SaveController : MonoBehaviour
     {
         public SerializableInventory SerializableInventory;
         public SerializablePlayerProperties SerializablePlayerProperties;
-        public SpawnerSaveEntry[] SpawnerSaveEntries;
+        public SerializableSpawnerState[] SpawnerStates;
         public SerializableItemWorldState[] ItemWorldStates;
         public SerializableEnemyState[] EnemyStates;
         public SerializableDebugAddItemUIState DebugAddItemUIState;

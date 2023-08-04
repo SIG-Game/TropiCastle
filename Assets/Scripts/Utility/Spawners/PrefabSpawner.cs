@@ -149,6 +149,7 @@ public class PrefabSpawner : MonoBehaviour,
     {
         var serializableState = new SerializableSpawnerState
         {
+            SpawnerId = spawnerId,
             NumberOfSpawnedPrefabs = numPrefabs,
             SpawnTimer = spawnTimer,
             WaitBeforeFirstSpawnCompleted = waitBeforeFirstSpawnCompleted
@@ -160,6 +161,7 @@ public class PrefabSpawner : MonoBehaviour,
     public void SetPropertiesFromSerializableState(
         SerializableSpawnerState serializableState)
     {
+        spawnerId = serializableState.SpawnerId;
         numPrefabs = serializableState.NumberOfSpawnedPrefabs;
         spawnTimer = serializableState.SpawnTimer;
         waitBeforeFirstSpawnCompleted = serializableState.WaitBeforeFirstSpawnCompleted;
@@ -168,6 +170,7 @@ public class PrefabSpawner : MonoBehaviour,
     [Serializable]
     public class SerializableSpawnerState
     {
+        public int SpawnerId;
         public int NumberOfSpawnedPrefabs;
         public float SpawnTimer;
         public bool WaitBeforeFirstSpawnCompleted;

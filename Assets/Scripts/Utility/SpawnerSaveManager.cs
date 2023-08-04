@@ -1,9 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static PrefabSpawner;
 
-public class SpawnerSaveManager : MonoBehaviour
+public class SpawnerSaveManager : MonoBehaviour,
+    ISaveManager<SerializableSpawnerState>
 {
     private PrefabSpawner[] prefabSpawners;
 
@@ -12,42 +13,24 @@ public class SpawnerSaveManager : MonoBehaviour
         prefabSpawners = FindObjectsOfType<PrefabSpawner>();
     }
 
-    public SpawnerSaveEntry[] GetSpawnerSaveEntries()
+    public SerializableSpawnerState[] GetStates()
     {
-        SpawnerSaveEntry[] spawnerSaveEntries =
-            prefabSpawners.Select(GetSpawnerSaveEntryFromSpawner).ToArray();
+        SerializableSpawnerState[] spawnerStates =
+            prefabSpawners.Select(x => x.GetSerializableState()).ToArray();
 
-        return spawnerSaveEntries;
+        return spawnerStates;
     }
 
-    public void SetSpawnerStates(SpawnerSaveEntry[] spawnerSaveEntries)
+    public void CreateObjectsFromStates(SerializableSpawnerState[] states)
     {
         List<PrefabSpawner> spawners = FindObjectsOfType<PrefabSpawner>().ToList();
 
-        foreach (var spawnerSaveEntry in spawnerSaveEntries)
+        foreach (SerializableSpawnerState state in states)
         {
             PrefabSpawner spawner = spawners.Find(
-                x => x.GetSpawnerId() == spawnerSaveEntry.SpawnerId);
+                x => x.GetSpawnerId() == state.SpawnerId);
 
-            spawner.SetPropertiesFromSerializableState(spawnerSaveEntry.State);
+            spawner.SetPropertiesFromSerializableState(state);
         }
-    }
-
-    private SpawnerSaveEntry GetSpawnerSaveEntryFromSpawner(PrefabSpawner spawner)
-    {
-        var spawnerSaveEntry = new SpawnerSaveEntry
-        {
-            SpawnerId = spawner.GetSpawnerId(),
-            State = spawner.GetSerializableState()
-        };
-
-        return spawnerSaveEntry;
-    }
-
-    [Serializable]
-    public class SpawnerSaveEntry
-    {
-        public int SpawnerId;
-        public PrefabSpawner.SerializableSpawnerState State;
     }
 }
