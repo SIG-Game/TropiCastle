@@ -251,6 +251,45 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
         }
     }
 
+    public void TryAddItem(ItemWithAmount item, out int amountAdded)
+    {
+        Action<ItemWithAmount> addItem = (item) => AddItem(item);
+
+        TryAddItem(item, addItem, out amountAdded);
+    }
+
+    public void TryAddItemAtIndexWithFallbackToFirstEmptyIndex(
+        ItemWithAmount item, int index, out int amountAdded)
+    {
+        Action<ItemWithAmount> addItem =
+           (item) => AddItemAtIndexWithFallbackToFirstEmptyIndex(item, index);
+
+        TryAddItem(item, addItem, out amountAdded);
+    }
+
+    private void TryAddItem(ItemWithAmount item,
+        Action<ItemWithAmount> addItem, out int amountAdded)
+    {
+        if (!CanAddItem(item, out int canAddAmount))
+        {
+            if (canAddAmount != 0)
+            {
+                ItemWithAmount itemToAdd = new ItemWithAmount(
+                    item.itemData, canAddAmount, item.instanceProperties);
+
+                addItem(itemToAdd);
+            }
+
+            amountAdded = canAddAmount;
+        }
+        else
+        {
+            addItem(item);
+
+            amountAdded = item.amount;
+        }
+    }
+
     public void DecrementItemDurabilityAtIndex(int index)
     {
         ItemWithAmount breakableItem = GetItemAtIndex(index);

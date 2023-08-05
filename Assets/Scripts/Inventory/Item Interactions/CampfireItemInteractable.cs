@@ -36,18 +36,21 @@ public class CampfireItemInteractable : ItemInteractable
         Inventory playerInventory = playerController.GetInventory();
         ItemWithAmount resultItem = selectedItemCampfireRecipe.resultItem;
 
-        bool inputItemSlotWillBeEmptied = selectedItem.amount == 1;
-        if (inputItemSlotWillBeEmptied || playerInventory.CanAddItem(resultItem))
-        {
-            int selectedItemIndex = playerController.GetSelectedItemIndex();
+        int selectedItemIndex = playerController.GetSelectedItemIndex();
 
-            playerInventory.DecrementItemStackAtIndex(selectedItemIndex);
+        playerInventory.DecrementItemStackAtIndex(selectedItemIndex);
 
-            playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
-                resultItem, selectedItemIndex);
-        }
-        else
+        playerInventory.TryAddItemAtIndexWithFallbackToFirstEmptyIndex(
+            resultItem, selectedItemIndex, out int amountAdded);
+
+        bool resultItemNotAdded = amountAdded == 0;
+        if (resultItemNotAdded)
         {
+            // This item stack is guaranteed to not be empty. If this item
+            // stack was empty, then the result item would have been added
+            // to the player's inventory.
+            playerInventory.IncrementItemStackAtIndex(selectedItemIndex);
+
             InventoryFullUIController.Instance.ShowInventoryFullText();
         }
     }

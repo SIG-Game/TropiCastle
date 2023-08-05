@@ -78,18 +78,18 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         ItemWithAmount hoveredItem = HoveredItemWorld.GetItem();
 
-        bool canAddItem =
-            playerInventory.CanAddItem(hoveredItem, out int canAddAmount);
-        bool canPartiallyAddItemStack = canAddAmount != 0;
+        playerInventory.TryAddItemAtIndexWithFallbackToFirstEmptyIndex(
+            hoveredItem, player.GetSelectedItemIndex(), out int amountAdded);
 
-        if (canAddItem)
+        bool hoveredItemAdded = amountAdded == hoveredItem.amount;
+        bool hoveredItemPartiallyAdded = !hoveredItemAdded && amountAdded != 0;
+        if (hoveredItemAdded)
         {
-            AddItemWorldToPlayerInventory(HoveredItemWorld);
+            Destroy(HoveredItemWorld.gameObject);
         }
-        else if (canPartiallyAddItemStack)
+        else if (hoveredItemPartiallyAdded)
         {
-            PartiallyAddItemWorldStackToPlayerInventory(
-                HoveredItemWorld, canAddAmount);
+            HoveredItemWorld.SetItemAmount(hoveredItem.amount - amountAdded);
         }
         else
         {
@@ -185,28 +185,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         PlacingItem = itemPickupAndPlacementAction.IsPressed() &&
             !WaitingForInputReleaseBeforePlacement && selectedItemData.name != "Empty";
-    }
-
-    private void AddItemWorldToPlayerInventory(ItemWorld itemWorld)
-    {
-        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(
-            itemWorld.GetItem(), itemSelectionController.SelectedItemIndex);
-
-        Destroy(itemWorld.gameObject);
-    }
-
-    private void PartiallyAddItemWorldStackToPlayerInventory(
-        ItemWorld itemWorld, int amountToAdd)
-    {
-        ItemWithAmount item = itemWorld.GetItem();
-
-        ItemWithAmount itemToAdd = new ItemWithAmount(item.itemData,
-            amountToAdd, item.instanceProperties);
-
-        playerInventory.AddItemAtIndexWithFallbackToFirstEmptyIndex(itemToAdd,
-            itemSelectionController.SelectedItemIndex);
-
-        itemWorld.SetItemAmount(item.amount - amountToAdd);
     }
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)
