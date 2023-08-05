@@ -156,8 +156,8 @@ public class FishingUIController : MonoBehaviour
         fishUI.Speed = selectedFish.speed;
         fishUI.SetColor(selectedFish.fishUIColor);
 
-        selectedFishItem = new ItemWithAmount(Resources.Load<ItemScriptableObject>(
-            "Items/" + selectedFish.name), 1);
+        selectedFishItem = new ItemWithAmount(
+            ItemScriptableObject.FromName(selectedFish.name), 1);
 
         if (logSelectedFish)
         {

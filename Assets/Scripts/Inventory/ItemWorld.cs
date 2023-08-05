@@ -95,7 +95,7 @@ public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorld
         transform.position = serializableState.Position;
 
         ItemScriptableObject itemScriptableObject =
-            Resources.Load<ItemScriptableObject>($"Items/{serializableState.Item.ItemName}");
+            ItemScriptableObject.FromName(serializableState.Item.ItemName);
 
         ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
             serializableState.Item.Amount,

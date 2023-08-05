@@ -15,4 +15,7 @@ public class ItemScriptableObject : ScriptableObject
         string.Concat(name, GetAdditionalInfo()) : string.Empty;
 
     public virtual string GetAdditionalInfo() => string.Empty;
+
+    public static ItemScriptableObject FromName(string name) =>
+        Resources.Load<ItemScriptableObject>($"Items/{name}");
 }

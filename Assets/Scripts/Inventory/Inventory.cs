@@ -21,7 +21,8 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
     {
         if (emptyItemInstance == null)
         {
-            ItemScriptableObject emptyItemInfo = Resources.Load<ItemScriptableObject>("Items/Empty");
+            ItemScriptableObject emptyItemInfo =
+                ItemScriptableObject.FromName("Empty");
 
             emptyItemInstance = new ItemWithAmount(emptyItemInfo, 0);
         }
@@ -443,8 +444,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
                 serializableState.SerializableItemList[i];
 
             ItemScriptableObject itemScriptableObject =
-                Resources.Load<ItemScriptableObject>(
-                    $"Items/{serializableInventoryItem.ItemName}");
+                ItemScriptableObject.FromName(serializableInventoryItem.ItemName);
 
             ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
                 serializableInventoryItem.Amount,
@@ -486,7 +486,8 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
 
     public void FillInventory()
     {
-        ItemScriptableObject coconutItemInfo = Resources.Load<ItemScriptableObject>("Items/Coconut");
+        ItemScriptableObject coconutItemInfo =
+            ItemScriptableObject.FromName("Coconut");
 
         ItemWithAmount coconutItemWithMaxAmount = new ItemWithAmount(coconutItemInfo,
             coconutItemInfo.stackSize);
