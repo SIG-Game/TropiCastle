@@ -25,8 +25,7 @@ public class SaveController : MonoBehaviour
 
     private void Awake()
     {
-        saveDataFilePath = Application.persistentDataPath +
-            Path.DirectorySeparatorChar + saveDataFileName;
+        saveDataFilePath = GetSaveDataFilePath();
     }
 
     private void Start()
@@ -117,4 +116,7 @@ public class SaveController : MonoBehaviour
         public SerializableDebugAddItemUIState DebugAddItemUIState;
         public SerializableChimpState ChimpState;
     }
+
+    public static string GetSaveDataFilePath() =>
+        Application.persistentDataPath + Path.DirectorySeparatorChar + saveDataFileName;
 }
