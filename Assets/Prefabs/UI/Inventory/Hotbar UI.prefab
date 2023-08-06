@@ -191,8 +191,6 @@ MonoBehaviour:
   - {fileID: 1933860603901713551}
   - {fileID: 1933860605246012561}
   itemSelectionController: {fileID: 0}
-  highlightedSlotColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
-  unhighlightedSlotColor: {r: 1, g: 1, b: 1, a: 1}
   inventoryUIManager: {fileID: 0}
 --- !u!1001 &7402690958086517192
 PrefabInstance:

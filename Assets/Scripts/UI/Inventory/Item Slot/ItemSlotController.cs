@@ -9,6 +9,8 @@ public class ItemSlotController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI amountText;
     [SerializeField] private ItemDurabilityMeterController durabilityMeter;
     [SerializeField] private Sprite transparentSprite;
+    [SerializeField] private Color highlightedBackgroundColor;
+    [SerializeField] private Color unhighlightedBackgroundColor;
 
     public virtual void UpdateUsingItem(ItemWithAmount item)
     {
@@ -24,8 +26,13 @@ public class ItemSlotController : MonoBehaviour
         durabilityMeter.HideMeter();
     }
 
-    public void SetBackgroundColor(Color color)
+    public void Highlight()
     {
-        itemSlotBackgroundImage.color = color;
+        itemSlotBackgroundImage.color = highlightedBackgroundColor;
+    }
+
+    public void Unhighlight()
+    {
+        itemSlotBackgroundImage.color = unhighlightedBackgroundColor;
     }
 }

@@ -1,13 +1,8 @@
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class InventoryUIWithSelectionController : InventoryUIController
 {
     [SerializeField] protected ItemSelectionController itemSelectionController;
-    [SerializeField] private Color highlightedSlotColor;
-    [SerializeField] private Color unhighlightedSlotColor;
 
     protected override void Awake()
     {
@@ -41,27 +36,11 @@ public class InventoryUIWithSelectionController : InventoryUIController
 
     protected void HighlightSlotAtIndex(int slotIndex)
     {
-        itemSlotControllers[slotIndex].SetBackgroundColor(highlightedSlotColor);
+        itemSlotControllers[slotIndex].Highlight();
     }
 
     protected void UnhighlightSlotAtIndex(int slotIndex)
     {
-        itemSlotControllers[slotIndex].SetBackgroundColor(unhighlightedSlotColor);
-    }
-
-    [ContextMenu("Set Unhighlighted Slot Color")]
-    private void SetUnhighlightedSlotColor()
-    {
-        if (itemSlotControllers.Count == 0)
-        {
-            Debug.LogWarning($"No {nameof(itemSlotControllers)} set, so " +
-                $"{nameof(unhighlightedSlotColor)} will not be set");
-        }
-        else
-        {
-            unhighlightedSlotColor = itemSlotControllers[0].GetComponent<Image>().color;
-
-            EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
-        }
+        itemSlotControllers[slotIndex].Unhighlight();
     }
 }

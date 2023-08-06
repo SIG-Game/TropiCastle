@@ -97,6 +97,8 @@ MonoBehaviour:
   amountText: {fileID: 593728386246406947}
   durabilityMeter: {fileID: 875966199815097367}
   transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
+  highlightedBackgroundColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
+  unhighlightedBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &3940269534252583009
 GameObject:
   m_ObjectHideFlags: 0

@@ -3037,8 +3037,6 @@ MonoBehaviour:
   - {fileID: 8774762379505792207}
   - {fileID: 8774762378629927820}
   itemSelectionController: {fileID: 0}
-  highlightedSlotColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
-  unhighlightedSlotColor: {r: 1, g: 1, b: 1, a: 1}
   playerInventoryUIGameObjects:
   - {fileID: 8774762379877637705}
   - {fileID: 0}
