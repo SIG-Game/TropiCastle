@@ -144,8 +144,6 @@ public class EnemyController : MonoBehaviour,
 
                 ItemWorldPrefabInstanceFactory.Instance.DropItem(
                     transform.position, itemToDrop);
-
-                InventoryFullUIController.Instance.ShowInventoryFullText();
             }
         }
 

@@ -91,10 +91,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
         {
             HoveredItemWorld.SetItemAmount(hoveredItem.amount - amountAdded);
         }
-        else
-        {
-            InventoryFullUIController.Instance.ShowInventoryFullText();
-        }
     }
 
     public void PlaceSelectedItemAtCursorPosition()

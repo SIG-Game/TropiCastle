@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
     public event Action<ItemWithAmount, int> OnItemChangedAtIndex = delegate { };
     public event Action<ItemWithAmount> OnItemAdded = delegate { };
     public event Action<ItemWithAmount> OnItemRemoved = delegate { };
+    public event Action OnFailedToAddItemToFullInventory = delegate { };
 
     // Every empty item slot references this instance
     private static ItemWithAmount emptyItemInstance;
@@ -279,6 +280,10 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
                     item.itemData, canAddAmount, item.instanceProperties);
 
                 addItem(itemToAdd);
+            }
+            else
+            {
+                OnFailedToAddItemToFullInventory();
             }
 
             amountAdded = canAddAmount;

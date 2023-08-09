@@ -50,8 +50,6 @@ public class CampfireItemInteractable : ItemInteractable
             // stack was empty, then the result item would have been added
             // to the player's inventory.
             playerInventory.IncrementItemStackAtIndex(selectedItemIndex);
-
-            InventoryFullUIController.Instance.ShowInventoryFullText();
         }
     }
 

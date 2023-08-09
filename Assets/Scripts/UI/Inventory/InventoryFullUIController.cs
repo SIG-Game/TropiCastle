@@ -3,24 +3,25 @@ using UnityEngine;
 
 public class InventoryFullUIController : MonoBehaviour
 {
+    [SerializeField] private Inventory inventory;
     [SerializeField] private CanvasGroupAlphaInterpolator canvasGroupAlphaInterpolator;
     [SerializeField] private float visibleTimeSeconds;
 
     private Coroutine startFadingOutAfterWaitCoroutineObject;
     private WaitForSeconds visibleWaitForSeconds;
 
-    public static InventoryFullUIController Instance;
-
     private void Awake()
     {
-        Instance = this;
-
         visibleWaitForSeconds = new WaitForSeconds(visibleTimeSeconds);
+
+        inventory.OnFailedToAddItemToFullInventory +=
+            Inventory_OnFailedToAddItemToFullInventory;
     }
 
     private void OnDestroy()
     {
-        Instance = null;
+        inventory.OnFailedToAddItemToFullInventory -=
+            Inventory_OnFailedToAddItemToFullInventory;
     }
 
     private IEnumerator StartFadingOutAfterWaitCoroutine()
@@ -41,5 +42,10 @@ public class InventoryFullUIController : MonoBehaviour
 
         startFadingOutAfterWaitCoroutineObject =
             StartCoroutine(StartFadingOutAfterWaitCoroutine());
+    }
+
+    private void Inventory_OnFailedToAddItemToFullInventory()
+    {
+        ShowInventoryFullText();
     }
 }

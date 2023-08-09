@@ -13,6 +13,7 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
+    [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private Vector2 catchFishXPositionRange;
     [SerializeField] private bool logSelectedFish;
 
@@ -117,7 +118,7 @@ public class FishingUIController : MonoBehaviour
 
         if (!playerInventory.CanAddItem(selectedFishItem))
         {
-            InventoryFullUIController.Instance.ShowInventoryFullText();
+            inventoryFullUIController.ShowInventoryFullText();
             return;
         }
 
