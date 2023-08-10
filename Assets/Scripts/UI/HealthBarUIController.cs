@@ -7,16 +7,21 @@ public class HealthBarUIController : MonoBehaviour
     [SerializeField] private float fillChangeSpeed;
 
     private float targetMaxHealthFloat;
-    private float currentFillXScale;
-    private float targetFillXScale;
+    private float fillWidth;
+    private float minHealthFillXPosition;
+    private float currentFillXPosition;
+    private float targetFillXPosition;
     private bool initialHealthSet;
 
     private void Awake()
     {
         targetMaxHealthFloat = targetHealthController.GetMaxHealth();
+        fillWidth = healthBarFill.sizeDelta.x;
+        minHealthFillXPosition =
+            healthBarFill.anchoredPosition.x - fillWidth;
 
-        currentFillXScale = 1f;
-        targetFillXScale = 1f;
+        currentFillXPosition = healthBarFill.anchoredPosition.x;
+        targetFillXPosition = currentFillXPosition;
         initialHealthSet = false;
 
         targetHealthController.OnHealthSet += HealthController_OnHealthSet;
@@ -24,13 +29,13 @@ public class HealthBarUIController : MonoBehaviour
 
     private void Update()
     {
-        if (currentFillXScale != targetFillXScale)
+        if (currentFillXPosition != targetFillXPosition)
         {
             // unscaledDeltaTime is used so that interpolation can occur while the game is paused
-            currentFillXScale = Mathf.MoveTowards(currentFillXScale, targetFillXScale,
+            currentFillXPosition = Mathf.MoveTowards(currentFillXPosition, targetFillXPosition,
                 fillChangeSpeed * Time.unscaledDeltaTime);
 
-            SetHealthBarFillXScale(currentFillXScale);
+            SetHealthBarFillXPosition(currentFillXPosition);
         }
     }
 
@@ -42,23 +47,27 @@ public class HealthBarUIController : MonoBehaviour
         }
     }
 
-    private void SetHealthBarFillXScale(float xScale)
+    private void SetHealthBarFillXPosition(float xPosition)
     {
-        healthBarFill.localScale = new Vector3(xScale,
-            healthBarFill.localScale.y, healthBarFill.localScale.z);
+        healthBarFill.anchoredPosition =
+            new Vector3(xPosition, healthBarFill.anchoredPosition.y);
     }
 
     private void HealthController_OnHealthSet(int newHealth)
     {
+        float currentHealthNormalized =
+            newHealth / targetMaxHealthFloat;
+
+        targetFillXPosition = minHealthFillXPosition +
+            fillWidth * currentHealthNormalized;
+
         if (!initialHealthSet)
         {
-            currentFillXScale = newHealth / targetMaxHealthFloat;
+            currentFillXPosition = targetFillXPosition;
 
-            SetHealthBarFillXScale(currentFillXScale);
+            SetHealthBarFillXPosition(currentFillXPosition);
 
             initialHealthSet = true;
         }
-
-        targetFillXScale = newHealth / targetMaxHealthFloat;
     }
 }
