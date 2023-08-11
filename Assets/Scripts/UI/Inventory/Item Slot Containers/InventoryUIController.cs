@@ -31,7 +31,7 @@ public class InventoryUIController : MonoBehaviour
 
     protected void UpdateSlotAtIndexUsingItem(int slotIndex, ItemWithAmount item)
     {
-        itemSlotControllers[slotIndex].UpdateUsingItem(item);
+        itemSlotControllers[slotIndex].UpdateUsingItem(item, true);
     }
 
     public void SetInventory(Inventory inventory)
@@ -47,7 +47,7 @@ public class InventoryUIController : MonoBehaviour
             ItemWithAmount item = itemList[i];
 
             itemSlotController.SetInventory(inventory);
-            itemSlotController.UpdateUsingItem(item);
+            itemSlotController.UpdateUsingItem(item, true);
         }
 
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;

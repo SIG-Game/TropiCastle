@@ -144,26 +144,26 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
             clickedItemIndex == heldItemIndex;
         if (putHeldItemBack)
         {
-            heldItemSlot.UpdateUsingItem(heldItem);
+            ResetHeldItem();
         }
         else if (clickedItem.itemData.name == heldItem.itemData.name &&
             clickedItem.amount < clickedItem.itemData.stackSize)
         {
             CombineHeldItemStackWithClickedItemStack(clickedItemIndex, clickedItem);
-
-            return;
         }
         else if (clickedInventory == heldItemInventory)
         {
+            HideHeldItemUI();
+
             clickedInventory.SwapItemsAt(heldItemIndex, clickedItemIndex);
         }
         else
         {
+            HideHeldItemUI();
+
             heldItemInventory.SwapItemsBetweenInventories(heldItemIndex,
                 clickedInventory, clickedItemIndex);
         }
-
-        HideHeldItemUI();
     }
 
     private void CombineHeldItemStackWithClickedItemStack(int clickedItemIndex,
@@ -177,9 +177,9 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
         if (heldItem.amount == amountToMove)
         {
-            heldItemInventory.RemoveItemAtIndex(heldItemIndex);
-
             HideHeldItemUI();
+
+            heldItemInventory.RemoveItemAtIndex(heldItemIndex);
         }
         else
         {
@@ -195,9 +195,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
             clickedItemIndex == heldItemIndex;
         if (putHeldItemBack)
         {
-            heldItemSlot.UpdateUsingItem(heldItem);
-
-            HideHeldItemUI();
+            ResetHeldItem();
 
             return;
         }
@@ -233,6 +231,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
         heldItemSlot.Clear();
 
+        heldItemSlot.DisableUpdatingUsingInventory();
+
         heldItemIndex = itemIndex;
         heldItem = item;
 
@@ -257,7 +257,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     {
         if (HoldingItem())
         {
-            heldItemSlot.UpdateUsingItem(heldItem);
+            heldItemSlot.UpdateUsingItem(heldItem, false);
 
             HideHeldItemUI();
         }
@@ -276,13 +276,16 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         else
         {
             UpdateHeldItemUI();
-
-            heldItemSlot.Clear();
         }
     }
 
     public void HideHeldItemUI()
     {
+        if (HoldingItem())
+        {
+            heldItemSlot.EnableUpdatingUsingInventory();
+        }
+
         heldItemImage.sprite = transparentSprite;
         heldItemAmountText.text = string.Empty;
 
