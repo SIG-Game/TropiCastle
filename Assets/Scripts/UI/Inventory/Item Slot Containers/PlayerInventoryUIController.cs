@@ -29,8 +29,6 @@ public class PlayerInventoryUIController : InventoryUIWithSelectionController
         }
     }
 
-    public Inventory GetInventory() => inventory;
-
     [ContextMenu("Set Inventory UI Item Slot Indexes")]
     private void SetInventoryUIItemSlotIndexes()
     {

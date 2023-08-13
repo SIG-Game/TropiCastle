@@ -3,17 +3,11 @@ using UnityEngine;
 public class DebugClearInventoryButton : MonoBehaviour
 {
     [SerializeField] private PlayerInventoryUIController playerInventoryUIController;
-
-    private Inventory playerInventory;
-
-    private void Awake()
-    {
-        playerInventory = playerInventoryUIController.GetInventory();
-    }
+    [SerializeField] private Inventory inventory;
 
     public void DebugClearInventoryButton_OnClick()
     {
-        playerInventory.ClearInventory();
+        inventory.ClearInventory();
 
         if (InventoryUIHeldItemController.Instance.HoldingItem())
         {

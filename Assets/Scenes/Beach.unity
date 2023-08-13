@@ -34095,6 +34095,11 @@ PrefabInstance:
       propertyPath: itemSelectionController
       value: 
       objectReference: {fileID: 1982112583}
+    - target: {fileID: 394579288440740379, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 692706992488476330, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -34160,6 +34165,11 @@ PrefabInstance:
       propertyPath: playerActionDisablingUIManager
       value: 
       objectReference: {fileID: 1982112585}
+    - target: {fileID: 4800465549122388382, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 6847651756572252548, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -35100,6 +35110,11 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 572276101}
+    - target: {fileID: 8489665953952761092, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 8711815962510170113, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: playerInventory

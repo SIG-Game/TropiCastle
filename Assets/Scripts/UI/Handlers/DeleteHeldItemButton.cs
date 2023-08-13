@@ -5,14 +5,13 @@ public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private PlayerInventoryUIController playerInventoryUIController;
+    [SerializeField] private Inventory inventory;
 
     private InventoryUIHeldItemController heldItemController;
-    private Inventory playerInventory;
 
     private void Start()
     {
         heldItemController = InventoryUIHeldItemController.Instance;
-        playerInventory = playerInventoryUIController.GetInventory();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -23,7 +22,7 @@ public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
             {
                 heldItemController.HideHeldItemUI();
 
-                playerInventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
+                inventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
