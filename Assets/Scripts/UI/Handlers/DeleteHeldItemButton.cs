@@ -5,42 +5,37 @@ public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private PlayerInventoryUIController playerInventoryUIController;
+    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private Inventory inventory;
-
-    private InventoryUIHeldItemController heldItemController;
-
-    private void Start()
-    {
-        heldItemController = InventoryUIHeldItemController.Instance;
-    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (heldItemController.HoldingItem())
+            if (inventoryUIHeldItemController.HoldingItem())
             {
-                heldItemController.HideHeldItemUI();
+                inventoryUIHeldItemController.HideHeldItemUI();
 
-                inventory.RemoveItemAtIndex(heldItemController.GetHeldItemIndex());
+                inventory.RemoveItemAtIndex(
+                    inventoryUIHeldItemController.GetHeldItemIndex());
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (heldItemController.HoldingItem())
+            if (inventoryUIHeldItemController.HoldingItem())
             {
-                heldItemController.DecrementHeldItemStack();
+                inventoryUIHeldItemController.DecrementHeldItemStack();
             }
         }
     }
 
     public void OnPointerEnter(PointerEventData _)
     {
-        heldItemController.SetRightClickToResetEnabled(false);
+        inventoryUIHeldItemController.SetRightClickToResetEnabled(false);
     }
 
     public void OnPointerExit(PointerEventData _)
     {
-        heldItemController.SetRightClickToResetEnabled(true);
+        inventoryUIHeldItemController.SetRightClickToResetEnabled(true);
     }
 }

@@ -10,10 +10,14 @@ public class CraftingButton : MonoBehaviour, IElementWithMultiTextTooltip
     [SerializeField] private CraftingRecipeScriptableObject craftingRecipe;
     [SerializeField] private Image craftingButtonImage;
 
+    private InventoryUIHeldItemController inventoryUIHeldItemController;
     private string resultItemTooltipText;
 
     private void Awake()
     {
+        inventoryUIHeldItemController =
+            craftingButtonDependencies.GetInventoryUIHeldItemController();
+
         // This could be changed to not be set at runtime
         // It this wasn't set at runtime, an old item tooltip format might get cached
         resultItemTooltipText = $"Result:\n" +
@@ -23,12 +27,12 @@ public class CraftingButton : MonoBehaviour, IElementWithMultiTextTooltip
     private void Update()
     {
         craftingButton.interactable =
-            !InventoryUIHeldItemController.Instance.HoldingItem();
+            !inventoryUIHeldItemController.HoldingItem();
     }
 
     public void CraftingButton_OnClick()
     {
-        if (!InventoryUIHeldItemController.Instance.HoldingItem())
+        if (!inventoryUIHeldItemController.HoldingItem())
         {
             craftingButtonDependencies.GetCrafting().CraftItem(craftingRecipe);
         }

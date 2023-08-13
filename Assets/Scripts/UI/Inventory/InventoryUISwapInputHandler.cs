@@ -5,13 +5,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private InventoryUIManager inventoryUIManager;
-
-    private InventoryUIHeldItemController heldItemController;
-
-    private void Start()
-    {
-        heldItemController = InventoryUIHeldItemController.Instance;
-    }
+    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
 
     // Must run before ItemSelectionController Update method so that using number keys to
     // swap items in inventory UI takes priority over using number keys to select an item
@@ -25,7 +19,7 @@ public class InventoryUISwapInputHandler : MonoBehaviour
 
     private void SwapItemsUsingNumberKeyInput()
     {
-        bool canSwapItems = heldItemController.HoldingItem() ||
+        bool canSwapItems = inventoryUIHeldItemController.HoldingItem() ||
             hoveredItemSlotManager.HoveredItemIndex != -1;
         if (!canSwapItems)
         {
@@ -42,12 +36,12 @@ public class InventoryUISwapInputHandler : MonoBehaviour
         int swapItemIndex;
         Inventory swapInventory;
 
-        if (heldItemController.HoldingItem())
+        if (inventoryUIHeldItemController.HoldingItem())
         {
-            swapItemIndex = heldItemController.GetHeldItemIndex();
-            swapInventory = heldItemController.GetHeldItemInventory();
+            swapItemIndex = inventoryUIHeldItemController.GetHeldItemIndex();
+            swapInventory = inventoryUIHeldItemController.GetHeldItemInventory();
 
-            heldItemController.ResetHeldItem();
+            inventoryUIHeldItemController.ResetHeldItem();
         }
         else
         {

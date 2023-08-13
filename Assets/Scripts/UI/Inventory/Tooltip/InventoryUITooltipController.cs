@@ -12,6 +12,7 @@ public class InventoryUITooltipController : MonoBehaviour
     [SerializeField] private GraphicRaycaster graphicRaycaster;
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIManager inventoryUIManager;
+    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private bool logTooltipList;
 
@@ -35,9 +36,9 @@ public class InventoryUITooltipController : MonoBehaviour
             return;
         }
 
-        if (InventoryUIHeldItemController.Instance.HoldingItem())
+        if (inventoryUIHeldItemController.HoldingItem())
         {
-            SetTooltipText(InventoryUIHeldItemController.Instance);
+            SetTooltipText(inventoryUIHeldItemController);
         }
         else
         {

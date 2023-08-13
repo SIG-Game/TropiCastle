@@ -21,12 +21,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     private int heldItemIndex;
     private bool rightClickToResetEnabled;
 
-    public static InventoryUIHeldItemController Instance;
-
     private void Awake()
     {
-        Instance = this;
-
         heldItemRectTransform = GetComponent<RectTransform>();
         heldItemImage = GetComponent<Image>();
 
@@ -52,8 +48,6 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
     private void OnDestroy()
     {
-        Instance = null;
-
         inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
     }
 

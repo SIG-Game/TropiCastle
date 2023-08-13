@@ -5,6 +5,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
     IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
+    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
 
@@ -18,12 +19,12 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
 
         if (Input.GetMouseButton(0))
         {
-            InventoryUIHeldItemController.Instance.HeldLeftClickOverItemAtIndex(
+            inventoryUIHeldItemController.HeldLeftClickOverItemAtIndex(
                 inventory, slotItemIndex);
         }
         else if (Input.GetMouseButton(1))
         {
-            InventoryUIHeldItemController.Instance.HeldRightClickOverItemAtIndex(
+            inventoryUIHeldItemController.HeldRightClickOverItemAtIndex(
                 inventory, slotItemIndex);
         }
     }
@@ -32,12 +33,12 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            InventoryUIHeldItemController.Instance.LeftClickedItemAtIndex(
+            inventoryUIHeldItemController.LeftClickedItemAtIndex(
                 inventory, slotItemIndex, this);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            InventoryUIHeldItemController.Instance.RightClickedItemAtIndex(
+            inventoryUIHeldItemController.RightClickedItemAtIndex(
                 inventory, slotItemIndex);
         }
     }
