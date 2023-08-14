@@ -189,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crafting: {fileID: 0}
   playerInventory: {fileID: 0}
+  inventoryUIHeldItemController: {fileID: 0}
 --- !u!114 &3872985727311164805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,8 +268,8 @@ MonoBehaviour:
   m_ChildAlignment: 2
   m_StartCorner: 1
   m_StartAxis: 0
-  m_CellSize: {x: 50, y: 50}
-  m_Spacing: {x: 10, y: 10}
+  m_CellSize: {x: 56.25, y: 56.25}
+  m_Spacing: {x: 5, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 2
 --- !u!1001 &393013020649831159
