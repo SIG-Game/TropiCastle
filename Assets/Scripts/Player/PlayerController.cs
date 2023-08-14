@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour,
     private InputAction attackAction;
     private InputAction healAction;
     private LayerMask interactableMask;
+    private LayerMask waterMask;
     private bool isAttacking;
 
     private void Awake()
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour,
         healAction = healActionReference.action;
 
         interactableMask = LayerMask.GetMask("Interactable");
+        waterMask = LayerMask.GetMask("Water");
 
         SetItemUsageDictionaries();
 
@@ -167,6 +169,10 @@ public class PlayerController : MonoBehaviour,
 
         return hit;
     }
+
+    public RaycastHit2D WaterInteractionCast(
+        float horizontalBoxCastDistance, float verticalBoxCastDistance) =>
+        InteractionCast(waterMask, horizontalBoxCastDistance, verticalBoxCastDistance);
 
     private void UseItem(ItemWithAmount item, int itemIndex)
     {
