@@ -26,7 +26,8 @@ public class CampfireItemInteractable : ItemInteractable
 
         CampfireRecipeScriptableObject selectedItemCampfireRecipe =
             campfireRecipes.FirstOrDefault(
-                x => x.inputItem.name == selectedItem.itemData.name);
+                x => x.PossibleInputItems.Any(
+                    x => x.name == selectedItem.itemData.name));
 
         if (selectedItemCampfireRecipe == null)
         {
@@ -34,7 +35,7 @@ public class CampfireItemInteractable : ItemInteractable
         }
 
         Inventory playerInventory = playerController.GetInventory();
-        ItemWithAmount resultItem = selectedItemCampfireRecipe.resultItem;
+        ItemWithAmount resultItem = selectedItemCampfireRecipe.ResultItem;
 
         int selectedItemIndex = playerController.GetSelectedItemIndex();
 
