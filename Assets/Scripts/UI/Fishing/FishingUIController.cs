@@ -18,6 +18,8 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private bool logSelectedFish;
 
     public event Action OnFishingStopped = delegate { };
+    public event Action OnFishingUIOpened = delegate { };
+    public event Action OnFishingUIClosed = delegate { };
 
     private Animator animator;
     private FishScriptableObject selectedFish;
@@ -68,6 +70,8 @@ public class FishingUIController : MonoBehaviour
         Addressables.Release(fishScriptableObjectsLoadHandle);
 
         OnFishingStopped = delegate { };
+        OnFishingUIOpened = delegate { };
+        OnFishingUIClosed = delegate { };
     }
 
     private void AttemptToCatchFish()
@@ -133,6 +137,8 @@ public class FishingUIController : MonoBehaviour
 
         fishingUI.SetActive(true);
         fishUI.gameObject.SetActive(true);
+
+        OnFishingUIOpened();
     }
 
     private void SelectRandomFish()
@@ -172,5 +178,7 @@ public class FishingUIController : MonoBehaviour
         fishUI.gameObject.SetActive(false);
 
         playerActionDisablingUIManager.ActionDisablingUIOpen = false;
+
+        OnFishingUIClosed();
     }
 }
