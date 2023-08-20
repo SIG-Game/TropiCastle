@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class BreakableItemInstanceProperties
+public class BreakableItemInstanceProperties : ItemInstanceProperties
 {
     public int Durability;
 

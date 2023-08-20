@@ -6,7 +6,7 @@ public class ItemWithAmount
 {
     public ItemScriptableObject itemData;
     public int amount;
-    public object instanceProperties;
+    public ItemInstanceProperties instanceProperties;
 
     private static readonly Dictionary<string, Type> itemNameToInstancePropertiesType =
         new Dictionary<string, Type>
@@ -15,7 +15,7 @@ public class ItemWithAmount
     };
 
     public ItemWithAmount(ItemScriptableObject itemData, int amount,
-        object instanceProperties = null)
+        ItemInstanceProperties instanceProperties = null)
     {
         this.itemData = itemData;
         this.amount = amount;
@@ -26,9 +26,7 @@ public class ItemWithAmount
     {
         itemData = item.itemData;
         amount = item.amount;
-
-        // TODO: Use a deep copy of item.instanceProperties
-        instanceProperties = item.instanceProperties;
+        instanceProperties = item.instanceProperties?.DeepCopy();
     }
 
     public void InitializeItemInstanceProperties()
@@ -41,7 +39,8 @@ public class ItemWithAmount
         else if (itemNameToInstancePropertiesType.TryGetValue(itemData.name,
             out Type itemInstancePropertiesType))
         {
-            instanceProperties = Activator.CreateInstance(itemInstancePropertiesType);
+            instanceProperties = (ItemInstanceProperties)Activator
+                .CreateInstance(itemInstancePropertiesType);
         }
     }
 

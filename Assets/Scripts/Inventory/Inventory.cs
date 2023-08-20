@@ -474,10 +474,18 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
         public int Amount;
 
         [SerializeReference]
-        public object InstanceProperties;
+        public ItemInstanceProperties InstanceProperties;
 
         public SerializableInventoryItem()
         {
+        }
+
+        public SerializableInventoryItem(
+            SerializableInventoryItem serializableInventoryItem)
+        {
+            ItemName = serializableInventoryItem.ItemName;
+            Amount = serializableInventoryItem.Amount;
+            InstanceProperties = serializableInventoryItem.InstanceProperties?.DeepCopy();
         }
 
         public SerializableInventoryItem(ItemWithAmount item)
