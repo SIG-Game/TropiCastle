@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultNPC : NPCInteractable
+public class DialogueNPC : NPCInteractable
 {
     [SerializeField] private List<string> dialogueLines;
 
