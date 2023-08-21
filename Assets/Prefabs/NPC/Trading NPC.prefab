@@ -87,10 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 560829dcf7bec81488a40de85eee8fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputItem: {fileID: 11400000, guid: a4423d94df5353a49bba5cc5ef47541c, type: 2}
-  outputItem:
-    itemData: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
-    amount: 1
+  trade: {fileID: 11400000, guid: 7c877f6345a21f54a832fde78ec813fd, type: 2}
   noInputItemDialogue:
   - I will trade you 1 rock for 1 goldfish.
   playerInventoryFullDialogue:

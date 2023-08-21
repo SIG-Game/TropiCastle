@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class TradingNPC : NPCInteractable
 {
-    [SerializeField] private ItemScriptableObject inputItem;
-    [SerializeField] private ItemWithAmount outputItem;
+    [SerializeField] private NPCTradeScriptableObject trade;
     [SerializeField] private List<string> noInputItemDialogue;
     [SerializeField] private List<string> playerInventoryFullDialogue;
 
@@ -15,7 +14,8 @@ public class TradingNPC : NPCInteractable
         Inventory playerInventory = player.GetInventory();
         List<ItemWithAmount> itemList = playerInventory.GetItemList();
 
-        int inputItemStackIndex = itemList.FindIndex(x => x.itemData == inputItem);
+        int inputItemStackIndex = itemList.FindIndex(
+            x => x.itemData == trade.InputItem);
 
         if (inputItemStackIndex == -1)
         {
@@ -24,10 +24,10 @@ public class TradingNPC : NPCInteractable
             return;
         }
 
-        if (playerInventory.CanAddItem(outputItem))
+        if (playerInventory.CanAddItem(trade.OutputItem))
         {
             playerInventory.DecrementItemStackAtIndex(inputItemStackIndex);
-            playerInventory.AddItem(outputItem);
+            playerInventory.AddItem(trade.OutputItem);
         }
         else
         {
