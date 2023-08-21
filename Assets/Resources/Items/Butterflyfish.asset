@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
+  m_Script: {fileID: 11500000, guid: c0af8e4556f8fba4c9d2c11ccacb9506, type: 3}
   m_Name: Butterflyfish
   m_EditorClassIdentifier: 
   name: Butterflyfish
@@ -17,3 +17,7 @@ MonoBehaviour:
   stackSize: 99
   hasCustomColliderSize: 0
   customColliderSize: {x: 0, y: 0}
+  description: This fish is bugging me...
+  speed: 270
+  probabilityWeight: 0.25
+  fishUIColor: {r: 1, g: 0.8, b: 0.09803922, a: 1}

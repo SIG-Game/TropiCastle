@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
 
 public class FishingUIController : MonoBehaviour
@@ -22,29 +20,28 @@ public class FishingUIController : MonoBehaviour
     public event Action OnFishingUIClosed = delegate { };
 
     private Animator animator;
-    private FishScriptableObject selectedFish;
+    private FishItemScriptableObject selectedFish;
     private ItemWithAmount selectedFishItem;
     private List<float> fishProbabilityWeights;
     private float fishProbabilityWeightSum;
     private bool catchFailedAnimationStarted;
 
-    private AsyncOperationHandle<IList<FishScriptableObject>> fishScriptableObjectsLoadHandle;
-    private IList<FishScriptableObject> fishScriptableObjects;
+    private IList<FishItemScriptableObject> fishItemScriptableObjects;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
 
-        fishScriptableObjectsLoadHandle = Addressables.LoadAssetsAsync<FishScriptableObject>("fish", null);
-        fishScriptableObjects = fishScriptableObjectsLoadHandle.WaitForCompletion();
+        fishItemScriptableObjects =
+            Resources.LoadAll<FishItemScriptableObject>("Items");
 
         fishProbabilityWeights = new List<float>();
         fishProbabilityWeightSum = 0f;
 
-        foreach (var fishScriptableObject in fishScriptableObjects)
+        foreach (var fishItemScriptableObject in fishItemScriptableObjects)
         {
-            fishProbabilityWeights.Add(fishScriptableObject.probabilityWeight);
-            fishProbabilityWeightSum += fishScriptableObject.probabilityWeight;
+            fishProbabilityWeights.Add(fishItemScriptableObject.probabilityWeight);
+            fishProbabilityWeightSum += fishItemScriptableObject.probabilityWeight;
         }
     }
 
@@ -67,8 +64,6 @@ public class FishingUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Addressables.Release(fishScriptableObjectsLoadHandle);
-
         OnFishingStopped = delegate { };
         OnFishingUIOpened = delegate { };
         OnFishingUIClosed = delegate { };
@@ -106,7 +101,8 @@ public class FishingUIController : MonoBehaviour
             playerItemInWorld.HideCharacterItemInWorld();
         }
 
-        DialogueBox.Instance.PlayDialogue($"You caught a {selectedFish.species.ToLowerInvariant()}!\n" +
+        DialogueBox.Instance.PlayDialogue(
+            $"You caught a {selectedFish.name.ToLowerInvariant()}!\n" +
             $"{selectedFish.description}", afterCatchDialogueAction);
     }
 
@@ -159,16 +155,15 @@ public class FishingUIController : MonoBehaviour
             fishSelectionLowerBound += fishProbabilityWeights[i];
         }
 
-        selectedFish = fishScriptableObjects[selectedFishIndex];
+        selectedFish = fishItemScriptableObjects[selectedFishIndex];
         fishUI.Speed = selectedFish.speed;
         fishUI.SetColor(selectedFish.fishUIColor);
 
-        selectedFishItem = new ItemWithAmount(
-            ItemScriptableObject.FromName(selectedFish.name), 1);
+        selectedFishItem = new ItemWithAmount(selectedFish, 1);
 
         if (logSelectedFish)
         {
-            Debug.Log("Selected fish: " + selectedFish.species);
+            Debug.Log("Selected fish: " + selectedFish.name);
         }
     }
 
