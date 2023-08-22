@@ -9,8 +9,6 @@ public class InputManager : MonoBehaviour
     [SerializeField] private InputActionReference inventoryActionReference;
     [SerializeField] private InputActionReference fishActionReference;
 
-    public static InputManager Instance;
-
     private PlayerInput playerInput;
 
     private InputAction useItemAction;
@@ -25,8 +23,6 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-
         playerInput = GetComponent<PlayerInput>();
 
         useItemAction = useItemActionReference.action;
@@ -43,11 +39,6 @@ public class InputManager : MonoBehaviour
         interactButtonDownUsedThisFrame = false;
         inventoryButtonDownUsedThisFrame = false;
         fishButtonDownUsedThisFrame = false;
-    }
-
-    private void OnDestroy()
-    {
-        Instance = null;
     }
 
     // Returns input bool when that input has not been used this frame

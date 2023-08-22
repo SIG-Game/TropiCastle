@@ -2,12 +2,14 @@ using UnityEngine.InputSystem;
 
 public class ItemPlacementState : BaseItemPickupAndPlacementState
 {
+    private InputManager inputManager;
     private InputAction itemPickupAndPlacementAction;
 
     public ItemPlacementState(ItemPickupAndPlacement itemPickupAndPlacement,
-        InputAction itemPickupAndPlacementAction) :
+        InputManager inputManager, InputAction itemPickupAndPlacementAction) :
         base(itemPickupAndPlacement)
     {
+        this.inputManager = inputManager;
         this.itemPickupAndPlacementAction = itemPickupAndPlacementAction;
     }
 
@@ -42,7 +44,7 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
 
         // Cancel item placement when use item button is pressed while placing an item
         if (itemPickupAndPlacement.PlacingItem &&
-            InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame())
+            inputManager.GetUseItemButtonDownIfUnusedThisFrame())
         {
             itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;
 

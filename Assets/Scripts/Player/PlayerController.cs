@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour,
     [SerializeField] private SpriteMask overlaySpriteMask;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private InventoryUIManager inventoryUIManager;
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private InputActionReference attackActionReference;
     [SerializeField] private InputActionReference healActionReference;
 
@@ -95,7 +96,7 @@ public class PlayerController : MonoBehaviour,
             return;
         }
 
-        if (InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame())
+        if (inputManager.GetUseItemButtonDownIfUnusedThisFrame())
         {
             UseItem(GetSelectedItem(), GetSelectedItemIndex());
 
@@ -110,7 +111,7 @@ public class PlayerController : MonoBehaviour,
             weaponItemUsage.AttackWithStrongestWeaponInInventory();
         }
         // Do not check for fish input on the same frame that an item is used
-        else if (InputManager.Instance.GetFishButtonDownIfUnusedThisFrame() &&
+        else if (inputManager.GetFishButtonDownIfUnusedThisFrame() &&
             !playerActionDisablingUIManager.ActionDisablingUIOpen &&
             TryGetFishingRodItemIndex(out int fishingRodItemIndex))
         {
@@ -123,7 +124,7 @@ public class PlayerController : MonoBehaviour,
             healingItemUsage.ConsumeFirstHealingItemInPlayerInventory();
         }
 
-        if (InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame())
+        if (inputManager.GetInteractButtonDownIfUnusedThisFrame())
         {
             RaycastHit2D hit = InteractionCast(interactableMask, 0.15f, 0.12f);
 

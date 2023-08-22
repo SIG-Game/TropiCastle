@@ -12,6 +12,7 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private Vector2 catchFishXPositionRange;
     [SerializeField] private bool logSelectedFish;
 
@@ -53,8 +54,10 @@ public class FishingUIController : MonoBehaviour
         }
 
         // Get both inputs so that neither can be used elsewhere
-        bool useItemButtonInput = InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame();
-        bool fishButtonInput = InputManager.Instance.GetFishButtonDownIfUnusedThisFrame();
+        bool useItemButtonInput =
+            inputManager.GetUseItemButtonDownIfUnusedThisFrame();
+        bool fishButtonInput =
+            inputManager.GetFishButtonDownIfUnusedThisFrame();
 
         if ((useItemButtonInput || fishButtonInput) && !catchFailedAnimationStarted)
         {

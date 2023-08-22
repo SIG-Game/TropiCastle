@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class ItemSelectionController : MonoBehaviour
 {
     [SerializeField] private InventoryUIManager inventoryUIManager;
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private InputActionReference selectLeftItemActionReference;
     [SerializeField] private InputActionReference selectRightItemActionReference;
     [SerializeField] private int onePlusMaxSelectedItemIndex;
@@ -75,7 +76,7 @@ public class ItemSelectionController : MonoBehaviour
             SelectedItemIndex = ClampSelectedItemIndex(newSelectedItemIndex);
         }
 
-        int? numberKeyIndex = InputManager.Instance.GetNumberKeyIndexIfUnusedThisFrame();
+        int? numberKeyIndex = inputManager.GetNumberKeyIndexIfUnusedThisFrame();
         if (numberKeyIndex.HasValue)
         {
             SelectedItemIndex = numberKeyIndex.Value;

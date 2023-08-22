@@ -9,6 +9,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private Sprite itemPickupArrow;
     [SerializeField] private Sprite itemPickupArrowInventoryFull;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
@@ -40,7 +41,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         DefaultState = new DefaultItemPickupAndPlacementState(this);
         PickupState = new ItemPickupState(this, itemPickupAndPlacementAction);
-        PlacementState = new ItemPlacementState(this, itemPickupAndPlacementAction);
+        PlacementState = new ItemPlacementState(this, inputManager,
+            itemPickupAndPlacementAction);
 
         currentState = DefaultState;
 

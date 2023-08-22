@@ -7,6 +7,7 @@ public class PlayerInventoryUIController : InventoryUIWithSelectionController
     [SerializeField] private List<GameObject> playerInventoryUIGameObjects;
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
+    [SerializeField] private InputManager inputManager;
 
     // Must run after any script Update methods that can set ActionDisablingUIOpen
     // to true to prevent an action disabling UI from opening on the same frame
@@ -20,7 +21,7 @@ public class PlayerInventoryUIController : InventoryUIWithSelectionController
 
         bool openPlayerInventoryUI =
             !PauseController.Instance.GamePaused &&
-            InputManager.Instance.GetInventoryButtonDownIfUnusedThisFrame();
+            inputManager.GetInventoryButtonDownIfUnusedThisFrame();
         if (openPlayerInventoryUI)
         {
             inventoryUIManager.SetCurrentInventoryUIGameObjects(playerInventoryUIGameObjects);

@@ -27727,6 +27727,18 @@ PrefabInstance:
       objectReference: {fileID: 572276104}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfaf9ae57760545859b01d4467686f5b, type: 3}
+--- !u!114 &1274756994 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6057472411990195880, guid: 0b10992830a0ba7439705a4db0804f24,
+    type: 3}
+  m_PrefabInstance: {fileID: 6628131629790253055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b895e4d0d0a534f945065c2c047b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1304918691 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6847651758293349476, guid: cb76167790ad17b418442606107678be,
@@ -33391,6 +33403,11 @@ PrefabInstance:
       objectReference: {fileID: 1128719742}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
       propertyPath: spriteRender
       value: 
       objectReference: {fileID: 1421088111}
@@ -33540,6 +33557,11 @@ PrefabInstance:
       propertyPath: fishingUIController
       value: 
       objectReference: {fileID: 837265633}
+    - target: {fileID: 8536875563149633422, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
     - target: {fileID: 8536875563149633422, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: inventoryUIManager
@@ -33875,6 +33897,11 @@ PrefabInstance:
       objectReference: {fileID: 210157792}
     - target: {fileID: 987879900132414908, guid: 1618a20a205e6e64e8cf9c6a051be3a0,
         type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
+    - target: {fileID: 987879900132414908, guid: 1618a20a205e6e64e8cf9c6a051be3a0,
+        type: 3}
       propertyPath: pauseController
       value: 
       objectReference: {fileID: 1654789940}
@@ -34078,6 +34105,11 @@ PrefabInstance:
       objectReference: {fileID: 572276101}
     - target: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
         type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
+    - target: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1982112582}
@@ -34179,11 +34211,21 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 692706992488476330, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
     - target: {fileID: 1575772047881308915, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6628131629790253056}
+    - target: {fileID: 2122123279961665939, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
     - target: {fileID: 2122123279961665939, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: playerInventory
@@ -34229,6 +34271,11 @@ PrefabInstance:
       propertyPath: itemSelectionController
       value: 
       objectReference: {fileID: 1982112583}
+    - target: {fileID: 4365771476343332667, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
     - target: {fileID: 4443076731647371254, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: targetInventory
@@ -34726,6 +34773,11 @@ PrefabInstance:
       objectReference: {fileID: 1982112582}
     - target: {fileID: 6847651757852005858, guid: cb76167790ad17b418442606107678be,
         type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
+    - target: {fileID: 6847651757852005858, guid: cb76167790ad17b418442606107678be,
+        type: 3}
       propertyPath: itemSelectionController
       value: 
       objectReference: {fileID: 1982112583}
@@ -34784,6 +34836,11 @@ PrefabInstance:
       propertyPath: hoveredItemSlotManager
       value: 
       objectReference: {fileID: 6847651757298814664}
+    - target: {fileID: 6847651758018855121, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
     - target: {fileID: 6847651758018855121, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: playerActionDisablingUIManager
@@ -35184,6 +35241,11 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 572276101}
+    - target: {fileID: 8006763497998644967, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
     - target: {fileID: 8489665953952761092, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -35407,6 +35469,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EventSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 8494658916369790395, guid: 559fb8c14ac19b34091355c72e5b7c5a,
+        type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 559fb8c14ac19b34091355c72e5b7c5a, type: 3}
 --- !u!114 &8494658916821513171 stripped

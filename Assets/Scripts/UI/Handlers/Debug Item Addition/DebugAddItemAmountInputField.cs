@@ -5,6 +5,7 @@ public class DebugAddItemAmountInputField : MonoBehaviour
 {
     [SerializeField] private TMP_InputField amountInputField;
     [SerializeField] private DebugAddItemDropdownController debugAddItemDropdownController;
+    [SerializeField] private InputManager inputManager;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class DebugAddItemAmountInputField : MonoBehaviour
     {
         if (amountInputField.isFocused)
         {
-            InputManager.Instance.DisableGettingNumberKeyInputThisFrame();
+            inputManager.DisableGettingNumberKeyInputThisFrame();
         }
     }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InventoryUIManager : MonoBehaviour
 {
+    [SerializeField] private InputManager inputManager;
+
     public bool InventoryUIOpen
     {
         get => inventoryUIOpen;
@@ -44,10 +46,10 @@ public class InventoryUIManager : MonoBehaviour
         bool closeUsingEscapeKey = Input.GetKeyDown(KeyCode.Escape);
 
         bool closeUsingInteractAction = canCloseUsingInteractAction &&
-            InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
+            inputManager.GetInteractButtonDownIfUnusedThisFrame();
 
         bool closeUsingInventoryAction =
-            InputManager.Instance.GetInventoryButtonDownIfUnusedThisFrame();
+            inputManager.GetInventoryButtonDownIfUnusedThisFrame();
 
         return closeUsingEscapeKey || closeUsingInteractAction ||
             closeUsingInventoryAction;

@@ -12,6 +12,7 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private GameObject characterNameUI;
     [SerializeField] private TextMeshProUGUI characterNameText;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private float characterScrollWaitSeconds;
 
     private IEnumerator<string> linesEnumerator;
@@ -40,9 +41,9 @@ public class DialogueBox : MonoBehaviour
         {
             // Get both inputs so that neither can be used elsewhere
             bool useItemButtonInput =
-                InputManager.Instance.GetUseItemButtonDownIfUnusedThisFrame();
+                inputManager.GetUseItemButtonDownIfUnusedThisFrame();
             bool interactButtonInput =
-                InputManager.Instance.GetInteractButtonDownIfUnusedThisFrame();
+                inputManager.GetInteractButtonDownIfUnusedThisFrame();
 
             bool advanceDialogueInputPressedThisFrame =
                 useItemButtonInput || interactButtonInput;
