@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,30 +10,38 @@ public class EnemyController : MonoBehaviour,
     [SerializeField] private float playerKnockbackForce;
     [SerializeField] private float maxStartChasingDistanceToPlayer;
     [SerializeField] private float minStopChasingDistanceToPlayer;
-    [SerializeField] private float initialWaitTimeBeforeIdle;
-    [SerializeField] private float waitTimeAfterKnockback;
+    [SerializeField] private float initialWaitTimeBeforeIdleSeconds;
+    [SerializeField] private float waitTimeAfterKnockbackSeconds;
     [SerializeField] private float fadeOutSpeed;
     [SerializeField] private CanvasGroup healthBarCanvasGroup;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private List<ItemWithAmount> droppedLoot;
 
+    public InitialEnemyState InitialState { get; private set; }
+    public IdleEnemyState IdleState { get; private set; }
+    public ChasingEnemyState ChasingState { get; private set; }
+    public KnockedBackEnemyState KnockedBackState { get; private set; }
+    public FadingOutEnemyState FadingOutState { get; private set; }
+
+    public float LastHitTime { get; set; }
+
+    private BaseEnemyState currentState;
     private Rigidbody2D rb2d;
     private new Collider2D collider2D;
     private SpriteRenderer spriteRenderer;
     private HealthController healthController;
     private Spawnable spawnable;
-    private Coroutine initialWaitTimeBeforeIdleCoroutine;
-    private WaitForSeconds beforeIdleWaitForSecondsObject;
-    private WaitForSeconds afterKnockbackWaitForSecondsObject;
     private Vector2 playerColliderOffset;
-    private EnemyState state;
-    private bool initialWaitOccurring;
-
-    public float LastHitTime { get; set; }
 
     private void Awake()
     {
+        InitialState = new InitialEnemyState(this);
+        IdleState = new IdleEnemyState(this);
+        ChasingState = new ChasingEnemyState(this);
+        KnockedBackState = new KnockedBackEnemyState(this);
+        FadingOutState = new FadingOutEnemyState(this);
+
         LastHitTime = 0f;
 
         rb2d = GetComponent<Rigidbody2D>();
@@ -43,38 +50,21 @@ public class EnemyController : MonoBehaviour,
         healthController = GetComponent<HealthController>();
         spawnable = GetComponent<Spawnable>();
 
-        state = EnemyState.Initial;
-
-        beforeIdleWaitForSecondsObject =
-            new WaitForSeconds(initialWaitTimeBeforeIdle);
-        afterKnockbackWaitForSecondsObject =
-            new WaitForSeconds(waitTimeAfterKnockback);
-
-        initialWaitTimeBeforeIdleCoroutine =
-            StartCoroutine(InitialWaitBeforeIdleCoroutine());
-
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
+
+        currentState = InitialState;
+
+        currentState.StateEnter();
     }
 
     private void Update()
     {
-        if (state == EnemyState.Idle)
-        {
-            IdleStateUpdate();
-        }
-        else if (state == EnemyState.Chasing)
-        {
-            ChasingStateUpdate();
-        }
-        else if (state == EnemyState.FadingOut)
-        {
-            FadingOutStateUpdate();
-        }
+        currentState.StateUpdate();
     }
 
     private void FixedUpdate()
     {
-        if (state == EnemyState.Chasing)
+        if (currentState == ChasingState)
         {
             rb2d.MovePosition(Vector2.MoveTowards(transform.position,
                 GetPlayerColliderPosition(), speed));
@@ -89,37 +79,7 @@ public class EnemyController : MonoBehaviour,
         }
     }
 
-    private void IdleStateUpdate()
-    {
-        if (GetDistanceToPlayerCollider() <= maxStartChasingDistanceToPlayer)
-        {
-            state = EnemyState.Chasing;
-        }
-    }
-
-    private void ChasingStateUpdate()
-    {
-        if (GetDistanceToPlayerCollider() >= minStopChasingDistanceToPlayer)
-        {
-            state = EnemyState.Idle;
-        }
-    }
-
-    private void FadingOutStateUpdate()
-    {
-        float newAlpha = spriteRenderer.color.a - fadeOutSpeed * Time.deltaTime;
-
-        if (newAlpha <= 0f)
-        {
-            newAlpha = 0f;
-
-            EnemyDeath();
-        }
-
-        SetAlpha(newAlpha);
-    }
-
-    private void SetAlpha(float alpha)
+    public void SetAlpha(float alpha)
     {
         spriteRenderer.color = new Color(spriteRenderer.color.r,
             spriteRenderer.color.g, spriteRenderer.color.b, alpha);
@@ -130,7 +90,7 @@ public class EnemyController : MonoBehaviour,
         }
     }
 
-    private void EnemyDeath()
+    public void EnemyDeath()
     {
         foreach (ItemWithAmount loot in droppedLoot)
         {
@@ -152,9 +112,7 @@ public class EnemyController : MonoBehaviour,
 
     private void HealthController_OnHealthSetToZero()
     {
-        state = EnemyState.FadingOut;
-
-        collider2D.enabled = false;
+        SwitchState(FadingOutState);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -164,7 +122,7 @@ public class EnemyController : MonoBehaviour,
             HealthController playerHealthController = other.GetComponent<HealthController>();
             playerHealthController.DecreaseHealth(playerDamageAmount);
 
-            if (state != EnemyState.KnockedBack)
+            if (currentState != KnockedBackState)
             {
                 Vector2 directionFromPlayerToEnemy = GetDirectionFromPlayerToEnemy();
                 ApplyKnockback(directionFromPlayerToEnemy, playerKnockbackForce);
@@ -174,47 +132,39 @@ public class EnemyController : MonoBehaviour,
 
     public void ApplyKnockback(Vector2 normalizedDirection, float force)
     {
-        if (initialWaitOccurring)
-        {
-            StopCoroutine(initialWaitTimeBeforeIdleCoroutine);
-        }
-
-        if (state == EnemyState.KnockedBack)
+        if (currentState == KnockedBackState)
         {
             rb2d.velocity = Vector2.zero;
         }
-        else if (state != EnemyState.FadingOut)
+        else if (currentState != FadingOutState)
         {
-            state = EnemyState.KnockedBack;
+            SwitchState(KnockedBackState);
         }
 
         rb2d.AddForce(normalizedDirection * force, ForceMode2D.Impulse);
 
-        StopCoroutine(nameof(WaitAfterKnockbackCoroutine));
-        StartCoroutine(nameof(WaitAfterKnockbackCoroutine));
+        KnockedBackState.ResetKnockbackStartTime();
     }
 
-    private IEnumerator InitialWaitBeforeIdleCoroutine()
+    public void DisableCollider()
     {
-        initialWaitOccurring = true;
-
-        yield return beforeIdleWaitForSecondsObject;
-        state = EnemyState.Idle;
-
-        initialWaitOccurring = false;
+        collider2D.enabled = false;
     }
 
-    private IEnumerator WaitAfterKnockbackCoroutine()
-    {
-        yield return afterKnockbackWaitForSecondsObject;
+    public bool ShouldStartChasingPlayer() =>
+        GetDistanceToPlayerCollider() <= maxStartChasingDistanceToPlayer;
 
-        if (state != EnemyState.FadingOut)
-        {
-            state = EnemyState.Chasing;
-        }
+    public bool ShouldStopChasingPlayer() =>
+        GetDistanceToPlayerCollider() >= minStopChasingDistanceToPlayer;
 
-        rb2d.velocity = Vector2.zero;
-    }
+    public float GetNewFadingOutAlpha() =>
+        spriteRenderer.color.a - fadeOutSpeed * Time.deltaTime;
+
+    public float GetInitialWaitTimeBeforeIdleSeconds() =>
+        initialWaitTimeBeforeIdleSeconds;
+
+    public float GetWaitTimeAfterKnockbackSeconds() =>
+        waitTimeAfterKnockbackSeconds;
 
     private Vector2 GetPlayerColliderPosition() =>
         (Vector2)playerTransform.position + playerColliderOffset;
@@ -231,6 +181,12 @@ public class EnemyController : MonoBehaviour,
         this.playerInventory = playerInventory;
 
         playerColliderOffset = playerTransform.GetComponent<BoxCollider2D>().offset;
+    }
+
+    public void SwitchState(BaseEnemyState newState)
+    {
+        currentState = newState;
+        currentState.StateEnter();
     }
 
     public SerializableEnemyState GetSerializableState()

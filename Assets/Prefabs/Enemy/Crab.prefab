@@ -155,8 +155,8 @@ MonoBehaviour:
   playerKnockbackForce: 1.5
   maxStartChasingDistanceToPlayer: 2.5
   minStopChasingDistanceToPlayer: 3.75
-  initialWaitTimeBeforeIdle: 1.5
-  waitTimeAfterKnockback: 0.6
+  initialWaitTimeBeforeIdleSeconds: 1.5
+  waitTimeAfterKnockbackSeconds: 0.6
   fadeOutSpeed: 3.5
   healthBarCanvasGroup: {fileID: 1082179321904278149}
   playerTransform: {fileID: 0}
