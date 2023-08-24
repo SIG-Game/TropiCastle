@@ -444,8 +444,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee,
-    type: 3}
+  m_Sprite: {fileID: -1534306997, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -520,6 +519,7 @@ MonoBehaviour:
   overlaySpriteMask: {fileID: 7652320630200294286}
   cursorController: {fileID: 0}
   inventoryUIManager: {fileID: 0}
+  inputManager: {fileID: 0}
   attackActionReference: {fileID: -3758019864443385551, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
   healActionReference: {fileID: 5534942449988417204, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
@@ -599,6 +599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUIManager: {fileID: 0}
+  inputManager: {fileID: 0}
   selectLeftItemActionReference: {fileID: -766893524004852649, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
   selectRightItemActionReference: {fileID: 3435081143351072354, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
@@ -617,10 +618,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e72cf51700a9c48ad0af8562d44fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  front: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  back: {fileID: 931106270064198645, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  left: {fileID: 9158111770620788918, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
-  right: {fileID: 2034029286957099435, guid: 9c7f60e766fd645a28e63bf06c9dedee, type: 3}
+  front: {fileID: -1534306997, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+  back: {fileID: 1830328267, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+  left: {fileID: 309449331, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+  right: {fileID: -214433504, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
   defaultDirection: 1
 --- !u!95 &8669891105156055949
 Animator:
@@ -887,8 +888,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -115446527818050805, guid: 9c7f60e766fd645a28e63bf06c9dedee,
-    type: 3}
+  m_Sprite: {fileID: -1534306997, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 0
   m_BackSortingLayerID: 0
