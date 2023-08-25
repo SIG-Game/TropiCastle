@@ -261,6 +261,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8300868821272580690, guid: 04cfd4d604aadc446bb4a09fde99465b,
+        type: 3}
+      propertyPath: tradingUIController
+      value: 
+      objectReference: {fileID: 1170725310}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04cfd4d604aadc446bb4a09fde99465b, type: 3}
 --- !u!114 &295679833 stripped
@@ -27653,6 +27658,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6847651757298814663}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1170725310 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6877747647967441447, guid: cb76167790ad17b418442606107678be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6847651757298814663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f8c79a4e066ad4a8e24477f2999b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1234441276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35019,6 +35036,21 @@ PrefabInstance:
     - target: {fileID: 6847651758681978324, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 6877747647967441447, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inputManager
+      value: 
+      objectReference: {fileID: 1274756994}
+    - target: {fileID: 6877747647967441447, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
+    - target: {fileID: 6877747647967441447, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1982112582}
     - target: {fileID: 7081604086325166609, guid: cb76167790ad17b418442606107678be,
