@@ -134,7 +134,7 @@ TextureImporter:
         x: 0
         y: 0
         width: 12
-        height: 22
+        height: 21
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,10 +152,10 @@ TextureImporter:
       name: Chimp_1
       rect:
         serializedVersion: 2
-        x: 15
+        x: 13
         y: 0
         width: 9
-        height: 22
+        height: 21
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +173,10 @@ TextureImporter:
       name: Chimp_2
       rect:
         serializedVersion: 2
-        x: 27
+        x: 23
         y: 0
         width: 9
-        height: 22
+        height: 21
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +194,10 @@ TextureImporter:
       name: Chimp_3
       rect:
         serializedVersion: 2
-        x: 39
+        x: 33
         y: 0
         width: 12
-        height: 22
+        height: 21
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
