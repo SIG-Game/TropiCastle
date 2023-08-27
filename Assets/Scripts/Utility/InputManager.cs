@@ -9,8 +9,6 @@ public class InputManager : MonoBehaviour
     [SerializeField] private InputActionReference inventoryActionReference;
     [SerializeField] private InputActionReference fishActionReference;
 
-    private PlayerInput playerInput;
-
     private InputAction useItemAction;
     private InputAction interactAction;
     private InputAction inventoryAction;
@@ -23,8 +21,6 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-
         useItemAction = useItemActionReference.action;
         interactAction = interactActionReference.action;
         inventoryAction = inventoryActionReference.action;
@@ -113,8 +109,4 @@ public class InputManager : MonoBehaviour
     public bool GetFishButtonDownIfUnusedThisFrame() =>
         GetInputIfUnusedThisFrame(() => fishAction.WasPressedThisFrame(),
             ref fishButtonDownUsedThisFrame);
-
-    public string GetCurrentControlScheme() => playerInput.currentControlScheme;
-
-    public PlayerInput GetPlayerInput() => playerInput;
 }

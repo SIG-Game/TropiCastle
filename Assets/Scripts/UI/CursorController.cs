@@ -11,7 +11,7 @@ public class CursorController : MonoBehaviour
     [SerializeField] private PauseController pauseController;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
-    [SerializeField] private InputManager inputManager;
+    [SerializeField] private PlayerInput playerInput;
     [SerializeField] private InputActionReference moveCursorActionReference;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float gamepadSensitivity;
@@ -69,7 +69,7 @@ public class CursorController : MonoBehaviour
         {
             Vector2 cursorDelta = moveCursorInput;
 
-            if (inputManager.GetCurrentControlScheme() == "Mouse and Keyboard")
+            if (playerInput.currentControlScheme == "Mouse and Keyboard")
             {
                 // Movement distance using mouse delta is not multiplied by Time.deltaTime
                 // because doing that would make the movement distance vary with the frame rate

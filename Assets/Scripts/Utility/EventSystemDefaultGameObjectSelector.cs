@@ -6,9 +6,8 @@ using UnityEngine.InputSystem.UI;
 public class EventSystemDefaultGameObjectSelector : MonoBehaviour
 {
     [SerializeField] private GameObject defaultSelectedGameObject;
-    [SerializeField] private InputManager inputManager;
+    [SerializeField] private PlayerInput playerInput;
 
-    private PlayerInput playerInput;
     private InputAction navigateAction;
     private InputAction submitAction;
 
@@ -23,11 +22,6 @@ public class EventSystemDefaultGameObjectSelector : MonoBehaviour
 
         navigateAction = inputActionAsset["Navigate"];
         submitAction = inputActionAsset["Submit"];
-    }
-
-    private void Start()
-    {
-        playerInput = inputManager.GetPlayerInput();
     }
 
     private void Update()
