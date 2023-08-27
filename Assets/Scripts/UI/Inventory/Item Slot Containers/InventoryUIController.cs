@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -62,5 +63,22 @@ public class InventoryUIController : MonoBehaviour
         itemSlotControllers = new List<ItemSlotController>(childItemSlotControllersArray);
 
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+    }
+
+    [ContextMenu("Set Inventory UI Item Slot Indexes")]
+    private void SetInventoryUIItemSlotIndexes()
+    {
+        InventoryUIItemSlotController[] childInventoryUIItemSlots =
+            GetComponentsInChildren<InventoryUIItemSlotController>(true);
+
+        Undo.RecordObjects(childInventoryUIItemSlots, "Set Inventory UI Item Slot Indexes");
+
+        int currentSlotItemIndex = 0;
+        foreach (InventoryUIItemSlotController inventoryUIItemSlot in
+            childInventoryUIItemSlots)
+        {
+            inventoryUIItemSlot.SetSlotItemIndex(currentSlotItemIndex);
+            ++currentSlotItemIndex;
+        }
     }
 }

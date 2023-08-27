@@ -7,7 +7,6 @@ public class DebugAddItemButton : MonoBehaviour
     [SerializeField] private DebugAddItemDropdownController addItemDropdownController;
     [SerializeField] private TMP_InputField amountInputField;
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private ItemSelectionController itemSelectionController;
 
     private void Start()
     {
