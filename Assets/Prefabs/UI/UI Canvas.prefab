@@ -3244,6 +3244,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6847651757014132810}
     m_Modifications:
+    - target: {fileID: 1940752636317157425, guid: f05bb67feddd1804bbb72e5be82da685,
+        type: 3}
+      propertyPath: playerInventoryUI
+      value: 
+      objectReference: {fileID: 4685527892054663145}
+    - target: {fileID: 1940752636317157425, guid: f05bb67feddd1804bbb72e5be82da685,
+        type: 3}
+      propertyPath: inventoryUIManager
+      value: 
+      objectReference: {fileID: 4365771476343332667}
+    - target: {fileID: 1940752636317157425, guid: f05bb67feddd1804bbb72e5be82da685,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
     - target: {fileID: 1940752636317157426, guid: f05bb67feddd1804bbb72e5be82da685,
         type: 3}
       propertyPath: m_Pivot.x

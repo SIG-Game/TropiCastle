@@ -4,30 +4,40 @@ using UnityEngine.UI;
 
 public class TradingUIController : MonoBehaviour
 {
-    [SerializeField] private GameObject tradingUI;
+    [SerializeField] private GameObject tradeUI;
     [SerializeField] private Button tradeButton;
     [SerializeField] private Image inputItemImage;
     [SerializeField] private Image outputItemImage;
+    [SerializeField] private RectTransform playerInventoryUI;
+    [SerializeField] private InventoryUIManager inventoryUIManager;
+    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private PauseController pauseController;
+    [SerializeField] private Vector2 playerInventoryUIPosition;
 
+    private List<GameObject> tradingUIGameObjects;
     private NPCTradeScriptableObject currentTrade;
     private int inputItemStackIndex;
+    private bool isCurrentTradePossible;
 
     private void Awake()
     {
+        tradingUIGameObjects = new List<GameObject>
+        {
+            tradeUI,
+            playerInventoryUI.gameObject
+        };
+
         inputItemStackIndex = -1;
     }
 
-    // Must run after the PauseMenu Update method so that an Escape key press
-    // used to close the trading UI isn't reused to open the pause menu
+    // Runs after the InventoryUIHeldItemController Update method so that
+    // the trade button's interactability is affected on the frame that an
+    // item in the trading UI is picked up or placed
     private void Update()
     {
-        if (tradingUI.activeInHierarchy &&
-            CloseTradingUIInputPressed())
+        if (tradeUI.activeInHierarchy)
         {
-            CloseTradingUI();
+            UpdateTradeButtonInteractable();
         }
     }
 
@@ -38,11 +48,15 @@ public class TradingUIController : MonoBehaviour
         inputItemImage.sprite = trade.InputItem.sprite;
         outputItemImage.sprite = trade.OutputItem.itemData.sprite;
 
+        SetIsCurrentTradePossible();
+
         UpdateTradeButtonInteractable();
 
-        PauseController.Instance.GamePaused = true;
+        playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
-        tradingUI.SetActive(true);
+        inventoryUIManager.SetCurrentInventoryUIGameObjects(tradingUIGameObjects);
+        inventoryUIManager.SetCanCloseUsingInteractAction(true);
+        inventoryUIManager.EnableCurrentInventoryUI();
     }
 
     public void TradeButton_OnClick()
@@ -50,46 +64,27 @@ public class TradingUIController : MonoBehaviour
         playerInventory.DecrementItemStackAtIndex(inputItemStackIndex);
         playerInventory.AddItem(currentTrade.OutputItem);
 
+        SetIsCurrentTradePossible();
+
         UpdateTradeButtonInteractable();
     }
 
-    private void UpdateTradeButtonInteractable()
-    {
-        tradeButton.interactable = IsCurrentTradePossible();
-    }
-
-    private bool CloseTradingUIInputPressed()
-    {
-        bool closeUsingEscapeKey = Input.GetKeyDown(KeyCode.Escape);
-
-        bool closeUsingInteractAction =
-            inputManager.GetInteractButtonDownIfUnusedThisFrame();
-
-        return closeUsingEscapeKey || closeUsingInteractAction;
-    }
-
-    private void CloseTradingUI()
-    {
-        tradingUI.SetActive(false);
-
-        PauseController.Instance.GamePaused = false;
-
-        currentTrade = null;
-        inputItemStackIndex = -1;
-    }
-
-    private bool IsCurrentTradePossible()
+    private void SetIsCurrentTradePossible()
     {
         List<ItemWithAmount> itemList = playerInventory.GetItemList();
 
         inputItemStackIndex = itemList.FindIndex(
             x => x.itemData == currentTrade.InputItem);
 
-        if (inputItemStackIndex == -1)
-        {
-            return false;
-        }
+        isCurrentTradePossible =
+            inputItemStackIndex != -1 &&
+            playerInventory.CanAddItem(currentTrade.OutputItem);
+    }
 
-        return playerInventory.CanAddItem(currentTrade.OutputItem);
+    private void UpdateTradeButtonInteractable()
+    {
+        tradeButton.interactable =
+            isCurrentTradePossible &&
+            !inventoryUIHeldItemController.HoldingItem();
     }
 }
