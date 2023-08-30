@@ -12,6 +12,9 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private Sprite transparentSprite;
 
+    public event Action OnItemHeld = delegate { };
+    public event Action OnHidden = delegate { };
+
     private Inventory clickedInventory;
     private Inventory heldItemInventory;
     private ItemWithAmount heldItem;
@@ -231,6 +234,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         heldItem = item;
 
         UpdateHeldItemUI();
+
+        OnItemHeld();
     }
 
     private void InventoryUIManager_OnInventoryUIClosed()
@@ -284,6 +289,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         heldItemAmountText.text = string.Empty;
 
         durabilityMeter.HideMeter();
+
+        OnHidden();
     }
 
     public void SetRightClickToResetEnabled(bool rightClickToResetEnabled)

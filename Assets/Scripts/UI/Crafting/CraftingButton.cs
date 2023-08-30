@@ -22,20 +22,24 @@ public class CraftingButton : MonoBehaviour, IElementWithMultiTextTooltip
         // It this wasn't set at runtime, an old item tooltip format might get cached
         resultItemTooltipText = $"Result:\n" +
             craftingRecipe.resultItem.itemData.GetTooltipText();
+
+        inventoryUIHeldItemController.OnItemHeld +=
+            InventoryUIHeldItemController_OnItemHeld;
+        inventoryUIHeldItemController.OnHidden +=
+            InventoryUIHeldItemController_OnHidden;
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        craftingButton.interactable =
-            !inventoryUIHeldItemController.HoldingItem();
+        inventoryUIHeldItemController.OnItemHeld -=
+            InventoryUIHeldItemController_OnItemHeld;
+        inventoryUIHeldItemController.OnHidden -=
+            InventoryUIHeldItemController_OnHidden;
     }
 
     public void CraftingButton_OnClick()
     {
-        if (!inventoryUIHeldItemController.HoldingItem())
-        {
-            craftingButtonDependencies.GetCrafting().CraftItem(craftingRecipe);
-        }
+        craftingButtonDependencies.GetCrafting().CraftItem(craftingRecipe);
     }
 
     public void SetUpCraftingButton(CraftingButtonDependencies craftingButtonDependencies,
@@ -74,4 +78,14 @@ public class CraftingButton : MonoBehaviour, IElementWithMultiTextTooltip
     public string GetTooltipText() => GetIngredientsAsString();
 
     public string GetAlternateTooltipText() => resultItemTooltipText;
+
+    private void InventoryUIHeldItemController_OnItemHeld()
+    {
+        craftingButton.interactable = false;
+    }
+
+    private void InventoryUIHeldItemController_OnHidden()
+    {
+        craftingButton.interactable = true;
+    }
 }

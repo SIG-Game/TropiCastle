@@ -28,17 +28,19 @@ public class TradingUIController : MonoBehaviour
         };
 
         inputItemStackIndex = -1;
+
+        inventoryUIHeldItemController.OnItemHeld +=
+            InventoryUIHeldItemController_OnItemHeld;
+        inventoryUIHeldItemController.OnHidden +=
+            InventoryUIHeldItemController_OnHidden;
     }
 
-    // Runs after the InventoryUIHeldItemController Update method so that
-    // the trade button's interactability is affected on the frame that an
-    // item in the trading UI is picked up or placed
-    private void Update()
+    private void OnDestroy()
     {
-        if (tradeUI.activeInHierarchy)
-        {
-            UpdateTradeButtonInteractable();
-        }
+        inventoryUIHeldItemController.OnItemHeld -=
+            InventoryUIHeldItemController_OnItemHeld;
+        inventoryUIHeldItemController.OnHidden -=
+            InventoryUIHeldItemController_OnHidden;
     }
 
     public void DisplayTrade(NPCTradeScriptableObject trade)
@@ -50,7 +52,7 @@ public class TradingUIController : MonoBehaviour
 
         SetIsCurrentTradePossible();
 
-        UpdateTradeButtonInteractable();
+        tradeButton.interactable = isCurrentTradePossible;
 
         playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
@@ -66,7 +68,7 @@ public class TradingUIController : MonoBehaviour
 
         SetIsCurrentTradePossible();
 
-        UpdateTradeButtonInteractable();
+        tradeButton.interactable = isCurrentTradePossible;
     }
 
     private void SetIsCurrentTradePossible()
@@ -81,10 +83,13 @@ public class TradingUIController : MonoBehaviour
             playerInventory.CanAddItem(currentTrade.OutputItem);
     }
 
-    private void UpdateTradeButtonInteractable()
+    private void InventoryUIHeldItemController_OnItemHeld()
     {
-        tradeButton.interactable =
-            isCurrentTradePossible &&
-            !inventoryUIHeldItemController.HoldingItem();
+        tradeButton.interactable = false;
+    }
+
+    private void InventoryUIHeldItemController_OnHidden()
+    {
+        tradeButton.interactable = isCurrentTradePossible;
     }
 }
