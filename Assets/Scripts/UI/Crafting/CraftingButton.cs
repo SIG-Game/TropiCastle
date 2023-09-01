@@ -10,11 +10,14 @@ public class CraftingButton : MonoBehaviour, IElementWithMultiTextTooltip
     [SerializeField] private CraftingRecipeScriptableObject craftingRecipe;
     [SerializeField] private Image craftingButtonImage;
 
+    private Inventory playerInventory;
     private InventoryUIHeldItemController inventoryUIHeldItemController;
     private string resultItemTooltipText;
 
     private void Awake()
     {
+        playerInventory =
+            craftingButtonDependencies.GetPlayerInventory();
         inventoryUIHeldItemController =
             craftingButtonDependencies.GetInventoryUIHeldItemController();
 
@@ -39,7 +42,8 @@ public class CraftingButton : MonoBehaviour, IElementWithMultiTextTooltip
 
     public void CraftingButton_OnClick()
     {
-        craftingButtonDependencies.GetCrafting().CraftItem(craftingRecipe);
+        playerInventory.ReplaceItems(
+            craftingRecipe.ingredients, craftingRecipe.resultItem);
     }
 
     public void SetUpCraftingButton(CraftingButtonDependencies craftingButtonDependencies,
@@ -55,15 +59,12 @@ public class CraftingButton : MonoBehaviour, IElementWithMultiTextTooltip
     {
         StringBuilder ingredientsStringBuilder = new StringBuilder("Ingredients:\n");
 
-        List<ItemWithAmount> playerInventoryItemList =
-            craftingButtonDependencies.GetPlayerInventory().GetItemList();
-
         Dictionary<int, int> itemIndexToUsedAmount = new Dictionary<int, int>();
 
         foreach (ItemWithAmount ingredient in craftingRecipe.ingredients)
         {
-            bool playerHasIngredient = craftingButtonDependencies.GetCrafting()
-                .TryFindIngredient(playerInventoryItemList, itemIndexToUsedAmount, ingredient);
+            bool playerHasIngredient = playerInventory
+                .HasReplacementInputItem(itemIndexToUsedAmount, ingredient);
 
             ingredientsStringBuilder.Append(playerHasIngredient ? "<color=#00FF00>" : "<color=#FF0000>");
             ingredientsStringBuilder.Append($"- {ingredient.amount} {ingredient.itemData.name}: ");

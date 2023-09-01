@@ -187,7 +187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fdf8a82830df914f8842c0642272bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crafting: {fileID: 0}
   playerInventory: {fileID: 0}
   inventoryUIHeldItemController: {fileID: 0}
 --- !u!114 &3872985727311164805
