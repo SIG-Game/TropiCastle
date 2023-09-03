@@ -17605,6 +17605,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
+      propertyPath: itemToSpawn.itemDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649,
+        type: 2}
+    - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
+        type: 3}
       propertyPath: timeBeforeFirstSpawnRange.x
       value: 1
       objectReference: {fileID: 0}
@@ -33392,7 +33398,7 @@ PrefabInstance:
         type: 3}
       propertyPath: crafting
       value: 
-      objectReference: {fileID: 2003006741}
+      objectReference: {fileID: 0}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: pauseMenu
@@ -33833,18 +33839,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1991306457}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2003006741 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6628131631050701546, guid: 0b10992830a0ba7439705a4db0804f24,
-    type: 3}
-  m_PrefabInstance: {fileID: 6628131629790253055}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 086e92d45f299024dae23b50550b5966, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &987879901944864875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34289,7 +34283,7 @@ PrefabInstance:
         type: 3}
       propertyPath: crafting
       value: 
-      objectReference: {fileID: 2003006741}
+      objectReference: {fileID: 0}
     - target: {fileID: 2296847760118653159, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: playerInventory

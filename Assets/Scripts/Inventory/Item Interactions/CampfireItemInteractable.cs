@@ -27,7 +27,7 @@ public class CampfireItemInteractable : ItemInteractable
         CampfireRecipeScriptableObject selectedItemCampfireRecipe =
             campfireRecipes.FirstOrDefault(
                 x => x.PossibleInputItems.Any(
-                    x => x.name == selectedItem.itemData.name));
+                    x => x.name == selectedItem.itemDefinition.name));
 
         if (selectedItemCampfireRecipe == null)
         {

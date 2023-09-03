@@ -78,7 +78,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
         {
             AddItemToStackAtIndex(newItem, stackIndex);
         }
-        else if (itemList[index].itemData.name == "Empty")
+        else if (itemList[index].itemDefinition.name == "Empty")
         {
             AddItemAtIndex(newItem, index);
         }
@@ -144,7 +144,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
     {
         ItemWithAmount itemAtIndex = itemList[index];
 
-        if (itemAtIndex.itemData.name == "Empty")
+        if (itemAtIndex.itemDefinition.name == "Empty")
         {
             Debug.LogWarning("Attempted to remove empty item from inventory");
             return;
@@ -162,14 +162,14 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
 
     private void SetFirstEmptyIndex()
     {
-        firstEmptyIndex = itemList.FindIndex(x => x.itemData.name == "Empty");
+        firstEmptyIndex = itemList.FindIndex(x => x.itemDefinition.name == "Empty");
     }
 
     private void AddItemToStackAtIndex(ItemWithAmount newItem, int stackIndex)
     {
         ItemWithAmount itemAtStackIndex = itemList[stackIndex];
 
-        int itemStackSize = newItem.itemData.stackSize;
+        int itemStackSize = newItem.itemDefinition.stackSize;
 
         int combinedAmount = itemAtStackIndex.amount + newItem.amount;
 
@@ -188,14 +188,14 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
 
             OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
 
-            ItemWithAmount itemWithAmountAdded = new ItemWithAmount(newItem.itemData,
+            ItemWithAmount itemWithAmountAdded = new ItemWithAmount(newItem.itemDefinition,
                 amountToAdd, newItem.instanceProperties);
 
             OnItemAdded(itemWithAmountAdded);
 
             int amountRemaining = combinedAmount - itemStackSize;
 
-            ItemWithAmount itemWithAmountRemaining = new ItemWithAmount(newItem.itemData,
+            ItemWithAmount itemWithAmountRemaining = new ItemWithAmount(newItem.itemDefinition,
                 amountRemaining, newItem.instanceProperties);
 
             AddItem(itemWithAmountRemaining);
@@ -229,14 +229,14 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
     }
 
     private int FindStackIndex(ItemWithAmount item) =>
-        itemList.FindIndex(x => x.itemData.name == item.itemData.name &&
-            x.amount < x.itemData.stackSize);
+        itemList.FindIndex(x => x.itemDefinition.name == item.itemDefinition.name &&
+            x.amount < x.itemDefinition.stackSize);
 
     public void SetItemAmountAtIndex(int amount, int index)
     {
         ItemWithAmount itemAtIndex = itemList[index];
 
-        if (itemAtIndex.itemData.name == "Empty")
+        if (itemAtIndex.itemDefinition.name == "Empty")
         {
             return;
         }
@@ -277,7 +277,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
             if (canAddAmount != 0)
             {
                 ItemWithAmount itemToAdd = new ItemWithAmount(
-                    item.itemData, canAddAmount, item.instanceProperties);
+                    item.itemDefinition, canAddAmount, item.instanceProperties);
 
                 addItem(itemToAdd);
             }
@@ -343,9 +343,10 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
 
                 ItemWithAmount currentItem = itemList[i];
 
-                if ((currentItem.itemData.name == newItem.itemData.name &&
-                    currentItem.amount < currentItem.itemData.stackSize) ||
-                    currentItem.itemData.name == "Empty") {
+                if ((currentItem.itemDefinition.name == newItem.itemDefinition.name &&
+                    currentItem.amount < currentItem.itemDefinition.stackSize) ||
+                    currentItem.itemDefinition.name == "Empty")
+                {
                     stackIndex = i;
 
                     break;
@@ -361,7 +362,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
             ItemWithAmount itemAtStackIndex = itemList[stackIndex];
 
             int amountToReachStackSizeLimit =
-                itemAtStackIndex.itemData.stackSize - itemAtStackIndex.amount;
+                itemAtStackIndex.itemDefinition.stackSize - itemAtStackIndex.amount;
 
             if (amountToReachStackSizeLimit < amountToAdd)
             {
@@ -383,7 +384,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
     {
         ItemWithAmount targetItem = itemList[targetItemIndex];
 
-        if (targetItem.itemData.name == "Empty")
+        if (targetItem.itemDefinition.name == "Empty")
         {
             return;
         }
@@ -397,11 +398,11 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
 
             ItemWithAmount currentItem = itemList[i];
 
-            if (targetItem.itemData.name == currentItem.itemData.name)
+            if (targetItem.itemDefinition.name == currentItem.itemDefinition.name)
             {
                 int combinedAmount = targetItem.amount + currentItem.amount;
 
-                if (combinedAmount <= targetItem.itemData.stackSize)
+                if (combinedAmount <= targetItem.itemDefinition.stackSize)
                 {
                     targetItem.amount = combinedAmount;
 
@@ -409,9 +410,9 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
                 }
                 else
                 {
-                    targetItem.amount = targetItem.itemData.stackSize;
+                    targetItem.amount = targetItem.itemDefinition.stackSize;
 
-                    currentItem.amount = combinedAmount - targetItem.itemData.stackSize;
+                    currentItem.amount = combinedAmount - targetItem.itemDefinition.stackSize;
 
                     OnItemChangedAtIndex(currentItem, i);
                 }
@@ -472,7 +473,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
         {
             ItemWithAmount currentItem = itemList[i];
 
-            if (currentItem.itemData.name == inputItem.itemData.name)
+            if (currentItem.itemDefinition.name == inputItem.itemDefinition.name)
             {
                 int currentItemAmount = currentItem.amount;
 
@@ -596,7 +597,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
         public SerializableInventoryItem(ItemWithAmount item)
         {
             // Use ScriptableObject name and not item display name
-            ItemName = ((ScriptableObject)item.itemData).name;
+            ItemName = ((ScriptableObject)item.itemDefinition).name;
             Amount = item.amount;
             InstanceProperties = item.instanceProperties;
         }
@@ -614,13 +615,13 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
         {
             ItemWithAmount currentItem = itemList[i];
 
-            if (currentItem.itemData.name == "Coconut")
+            if (currentItem.itemDefinition.name == "Coconut")
             {
                 currentItem.amount = coconutItemInfo.stackSize;
 
                 OnItemChangedAtIndex(currentItem, i);
             }
-            else if (currentItem.itemData.name == "Empty")
+            else if (currentItem.itemDefinition.name == "Empty")
             {
                 AddItemAtIndex(coconutItemWithMaxAmount, i);
             }
@@ -631,7 +632,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
     {
         for (int i = 0; i < itemList.Count; ++i)
         {
-            if (itemList[i].itemData.name != "Empty")
+            if (itemList[i].itemDefinition.name != "Empty")
             {
                 RemoveItemAtIndex(i);
             }

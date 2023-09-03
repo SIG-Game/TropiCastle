@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class ItemWithAmount
 {
-    public ItemScriptableObject itemData;
+    public ItemScriptableObject itemDefinition;
     public int amount;
     public ItemInstanceProperties instanceProperties;
 
@@ -14,29 +14,29 @@ public class ItemWithAmount
         { "Chest", typeof(ChestItemInstanceProperties) }
     };
 
-    public ItemWithAmount(ItemScriptableObject itemData, int amount,
+    public ItemWithAmount(ItemScriptableObject itemDefinition, int amount,
         ItemInstanceProperties instanceProperties = null)
     {
-        this.itemData = itemData;
+        this.itemDefinition = itemDefinition;
         this.amount = amount;
         this.instanceProperties = instanceProperties;
     }
 
     public ItemWithAmount(ItemWithAmount item)
     {
-        itemData = item.itemData;
+        itemDefinition = item.itemDefinition;
         amount = item.amount;
         instanceProperties = item.instanceProperties?.DeepCopy();
     }
 
     public void InitializeItemInstanceProperties()
     {
-        if (itemData is BreakableItemScriptableObject breakableItemScriptableObject)
+        if (itemDefinition is BreakableItemScriptableObject breakableItemScriptableObject)
         {
             instanceProperties = new BreakableItemInstanceProperties(
                 breakableItemScriptableObject.InitialDurability);
         }
-        else if (itemNameToInstancePropertiesType.TryGetValue(itemData.name,
+        else if (itemNameToInstancePropertiesType.TryGetValue(itemDefinition.name,
             out Type itemInstancePropertiesType))
         {
             instanceProperties = (ItemInstanceProperties)Activator
@@ -48,18 +48,18 @@ public class ItemWithAmount
     {
         if (TryGetDurabilityProperties(out int durability, out int initialDurability))
         {
-            return $"{itemData.name}\nDurability: {durability} / {initialDurability}";
+            return $"{itemDefinition.name}\nDurability: {durability} / {initialDurability}";
         }
         else
         {
-            return itemData.GetTooltipText();
+            return itemDefinition.GetTooltipText();
         }
     }
 
     public bool TryGetDurabilityProperties(out int durability, out int initialDurability)
     {
         if (instanceProperties is BreakableItemInstanceProperties breakableItemProperties &&
-            itemData is BreakableItemScriptableObject breakableItemScriptableObject)
+            itemDefinition is BreakableItemScriptableObject breakableItemScriptableObject)
         {
             durability = breakableItemProperties.Durability;
             initialDurability = breakableItemScriptableObject.InitialDurability;

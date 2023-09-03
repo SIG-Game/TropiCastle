@@ -23,7 +23,7 @@ public class AutoHealButtonTooltipController : MonoBehaviour, IElementWithToolti
 
         for (int i = 0; i < playerInventoryItemList.Count; ++i)
         {
-            if (playerInventoryItemList[i].itemData is HealingItemScriptableObject healingItem)
+            if (playerInventoryItemList[i].itemDefinition is HealingItemScriptableObject healingItem)
             {
                 int amountToUse = 0;
                 bool maxHealthReached = false;

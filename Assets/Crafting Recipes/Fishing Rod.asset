@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Fishing Rod
   m_EditorClassIdentifier: 
   ingredients:
-  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
     amount: 1
-  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
     amount: 1
-  - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
     amount: 1
   resultItem:
-    itemData: {fileID: 11400000, guid: d02252380b58b91449f08b6b2b552303, type: 2}
+    itemDefinition: {fileID: 11400000, guid: d02252380b58b91449f08b6b2b552303, type: 2}
     amount: 1

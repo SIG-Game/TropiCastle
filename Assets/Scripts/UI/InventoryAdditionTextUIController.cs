@@ -53,7 +53,7 @@ public class InventoryAdditionTextUIController : MonoBehaviour
 
     public void UpdateWithItem(ItemWithAmount item)
     {
-        itemName = item.itemData.name;
+        itemName = item.itemDefinition.name;
         itemAmount = item.amount;
 
         UpdateText();

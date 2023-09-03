@@ -39,7 +39,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
             return;
         }
 
-        if (itemNameToAdditionText.TryGetValue(item.itemData.name,
+        if (itemNameToAdditionText.TryGetValue(item.itemDefinition.name,
             out InventoryAdditionTextUIController additionTextController))
         {
             additionTextController.AddAmount(item.amount);
@@ -60,7 +60,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
             // bottom of the inventory addition UI
             spawnedAdditionText.transform.SetAsFirstSibling();
 
-            itemNameToAdditionText.Add(item.itemData.name, spawnedAdditionTextController);
+            itemNameToAdditionText.Add(item.itemDefinition.name, spawnedAdditionTextController);
         }
     }
 
@@ -71,7 +71,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
             return;
         }
 
-        if (itemNameToAdditionText.TryGetValue(item.itemData.name,
+        if (itemNameToAdditionText.TryGetValue(item.itemDefinition.name,
             out InventoryAdditionTextUIController additionTextController))
         {
             additionTextController.RemoveAmount(item.amount);

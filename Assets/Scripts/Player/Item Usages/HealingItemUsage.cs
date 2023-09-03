@@ -10,7 +10,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
     {
         if (!playerHealthController.AtMaxHealth())
         {
-            int amountToHeal = ((HealingItemScriptableObject)item.itemData).healAmount;
+            int amountToHeal = ((HealingItemScriptableObject)item.itemDefinition).healAmount;
 
             playerHealthController.IncreaseHealth(amountToHeal);
 
@@ -21,7 +21,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
     public void ConsumeFirstHealingItemInPlayerInventory()
     {
         int healingItemIndex = playerInventory.GetItemList().FindIndex(
-            x => x.itemData is HealingItemScriptableObject);
+            x => x.itemDefinition is HealingItemScriptableObject);
 
         if (healingItemIndex != -1)
         {
@@ -37,7 +37,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
 
         for (int i = 0; i < playerInventoryItemList.Count; ++i)
         {
-            if (playerInventoryItemList[i].itemData is HealingItemScriptableObject)
+            if (playerInventoryItemList[i].itemDefinition is HealingItemScriptableObject)
             {
                 UseHealingItemStackAtIndex(i, out bool maxHealthReached);
 
@@ -58,7 +58,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
         int initialHealingItemAmount = healingItem.amount;
 
         int itemHealAmount =
-            (healingItem.itemData as HealingItemScriptableObject).healAmount;
+            (healingItem.itemDefinition as HealingItemScriptableObject).healAmount;
 
         for (int i = 0; i < initialHealingItemAmount; ++i)
         {

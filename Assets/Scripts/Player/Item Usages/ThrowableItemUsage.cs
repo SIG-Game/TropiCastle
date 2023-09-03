@@ -24,7 +24,7 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
             ((Vector3)cursorController.GetWorldPosition() - thrownItemStartPosition).normalized;
 
         Vector2 itemColliderSize =
-            ItemWorldPrefabInstanceFactory.GetItemColliderSize(item.itemData);
+            ItemWorldPrefabInstanceFactory.GetItemColliderSize(item.itemDefinition);
 
         Physics2D.queriesHitTriggers = false;
         bool canThrowItem = Physics2D.BoxCast(thrownItemStartPosition, itemColliderSize, 0f,
@@ -47,7 +47,7 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
             thrownItemWorld.gameObject.AddComponent<ThrownItemWorld>();
 
         thrownItemWorldComponent.SetUpThrownItemWorld(throwDirection,
-            (ThrowableItemScriptableObject)itemToThrow.itemData, playerCollider2D);
+            (ThrowableItemScriptableObject)itemToThrow.itemDefinition, playerCollider2D);
 
         playerInventory.DecrementItemStackAtIndex(itemIndex);
     }

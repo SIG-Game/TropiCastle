@@ -107,7 +107,7 @@ public class CursorController : MonoBehaviour
 
     public void UpdateUsingItem(ItemWithAmount item)
     {
-        Sprite = item.itemData.sprite;
+        Sprite = item.itemDefinition.sprite;
         amountText.text = item.GetAmountText();
     }
 

@@ -71,7 +71,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         {
             PlaceHeldItem(clickedItemIndex, clickedItem);
         }
-        else if (clickedItem.itemData.name != "Empty")
+        else if (clickedItem.itemDefinition.name != "Empty")
         {
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
@@ -106,12 +106,12 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
         ItemWithAmount clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
 
-        if (heldItem.itemData.name == clickedItem.itemData.name
-            && heldItem.amount < heldItem.itemData.stackSize)
+        if (heldItem.itemDefinition.name == clickedItem.itemDefinition.name
+            && heldItem.amount < heldItem.itemDefinition.stackSize)
         {
             int combinedAmount = heldItem.amount + clickedItem.amount;
 
-            if (combinedAmount <= heldItem.itemData.stackSize)
+            if (combinedAmount <= heldItem.itemDefinition.stackSize)
             {
                 clickedInventory.RemoveItemAtIndex(clickedItemIndex);
 
@@ -120,9 +120,9 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
             else
             {
                 clickedInventory.SetItemAmountAtIndex(
-                    combinedAmount - heldItem.itemData.stackSize, clickedItemIndex);
+                    combinedAmount - heldItem.itemDefinition.stackSize, clickedItemIndex);
 
-                heldItem.amount = heldItem.itemData.stackSize;
+                heldItem.amount = heldItem.itemDefinition.stackSize;
             }
 
             UpdateHeldItemUI();
@@ -143,8 +143,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         {
             ResetHeldItem();
         }
-        else if (clickedItem.itemData.name == heldItem.itemData.name &&
-            clickedItem.amount < clickedItem.itemData.stackSize)
+        else if (clickedItem.itemDefinition.name == heldItem.itemDefinition.name &&
+            clickedItem.amount < clickedItem.itemDefinition.stackSize)
         {
             CombineHeldItemStackWithClickedItemStack(clickedItemIndex, clickedItem);
         }
@@ -167,7 +167,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         ItemWithAmount clickedItem)
     {
         int amountToMove = Math.Min(heldItem.amount,
-            clickedItem.itemData.stackSize - clickedItem.amount);
+            clickedItem.itemDefinition.stackSize - clickedItem.amount);
 
         clickedInventory.SetItemAmountAtIndex(clickedItem.amount + amountToMove,
             clickedItemIndex);
@@ -198,16 +198,16 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
 
         bool canPlaceInClickedItemStack =
-            clickedItem.itemData.name == heldItem.itemData.name &&
-            clickedItem.amount < clickedItem.itemData.stackSize;
-        bool clickedEmptyItem = clickedItem.itemData.name == "Empty";
+            clickedItem.itemDefinition.name == heldItem.itemDefinition.name &&
+            clickedItem.amount < clickedItem.itemDefinition.stackSize;
+        bool clickedEmptyItem = clickedItem.itemDefinition.name == "Empty";
         if (canPlaceInClickedItemStack)
         {
             clickedInventory.IncrementItemStackAtIndex(clickedItemIndex);
         }
         else if (clickedEmptyItem)
         {
-            ItemWithAmount oneOfHeldItem = new ItemWithAmount(heldItem.itemData,
+            ItemWithAmount oneOfHeldItem = new ItemWithAmount(heldItem.itemDefinition,
                 1, heldItem.instanceProperties);
 
             clickedInventory.AddItemAtIndex(oneOfHeldItem, clickedItemIndex);
@@ -245,7 +245,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
     private void UpdateHeldItemUI()
     {
-        heldItemImage.sprite = heldItem.itemData.sprite;
+        heldItemImage.sprite = heldItem.itemDefinition.sprite;
 
         heldItemAmountText.text = heldItem.GetAmountText();
 

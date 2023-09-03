@@ -22,7 +22,7 @@ public class ItemSlotController : MonoBehaviour
             return;
         }
 
-        itemSlotImage.sprite = item.itemData.sprite;
+        itemSlotImage.sprite = item.itemDefinition.sprite;
         amountText.text = item.GetAmountText();
         durabilityMeter.UpdateUsingItem(item);
     }

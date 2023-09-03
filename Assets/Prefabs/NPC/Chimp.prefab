@@ -252,11 +252,11 @@ MonoBehaviour:
   - (The chimp is eager to give you something but can sense that your inventory is
     full.)
   potentialItemsToGive:
-  - itemData: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
     amount: 1
-  - itemData: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
     amount: 1
-  - itemData: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
     amount: 1
   timeBetweenGivesSecondsRange: {x: 5, y: 10}
   chimpSpinner: {fileID: 856391509901689041}

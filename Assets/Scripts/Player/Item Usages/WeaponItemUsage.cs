@@ -25,21 +25,21 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
 
     public void UseItem(ItemWithAmount item, int _)
     {
-        AttackWithWeapon((WeaponItemScriptableObject)item.itemData);
+        AttackWithWeapon((WeaponItemScriptableObject)item.itemDefinition);
     }
 
-    public void AttackWithWeapon(WeaponItemScriptableObject weaponItemData)
+    public void AttackWithWeapon(WeaponItemScriptableObject weaponItemDefinition)
     {
-        playerAnimator.SetFloat("Attack Speed Multiplier", weaponItemData.attackSpeed);
+        playerAnimator.SetFloat("Attack Speed Multiplier", weaponItemDefinition.attackSpeed);
 
-        weaponSpriteRenderer.sprite = weaponItemData.weaponSprite;
-        weaponController.SetUpUsingScriptableObject(weaponItemData);
+        weaponSpriteRenderer.sprite = weaponItemDefinition.weaponSprite;
+        weaponController.SetUpUsingScriptableObject(weaponItemDefinition);
 
         playerController.IsAttacking = true;
 
         playerController.DisableItemSelection();
 
-        string attackTypeString = weaponItemData.attackType.ToString();
+        string attackTypeString = weaponItemDefinition.attackType.ToString();
 
         playerAnimator.Play($"{attackTypeString} {playerController.Direction}");
     }
@@ -55,12 +55,12 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
 
         foreach (ItemWithAmount item in playerInventory.GetItemList())
         {
-            if (item.itemData is not WeaponItemScriptableObject)
+            if (item.itemDefinition is not WeaponItemScriptableObject)
             {
                 continue;
             }
 
-            WeaponItemScriptableObject weapon = item.itemData as WeaponItemScriptableObject;
+            WeaponItemScriptableObject weapon = item.itemDefinition as WeaponItemScriptableObject;
 
             if (strongestWeaponInInventory == null ||
                 weapon.damage > strongestWeaponInInventory.damage)

@@ -49,14 +49,14 @@ public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorld
     {
         this.item = item;
 
-        GetComponent<SpriteRenderer>().sprite = item.itemData.sprite;
+        GetComponent<SpriteRenderer>().sprite = item.itemDefinition.sprite;
 
-        if (item.itemData.hasCustomColliderSize)
+        if (item.itemDefinition.hasCustomColliderSize)
         {
-            GetComponent<BoxCollider2D>().size = item.itemData.customColliderSize;
+            GetComponent<BoxCollider2D>().size = item.itemDefinition.customColliderSize;
         }
 
-        if (itemNameToInteractableType.TryGetValue(item.itemData.name,
+        if (itemNameToInteractableType.TryGetValue(item.itemDefinition.name,
             out Type itemInteractableType))
         {
             gameObject.AddComponent(itemInteractableType);
@@ -67,7 +67,7 @@ public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorld
             gameObject.layer = LayerMask.NameToLayer("Interactable");
         }
 
-        name = $"{item.itemData.name} ItemWorld";
+        name = $"{item.itemDefinition.name} ItemWorld";
 
         amountText.text = item.GetAmountText();
     }

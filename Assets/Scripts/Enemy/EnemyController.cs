@@ -99,7 +99,7 @@ public class EnemyController : MonoBehaviour,
             bool lootItemNotFullyAdded = amountAdded != loot.amount;
             if (lootItemNotFullyAdded)
             {
-                ItemWithAmount itemToDrop = new ItemWithAmount(loot.itemData,
+                ItemWithAmount itemToDrop = new ItemWithAmount(loot.itemDefinition,
                     loot.amount - amountAdded, loot.instanceProperties);
 
                 ItemWorldPrefabInstanceFactory.Instance.DropItem(

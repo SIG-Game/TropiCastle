@@ -184,8 +184,8 @@ public class PlayerController : MonoBehaviour,
     }
 
     private bool TryGetItemUsage(ItemWithAmount item, out IItemUsage itemUsage) =>
-        itemNameToUsage.TryGetValue(item.itemData.name, out itemUsage) ||
-        itemScriptableObjectTypeToUsage.TryGetValue(item.itemData.GetType(), out itemUsage);
+        itemNameToUsage.TryGetValue(item.itemDefinition.name, out itemUsage) ||
+        itemScriptableObjectTypeToUsage.TryGetValue(item.itemDefinition.GetType(), out itemUsage);
 
     private void PlayerDeath()
     {
@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour,
     private bool TryGetFishingRodItemIndex(out int fishingRodItemIndex)
     {
         fishingRodItemIndex = inventory.GetItemList()
-            .FindIndex(x => x.itemData.name == "Fishing Rod");
+            .FindIndex(x => x.itemDefinition.name == "Fishing Rod");
 
         return fishingRodItemIndex != -1;
     }

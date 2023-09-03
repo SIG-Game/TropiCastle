@@ -56,7 +56,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)
     {
-        if (itemToDrop.itemData.name == "Empty")
+        if (itemToDrop.itemDefinition.name == "Empty")
             return;
 
         Vector2 spawnPositionGenerator()
@@ -67,7 +67,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
             return dropPosition + randomOffset;
         }
 
-        Vector2 itemColliderExtents = GetItemColliderExtents(itemToDrop.itemData);
+        Vector2 itemColliderExtents = GetItemColliderExtents(itemToDrop.itemDefinition);
 
         if (SpawnColliderHelper.TryGetSpawnPositionOutsideColliders(spawnPositionGenerator, itemColliderExtents,
             maxDropSpawnAttempts, out Vector2 spawnPosition))
@@ -79,13 +79,13 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         //itemWorld.GetComponent<Rigidbody2D>().AddForce(randomOffset * 0.5f, ForceMode2D.Impulse);
     }
 
-    public static Vector2 GetItemColliderExtents(ItemScriptableObject itemData)
+    public static Vector2 GetItemColliderExtents(ItemScriptableObject itemDefinition)
     {
         Vector2 itemColliderExtents;
 
-        if (itemData.hasCustomColliderSize)
+        if (itemDefinition.hasCustomColliderSize)
         {
-            itemColliderExtents = itemData.customColliderSize / 2f;
+            itemColliderExtents = itemDefinition.customColliderSize / 2f;
         }
         else
         {
@@ -95,13 +95,13 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         return itemColliderExtents;
     }
 
-    public static Vector2 GetItemColliderSize(ItemScriptableObject itemData)
+    public static Vector2 GetItemColliderSize(ItemScriptableObject itemDefinition)
     {
         Vector2 itemColliderSize;
 
-        if (itemData.hasCustomColliderSize)
+        if (itemDefinition.hasCustomColliderSize)
         {
-            itemColliderSize = itemData.customColliderSize;
+            itemColliderSize = itemDefinition.customColliderSize;
         }
         else
         {

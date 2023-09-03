@@ -162,7 +162,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   playerInventory: {fileID: 0}
   droppedLoot:
-  - itemData: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
     amount: 2
 --- !u!114 &5115571631946345362
 MonoBehaviour:

@@ -56,5 +56,6 @@ MonoBehaviour:
   drawSpawnArea: 0
   drawnSpawnAreaColor: {r: 1, g: 1, b: 1, a: 1}
   itemToSpawn:
-    itemData: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
+    itemDefinition: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
     amount: 1
+  itemInteractableDependencies: {fileID: 0}

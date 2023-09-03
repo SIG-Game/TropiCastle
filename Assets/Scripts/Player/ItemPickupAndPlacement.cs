@@ -100,7 +100,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
         ItemWithAmount itemToPlace = player.GetSelectedItem();
         int itemToPlaceIndex = player.GetSelectedItemIndex();
 
-        if (itemToPlace.itemData.name != "Empty")
+        if (itemToPlace.itemDefinition.name != "Empty")
         {
             _ =ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(cursorPoint, itemToPlace);
             playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
@@ -140,7 +140,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor;
 
         Vector2 selectedItemColliderSize =
-            ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItem.itemData);
+            ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItem.itemDefinition);
 
         cursorController.UpdateUsingItem(selectedItem);
         cursorController.UpdateCursorBackground(cursorBackgroundColor,
@@ -168,10 +168,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void UpdateCanPlaceItemAtCursorPosition()
     {
-        ItemScriptableObject selectedItemData = player.GetSelectedItem().itemData;
+        ItemScriptableObject selectedItemDefinition =
+            player.GetSelectedItem().itemDefinition;
 
         Vector2 selectedItemColliderExtents =
-            ItemWorldPrefabInstanceFactory.GetItemColliderExtents(selectedItemData);
+            ItemWorldPrefabInstanceFactory.GetItemColliderExtents(selectedItemDefinition);
 
         CanPlaceItemAtCursorPosition = SpawnColliderHelper.CanSpawnColliderAtPosition(
             cursorPoint, selectedItemColliderExtents);
@@ -179,10 +180,12 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void UpdatePlacingItem()
     {
-        ItemScriptableObject selectedItemData = player.GetSelectedItem().itemData;
+        ItemScriptableObject selectedItemDefinition =
+            player.GetSelectedItem().itemDefinition;
 
         PlacingItem = itemPickupAndPlacementAction.IsPressed() &&
-            !WaitingForInputReleaseBeforePlacement && selectedItemData.name != "Empty";
+            !WaitingForInputReleaseBeforePlacement &&
+            selectedItemDefinition.name != "Empty";
     }
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)

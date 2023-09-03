@@ -31,7 +31,7 @@ public class CharacterItemInWorldController : MonoBehaviour
         }
 
         transform.localPosition = itemInWorldOffset;
-        itemSpriteRenderer.sprite = item.itemData.sprite;
+        itemSpriteRenderer.sprite = item.itemDefinition.sprite;
     }
 
     public void HideCharacterItemInWorld()

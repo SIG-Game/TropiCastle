@@ -48,7 +48,7 @@ public class TradingUIController : MonoBehaviour
         currentTrade = trade;
 
         inputItemImage.sprite = trade.InputItem.sprite;
-        outputItemImage.sprite = trade.OutputItem.itemData.sprite;
+        outputItemImage.sprite = trade.OutputItem.itemDefinition.sprite;
 
         SetIsCurrentTradePossible();
 
@@ -76,7 +76,7 @@ public class TradingUIController : MonoBehaviour
         List<ItemWithAmount> itemList = playerInventory.GetItemList();
 
         inputItemStackIndex = itemList.FindIndex(
-            x => x.itemData == currentTrade.InputItem);
+            x => x.itemDefinition == currentTrade.InputItem);
 
         isCurrentTradePossible =
             inputItemStackIndex != -1 &&
