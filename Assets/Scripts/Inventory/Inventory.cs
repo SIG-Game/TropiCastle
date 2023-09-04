@@ -484,14 +484,14 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
 
                 if (currentItemAmount + amountExcluded >= inputItem.amount)
                 {
-                    AddToDictionaryOrIncreaseValue(itemIndexToExcludeAmount,
+                    itemIndexToExcludeAmount.AddOrIncreaseValue(
                         i, inputItem.amount - amountExcluded);
 
                     return true;
                 }
                 else
                 {
-                    AddToDictionaryOrIncreaseValue(itemIndexToExcludeAmount,
+                    itemIndexToExcludeAmount.AddOrIncreaseValue(
                         i, currentItemAmount);
 
                     amountExcluded += currentItemAmount;
@@ -511,19 +511,6 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
             ItemWithAmount removedItem = itemIndexAndItemRemoved.Value;
 
             SetItemAtIndex(removedItem, removedItemIndex);
-        }
-    }
-
-    private void AddToDictionaryOrIncreaseValue(
-        Dictionary<int, int> dictionary, int key, int value)
-    {
-        if (dictionary.ContainsKey(key))
-        {
-            dictionary[key] += value;
-        }
-        else
-        {
-            dictionary.Add(key, value);
         }
     }
 
