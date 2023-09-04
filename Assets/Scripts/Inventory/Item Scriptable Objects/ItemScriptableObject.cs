@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 [CreateAssetMenu(menuName = "Item")]
 public class ItemScriptableObject : ScriptableObject
@@ -16,6 +17,20 @@ public class ItemScriptableObject : ScriptableObject
 
     public virtual string GetAdditionalInfo() => string.Empty;
 
-    public static ItemScriptableObject FromName(string name) =>
-        Resources.Load<ItemScriptableObject>($"Items/{name}");
+    public static ItemScriptableObject FromName(string name)
+    {
+        string itemScriptableObjectKey = $"Items/{name}.asset";
+
+        var itemLoadHandle = Addressables
+            .LoadAssetAsync<ItemScriptableObject>(itemScriptableObjectKey);
+
+        ItemScriptableObject item = itemLoadHandle.WaitForCompletion();
+
+        if (itemLoadHandle.IsValid())
+        {
+            Addressables.Release(itemLoadHandle);
+        }
+
+        return item;
+    }
 }

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class DebugAddItemDropdownController : MonoBehaviour
 {
@@ -8,13 +10,17 @@ public class DebugAddItemDropdownController : MonoBehaviour
     [SerializeField] private DebugAddItemAmountInputField debugAddItemAmountInputField;
 
     private List<ItemScriptableObject> itemScriptableObjects;
+    private AsyncOperationHandle<IList<ItemScriptableObject>> itemsLoadHandle;
 
     public float ScrollRectVerticalNormalizedPosition { get; set; }
 
     private void Awake()
     {
+        itemsLoadHandle = Addressables
+            .LoadAssetsAsync<ItemScriptableObject>("item", null);
+
         itemScriptableObjects = new List<ItemScriptableObject>(
-            Resources.LoadAll<ItemScriptableObject>("Items"));
+            itemsLoadHandle.WaitForCompletion());
 
         itemScriptableObjects.RemoveAll(x => x.name == "Empty");
 
@@ -32,6 +38,14 @@ public class DebugAddItemDropdownController : MonoBehaviour
         if (!DebugModeController.DebugModeEnabled)
         {
             dropdown.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (itemsLoadHandle.IsValid())
+        {
+            Addressables.Release(itemsLoadHandle);
         }
     }
 

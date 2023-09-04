@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
 
 public class FishingUIController : MonoBehaviour
@@ -28,13 +30,16 @@ public class FishingUIController : MonoBehaviour
     private bool catchFailedAnimationStarted;
 
     private IList<FishItemScriptableObject> fishItemScriptableObjects;
+    private AsyncOperationHandle<IList<FishItemScriptableObject>> fishItemsLoadHandle;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
 
-        fishItemScriptableObjects =
-            Resources.LoadAll<FishItemScriptableObject>("Items");
+        fishItemsLoadHandle = Addressables
+            .LoadAssetsAsync<FishItemScriptableObject>("item", null);
+
+        fishItemScriptableObjects = fishItemsLoadHandle.WaitForCompletion();
 
         fishProbabilityWeights = new List<float>();
         fishProbabilityWeightSum = 0f;
@@ -67,6 +72,11 @@ public class FishingUIController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (fishItemsLoadHandle.IsValid())
+        {
+            Addressables.Release(fishItemsLoadHandle);
+        }
+
         OnFishingStopped = delegate { };
         OnFishingUIOpened = delegate { };
         OnFishingUIClosed = delegate { };
