@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 3db3b2e5a03a6114581de3fcd3e8f30c
   m_SerializeEntries:
   - m_GUID: 6d34607565fed6a4bb4cedf631701e74
-    m_Address: Assets/Campfire Recipes
+    m_Address: Campfire Recipes
     m_ReadOnly: 0
     m_SerializedLabels:
     - campfire recipe

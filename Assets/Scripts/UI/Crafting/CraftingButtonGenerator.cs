@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
 public class CraftingButtonGenerator : MonoBehaviour
 {
@@ -11,6 +14,7 @@ public class CraftingButtonGenerator : MonoBehaviour
     [SerializeField] private GameObject craftingButtonPrefab;
     [SerializeField] private Transform craftingButtonsParentTransform;
 
+#if UNITY_EDITOR
     private GameObject prefabRoot;
     private CraftingButtonGenerator prefabCraftingButtonGenerator;
     private Transform prefabCraftingButtonsParent;
@@ -96,4 +100,5 @@ public class CraftingButtonGenerator : MonoBehaviour
 
         // Crafting buttons are deleted from the prefab instance automatically
     }
+#endif
 }

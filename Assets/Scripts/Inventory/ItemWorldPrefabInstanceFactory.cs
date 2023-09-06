@@ -1,8 +1,11 @@
-﻿using UnityEditor.SceneManagement;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using static ItemWorld;
 using Random = UnityEngine.Random;
+
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
 public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 {
@@ -25,6 +28,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         Instance = null;
     }
 
+#if UNITY_EDITOR
     [ContextMenu("Set Item World Prefab Collider Extents")]
     private void SetItemWorldPrefabColliderExtents()
     {
@@ -34,6 +38,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
     }
+#endif
 
     public ItemWorld SpawnItemWorld(Vector3 position, ItemWithAmount itemToSpawn)
     {

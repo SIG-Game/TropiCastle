@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 2e96b53bb6317ae419553c3e003b586a
   m_SerializeEntries:
   - m_GUID: 09e607d20b1c12f40b262c3063fe9430
-    m_Address: Assets/Crafting Recipes
+    m_Address: Crafting Recipes
     m_ReadOnly: 0
     m_SerializedLabels:
     - crafting recipe

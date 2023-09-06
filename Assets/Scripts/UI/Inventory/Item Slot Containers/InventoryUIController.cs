@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
 public class InventoryUIController : MonoBehaviour
 {
@@ -54,6 +57,7 @@ public class InventoryUIController : MonoBehaviour
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
     }
 
+#if UNITY_EDITOR
     [ContextMenu("Set Item Slot Controllers")]
     private void SetItemSlotControllers()
     {
@@ -81,4 +85,5 @@ public class InventoryUIController : MonoBehaviour
             ++currentSlotItemIndex;
         }
     }
+#endif
 }
