@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class TradingUIController : MonoBehaviour
 {
-    [SerializeField] private GameObject tradeUI;
+    [SerializeField] private List<GameObject> tradingUIGameObjects;
     [SerializeField] private Button tradeButton;
     [SerializeField] private Image inputItemImage;
     [SerializeField] private Image outputItemImage;
@@ -14,19 +14,12 @@ public class TradingUIController : MonoBehaviour
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private Vector2 playerInventoryUIPosition;
 
-    private List<GameObject> tradingUIGameObjects;
     private NPCTradeScriptableObject currentTrade;
     private int inputItemStackIndex;
     private bool isCurrentTradePossible;
 
     private void Awake()
     {
-        tradingUIGameObjects = new List<GameObject>
-        {
-            tradeUI,
-            playerInventoryUI.gameObject
-        };
-
         inputItemStackIndex = -1;
 
         inventoryUIHeldItemController.OnItemHeld +=

@@ -2,7 +2,8 @@
 
 public class GameOverUIController : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverUIToActivateOnPlayerDeath;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject menuBackground;
     [SerializeField] private GameObject reloadButton;
     [SerializeField] private PlayerController playerController;
 
@@ -18,7 +19,8 @@ public class GameOverUIController : MonoBehaviour
 
     private void PlayerController_OnPlayerDied()
     {
-        gameOverUIToActivateOnPlayerDeath.SetActive(true);
+        gameOverUI.SetActive(true);
+        menuBackground.SetActive(true);
 
         EventSystemDefaultGameObjectSelector.Instance
             .SetDefaultSelectedGameObject(reloadButton);

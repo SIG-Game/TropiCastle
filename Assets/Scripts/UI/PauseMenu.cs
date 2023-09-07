@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject menuBackground;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private GameObject resumeButton;
     [SerializeField] private InputActionReference pauseActionReference;
@@ -29,6 +30,7 @@ public class PauseMenu : MonoBehaviour
     {
         PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
         pauseMenuUI.SetActive(PauseController.Instance.GamePaused);
+        menuBackground.SetActive(PauseController.Instance.GamePaused);
         playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
         if (PauseController.Instance.GamePaused)
