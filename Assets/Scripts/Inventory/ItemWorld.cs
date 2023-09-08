@@ -83,7 +83,7 @@ public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorld
             Item = serializableItem,
             Position = transform.position,
             GameObjectName = gameObject.name,
-            SpawnerId = spawnable.GetSpawnerId()
+            SpawnerGuid = spawnable.GetSpawnerGuid()
         };
 
         return serializableState;
@@ -106,7 +106,7 @@ public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorld
         gameObject.name = serializableState.GameObjectName;
 
         GetComponent<Spawnable>()
-            .SetSpawnerUsingId<ItemSpawner>(serializableState.SpawnerId);
+            .SetSpawnerUsingGuid<ItemSpawner>(serializableState.SpawnerGuid);
     }
 
     [Serializable]
@@ -115,6 +115,6 @@ public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorld
         public SerializableInventoryItem Item;
         public Vector2 Position;
         public string GameObjectName;
-        public int SpawnerId;
+        public string SpawnerGuid;
     }
 }

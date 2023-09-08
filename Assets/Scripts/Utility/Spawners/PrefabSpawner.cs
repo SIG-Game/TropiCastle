@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
 public class PrefabSpawner : MonoBehaviour,
     ISavable<PrefabSpawner.SerializableSpawnerState>
@@ -12,7 +17,7 @@ public class PrefabSpawner : MonoBehaviour,
     [SerializeField] private int maxSpawnedPrefabs;
     [SerializeField] private Vector2 minSpawnPosition;
     [SerializeField] private Vector2 maxSpawnPosition;
-    [SerializeField] private int spawnerId;
+    [SerializeField] private string spawnerGuid;
     [SerializeField] private bool logOnSpawn;
     [SerializeField] private bool drawSpawnArea;
     [SerializeField] private Color drawnSpawnAreaColor = Color.black;
@@ -143,13 +148,13 @@ public class PrefabSpawner : MonoBehaviour,
         numPrefabs--;
     }
 
-    public int GetSpawnerId() => spawnerId;
+    public string GetSpawnerGuid() => spawnerGuid;
 
     public SerializableSpawnerState GetSerializableState()
     {
         var serializableState = new SerializableSpawnerState
         {
-            SpawnerId = spawnerId,
+            SpawnerGuid = spawnerGuid,
             NumberOfSpawnedPrefabs = numPrefabs,
             SpawnTimer = spawnTimer,
             WaitBeforeFirstSpawnCompleted = waitBeforeFirstSpawnCompleted
@@ -161,7 +166,7 @@ public class PrefabSpawner : MonoBehaviour,
     public void SetPropertiesFromSerializableState(
         SerializableSpawnerState serializableState)
     {
-        spawnerId = serializableState.SpawnerId;
+        spawnerGuid = serializableState.SpawnerGuid;
         numPrefabs = serializableState.NumberOfSpawnedPrefabs;
         spawnTimer = serializableState.SpawnTimer;
         waitBeforeFirstSpawnCompleted = serializableState.WaitBeforeFirstSpawnCompleted;
@@ -170,9 +175,19 @@ public class PrefabSpawner : MonoBehaviour,
     [Serializable]
     public class SerializableSpawnerState
     {
-        public int SpawnerId;
+        public string SpawnerGuid;
         public int NumberOfSpawnedPrefabs;
         public float SpawnTimer;
         public bool WaitBeforeFirstSpawnCompleted;
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Set Spawner GUID")]
+    private void SetSpawnerGuid()
+    {
+        spawnerGuid = Guid.NewGuid().ToString();
+
+        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+    }
+#endif
 }

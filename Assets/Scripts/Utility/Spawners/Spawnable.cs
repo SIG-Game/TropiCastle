@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -20,10 +18,10 @@ public class Spawnable : MonoBehaviour
         this.spawner = spawner;
     }
 
-    public void SetSpawnerUsingId<TSpawner>(int spawnerId)
+    public void SetSpawnerUsingGuid<TSpawner>(string spawnerGuid)
         where TSpawner : PrefabSpawner
     {
-        if (spawnerId == -1)
+        if (string.IsNullOrEmpty(spawnerGuid))
         {
             return;
         }
@@ -31,7 +29,7 @@ public class Spawnable : MonoBehaviour
         PrefabSpawner[] spawners = FindObjectsOfType<TSpawner>();
 
         PrefabSpawner spawner = spawners.FirstOrDefault(
-            x => x.GetSpawnerId() == spawnerId);
+            x => x.GetSpawnerGuid() == spawnerGuid);
 
         if (spawner != null)
         {
@@ -40,10 +38,10 @@ public class Spawnable : MonoBehaviour
         else
         {
             Debug.LogWarning($"Spawner of type {typeof(TSpawner).Name} " +
-                $"with spawner ID {spawnerId} not found");
+                $"with spawner GUID {spawnerGuid} not found");
         }
     }
 
-    public int GetSpawnerId() =>
-        spawner != null ? spawner.GetSpawnerId() : -1;
+    public string GetSpawnerGuid() =>
+        spawner != null ? spawner.GetSpawnerGuid() : string.Empty;
 }

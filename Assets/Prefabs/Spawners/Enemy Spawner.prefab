@@ -51,6 +51,7 @@ MonoBehaviour:
   maxSpawnedPrefabs: 2
   minSpawnPosition: {x: -8, y: -3}
   maxSpawnPosition: {x: 8, y: 4}
+  spawnerGuid: 
   logOnSpawn: 0
   drawSpawnArea: 0
   drawnSpawnAreaColor: {r: 0, g: 0, b: 0, a: 1}

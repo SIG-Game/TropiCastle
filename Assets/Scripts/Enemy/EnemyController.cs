@@ -195,7 +195,7 @@ public class EnemyController : MonoBehaviour,
         {
             Position = transform.position,
             Health = healthController.CurrentHealth,
-            SpawnerId = spawnable.GetSpawnerId()
+            SpawnerGuid = spawnable.GetSpawnerGuid()
         };
 
         return serializableState;
@@ -209,7 +209,7 @@ public class EnemyController : MonoBehaviour,
         healthController.CurrentHealth = serializableState.Health;
 
         GetComponent<Spawnable>()
-            .SetSpawnerUsingId<EnemySpawner>(serializableState.SpawnerId);
+            .SetSpawnerUsingGuid<EnemySpawner>(serializableState.SpawnerGuid);
     }
 
     [Serializable]
@@ -217,6 +217,6 @@ public class EnemyController : MonoBehaviour,
     {
         public Vector2 Position;
         public int Health;
-        public int SpawnerId;
+        public string SpawnerGuid;
     }
 }
