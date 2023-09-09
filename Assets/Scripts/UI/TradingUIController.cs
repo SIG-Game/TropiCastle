@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,9 @@ public class TradingUIController : MonoBehaviour
     [SerializeField] private List<GameObject> tradingUIGameObjects;
     [SerializeField] private Button tradeButton;
     [SerializeField] private Image inputItemImage;
+    [SerializeField] private TextMeshProUGUI inputItemAmountText;
     [SerializeField] private Image outputItemImage;
+    [SerializeField] private TextMeshProUGUI outputItemAmountText;
     [SerializeField] private RectTransform playerInventoryUI;
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
@@ -15,13 +18,10 @@ public class TradingUIController : MonoBehaviour
     [SerializeField] private Vector2 playerInventoryUIPosition;
 
     private NPCTradeScriptableObject currentTrade;
-    private int inputItemStackIndex;
     private bool isCurrentTradePossible;
 
     private void Awake()
     {
-        inputItemStackIndex = -1;
-
         inventoryUIHeldItemController.OnItemHeld +=
             InventoryUIHeldItemController_OnItemHeld;
         inventoryUIHeldItemController.OnHidden +=
@@ -40,8 +40,11 @@ public class TradingUIController : MonoBehaviour
     {
         currentTrade = trade;
 
-        inputItemImage.sprite = trade.InputItem.sprite;
+        inputItemImage.sprite = trade.InputItem.itemDefinition.sprite;
         outputItemImage.sprite = trade.OutputItem.itemDefinition.sprite;
+
+        inputItemAmountText.text = trade.InputItem.GetAmountText();
+        outputItemAmountText.text = trade.OutputItem.GetAmountText();
 
         SetIsCurrentTradePossible();
 
@@ -56,8 +59,9 @@ public class TradingUIController : MonoBehaviour
 
     public void TradeButton_OnClick()
     {
-        playerInventory.DecrementItemStackAtIndex(inputItemStackIndex);
-        playerInventory.AddItem(currentTrade.OutputItem);
+        playerInventory.ReplaceItems(
+            new List<ItemWithAmount> { currentTrade.InputItem },
+            currentTrade.OutputItem);
 
         SetIsCurrentTradePossible();
 
@@ -66,14 +70,8 @@ public class TradingUIController : MonoBehaviour
 
     private void SetIsCurrentTradePossible()
     {
-        List<ItemWithAmount> itemList = playerInventory.GetItemList();
-
-        inputItemStackIndex = itemList.FindIndex(
-            x => x.itemDefinition == currentTrade.InputItem);
-
-        isCurrentTradePossible =
-            inputItemStackIndex != -1 &&
-            playerInventory.CanAddItem(currentTrade.OutputItem);
+        isCurrentTradePossible = playerInventory.HasReplacementInputItem(
+            new Dictionary<int, int>(), currentTrade.InputItem);
     }
 
     private void InventoryUIHeldItemController_OnItemHeld()

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434c0039ae443204589775ec4e227516, type: 3}
   m_Name: Goldfish To Rock
   m_EditorClassIdentifier: 
-  InputItem: {fileID: 11400000, guid: a4423d94df5353a49bba5cc5ef47541c, type: 2}
+  InputItem:
+    itemDefinition: {fileID: 11400000, guid: a4423d94df5353a49bba5cc5ef47541c, type: 2}
+    amount: 1
   OutputItem:
     itemDefinition: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
     amount: 1
