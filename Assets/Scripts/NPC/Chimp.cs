@@ -114,6 +114,8 @@ public class Chimp : NPCInteractable, ISavable<Chimp.SerializableChimpState>
         SerializableChimpState serializableState)
     {
         timeBetweenGivesSeconds = serializableState.TimeSecondsUntilNextGive;
+
+        lastGiveTimeSeconds = Time.time;
     }
 
     [Serializable]
