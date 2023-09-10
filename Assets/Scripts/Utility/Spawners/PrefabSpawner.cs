@@ -17,7 +17,7 @@ public class PrefabSpawner : MonoBehaviour,
     [SerializeField] private int maxSpawnedPrefabs;
     [SerializeField] private Vector2 minSpawnPosition;
     [SerializeField] private Vector2 maxSpawnPosition;
-    [SerializeField] private string spawnerGuid;
+    [SerializeField] private string saveGuid;
     [SerializeField] private bool logOnSpawn;
     [SerializeField] private bool drawSpawnArea;
     [SerializeField] private Color drawnSpawnAreaColor = Color.black;
@@ -148,13 +148,13 @@ public class PrefabSpawner : MonoBehaviour,
         numPrefabs--;
     }
 
-    public string GetSpawnerGuid() => spawnerGuid;
+    public string GetSaveGuid() => saveGuid;
 
     public SerializableSpawnerState GetSerializableState()
     {
         var serializableState = new SerializableSpawnerState
         {
-            SpawnerGuid = spawnerGuid,
+            SaveGuid = saveGuid,
             NumberOfSpawnedPrefabs = numPrefabs,
             SpawnTimer = spawnTimer,
             WaitBeforeFirstSpawnCompleted = waitBeforeFirstSpawnCompleted
@@ -166,26 +166,24 @@ public class PrefabSpawner : MonoBehaviour,
     public void SetPropertiesFromSerializableState(
         SerializableSpawnerState serializableState)
     {
-        spawnerGuid = serializableState.SpawnerGuid;
         numPrefabs = serializableState.NumberOfSpawnedPrefabs;
         spawnTimer = serializableState.SpawnTimer;
         waitBeforeFirstSpawnCompleted = serializableState.WaitBeforeFirstSpawnCompleted;
     }
 
     [Serializable]
-    public class SerializableSpawnerState
+    public class SerializableSpawnerState : SavableState
     {
-        public string SpawnerGuid;
         public int NumberOfSpawnedPrefabs;
         public float SpawnTimer;
         public bool WaitBeforeFirstSpawnCompleted;
     }
 
 #if UNITY_EDITOR
-    [ContextMenu("Set Spawner GUID")]
-    private void SetSpawnerGuid()
+    [ContextMenu("Set Save GUID")]
+    private void SetSaveGuid()
     {
-        spawnerGuid = Guid.NewGuid().ToString();
+        saveGuid = Guid.NewGuid().ToString();
 
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
     }

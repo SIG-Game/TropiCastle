@@ -29,7 +29,7 @@ public class Spawnable : MonoBehaviour
         PrefabSpawner[] spawners = FindObjectsOfType<TSpawner>();
 
         PrefabSpawner spawner = spawners.FirstOrDefault(
-            x => x.GetSpawnerGuid() == spawnerGuid);
+            x => x.GetSaveGuid() == spawnerGuid);
 
         if (spawner != null)
         {
@@ -43,5 +43,5 @@ public class Spawnable : MonoBehaviour
     }
 
     public string GetSpawnerGuid() =>
-        spawner != null ? spawner.GetSpawnerGuid() : string.Empty;
+        spawner != null ? spawner.GetSaveGuid() : string.Empty;
 }

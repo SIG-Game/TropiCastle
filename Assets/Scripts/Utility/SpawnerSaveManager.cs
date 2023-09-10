@@ -28,7 +28,7 @@ public class SpawnerSaveManager : MonoBehaviour,
         foreach (SerializableSpawnerState state in states)
         {
             PrefabSpawner spawner = spawners.Find(
-                x => x.GetSpawnerGuid() == state.SpawnerGuid);
+                x => x.GetSaveGuid() == state.SaveGuid);
 
             spawner.SetPropertiesFromSerializableState(state);
         }
