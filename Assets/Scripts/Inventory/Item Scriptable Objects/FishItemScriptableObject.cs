@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Fish Item")]
+[CreateAssetMenu(menuName = "Scriptable Object/Item/Fish Item")]
 public class FishItemScriptableObject : ItemScriptableObject
 {
     public string description;

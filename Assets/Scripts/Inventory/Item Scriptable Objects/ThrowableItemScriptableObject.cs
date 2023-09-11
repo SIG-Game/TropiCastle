@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Throwable Item")]
+[CreateAssetMenu(menuName = "Scriptable Object/Item/Throwable Item")]
 public class ThrowableItemScriptableObject : ItemScriptableObject
 {
     public int damage;

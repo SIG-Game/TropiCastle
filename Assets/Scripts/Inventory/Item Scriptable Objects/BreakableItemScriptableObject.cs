@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Breakable Item")]
+[CreateAssetMenu(menuName = "Scriptable Object/Item/Breakable Item")]
 public class BreakableItemScriptableObject : ItemScriptableObject
 {
     public int InitialDurability;

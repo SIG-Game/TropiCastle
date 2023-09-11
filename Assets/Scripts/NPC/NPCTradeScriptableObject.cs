@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "NPC Trade", fileName = "New NPC Trade")]
+[CreateAssetMenu(menuName = "Scriptable Object/Recipe/NPC Trade")]
 public class NPCTradeScriptableObject : ScriptableObject
 {
     public ItemWithAmount InputItem;

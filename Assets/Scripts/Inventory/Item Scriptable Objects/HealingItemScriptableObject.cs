@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Healing Item")]
+[CreateAssetMenu(menuName = "Scriptable Object/Item/Healing Item")]
 public class HealingItemScriptableObject : ItemScriptableObject
 {
     public int healAmount;

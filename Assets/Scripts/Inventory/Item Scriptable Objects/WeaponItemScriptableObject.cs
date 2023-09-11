@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Weapon Item")]
+[CreateAssetMenu(menuName = "Scriptable Object/Item/Weapon Item")]
 public class WeaponItemScriptableObject : ItemScriptableObject
 {
     public Sprite weaponSprite;
