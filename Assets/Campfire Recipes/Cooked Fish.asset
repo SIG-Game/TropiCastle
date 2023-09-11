@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Cooked Fish
   m_EditorClassIdentifier: 
   PossibleInputItems:
-  - {fileID: 11400000, guid: 48223af4aa6a229409f59bd9d04414bf, type: 2}
-  - {fileID: 11400000, guid: a4423d94df5353a49bba5cc5ef47541c, type: 2}
-  - {fileID: 11400000, guid: e72a46fd3c1ba554abaeea8237faf836, type: 2}
-  - {fileID: 11400000, guid: 0c5063d8c1c903a419af21ff86534646, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: 48223af4aa6a229409f59bd9d04414bf, type: 2}
+    amount: 1
+  - itemDefinition: {fileID: 11400000, guid: a4423d94df5353a49bba5cc5ef47541c, type: 2}
+    amount: 1
+  - itemDefinition: {fileID: 11400000, guid: e72a46fd3c1ba554abaeea8237faf836, type: 2}
+    amount: 1
+  - itemDefinition: {fileID: 11400000, guid: 0c5063d8c1c903a419af21ff86534646, type: 2}
+    amount: 1
   ResultItem:
     itemDefinition: {fileID: 11400000, guid: 4d12166f37d72a747903174112315548, type: 2}
     amount: 1

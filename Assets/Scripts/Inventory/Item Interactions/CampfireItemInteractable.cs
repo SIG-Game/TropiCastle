@@ -24,10 +24,21 @@ public class CampfireItemInteractable : ItemInteractable
     {
         ItemWithAmount selectedItem = playerController.GetSelectedItem();
 
-        CampfireRecipeScriptableObject selectedItemCampfireRecipe =
-            campfireRecipes.FirstOrDefault(
-                x => x.PossibleInputItems.Any(
-                    x => x.name == selectedItem.itemDefinition.name));
+        CampfireRecipeScriptableObject selectedItemCampfireRecipe = null;
+        ItemWithAmount recipeInputItem = null;
+
+        foreach (var campfireRecipe in campfireRecipes)
+        {
+            recipeInputItem = campfireRecipe.PossibleInputItems.FirstOrDefault(
+                x => x.itemDefinition.name == selectedItem.itemDefinition.name);
+
+            if (recipeInputItem != null)
+            {
+                selectedItemCampfireRecipe = campfireRecipe;
+
+                break;
+            }
+        }
 
         if (selectedItemCampfireRecipe == null)
         {
@@ -35,23 +46,10 @@ public class CampfireItemInteractable : ItemInteractable
         }
 
         Inventory playerInventory = playerController.GetInventory();
-        ItemWithAmount resultItem = selectedItemCampfireRecipe.ResultItem;
 
-        int selectedItemIndex = playerController.GetSelectedItemIndex();
-
-        playerInventory.DecrementItemStackAtIndex(selectedItemIndex);
-
-        playerInventory.TryAddItemAtIndexWithFallbackToFirstEmptyIndex(
-            resultItem, selectedItemIndex, out int amountAdded);
-
-        bool resultItemNotAdded = amountAdded == 0;
-        if (resultItemNotAdded)
-        {
-            // This item stack is guaranteed to not be empty. If this item
-            // stack was empty, then the result item would have been added
-            // to the player's inventory.
-            playerInventory.IncrementItemStackAtIndex(selectedItemIndex);
-        }
+        playerInventory.ReplaceItems(
+            new List<ItemWithAmount> { recipeInputItem },
+            selectedItemCampfireRecipe.ResultItem);
     }
 
     public override void SetUpUsingDependencies(

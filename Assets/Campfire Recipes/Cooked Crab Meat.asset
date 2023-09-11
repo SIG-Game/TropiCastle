@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Cooked Crab Meat
   m_EditorClassIdentifier: 
   PossibleInputItems:
-  - {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
+  - itemDefinition: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
+    amount: 1
   ResultItem:
     itemDefinition: {fileID: 11400000, guid: 8e2cdb634b8ed1c48ac2dc91bd9e1bcc, type: 2}
     amount: 1
