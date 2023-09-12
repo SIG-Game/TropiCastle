@@ -1,35 +1,58 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class DebugAddItemUISaveManager : MonoBehaviour,
-    ISavable<DebugAddItemUISaveManager.SerializableDebugAddItemUIState>
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
+
+public class DebugAddItemUISaveManager : MonoBehaviour, ISavableNongeneric
 {
     [SerializeField] private TMP_InputField amountInputField;
     [SerializeField] private TMP_Dropdown itemDropdown;
+    [SerializeField] private string saveGuid;
 
-    public SerializableDebugAddItemUIState GetSerializableState()
+    public SavableState GetSavableState()
     {
-        var serializableState = new SerializableDebugAddItemUIState
+        var savableState = new SavableDebugAddItemUIState
         {
+            SaveGuid = saveGuid,
             AmountInputFieldText = amountInputField.text,
             ItemDropdownValue = itemDropdown.value
         };
 
-        return serializableState;
+        return savableState;
     }
 
-    public void SetPropertiesFromSerializableState(
-        SerializableDebugAddItemUIState serializableState)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        amountInputField.text = serializableState.AmountInputFieldText;
-        itemDropdown.value = serializableState.ItemDropdownValue;
+        SavableDebugAddItemUIState debugAddItemUIState =
+            (SavableDebugAddItemUIState)savableState;
+
+        amountInputField.text = debugAddItemUIState.AmountInputFieldText;
+        itemDropdown.value = debugAddItemUIState.ItemDropdownValue;
     }
+
+    public string GetSaveGuid() => saveGuid;
 
     [Serializable]
-    public class SerializableDebugAddItemUIState
+    public class SavableDebugAddItemUIState : SavableState
     {
         public string AmountInputFieldText;
         public int ItemDropdownValue;
+
+        public override Type GetSavableClassType() =>
+            typeof(DebugAddItemUISaveManager);
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Set Save GUID")]
+    private void SetSaveGuid()
+    {
+        saveGuid = Guid.NewGuid().ToString();
+
+        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+    }
+#endif
 }

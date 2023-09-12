@@ -1,8 +1,8 @@
 using System;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using static Chimp;
-using static DebugAddItemUISaveManager;
 using static EnemyController;
 using static Inventory;
 using static ItemWorld;
@@ -37,6 +37,11 @@ public class SaveController : MonoBehaviour
 
     public void SaveToFile()
     {
+        var savableStates = new SavableState[]
+        {
+            debugAddItemUISaveManager.GetSavableState()
+        };
+
         var saveData = new SaveData
         {
             SerializableInventory = playerInventory.GetSerializableState(),
@@ -44,8 +49,8 @@ public class SaveController : MonoBehaviour
             SpawnerStates = spawnerSaveManager.GetStates(),
             ItemWorldStates = itemWorldSaveManager.GetStates(),
             EnemyStates = enemySaveManager.GetStates(),
-            DebugAddItemUIState = debugAddItemUISaveManager.GetSerializableState(),
-            ChimpState = chimp.GetSerializableState()
+            ChimpState = chimp.GetSerializableState(),
+            SavableStates = savableStates
         };
 
         WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
@@ -73,10 +78,20 @@ public class SaveController : MonoBehaviour
 
         enemySaveManager.CreateObjectsFromStates(saveData.EnemyStates);
 
-        debugAddItemUISaveManager
-            .SetPropertiesFromSerializableState(saveData.DebugAddItemUIState);
-
         chimp.SetPropertiesFromSerializableState(saveData.ChimpState);
+
+        foreach (var savableState in saveData.SavableStates)
+        {
+            Type savableClassType = savableState.GetSavableClassType();
+
+            ISavableNongeneric[] foundSavableObjects =
+                (ISavableNongeneric[])FindObjectsOfType(savableClassType);
+
+            ISavableNongeneric savableObject = foundSavableObjects.FirstOrDefault(
+                x => x.GetSaveGuid() == savableState.SaveGuid);
+
+            savableObject.SetPropertiesFromSavableState(savableState);
+        }
     }
 
     private void WriteSerializableObjectAsJsonToFile(object serializableObject, string filePath)
@@ -113,8 +128,10 @@ public class SaveController : MonoBehaviour
         public SerializableSpawnerState[] SpawnerStates;
         public SerializableItemWorldState[] ItemWorldStates;
         public SerializableEnemyState[] EnemyStates;
-        public SerializableDebugAddItemUIState DebugAddItemUIState;
         public SerializableChimpState ChimpState;
+
+        [SerializeReference]
+        public SavableState[] SavableStates;
     }
 
     public static string GetSaveDataFilePath() =>
