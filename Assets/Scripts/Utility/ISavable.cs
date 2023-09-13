@@ -1,8 +1,8 @@
-public interface ISavable<TState>
+public interface ISavable
 {
-    public TState GetSerializableState();
+    public SavableState GetSavableState();
 
-    public void SetPropertiesFromSerializableState(TState serializableState);
+    public void SetPropertiesFromSavableState(SavableState savableState);
 
     public string GetSaveGuid() => string.Empty;
 }

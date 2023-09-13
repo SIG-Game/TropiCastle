@@ -50,13 +50,13 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         return spawnedItemWorld;
     }
 
-    public void SpawnItemWorldFromState(SerializableItemWorldState itemWorldState)
+    public void SpawnItemWorldFromState(SavableItemWorldState itemWorldState)
     {
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, itemWorldParent);
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
         spawnedItemWorld.SetItemInteractableDependencies(itemInteractableDependencies);
-        spawnedItemWorld.SetPropertiesFromSerializableState(itemWorldState);
+        spawnedItemWorld.SetPropertiesFromSavableState(itemWorldState);
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)

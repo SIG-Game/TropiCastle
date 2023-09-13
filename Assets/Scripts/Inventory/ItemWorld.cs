@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using static Inventory;
 
-public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorldState>
+public class ItemWorld : MonoBehaviour, ISavable
 {
     [SerializeField] private ItemWithAmount item;
     [SerializeField] private TMP_Text amountText;
@@ -74,11 +74,11 @@ public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorld
 
     public ItemWithAmount GetItem() => item;
 
-    public SerializableItemWorldState GetSerializableState()
+    public SavableState GetSavableState()
     {
         var serializableItem = new SerializableInventoryItem(item);
 
-        var serializableState = new SerializableItemWorldState
+        var savableState = new SavableItemWorldState
         {
             Item = serializableItem,
             Position = transform.position,
@@ -86,31 +86,32 @@ public class ItemWorld : MonoBehaviour, ISavable<ItemWorld.SerializableItemWorld
             SpawnerGuid = spawnable.GetSpawnerGuid()
         };
 
-        return serializableState;
+        return savableState;
     }
 
-    public void SetPropertiesFromSerializableState(
-        SerializableItemWorldState serializableState)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        transform.position = serializableState.Position;
+        SavableItemWorldState itemWorldState = (SavableItemWorldState)savableState;
+
+        transform.position = itemWorldState.Position;
 
         ItemScriptableObject itemScriptableObject =
-            ItemScriptableObject.FromName(serializableState.Item.ItemName);
+            ItemScriptableObject.FromName(itemWorldState.Item.ItemName);
 
         ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
-            serializableState.Item.Amount,
-            serializableState.Item.InstanceProperties);
+            itemWorldState.Item.Amount,
+            itemWorldState.Item.InstanceProperties);
 
         SetItem(item);
 
-        gameObject.name = serializableState.GameObjectName;
+        gameObject.name = itemWorldState.GameObjectName;
 
         GetComponent<Spawnable>()
-            .SetSpawnerUsingGuid<ItemSpawner>(serializableState.SpawnerGuid);
+            .SetSpawnerUsingGuid<ItemSpawner>(itemWorldState.SpawnerGuid);
     }
 
     [Serializable]
-    public class SerializableItemWorldState
+    public class SavableItemWorldState : SavableState
     {
         public SerializableInventoryItem Item;
         public Vector2 Position;

@@ -3,21 +3,21 @@ using UnityEngine;
 using static ItemWorld;
 
 public class ItemWorldSaveManager : MonoBehaviour,
-    ISaveManager<SerializableItemWorldState>
+    ISaveManager<SavableItemWorldState>
 {
-    public SerializableItemWorldState[] GetStates()
+    public SavableItemWorldState[] GetStates()
     {
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
 
-        SerializableItemWorldState[] states =
-            itemWorlds.Select(x => x.GetSerializableState()).ToArray();
+        SavableItemWorldState[] states = itemWorlds.Select(
+            x => (SavableItemWorldState)x.GetSavableState()).ToArray();
 
         return states;
     }
 
-    public void CreateObjectsFromStates(SerializableItemWorldState[] states)
+    public void CreateObjectsFromStates(SavableItemWorldState[] states)
     {
-        foreach (SerializableItemWorldState state in states)
+        foreach (SavableItemWorldState state in states)
         {
             ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorldFromState(state);
         }

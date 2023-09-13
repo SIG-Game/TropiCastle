@@ -3,25 +3,25 @@ using UnityEngine;
 using static EnemyController;
 
 public class EnemySaveManager : MonoBehaviour,
-    ISaveManager<SerializableEnemyState>
+    ISaveManager<SavableEnemyState>
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
 
-    public SerializableEnemyState[] GetStates()
+    public SavableEnemyState[] GetStates()
     {
         EnemyController[] enemyControllers = FindObjectsOfType<EnemyController>();
 
-        SerializableEnemyState[] states =
-            enemyControllers.Select(x => x.GetSerializableState()).ToArray();
+        SavableEnemyState[] states = enemyControllers.Select(
+            x => (SavableEnemyState)x.GetSavableState()).ToArray();
 
         return states;
     }
 
-    public void CreateObjectsFromStates(SerializableEnemyState[] states)
+    public void CreateObjectsFromStates(SavableEnemyState[] states)
     {
-        foreach (SerializableEnemyState state in states)
+        foreach (SavableEnemyState state in states)
         {
             GameObject spawnedEnemy = Instantiate(enemyPrefab);
 
@@ -30,7 +30,7 @@ public class EnemySaveManager : MonoBehaviour,
 
             spawnedEnemyController.SetUpEnemy(playerTransform, playerInventory);
 
-            spawnedEnemyController.SetPropertiesFromSerializableState(state);
+            spawnedEnemyController.SetPropertiesFromSavableState(state);
         }
     }
 }

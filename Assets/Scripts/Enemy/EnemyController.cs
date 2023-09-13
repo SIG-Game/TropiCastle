@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour,
-    ISavable<EnemyController.SerializableEnemyState>
+public class EnemyController : MonoBehaviour, ISavable
 {
     [SerializeField] private float speed;
     [SerializeField] private int playerDamageAmount;
@@ -189,31 +188,32 @@ public class EnemyController : MonoBehaviour,
         currentState.StateEnter();
     }
 
-    public SerializableEnemyState GetSerializableState()
+    public SavableState GetSavableState()
     {
-        var serializableState = new SerializableEnemyState
+        var savableState = new SavableEnemyState
         {
             Position = transform.position,
             Health = healthController.CurrentHealth,
             SpawnerGuid = spawnable.GetSpawnerGuid()
         };
 
-        return serializableState;
+        return savableState;
     }
 
-    public void SetPropertiesFromSerializableState(
-        SerializableEnemyState serializableState)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        transform.position = serializableState.Position;
+        SavableEnemyState enemyState = (SavableEnemyState)savableState;
 
-        healthController.CurrentHealth = serializableState.Health;
+        transform.position = enemyState.Position;
+
+        healthController.CurrentHealth = enemyState.Health;
 
         GetComponent<Spawnable>()
-            .SetSpawnerUsingGuid<EnemySpawner>(serializableState.SpawnerGuid);
+            .SetSpawnerUsingGuid<EnemySpawner>(enemyState.SpawnerGuid);
     }
 
     [Serializable]
-    public class SerializableEnemyState
+    public class SavableEnemyState : SavableState
     {
         public Vector2 Position;
         public int Health;

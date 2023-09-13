@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Chimp : NPCInteractable, ISavable<Chimp.SerializableChimpState>
+public class Chimp : NPCInteractable, ISavable
 {
     [SerializeField] private List<string> givingItemDialogueLines;
     [SerializeField] private List<string> notGivingItemDialogueLines;
@@ -87,7 +87,7 @@ public class Chimp : NPCInteractable, ISavable<Chimp.SerializableChimpState>
     private bool ItemGiveAvailable() =>
         lastGiveTimeSeconds + timeBetweenGivesSeconds <= Time.time;
 
-    public SerializableChimpState GetSerializableState()
+    public SavableState GetSavableState()
     {
         float timeUntilNextGiveSeconds;
 
@@ -102,24 +102,25 @@ public class Chimp : NPCInteractable, ISavable<Chimp.SerializableChimpState>
             timeUntilNextGiveSeconds = nextGiveTimeSeconds - Time.time;
         }
 
-        var serializableState = new SerializableChimpState
+        var savableState = new SavableChimpState
         {
             TimeSecondsUntilNextGive = timeUntilNextGiveSeconds
         };
 
-        return serializableState;
+        return savableState;
     }
 
-    public void SetPropertiesFromSerializableState(
-        SerializableChimpState serializableState)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        timeBetweenGivesSeconds = serializableState.TimeSecondsUntilNextGive;
+        SavableChimpState chimpState = (SavableChimpState)savableState;
+
+        timeBetweenGivesSeconds = chimpState.TimeSecondsUntilNextGive;
 
         lastGiveTimeSeconds = Time.time;
     }
 
     [Serializable]
-    public class SerializableChimpState
+    public class SavableChimpState : SavableState
     {
         public float TimeSecondsUntilNextGive;
     }

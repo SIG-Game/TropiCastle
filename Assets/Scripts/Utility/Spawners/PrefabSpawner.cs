@@ -8,8 +8,7 @@ using Random = UnityEngine.Random;
 using UnityEditor.SceneManagement;
 #endif
 
-public class PrefabSpawner : MonoBehaviour,
-    ISavable<PrefabSpawner.SerializableSpawnerState>
+public class PrefabSpawner : MonoBehaviour, ISavable
 {
     [SerializeField] protected GameObject prefabToSpawn;
     [SerializeField] private Vector2 timeBeforeFirstSpawnRange;
@@ -148,11 +147,9 @@ public class PrefabSpawner : MonoBehaviour,
         numPrefabs--;
     }
 
-    public string GetSaveGuid() => saveGuid;
-
-    public SerializableSpawnerState GetSerializableState()
+    public SavableState GetSavableState()
     {
-        var serializableState = new SerializableSpawnerState
+        var savableState = new SavableSpawnerState
         {
             SaveGuid = saveGuid,
             NumberOfSpawnedPrefabs = numPrefabs,
@@ -160,19 +157,22 @@ public class PrefabSpawner : MonoBehaviour,
             WaitBeforeFirstSpawnCompleted = waitBeforeFirstSpawnCompleted
         };
 
-        return serializableState;
+        return savableState;
     }
 
-    public void SetPropertiesFromSerializableState(
-        SerializableSpawnerState serializableState)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        numPrefabs = serializableState.NumberOfSpawnedPrefabs;
-        spawnTimer = serializableState.SpawnTimer;
-        waitBeforeFirstSpawnCompleted = serializableState.WaitBeforeFirstSpawnCompleted;
+        SavableSpawnerState spawnerState = (SavableSpawnerState)savableState;
+
+        numPrefabs = spawnerState.NumberOfSpawnedPrefabs;
+        spawnTimer = spawnerState.SpawnTimer;
+        waitBeforeFirstSpawnCompleted = spawnerState.WaitBeforeFirstSpawnCompleted;
     }
+
+    public string GetSaveGuid() => saveGuid;
 
     [Serializable]
-    public class SerializableSpawnerState : SavableState
+    public class SavableSpawnerState : SavableState
     {
         public int NumberOfSpawnedPrefabs;
         public float SpawnTimer;

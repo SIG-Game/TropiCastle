@@ -44,12 +44,14 @@ public class SaveController : MonoBehaviour
 
         var saveData = new SaveData
         {
-            SerializableInventory = playerInventory.GetSerializableState(),
-            SerializablePlayerProperties = playerController.GetSerializableState(),
+            SavablePlayerState =
+                (SavablePlayerState)playerController.GetSavableState(),
+            SavableInventoryState =
+                (SavableInventoryState)playerInventory.GetSavableState(),
+            SavableChimpState = (SavableChimpState)chimp.GetSavableState(),
             SpawnerStates = spawnerSaveManager.GetStates(),
             ItemWorldStates = itemWorldSaveManager.GetStates(),
             EnemyStates = enemySaveManager.GetStates(),
-            ChimpState = chimp.GetSerializableState(),
             SavableStates = savableStates
         };
 
@@ -66,11 +68,13 @@ public class SaveController : MonoBehaviour
         var saveData =
             GetSerializableObjectFromJsonFile<SaveData>(saveDataFilePath);
 
-        playerInventory
-            .SetPropertiesFromSerializableState(saveData.SerializableInventory);
-
         playerController
-            .SetPropertiesFromSerializableState(saveData.SerializablePlayerProperties);
+            .SetPropertiesFromSavableState(saveData.SavablePlayerState);
+
+        playerInventory
+            .SetPropertiesFromSavableState(saveData.SavableInventoryState);
+
+        chimp.SetPropertiesFromSavableState(saveData.SavableChimpState);
 
         spawnerSaveManager.CreateObjectsFromStates(saveData.SpawnerStates);
 
@@ -78,16 +82,14 @@ public class SaveController : MonoBehaviour
 
         enemySaveManager.CreateObjectsFromStates(saveData.EnemyStates);
 
-        chimp.SetPropertiesFromSerializableState(saveData.ChimpState);
-
         foreach (var savableState in saveData.SavableStates)
         {
             Type savableClassType = savableState.GetSavableClassType();
 
-            ISavableNongeneric[] foundSavableObjects =
-                (ISavableNongeneric[])FindObjectsOfType(savableClassType);
+            ISavable[] foundSavableObjects =
+                (ISavable[])FindObjectsOfType(savableClassType);
 
-            ISavableNongeneric savableObject = foundSavableObjects.FirstOrDefault(
+            ISavable savableObject = foundSavableObjects.FirstOrDefault(
                 x => x.GetSaveGuid() == savableState.SaveGuid);
 
             savableObject.SetPropertiesFromSavableState(savableState);
@@ -123,12 +125,12 @@ public class SaveController : MonoBehaviour
     [Serializable]
     private class SaveData
     {
-        public SerializableInventory SerializableInventory;
-        public SerializablePlayerProperties SerializablePlayerProperties;
-        public SerializableSpawnerState[] SpawnerStates;
-        public SerializableItemWorldState[] ItemWorldStates;
-        public SerializableEnemyState[] EnemyStates;
-        public SerializableChimpState ChimpState;
+        public SavablePlayerState SavablePlayerState;
+        public SavableInventoryState SavableInventoryState;
+        public SavableChimpState SavableChimpState;
+        public SavableSpawnerState[] SpawnerStates;
+        public SavableItemWorldState[] ItemWorldStates;
+        public SavableEnemyState[] EnemyStates;
 
         [SerializeReference]
         public SavableState[] SavableStates;

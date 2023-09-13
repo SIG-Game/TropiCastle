@@ -5,7 +5,7 @@ using static Inventory;
 [Serializable]
 public class ChestItemInstanceProperties : ItemInstanceProperties
 {
-    public SerializableInventory SerializableInventory;
+    public SavableInventoryState SerializableInventory;
 
     public const int ChestInventorySize = 10;
 
@@ -23,7 +23,7 @@ public class ChestItemInstanceProperties : ItemInstanceProperties
             });
         }
 
-        SerializableInventory = new SerializableInventory
+        SerializableInventory = new SavableInventoryState
         {
             SerializableItemList = chestItemList
         };
@@ -31,7 +31,8 @@ public class ChestItemInstanceProperties : ItemInstanceProperties
 
     public void UpdateSerializableInventory(Inventory inventory)
     {
-        SerializableInventory = inventory.GetSerializableState();
+        SerializableInventory =
+            (SavableInventoryState)inventory.GetSavableState();
     }
 
     public override ItemInstanceProperties DeepCopy()
@@ -41,9 +42,6 @@ public class ChestItemInstanceProperties : ItemInstanceProperties
 
         for (int i = 0; i < ChestInventorySize; ++i)
         {
-            SerializableInventoryItem item =
-                SerializableInventory.SerializableItemList[i];
-
             chestItemListDeepCopy.Add(new SerializableInventoryItem(
                 SerializableInventory.SerializableItemList[i]));
         }
@@ -51,7 +49,7 @@ public class ChestItemInstanceProperties : ItemInstanceProperties
         ChestItemInstanceProperties deepCopy =
             (ChestItemInstanceProperties)base.DeepCopy();
 
-        deepCopy.SerializableInventory = new SerializableInventory
+        deepCopy.SerializableInventory = new SavableInventoryState
         {
             SerializableItemList = chestItemListDeepCopy
         };

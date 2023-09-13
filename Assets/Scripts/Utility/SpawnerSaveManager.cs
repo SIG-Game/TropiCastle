@@ -4,7 +4,7 @@ using UnityEngine;
 using static PrefabSpawner;
 
 public class SpawnerSaveManager : MonoBehaviour,
-    ISaveManager<SerializableSpawnerState>
+    ISaveManager<SavableSpawnerState>
 {
     private PrefabSpawner[] prefabSpawners;
 
@@ -13,24 +13,24 @@ public class SpawnerSaveManager : MonoBehaviour,
         prefabSpawners = FindObjectsOfType<PrefabSpawner>();
     }
 
-    public SerializableSpawnerState[] GetStates()
+    public SavableSpawnerState[] GetStates()
     {
-        SerializableSpawnerState[] spawnerStates =
-            prefabSpawners.Select(x => x.GetSerializableState()).ToArray();
+        SavableSpawnerState[] spawnerStates = prefabSpawners.Select(
+            x => (SavableSpawnerState)x.GetSavableState()).ToArray();
 
         return spawnerStates;
     }
 
-    public void CreateObjectsFromStates(SerializableSpawnerState[] states)
+    public void CreateObjectsFromStates(SavableSpawnerState[] states)
     {
         List<PrefabSpawner> spawners = FindObjectsOfType<PrefabSpawner>().ToList();
 
-        foreach (SerializableSpawnerState state in states)
+        foreach (SavableSpawnerState state in states)
         {
             PrefabSpawner spawner = spawners.Find(
                 x => x.GetSaveGuid() == state.SaveGuid);
 
-            spawner.SetPropertiesFromSerializableState(state);
+            spawner.SetPropertiesFromSavableState(state);
         }
     }
 }

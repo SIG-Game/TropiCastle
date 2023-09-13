@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 #endif
 
-public class DebugAddItemUISaveManager : MonoBehaviour, ISavableNongeneric
+public class DebugAddItemUISaveManager : MonoBehaviour, ISavable
 {
     [SerializeField] private TMP_InputField amountInputField;
     [SerializeField] private TMP_Dropdown itemDropdown;

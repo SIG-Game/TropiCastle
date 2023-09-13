@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory>
+public class Inventory : MonoBehaviour, ISavable
 {
     [SerializeField] private int inventorySize;
 
@@ -520,26 +520,27 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
 
     public bool HasNoEmptySlots() => firstEmptyIndex == -1;
 
-    public SerializableInventory GetSerializableState()
+    public SavableState GetSavableState()
     {
         IEnumerable<SerializableInventoryItem> serializableInventoryItems =
             itemList.Select(x => new SerializableInventoryItem(x));
 
-        var serializableState = new SerializableInventory
+        var savableState = new SavableInventoryState
         {
             SerializableItemList = serializableInventoryItems.ToList()
         };
 
-        return serializableState;
+        return savableState;
     }
 
-    public void SetPropertiesFromSerializableState(
-        SerializableInventory serializableState)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        for (int i = 0; i < serializableState.SerializableItemList.Count; ++i)
+        SavableInventoryState inventoryState = (SavableInventoryState)savableState;
+
+        for (int i = 0; i < inventoryState.SerializableItemList.Count; ++i)
         {
             SerializableInventoryItem serializableInventoryItem =
-                serializableState.SerializableItemList[i];
+                inventoryState.SerializableItemList[i];
 
             ItemScriptableObject itemScriptableObject =
                 ItemScriptableObject.FromName(serializableInventoryItem.ItemName);
@@ -555,7 +556,7 @@ public class Inventory : MonoBehaviour, ISavable<Inventory.SerializableInventory
     }
 
     [Serializable]
-    public class SerializableInventory
+    public class SavableInventoryState : SavableState
     {
         public List<SerializableInventoryItem> SerializableItemList;
     }

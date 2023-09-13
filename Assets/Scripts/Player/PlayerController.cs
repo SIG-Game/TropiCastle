@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour,
-    ISavable<PlayerController.SerializablePlayerProperties>
+public class PlayerController : MonoBehaviour, ISavable
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
@@ -234,14 +233,14 @@ public class PlayerController : MonoBehaviour,
         itemSelectionController.CanSelect = false;
     }
 
-    public SerializablePlayerProperties GetSerializableState()
+    public SavableState GetSavableState()
     {
         Vector2 playerPosition = transform.position;
         int playerDirection = (int)Direction;
         int selectedItemIndex = GetSelectedItemIndex();
         int health = healthController.CurrentHealth;
 
-        var serializableState = new SerializablePlayerProperties
+        var savableState = new SavablePlayerState
         {
             PlayerPosition = playerPosition,
             PlayerDirection = playerDirection,
@@ -249,20 +248,21 @@ public class PlayerController : MonoBehaviour,
             Health = health
         };
 
-        return serializableState;
+        return savableState;
     }
 
-    public void SetPropertiesFromSerializableState(
-        SerializablePlayerProperties serializableState)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        transform.position = serializableState.PlayerPosition;
-        Direction = (CharacterDirection)serializableState.PlayerDirection;
-        itemSelectionController.SelectedItemIndex = serializableState.SelectedItemIndex;
-        healthController.CurrentHealth = serializableState.Health;
+        SavablePlayerState playerState = (SavablePlayerState)savableState;
+
+        transform.position = playerState.PlayerPosition;
+        Direction = (CharacterDirection)playerState.PlayerDirection;
+        itemSelectionController.SelectedItemIndex = playerState.SelectedItemIndex;
+        healthController.CurrentHealth = playerState.Health;
     }
 
     [Serializable]
-    public class SerializablePlayerProperties
+    public class SavablePlayerState : SavableState
     {
         public Vector2 PlayerPosition;
         public int PlayerDirection;
