@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static PrefabSpawner;
 
-public class SpawnerSaveManager : MonoBehaviour,
-    ISaveManager<SavableSpawnerState>
+public class SpawnerSaveManager : MonoBehaviour, ISavable
 {
     private PrefabSpawner[] prefabSpawners;
 
@@ -13,24 +13,38 @@ public class SpawnerSaveManager : MonoBehaviour,
         prefabSpawners = FindObjectsOfType<PrefabSpawner>();
     }
 
-    public SavableSpawnerState[] GetStates()
+    public SavableState GetSavableState()
     {
         SavableSpawnerState[] spawnerStates = prefabSpawners.Select(
             x => (SavableSpawnerState)x.GetSavableState()).ToArray();
 
-        return spawnerStates;
+        var savableState = new SavableSpawnerSaveManagerState
+        {
+            SpawnerStates = spawnerStates
+        };
+
+        return savableState;
     }
 
-    public void CreateObjectsFromStates(SavableSpawnerState[] states)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
+        var spawnerSaveManagerState =
+            (SavableSpawnerSaveManagerState)savableState;
+
         List<PrefabSpawner> spawners = FindObjectsOfType<PrefabSpawner>().ToList();
 
-        foreach (SavableSpawnerState state in states)
+        foreach (var spawnerState in spawnerSaveManagerState.SpawnerStates)
         {
             PrefabSpawner spawner = spawners.Find(
-                x => x.GetSaveGuid() == state.SaveGuid);
+                x => x.GetSaveGuid() == spawnerState.SaveGuid);
 
-            spawner.SetPropertiesFromSavableState(state);
+            spawner.SetPropertiesFromSavableState(spawnerState);
         }
+    }
+
+    [Serializable]
+    public class SavableSpawnerSaveManagerState : SavableState
+    {
+        public SavableSpawnerState[] SpawnerStates;
     }
 }

@@ -1,25 +1,41 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using static ItemWorld;
 
-public class ItemWorldSaveManager : MonoBehaviour,
-    ISaveManager<SavableItemWorldState>
+public class ItemWorldSaveManager : MonoBehaviour, ISavable
 {
-    public SavableItemWorldState[] GetStates()
+    public SavableState GetSavableState()
     {
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
 
-        SavableItemWorldState[] states = itemWorlds.Select(
+        SavableItemWorldState[] itemWorldStates = itemWorlds.Select(
             x => (SavableItemWorldState)x.GetSavableState()).ToArray();
 
-        return states;
+        var savableState = new SavableItemWorldSaveManagerState
+        {
+            ItemWorldStates = itemWorldStates
+        };
+
+        return savableState;
     }
 
-    public void CreateObjectsFromStates(SavableItemWorldState[] states)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        foreach (SavableItemWorldState state in states)
+        var itemWorldSaveManagerState =
+            (SavableItemWorldSaveManagerState)savableState;
+
+        foreach (var itemWorldState in
+            itemWorldSaveManagerState.ItemWorldStates)
         {
-            ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorldFromState(state);
+            ItemWorldPrefabInstanceFactory.Instance
+                .SpawnItemWorldFromState(itemWorldState);
         }
+    }
+
+    [Serializable]
+    public class SavableItemWorldSaveManagerState : SavableState
+    {
+        public SavableItemWorldState[] ItemWorldStates;
     }
 }

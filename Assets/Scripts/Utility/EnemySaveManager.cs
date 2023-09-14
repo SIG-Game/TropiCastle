@@ -1,27 +1,35 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using static EnemyController;
 
-public class EnemySaveManager : MonoBehaviour,
-    ISaveManager<SavableEnemyState>
+public class EnemySaveManager : MonoBehaviour, ISavable
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
 
-    public SavableEnemyState[] GetStates()
+    public SavableState GetSavableState()
     {
         EnemyController[] enemyControllers = FindObjectsOfType<EnemyController>();
 
-        SavableEnemyState[] states = enemyControllers.Select(
+        SavableEnemyState[] enemyStates = enemyControllers.Select(
             x => (SavableEnemyState)x.GetSavableState()).ToArray();
 
-        return states;
+        var savableState = new SavableEnemySaveManagerState
+        {
+            EnemyStates = enemyStates
+        };
+
+        return savableState;
     }
 
-    public void CreateObjectsFromStates(SavableEnemyState[] states)
+    public void SetPropertiesFromSavableState(SavableState savableState)
     {
-        foreach (SavableEnemyState state in states)
+        var enemySaveManagerState =
+            (SavableEnemySaveManagerState)savableState;
+
+        foreach (var enemyState in enemySaveManagerState.EnemyStates)
         {
             GameObject spawnedEnemy = Instantiate(enemyPrefab);
 
@@ -30,7 +38,13 @@ public class EnemySaveManager : MonoBehaviour,
 
             spawnedEnemyController.SetUpEnemy(playerTransform, playerInventory);
 
-            spawnedEnemyController.SetPropertiesFromSavableState(state);
+            spawnedEnemyController.SetPropertiesFromSavableState(enemyState);
         }
+    }
+
+    [Serializable]
+    public class SavableEnemySaveManagerState : SavableState
+    {
+        public SavableEnemyState[] EnemyStates;
     }
 }

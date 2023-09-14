@@ -3,11 +3,11 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using static Chimp;
-using static EnemyController;
+using static EnemySaveManager;
 using static Inventory;
-using static ItemWorld;
+using static ItemWorldSaveManager;
 using static PlayerController;
-using static PrefabSpawner;
+using static SpawnerSaveManager;
 
 public class SaveController : MonoBehaviour
 {
@@ -49,9 +49,12 @@ public class SaveController : MonoBehaviour
             SavableInventoryState =
                 (SavableInventoryState)playerInventory.GetSavableState(),
             SavableChimpState = (SavableChimpState)chimp.GetSavableState(),
-            SpawnerStates = spawnerSaveManager.GetStates(),
-            ItemWorldStates = itemWorldSaveManager.GetStates(),
-            EnemyStates = enemySaveManager.GetStates(),
+            SpawnerSaveManagerState =
+                (SavableSpawnerSaveManagerState)spawnerSaveManager.GetSavableState(),
+            ItemWorldSaveManagerState =
+                (SavableItemWorldSaveManagerState)itemWorldSaveManager.GetSavableState(),
+            EnemySaveManagerState =
+                (SavableEnemySaveManagerState)enemySaveManager.GetSavableState(),
             SavableStates = savableStates
         };
 
@@ -76,11 +79,14 @@ public class SaveController : MonoBehaviour
 
         chimp.SetPropertiesFromSavableState(saveData.SavableChimpState);
 
-        spawnerSaveManager.CreateObjectsFromStates(saveData.SpawnerStates);
+        spawnerSaveManager
+            .SetPropertiesFromSavableState(saveData.SpawnerSaveManagerState);
 
-        itemWorldSaveManager.CreateObjectsFromStates(saveData.ItemWorldStates);
+        itemWorldSaveManager
+            .SetPropertiesFromSavableState(saveData.ItemWorldSaveManagerState);
 
-        enemySaveManager.CreateObjectsFromStates(saveData.EnemyStates);
+        enemySaveManager
+            .SetPropertiesFromSavableState(saveData.EnemySaveManagerState);
 
         foreach (var savableState in saveData.SavableStates)
         {
@@ -128,9 +134,9 @@ public class SaveController : MonoBehaviour
         public SavablePlayerState SavablePlayerState;
         public SavableInventoryState SavableInventoryState;
         public SavableChimpState SavableChimpState;
-        public SavableSpawnerState[] SpawnerStates;
-        public SavableItemWorldState[] ItemWorldStates;
-        public SavableEnemyState[] EnemyStates;
+        public SavableSpawnerSaveManagerState SpawnerSaveManagerState;
+        public SavableItemWorldSaveManagerState ItemWorldSaveManagerState;
+        public SavableEnemySaveManagerState EnemySaveManagerState;
 
         [SerializeReference]
         public SavableState[] SavableStates;
