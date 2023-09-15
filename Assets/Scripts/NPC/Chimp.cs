@@ -12,6 +12,7 @@ public class Chimp : NPCInteractable, ISavable
     [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
+    [SerializeField] private string saveGuid;
 
     private float lastGiveTimeSeconds;
     private float timeBetweenGivesSeconds;
@@ -104,6 +105,7 @@ public class Chimp : NPCInteractable, ISavable
 
         var savableState = new SavableChimpState
         {
+            SaveGuid = saveGuid,
             TimeSecondsUntilNextGive = timeUntilNextGiveSeconds
         };
 
@@ -119,9 +121,14 @@ public class Chimp : NPCInteractable, ISavable
         lastGiveTimeSeconds = Time.time;
     }
 
+    public string GetSaveGuid() => saveGuid;
+
     [Serializable]
     public class SavableChimpState : SavableState
     {
         public float TimeSecondsUntilNextGive;
+
+        public override Type GetSavableClassType() =>
+            typeof(Chimp);
     }
 }

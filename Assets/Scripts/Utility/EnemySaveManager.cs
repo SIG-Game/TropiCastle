@@ -3,13 +3,13 @@ using System.Linq;
 using UnityEngine;
 using static EnemyController;
 
-public class EnemySaveManager : MonoBehaviour, ISavable
+public class EnemySaveManager : SaveManager
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
 
-    public SavableState GetSavableState()
+    public override SavableState GetSavableState()
     {
         EnemyController[] enemyControllers = FindObjectsOfType<EnemyController>();
 
@@ -18,13 +18,14 @@ public class EnemySaveManager : MonoBehaviour, ISavable
 
         var savableState = new SavableEnemySaveManagerState
         {
+            SaveGuid = saveGuid,
             EnemyStates = enemyStates
         };
 
         return savableState;
     }
 
-    public void SetPropertiesFromSavableState(SavableState savableState)
+    public override void SetPropertiesFromSavableState(SavableState savableState)
     {
         var enemySaveManagerState =
             (SavableEnemySaveManagerState)savableState;
@@ -46,5 +47,8 @@ public class EnemySaveManager : MonoBehaviour, ISavable
     public class SavableEnemySaveManagerState : SavableState
     {
         public SavableEnemyState[] EnemyStates;
+
+        public override Type GetSavableClassType() =>
+            typeof(EnemySaveManager);
     }
 }

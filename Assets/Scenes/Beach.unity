@@ -34060,6 +34060,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6226198124874704995, guid: 3575553e460267e42948f49db8775401,
+        type: 3}
+      propertyPath: saveGuid
+      value: 2bf2a35e-0556-4744-a5ed-4142dfbdc621
+      objectReference: {fileID: 0}
     - target: {fileID: 6226198124874704999, guid: 3575553e460267e42948f49db8775401,
         type: 3}
       propertyPath: m_Name
@@ -34089,11 +34094,6 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 572276104}
-    - target: {fileID: 3441817848861255927, guid: 0b10992830a0ba7439705a4db0804f24,
-        type: 3}
-      propertyPath: saveGuid
-      value: a9da6e32-2500-4d84-b068-c3ae8532e168
-      objectReference: {fileID: 0}
     - target: {fileID: 3441817848861255927, guid: 0b10992830a0ba7439705a4db0804f24,
         type: 3}
       propertyPath: itemDropdown

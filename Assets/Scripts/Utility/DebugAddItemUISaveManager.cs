@@ -1,19 +1,13 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-#if UNITY_EDITOR
-using UnityEditor.SceneManagement;
-#endif
-
-public class DebugAddItemUISaveManager : MonoBehaviour, ISavable
+public class DebugAddItemUISaveManager : SaveManager
 {
     [SerializeField] private TMP_InputField amountInputField;
     [SerializeField] private TMP_Dropdown itemDropdown;
-    [SerializeField] private string saveGuid;
 
-    public SavableState GetSavableState()
+    public override SavableState GetSavableState()
     {
         var savableState = new SavableDebugAddItemUIState
         {
@@ -25,7 +19,7 @@ public class DebugAddItemUISaveManager : MonoBehaviour, ISavable
         return savableState;
     }
 
-    public void SetPropertiesFromSavableState(SavableState savableState)
+    public override void SetPropertiesFromSavableState(SavableState savableState)
     {
         SavableDebugAddItemUIState debugAddItemUIState =
             (SavableDebugAddItemUIState)savableState;
@@ -33,8 +27,6 @@ public class DebugAddItemUISaveManager : MonoBehaviour, ISavable
         amountInputField.text = debugAddItemUIState.AmountInputFieldText;
         itemDropdown.value = debugAddItemUIState.ItemDropdownValue;
     }
-
-    public string GetSaveGuid() => saveGuid;
 
     [Serializable]
     public class SavableDebugAddItemUIState : SavableState
@@ -45,14 +37,4 @@ public class DebugAddItemUISaveManager : MonoBehaviour, ISavable
         public override Type GetSavableClassType() =>
             typeof(DebugAddItemUISaveManager);
     }
-
-#if UNITY_EDITOR
-    [ContextMenu("Set Save GUID")]
-    private void SetSaveGuid()
-    {
-        saveGuid = Guid.NewGuid().ToString();
-
-        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
-    }
-#endif
 }

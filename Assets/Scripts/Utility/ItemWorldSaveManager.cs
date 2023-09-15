@@ -1,11 +1,10 @@
 using System;
 using System.Linq;
-using UnityEngine;
 using static ItemWorld;
 
-public class ItemWorldSaveManager : MonoBehaviour, ISavable
+public class ItemWorldSaveManager : SaveManager
 {
-    public SavableState GetSavableState()
+    public override SavableState GetSavableState()
     {
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
 
@@ -14,13 +13,14 @@ public class ItemWorldSaveManager : MonoBehaviour, ISavable
 
         var savableState = new SavableItemWorldSaveManagerState
         {
+            SaveGuid = saveGuid,
             ItemWorldStates = itemWorldStates
         };
 
         return savableState;
     }
 
-    public void SetPropertiesFromSavableState(SavableState savableState)
+    public override void SetPropertiesFromSavableState(SavableState savableState)
     {
         var itemWorldSaveManagerState =
             (SavableItemWorldSaveManagerState)savableState;
@@ -37,5 +37,8 @@ public class ItemWorldSaveManager : MonoBehaviour, ISavable
     public class SavableItemWorldSaveManagerState : SavableState
     {
         public SavableItemWorldState[] ItemWorldStates;
+
+        public override Type GetSavableClassType() =>
+            typeof(ItemWorldSaveManager);
     }
 }

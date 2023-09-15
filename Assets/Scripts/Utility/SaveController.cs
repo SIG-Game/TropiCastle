@@ -2,12 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using static Chimp;
-using static EnemySaveManager;
-using static Inventory;
-using static ItemWorldSaveManager;
-using static PlayerController;
-using static SpawnerSaveManager;
 
 public class SaveController : MonoBehaviour
 {
@@ -39,22 +33,17 @@ public class SaveController : MonoBehaviour
     {
         var savableStates = new SavableState[]
         {
+            playerController.GetSavableState(),
+            playerInventory.GetSavableState(),
+            chimp.GetSavableState(),
+            spawnerSaveManager.GetSavableState(),
+            itemWorldSaveManager.GetSavableState(),
+            enemySaveManager.GetSavableState(),
             debugAddItemUISaveManager.GetSavableState()
         };
 
         var saveData = new SaveData
         {
-            SavablePlayerState =
-                (SavablePlayerState)playerController.GetSavableState(),
-            SavableInventoryState =
-                (SavableInventoryState)playerInventory.GetSavableState(),
-            SavableChimpState = (SavableChimpState)chimp.GetSavableState(),
-            SpawnerSaveManagerState =
-                (SavableSpawnerSaveManagerState)spawnerSaveManager.GetSavableState(),
-            ItemWorldSaveManagerState =
-                (SavableItemWorldSaveManagerState)itemWorldSaveManager.GetSavableState(),
-            EnemySaveManagerState =
-                (SavableEnemySaveManagerState)enemySaveManager.GetSavableState(),
             SavableStates = savableStates
         };
 
@@ -70,23 +59,6 @@ public class SaveController : MonoBehaviour
 
         var saveData =
             GetSerializableObjectFromJsonFile<SaveData>(saveDataFilePath);
-
-        playerController
-            .SetPropertiesFromSavableState(saveData.SavablePlayerState);
-
-        playerInventory
-            .SetPropertiesFromSavableState(saveData.SavableInventoryState);
-
-        chimp.SetPropertiesFromSavableState(saveData.SavableChimpState);
-
-        spawnerSaveManager
-            .SetPropertiesFromSavableState(saveData.SpawnerSaveManagerState);
-
-        itemWorldSaveManager
-            .SetPropertiesFromSavableState(saveData.ItemWorldSaveManagerState);
-
-        enemySaveManager
-            .SetPropertiesFromSavableState(saveData.EnemySaveManagerState);
 
         foreach (var savableState in saveData.SavableStates)
         {
@@ -131,13 +103,6 @@ public class SaveController : MonoBehaviour
     [Serializable]
     private class SaveData
     {
-        public SavablePlayerState SavablePlayerState;
-        public SavableInventoryState SavableInventoryState;
-        public SavableChimpState SavableChimpState;
-        public SavableSpawnerSaveManagerState SpawnerSaveManagerState;
-        public SavableItemWorldSaveManagerState ItemWorldSaveManagerState;
-        public SavableEnemySaveManagerState EnemySaveManagerState;
-
         [SerializeReference]
         public SavableState[] SavableStates;
     }

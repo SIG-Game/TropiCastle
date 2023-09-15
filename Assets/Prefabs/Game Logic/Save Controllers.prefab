@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae8f0681ce1ce043a858b5652b218f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveGuid: 70ec915e-4ee9-4bb4-a683-53b83c034399
 --- !u!114 &7293868207348730853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be777cc213f25924b8e2bcbc4c0ce1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveGuid: bd78f37e-0cec-4f68-b082-8ab9047d2aae
 --- !u!114 &5284669079591204523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f905d04751eed4c86d7b51d97c5de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveGuid: 020f396f-c69a-4e66-a909-8f0fbb3d31f3
   enemyPrefab: {fileID: 1376027503358213722, guid: 14eafeb4364c04735ba4669ae2166aa2,
     type: 3}
   playerTransform: {fileID: 0}
@@ -107,5 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4213905d4bf00242b17344d2509b97d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveGuid: a9da6e32-2500-4d84-b068-c3ae8532e168
   amountInputField: {fileID: 0}
   itemDropdown: {fileID: 0}

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, ISavable
     [SerializeField] private InputManager inputManager;
     [SerializeField] private InputActionReference attackActionReference;
     [SerializeField] private InputActionReference healActionReference;
+    [SerializeField] private string saveGuid;
 
     [Header("Item Usages")]
     [SerializeField] private BucketItemUsage bucketItemUsage;
@@ -242,6 +243,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
         var savableState = new SavablePlayerState
         {
+            SaveGuid = saveGuid,
             PlayerPosition = playerPosition,
             PlayerDirection = playerDirection,
             SelectedItemIndex = selectedItemIndex,
@@ -261,6 +263,8 @@ public class PlayerController : MonoBehaviour, ISavable
         healthController.CurrentHealth = playerState.Health;
     }
 
+    public string GetSaveGuid() => saveGuid;
+
     [Serializable]
     public class SavablePlayerState : SavableState
     {
@@ -268,6 +272,9 @@ public class PlayerController : MonoBehaviour, ISavable
         public int PlayerDirection;
         public int SelectedItemIndex;
         public int Health;
+
+        public override Type GetSavableClassType() =>
+            typeof(PlayerController);
     }
 
     public bool CanMove() => !IsAttacking && !PauseController.Instance.GamePaused &&

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using static PrefabSpawner;
 
-public class SpawnerSaveManager : MonoBehaviour, ISavable
+public class SpawnerSaveManager : SaveManager
 {
     private PrefabSpawner[] prefabSpawners;
 
@@ -13,20 +12,21 @@ public class SpawnerSaveManager : MonoBehaviour, ISavable
         prefabSpawners = FindObjectsOfType<PrefabSpawner>();
     }
 
-    public SavableState GetSavableState()
+    public override SavableState GetSavableState()
     {
         SavableSpawnerState[] spawnerStates = prefabSpawners.Select(
             x => (SavableSpawnerState)x.GetSavableState()).ToArray();
 
         var savableState = new SavableSpawnerSaveManagerState
         {
+            SaveGuid = saveGuid,
             SpawnerStates = spawnerStates
         };
 
         return savableState;
     }
 
-    public void SetPropertiesFromSavableState(SavableState savableState)
+    public override void SetPropertiesFromSavableState(SavableState savableState)
     {
         var spawnerSaveManagerState =
             (SavableSpawnerSaveManagerState)savableState;
@@ -46,5 +46,8 @@ public class SpawnerSaveManager : MonoBehaviour, ISavable
     public class SavableSpawnerSaveManagerState : SavableState
     {
         public SavableSpawnerState[] SpawnerStates;
+
+        public override Type GetSavableClassType() =>
+            typeof(SpawnerSaveManager);
     }
 }

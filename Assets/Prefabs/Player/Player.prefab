@@ -524,6 +524,7 @@ MonoBehaviour:
     type: 3}
   healActionReference: {fileID: 5534942449988417204, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
+  saveGuid: 710d5612-7175-4f2a-a3a9-b1817a4b52d9
   bucketItemUsage: {fileID: 1346236021351400951}
   fishingRodItemUsage: {fileID: 8293061806737836654}
   healingItemUsage: {fileID: 7288205203562457323}
@@ -586,6 +587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorySize: 30
+  saveGuid: ccd3b27d-8782-4ce1-a651-aebbe395097b
 --- !u!114 &8536875563149633422
 MonoBehaviour:
   m_ObjectHideFlags: 0

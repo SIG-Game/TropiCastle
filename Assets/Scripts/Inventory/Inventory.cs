@@ -6,6 +6,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour, ISavable
 {
     [SerializeField] private int inventorySize;
+    [SerializeField] private string saveGuid;
 
     private List<ItemWithAmount> itemList;
     private int firstEmptyIndex;
@@ -527,6 +528,7 @@ public class Inventory : MonoBehaviour, ISavable
 
         var savableState = new SavableInventoryState
         {
+            SaveGuid = saveGuid,
             SerializableItemList = serializableInventoryItems.ToList()
         };
 
@@ -555,10 +557,15 @@ public class Inventory : MonoBehaviour, ISavable
         SetFirstEmptyIndex();
     }
 
+    public string GetSaveGuid() => saveGuid;
+
     [Serializable]
     public class SavableInventoryState : SavableState
     {
         public List<SerializableInventoryItem> SerializableItemList;
+
+        public override Type GetSavableClassType() =>
+            typeof(Inventory);
     }
 
     [Serializable]
