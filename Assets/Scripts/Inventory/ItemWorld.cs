@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using static Inventory;
 
-public class ItemWorld : MonoBehaviour, ISavable
+public class ItemWorld : MonoBehaviour, ISavablePrefabInstance
 {
     [SerializeField] private ItemWithAmount item;
     [SerializeField] private TMP_Text amountText;
@@ -74,7 +74,7 @@ public class ItemWorld : MonoBehaviour, ISavable
 
     public ItemWithAmount GetItem() => item;
 
-    public SavableState GetSavableState()
+    public SavablePrefabInstanceState GetSavablePrefabInstanceState()
     {
         var serializableItem = new SerializableInventoryItem(item);
 
@@ -82,14 +82,14 @@ public class ItemWorld : MonoBehaviour, ISavable
         {
             Item = serializableItem,
             Position = transform.position,
-            GameObjectName = gameObject.name,
             SpawnerGuid = spawnable.GetSpawnerGuid()
         };
 
         return savableState;
     }
 
-    public void SetPropertiesFromSavableState(SavableState savableState)
+    public void SetPropertiesFromSavablePrefabInstanceState(
+        SavablePrefabInstanceState savableState)
     {
         SavableItemWorldState itemWorldState = (SavableItemWorldState)savableState;
 
@@ -104,18 +104,17 @@ public class ItemWorld : MonoBehaviour, ISavable
 
         SetItem(item);
 
-        gameObject.name = itemWorldState.GameObjectName;
-
         GetComponent<Spawnable>()
             .SetSpawnerUsingGuid<ItemSpawner>(itemWorldState.SpawnerGuid);
     }
 
     [Serializable]
-    public class SavableItemWorldState : SavableState
+    public class SavableItemWorldState : SavablePrefabInstanceState
     {
         public SerializableInventoryItem Item;
         public Vector2 Position;
-        public string GameObjectName;
         public string SpawnerGuid;
+
+        public override string GetSavablePrefabName() => "ItemWorld";
     }
 }

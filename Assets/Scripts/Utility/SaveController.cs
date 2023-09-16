@@ -1,17 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class SaveController : MonoBehaviour
 {
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private SpawnerSaveManager spawnerSaveManager;
-    [SerializeField] private ItemWorldSaveManager itemWorldSaveManager;
     [SerializeField] private EnemySaveManager enemySaveManager;
     [SerializeField] private DebugAddItemUISaveManager debugAddItemUISaveManager;
     [SerializeField] private Chimp chimp;
+    [SerializeField] private ItemInteractableDependencies itemInteractableDependencies;
+    [SerializeField] private Transform itemWorldParent;
 
     private string saveDataFilePath;
 
@@ -37,14 +40,19 @@ public class SaveController : MonoBehaviour
             playerInventory.GetSavableState(),
             chimp.GetSavableState(),
             spawnerSaveManager.GetSavableState(),
-            itemWorldSaveManager.GetSavableState(),
             enemySaveManager.GetSavableState(),
             debugAddItemUISaveManager.GetSavableState()
         };
 
+        ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
+
+        SavablePrefabInstanceState[] savablePrefabInstanceStates = itemWorlds.Select(
+            x => x.GetSavablePrefabInstanceState()).ToArray();
+
         var saveData = new SaveData
         {
-            SavableStates = savableStates
+            SavableStates = savableStates,
+            SavablePrefabInstanceStates = savablePrefabInstanceStates
         };
 
         WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
@@ -71,6 +79,43 @@ public class SaveController : MonoBehaviour
                 x => x.GetSaveGuid() == savableState.SaveGuid);
 
             savableObject.SetPropertiesFromSavableState(savableState);
+        }
+
+        var savablePrefabsLoadHandle = Addressables
+            .LoadAssetsAsync<GameObject>("savable prefab", null);
+
+        List<GameObject> savablePrefabs = new List<GameObject>(
+            savablePrefabsLoadHandle.WaitForCompletion());
+
+        foreach (var savablePrefabInstanceState in saveData.SavablePrefabInstanceStates)
+        {
+            string savablePrefabName = savablePrefabInstanceState.GetSavablePrefabName();
+
+            GameObject savablePrefab = savablePrefabs.Find(x => x.name == savablePrefabName);
+
+            GameObject spawnedGameObject = Instantiate(savablePrefab);
+
+            ISavablePrefabInstance savablePrefabInstance =
+                spawnedGameObject.GetComponent<ISavablePrefabInstance>();
+
+            if (savablePrefabInstance is ItemWorld itemWorld)
+            {
+                itemWorld.transform.parent = itemWorldParent;
+
+                // itemInteractableDependencies needs to be set for an ItemWorld
+                // before SetPropertiesFromSavablePrefabInstanceState is called
+                // on that ItemWorld
+                itemWorld
+                    .SetItemInteractableDependencies(itemInteractableDependencies);
+            }
+
+            savablePrefabInstance
+                .SetPropertiesFromSavablePrefabInstanceState(savablePrefabInstanceState);
+        }
+
+        if (savablePrefabsLoadHandle.IsValid())
+        {
+            Addressables.Release(savablePrefabsLoadHandle);
         }
     }
 
@@ -105,6 +150,9 @@ public class SaveController : MonoBehaviour
     {
         [SerializeReference]
         public SavableState[] SavableStates;
+
+        [SerializeReference]
+        public SavablePrefabInstanceState[] SavablePrefabInstanceStates;
     }
 
     public static string GetSaveDataFilePath() =>

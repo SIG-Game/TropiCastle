@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Savable Prefabs
+  m_EditorClassIdentifier: 
+  m_GroupName: Savable Prefabs
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ccd3b37d2afe87e4480a4d5ab3a8d474
+  m_SerializeEntries:
+  - m_GUID: 431e7be619be686458842aa83a2c8797
+    m_Address: ItemWorld
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - savable prefab
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: edb73a2364990aa47a457b58d8d58896, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ef8b1873789bbff4dadd139647b59431, type: 2}
+    - {fileID: 11400000, guid: 38e5540585e864943bb634cc8fcd0345, type: 2}

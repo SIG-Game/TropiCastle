@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using static ItemWorld;
 using Random = UnityEngine.Random;
 
 #if UNITY_EDITOR
@@ -48,15 +47,6 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         spawnedItemWorld.SetUpItemWorld(itemToSpawn, itemInteractableDependencies);
 
         return spawnedItemWorld;
-    }
-
-    public void SpawnItemWorldFromState(SavableItemWorldState itemWorldState)
-    {
-        GameObject spawnedGameObject = Instantiate(itemWorldPrefab, itemWorldParent);
-        ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
-
-        spawnedItemWorld.SetItemInteractableDependencies(itemInteractableDependencies);
-        spawnedItemWorld.SetPropertiesFromSavableState(itemWorldState);
     }
 
     public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)
