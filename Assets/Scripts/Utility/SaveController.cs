@@ -11,15 +11,23 @@ public class SaveController : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private DebugAddItemUISaveManager debugAddItemUISaveManager;
     [SerializeField] private Chimp chimp;
-    [SerializeField] private ItemInteractableDependencies itemInteractableDependencies;
-    [SerializeField] private Transform itemWorldParent;
+    [SerializeField] private SavableItemWorldDependencySetter itemWorldDependencySetter;
+    [SerializeField] private SavableEnemyDependencySetter enemyDependencySetter;
 
+    private Dictionary<Type, ISavablePrefabInstanceDependencySetter> prefabTypeToDependencySetter;
     private string saveDataFilePath;
 
     private const string saveDataFileName = "save_data.json";
 
     private void Awake()
     {
+        prefabTypeToDependencySetter =
+            new Dictionary<Type, ISavablePrefabInstanceDependencySetter>
+            {
+                { typeof(ItemWorld), itemWorldDependencySetter },
+                { typeof(EnemyController), enemyDependencySetter }
+            };
+
         saveDataFilePath = GetSaveDataFilePath();
     }
 
@@ -107,19 +115,11 @@ public class SaveController : MonoBehaviour
             ISavablePrefabInstance savablePrefabInstance =
                 spawnedGameObject.GetComponent<ISavablePrefabInstance>();
 
-            if (savablePrefabInstance is ItemWorld itemWorld)
-            {
-                itemWorld.transform.parent = itemWorldParent;
+            ISavablePrefabInstanceDependencySetter dependencySetter =
+                prefabTypeToDependencySetter[savablePrefabInstance.GetType()];
 
-                // itemInteractableDependencies needs to be set for an ItemWorld
-                // before SetPropertiesFromSavablePrefabInstanceState is called
-                // on that ItemWorld
-                itemWorld
-                    .SetItemInteractableDependencies(itemInteractableDependencies);
-            }
-            else if (savablePrefabInstance is EnemyController enemyController) {
-                enemyController.SetUpEnemy(playerController.transform, playerInventory);
-            }
+            // Must run before SetPropertiesFromSavablePrefabInstanceState
+            dependencySetter.SetPrefabInstanceDependencies(savablePrefabInstance);
 
             savablePrefabInstance
                 .SetPropertiesFromSavablePrefabInstanceState(savablePrefabInstanceState);
@@ -135,7 +135,7 @@ public class SaveController : MonoBehaviour
     {
         using (var streamWriter = new StreamWriter(filePath))
         {
-            string serializableObjectJson = JsonUtility.ToJson(serializableObject, true);
+            string serializableObjectJson = JsonUtility.ToJson(serializableObject);
 
             streamWriter.Write(serializableObjectJson);
         }
