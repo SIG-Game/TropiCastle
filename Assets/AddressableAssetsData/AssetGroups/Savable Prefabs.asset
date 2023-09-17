@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - savable prefab
+  - m_GUID: 14eafeb4364c04735ba4669ae2166aa2
+    m_Address: Crab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - savable prefab
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: edb73a2364990aa47a457b58d8d58896, type: 2}
   m_SchemaSet:

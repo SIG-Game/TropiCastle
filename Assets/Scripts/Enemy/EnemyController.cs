@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, ISavable
+public class EnemyController : MonoBehaviour, ISavablePrefabInstance
 {
     [SerializeField] private float speed;
     [SerializeField] private int playerDamageAmount;
@@ -188,7 +188,7 @@ public class EnemyController : MonoBehaviour, ISavable
         currentState.StateEnter();
     }
 
-    public SavableState GetSavableState()
+    public SavablePrefabInstanceState GetSavablePrefabInstanceState()
     {
         var savableState = new SavableEnemyState
         {
@@ -200,7 +200,8 @@ public class EnemyController : MonoBehaviour, ISavable
         return savableState;
     }
 
-    public void SetPropertiesFromSavableState(SavableState savableState)
+    public void SetPropertiesFromSavablePrefabInstanceState(
+        SavablePrefabInstanceState savableState)
     {
         SavableEnemyState enemyState = (SavableEnemyState)savableState;
 
@@ -213,10 +214,12 @@ public class EnemyController : MonoBehaviour, ISavable
     }
 
     [Serializable]
-    public class SavableEnemyState : SavableState
+    public class SavableEnemyState : SavablePrefabInstanceState
     {
         public Vector2 Position;
         public int Health;
         public string SpawnerGuid;
+
+        public override string GetSavablePrefabName() => "Crab";
     }
 }

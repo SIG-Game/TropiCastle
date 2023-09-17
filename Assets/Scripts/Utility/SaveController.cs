@@ -10,7 +10,6 @@ public class SaveController : MonoBehaviour
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private SpawnerSaveManager spawnerSaveManager;
-    [SerializeField] private EnemySaveManager enemySaveManager;
     [SerializeField] private DebugAddItemUISaveManager debugAddItemUISaveManager;
     [SerializeField] private Chimp chimp;
     [SerializeField] private ItemInteractableDependencies itemInteractableDependencies;
@@ -40,14 +39,19 @@ public class SaveController : MonoBehaviour
             playerInventory.GetSavableState(),
             chimp.GetSavableState(),
             spawnerSaveManager.GetSavableState(),
-            enemySaveManager.GetSavableState(),
             debugAddItemUISaveManager.GetSavableState()
         };
 
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
+        EnemyController[] enemies = FindObjectsOfType<EnemyController>();
 
-        SavablePrefabInstanceState[] savablePrefabInstanceStates = itemWorlds.Select(
+        SavablePrefabInstanceState[] itemWorldStates = itemWorlds.Select(
             x => x.GetSavablePrefabInstanceState()).ToArray();
+        SavablePrefabInstanceState[] enemyStates = enemies.Select(
+            x => x.GetSavablePrefabInstanceState()).ToArray();
+
+        SavablePrefabInstanceState[] savablePrefabInstanceStates =
+            itemWorldStates.Concat(enemyStates).ToArray();
 
         var saveData = new SaveData
         {
@@ -108,6 +112,9 @@ public class SaveController : MonoBehaviour
                 itemWorld
                     .SetItemInteractableDependencies(itemInteractableDependencies);
             }
+            else if (savablePrefabInstance is EnemyController enemyController) {
+                enemyController.SetUpEnemy(playerController.transform, playerInventory);
+            }
 
             savablePrefabInstance
                 .SetPropertiesFromSavablePrefabInstanceState(savablePrefabInstanceState);
@@ -123,7 +130,7 @@ public class SaveController : MonoBehaviour
     {
         using (var streamWriter = new StreamWriter(filePath))
         {
-            string serializableObjectJson = JsonUtility.ToJson(serializableObject);
+            string serializableObjectJson = JsonUtility.ToJson(serializableObject, true);
 
             streamWriter.Write(serializableObjectJson);
         }

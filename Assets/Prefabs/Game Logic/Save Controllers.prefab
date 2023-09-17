@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7518532117981212944}
   - component: {fileID: 1760163904208803323}
   - component: {fileID: 656344412240068163}
-  - component: {fileID: 5284669079591204523}
   - component: {fileID: 428733055194276201}
   m_Layer: 0
   m_Name: Save Controllers
@@ -50,7 +49,6 @@ MonoBehaviour:
   playerInventory: {fileID: 0}
   playerController: {fileID: 0}
   spawnerSaveManager: {fileID: 656344412240068163}
-  enemySaveManager: {fileID: 5284669079591204523}
   debugAddItemUISaveManager: {fileID: 428733055194276201}
   chimp: {fileID: 0}
   itemInteractableDependencies: {fileID: 0}
@@ -68,23 +66,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveGuid: 70ec915e-4ee9-4bb4-a683-53b83c034399
---- !u!114 &5284669079591204523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3413001535477685364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53f905d04751eed4c86d7b51d97c5de5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveGuid: 020f396f-c69a-4e66-a909-8f0fbb3d31f3
-  enemyPrefab: {fileID: 1376027503358213722, guid: 14eafeb4364c04735ba4669ae2166aa2,
-    type: 3}
-  playerTransform: {fileID: 0}
-  playerInventory: {fileID: 0}
 --- !u!114 &428733055194276201
 MonoBehaviour:
   m_ObjectHideFlags: 0
