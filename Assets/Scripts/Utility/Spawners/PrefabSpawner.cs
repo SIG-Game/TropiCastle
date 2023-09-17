@@ -177,6 +177,9 @@ public class PrefabSpawner : MonoBehaviour, ISavable
         public int NumberOfSpawnedPrefabs;
         public float SpawnTimer;
         public bool WaitBeforeFirstSpawnCompleted;
+
+        public override Type GetSavableClassType() =>
+            typeof(PrefabSpawner);
     }
 
 #if UNITY_EDITOR

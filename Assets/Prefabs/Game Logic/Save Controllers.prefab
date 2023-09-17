@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7518532117981212944}
   - component: {fileID: 1760163904208803323}
-  - component: {fileID: 656344412240068163}
   - component: {fileID: 428733055194276201}
   m_Layer: 0
   m_Name: Save Controllers
@@ -48,24 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInventory: {fileID: 0}
   playerController: {fileID: 0}
-  spawnerSaveManager: {fileID: 656344412240068163}
   debugAddItemUISaveManager: {fileID: 428733055194276201}
   chimp: {fileID: 0}
   itemInteractableDependencies: {fileID: 0}
   itemWorldParent: {fileID: 0}
---- !u!114 &656344412240068163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3413001535477685364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bae8f0681ce1ce043a858b5652b218f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveGuid: 70ec915e-4ee9-4bb4-a683-53b83c034399
 --- !u!114 &428733055194276201
 MonoBehaviour:
   m_ObjectHideFlags: 0

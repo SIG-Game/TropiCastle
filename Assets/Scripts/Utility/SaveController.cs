@@ -9,7 +9,6 @@ public class SaveController : MonoBehaviour
 {
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private SpawnerSaveManager spawnerSaveManager;
     [SerializeField] private DebugAddItemUISaveManager debugAddItemUISaveManager;
     [SerializeField] private Chimp chimp;
     [SerializeField] private ItemInteractableDependencies itemInteractableDependencies;
@@ -38,9 +37,15 @@ public class SaveController : MonoBehaviour
             playerController.GetSavableState(),
             playerInventory.GetSavableState(),
             chimp.GetSavableState(),
-            spawnerSaveManager.GetSavableState(),
             debugAddItemUISaveManager.GetSavableState()
         };
+
+        PrefabSpawner[] spawners = FindObjectsOfType<PrefabSpawner>();
+
+        SavableState[] spawnerStates = spawners.Select(
+            x => x.GetSavableState()).ToArray();
+
+        savableStates = savableStates.Concat(spawnerStates).ToArray();
 
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
         EnemyController[] enemies = FindObjectsOfType<EnemyController>();

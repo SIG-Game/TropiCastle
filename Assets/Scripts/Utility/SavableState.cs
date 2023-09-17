@@ -1,9 +1,9 @@
 using System;
 
 [Serializable]
-public class SavableState
+public abstract class SavableState
 {
     public string SaveGuid;
 
-    public virtual Type GetSavableClassType() => null;
+    public abstract Type GetSavableClassType();
 }
