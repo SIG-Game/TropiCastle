@@ -49,7 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInventory: {fileID: 0}
   playerController: {fileID: 0}
-  debugAddItemUISaveManager: {fileID: 428733055194276201}
   chimp: {fileID: 0}
   itemWorldDependencySetter: {fileID: 8061449636975835726}
   enemyDependencySetter: {fileID: 8732643217373184237}
