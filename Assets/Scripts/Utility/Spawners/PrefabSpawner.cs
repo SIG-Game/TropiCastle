@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-#if UNITY_EDITOR
-using UnityEditor.SceneManagement;
-#endif
-
-public class PrefabSpawner : MonoBehaviour, ISavable
+public class PrefabSpawner : MonoBehaviour
 {
     [SerializeField] protected GameObject prefabToSpawn;
+    [SerializeField] private SpawnerSaveManager spawnerSaveManager;
     [SerializeField] private Vector2 timeBeforeFirstSpawnRange;
     [SerializeField] private float timeBetweenSpawns;
     [SerializeField] private int maxSpawnedPrefabs;
     [SerializeField] private Vector2 minSpawnPosition;
     [SerializeField] private Vector2 maxSpawnPosition;
-    [SerializeField] private string saveGuid;
     [SerializeField] private bool logOnSpawn;
     [SerializeField] private bool drawSpawnArea;
     [SerializeField] private Color drawnSpawnAreaColor = Color.black;
 
-    private int numPrefabs;
-    private float spawnTimer;
-    private bool waitBeforeFirstSpawnCompleted;
+    public int NumPrefabs { get; set; }
+    public float SpawnTimer { get; set; }
+    public bool WaitBeforeFirstSpawnCompleted { get; set; }
+
     private Vector3 topLeftCornerSpawnArea;
     private Vector3 topRightCornerSpawnArea;
     private Vector3 bottomLeftCornerSpawnArea;
@@ -54,7 +49,7 @@ public class PrefabSpawner : MonoBehaviour, ISavable
 
     private void Start()
     {
-        if (!waitBeforeFirstSpawnCompleted)
+        if (!WaitBeforeFirstSpawnCompleted)
         {
             float beforeFirstSpawnWait = Random.Range(timeBeforeFirstSpawnRange.x,
             timeBeforeFirstSpawnRange.y);
@@ -75,16 +70,16 @@ public class PrefabSpawner : MonoBehaviour, ISavable
             Debug.DrawLine(bottomLeftCornerSpawnArea, topLeftCornerSpawnArea, drawnSpawnAreaColor);
         }
 
-        if (numPrefabs >= maxSpawnedPrefabs || !waitBeforeFirstSpawnCompleted)
+        if (NumPrefabs >= maxSpawnedPrefabs || !WaitBeforeFirstSpawnCompleted)
         {
             return;
         }
 
-        spawnTimer += Time.deltaTime;
+        SpawnTimer += Time.deltaTime;
 
-        if (spawnTimer >= timeBetweenSpawns)
+        if (SpawnTimer >= timeBetweenSpawns)
         {
-            spawnTimer = 0f;
+            SpawnTimer = 0f;
             SpawnPrefab();
         }
     }
@@ -120,19 +115,19 @@ public class PrefabSpawner : MonoBehaviour, ISavable
             Debug.Log($"Spawned {spawnedPrefab.name} at {spawnedPrefab.transform.position}.");
         }
 
-        numPrefabs++;
+        NumPrefabs++;
     }
 
     private IEnumerator WaitBeforeFirstSpawn()
     {
         yield return beforeFirstSpawnWaitForSeconds;
 
-        waitBeforeFirstSpawnCompleted = true;
+        WaitBeforeFirstSpawnCompleted = true;
 
-        numPrefabs = 0;
-        spawnTimer = 0f;
+        NumPrefabs = 0;
+        SpawnTimer = 0f;
 
-        if (numPrefabs < maxSpawnedPrefabs)
+        if (NumPrefabs < maxSpawnedPrefabs)
         {
             SpawnPrefab();
         }
@@ -144,51 +139,9 @@ public class PrefabSpawner : MonoBehaviour, ISavable
 
     public void SpawnedPrefabDestroyed()
     {
-        numPrefabs--;
+        NumPrefabs--;
     }
 
-    public SavableState GetSavableState()
-    {
-        var savableState = new SavableSpawnerState
-        {
-            SaveGuid = saveGuid,
-            NumberOfSpawnedPrefabs = numPrefabs,
-            SpawnTimer = spawnTimer,
-            WaitBeforeFirstSpawnCompleted = waitBeforeFirstSpawnCompleted
-        };
-
-        return savableState;
-    }
-
-    public void SetPropertiesFromSavableState(SavableState savableState)
-    {
-        SavableSpawnerState spawnerState = (SavableSpawnerState)savableState;
-
-        numPrefabs = spawnerState.NumberOfSpawnedPrefabs;
-        spawnTimer = spawnerState.SpawnTimer;
-        waitBeforeFirstSpawnCompleted = spawnerState.WaitBeforeFirstSpawnCompleted;
-    }
-
-    public string GetSaveGuid() => saveGuid;
-
-    [Serializable]
-    public class SavableSpawnerState : SavableState
-    {
-        public int NumberOfSpawnedPrefabs;
-        public float SpawnTimer;
-        public bool WaitBeforeFirstSpawnCompleted;
-
-        public override Type GetSavableClassType() =>
-            typeof(PrefabSpawner);
-    }
-
-#if UNITY_EDITOR
-    [ContextMenu("Set Save GUID")]
-    private void SetSaveGuid()
-    {
-        saveGuid = Guid.NewGuid().ToString();
-
-        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
-    }
-#endif
+    public string GetSaveGuid() =>
+        spawnerSaveManager != null ? spawnerSaveManager.GetSaveGuid() : string.Empty;
 }

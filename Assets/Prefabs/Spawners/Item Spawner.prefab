@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6287177743119961213}
   - component: {fileID: 6287177743119961212}
+  - component: {fileID: 5395899409496471975}
   m_Layer: 0
   m_Name: Item Spawner
   m_TagString: Untagged
@@ -46,12 +47,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 60412012990745525, guid: 431e7be619be686458842aa83a2c8797,
     type: 3}
+  spawnerSaveManager: {fileID: 5395899409496471975}
   timeBeforeFirstSpawnRange: {x: 0, y: 5}
   timeBetweenSpawns: 15
   maxSpawnedPrefabs: 1
   minSpawnPosition: {x: 0, y: 0}
   maxSpawnPosition: {x: 0, y: 0}
-  spawnerGuid: 
   logOnSpawn: 0
   drawSpawnArea: 0
   drawnSpawnAreaColor: {r: 1, g: 1, b: 1, a: 1}
@@ -59,3 +60,17 @@ MonoBehaviour:
     itemDefinition: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
     amount: 1
   itemInteractableDependencies: {fileID: 0}
+--- !u!114 &5395899409496471975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6287177743119961214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 833c963c870aec940a33ef173e68bab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveGuid: 
+  spawner: {fileID: 6287177743119961212}

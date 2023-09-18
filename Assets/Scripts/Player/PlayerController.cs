@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, ISavable
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour, ISavable
     [SerializeField] private InputManager inputManager;
     [SerializeField] private InputActionReference attackActionReference;
     [SerializeField] private InputActionReference healActionReference;
-    [SerializeField] private string saveGuid;
 
     [Header("Item Usages")]
     [SerializeField] private BucketItemUsage bucketItemUsage;
@@ -232,49 +231,6 @@ public class PlayerController : MonoBehaviour, ISavable
     public void DisableItemSelection()
     {
         itemSelectionController.CanSelect = false;
-    }
-
-    public SavableState GetSavableState()
-    {
-        Vector2 playerPosition = transform.position;
-        int playerDirection = (int)Direction;
-        int selectedItemIndex = GetSelectedItemIndex();
-        int health = healthController.CurrentHealth;
-
-        var savableState = new SavablePlayerState
-        {
-            SaveGuid = saveGuid,
-            PlayerPosition = playerPosition,
-            PlayerDirection = playerDirection,
-            SelectedItemIndex = selectedItemIndex,
-            Health = health
-        };
-
-        return savableState;
-    }
-
-    public void SetPropertiesFromSavableState(SavableState savableState)
-    {
-        SavablePlayerState playerState = (SavablePlayerState)savableState;
-
-        transform.position = playerState.PlayerPosition;
-        Direction = (CharacterDirection)playerState.PlayerDirection;
-        itemSelectionController.SelectedItemIndex = playerState.SelectedItemIndex;
-        healthController.CurrentHealth = playerState.Health;
-    }
-
-    public string GetSaveGuid() => saveGuid;
-
-    [Serializable]
-    public class SavablePlayerState : SavableState
-    {
-        public Vector2 PlayerPosition;
-        public int PlayerDirection;
-        public int SelectedItemIndex;
-        public int Health;
-
-        public override Type GetSavableClassType() =>
-            typeof(PlayerController);
     }
 
     public bool CanMove() => !IsAttacking && !PauseController.Instance.GamePaused &&

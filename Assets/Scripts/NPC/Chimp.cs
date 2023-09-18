@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Chimp : NPCInteractable, ISavable
+public class Chimp : NPCInteractable
 {
     [SerializeField] private List<string> givingItemDialogueLines;
     [SerializeField] private List<string> notGivingItemDialogueLines;
@@ -12,10 +11,9 @@ public class Chimp : NPCInteractable, ISavable
     [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
-    [SerializeField] private string saveGuid;
 
-    private float lastGiveTimeSeconds;
-    private float timeBetweenGivesSeconds;
+    public float LastGiveTimeSeconds { get; set; }
+    public float TimeBetweenGivesSeconds { get; set; }
 
     private const string chimpCharacterName = "Chimp";
 
@@ -23,8 +21,8 @@ public class Chimp : NPCInteractable, ISavable
     {
         base.Awake();
 
-        lastGiveTimeSeconds = 0f;
-        timeBetweenGivesSeconds = 0f;
+        LastGiveTimeSeconds = 0f;
+        TimeBetweenGivesSeconds = 0f;
     }
 
     private void Start()
@@ -75,60 +73,16 @@ public class Chimp : NPCInteractable, ISavable
 
             chimpItemInWorld.HideCharacterItemInWorld();
 
-            lastGiveTimeSeconds = Time.time;
-            timeBetweenGivesSeconds = GetRandomTimeBetweenGivesSeconds();
+            LastGiveTimeSeconds = Time.time;
+            TimeBetweenGivesSeconds = GetRandomTimeBetweenGivesSeconds();
         }
 
         chimpSpinner.StartSpinning();
     }
 
+    public bool ItemGiveAvailable() =>
+        LastGiveTimeSeconds + TimeBetweenGivesSeconds <= Time.time;
+
     private float GetRandomTimeBetweenGivesSeconds() =>
         Random.Range(timeBetweenGivesSecondsRange.x, timeBetweenGivesSecondsRange.y);
-
-    private bool ItemGiveAvailable() =>
-        lastGiveTimeSeconds + timeBetweenGivesSeconds <= Time.time;
-
-    public SavableState GetSavableState()
-    {
-        float timeUntilNextGiveSeconds;
-
-        if (ItemGiveAvailable())
-        {
-            timeUntilNextGiveSeconds = 0f;
-        }
-        else
-        {
-            float nextGiveTimeSeconds = lastGiveTimeSeconds + timeBetweenGivesSeconds;
-
-            timeUntilNextGiveSeconds = nextGiveTimeSeconds - Time.time;
-        }
-
-        var savableState = new SavableChimpState
-        {
-            SaveGuid = saveGuid,
-            TimeSecondsUntilNextGive = timeUntilNextGiveSeconds
-        };
-
-        return savableState;
-    }
-
-    public void SetPropertiesFromSavableState(SavableState savableState)
-    {
-        SavableChimpState chimpState = (SavableChimpState)savableState;
-
-        timeBetweenGivesSeconds = chimpState.TimeSecondsUntilNextGive;
-
-        lastGiveTimeSeconds = Time.time;
-    }
-
-    public string GetSaveGuid() => saveGuid;
-
-    [Serializable]
-    public class SavableChimpState : SavableState
-    {
-        public float TimeSecondsUntilNextGive;
-
-        public override Type GetSavableClassType() =>
-            typeof(Chimp);
-    }
 }

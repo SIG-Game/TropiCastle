@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 6226198124874704995}
   - component: {fileID: 856391509901689041}
   - component: {fileID: 6226198124874705005}
+  - component: {fileID: 2289581544261555151}
   m_Layer: 8
   m_Name: Chimp
   m_TagString: Untagged
@@ -212,7 +213,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.375, y: 0.6875}
+    oldSize: {x: 0.375, y: 0.65625}
     newSize: {x: 0.375, y: 0.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -261,7 +262,6 @@ MonoBehaviour:
   timeBetweenGivesSecondsRange: {x: 5, y: 10}
   chimpSpinner: {fileID: 856391509901689041}
   chimpItemInWorld: {fileID: 5168677056278632683}
-  saveGuid: 
 --- !u!114 &856391509901689041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,3 +294,17 @@ MonoBehaviour:
   left: {fileID: -2894374843917858475, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
   right: {fileID: -4276444356177666921, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
   defaultDirection: 1
+--- !u!114 &2289581544261555151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6226198124874704999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78aa919a98a862f4dac384ec7733b7b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveGuid: 
+  chimp: {fileID: 6226198124874704995}

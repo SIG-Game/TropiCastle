@@ -8,8 +8,6 @@ using UnityEngine.AddressableAssets;
 public class SaveController : MonoBehaviour
 {
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private PlayerController playerController;
-    [SerializeField] private Chimp chimp;
     [SerializeField] private SavableItemWorldDependencySetter itemWorldDependencySetter;
     [SerializeField] private SavableEnemyDependencySetter enemyDependencySetter;
 
@@ -41,21 +39,15 @@ public class SaveController : MonoBehaviour
     {
         var savableStates = new SavableState[]
         {
-            playerController.GetSavableState(),
-            playerInventory.GetSavableState(),
-            chimp.GetSavableState()
+            playerInventory.GetSavableState()
         };
 
-        PrefabSpawner[] spawners = FindObjectsOfType<PrefabSpawner>();
         SaveManager[] saveManagers = FindObjectsOfType<SaveManager>();
 
-        SavableState[] spawnerStates = spawners.Select(
-            x => x.GetSavableState()).ToArray();
         SavableState[] saveManagerStates = saveManagers.Select(
             x => x.GetSavableState()).ToArray();
 
-        savableStates = savableStates.Concat(spawnerStates)
-            .Concat(saveManagerStates).ToArray();
+        savableStates = savableStates.Concat(saveManagerStates).ToArray();
 
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
         EnemyController[] enemies = FindObjectsOfType<EnemyController>();
