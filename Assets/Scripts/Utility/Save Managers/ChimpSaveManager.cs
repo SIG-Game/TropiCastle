@@ -5,7 +5,7 @@ public class ChimpSaveManager : SaveManager
 {
     [SerializeField] private Chimp chimp;
 
-    public override SavableState GetSavableState()
+    public override SaveManagerState GetState()
     {
         float timeUntilNextGiveSeconds;
 
@@ -21,18 +21,18 @@ public class ChimpSaveManager : SaveManager
             timeUntilNextGiveSeconds = nextGiveTimeSeconds - Time.time;
         }
 
-        var savableState = new SavableChimpState
+        var saveManagerState = new ChimpSaveManagerState
         {
             SaveGuid = saveGuid,
             TimeSecondsUntilNextGive = timeUntilNextGiveSeconds
         };
 
-        return savableState;
+        return saveManagerState;
     }
 
-    public override void SetPropertiesFromSavableState(SavableState savableState)
+    public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        SavableChimpState chimpState = (SavableChimpState)savableState;
+        ChimpSaveManagerState chimpState = (ChimpSaveManagerState)saveManagerState;
 
         chimp.TimeBetweenGivesSeconds = chimpState.TimeSecondsUntilNextGive;
 
@@ -40,11 +40,8 @@ public class ChimpSaveManager : SaveManager
     }
 
     [Serializable]
-    public class SavableChimpState : SavableState
+    public class ChimpSaveManagerState : SaveManagerState
     {
         public float TimeSecondsUntilNextGive;
-
-        public override Type GetSavableClassType() =>
-            typeof(ChimpSaveManager);
     }
 }

@@ -39,8 +39,8 @@ public class SaveController : MonoBehaviour
     {
         SaveManager[] saveManagers = FindObjectsOfType<SaveManager>();
 
-        SavableState[] savableStates = saveManagers.Select(
-            x => x.GetSavableState()).ToArray();
+        SaveManagerState[] saveManagerStates =
+            saveManagers.Select(x => x.GetState()).ToArray();
 
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
         EnemyController[] enemies = FindObjectsOfType<EnemyController>();
@@ -55,7 +55,7 @@ public class SaveController : MonoBehaviour
 
         var saveData = new SaveData
         {
-            SavableStates = savableStates,
+            SaveManagerStates = saveManagerStates,
             SavablePrefabInstanceStates = savablePrefabInstanceStates
         };
 
@@ -72,17 +72,14 @@ public class SaveController : MonoBehaviour
         var saveData =
             GetSerializableObjectFromJsonFile<SaveData>(saveDataFilePath);
 
-        foreach (var savableState in saveData.SavableStates)
+        SaveManager[] saveManagers = FindObjectsOfType<SaveManager>();
+
+        foreach (var saveManagerState in saveData.SaveManagerStates)
         {
-            Type savableClassType = savableState.GetSavableClassType();
+            SaveManager saveManager = saveManagers.FirstOrDefault(
+                x => x.GetSaveGuid() == saveManagerState.SaveGuid);
 
-            ISavable[] foundSavableObjects =
-                (ISavable[])FindObjectsOfType(savableClassType);
-
-            ISavable savableObject = foundSavableObjects.FirstOrDefault(
-                x => x.GetSaveGuid() == savableState.SaveGuid);
-
-            savableObject.SetPropertiesFromSavableState(savableState);
+            saveManager.UpdateFromState(saveManagerState);
         }
 
         var savablePrefabsLoadHandle = Addressables
@@ -148,7 +145,7 @@ public class SaveController : MonoBehaviour
     private class SaveData
     {
         [SerializeReference]
-        public SavableState[] SavableStates;
+        public SaveManagerState[] SaveManagerStates;
 
         [SerializeReference]
         public SavablePrefabInstanceState[] SavablePrefabInstanceStates;

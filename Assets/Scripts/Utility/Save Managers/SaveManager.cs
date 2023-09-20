@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 #endif
 
-public abstract class SaveManager : MonoBehaviour, ISavable
+public abstract class SaveManager : MonoBehaviour
 {
     [SerializeField] protected string saveGuid;
 
-    public abstract SavableState GetSavableState();
+    public abstract SaveManagerState GetState();
 
-    public abstract void SetPropertiesFromSavableState(SavableState savableState);
+    public abstract void UpdateFromState(SaveManagerState saveManagerState);
 
     public string GetSaveGuid() => saveGuid;
 

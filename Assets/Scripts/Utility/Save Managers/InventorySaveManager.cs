@@ -6,33 +6,31 @@ public class InventorySaveManager : SaveManager
 {
     [SerializeField] private Inventory inventory;
 
-    public override SavableState GetSavableState()
+    public override SaveManagerState GetState()
     {
         SerializableInventory serializableInventory =
             inventory.GetAsSerializableInventory();
 
-        var savableState = new SavableInventoryState
+        var saveManagerState = new InventorySaveManagerState
         {
             SaveGuid = saveGuid,
             serializableInventory = serializableInventory
         };
 
-        return savableState;
+        return saveManagerState;
     }
 
-    public override void SetPropertiesFromSavableState(SavableState savableState)
+    public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        SavableInventoryState inventoryState = (SavableInventoryState)savableState;
+        InventorySaveManagerState inventoryState =
+            (InventorySaveManagerState)saveManagerState;
 
         inventory.SetUpFromSerializableInventory(inventoryState.serializableInventory);
     }
 
     [Serializable]
-    public class SavableInventoryState : SavableState
+    public class InventorySaveManagerState : SaveManagerState
     {
         public SerializableInventory serializableInventory;
-
-        public override Type GetSavableClassType() =>
-            typeof(InventorySaveManager);
     }
 }

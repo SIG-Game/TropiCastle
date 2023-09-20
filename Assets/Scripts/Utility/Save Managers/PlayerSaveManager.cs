@@ -7,14 +7,14 @@ public class PlayerSaveManager : SaveManager
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private HealthController playerHealthController;
 
-    public override SavableState GetSavableState()
+    public override SaveManagerState GetState()
     {
         Vector2 playerPosition = playerController.transform.position;
         int playerDirection = (int)playerController.Direction;
         int selectedItemIndex = itemSelectionController.SelectedItemIndex;
         int health = playerHealthController.CurrentHealth;
 
-        var savableState = new SavablePlayerState
+        var saveManagerState = new PlayerSaveManagerState
         {
             SaveGuid = saveGuid,
             PlayerPosition = playerPosition,
@@ -23,12 +23,12 @@ public class PlayerSaveManager : SaveManager
             Health = health
         };
 
-        return savableState;
+        return saveManagerState;
     }
 
-    public override void SetPropertiesFromSavableState(SavableState savableState)
+    public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        SavablePlayerState playerState = (SavablePlayerState)savableState;
+        PlayerSaveManagerState playerState = (PlayerSaveManagerState)saveManagerState;
 
         playerController.transform.position = playerState.PlayerPosition;
         playerController.Direction = (CharacterDirection)playerState.PlayerDirection;
@@ -37,14 +37,11 @@ public class PlayerSaveManager : SaveManager
     }
 
     [Serializable]
-    public class SavablePlayerState : SavableState
+    public class PlayerSaveManagerState : SaveManagerState
     {
         public Vector2 PlayerPosition;
         public int PlayerDirection;
         public int SelectedItemIndex;
         public int Health;
-
-        public override Type GetSavableClassType() =>
-            typeof(PlayerSaveManager);
     }
 }

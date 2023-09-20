@@ -5,9 +5,9 @@ public class SpawnerSaveManager : SaveManager
 {
     [SerializeField] private PrefabSpawner spawner;
 
-    public override SavableState GetSavableState()
+    public override SaveManagerState GetState()
     {
-        var savableState = new SavableSpawnerState
+        var saveManagerState = new SpawnerSaveManagerState
         {
             SaveGuid = saveGuid,
             NumberOfSpawnedPrefabs = spawner.NumPrefabs,
@@ -15,12 +15,12 @@ public class SpawnerSaveManager : SaveManager
             WaitBeforeFirstSpawnCompleted = spawner.WaitBeforeFirstSpawnCompleted
         };
 
-        return savableState;
+        return saveManagerState;
     }
 
-    public override void SetPropertiesFromSavableState(SavableState savableState)
+    public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        SavableSpawnerState spawnerState = (SavableSpawnerState)savableState;
+        SpawnerSaveManagerState spawnerState = (SpawnerSaveManagerState)saveManagerState;
 
         spawner.NumPrefabs = spawnerState.NumberOfSpawnedPrefabs;
         spawner.SpawnTimer = spawnerState.SpawnTimer;
@@ -28,13 +28,10 @@ public class SpawnerSaveManager : SaveManager
     }
 
     [Serializable]
-    public class SavableSpawnerState : SavableState
+    public class SpawnerSaveManagerState : SaveManagerState
     {
         public int NumberOfSpawnedPrefabs;
         public float SpawnTimer;
         public bool WaitBeforeFirstSpawnCompleted;
-
-        public override Type GetSavableClassType() =>
-            typeof(SpawnerSaveManager);
     }
 }
