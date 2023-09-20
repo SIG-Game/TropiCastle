@@ -37,17 +37,10 @@ public class SaveController : MonoBehaviour
 
     public void SaveToFile()
     {
-        var savableStates = new SavableState[]
-        {
-            playerInventory.GetSavableState()
-        };
-
         SaveManager[] saveManagers = FindObjectsOfType<SaveManager>();
 
-        SavableState[] saveManagerStates = saveManagers.Select(
+        SavableState[] savableStates = saveManagers.Select(
             x => x.GetSavableState()).ToArray();
-
-        savableStates = savableStates.Concat(saveManagerStates).ToArray();
 
         ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
         EnemyController[] enemies = FindObjectsOfType<EnemyController>();

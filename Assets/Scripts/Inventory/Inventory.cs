@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour, ISavable
+public class Inventory : MonoBehaviour
 {
     [SerializeField] private int inventorySize;
-    [SerializeField] private string saveGuid;
 
     private List<ItemWithAmount> itemList;
     private int firstEmptyIndex;
@@ -521,28 +520,25 @@ public class Inventory : MonoBehaviour, ISavable
 
     public bool HasNoEmptySlots() => firstEmptyIndex == -1;
 
-    public SavableState GetSavableState()
+    public SerializableInventory GetAsSerializableInventory()
     {
-        IEnumerable<SerializableInventoryItem> serializableInventoryItems =
-            itemList.Select(x => new SerializableInventoryItem(x));
+        List<SerializableInventoryItem> serializableItemList =
+            itemList.Select(x => new SerializableInventoryItem(x)).ToList();
 
-        var savableState = new SavableInventoryState
+        var serializableInventory = new SerializableInventory
         {
-            SaveGuid = saveGuid,
-            SerializableItemList = serializableInventoryItems.ToList()
+            SerializableItemList = serializableItemList
         };
 
-        return savableState;
+        return serializableInventory;
     }
 
-    public void SetPropertiesFromSavableState(SavableState savableState)
+    public void SetUpFromSerializableInventory(SerializableInventory serializableInventory)
     {
-        SavableInventoryState inventoryState = (SavableInventoryState)savableState;
-
-        for (int i = 0; i < inventoryState.SerializableItemList.Count; ++i)
+        for (int i = 0; i < serializableInventory.SerializableItemList.Count; ++i)
         {
             SerializableInventoryItem serializableInventoryItem =
-                inventoryState.SerializableItemList[i];
+                serializableInventory.SerializableItemList[i];
 
             ItemScriptableObject itemScriptableObject =
                 ItemScriptableObject.FromName(serializableInventoryItem.ItemName);
@@ -557,15 +553,10 @@ public class Inventory : MonoBehaviour, ISavable
         SetFirstEmptyIndex();
     }
 
-    public string GetSaveGuid() => saveGuid;
-
     [Serializable]
-    public class SavableInventoryState : SavableState
+    public class SerializableInventory
     {
         public List<SerializableInventoryItem> SerializableItemList;
-
-        public override Type GetSavableClassType() =>
-            typeof(Inventory);
     }
 
     [Serializable]

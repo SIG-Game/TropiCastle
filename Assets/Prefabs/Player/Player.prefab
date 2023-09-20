@@ -374,6 +374,7 @@ GameObject:
   - component: {fileID: 8536875563149633422}
   - component: {fileID: 5613604618592605289}
   - component: {fileID: 6692545634876907308}
+  - component: {fileID: 2514896595225604082}
   - component: {fileID: 8669891105156055949}
   - component: {fileID: 3827053378170763305}
   m_Layer: 6
@@ -525,7 +526,6 @@ MonoBehaviour:
     type: 3}
   healActionReference: {fileID: 5534942449988417204, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
-  saveGuid: 710d5612-7175-4f2a-a3a9-b1817a4b52d9
   bucketItemUsage: {fileID: 1346236021351400951}
   fishingRodItemUsage: {fileID: 8293061806737836654}
   healingItemUsage: {fileID: 7288205203562457323}
@@ -588,7 +588,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorySize: 30
-  saveGuid: ccd3b27d-8782-4ce1-a651-aebbe395097b
 --- !u!114 &8536875563149633422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,6 +641,20 @@ MonoBehaviour:
   playerController: {fileID: 5288355818519945016}
   itemSelectionController: {fileID: 8536875563149633422}
   playerHealthController: {fileID: 3015389456133774718}
+--- !u!114 &2514896595225604082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288355818519944996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d497fbcf22cdb41bb7f0a03a90b3a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveGuid: ccd3b27d-8782-4ce1-a651-aebbe395097b
+  inventory: {fileID: 856750480813842556}
 --- !u!95 &8669891105156055949
 Animator:
   serializedVersion: 4

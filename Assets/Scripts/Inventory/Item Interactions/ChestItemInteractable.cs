@@ -17,7 +17,7 @@ public class ChestItemInteractable : ItemInteractable
 
         if (chestItemInstanceProperties != null)
         {
-            chestInventory.SetPropertiesFromSavableState(
+            chestInventory.SetUpFromSerializableInventory(
                 chestItemInstanceProperties.SerializableInventory);
         }
 
