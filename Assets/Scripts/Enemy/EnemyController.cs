@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, ISavablePrefabInstance
+public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private int playerDamageAmount;
@@ -186,40 +185,5 @@ public class EnemyController : MonoBehaviour, ISavablePrefabInstance
     {
         currentState = newState;
         currentState.StateEnter();
-    }
-
-    public SavablePrefabInstanceState GetSavablePrefabInstanceState()
-    {
-        var savableState = new SavableEnemyState
-        {
-            Position = transform.position,
-            Health = healthController.CurrentHealth,
-            SpawnerGuid = spawnable.GetSpawnerGuid()
-        };
-
-        return savableState;
-    }
-
-    public void SetPropertiesFromSavablePrefabInstanceState(
-        SavablePrefabInstanceState savableState)
-    {
-        SavableEnemyState enemyState = (SavableEnemyState)savableState;
-
-        transform.position = enemyState.Position;
-
-        healthController.CurrentHealth = enemyState.Health;
-
-        GetComponent<Spawnable>()
-            .SetSpawnerUsingGuid<EnemySpawner>(enemyState.SpawnerGuid);
-    }
-
-    [Serializable]
-    public class SavableEnemyState : SavablePrefabInstanceState
-    {
-        public Vector2 Position;
-        public int Health;
-        public string SpawnerGuid;
-
-        public override string GetSavablePrefabName() => "Crab";
     }
 }

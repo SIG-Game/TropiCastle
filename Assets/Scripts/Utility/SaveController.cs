@@ -11,18 +11,18 @@ public class SaveController : MonoBehaviour
     [SerializeField] private SavableItemWorldDependencySetter itemWorldDependencySetter;
     [SerializeField] private SavableEnemyDependencySetter enemyDependencySetter;
 
-    private Dictionary<Type, ISavablePrefabInstanceDependencySetter> prefabTypeToDependencySetter;
+    private Dictionary<Type, ISavablePrefabDependencySetter> savablePrefabTypeToDependencySetter;
     private string saveDataFilePath;
 
     private const string saveDataFileName = "save_data.json";
 
     private void Awake()
     {
-        prefabTypeToDependencySetter =
-            new Dictionary<Type, ISavablePrefabInstanceDependencySetter>
+        savablePrefabTypeToDependencySetter =
+            new Dictionary<Type, ISavablePrefabDependencySetter>
             {
-                { typeof(ItemWorld), itemWorldDependencySetter },
-                { typeof(EnemyController), enemyDependencySetter }
+                { typeof(SavablePrefabItemWorld), itemWorldDependencySetter },
+                { typeof(SavablePrefabEnemy), enemyDependencySetter }
             };
 
         saveDataFilePath = GetSaveDataFilePath();
@@ -42,21 +42,15 @@ public class SaveController : MonoBehaviour
         SaveManagerState[] saveManagerStates =
             saveManagers.Select(x => x.GetState()).ToArray();
 
-        ItemWorld[] itemWorlds = FindObjectsOfType<ItemWorld>();
-        EnemyController[] enemies = FindObjectsOfType<EnemyController>();
+        SavablePrefab[] savablePrefabs = FindObjectsOfType<SavablePrefab>();
 
-        SavablePrefabInstanceState[] itemWorldStates = itemWorlds.Select(
-            x => x.GetSavablePrefabInstanceState()).ToArray();
-        SavablePrefabInstanceState[] enemyStates = enemies.Select(
-            x => x.GetSavablePrefabInstanceState()).ToArray();
-
-        SavablePrefabInstanceState[] savablePrefabInstanceStates =
-            itemWorldStates.Concat(enemyStates).ToArray();
+        SavablePrefabState[] savablePrefabStates = savablePrefabs.Select(
+            x => x.GetSavablePrefabState()).ToArray();
 
         var saveData = new SaveData
         {
             SaveManagerStates = saveManagerStates,
-            SavablePrefabInstanceStates = savablePrefabInstanceStates
+            SavablePrefabStates = savablePrefabStates
         };
 
         WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
@@ -82,36 +76,38 @@ public class SaveController : MonoBehaviour
             saveManager.UpdateFromState(saveManagerState);
         }
 
-        var savablePrefabsLoadHandle = Addressables
+        var savablePrefabGameObjectsLoadHandle = Addressables
             .LoadAssetsAsync<GameObject>("savable prefab", null);
 
-        List<GameObject> savablePrefabs = new List<GameObject>(
-            savablePrefabsLoadHandle.WaitForCompletion());
+        List<GameObject> savablePrefabGameObjects = new List<GameObject>(
+            savablePrefabGameObjectsLoadHandle.WaitForCompletion());
 
-        foreach (var savablePrefabInstanceState in saveData.SavablePrefabInstanceStates)
+        foreach (var savablePrefabState in saveData.SavablePrefabStates)
         {
-            string savablePrefabName = savablePrefabInstanceState.GetSavablePrefabName();
+            string savablePrefabGameObjectName =
+                savablePrefabState.GetPrefabGameObjectName();
 
-            GameObject savablePrefab = savablePrefabs.Find(x => x.name == savablePrefabName);
+            GameObject savablePrefabGameObject =
+                savablePrefabGameObjects.Find(
+                    x => x.name == savablePrefabGameObjectName);
 
-            GameObject spawnedGameObject = Instantiate(savablePrefab);
+            GameObject spawnedGameObject = Instantiate(savablePrefabGameObject);
 
-            ISavablePrefabInstance savablePrefabInstance =
-                spawnedGameObject.GetComponent<ISavablePrefabInstance>();
+            SavablePrefab savablePrefab =
+                spawnedGameObject.GetComponent<SavablePrefab>();
 
-            ISavablePrefabInstanceDependencySetter dependencySetter =
-                prefabTypeToDependencySetter[savablePrefabInstance.GetType()];
+            ISavablePrefabDependencySetter dependencySetter =
+                savablePrefabTypeToDependencySetter[savablePrefab.GetType()];
 
-            // Must run before SetPropertiesFromSavablePrefabInstanceState
-            dependencySetter.SetPrefabInstanceDependencies(savablePrefabInstance);
+            // Must run before SetUpFromSavablePrefabState
+            dependencySetter.SetPrefabDependencies(savablePrefab);
 
-            savablePrefabInstance
-                .SetPropertiesFromSavablePrefabInstanceState(savablePrefabInstanceState);
+            savablePrefab.SetUpFromSavablePrefabState(savablePrefabState);
         }
 
-        if (savablePrefabsLoadHandle.IsValid())
+        if (savablePrefabGameObjectsLoadHandle.IsValid())
         {
-            Addressables.Release(savablePrefabsLoadHandle);
+            Addressables.Release(savablePrefabGameObjectsLoadHandle);
         }
     }
 
@@ -148,7 +144,7 @@ public class SaveController : MonoBehaviour
         public SaveManagerState[] SaveManagerStates;
 
         [SerializeReference]
-        public SavablePrefabInstanceState[] SavablePrefabInstanceStates;
+        public SavablePrefabState[] SavablePrefabStates;
     }
 
     public static string GetSaveDataFilePath() =>

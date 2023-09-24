@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static Inventory;
 
-public class ItemWorld : MonoBehaviour, ISavablePrefabInstance
+public class ItemWorld : MonoBehaviour
 {
     [SerializeField] private ItemWithAmount item;
     [SerializeField] private TMP_Text amountText;
@@ -45,7 +44,7 @@ public class ItemWorld : MonoBehaviour, ISavablePrefabInstance
         this.itemInteractableDependencies = itemInteractableDependencies;
     }
 
-    private void SetItem(ItemWithAmount item)
+    public void SetItem(ItemWithAmount item)
     {
         this.item = item;
 
@@ -73,48 +72,4 @@ public class ItemWorld : MonoBehaviour, ISavablePrefabInstance
     }
 
     public ItemWithAmount GetItem() => item;
-
-    public SavablePrefabInstanceState GetSavablePrefabInstanceState()
-    {
-        var serializableItem = new SerializableInventoryItem(item);
-
-        var savableState = new SavableItemWorldState
-        {
-            Item = serializableItem,
-            Position = transform.position,
-            SpawnerGuid = spawnable.GetSpawnerGuid()
-        };
-
-        return savableState;
-    }
-
-    public void SetPropertiesFromSavablePrefabInstanceState(
-        SavablePrefabInstanceState savableState)
-    {
-        SavableItemWorldState itemWorldState = (SavableItemWorldState)savableState;
-
-        transform.position = itemWorldState.Position;
-
-        ItemScriptableObject itemScriptableObject =
-            ItemScriptableObject.FromName(itemWorldState.Item.ItemName);
-
-        ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
-            itemWorldState.Item.Amount,
-            itemWorldState.Item.InstanceProperties);
-
-        SetItem(item);
-
-        GetComponent<Spawnable>()
-            .SetSpawnerUsingGuid<ItemSpawner>(itemWorldState.SpawnerGuid);
-    }
-
-    [Serializable]
-    public class SavableItemWorldState : SavablePrefabInstanceState
-    {
-        public SerializableInventoryItem Item;
-        public Vector2 Position;
-        public string SpawnerGuid;
-
-        public override string GetSavablePrefabName() => "ItemWorld";
-    }
 }

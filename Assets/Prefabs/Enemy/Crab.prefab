@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -5352361096146735681}
   - component: {fileID: 5115571631946345362}
   - component: {fileID: 3204248971960745404}
+  - component: {fileID: 7226919736916653521}
   - component: {fileID: 4960087397785287127}
   m_Layer: 0
   m_Name: Crab
@@ -189,6 +190,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4884d491fc41bee47b5f0af38940ec1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7226919736916653521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376027503358213722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0ff97b9b97a9b439ccc29c224783a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: -5352361096146735681}
+  healthController: {fileID: 5115571631946345362}
+  spawnable: {fileID: 3204248971960745404}
 --- !u!210 &4960087397785287127
 SortingGroup:
   m_ObjectHideFlags: 0

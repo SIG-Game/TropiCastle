@@ -1,15 +1,15 @@
 using UnityEngine;
 
 public class SavableEnemyDependencySetter : MonoBehaviour,
-    ISavablePrefabInstanceDependencySetter
+    ISavablePrefabDependencySetter
 {
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
 
-    public void SetPrefabInstanceDependencies(ISavablePrefabInstance savablePrefabInstance)
+    public void SetPrefabDependencies(SavablePrefab savablePrefab)
     {
-        EnemyController enemy = (EnemyController)savablePrefabInstance;
+        SavablePrefabEnemy savablePrefabEnemy = (SavablePrefabEnemy)savablePrefab;
 
-        enemy.SetUpEnemy(playerTransform, playerInventory);
+        savablePrefabEnemy.SetUpEnemy(playerTransform, playerInventory);
     }
 }
