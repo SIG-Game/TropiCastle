@@ -31,10 +31,10 @@ public class SavablePrefabEnemy : SavablePrefab
             .SetSpawnerUsingGuid<EnemySpawner>(enemyState.SpawnerGuid);
     }
 
-    public void SetUpEnemy(Transform playerTransform, Inventory playerInventory)
-    {
-        enemyController.SetUpEnemy(playerTransform, playerInventory);
-    }
+    public override Type GetDependencySetterType() =>
+        typeof(SavableEnemyDependencySetter);
+
+    public EnemyController GetEnemyController() => enemyController;
 
     [Serializable]
     public class SavableEnemyState : SavablePrefabState

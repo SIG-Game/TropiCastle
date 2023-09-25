@@ -11,18 +11,18 @@ public class SaveController : MonoBehaviour
     [SerializeField] private SavableItemWorldDependencySetter itemWorldDependencySetter;
     [SerializeField] private SavableEnemyDependencySetter enemyDependencySetter;
 
-    private Dictionary<Type, ISavablePrefabDependencySetter> savablePrefabTypeToDependencySetter;
+    private Dictionary<Type, ISavablePrefabDependencySetter> typeToDependencySetter;
     private string saveDataFilePath;
 
     private const string saveDataFileName = "save_data.json";
 
     private void Awake()
     {
-        savablePrefabTypeToDependencySetter =
+        typeToDependencySetter =
             new Dictionary<Type, ISavablePrefabDependencySetter>
             {
-                { typeof(SavablePrefabItemWorld), itemWorldDependencySetter },
-                { typeof(SavablePrefabEnemy), enemyDependencySetter }
+                { typeof(SavableItemWorldDependencySetter), itemWorldDependencySetter },
+                { typeof(SavableEnemyDependencySetter), enemyDependencySetter }
             };
 
         saveDataFilePath = GetSaveDataFilePath();
@@ -97,7 +97,7 @@ public class SaveController : MonoBehaviour
                 spawnedGameObject.GetComponent<SavablePrefab>();
 
             ISavablePrefabDependencySetter dependencySetter =
-                savablePrefabTypeToDependencySetter[savablePrefab.GetType()];
+                typeToDependencySetter[savablePrefab.GetDependencySetterType()];
 
             // Must run before SetUpFromSavablePrefabState
             dependencySetter.SetPrefabDependencies(savablePrefab);

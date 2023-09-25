@@ -40,11 +40,10 @@ public class SavablePrefabItemWorld : SavablePrefab
             .SetSpawnerUsingGuid<ItemSpawner>(itemWorldState.SpawnerGuid);
     }
 
-    public void SetItemInteractableDependencies(
-        ItemInteractableDependencies itemInteractableDependencies)
-    {
-        itemWorld.SetItemInteractableDependencies(itemInteractableDependencies);
-    }
+    public override Type GetDependencySetterType() =>
+        typeof(SavableItemWorldDependencySetter);
+
+    public ItemWorld GetItemWorld() => itemWorld;
 
     [Serializable]
     public class SavableItemWorldState : SavablePrefabState

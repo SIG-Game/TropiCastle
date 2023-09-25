@@ -10,6 +10,7 @@ public class SavableEnemyDependencySetter : MonoBehaviour,
     {
         SavablePrefabEnemy savablePrefabEnemy = (SavablePrefabEnemy)savablePrefab;
 
-        savablePrefabEnemy.SetUpEnemy(playerTransform, playerInventory);
+        savablePrefabEnemy.GetEnemyController()
+            .SetUpEnemy(playerTransform, playerInventory);
     }
 }

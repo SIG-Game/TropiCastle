@@ -13,7 +13,7 @@ public class SavableItemWorldDependencySetter : MonoBehaviour,
 
         savablePrefabItemWorld.transform.parent = itemWorldParent;
 
-        savablePrefabItemWorld.SetItemInteractableDependencies(
-            itemInteractableDependencies);
+        savablePrefabItemWorld.GetItemWorld()
+            .SetItemInteractableDependencies(itemInteractableDependencies);
     }
 }

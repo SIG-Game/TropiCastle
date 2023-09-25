@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class SavablePrefab : MonoBehaviour
@@ -6,4 +7,6 @@ public abstract class SavablePrefab : MonoBehaviour
 
     public abstract void SetUpFromSavablePrefabState(
         SavablePrefabState savableState);
+
+    public abstract Type GetDependencySetterType();
 }
