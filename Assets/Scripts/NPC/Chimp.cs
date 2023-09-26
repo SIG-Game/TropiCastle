@@ -7,7 +7,7 @@ public class Chimp : NPCInteractable
     [SerializeField] private List<string> givingItemDialogueLines;
     [SerializeField] private List<string> notGivingItemDialogueLines;
     [SerializeField] private List<string> playerInventoryFullDialogueLines;
-    [SerializeField] private List<ItemWithAmount> potentialItemsToGive;
+    [SerializeField] private NPCItemOfferingScriptableObject itemOffering;
     [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
@@ -41,8 +41,10 @@ public class Chimp : NPCInteractable
 
         if (ItemGiveAvailable())
         {
-            int itemToGiveIndex = Random.Range(0, potentialItemsToGive.Count);
-            itemToGive = potentialItemsToGive[itemToGiveIndex];
+            int itemToGiveIndex =
+                Random.Range(0, itemOffering.PotentialItemsToGive.Count);
+
+            itemToGive = itemOffering.PotentialItemsToGive[itemToGiveIndex];
 
             if (!player.GetInventory().CanAddItem(itemToGive))
             {
