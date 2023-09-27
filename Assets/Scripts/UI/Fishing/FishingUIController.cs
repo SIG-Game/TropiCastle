@@ -104,14 +104,14 @@ public class FishingUIController : MonoBehaviour
 
     private void CatchFish()
     {
-        playerItemInWorld.ShowCharacterItemInWorld(selectedFishItem);
+        playerItemInWorld.ShowItem(selectedFishItem);
 
         HideFishingUI();
 
         void afterCatchDialogueAction()
         {
             playerInventory.AddItem(selectedFishItem);
-            playerItemInWorld.HideCharacterItemInWorld();
+            playerItemInWorld.Hide();
         }
 
         DialogueBox.Instance.PlayDialogue(

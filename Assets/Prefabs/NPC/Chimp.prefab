@@ -98,8 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterDirectionController: {fileID: 6226198124874705005}
-  characterTransform: {fileID: 6226198124874704993}
-  itemInWorldOffsets:
+  objectInWorldOffsets:
   - {x: 0, y: 0.25, z: 0}
   - {x: 0, y: 0.3, z: 0}
   - {x: -0.09, y: 0.25, z: 0}

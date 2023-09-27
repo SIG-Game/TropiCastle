@@ -98,8 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterDirectionController: {fileID: 5613604618592605289}
-  characterTransform: {fileID: 5288355818519945019}
-  itemInWorldOffsets:
+  objectInWorldOffsets:
   - {x: 0, y: 0.35, z: 0}
   - {x: 0, y: 0.3, z: 0}
   - {x: -0.12, y: 0.27, z: 0}
@@ -1027,16 +1026,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43415e589da5bdc47a3339124800c245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishingRodInWorld: {fileID: 6124011893496063210}
-  playerDirectionController: {fileID: 5613604618592605289}
+  characterDirectionController: {fileID: 5613604618592605289}
+  objectInWorldOffsets:
+  - {x: 0.171875, y: 0.21875, z: 0}
+  - {x: -0.171875, y: 0.1875, z: 0}
+  - {x: 0.046875, y: 0.1875, z: 0}
+  - {x: -0.046875, y: 0.1875, z: 0}
   fishingUIController: {fileID: 0}
   fishingRodInWorldSprites:
   - {fileID: -1096853386, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
   - {fileID: -1391235922, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
   - {fileID: 300538706, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
   - {fileID: 760536588, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
-  fishingRodInWorldOffsets:
-  - {x: 0.171875, y: 0.21875, z: 0}
-  - {x: -0.171875, y: 0.1875, z: 0}
-  - {x: 0.046875, y: 0.1875, z: 0}
-  - {x: -0.046875, y: 0.1875, z: 0}

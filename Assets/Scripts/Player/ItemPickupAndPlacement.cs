@@ -115,7 +115,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public void ResetCursorAndPlayerItem()
     {
         ResetCursor();
-        playerItemInWorld.HideCharacterItemInWorld();
+        playerItemInWorld.Hide();
     }
 
     public void UsePickupCursor()
@@ -146,7 +146,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
         cursorController.UpdateCursorBackground(cursorBackgroundColor,
             selectedItemColliderSize);
 
-        playerItemInWorld.ShowCharacterItemInWorld(selectedItem);
+        playerItemInWorld.ShowItem(selectedItem);
     }
 
     private void UpdateHoveredItemWorld()

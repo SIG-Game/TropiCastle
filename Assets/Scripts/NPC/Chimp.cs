@@ -54,7 +54,7 @@ public class Chimp : NPCInteractable
             else
             {
                 dialogueLinesToPlay = givingItemDialogueLines;
-                chimpItemInWorld.ShowCharacterItemInWorld(itemToGive);
+                chimpItemInWorld.ShowItem(itemToGive);
             }
         }
         else
@@ -73,7 +73,7 @@ public class Chimp : NPCInteractable
         {
             player.GetInventory().AddItem(itemToGive);
 
-            chimpItemInWorld.HideCharacterItemInWorld();
+            chimpItemInWorld.Hide();
 
             LastGiveTimeSeconds = Time.time;
             TimeBetweenGivesSeconds = GetRandomTimeBetweenGivesSeconds();
