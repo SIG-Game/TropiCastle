@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3895392963248142505}
   - component: {fileID: 7958139642870328749}
   - component: {fileID: 2763883772261998751}
+  - component: {fileID: 7442480308541426570}
   m_Layer: 0
   m_Name: Enemy Spawner
   m_TagString: Untagged
@@ -54,8 +55,6 @@ MonoBehaviour:
   minSpawnPosition: {x: -8, y: -3}
   maxSpawnPosition: {x: 8, y: 4}
   logOnSpawn: 0
-  drawSpawnArea: 0
-  drawnSpawnAreaColor: {r: 0, g: 0, b: 0, a: 1}
   playerTransform: {fileID: 0}
   playerInventory: {fileID: 0}
 --- !u!114 &2763883772261998751
@@ -72,3 +71,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveGuid: 
   spawner: {fileID: 7958139642870328749}
+--- !u!114 &7442480308541426570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3895392963248142511}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f95cd5292618c04095702ff55402be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawnSpawnAreaColor: {r: 0, g: 0, b: 0, a: 1}

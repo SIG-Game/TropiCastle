@@ -12,17 +12,11 @@ public class PrefabSpawner : MonoBehaviour
     [SerializeField] private Vector2 minSpawnPosition;
     [SerializeField] private Vector2 maxSpawnPosition;
     [SerializeField] private bool logOnSpawn;
-    [SerializeField] private bool drawSpawnArea;
-    [SerializeField] private Color drawnSpawnAreaColor = Color.black;
 
     public int NumPrefabs { get; set; }
     public float SpawnTimer { get; set; }
     public bool WaitBeforeFirstSpawnCompleted { get; set; }
 
-    private Vector3 topLeftCornerSpawnArea;
-    private Vector3 topRightCornerSpawnArea;
-    private Vector3 bottomLeftCornerSpawnArea;
-    private Vector3 bottomRightCornerSpawnArea;
     private BoxCollider2D prefabToSpawnBoxCollider;
     private Vector2 prefabToSpawnColliderExtents;
     private WaitForSeconds beforeFirstSpawnWaitForSeconds;
@@ -37,11 +31,6 @@ public class PrefabSpawner : MonoBehaviour
                 $"must have {nameof(Spawnable)} component. Destroying spawner...");
             Destroy(gameObject);
         }
-
-        topLeftCornerSpawnArea = new Vector3(minSpawnPosition.x, maxSpawnPosition.y);
-        topRightCornerSpawnArea = new Vector3(maxSpawnPosition.x, maxSpawnPosition.y);
-        bottomLeftCornerSpawnArea = new Vector3(minSpawnPosition.x, minSpawnPosition.y);
-        bottomRightCornerSpawnArea = new Vector3(maxSpawnPosition.x, minSpawnPosition.y);
 
         prefabToSpawnBoxCollider = prefabToSpawn.GetComponent<BoxCollider2D>();
         prefabToSpawnColliderExtents = prefabToSpawnBoxCollider.size / 2f;
@@ -62,14 +51,6 @@ public class PrefabSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (drawSpawnArea)
-        {
-            Debug.DrawLine(topLeftCornerSpawnArea, topRightCornerSpawnArea, drawnSpawnAreaColor);
-            Debug.DrawLine(topRightCornerSpawnArea, bottomRightCornerSpawnArea, drawnSpawnAreaColor);
-            Debug.DrawLine(bottomRightCornerSpawnArea, bottomLeftCornerSpawnArea, drawnSpawnAreaColor);
-            Debug.DrawLine(bottomLeftCornerSpawnArea, topLeftCornerSpawnArea, drawnSpawnAreaColor);
-        }
-
         if (NumPrefabs >= maxSpawnedPrefabs || !WaitBeforeFirstSpawnCompleted)
         {
             return;
@@ -144,4 +125,8 @@ public class PrefabSpawner : MonoBehaviour
 
     public string GetSaveGuid() =>
         spawnerSaveManager != null ? spawnerSaveManager.GetSaveGuid() : string.Empty;
+
+    public Vector2 GetMinSpawnPosition() => minSpawnPosition;
+
+    public Vector2 GetMaxSpawnPosition() => maxSpawnPosition;
 }
