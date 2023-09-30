@@ -7,10 +7,9 @@ public class TradingUIController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> tradingUIGameObjects;
     [SerializeField] private Button tradeButton;
-    [SerializeField] private GameObject inputItemUIPrefab;
+    [SerializeField] private GameObject tradeItemUIPrefab;
     [SerializeField] private Transform inputItemUIParent;
-    [SerializeField] private Image outputItemImage;
-    [SerializeField] private TextMeshProUGUI outputItemAmountText;
+    [SerializeField] private Transform outputItemUIParent;
     [SerializeField] private RectTransform playerInventoryUI;
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
@@ -40,27 +39,8 @@ public class TradingUIController : MonoBehaviour
     {
         currentTrade = trade;
 
-        foreach (Transform inputItemUI in inputItemUIParent)
-        {
-            Destroy(inputItemUI.gameObject);
-        }
-
-        foreach (ItemWithAmount inputItem in trade.InputItems)
-        {
-            GameObject inputItemUI =
-                Instantiate(inputItemUIPrefab, inputItemUIParent);
-
-            inputItemUI.GetComponent<Image>().sprite =
-                inputItem.itemDefinition.sprite;
-
-            TextMeshProUGUI inputItemAmountText =
-                inputItemUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
-            inputItemAmountText.text = inputItem.GetAmountText();
-        }
-
-        outputItemImage.sprite = trade.OutputItem.itemDefinition.sprite;
-        outputItemAmountText.text = trade.OutputItem.GetAmountText();
+        UpdateTradeItemUI(inputItemUIParent, trade.InputItems);
+        UpdateTradeItemUI(outputItemUIParent, trade.OutputItems);
 
         SetIsCurrentTradePossible();
 
@@ -73,11 +53,31 @@ public class TradingUIController : MonoBehaviour
         inventoryUIManager.EnableCurrentInventoryUI();
     }
 
+    private void UpdateTradeItemUI(Transform itemUIParent, List<ItemWithAmount> items)
+    {
+        foreach (Transform itemUI in itemUIParent)
+        {
+            Destroy(itemUI.gameObject);
+        }
+
+        foreach (ItemWithAmount item in items)
+        {
+            GameObject itemUI = Instantiate(tradeItemUIPrefab, itemUIParent);
+
+            itemUI.GetComponent<Image>().sprite = item.itemDefinition.sprite;
+
+            TextMeshProUGUI itemAmountText =
+                itemUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+            itemAmountText.text = item.GetAmountText();
+        }
+    }
+
     public void TradeButton_OnClick()
     {
         playerInventory.ReplaceItems(
             currentTrade.InputItems,
-            currentTrade.OutputItem);
+            currentTrade.OutputItems);
 
         SetIsCurrentTradePossible();
 

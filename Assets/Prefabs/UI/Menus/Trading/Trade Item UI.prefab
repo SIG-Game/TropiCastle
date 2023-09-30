@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4086417001512461188}
   - component: {fileID: 4086417001512461243}
   m_Layer: 5
-  m_Name: Trade Input Item UI
+  m_Name: Trade Item UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

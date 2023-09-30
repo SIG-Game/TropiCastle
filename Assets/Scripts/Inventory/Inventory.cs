@@ -422,20 +422,66 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void ReplaceItems(List<ItemWithAmount> inputItems, ItemWithAmount newItem)
+    public void ReplaceItems(List<ItemWithAmount> inputItems, ItemWithAmount outputItem)
     {
+        if (!TryRemoveReplaceInputItems(inputItems,
+            out Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval))
+        {
+            return;
+        }
+
+        if (CanAddItem(outputItem))
+        {
+            AddItem(outputItem);
+        }
+        else
+        {
+            RevertItemRemoval(itemIndexToItemBeforeRemoval);
+        }
+    }
+
+    public void ReplaceItems(List<ItemWithAmount> inputItems,
+        List<ItemWithAmount> outputItems)
+    {
+        if (!TryRemoveReplaceInputItems(inputItems,
+            out Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval))
+        {
+            return;
+        }
+
+        Dictionary<int, int> itemIndexToAddAmount = new Dictionary<int, int>();
+
+        foreach (ItemWithAmount outputItem in outputItems)
+        {
+            if (!CanAddReplaceOutputItem(itemIndexToAddAmount, outputItem))
+            {
+                RevertItemRemoval(itemIndexToItemBeforeRemoval);
+                return;
+            }
+        }
+
+        foreach(ItemWithAmount outputItem in outputItems)
+        {
+            AddItem(outputItem);
+        }
+    }
+
+    private bool TryRemoveReplaceInputItems(List<ItemWithAmount> inputItems,
+        out Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval)
+    {
+        itemIndexToItemBeforeRemoval = null;
+
         Dictionary<int, int> itemIndexToRemoveAmount = new Dictionary<int, int>();
 
         foreach (ItemWithAmount inputItem in inputItems)
         {
             if (!HasReplacementInputItem(itemIndexToRemoveAmount, inputItem))
             {
-                return;
+                return false;
             }
         }
 
-        Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval =
-            new Dictionary<int, ItemWithAmount>();
+        itemIndexToItemBeforeRemoval = new Dictionary<int, ItemWithAmount>();
 
         foreach (var itemIndexAndRemoveAmount in itemIndexToRemoveAmount)
         {
@@ -454,14 +500,7 @@ public class Inventory : MonoBehaviour
             SetItemAmountAtIndex(newItemAmount, itemToRemoveIndex);
         }
 
-        if (CanAddItem(newItem))
-        {
-            AddItem(newItem);
-        }
-        else
-        {
-            RevertItemRemoval(itemIndexToItemBeforeRemoval);
-        }
+        return true;
     }
 
     public bool HasReplacementInputItem(
@@ -495,6 +534,47 @@ public class Inventory : MonoBehaviour
                         i, currentItemAmount);
 
                     amountExcluded += currentItemAmount;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public bool CanAddReplaceOutputItem(
+        Dictionary<int, int> itemIndexToAddAmount, ItemWithAmount outputItem)
+    {
+        int amountToAdd = outputItem.amount;
+
+        for (int i = 0; i < itemList.Count; ++i)
+        {
+            ItemWithAmount currentItem = itemList[i];
+
+            if ((currentItem.itemDefinition.name == outputItem.itemDefinition.name &&
+                currentItem.amount < currentItem.itemDefinition.stackSize) ||
+                currentItem.itemDefinition.name == "Empty")
+            {
+                int currentItemAmount = currentItem.amount;
+
+                if (itemIndexToAddAmount.ContainsKey(i))
+                {
+                    currentItemAmount += itemIndexToAddAmount[i];
+                }
+
+                if (currentItemAmount + amountToAdd <= outputItem.itemDefinition.stackSize)
+                {
+                    itemIndexToAddAmount.AddOrIncreaseValue(i, amountToAdd);
+
+                    return true;
+                }
+                else
+                {
+                    int amountAdded =
+                        outputItem.itemDefinition.stackSize - currentItemAmount;
+
+                    itemIndexToAddAmount.AddOrIncreaseValue(i, amountAdded);
+
+                    amountToAdd -= amountAdded;
                 }
             }
         }

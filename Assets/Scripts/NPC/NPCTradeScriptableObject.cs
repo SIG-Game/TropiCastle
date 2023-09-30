@@ -5,5 +5,5 @@ using UnityEngine;
 public class NPCTradeScriptableObject : ScriptableObject
 {
     public List<ItemWithAmount> InputItems;
-    public ItemWithAmount OutputItem;
+    public List<ItemWithAmount> OutputItems;
 }
