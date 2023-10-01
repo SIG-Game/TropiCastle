@@ -52,22 +52,60 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemWithAmount newItem)
     {
-        int stackIndex = FindStackIndex(newItem);
+        int amountToAdd = newItem.amount;
+        int stackSize = newItem.itemDefinition.stackSize;
 
-        if (HasNoEmptySlots() && stackIndex == -1)
+        for (int i = 0; i < itemList.Count; ++i)
         {
-            Debug.LogWarning("Attempted to add an item to a full inventory");
-            return;
+            ItemWithAmount currentItem = itemList[i];
+
+            if (currentItem.itemDefinition.name == newItem.itemDefinition.name &&
+                currentItem.amount < stackSize)
+            {
+                int currentItemAmountToAdd = Math.Min(
+                    amountToAdd, stackSize - currentItem.amount);
+
+                currentItem.amount += currentItemAmountToAdd;
+
+                OnItemChangedAtIndex(currentItem, i);
+
+                ItemWithAmount itemAdded = new ItemWithAmount(newItem.itemDefinition,
+                    currentItemAmountToAdd, newItem.instanceProperties);
+
+                OnItemAdded(itemAdded);
+
+                amountToAdd -= currentItemAmountToAdd;
+
+                if (amountToAdd == 0)
+                {
+                    return;
+                }
+            }
+            else if (currentItem.itemDefinition.name == "Empty")
+            {
+                // Prevent newItem from being modified
+                ItemWithAmount newItemCopy = new ItemWithAmount(newItem.itemDefinition,
+                    amountToAdd, newItem.instanceProperties);
+
+                if (newItemCopy.instanceProperties == null)
+                {
+                    newItemCopy.InitializeItemInstanceProperties();
+                }
+
+                SetItemAtIndex(newItemCopy, i);
+
+                OnItemAdded(newItemCopy);
+
+                if (i == firstEmptyIndex)
+                {
+                    SetFirstEmptyIndex();
+                }
+
+                return;
+            }
         }
 
-        if (stackIndex != -1)
-        {
-            AddItemToStackAtIndex(newItem, stackIndex);
-        }
-        else
-        {
-            AddItemAtIndex(newItem, firstEmptyIndex);
-        }
+        Debug.LogWarning("Attempted to add an item to a full inventory");
     }
 
     public void AddItemAtIndexWithFallbackToFirstEmptyIndex(ItemWithAmount newItem, int index)
