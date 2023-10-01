@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
@@ -39,12 +38,12 @@ public class InputManager : MonoBehaviour
 
     // Returns input bool when that input has not been used this frame
     // Otherwise, returns false
-    private static bool GetInputIfUnusedThisFrame(Func<bool> inputFunc, ref bool inputUsedThisFrame)
+    private static bool GetInputIfUnusedThisFrame(bool input, ref bool inputUsedThisFrame)
     {
         if (!inputUsedThisFrame)
         {
             inputUsedThisFrame = true;
-            return inputFunc();
+            return input;
         }
         else
         {
@@ -95,18 +94,18 @@ public class InputManager : MonoBehaviour
     }
 
     public bool GetUseItemButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => useItemAction.WasPressedThisFrame(),
+        GetInputIfUnusedThisFrame(useItemAction.WasPressedThisFrame(),
             ref useItemButtonDownUsedThisFrame);
 
     public bool GetInteractButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => interactAction.WasPressedThisFrame(),
+        GetInputIfUnusedThisFrame(interactAction.WasPressedThisFrame(),
             ref interactButtonDownUsedThisFrame);
 
     public bool GetInventoryButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => inventoryAction.WasPressedThisFrame(),
+        GetInputIfUnusedThisFrame(inventoryAction.WasPressedThisFrame(),
             ref inventoryButtonDownUsedThisFrame);
 
     public bool GetFishButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(() => fishAction.WasPressedThisFrame(),
+        GetInputIfUnusedThisFrame(fishAction.WasPressedThisFrame(),
             ref fishButtonDownUsedThisFrame);
 }
