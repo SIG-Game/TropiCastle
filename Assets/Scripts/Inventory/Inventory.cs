@@ -52,7 +52,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemWithAmount newItem)
     {
-        int amountToAdd = newItem.amount;
+        int remainingAmount = newItem.amount;
         int stackSize = newItem.itemDefinition.stackSize;
 
         for (int i = 0; i < itemList.Count; ++i)
@@ -62,44 +62,21 @@ public class Inventory : MonoBehaviour
             if (currentItem.itemDefinition.name == newItem.itemDefinition.name &&
                 currentItem.amount < stackSize)
             {
-                int currentItemAmountToAdd = Math.Min(
-                    amountToAdd, stackSize - currentItem.amount);
+                AddAmountToItemAtIndex(remainingAmount, i, out int amountAdded);
 
-                currentItem.amount += currentItemAmountToAdd;
+                remainingAmount -= amountAdded;
 
-                OnItemChangedAtIndex(currentItem, i);
-
-                ItemWithAmount itemAdded = new ItemWithAmount(newItem.itemDefinition,
-                    currentItemAmountToAdd, newItem.instanceProperties);
-
-                OnItemAdded(itemAdded);
-
-                amountToAdd -= currentItemAmountToAdd;
-
-                if (amountToAdd == 0)
+                if (remainingAmount == 0)
                 {
                     return;
                 }
             }
             else if (currentItem.itemDefinition.name == "Empty")
             {
-                // Prevent newItem from being modified
-                ItemWithAmount newItemCopy = new ItemWithAmount(newItem.itemDefinition,
-                    amountToAdd, newItem.instanceProperties);
+                ItemWithAmount itemWithRemainingAmount = new ItemWithAmount(
+                    newItem.itemDefinition, remainingAmount, newItem.instanceProperties);
 
-                if (newItemCopy.instanceProperties == null)
-                {
-                    newItemCopy.InitializeItemInstanceProperties();
-                }
-
-                SetItemAtIndex(newItemCopy, i);
-
-                OnItemAdded(newItemCopy);
-
-                if (i == firstEmptyIndex)
-                {
-                    SetFirstEmptyIndex();
-                }
+                AddItemAtIndex(itemWithRemainingAmount, i);
 
                 return;
             }
@@ -116,29 +93,14 @@ public class Inventory : MonoBehaviour
 
         if (itemStackIndex != -1)
         {
-            ItemWithAmount itemStack = itemList[itemStackIndex];
+            AddAmountToItemAtIndex(newItem.amount, itemStackIndex, out int amountAdded);
 
-            int stackSize = newItem.itemDefinition.stackSize;
+            int remainingAmount = newItem.amount - amountAdded;
 
-            int itemStackAmountToAdd = Math.Min(
-                newItem.amount, stackSize - itemStack.amount);
-
-            itemStack.amount += itemStackAmountToAdd;
-
-            OnItemChangedAtIndex(itemStack, itemStackIndex);
-
-            ItemWithAmount itemAdded = new ItemWithAmount(newItem.itemDefinition,
-                itemStackAmountToAdd, newItem.instanceProperties);
-
-            OnItemAdded(itemAdded);
-
-            if (itemStackAmountToAdd != newItem.amount)
+            if (remainingAmount != 0)
             {
-                int remainingAmount = newItem.amount - itemStackAmountToAdd;
-
                 ItemWithAmount itemWithRemainingAmount = new ItemWithAmount(
-                    newItem.itemDefinition, remainingAmount,
-                    newItem.instanceProperties);
+                    newItem.itemDefinition, remainingAmount, newItem.instanceProperties);
 
                 AddItem(itemWithRemainingAmount);
             }
@@ -151,6 +113,24 @@ public class Inventory : MonoBehaviour
         {
             AddItem(newItem);
         }
+    }
+
+    private void AddAmountToItemAtIndex(int amount, int index, out int amountAdded)
+    {
+        ItemWithAmount item = itemList[index];
+
+        int stackSize = item.itemDefinition.stackSize;
+
+        amountAdded = Math.Min(amount, stackSize - item.amount);
+
+        item.amount += amountAdded;
+
+        OnItemChangedAtIndex(item, index);
+
+        ItemWithAmount itemAdded = new ItemWithAmount(
+            item.itemDefinition, amountAdded, item.instanceProperties);
+
+        OnItemAdded(itemAdded);
     }
 
     public void SwapItemsAt(int index1, int index2)
