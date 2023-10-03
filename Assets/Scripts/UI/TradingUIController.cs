@@ -64,10 +64,12 @@ public class TradingUIController : MonoBehaviour
         {
             GameObject itemUI = Instantiate(tradeItemUIPrefab, itemUIParent);
 
-            itemUI.GetComponent<Image>().sprite = item.itemDefinition.sprite;
+            Image itemImage = itemUI.transform.GetChild(0).GetComponent<Image>();
+
+            itemImage.sprite = item.itemDefinition.sprite;
 
             TextMeshProUGUI itemAmountText =
-                itemUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                itemUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
             itemAmountText.text = item.GetAmountText();
         }
