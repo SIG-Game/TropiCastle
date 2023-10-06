@@ -9,19 +9,13 @@ public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (inventoryUIHeldItemController.HoldingItem())
         {
-            if (inventoryUIHeldItemController.HoldingItem())
+            if (eventData.button == PointerEventData.InputButton.Left)
             {
                 inventoryUIHeldItemController.HideHeldItemUI();
-
-                inventory.RemoveItemAtIndex(
-                    inventoryUIHeldItemController.GetHeldItemIndex());
             }
-        }
-        else if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            if (inventoryUIHeldItemController.HoldingItem())
+            else if (eventData.button == PointerEventData.InputButton.Right)
             {
                 inventoryUIHeldItemController.DecrementHeldItemStack();
             }

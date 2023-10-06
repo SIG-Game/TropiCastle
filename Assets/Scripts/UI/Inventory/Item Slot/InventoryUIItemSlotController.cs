@@ -34,7 +34,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             inventoryUIHeldItemController.LeftClickedItemAtIndex(
-                inventory, slotItemIndex, this);
+                inventory, slotItemIndex);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
