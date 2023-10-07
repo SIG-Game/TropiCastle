@@ -115,7 +115,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void AddAmountToItemAtIndex(int amount, int index, out int amountAdded)
+    public void AddAmountToItemAtIndex(int amount, int index, out int amountAdded)
     {
         ItemWithAmount item = itemList[index];
 

@@ -94,7 +94,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
     public void HeldLeftClickOverItemAtIndex(Inventory clickedInventory, int clickedItemIndex)
     {
-        if (!HoldingItem() || heldItemIndex == clickedItemIndex)
+        if (!HoldingItem())
         {
             return;
         }
@@ -142,18 +142,11 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         {
             CombineHeldItemStackWithClickedItemStack(clickedItemIndex, clickedItem);
         }
-        else if (clickedInventory == heldItemInventory)
+        else if (clickedItem.itemDefinition.name == "Empty")
         {
-            ResetHeldItem();
+            clickedInventory.AddItemAtIndex(heldItem, clickedItemIndex);
 
-            clickedInventory.SwapItemsAt(heldItemIndex, clickedItemIndex);
-        }
-        else
-        {
-            ResetHeldItem();
-
-            heldItemInventory.SwapItemsBetweenInventories(heldItemIndex,
-                clickedInventory, clickedItemIndex);
+            HideHeldItemUI();
         }
     }
 
@@ -180,15 +173,6 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
     private void PlaceOneOfHeldItem(int clickedItemIndex, ItemWithAmount clickedItem)
     {
-        bool putHeldItemBack = clickedInventory == heldItemInventory &&
-            clickedItemIndex == heldItemIndex;
-        if (putHeldItemBack)
-        {
-            ResetHeldItem();
-
-            return;
-        }
-
         bool canPlaceInClickedItemStack =
             clickedItem.itemDefinition.name == heldItem.itemDefinition.name &&
             clickedItem.amount < clickedItem.itemDefinition.stackSize;
@@ -256,7 +240,29 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     {
         if (HoldingItem())
         {
-            heldItemInventory.AddItemAtIndex(heldItem, heldItemIndex);
+            ItemWithAmount itemAtHeldItemIndex =
+                heldItemInventory.GetItemAtIndex(heldItemIndex);
+
+            if (itemAtHeldItemIndex.itemDefinition.name == "Empty")
+            {
+                heldItemInventory.AddItemAtIndex(heldItem, heldItemIndex);
+            }
+            else
+            {
+                heldItemInventory.AddAmountToItemAtIndex(
+                    heldItem.amount, heldItemIndex, out int amountAdded);
+
+                int amountRemaining = heldItem.amount - amountAdded;
+
+                if (amountRemaining != 0)
+                {
+                    ItemWithAmount itemWithAmountRemaining =
+                        new ItemWithAmount(heldItem.itemDefinition,
+                            amountRemaining, heldItem.instanceProperties);
+
+                    heldItemInventory.AddItem(itemWithAmountRemaining);
+                }
+            }
         }
 
         HideHeldItemUI();
