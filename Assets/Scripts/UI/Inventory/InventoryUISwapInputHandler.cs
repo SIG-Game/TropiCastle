@@ -20,8 +20,8 @@ public class InventoryUISwapInputHandler : MonoBehaviour
 
     private void SwapItemsUsingNumberKeyInput()
     {
-        bool canSwapItems = inventoryUIHeldItemController.HoldingItem() ||
-            hoveredItemSlotManager.HoveredItemIndex != -1;
+        bool canSwapItems = hoveredItemSlotManager.HoveredItemIndex != -1 &&
+            !inventoryUIHeldItemController.HoldingItem();
         if (!canSwapItems)
         {
             return;
@@ -33,30 +33,16 @@ public class InventoryUISwapInputHandler : MonoBehaviour
             return;
         }
 
-        int swapItemIndex;
-        Inventory swapInventory;
-
-        if (inventoryUIHeldItemController.HoldingItem())
+        if (inventory == hoveredItemSlotManager.HoveredInventory)
         {
-            swapItemIndex = inventoryUIHeldItemController.GetHeldItemIndex();
-            swapInventory = inventoryUIHeldItemController.GetHeldItemInventory();
-
-            inventoryUIHeldItemController.ResetHeldItem();
-        }
-        else
-        {
-            swapItemIndex = hoveredItemSlotManager.HoveredItemIndex;
-            swapInventory = hoveredItemSlotManager.HoveredInventory;
-        }
-
-        if (inventory == swapInventory)
-        {
-            inventory.SwapItemsAt(swapItemIndex, numberKeyIndex.Value);
+            inventory.SwapItemsAt(
+                hoveredItemSlotManager.HoveredItemIndex, numberKeyIndex.Value);
         }
         else
         {
             inventory.SwapItemsBetweenInventories(numberKeyIndex.Value,
-                swapInventory, swapItemIndex);
+                hoveredItemSlotManager.HoveredInventory,
+                hoveredItemSlotManager.HoveredItemIndex);
         }
     }
 }
