@@ -76,7 +76,7 @@ public class Inventory : MonoBehaviour
                 ItemWithAmount itemWithRemainingAmount = new ItemWithAmount(
                     newItem.itemDefinition, remainingAmount, newItem.instanceProperties);
 
-                AddItemAtIndex(itemWithRemainingAmount, i);
+                AddItemAtEmptyItemIndex(itemWithRemainingAmount, i);
 
                 return;
             }
@@ -85,7 +85,7 @@ public class Inventory : MonoBehaviour
         Debug.LogWarning("Attempted to add an item to a full inventory");
     }
 
-    public void AddItemAtIndexWithFallbackToFirstEmptyIndex(ItemWithAmount newItem, int index)
+    public void AddItemToFirstStackOrIndex(ItemWithAmount newItem, int index)
     {
         int itemStackIndex = itemList.FindIndex(
             x => x.itemDefinition.name == newItem.itemDefinition.name &&
@@ -102,12 +102,12 @@ public class Inventory : MonoBehaviour
                 ItemWithAmount itemWithRemainingAmount = new ItemWithAmount(
                     newItem.itemDefinition, remainingAmount, newItem.instanceProperties);
 
-                AddItem(itemWithRemainingAmount);
+                AddItemToFirstStackOrIndex(itemWithRemainingAmount, index);
             }
         }
         else if (itemList[index].itemDefinition.name == "Empty")
         {
-            AddItemAtIndex(newItem, index);
+            AddItemAtEmptyItemIndex(newItem, index);
         }
         else
         {
@@ -212,6 +212,36 @@ public class Inventory : MonoBehaviour
 
     public void AddItemAtIndex(ItemWithAmount newItem, int index)
     {
+        ItemWithAmount itemAtIndex = GetItemAtIndex(index);
+
+        if (itemAtIndex.itemDefinition.name == "Empty")
+        {
+            AddItemAtEmptyItemIndex(newItem, index);
+        }
+        else if (itemAtIndex.itemDefinition == newItem.itemDefinition)
+        {
+            AddAmountToItemAtIndex(
+                newItem.amount, index, out int amountAdded);
+
+            int remainingAmount = newItem.amount - amountAdded;
+
+            if (remainingAmount != 0)
+            {
+                ItemWithAmount itemWithRemainingAmount =
+                    new ItemWithAmount(newItem.itemDefinition,
+                        remainingAmount, newItem.instanceProperties);
+
+                AddItem(itemWithRemainingAmount);
+            }
+        }
+        else
+        {
+            AddItem(newItem);
+        }
+    }
+
+    public void AddItemAtEmptyItemIndex(ItemWithAmount newItem, int index)
+    {
         // Prevent newItem from being modified
         ItemWithAmount newItemCopy = new ItemWithAmount(newItem);
 
@@ -264,11 +294,11 @@ public class Inventory : MonoBehaviour
         TryAddItem(item, addItem, out amountAdded);
     }
 
-    public void TryAddItemAtIndexWithFallbackToFirstEmptyIndex(
+    public void TryAddItemToFirstStackOrIndex(
         ItemWithAmount item, int index, out int amountAdded)
     {
         Action<ItemWithAmount> addItem =
-           (item) => AddItemAtIndexWithFallbackToFirstEmptyIndex(item, index);
+           (item) => AddItemToFirstStackOrIndex(item, index);
 
         TryAddItem(item, addItem, out amountAdded);
     }
@@ -693,7 +723,7 @@ public class Inventory : MonoBehaviour
             }
             else if (currentItem.itemDefinition.name == "Empty")
             {
-                AddItemAtIndex(coconutItemWithMaxAmount, i);
+                AddItemAtEmptyItemIndex(coconutItemWithMaxAmount, i);
             }
         }
     }

@@ -80,7 +80,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         ItemWithAmount hoveredItem = HoveredItemWorld.GetItem();
 
-        playerInventory.TryAddItemAtIndexWithFallbackToFirstEmptyIndex(
+        playerInventory.TryAddItemToFirstStackOrIndex(
             hoveredItem, player.GetSelectedItemIndex(), out int amountAdded);
 
         bool hoveredItemAdded = amountAdded == hoveredItem.amount;
