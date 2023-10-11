@@ -99,8 +99,8 @@ public class Inventory : MonoBehaviour
 
             if (remainingAmount != 0)
             {
-                ItemWithAmount itemWithRemainingAmount = new ItemWithAmount(
-                    newItem.itemDefinition, remainingAmount, newItem.instanceProperties);
+                ItemWithAmount itemWithRemainingAmount =
+                    newItem.GetCopyWithAmount(remainingAmount);
 
                 AddItemToFirstStackOrIndex(itemWithRemainingAmount, index);
             }
@@ -127,8 +127,7 @@ public class Inventory : MonoBehaviour
 
         OnItemChangedAtIndex(item, index);
 
-        ItemWithAmount itemAdded = new ItemWithAmount(
-            item.itemDefinition, amountAdded, item.instanceProperties);
+        ItemWithAmount itemAdded = item.GetCopyWithAmount(amountAdded);
 
         OnItemAdded(itemAdded);
     }
@@ -310,8 +309,8 @@ public class Inventory : MonoBehaviour
         {
             if (canAddAmount != 0)
             {
-                ItemWithAmount itemToAdd = new ItemWithAmount(
-                    item.itemDefinition, canAddAmount, item.instanceProperties);
+                ItemWithAmount itemToAdd =
+                    item.GetCopyWithAmount(canAddAmount);
 
                 addItem(itemToAdd);
             }

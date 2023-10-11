@@ -75,5 +75,8 @@ public class ItemWithAmount
         }
     }
 
+    public ItemWithAmount GetCopyWithAmount(int amount) =>
+        new ItemWithAmount(itemDefinition, amount, instanceProperties);
+
     public string GetAmountText() => amount > 1 ? amount.ToString() : string.Empty;
 }

@@ -200,8 +200,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
         else if (clickedItem.itemDefinition.name == "Empty")
         {
-            ItemWithAmount oneOfHeldItem = new ItemWithAmount(
-                HeldItem.itemDefinition, 1, HeldItem.instanceProperties);
+            ItemWithAmount oneOfHeldItem = HeldItem.GetCopyWithAmount(1);
 
             clickedInventory.AddItemAtEmptyItemIndex(oneOfHeldItem, clickedItemIndex);
         }
