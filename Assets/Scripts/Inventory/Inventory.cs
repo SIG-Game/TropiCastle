@@ -52,44 +52,35 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemWithAmount newItem)
     {
-        int remainingAmount = newItem.amount;
-        int stackSize = newItem.itemDefinition.stackSize;
+        int itemStackIndex = FindItemStackIndex(newItem);
 
-        for (int i = 0; i < itemList.Count; ++i)
+        if (itemStackIndex != -1)
         {
-            ItemWithAmount currentItem = itemList[i];
+            AddAmountToItemAtIndex(newItem.amount, itemStackIndex, out int amountAdded);
 
-            if (currentItem.itemDefinition.name == newItem.itemDefinition.name &&
-                currentItem.amount < stackSize)
+            int remainingAmount = newItem.amount - amountAdded;
+
+            if (remainingAmount != 0)
             {
-                AddAmountToItemAtIndex(remainingAmount, i, out int amountAdded);
+                ItemWithAmount itemWithRemainingAmount =
+                    newItem.GetCopyWithAmount(remainingAmount);
 
-                remainingAmount -= amountAdded;
-
-                if (remainingAmount == 0)
-                {
-                    return;
-                }
-            }
-            else if (currentItem.itemDefinition.name == "Empty")
-            {
-                ItemWithAmount itemWithRemainingAmount = new ItemWithAmount(
-                    newItem.itemDefinition, remainingAmount, newItem.instanceProperties);
-
-                AddItemAtEmptyItemIndex(itemWithRemainingAmount, i);
-
-                return;
+                AddItem(itemWithRemainingAmount);
             }
         }
-
-        Debug.LogWarning("Attempted to add an item to a full inventory");
+        else if (firstEmptyIndex != -1)
+        {
+            AddItemAtEmptyItemIndex(newItem, firstEmptyIndex);
+        }
+        else
+        {
+            Debug.LogWarning("Attempted to add an item to a full inventory");
+        }
     }
 
     public void AddItemToFirstStackOrIndex(ItemWithAmount newItem, int index)
     {
-        int itemStackIndex = itemList.FindIndex(
-            x => x.itemDefinition.name == newItem.itemDefinition.name &&
-            x.amount < x.itemDefinition.stackSize);
+        int itemStackIndex = FindItemStackIndex(newItem);
 
         if (itemStackIndex != -1)
         {
@@ -626,6 +617,10 @@ public class Inventory : MonoBehaviour
             SetItemAtIndex(removedItem, removedItemIndex);
         }
     }
+
+    private int FindItemStackIndex(ItemWithAmount item) =>
+        itemList.FindIndex(x => x.itemDefinition.name == item.itemDefinition.name &&
+            x.amount < x.itemDefinition.stackSize);
 
     public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
 
