@@ -11,7 +11,6 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject characterNameUI;
     [SerializeField] private TextMeshProUGUI characterNameText;
-    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private float characterScrollWaitSeconds;
 
@@ -116,7 +115,6 @@ public class DialogueBox : MonoBehaviour
     {
         DisplayScrollingText(line);
         dialogueBoxUI.SetActive(true);
-        playerActionDisablingUIManager.ActionDisablingUIOpen = true;
     }
 
     private void DisplayScrollingText(string text)
@@ -155,7 +153,6 @@ public class DialogueBox : MonoBehaviour
         afterDialogueAction?.Invoke();
         dialogueBoxUI.SetActive(false);
         characterNameUI.SetActive(false);
-        playerActionDisablingUIManager.ActionDisablingUIOpen = false;
     }
 
     private void StopDisplayScrollingTextCoroutine()

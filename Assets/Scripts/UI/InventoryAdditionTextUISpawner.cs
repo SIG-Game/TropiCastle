@@ -14,16 +14,20 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
     {
         itemNameToAdditionText = new Dictionary<string, InventoryAdditionTextUIController>();
 
-        playerActionDisablingUIManager.OnActionDisablingUIOpenSet +=
-            PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet;
+        playerActionDisablingUIManager.OnUIOpened +=
+            PlayerActionDisablingUIManager_OnUIOpened;
+        playerActionDisablingUIManager.OnUIClosed +=
+            PlayerActionDisablingUIManager_OnUIClosed;
         targetInventory.OnItemAdded += TargetInventory_OnItemAdded;
         targetInventory.OnItemRemoved += TargetInventory_OnItemRemoved;
     }
 
     private void OnDestroy()
     {
-        playerActionDisablingUIManager.OnActionDisablingUIOpenSet -=
-            PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet;
+        playerActionDisablingUIManager.OnUIOpened -=
+            PlayerActionDisablingUIManager_OnUIOpened;
+        playerActionDisablingUIManager.OnUIClosed -=
+            PlayerActionDisablingUIManager_OnUIClosed;
 
         if (targetInventory != null)
         {
@@ -78,10 +82,14 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
         }
     }
 
-    private void PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet()
+    private void PlayerActionDisablingUIManager_OnUIOpened()
     {
-        inventoryAdditionUICanvasGroup.alpha =
-            playerActionDisablingUIManager.ActionDisablingUIOpen ? 0f : 1f;
+        inventoryAdditionUICanvasGroup.alpha = 0f;
+    }
+
+    private void PlayerActionDisablingUIManager_OnUIClosed()
+    {
+        inventoryAdditionUICanvasGroup.alpha = 1f;
     }
 
     public void OnAdditionTextDestroyed(string itemName)

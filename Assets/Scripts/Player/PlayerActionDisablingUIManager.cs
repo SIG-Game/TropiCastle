@@ -10,11 +10,20 @@ public class PlayerActionDisablingUIManager : MonoBehaviour
         set
         {
             actionDisablingUIOpen = value;
-            OnActionDisablingUIOpenSet();
+
+            if (actionDisablingUIOpen)
+            {
+                OnUIOpened();
+            }
+            else
+            {
+                OnUIClosed();
+            }
         }
     }
 
-    public event Action OnActionDisablingUIOpenSet = delegate { };
+    public event Action OnUIOpened = delegate { };
+    public event Action OnUIClosed = delegate { };
 
     private bool actionDisablingUIOpen;
 

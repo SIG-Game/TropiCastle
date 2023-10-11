@@ -34601,6 +34601,11 @@ PrefabInstance:
       propertyPath: playerActionDisablingUIManager
       value: 
       objectReference: {fileID: 1982112585}
+    - target: {fileID: 4640430961688840060, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1982112585}
     - target: {fileID: 4685527890192855623, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -35766,6 +35771,11 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 1274756994}
+    - target: {fileID: 8226926627079009034, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1982112585}
     - target: {fileID: 8244700022453708597, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory

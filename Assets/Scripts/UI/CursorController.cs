@@ -46,8 +46,8 @@ public class CursorController : MonoBehaviour
         cursorWorldPosition = Vector2.zero;
 
         pauseController.OnGamePausedSet += PauseController_OnGamePausedSet;
-        playerActionDisablingUIManager.OnActionDisablingUIOpenSet +=
-            PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet;
+        playerActionDisablingUIManager.OnUIOpened += HideIfUnpaused;
+        playerActionDisablingUIManager.OnUIClosed += ShowIfUnpaused;
         playerController.OnIsAttackingSet += PlayerController_OnIsAttackingSet;
     }
 
@@ -96,8 +96,8 @@ public class CursorController : MonoBehaviour
     private void OnDestroy()
     {
         pauseController.OnGamePausedSet -= PauseController_OnGamePausedSet;
-        playerActionDisablingUIManager.OnActionDisablingUIOpenSet -=
-            PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet;
+        playerActionDisablingUIManager.OnUIOpened -= HideIfUnpaused;
+        playerActionDisablingUIManager.OnUIClosed -= ShowIfUnpaused;
 
         if (playerController != null)
         {
@@ -163,6 +163,22 @@ public class CursorController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
+    private void HideIfUnpaused()
+    {
+        if (!PauseController.Instance.GamePaused)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void ShowIfUnpaused()
+    {
+        if (!PauseController.Instance.GamePaused)
+        {
+            gameObject.SetActive(true);
+        }
+    }
+
     private void PauseController_OnGamePausedSet()
     {
         if (PauseController.Instance.GamePaused)
@@ -181,16 +197,6 @@ public class CursorController : MonoBehaviour
                 gameObject.SetActive(true);
             }
         }
-    }
-
-    private void PlayerActionDisablingUIManager_OnActionDisablingUIOpenSet()
-    {
-        if (PauseController.Instance.GamePaused)
-        {
-            return;
-        }
-
-        gameObject.SetActive(!playerActionDisablingUIManager.ActionDisablingUIOpen);
     }
 
     private void PlayerController_OnIsAttackingSet(bool isAttacking)

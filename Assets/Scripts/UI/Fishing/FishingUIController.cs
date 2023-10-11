@@ -12,7 +12,6 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private Transform hookTransform;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
-    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Vector2 catchFishXPositionRange;
@@ -135,8 +134,6 @@ public class FishingUIController : MonoBehaviour
             return;
         }
 
-        playerActionDisablingUIManager.ActionDisablingUIOpen = true;
-
         catchFailedAnimationStarted = false;
 
         fishUI.ResetFishUIImage();
@@ -184,8 +181,6 @@ public class FishingUIController : MonoBehaviour
     {
         fishingUI.SetActive(false);
         fishUI.gameObject.SetActive(false);
-
-        playerActionDisablingUIManager.ActionDisablingUIOpen = false;
 
         OnFishingUIClosed();
     }

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7274917953951636100}
+  - component: {fileID: 3255069899163451766}
   m_Layer: 5
   m_Name: Fishing UI
   m_TagString: Untagged
@@ -38,6 +39,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3255069899163451766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24094386154538983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e383f195291eb429282636350af701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
 --- !u!1 &1938744877069393186
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +108,8 @@ MonoBehaviour:
   hookTransform: {fileID: 1938744877893344358}
   playerInventory: {fileID: 0}
   playerItemInWorld: {fileID: 0}
-  playerActionDisablingUIManager: {fileID: 0}
+  inventoryFullUIController: {fileID: 0}
+  inputManager: {fileID: 0}
   catchFishXPositionRange: {x: -50, y: 50}
   logSelectedFish: 0
 --- !u!95 &239831750938302052
