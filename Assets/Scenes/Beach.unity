@@ -33186,6 +33186,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628e3e54b3bd155438635080e73a41bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1816801988 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7863866477224473406, guid: cb76167790ad17b418442606107678be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6847651757298814663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 138d46d0c4ccbc449bee85b52ad15d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1817945031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34131,6 +34143,11 @@ PrefabInstance:
       propertyPath: chestUIController
       value: 
       objectReference: {fileID: 6847651757298814668}
+    - target: {fileID: 1411982649278047939, guid: 0b10992830a0ba7439705a4db0804f24,
+        type: 3}
+      propertyPath: campfireUIController
+      value: 
+      objectReference: {fileID: 1816801988}
     - target: {fileID: 1780375086519093215, guid: 0b10992830a0ba7439705a4db0804f24,
         type: 3}
       propertyPath: playerInventory
@@ -35761,6 +35778,16 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 7863866477224473406, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 7863866477224473406, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: itemSelectionController
+      value: 
+      objectReference: {fileID: 1982112583}
     - target: {fileID: 7976920315976224363, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: playerController
