@@ -2653,12 +2653,112 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1540434473152835797}
     m_Modifications:
+    - target: {fileID: 187591245450603797, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 187591245450603797, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 574209941785849405, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 574209941785849405, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 1022344607319802542, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 1022344607319802542, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 2214888230869262242, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 2214888230869262242, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 2687675049476698890, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 2687675049476698890, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 4949135189780410103, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 4949135189780410103, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
     - target: {fileID: 5380517131048265364, guid: 47c6f843b042ef44097e788531267c88,
         type: 3}
       propertyPath: hoveredItemSlotManager
       value: 
       objectReference: {fileID: 1792519838596709335}
     - target: {fileID: 5380517131048265364, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 6528829843863601764, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 6528829843863601764, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 6866761777663643566, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 6866761777663643566, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 7191287537741528843, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 7191287537741528843, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
+    - target: {fileID: 7323573579312747471, guid: 47c6f843b042ef44097e788531267c88,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 7323573579312747471, guid: 47c6f843b042ef44097e788531267c88,
         type: 3}
       propertyPath: inventoryUIHeldItemController
       value: 

@@ -34493,6 +34493,11 @@ PrefabInstance:
       propertyPath: playerActionDisablingUIManager
       value: 
       objectReference: {fileID: 1982112585}
+    - target: {fileID: 2129335218957857451, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 2216432832818686640, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -34513,6 +34518,11 @@ PrefabInstance:
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 2773298394765778435, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 3166607726821723569, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -34603,6 +34613,16 @@ PrefabInstance:
       propertyPath: itemSelectionController
       value: 
       objectReference: {fileID: 1982112583}
+    - target: {fileID: 3958796214968664847, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 4204695262297681076, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 4365771476343332667, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inputManager
@@ -34618,6 +34638,11 @@ PrefabInstance:
       propertyPath: playerActionDisablingUIManager
       value: 
       objectReference: {fileID: 1982112585}
+    - target: {fileID: 4555498536597172124, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 4640430961688840060, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: manager
@@ -34818,6 +34843,16 @@ PrefabInstance:
       propertyPath: itemSelectionController
       value: 
       objectReference: {fileID: 1982112583}
+    - target: {fileID: 6560887880809316010, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 6729202960050705006, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 6847651756572252548, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -35568,11 +35603,21 @@ PrefabInstance:
       propertyPath: hoveredItemSlotManager
       value: 
       objectReference: {fileID: 6847651757298814664}
+    - target: {fileID: 7087382722007434181, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 7139093755093260092, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: targetHealthController
       value: 
       objectReference: {fileID: 1982112581}
+    - target: {fileID: 7461270902237564431, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 7613643847479905876, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -35823,6 +35868,11 @@ PrefabInstance:
       propertyPath: playerHealthController
       value: 
       objectReference: {fileID: 1982112581}
+    - target: {fileID: 8966311809828269910, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 1982112582}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb76167790ad17b418442606107678be, type: 3}
 --- !u!114 &6847651757298814664 stripped

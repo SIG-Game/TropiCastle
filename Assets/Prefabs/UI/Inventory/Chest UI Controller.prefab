@@ -232,7 +232,7 @@ MonoBehaviour:
   chestInventoryUIController: {fileID: 2446165521011752754}
   playerInventoryUI: {fileID: 0}
   inventoryUIManager: {fileID: 0}
-  playerInventoryUIPosition: {x: 0, y: -15}
+  playerInventoryUIPosition: {x: 0, y: -19.6875}
 --- !u!1 &6696742861595086468
 GameObject:
   m_ObjectHideFlags: 0
