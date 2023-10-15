@@ -72,6 +72,8 @@ public class TradingUIController : MonoBehaviour
                 itemUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
             itemAmountText.text = item.GetAmountText();
+
+            itemUI.GetComponent<TradeItemTooltipController>().Item = item;
         }
     }
 
