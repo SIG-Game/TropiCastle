@@ -7,16 +7,16 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private int inventorySize;
 
-    private List<ItemWithAmount> itemList;
+    private List<ItemStack> itemList;
     private int firstEmptyIndex;
 
-    public event Action<ItemWithAmount, int> OnItemChangedAtIndex = delegate { };
-    public event Action<ItemWithAmount> OnItemAdded = delegate { };
-    public event Action<ItemWithAmount> OnItemRemoved = delegate { };
+    public event Action<ItemStack, int> OnItemChangedAtIndex = delegate { };
+    public event Action<ItemStack> OnItemAdded = delegate { };
+    public event Action<ItemStack> OnItemRemoved = delegate { };
     public event Action OnFailedToAddItemToFullInventory = delegate { };
 
     // Every empty item slot references this instance
-    private static ItemWithAmount emptyItemInstance;
+    private static ItemStack emptyItemInstance;
 
     private void Awake()
     {
@@ -25,7 +25,7 @@ public class Inventory : MonoBehaviour
             ItemScriptableObject emptyItemInfo =
                 ItemScriptableObject.FromName("Empty");
 
-            emptyItemInstance = new ItemWithAmount(emptyItemInfo, 0);
+            emptyItemInstance = new ItemStack(emptyItemInfo, 0);
         }
 
         InitializeItemListWithSize(inventorySize);
@@ -33,7 +33,7 @@ public class Inventory : MonoBehaviour
 
     public void InitializeItemListWithSize(int inventorySize)
     {
-        itemList = new List<ItemWithAmount>(inventorySize);
+        itemList = new List<ItemStack>(inventorySize);
 
         for (int i = 0; i < inventorySize; ++i)
         {
@@ -45,12 +45,12 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemScriptableObject info, int amount)
     {
-        ItemWithAmount newItem = new ItemWithAmount(info, amount);
+        ItemStack newItem = new ItemStack(info, amount);
 
         AddItem(newItem);
     }
 
-    public void AddItem(ItemWithAmount newItem)
+    public void AddItem(ItemStack newItem)
     {
         int itemStackIndex = FindItemStackIndex(newItem);
 
@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour
 
             if (remainingAmount != 0)
             {
-                ItemWithAmount itemWithRemainingAmount =
+                ItemStack itemWithRemainingAmount =
                     newItem.GetCopyWithAmount(remainingAmount);
 
                 AddItem(itemWithRemainingAmount);
@@ -78,7 +78,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItemToFirstStackOrIndex(ItemWithAmount newItem, int index)
+    public void AddItemToFirstStackOrIndex(ItemStack newItem, int index)
     {
         int itemStackIndex = FindItemStackIndex(newItem);
 
@@ -90,7 +90,7 @@ public class Inventory : MonoBehaviour
 
             if (remainingAmount != 0)
             {
-                ItemWithAmount itemWithRemainingAmount =
+                ItemStack itemWithRemainingAmount =
                     newItem.GetCopyWithAmount(remainingAmount);
 
                 AddItemToFirstStackOrIndex(itemWithRemainingAmount, index);
@@ -108,7 +108,7 @@ public class Inventory : MonoBehaviour
 
     public void AddAmountToItemAtIndex(int amount, int index, out int amountAdded)
     {
-        ItemWithAmount item = itemList[index];
+        ItemStack item = itemList[index];
 
         int stackSize = item.itemDefinition.stackSize;
 
@@ -118,7 +118,7 @@ public class Inventory : MonoBehaviour
 
         OnItemChangedAtIndex(item, index);
 
-        ItemWithAmount itemAdded = item.GetCopyWithAmount(amountAdded);
+        ItemStack itemAdded = item.GetCopyWithAmount(amountAdded);
 
         OnItemAdded(itemAdded);
     }
@@ -130,7 +130,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        ItemWithAmount itemAtIndex1BeforeSwap = itemList[index1];
+        ItemStack itemAtIndex1BeforeSwap = itemList[index1];
 
         SetItemAtIndex(itemList[index2], index1);
         SetItemAtIndex(itemAtIndex1BeforeSwap, index2);
@@ -141,7 +141,7 @@ public class Inventory : MonoBehaviour
     public void SwapItemsBetweenInventories(int index, Inventory otherInventory,
         int otherInventoryIndex)
     {
-        ItemWithAmount itemAtIndexBeforeSwap = itemList[index];
+        ItemStack itemAtIndexBeforeSwap = itemList[index];
 
         SetItemAtIndex(otherInventory.GetItemList()[otherInventoryIndex], index);
         otherInventory.SetItemAtIndex(itemAtIndexBeforeSwap, otherInventoryIndex);
@@ -152,7 +152,7 @@ public class Inventory : MonoBehaviour
 
     public void DecrementItemStackAtIndex(int stackIndex)
     {
-        ItemWithAmount itemAtStackIndex = itemList[stackIndex];
+        ItemStack itemAtStackIndex = itemList[stackIndex];
 
         if (itemAtStackIndex.amount == 1)
         {
@@ -168,7 +168,7 @@ public class Inventory : MonoBehaviour
 
     public void IncrementItemStackAtIndex(int stackIndex)
     {
-        ItemWithAmount itemAtStackIndex = itemList[stackIndex];
+        ItemStack itemAtStackIndex = itemList[stackIndex];
 
         itemAtStackIndex.amount += 1;
 
@@ -177,7 +177,7 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItemAtIndex(int index)
     {
-        ItemWithAmount itemAtIndex = itemList[index];
+        ItemStack itemAtIndex = itemList[index];
 
         if (itemAtIndex.itemDefinition.name == "Empty")
         {
@@ -200,9 +200,9 @@ public class Inventory : MonoBehaviour
         firstEmptyIndex = itemList.FindIndex(x => x.itemDefinition.name == "Empty");
     }
 
-    public void AddItemAtIndex(ItemWithAmount newItem, int index)
+    public void AddItemAtIndex(ItemStack newItem, int index)
     {
-        ItemWithAmount itemAtIndex = GetItemAtIndex(index);
+        ItemStack itemAtIndex = GetItemAtIndex(index);
 
         if (itemAtIndex.itemDefinition.name == "Empty")
         {
@@ -217,8 +217,8 @@ public class Inventory : MonoBehaviour
 
             if (remainingAmount != 0)
             {
-                ItemWithAmount itemWithRemainingAmount =
-                    new ItemWithAmount(newItem.itemDefinition,
+                ItemStack itemWithRemainingAmount =
+                    new ItemStack(newItem.itemDefinition,
                         remainingAmount, newItem.instanceProperties);
 
                 AddItem(itemWithRemainingAmount);
@@ -230,10 +230,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItemAtEmptyItemIndex(ItemWithAmount newItem, int index)
+    public void AddItemAtEmptyItemIndex(ItemStack newItem, int index)
     {
         // Prevent newItem from being modified
-        ItemWithAmount newItemCopy = new ItemWithAmount(newItem);
+        ItemStack newItemCopy = new ItemStack(newItem);
 
         if (newItemCopy.instanceProperties == null)
         {
@@ -250,7 +250,7 @@ public class Inventory : MonoBehaviour
         OnItemAdded(newItemCopy);
     }
 
-    public void SetItemAtIndex(ItemWithAmount item, int index)
+    public void SetItemAtIndex(ItemStack item, int index)
     {
         itemList[index] = item;
         OnItemChangedAtIndex(item, index);
@@ -258,7 +258,7 @@ public class Inventory : MonoBehaviour
 
     public void SetItemAmountAtIndex(int amount, int index)
     {
-        ItemWithAmount itemAtIndex = itemList[index];
+        ItemStack itemAtIndex = itemList[index];
 
         if (itemAtIndex.itemDefinition.name == "Empty")
         {
@@ -277,30 +277,30 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void TryAddItem(ItemWithAmount item, out int amountAdded)
+    public void TryAddItem(ItemStack item, out int amountAdded)
     {
-        Action<ItemWithAmount> addItem = (item) => AddItem(item);
+        Action<ItemStack> addItem = (item) => AddItem(item);
 
         TryAddItem(item, addItem, out amountAdded);
     }
 
     public void TryAddItemToFirstStackOrIndex(
-        ItemWithAmount item, int index, out int amountAdded)
+        ItemStack item, int index, out int amountAdded)
     {
-        Action<ItemWithAmount> addItem =
+        Action<ItemStack> addItem =
            (item) => AddItemToFirstStackOrIndex(item, index);
 
         TryAddItem(item, addItem, out amountAdded);
     }
 
-    private void TryAddItem(ItemWithAmount item,
-        Action<ItemWithAmount> addItem, out int amountAdded)
+    private void TryAddItem(ItemStack item,
+        Action<ItemStack> addItem, out int amountAdded)
     {
         if (!CanAddItem(item, out int canAddAmount))
         {
             if (canAddAmount != 0)
             {
-                ItemWithAmount itemToAdd =
+                ItemStack itemToAdd =
                     item.GetCopyWithAmount(canAddAmount);
 
                 addItem(itemToAdd);
@@ -322,7 +322,7 @@ public class Inventory : MonoBehaviour
 
     public void DecrementItemDurabilityAtIndex(int index)
     {
-        ItemWithAmount breakableItem = GetItemAtIndex(index);
+        ItemStack breakableItem = GetItemAtIndex(index);
 
         if (breakableItem.instanceProperties is
             BreakableItemInstanceProperties breakableItemInstanceProperties)
@@ -340,9 +340,9 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool CanAddItem(ItemWithAmount newItem) => CanAddItem(newItem, out _);
+    public bool CanAddItem(ItemStack newItem) => CanAddItem(newItem, out _);
 
-    public bool CanAddItem(ItemWithAmount newItem, out int canAddAmount)
+    public bool CanAddItem(ItemStack newItem, out int canAddAmount)
     {
         if (firstEmptyIndex != -1)
         {
@@ -365,7 +365,7 @@ public class Inventory : MonoBehaviour
                     continue;
                 }
 
-                ItemWithAmount currentItem = itemList[i];
+                ItemStack currentItem = itemList[i];
 
                 if ((currentItem.itemDefinition.name == newItem.itemDefinition.name &&
                     currentItem.amount < currentItem.itemDefinition.stackSize) ||
@@ -383,7 +383,7 @@ public class Inventory : MonoBehaviour
                 return false;
             }
 
-            ItemWithAmount itemAtStackIndex = itemList[stackIndex];
+            ItemStack itemAtStackIndex = itemList[stackIndex];
 
             int amountToReachStackSizeLimit =
                 itemAtStackIndex.itemDefinition.stackSize - itemAtStackIndex.amount;
@@ -406,7 +406,7 @@ public class Inventory : MonoBehaviour
 
     public void ConsolidateItemsToIndex(int targetItemIndex)
     {
-        ItemWithAmount targetItem = itemList[targetItemIndex];
+        ItemStack targetItem = itemList[targetItemIndex];
 
         if (targetItem.itemDefinition.name == "Empty")
         {
@@ -420,7 +420,7 @@ public class Inventory : MonoBehaviour
                 continue;
             }
 
-            ItemWithAmount currentItem = itemList[i];
+            ItemStack currentItem = itemList[i];
 
             if (targetItem.itemDefinition.name == currentItem.itemDefinition.name)
             {
@@ -446,10 +446,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void ReplaceItems(List<ItemWithAmount> inputItems, ItemWithAmount outputItem)
+    public void ReplaceItems(List<ItemStack> inputItems, ItemStack outputItem)
     {
         if (!TryRemoveReplaceInputItems(inputItems,
-            out Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval))
+            out Dictionary<int, ItemStack> itemIndexToItemBeforeRemoval))
         {
             return;
         }
@@ -464,18 +464,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void ReplaceItems(List<ItemWithAmount> inputItems,
-        List<ItemWithAmount> outputItems)
+    public void ReplaceItems(List<ItemStack> inputItems,
+        List<ItemStack> outputItems)
     {
         if (!TryRemoveReplaceInputItems(inputItems,
-            out Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval))
+            out Dictionary<int, ItemStack> itemIndexToItemBeforeRemoval))
         {
             return;
         }
 
         Dictionary<int, int> itemIndexToAddAmount = new Dictionary<int, int>();
 
-        foreach (ItemWithAmount outputItem in outputItems)
+        foreach (ItemStack outputItem in outputItems)
         {
             if (!CanAddReplaceOutputItem(itemIndexToAddAmount, outputItem))
             {
@@ -484,20 +484,20 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        foreach(ItemWithAmount outputItem in outputItems)
+        foreach(ItemStack outputItem in outputItems)
         {
             AddItem(outputItem);
         }
     }
 
-    private bool TryRemoveReplaceInputItems(List<ItemWithAmount> inputItems,
-        out Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval)
+    private bool TryRemoveReplaceInputItems(List<ItemStack> inputItems,
+        out Dictionary<int, ItemStack> itemIndexToItemBeforeRemoval)
     {
         itemIndexToItemBeforeRemoval = null;
 
         Dictionary<int, int> itemIndexToRemoveAmount = new Dictionary<int, int>();
 
-        foreach (ItemWithAmount inputItem in inputItems)
+        foreach (ItemStack inputItem in inputItems)
         {
             if (!HasReplacementInputItem(itemIndexToRemoveAmount, inputItem))
             {
@@ -505,19 +505,19 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        itemIndexToItemBeforeRemoval = new Dictionary<int, ItemWithAmount>();
+        itemIndexToItemBeforeRemoval = new Dictionary<int, ItemStack>();
 
         foreach (var itemIndexAndRemoveAmount in itemIndexToRemoveAmount)
         {
             int itemToRemoveIndex = itemIndexAndRemoveAmount.Key;
             int itemAmountToRemove = itemIndexAndRemoveAmount.Value;
 
-            ItemWithAmount itemToRemove = itemList[itemToRemoveIndex];
+            ItemStack itemToRemove = itemList[itemToRemoveIndex];
 
             if (!itemIndexToItemBeforeRemoval.ContainsKey(itemToRemoveIndex))
             {
                 itemIndexToItemBeforeRemoval.Add(itemToRemoveIndex,
-                    new ItemWithAmount(itemToRemove));
+                    new ItemStack(itemToRemove));
             }
 
             int newItemAmount = itemToRemove.amount - itemAmountToRemove;
@@ -528,13 +528,13 @@ public class Inventory : MonoBehaviour
     }
 
     public bool HasReplacementInputItem(
-        Dictionary<int, int> itemIndexToExcludeAmount, ItemWithAmount inputItem)
+        Dictionary<int, int> itemIndexToExcludeAmount, ItemStack inputItem)
     {
         int amountExcluded = 0;
 
         for (int i = 0; i < itemList.Count; ++i)
         {
-            ItemWithAmount currentItem = itemList[i];
+            ItemStack currentItem = itemList[i];
 
             if (currentItem.itemDefinition.name == inputItem.itemDefinition.name)
             {
@@ -566,13 +566,13 @@ public class Inventory : MonoBehaviour
     }
 
     public bool CanAddReplaceOutputItem(
-        Dictionary<int, int> itemIndexToAddAmount, ItemWithAmount outputItem)
+        Dictionary<int, int> itemIndexToAddAmount, ItemStack outputItem)
     {
         int amountToAdd = outputItem.amount;
 
         for (int i = 0; i < itemList.Count; ++i)
         {
-            ItemWithAmount currentItem = itemList[i];
+            ItemStack currentItem = itemList[i];
 
             if ((currentItem.itemDefinition.name == outputItem.itemDefinition.name &&
                 currentItem.amount < currentItem.itemDefinition.stackSize) ||
@@ -607,24 +607,24 @@ public class Inventory : MonoBehaviour
     }
 
     private void RevertItemRemoval(
-        Dictionary<int, ItemWithAmount> itemIndexToItemBeforeRemoval)
+        Dictionary<int, ItemStack> itemIndexToItemBeforeRemoval)
     {
         foreach (var itemIndexAndItemRemoved in itemIndexToItemBeforeRemoval)
         {
             int removedItemIndex = itemIndexAndItemRemoved.Key;
-            ItemWithAmount removedItem = itemIndexAndItemRemoved.Value;
+            ItemStack removedItem = itemIndexAndItemRemoved.Value;
 
             SetItemAtIndex(removedItem, removedItemIndex);
         }
     }
 
-    private int FindItemStackIndex(ItemWithAmount item) =>
+    private int FindItemStackIndex(ItemStack item) =>
         itemList.FindIndex(x => x.itemDefinition.name == item.itemDefinition.name &&
             x.amount < x.itemDefinition.stackSize);
 
-    public ItemWithAmount GetItemAtIndex(int index) => itemList[index];
+    public ItemStack GetItemAtIndex(int index) => itemList[index];
 
-    public List<ItemWithAmount> GetItemList() => itemList;
+    public List<ItemStack> GetItemList() => itemList;
 
     public bool HasNoEmptySlots() => firstEmptyIndex == -1;
 
@@ -651,7 +651,7 @@ public class Inventory : MonoBehaviour
             ItemScriptableObject itemScriptableObject =
                 ItemScriptableObject.FromName(serializableInventoryItem.ItemName);
 
-            ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
+            ItemStack item = new ItemStack(itemScriptableObject,
                 serializableInventoryItem.Amount,
                 serializableInventoryItem.InstanceProperties);
 
@@ -688,7 +688,7 @@ public class Inventory : MonoBehaviour
             InstanceProperties = serializableInventoryItem.InstanceProperties?.DeepCopy();
         }
 
-        public SerializableInventoryItem(ItemWithAmount item)
+        public SerializableInventoryItem(ItemStack item)
         {
             // Use ScriptableObject name and not item display name
             ItemName = ((ScriptableObject)item.itemDefinition).name;
@@ -702,12 +702,12 @@ public class Inventory : MonoBehaviour
         ItemScriptableObject coconutItemInfo =
             ItemScriptableObject.FromName("Coconut");
 
-        ItemWithAmount coconutItemWithMaxAmount = new ItemWithAmount(coconutItemInfo,
+        ItemStack coconutItemWithMaxAmount = new ItemStack(coconutItemInfo,
             coconutItemInfo.stackSize);
 
         for (int i = 0; i < itemList.Count; ++i)
         {
-            ItemWithAmount currentItem = itemList[i];
+            ItemStack currentItem = itemList[i];
 
             if (currentItem.itemDefinition.name == "Coconut")
             {

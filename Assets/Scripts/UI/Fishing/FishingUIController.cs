@@ -23,7 +23,7 @@ public class FishingUIController : MonoBehaviour
 
     private Animator animator;
     private FishItemScriptableObject selectedFish;
-    private ItemWithAmount selectedFishItem;
+    private ItemStack selectedFishItem;
     private List<float> fishProbabilityWeights;
     private float fishProbabilityWeightSum;
     private bool catchFailedAnimationStarted;
@@ -169,7 +169,7 @@ public class FishingUIController : MonoBehaviour
         fishUI.Speed = selectedFish.speed;
         fishUI.SetColor(selectedFish.fishUIColor);
 
-        selectedFishItem = new ItemWithAmount(selectedFish, 1);
+        selectedFishItem = new ItemStack(selectedFish, 1);
 
         if (logSelectedFish)
         {

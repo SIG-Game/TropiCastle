@@ -1,4 +1,4 @@
 public interface IItemUsage
 {
-    public void UseItem(ItemWithAmount item, int itemIndex);
+    public void UseItem(ItemStack item, int itemIndex);
 }

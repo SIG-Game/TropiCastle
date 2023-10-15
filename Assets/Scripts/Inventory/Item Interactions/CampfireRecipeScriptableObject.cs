@@ -4,6 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Object/Recipe/Campfire Recipe")]
 public class CampfireRecipeScriptableObject : ScriptableObject
 {
-    public List<ItemWithAmount> PossibleInputItems;
-    public ItemWithAmount ResultItem;
+    public List<ItemStack> PossibleInputItems;
+    public ItemStack ResultItem;
 }

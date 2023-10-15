@@ -29,7 +29,7 @@ public class ChestItemInteractable : ItemInteractable
         chestInventory.OnItemChangedAtIndex -= ChestInventory_OnItemChangedAtIndex;
     }
 
-    private void ChestInventory_OnItemChangedAtIndex(ItemWithAmount _, int _1)
+    private void ChestInventory_OnItemChangedAtIndex(ItemStack _, int _1)
     {
         chestItemInstanceProperties.UpdateSerializableInventory(chestInventory);
     }

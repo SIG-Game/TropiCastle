@@ -15,7 +15,7 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
         notPlayerLayerMask = ~LayerMask.GetMask("Player");
     }
 
-    public void UseItem(ItemWithAmount item, int itemIndex)
+    public void UseItem(ItemStack item, int itemIndex)
     {
         Vector3 thrownItemStartPosition =
             playerController.transform.position + new Vector3(0f, 0.3f, 0f);
@@ -36,7 +36,7 @@ public class ThrowableItemUsage : MonoBehaviour, IItemUsage
             return;
         }
 
-        ItemWithAmount itemToThrow = new ItemWithAmount(item);
+        ItemStack itemToThrow = new ItemStack(item);
         itemToThrow.amount = 1;
 
         ItemWorld thrownItemWorld =

@@ -5,7 +5,7 @@ public class ItemDurabilityMeterController : MonoBehaviour
     [SerializeField] private GameObject durabilityMeterBackground;
     [SerializeField] private RectTransform durabilityMeterFill;
 
-    public void UpdateUsingItem(ItemWithAmount item)
+    public void UpdateUsingItem(ItemStack item)
     {
         if (item.TryGetDurabilityProperties(out int durability, out int initialDurability))
         {

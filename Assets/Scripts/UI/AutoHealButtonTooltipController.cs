@@ -19,7 +19,7 @@ public class AutoHealButtonTooltipController : MonoBehaviour, IElementWithToolti
 
         int healthFromItemsToConsume = 0;
 
-        List<ItemWithAmount> playerInventoryItemList = playerInventory.GetItemList();
+        List<ItemStack> playerInventoryItemList = playerInventory.GetItemList();
 
         for (int i = 0; i < playerInventoryItemList.Count; ++i)
         {

@@ -6,7 +6,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
     [SerializeField] private HealthController playerHealthController;
     [SerializeField] private Inventory playerInventory;
 
-    public void UseItem(ItemWithAmount item, int itemIndex)
+    public void UseItem(ItemStack item, int itemIndex)
     {
         if (!playerHealthController.AtMaxHealth())
         {
@@ -25,7 +25,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
 
         if (healingItemIndex != -1)
         {
-            ItemWithAmount healingItem = playerInventory.GetItemAtIndex(healingItemIndex);
+            ItemStack healingItem = playerInventory.GetItemAtIndex(healingItemIndex);
 
             UseItem(healingItem, healingItemIndex);
         }
@@ -33,7 +33,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
 
     public void UseHealingItemsUntilMaxHealthReached()
     {
-        List<ItemWithAmount> playerInventoryItemList = playerInventory.GetItemList();
+        List<ItemStack> playerInventoryItemList = playerInventory.GetItemList();
 
         for (int i = 0; i < playerInventoryItemList.Count; ++i)
         {
@@ -52,7 +52,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
     private void UseHealingItemStackAtIndex(int healingItemStackIndex,
         out bool maxHealthReached)
     {
-        ItemWithAmount healingItem =
+        ItemStack healingItem =
             playerInventory.GetItemAtIndex(healingItemStackIndex);
 
         int initialHealingItemAmount = healingItem.amount;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ItemWorld : MonoBehaviour
 {
-    [SerializeField] private ItemWithAmount item;
+    [SerializeField] private ItemStack item;
     [SerializeField] private TMP_Text amountText;
     [SerializeField] private bool logOnInteract;
 
@@ -24,7 +24,7 @@ public class ItemWorld : MonoBehaviour
         spawnable = GetComponent<Spawnable>();
     }
 
-    public void SetUpItemWorld(ItemWithAmount item,
+    public void SetUpItemWorld(ItemStack item,
         ItemInteractableDependencies itemInteractableDependencies)
     {
         SetItemInteractableDependencies(itemInteractableDependencies);
@@ -44,7 +44,7 @@ public class ItemWorld : MonoBehaviour
         this.itemInteractableDependencies = itemInteractableDependencies;
     }
 
-    public void SetItem(ItemWithAmount item)
+    public void SetItem(ItemStack item)
     {
         this.item = item;
 
@@ -71,5 +71,5 @@ public class ItemWorld : MonoBehaviour
         amountText.text = item.GetAmountText();
     }
 
-    public ItemWithAmount GetItem() => item;
+    public ItemStack GetItem() => item;
 }

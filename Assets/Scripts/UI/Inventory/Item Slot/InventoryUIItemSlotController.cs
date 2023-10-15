@@ -53,7 +53,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
 
     private string GetSlotItemTooltipText()
     {
-        ItemWithAmount slotItem = inventory.GetItemAtIndex(slotItemIndex);
+        ItemStack slotItem = inventory.GetItemAtIndex(slotItemIndex);
 
         return slotItem.GetTooltipText();
     }

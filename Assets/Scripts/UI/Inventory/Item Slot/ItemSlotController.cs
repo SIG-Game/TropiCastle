@@ -12,7 +12,7 @@ public class ItemSlotController : MonoBehaviour
     [SerializeField] private Color highlightedBackgroundColor;
     [SerializeField] private Color unhighlightedBackgroundColor;
 
-    public void UpdateUsingItem(ItemWithAmount item)
+    public void UpdateUsingItem(ItemStack item)
     {
         itemSlotImage.sprite = item.itemDefinition.sprite;
         amountText.text = item.GetAmountText();

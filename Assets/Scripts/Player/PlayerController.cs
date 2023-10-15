@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
             !playerActionDisablingUIManager.ActionDisablingUIOpen &&
             TryGetFishingRodItemIndex(out int fishingRodItemIndex))
         {
-            ItemWithAmount fishingRodItem = inventory.GetItemList()[fishingRodItemIndex];
+            ItemStack fishingRodItem = inventory.GetItemList()[fishingRodItemIndex];
 
             fishingRodItemUsage.UseItem(fishingRodItem, fishingRodItemIndex);
         }
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
         float horizontalBoxCastDistance, float verticalBoxCastDistance) =>
         InteractionCast(waterMask, horizontalBoxCastDistance, verticalBoxCastDistance);
 
-    private void UseItem(ItemWithAmount item, int itemIndex)
+    private void UseItem(ItemStack item, int itemIndex)
     {
         if (TryGetItemUsage(item, out IItemUsage itemUsage))
         {
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool TryGetItemUsage(ItemWithAmount item, out IItemUsage itemUsage) =>
+    private bool TryGetItemUsage(ItemStack item, out IItemUsage itemUsage) =>
         itemNameToUsage.TryGetValue(item.itemDefinition.name, out itemUsage) ||
         itemScriptableObjectTypeToUsage.TryGetValue(item.itemDefinition.GetType(), out itemUsage);
 
@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
 
     public int GetSelectedItemIndex() => itemSelectionController.SelectedItemIndex;
 
-    public ItemWithAmount GetSelectedItem() => inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
+    public ItemStack GetSelectedItem() => inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
 
     public Inventory GetInventory() => inventory;
 }

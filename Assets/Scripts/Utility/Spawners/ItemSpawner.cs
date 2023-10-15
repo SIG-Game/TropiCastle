@@ -2,7 +2,7 @@
 
 public class ItemSpawner : PrefabSpawner
 {
-    [SerializeField] private ItemWithAmount itemToSpawn;
+    [SerializeField] private ItemStack itemToSpawn;
     [SerializeField] private ItemInteractableDependencies itemInteractableDependencies;
 
     protected override void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)

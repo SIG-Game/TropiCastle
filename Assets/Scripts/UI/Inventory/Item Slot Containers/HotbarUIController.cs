@@ -23,7 +23,7 @@ public class HotbarUIController : InventoryUIWithSelectionController
         inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
     }
 
-    protected override void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
+    protected override void Inventory_OnItemChangedAtIndex(ItemStack item, int index)
     {
         if (index < hotbarSize && !inventoryUIManager.InventoryUIOpen)
         {
@@ -57,7 +57,7 @@ public class HotbarUIController : InventoryUIWithSelectionController
     {
         for (int i = 0; i < hotbarSize; ++i)
         {
-            ItemWithAmount currentItem = inventory.GetItemAtIndex(i);
+            ItemStack currentItem = inventory.GetItemAtIndex(i);
 
             UpdateSlotAtIndexUsingItem(i, currentItem);
         }

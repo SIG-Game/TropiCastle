@@ -28,12 +28,12 @@ public class InventoryUIController : MonoBehaviour
         }
     }
 
-    protected virtual void Inventory_OnItemChangedAtIndex(ItemWithAmount item, int index)
+    protected virtual void Inventory_OnItemChangedAtIndex(ItemStack item, int index)
     {
         UpdateSlotAtIndexUsingItem(index, item);
     }
 
-    protected void UpdateSlotAtIndexUsingItem(int slotIndex, ItemWithAmount item)
+    protected void UpdateSlotAtIndexUsingItem(int slotIndex, ItemStack item)
     {
         itemSlotControllers[slotIndex].UpdateUsingItem(item);
     }
@@ -42,13 +42,13 @@ public class InventoryUIController : MonoBehaviour
     {
         this.inventory = inventory;
 
-        List<ItemWithAmount> itemList = inventory.GetItemList();
+        List<ItemStack> itemList = inventory.GetItemList();
 
         for (int i = 0; i < itemSlotControllers.Count; ++i)
         {
             InventoryUIItemSlotController itemSlotController =
                 itemSlotControllers[i] as InventoryUIItemSlotController;
-            ItemWithAmount item = itemList[i];
+            ItemStack item = itemList[i];
 
             itemSlotController.SetInventory(inventory);
             itemSlotController.UpdateUsingItem(item);

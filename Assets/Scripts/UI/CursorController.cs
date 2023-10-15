@@ -105,7 +105,7 @@ public class CursorController : MonoBehaviour
         }
     }
 
-    public void UpdateUsingItem(ItemWithAmount item)
+    public void UpdateUsingItem(ItemStack item)
     {
         Sprite = item.itemDefinition.sprite;
         amountText.text = item.GetAmountText();

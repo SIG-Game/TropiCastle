@@ -39,7 +39,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
     }
 #endif
 
-    public ItemWorld SpawnItemWorld(Vector3 position, ItemWithAmount itemToSpawn)
+    public ItemWorld SpawnItemWorld(Vector3 position, ItemStack itemToSpawn)
     {
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity, itemWorldParent);
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
@@ -49,7 +49,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         return spawnedItemWorld;
     }
 
-    public void DropItem(Vector3 dropPosition, ItemWithAmount itemToDrop)
+    public void DropItem(Vector3 dropPosition, ItemStack itemToDrop)
     {
         if (itemToDrop.itemDefinition.name == "Empty")
             return;

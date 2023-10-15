@@ -5,15 +5,15 @@ public class BucketItemUsage : MonoBehaviour, IItemUsage
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Inventory playerInventory;
 
-    private ItemWithAmount bucketOfWaterItem;
+    private ItemStack bucketOfWaterItem;
 
     private void Awake()
     {
-        bucketOfWaterItem = new ItemWithAmount(
+        bucketOfWaterItem = new ItemStack(
             ItemScriptableObject.FromName("BucketOfWater"), 1);
     }
 
-    public void UseItem(ItemWithAmount _, int itemIndex)
+    public void UseItem(ItemStack _, int itemIndex)
     {
         if (playerController.WaterInteractionCast(0.25f, 0.2f).collider != null)
         {

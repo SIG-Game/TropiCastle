@@ -61,7 +61,7 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
 
         Dictionary<int, int> itemIndexToUsedAmount = new Dictionary<int, int>();
 
-        foreach (ItemWithAmount ingredient in craftingRecipe.ingredients)
+        foreach (ItemStack ingredient in craftingRecipe.ingredients)
         {
             bool playerHasIngredient = playerInventory
                 .HasReplacementInputItem(itemIndexToUsedAmount, ingredient);

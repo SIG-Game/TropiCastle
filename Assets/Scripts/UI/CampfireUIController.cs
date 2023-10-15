@@ -52,11 +52,11 @@ public class CampfireUIController : MonoBehaviour
 
     public void CookSelectedItemButton_OnClick()
     {
-        ItemWithAmount selectedItem = playerInventory.GetItemAtIndex(
+        ItemStack selectedItem = playerInventory.GetItemAtIndex(
             itemSelectionController.SelectedItemIndex);
 
         CampfireRecipeScriptableObject selectedItemCampfireRecipe = null;
-        ItemWithAmount recipeInputItem = null;
+        ItemStack recipeInputItem = null;
 
         foreach (var campfireRecipe in campfireRecipes)
         {
@@ -77,7 +77,7 @@ public class CampfireUIController : MonoBehaviour
         }
 
         playerInventory.ReplaceItems(
-            new List<ItemWithAmount> { recipeInputItem },
+            new List<ItemStack> { recipeInputItem },
             selectedItemCampfireRecipe.ResultItem);
     }
 

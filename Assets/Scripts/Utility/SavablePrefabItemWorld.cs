@@ -30,7 +30,7 @@ public class SavablePrefabItemWorld : SavablePrefab
         ItemScriptableObject itemScriptableObject =
             ItemScriptableObject.FromName(itemWorldState.Item.ItemName);
 
-        ItemWithAmount item = new ItemWithAmount(itemScriptableObject,
+        ItemStack item = new ItemStack(itemScriptableObject,
             itemWorldState.Item.Amount,
             itemWorldState.Item.InstanceProperties);
 

@@ -1,6 +1,6 @@
 public class CharacterItemInWorldController : CharacterObjectInWorldController
 {
-    public void ShowItem(ItemWithAmount item)
+    public void ShowItem(ItemStack item)
     {
         Show(item.itemDefinition.sprite);
     }

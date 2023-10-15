@@ -23,7 +23,7 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
         }
     }
 
-    public void UseItem(ItemWithAmount item, int _)
+    public void UseItem(ItemStack item, int _)
     {
         AttackWithWeapon((WeaponItemScriptableObject)item.itemDefinition);
     }
@@ -53,7 +53,7 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
     {
         strongestWeaponInInventory = null;
 
-        foreach (ItemWithAmount item in playerInventory.GetItemList())
+        foreach (ItemStack item in playerInventory.GetItemList())
         {
             if (item.itemDefinition is not WeaponItemScriptableObject)
             {
@@ -70,7 +70,7 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
         }
     }
 
-    private void PlayerInventory_OnItemChangedAtIndex(ItemWithAmount _, int _1)
+    private void PlayerInventory_OnItemChangedAtIndex(ItemStack _, int _1)
     {
         UpdateStrongestWeaponInInventory();
     }

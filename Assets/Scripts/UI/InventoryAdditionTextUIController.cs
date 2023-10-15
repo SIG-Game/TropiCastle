@@ -51,7 +51,7 @@ public class InventoryAdditionTextUIController : MonoBehaviour
         canvasGroupAlphaInterpolator.TargetAlpha = 0f;
     }
 
-    public void UpdateWithItem(ItemWithAmount item)
+    public void UpdateWithItem(ItemStack item)
     {
         itemName = item.itemDefinition.name;
         itemAmount = item.amount;

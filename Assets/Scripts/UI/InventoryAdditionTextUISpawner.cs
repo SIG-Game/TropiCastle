@@ -36,7 +36,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
         }
     }
 
-    private void TargetInventory_OnItemAdded(ItemWithAmount item)
+    private void TargetInventory_OnItemAdded(ItemStack item)
     {
         if (PauseController.Instance.GamePaused)
         {
@@ -68,7 +68,7 @@ public class InventoryAdditionTextUISpawner : MonoBehaviour
         }
     }
 
-    private void TargetInventory_OnItemRemoved(ItemWithAmount item)
+    private void TargetInventory_OnItemRemoved(ItemStack item)
     {
         if (PauseController.Instance.GamePaused)
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 [Serializable]
-public class ItemWithAmount
+public class ItemStack
 {
     public ItemScriptableObject itemDefinition;
     public int amount;
@@ -14,7 +14,7 @@ public class ItemWithAmount
         { "Chest", typeof(ChestItemInstanceProperties) }
     };
 
-    public ItemWithAmount(ItemScriptableObject itemDefinition, int amount,
+    public ItemStack(ItemScriptableObject itemDefinition, int amount,
         ItemInstanceProperties instanceProperties = null)
     {
         this.itemDefinition = itemDefinition;
@@ -22,7 +22,7 @@ public class ItemWithAmount
         this.instanceProperties = instanceProperties;
     }
 
-    public ItemWithAmount(ItemWithAmount item)
+    public ItemStack(ItemStack item)
     {
         itemDefinition = item.itemDefinition;
         amount = item.amount;
@@ -75,8 +75,8 @@ public class ItemWithAmount
         }
     }
 
-    public ItemWithAmount GetCopyWithAmount(int amount) =>
-        new ItemWithAmount(itemDefinition, amount, instanceProperties);
+    public ItemStack GetCopyWithAmount(int amount) =>
+        new ItemStack(itemDefinition, amount, instanceProperties);
 
     public string GetAmountText() => amount > 1 ? amount.ToString() : string.Empty;
 }

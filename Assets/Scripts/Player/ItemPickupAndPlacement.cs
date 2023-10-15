@@ -78,7 +78,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void AttemptToPickUpHoveredItem()
     {
-        ItemWithAmount hoveredItem = HoveredItemWorld.GetItem();
+        ItemStack hoveredItem = HoveredItemWorld.GetItem();
 
         playerInventory.TryAddItemToFirstStackOrIndex(
             hoveredItem, player.GetSelectedItemIndex(), out int amountAdded);
@@ -97,7 +97,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PlaceSelectedItemAtCursorPosition()
     {
-        ItemWithAmount itemToPlace = player.GetSelectedItem();
+        ItemStack itemToPlace = player.GetSelectedItem();
         int itemToPlaceIndex = player.GetSelectedItemIndex();
 
         if (itemToPlace.itemDefinition.name != "Empty")
@@ -134,7 +134,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePlacementCursorAndPlayerItem()
     {
-        ItemWithAmount selectedItem = player.GetSelectedItem();
+        ItemStack selectedItem = player.GetSelectedItem();
 
         Color cursorBackgroundColor = CanPlaceItemAtCursorPosition ?
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor;
