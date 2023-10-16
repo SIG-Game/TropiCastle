@@ -28,6 +28,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8415636007822136750}
   - {fileID: 8000109074376044411}
   m_Father: {fileID: 7390056261779678053}
   m_RootOrder: 0
@@ -35,6 +36,43 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1677478146008848249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8415636007822136750}
+  m_Layer: 5
+  m_Name: Campfire Item Slot Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8415636007822136750
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677478146008848249}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4044263567241595187}
+  m_Father: {fileID: 4992776021431480352}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -110, y: 84.375}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1677894169258447991
@@ -47,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7390056261779678053}
   - component: {fileID: 586275701106944370}
+  - component: {fileID: 2093669872953180739}
   m_Layer: 5
   m_Name: Campfire UI Controller
   m_TagString: Untagged
@@ -91,13 +130,29 @@ MonoBehaviour:
   - {fileID: 1252840876479137081}
   - {fileID: 0}
   - {fileID: 0}
-  cookSelectedItemButton: {fileID: 8214702180446544188}
+  campfireInventoryUIController: {fileID: 2093669872953180739}
+  cookItemButton: {fileID: 8214702180446544188}
   playerInventory: {fileID: 0}
   itemSelectionController: {fileID: 0}
   inventoryUIManager: {fileID: 0}
   inventoryUIHeldItemController: {fileID: 0}
   playerInventoryUI: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: -17.8125}
+--- !u!114 &2093669872953180739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677894169258447991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d2324658b3ea894589c718b1b1aa578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  itemSlotControllers:
+  - {fileID: 4459656806542347087}
 --- !u!1 &3057728497288971310
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +219,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cook Selected Item
+  m_text: Cook Item
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -246,7 +301,7 @@ GameObject:
   - component: {fileID: 3456068063194431699}
   - component: {fileID: 8214702180446544188}
   m_Layer: 5
-  m_Name: Cook Selected Item Button
+  m_Name: Cook Item Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,12 +321,12 @@ RectTransform:
   m_Children:
   - {fileID: 8832434782023372218}
   m_Father: {fileID: 4992776021431480352}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 81.875}
-  m_SizeDelta: {x: 260, y: 30}
+  m_AnchoredPosition: {x: 25, y: 94.375}
+  m_SizeDelta: {x: 150, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8349820497698275494
 CanvasRenderer:
@@ -357,7 +412,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 586275701106944370}
         m_TargetAssemblyTypeName: CampfireUIController, Assembly-CSharp
-        m_MethodName: CookSelectedItemButton_OnClick
+        m_MethodName: CookItemButton_OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -367,3 +422,149 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1001 &4459656807640032924
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8415636007822136750}
+    m_Modifications:
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: heldItemController
+      value: 
+      objectReference: {fileID: 8774762380487729183, guid: aed0fde4b0ab92c40899e678ccf7f384,
+        type: 3}
+    - target: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+      propertyPath: inventoryUIItemSlotContainer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550700, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_Name
+      value: Item Slot Inventory UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6f46d6efc94f1c84aae64181026de762, type: 3}
+--- !u!224 &4044263567241595187 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 415455371410550703, guid: 6f46d6efc94f1c84aae64181026de762,
+    type: 3}
+  m_PrefabInstance: {fileID: 4459656807640032924}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4459656806542347087 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1100312019, guid: 6f46d6efc94f1c84aae64181026de762,
+    type: 3}
+  m_PrefabInstance: {fileID: 4459656807640032924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c297006eba5c7fb4db352893d7d13798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

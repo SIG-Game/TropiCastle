@@ -5188,6 +5188,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Campfire UI Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 4459656806542347087, guid: 0a7a619505812d74da8d745c0a53bf28,
+        type: 3}
+      propertyPath: hoveredItemSlotManager
+      value: 
+      objectReference: {fileID: 1792519838596709335}
+    - target: {fileID: 4459656806542347087, guid: 0a7a619505812d74da8d745c0a53bf28,
+        type: 3}
+      propertyPath: inventoryUIHeldItemController
+      value: 
+      objectReference: {fileID: 2594139973274944938}
     - target: {fileID: 7390056261779678053, guid: 0a7a619505812d74da8d745c0a53bf28,
         type: 3}
       propertyPath: m_Pivot.x

@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class CampfireUIController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> campfireUIGameObjects;
-    [SerializeField] private Button cookSelectedItemButton;
+    [SerializeField] private InventoryUIController campfireInventoryUIController;
+    [SerializeField] private Button cookItemButton;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private InventoryUIManager inventoryUIManager;
@@ -16,6 +17,7 @@ public class CampfireUIController : MonoBehaviour
     [SerializeField] private Vector2 playerInventoryUIPosition;
 
     private IList<CampfireRecipeScriptableObject> campfireRecipes;
+    private Inventory campfireInventory;
 
     private void Awake()
     {
@@ -50,44 +52,53 @@ public class CampfireUIController : MonoBehaviour
         inventoryUIManager.EnableCurrentInventoryUI();
     }
 
-    public void CookSelectedItemButton_OnClick()
+    public void SetInventory(Inventory campfireInventory)
     {
-        ItemStack selectedItem = playerInventory.GetItemAtIndex(
-            itemSelectionController.SelectedItemIndex);
+        this.campfireInventory = campfireInventory;
 
-        CampfireRecipeScriptableObject selectedItemCampfireRecipe = null;
+        campfireInventoryUIController.SetInventory(campfireInventory);
+    }
+
+    public void CookItemButton_OnClick()
+    {
+        ItemStack inputItem = campfireInventory.GetItemAtIndex(0);
+
+        CampfireRecipeScriptableObject inputItemCampfireRecipe = null;
         ItemStack recipeInputItem = null;
 
         foreach (var campfireRecipe in campfireRecipes)
         {
             recipeInputItem = campfireRecipe.PossibleInputItems.FirstOrDefault(
-                x => x.itemDefinition.name == selectedItem.itemDefinition.name);
+                x => x.itemDefinition.name == inputItem.itemDefinition.name &&
+                x.amount <= inputItem.amount);
 
             if (recipeInputItem != null)
             {
-                selectedItemCampfireRecipe = campfireRecipe;
+                inputItemCampfireRecipe = campfireRecipe;
 
                 break;
             }
         }
 
-        if (selectedItemCampfireRecipe == null)
+        if (inputItemCampfireRecipe == null ||
+            !playerInventory.CanAddItem(inputItemCampfireRecipe.ResultItem))
         {
             return;
         }
 
-        playerInventory.ReplaceItems(
-            new List<ItemStack> { recipeInputItem },
-            selectedItemCampfireRecipe.ResultItem);
+        campfireInventory.SetItemAmountAtIndex(
+            inputItem.amount - recipeInputItem.amount, 0);
+
+        playerInventory.AddItem(inputItemCampfireRecipe.ResultItem);
     }
 
     private void InventoryUIHeldItemController_OnItemHeld()
     {
-        cookSelectedItemButton.interactable = false;
+        cookItemButton.interactable = false;
     }
 
     private void InventoryUIHeldItemController_OnHidden()
     {
-        cookSelectedItemButton.interactable = true;
+        cookItemButton.interactable = true;
     }
 }

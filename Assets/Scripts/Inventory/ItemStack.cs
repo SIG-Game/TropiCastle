@@ -11,6 +11,7 @@ public class ItemStack
     private static readonly Dictionary<string, Type> itemNameToInstancePropertiesType =
         new Dictionary<string, Type>
     {
+        { "Campfire", typeof(CampfireItemInstanceProperties) },
         { "Chest", typeof(ChestItemInstanceProperties) }
     };
 
