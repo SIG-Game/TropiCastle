@@ -97,7 +97,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PlaceSelectedItemAtCursorPosition()
     {
-        ItemStack itemToPlace = player.GetSelectedItem();
+        ItemStack selectedItem = player.GetSelectedItem();
+
+        ItemStack itemToPlace = selectedItem.itemDefinition.oneAtATimePlacement ?
+            selectedItem.GetCopyWithAmount(1) : selectedItem;
+
         int itemToPlaceIndex = player.GetSelectedItemIndex();
 
         if (itemToPlace.itemDefinition.name != "Empty")
@@ -117,7 +121,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
             _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(
                 itemPlacementPosition, itemToPlace);
 
-            playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
+            if (selectedItem.itemDefinition.oneAtATimePlacement)
+            {
+                playerInventory.DecrementItemStackAtIndex(itemToPlaceIndex);
+            }
+            else
+            {
+                playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
+            }
         }
     }
 
@@ -150,17 +161,20 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         ItemStack selectedItem = player.GetSelectedItem();
 
+        ItemStack placementItem = selectedItem.itemDefinition.oneAtATimePlacement ?
+            selectedItem.GetCopyWithAmount(1) : selectedItem;
+
         Color cursorBackgroundColor = CanPlaceItemAtCursorPosition ?
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor;
 
         Vector2 selectedItemColliderSize =
             ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItem.itemDefinition);
 
-        cursorController.UpdateUsingItem(selectedItem);
+        cursorController.UpdateUsingItem(placementItem);
         cursorController.UpdateCursorBackground(cursorBackgroundColor,
             selectedItemColliderSize);
 
-        playerItemInWorld.ShowItem(selectedItem);
+        playerItemInWorld.ShowItem(placementItem);
     }
 
     private void UpdateHoveredItemWorld()

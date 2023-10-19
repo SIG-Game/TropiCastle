@@ -8,6 +8,7 @@ public class ItemScriptableObject : ScriptableObject
     public Sprite sprite;
     public int stackSize = defaultStackSize;
     public bool lockPlacementToGrid;
+    public bool oneAtATimePlacement;
     public bool hasCustomColliderSize;
     public Vector2 customColliderSize;
 
