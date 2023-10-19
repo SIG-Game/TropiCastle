@@ -102,7 +102,21 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         if (itemToPlace.itemDefinition.name != "Empty")
         {
-            _ =ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(cursorPoint, itemToPlace);
+            Vector2 itemPlacementPosition;
+
+            if (itemToPlace.itemDefinition.lockPlacementToGrid)
+            {
+                itemPlacementPosition = new Vector2(
+                    RoundToGrid(cursorPoint.x), RoundToGrid(cursorPoint.y));
+            }
+            else
+            {
+                itemPlacementPosition = cursorPoint;
+            }
+
+            _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(
+                itemPlacementPosition, itemToPlace);
+
             playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
         }
     }
@@ -174,8 +188,20 @@ public class ItemPickupAndPlacement : MonoBehaviour
         Vector2 selectedItemColliderExtents =
             ItemWorldPrefabInstanceFactory.GetItemColliderExtents(selectedItemDefinition);
 
+        Vector2 itemPlacementPosition;
+
+        if (selectedItemDefinition.lockPlacementToGrid)
+        {
+            itemPlacementPosition = new Vector2(
+                RoundToGrid(cursorPoint.x), RoundToGrid(cursorPoint.y));
+        }
+        else
+        {
+            itemPlacementPosition = cursorPoint;
+        }
+
         CanPlaceItemAtCursorPosition = SpawnColliderHelper.CanSpawnColliderAtPosition(
-            cursorPoint, selectedItemColliderExtents);
+            itemPlacementPosition, selectedItemColliderExtents);
     }
 
     private void UpdatePlacingItem()
@@ -194,4 +220,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState = newState;
         currentState.StateEnter();
     }
+
+    // Round to the nearest number ending in .25 or .75
+    private static float RoundToGrid(float value) =>
+        Mathf.Round(2f * value - 0.5f) / 2f + 0.25f;
 }
