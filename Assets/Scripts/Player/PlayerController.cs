@@ -200,6 +200,15 @@ public class PlayerController : MonoBehaviour
         return fishingRodItemIndex != -1;
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Item World"))
+        {
+            ItemPickupAndPlacement.PickUpItemWorld(
+                other.GetComponent<ItemWorld>(), inventory, GetSelectedItemIndex());
+        }
+    }
+
     private void HealthController_OnHealthSetToZero()
     {
         PlayerDeath();

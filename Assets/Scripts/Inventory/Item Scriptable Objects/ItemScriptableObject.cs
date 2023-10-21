@@ -10,6 +10,7 @@ public class ItemScriptableObject : ScriptableObject
     public bool lockPlacementToGrid;
     public bool oneAtATimePlacement;
     public bool hasCustomColliderSize;
+    public bool triggerCollisionPickup;
     public Vector2 customColliderSize;
 
     private const int defaultStackSize = 99;

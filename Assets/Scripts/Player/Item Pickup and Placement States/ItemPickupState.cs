@@ -52,14 +52,14 @@ public class ItemPickupState : BaseItemPickupAndPlacementState
         if (itemPickupAndPlacementAction.WasPressedThisFrame() ||
             holdingPickupInputAndNotPlacingItem)
         {
-            itemPickupAndPlacement.AttemptToPickUpHoveredItem();
+            itemPickupAndPlacement.PickUpHoveredItem();
 
             // Prevent held input from being used for item placement
             itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;
         }
         else if (itemPickupAndPlacementAction.WasReleasedThisFrame())
         {
-            itemPickupAndPlacement.AttemptToPickUpHoveredItem();
+            itemPickupAndPlacement.PickUpHoveredItem();
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
         }

@@ -76,23 +76,10 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState.StateUpdate();
     }
 
-    public void AttemptToPickUpHoveredItem()
+    public void PickUpHoveredItem()
     {
-        ItemStack hoveredItem = HoveredItemWorld.GetItem();
-
-        playerInventory.TryAddItemToFirstStackOrIndex(
-            hoveredItem, player.GetSelectedItemIndex(), out int amountAdded);
-
-        bool hoveredItemAdded = amountAdded == hoveredItem.amount;
-        bool hoveredItemPartiallyAdded = !hoveredItemAdded && amountAdded != 0;
-        if (hoveredItemAdded)
-        {
-            Destroy(HoveredItemWorld.gameObject);
-        }
-        else if (hoveredItemPartiallyAdded)
-        {
-            HoveredItemWorld.SetItemAmount(hoveredItem.amount - amountAdded);
-        }
+        PickUpItemWorld(HoveredItemWorld,
+            playerInventory, player.GetSelectedItemIndex());
     }
 
     public void PlaceSelectedItemAtCursorPosition()
@@ -233,6 +220,24 @@ public class ItemPickupAndPlacement : MonoBehaviour
         currentState.StateExit();
         currentState = newState;
         currentState.StateEnter();
+    }
+
+    public static void PickUpItemWorld(ItemWorld itemWorld,
+        Inventory inventory, int preferredIndex)
+    {
+        ItemStack item = itemWorld.GetItem();
+
+        inventory.TryAddItemToFirstStackOrIndex(
+            item, preferredIndex, out int amountAdded);
+
+        if (amountAdded == item.amount)
+        {
+            Destroy(itemWorld.gameObject);
+        }
+        else if (amountAdded != 0)
+        {
+            itemWorld.SetItemAmount(item.amount - amountAdded);
+        }
     }
 
     // Round to the nearest number ending in .25 or .75

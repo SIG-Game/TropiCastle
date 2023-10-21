@@ -55,6 +55,12 @@ public class ItemWorld : MonoBehaviour
             GetComponent<BoxCollider2D>().size = item.itemDefinition.customColliderSize;
         }
 
+        if (item.itemDefinition.triggerCollisionPickup)
+        {
+            GetComponent<BoxCollider2D>().isTrigger =
+                item.itemDefinition.triggerCollisionPickup;
+        }
+
         if (itemNameToInteractableType.TryGetValue(item.itemDefinition.name,
             out Type itemInteractableType))
         {
