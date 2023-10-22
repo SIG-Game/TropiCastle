@@ -1,3 +1,5 @@
+// UNUSED
+
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Object/Item/Throwable Item")]

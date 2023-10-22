@@ -1,3 +1,5 @@
+// UNUSED
+
 using UnityEngine;
 
 public class ThrowableItemUsage : MonoBehaviour, IItemUsage
