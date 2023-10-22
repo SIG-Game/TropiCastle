@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -62,11 +63,29 @@ public class CampfireUIController : MonoBehaviour
     public void CookItemButton_OnClick()
     {
         ItemStack inputItem = campfireInventory.GetItemAtIndex(0);
+        ItemStack inventoryResultItem = campfireInventory.GetItemAtIndex(1);
 
         CampfireRecipeScriptableObject inputItemCampfireRecipe = null;
         ItemStack recipeInputItem = null;
 
-        foreach (var campfireRecipe in campfireRecipes)
+        IEnumerable<CampfireRecipeScriptableObject> possiblyMatchingRecipes;
+
+        if (inventoryResultItem.itemDefinition.name == "Empty")
+        {
+            possiblyMatchingRecipes = campfireRecipes;
+        }
+        else
+        {
+            Func<CampfireRecipeScriptableObject, bool> isValidRecipe = x =>
+                x.ResultItem.itemDefinition.name ==
+                    inventoryResultItem.itemDefinition.name &&
+                x.ResultItem.amount + inventoryResultItem.amount <=
+                    x.ResultItem.itemDefinition.stackSize;
+
+            possiblyMatchingRecipes = campfireRecipes.Where(isValidRecipe);
+        }
+
+        foreach (var campfireRecipe in possiblyMatchingRecipes)
         {
             recipeInputItem = campfireRecipe.PossibleInputItems.FirstOrDefault(
                 x => x.itemDefinition.name == inputItem.itemDefinition.name &&
@@ -89,7 +108,8 @@ public class CampfireUIController : MonoBehaviour
         campfireInventory.SetItemAmountAtIndex(
             inputItem.amount - recipeInputItem.amount, 0);
 
-        playerInventory.AddItem(inputItemCampfireRecipe.ResultItem);
+        campfireInventory.AddItemAtIndex(
+            inputItemCampfireRecipe.ResultItem, 1);
     }
 
     private void InventoryUIHeldItemController_OnItemHeld()

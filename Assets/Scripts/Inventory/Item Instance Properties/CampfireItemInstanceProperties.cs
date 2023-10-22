@@ -5,7 +5,7 @@ public class CampfireItemInstanceProperties : ItemInstanceProperties
 {
     public SerializableInventory SerializableInventory;
 
-    public const int CampfireInventorySize = 1;
+    public const int CampfireInventorySize = 2;
 
     public CampfireItemInstanceProperties()
     {
