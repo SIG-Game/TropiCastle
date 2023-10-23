@@ -8,6 +8,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
     [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
+    [SerializeField] private bool itemPlacementEnabled;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -22,7 +23,7 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
             inventoryUIHeldItemController.HeldLeftClickOverItemAtIndex(
                 inventory, slotItemIndex);
         }
-        else if (Input.GetMouseButton(1))
+        else if (Input.GetMouseButton(1) && itemPlacementEnabled)
         {
             inventoryUIHeldItemController.HeldRightClickOverItemAtIndex(
                 inventory, slotItemIndex);
@@ -34,9 +35,10 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             inventoryUIHeldItemController.LeftClickedItemAtIndex(
-                inventory, slotItemIndex);
+                inventory, slotItemIndex, itemPlacementEnabled);
         }
-        else if (eventData.button == PointerEventData.InputButton.Right)
+        else if (eventData.button == PointerEventData.InputButton.Right &&
+            itemPlacementEnabled)
         {
             inventoryUIHeldItemController.RightClickedItemAtIndex(
                 inventory, slotItemIndex);

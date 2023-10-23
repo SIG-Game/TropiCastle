@@ -158,8 +158,10 @@ MonoBehaviour:
   highlightedBackgroundColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
   unhighlightedBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
   hoveredItemSlotManager: {fileID: 0}
+  inventoryUIHeldItemController: {fileID: 0}
   inventory: {fileID: 0}
   slotItemIndex: 0
+  itemPlacementEnabled: 1
 --- !u!114 &415455371632956867 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3940269534252583011, guid: 41b1c1a20cea77944a32a62a21f6716c,

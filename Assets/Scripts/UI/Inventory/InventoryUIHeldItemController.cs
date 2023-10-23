@@ -77,7 +77,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
             MousePositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
     }
 
-    public void LeftClickedItemAtIndex(Inventory clickedInventory, int clickedItemIndex)
+    public void LeftClickedItemAtIndex(
+        Inventory clickedInventory, int clickedItemIndex, bool itemPlacementEnabled)
     {
         this.clickedInventory = clickedInventory;
 
@@ -85,7 +86,10 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
         if (HoldingItem())
         {
-            PlaceHeldItem(clickedItemIndex, clickedItem);
+            if (itemPlacementEnabled)
+            {
+                PlaceHeldItem(clickedItemIndex, clickedItem);
+            }
         }
         else if (clickedItem.itemDefinition.name != "Empty")
         {
