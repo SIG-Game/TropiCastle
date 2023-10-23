@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.UI;
 
 public class CampfireUIController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> campfireUIGameObjects;
     [SerializeField] private InventoryUIController campfireInventoryUIController;
-    [SerializeField] private Button cookItemButton;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private RectTransform playerInventoryUI;
     [SerializeField] private Vector2 playerInventoryUIPosition;
 
     private IList<CampfireRecipeScriptableObject> campfireRecipes;
     private Inventory campfireInventory;
+    private bool cooking;
 
     private void Awake()
     {
@@ -29,19 +27,6 @@ public class CampfireUIController : MonoBehaviour
         campfireRecipes = campfireRecipesLoadHandle.WaitForCompletion();
 
         Addressables.Release(campfireRecipesLoadHandle);
-
-        inventoryUIHeldItemController.OnItemHeld +=
-            InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden +=
-            InventoryUIHeldItemController_OnHidden;
-    }
-
-    private void OnDestroy()
-    {
-        inventoryUIHeldItemController.OnItemHeld -=
-            InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden -=
-            InventoryUIHeldItemController_OnHidden;
     }
 
     public void Show()
@@ -51,6 +36,8 @@ public class CampfireUIController : MonoBehaviour
         inventoryUIManager.SetCurrentInventoryUIGameObjects(campfireUIGameObjects);
         inventoryUIManager.SetCanCloseUsingInteractAction(true);
         inventoryUIManager.EnableCurrentInventoryUI();
+
+        inventoryUIManager.OnInventoryUIClosed += OnCampfireUIClosed;
     }
 
     public void SetInventory(Inventory campfireInventory)
@@ -58,9 +45,12 @@ public class CampfireUIController : MonoBehaviour
         this.campfireInventory = campfireInventory;
 
         campfireInventoryUIController.SetInventory(campfireInventory);
+
+        campfireInventory.OnItemChangedAtIndex +=
+            CampfireInventory_OnItemChangedAtIndex;
     }
 
-    public void CookItemButton_OnClick()
+    private bool TryCookItem()
     {
         ItemStack inputItem = campfireInventory.GetItemAtIndex(0);
         ItemStack inventoryResultItem = campfireInventory.GetItemAtIndex(1);
@@ -102,7 +92,7 @@ public class CampfireUIController : MonoBehaviour
         if (inputItemCampfireRecipe == null ||
             !playerInventory.CanAddItem(inputItemCampfireRecipe.ResultItem))
         {
-            return;
+            return false;
         }
 
         campfireInventory.SetItemAmountAtIndex(
@@ -110,15 +100,30 @@ public class CampfireUIController : MonoBehaviour
 
         campfireInventory.AddItemAtIndex(
             inputItemCampfireRecipe.ResultItem, 1);
+
+        return true;
     }
 
-    private void InventoryUIHeldItemController_OnItemHeld()
+    private void OnCampfireUIClosed()
     {
-        cookItemButton.interactable = false;
+        inventoryUIManager.OnInventoryUIClosed -= OnCampfireUIClosed;
+        campfireInventory.OnItemChangedAtIndex -=
+            CampfireInventory_OnItemChangedAtIndex;
+
+        campfireInventory = null;
     }
 
-    private void InventoryUIHeldItemController_OnHidden()
+    private void CampfireInventory_OnItemChangedAtIndex(ItemStack itemStack, int index)
     {
-        cookItemButton.interactable = true;
+        if (cooking)
+        {
+            return;
+        }
+
+        cooking = true;
+
+        while (TryCookItem()) {}
+
+        cooking = false;
     }
 }
