@@ -726,11 +726,10 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < itemList.Count; ++i)
         {
-            if (!itemList[i].itemDefinition.IsEmpty())
-            {
-                RemoveItemAtIndex(i);
-            }
+            SetItemAtIndex(emptyItemInstance, i);
         }
+
+        firstEmptyIndex = 0;
     }
 
     [ContextMenu("Fill Inventory")]
