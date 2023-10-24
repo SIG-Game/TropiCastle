@@ -60,7 +60,7 @@ public class CampfireUIController : MonoBehaviour
 
         IEnumerable<CampfireRecipeScriptableObject> possiblyMatchingRecipes;
 
-        if (inventoryResultItem.itemDefinition.name == "Empty")
+        if (inventoryResultItem.itemDefinition.IsEmpty())
         {
             possiblyMatchingRecipes = campfireRecipes;
         }

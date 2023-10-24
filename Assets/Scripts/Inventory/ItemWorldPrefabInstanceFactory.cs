@@ -51,8 +51,10 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
     public void DropItem(Vector3 dropPosition, ItemStack itemToDrop)
     {
-        if (itemToDrop.itemDefinition.name == "Empty")
+        if (itemToDrop.itemDefinition.IsEmpty())
+        {
             return;
+        }
 
         Vector2 spawnPositionGenerator()
         {

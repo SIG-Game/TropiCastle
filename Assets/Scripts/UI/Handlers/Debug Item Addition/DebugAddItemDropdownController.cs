@@ -22,7 +22,7 @@ public class DebugAddItemDropdownController : MonoBehaviour
         itemScriptableObjects = new List<ItemScriptableObject>(
             itemsLoadHandle.WaitForCompletion());
 
-        itemScriptableObjects.RemoveAll(x => x.name == "Empty");
+        itemScriptableObjects.RemoveAll(x => x.IsEmpty());
 
         foreach (ItemScriptableObject itemScriptableObject in itemScriptableObjects)
         {

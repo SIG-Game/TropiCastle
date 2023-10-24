@@ -91,7 +91,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         int itemToPlaceIndex = player.GetSelectedItemIndex();
 
-        if (itemToPlace.itemDefinition.name != "Empty")
+        if (!itemToPlace.itemDefinition.IsEmpty())
         {
             Vector2 itemPlacementPosition;
 
@@ -212,7 +212,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         PlacingItem = itemPickupAndPlacementAction.IsPressed() &&
             !WaitingForInputReleaseBeforePlacement &&
-            selectedItemDefinition.name != "Empty";
+            !selectedItemDefinition.IsEmpty();
     }
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)

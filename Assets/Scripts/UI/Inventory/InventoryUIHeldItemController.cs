@@ -91,7 +91,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
                 PlaceHeldItem(clickedItemIndex, clickedItem);
             }
         }
-        else if (clickedItem.itemDefinition.name != "Empty")
+        else if (!clickedItem.itemDefinition.IsEmpty())
         {
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
@@ -164,7 +164,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         {
             CombineHeldItemStackWithClickedItemStack(clickedItemIndex, clickedItem);
         }
-        else if (clickedItem.itemDefinition.name == "Empty")
+        else if (clickedItem.itemDefinition.IsEmpty())
         {
             clickedInventory.AddItemAtEmptyItemIndex(HeldItem, clickedItemIndex);
 
@@ -202,7 +202,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         {
             clickedInventory.IncrementItemStackAtIndex(clickedItemIndex);
         }
-        else if (clickedItem.itemDefinition.name == "Empty")
+        else if (clickedItem.itemDefinition.IsEmpty())
         {
             ItemStack oneOfHeldItem = HeldItem.GetCopyWithAmount(1);
 

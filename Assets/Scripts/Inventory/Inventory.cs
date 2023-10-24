@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
                 AddItemToFirstStackOrIndex(itemWithRemainingAmount, index);
             }
         }
-        else if (itemList[index].itemDefinition.name == "Empty")
+        else if (itemList[index].itemDefinition.IsEmpty())
         {
             AddItemAtEmptyItemIndex(newItem, index);
         }
@@ -179,7 +179,7 @@ public class Inventory : MonoBehaviour
     {
         ItemStack itemAtIndex = itemList[index];
 
-        if (itemAtIndex.itemDefinition.name == "Empty")
+        if (itemAtIndex.itemDefinition.IsEmpty())
         {
             Debug.LogWarning("Attempted to remove empty item from inventory");
             return;
@@ -197,14 +197,14 @@ public class Inventory : MonoBehaviour
 
     private void SetFirstEmptyIndex()
     {
-        firstEmptyIndex = itemList.FindIndex(x => x.itemDefinition.name == "Empty");
+        firstEmptyIndex = itemList.FindIndex(x => x.itemDefinition.IsEmpty());
     }
 
     public void AddItemAtIndex(ItemStack newItem, int index)
     {
         ItemStack itemAtIndex = GetItemAtIndex(index);
 
-        if (itemAtIndex.itemDefinition.name == "Empty")
+        if (itemAtIndex.itemDefinition.IsEmpty())
         {
             AddItemAtEmptyItemIndex(newItem, index);
         }
@@ -260,7 +260,7 @@ public class Inventory : MonoBehaviour
     {
         ItemStack itemAtIndex = itemList[index];
 
-        if (itemAtIndex.itemDefinition.name == "Empty")
+        if (itemAtIndex.itemDefinition.IsEmpty())
         {
             return;
         }
@@ -369,7 +369,7 @@ public class Inventory : MonoBehaviour
 
                 if ((currentItem.itemDefinition.name == newItem.itemDefinition.name &&
                     currentItem.amount < currentItem.itemDefinition.stackSize) ||
-                    currentItem.itemDefinition.name == "Empty")
+                    currentItem.itemDefinition.IsEmpty())
                 {
                     stackIndex = i;
 
@@ -408,7 +408,7 @@ public class Inventory : MonoBehaviour
     {
         ItemStack targetItem = itemList[targetItemIndex];
 
-        if (targetItem.itemDefinition.name == "Empty")
+        if (targetItem.itemDefinition.IsEmpty())
         {
             return;
         }
@@ -576,7 +576,7 @@ public class Inventory : MonoBehaviour
 
             if ((currentItem.itemDefinition.name == outputItem.itemDefinition.name &&
                 currentItem.amount < currentItem.itemDefinition.stackSize) ||
-                currentItem.itemDefinition.name == "Empty")
+                currentItem.itemDefinition.IsEmpty())
             {
                 int currentItemAmount = currentItem.amount;
 
@@ -715,7 +715,7 @@ public class Inventory : MonoBehaviour
 
                 OnItemChangedAtIndex(currentItem, i);
             }
-            else if (currentItem.itemDefinition.name == "Empty")
+            else if (currentItem.itemDefinition.IsEmpty())
             {
                 AddItemAtEmptyItemIndex(coconutItemWithMaxAmount, i);
             }
@@ -726,7 +726,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < itemList.Count; ++i)
         {
-            if (itemList[i].itemDefinition.name != "Empty")
+            if (!itemList[i].itemDefinition.IsEmpty())
             {
                 RemoveItemAtIndex(i);
             }
