@@ -24,3 +24,4 @@ MonoBehaviour:
   ResultItem:
     itemDefinition: {fileID: 11400000, guid: 4d12166f37d72a747903174112315548, type: 2}
     amount: 1
+  CookTime: 1

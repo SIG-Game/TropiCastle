@@ -4,6 +4,7 @@ using static Inventory;
 public class CampfireItemInstanceProperties : ItemInstanceProperties
 {
     public SerializableInventory SerializableInventory;
+    public float CookTimeProgress;
 
     public const int CampfireInventorySize = 2;
 
@@ -12,11 +13,14 @@ public class CampfireItemInstanceProperties : ItemInstanceProperties
         List<SerializableInventoryItem> campfireItemList =
             new List<SerializableInventoryItem>(CampfireInventorySize);
 
-        campfireItemList.Add(new SerializableInventoryItem
+        for (int i = 0; i < CampfireInventorySize; ++i)
         {
-            ItemName = "Empty",
-            Amount = 0
-        });
+            campfireItemList.Add(new SerializableInventoryItem
+            {
+                ItemName = "Empty",
+                Amount = 0
+            });
+        }
 
         SerializableInventory = new SerializableInventory
         {

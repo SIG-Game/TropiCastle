@@ -6,4 +6,5 @@ public class CampfireRecipeScriptableObject : ScriptableObject
 {
     public List<ItemStack> PossibleInputItems;
     public ItemStack ResultItem;
+    public float CookTime;
 }

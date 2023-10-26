@@ -416,8 +416,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   campfireInventoryUIController: {fileID: 2093669872953180739}
-  playerInventory: {fileID: 0}
-  itemSelectionController: {fileID: 0}
   inventoryUIManager: {fileID: 0}
   playerInventoryUI: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: -17.8125}
