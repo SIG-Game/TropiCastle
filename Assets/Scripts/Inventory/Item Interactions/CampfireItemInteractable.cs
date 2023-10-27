@@ -12,6 +12,7 @@ public class CampfireItemInteractable : ItemInteractable
     private IList<CampfireRecipeScriptableObject> campfireRecipes;
     private CampfireRecipeScriptableObject currentRecipe;
     private ItemStack currentRecipeInputItem;
+    private bool activeInUI;
 
     private void Awake()
     {
@@ -63,6 +64,8 @@ public class CampfireItemInteractable : ItemInteractable
 
                 campfireItemInstanceProperties.CookTimeProgress = 0f;
             }
+
+            UpdateCampfireUIProgressArrow();
         }
     }
 
@@ -77,6 +80,13 @@ public class CampfireItemInteractable : ItemInteractable
         campfireUIController.SetInventory(campfireInventory);
 
         campfireUIController.Show();
+
+        activeInUI = true;
+
+        UpdateCampfireUIProgressArrow();
+
+        campfireUIController.OnCampfireUIClosed +=
+            CampfireUIController_OnCampfireUIClosed;
     }
 
     public override void SetUpUsingDependencies(
@@ -137,6 +147,23 @@ public class CampfireItemInteractable : ItemInteractable
         }
     }
 
+    private void UpdateCampfireUIProgressArrow()
+    {
+        if (activeInUI)
+        {
+            if (currentRecipe == null)
+            {
+                campfireUIController.HideCookTimeProgressArrow();
+            }
+            else
+            {
+                campfireUIController.UpdateCookTimeProgressArrow(
+                    campfireItemInstanceProperties.CookTimeProgress,
+                    currentRecipe.CookTime);
+            }
+        }
+    }
+
     private void CampfireInventory_OnItemChangedAtIndex(ItemStack itemStack, int index)
     {
         campfireItemInstanceProperties.UpdateSerializableInventory(campfireInventory);
@@ -147,6 +174,16 @@ public class CampfireItemInteractable : ItemInteractable
             SetCurrentRecipe();
 
             campfireItemInstanceProperties.CookTimeProgress = 0f;
+
+            UpdateCampfireUIProgressArrow();
         }
+    }
+
+    private void CampfireUIController_OnCampfireUIClosed()
+    {
+        activeInUI = false;
+
+        campfireUIController.OnCampfireUIClosed -=
+            CampfireUIController_OnCampfireUIClosed;
     }
 }
