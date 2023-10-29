@@ -36,8 +36,8 @@ public class ItemSelectionController : MonoBehaviour
     public bool CanScroll { private get; set; }
     public bool CanSelect { private get; set; }
 
-    public event Action<int> OnItemSelectedAtIndex = delegate { };
-    public event Action<int> OnItemDeselectedAtIndex = delegate { };
+    public event Action<int> OnItemSelectedAtIndex = (_) => {};
+    public event Action<int> OnItemDeselectedAtIndex = (_) => {};
 
     private void Awake()
     {

@@ -22,8 +22,8 @@ public class PlayerActionDisablingUIManager : MonoBehaviour
         }
     }
 
-    public event Action OnUIOpened = delegate { };
-    public event Action OnUIClosed = delegate { };
+    public event Action OnUIOpened = () => {};
+    public event Action OnUIClosed = () => {};
 
     private bool actionDisablingUIOpen;
 

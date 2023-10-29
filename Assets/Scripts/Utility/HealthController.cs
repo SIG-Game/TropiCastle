@@ -23,9 +23,9 @@ public class HealthController : MonoBehaviour
         }
     }
 
-    public event Action<int> OnHealthSet = delegate { };
-    public event Action<int> OnHealthChangedByAmount = delegate { };
-    public event Action OnHealthSetToZero = delegate { };
+    public event Action<int> OnHealthSet = (_) => {};
+    public event Action<int> OnHealthChangedByAmount = (_) => {};
+    public event Action OnHealthSetToZero = () => {};
 
     private void Awake()
     {

@@ -17,7 +17,7 @@ public class PauseController : MonoBehaviour
         }
     }
 
-    public event Action OnGamePausedSet = delegate { };
+    public event Action OnGamePausedSet = () => {};
 
     public static PauseController Instance;
 

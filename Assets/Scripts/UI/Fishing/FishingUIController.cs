@@ -17,9 +17,9 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private Vector2 catchFishXPositionRange;
     [SerializeField] private bool logSelectedFish;
 
-    public event Action OnFishingStopped = delegate { };
-    public event Action OnFishingUIOpened = delegate { };
-    public event Action OnFishingUIClosed = delegate { };
+    public event Action OnFishingStopped = () => {};
+    public event Action OnFishingUIOpened = () => {};
+    public event Action OnFishingUIClosed = () => {};
 
     private Animator animator;
     private FishItemScriptableObject selectedFish;
@@ -75,10 +75,6 @@ public class FishingUIController : MonoBehaviour
         {
             Addressables.Release(fishItemsLoadHandle);
         }
-
-        OnFishingStopped = delegate { };
-        OnFishingUIOpened = delegate { };
-        OnFishingUIClosed = delegate { };
     }
 
     private void AttemptToCatchFish()

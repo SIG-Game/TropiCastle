@@ -20,7 +20,7 @@ public class InventoryUIManager : MonoBehaviour
         }
     }
 
-    public event Action OnInventoryUIClosed = delegate { };
+    public event Action OnInventoryUIClosed = () => {};
 
     private List<GameObject> currentInventoryUIGameObjects;
     private bool canCloseUsingInteractAction;

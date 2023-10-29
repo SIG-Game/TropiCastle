@@ -10,10 +10,10 @@ public class Inventory : MonoBehaviour
     private List<ItemStack> itemList;
     private int firstEmptyIndex;
 
-    public event Action<ItemStack, int> OnItemChangedAtIndex = delegate { };
-    public event Action<ItemStack> OnItemAdded = delegate { };
-    public event Action<ItemStack> OnItemRemoved = delegate { };
-    public event Action OnFailedToAddItemToFullInventory = delegate { };
+    public event Action<ItemStack, int> OnItemChangedAtIndex = (_, _) => {};
+    public event Action<ItemStack> OnItemAdded = (_) => {};
+    public event Action<ItemStack> OnItemRemoved = (_) => {};
+    public event Action OnFailedToAddItemToFullInventory = () => {};
 
     // Every empty item slot references this instance
     private static ItemStack emptyItemInstance;

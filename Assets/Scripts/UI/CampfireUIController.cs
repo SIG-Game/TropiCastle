@@ -12,7 +12,7 @@ public class CampfireUIController : MonoBehaviour
     [SerializeField] private Vector2 playerInventoryUIPosition;
     [SerializeField] private float maxProgressArrowMaskWidth;
 
-    public event Action OnCampfireUIClosed = delegate { };
+    public event Action OnCampfireUIClosed = () => {};
 
     public void Show()
     {

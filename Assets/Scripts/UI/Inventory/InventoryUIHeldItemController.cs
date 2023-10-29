@@ -12,8 +12,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private Sprite transparentSprite;
 
-    public event Action OnItemHeld = delegate { };
-    public event Action OnHidden = delegate { };
+    public event Action OnItemHeld = () => {};
+    public event Action OnHidden = () => {};
 
     private ItemStack HeldItem
     {

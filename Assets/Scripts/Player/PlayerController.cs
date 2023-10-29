@@ -41,8 +41,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public event Action<bool> OnIsAttackingSet = delegate { };
-    public event Action OnPlayerDied = delegate { };
+    public event Action<bool> OnIsAttackingSet = (_) => {};
+    public event Action OnPlayerDied = () => {};
 
     private Dictionary<string, IItemUsage> itemNameToUsage;
     private Dictionary<Type, IItemUsage> itemScriptableObjectTypeToUsage;
