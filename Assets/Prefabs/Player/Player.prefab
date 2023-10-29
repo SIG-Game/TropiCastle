@@ -525,7 +525,6 @@ MonoBehaviour:
     type: 3}
   healActionReference: {fileID: 5534942449988417204, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
-  bucketItemUsage: {fileID: 1346236021351400951}
   fishingRodItemUsage: {fileID: 8293061806737836654}
   healingItemUsage: {fileID: 7288205203562457323}
   throwableItemUsage: {fileID: 5567921040364044053}
@@ -741,7 +740,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4901340854988399641}
-  - component: {fileID: 1346236021351400951}
   - component: {fileID: 8293061806737836654}
   - component: {fileID: 7288205203562457323}
   - component: {fileID: 5567921040364044053}
@@ -768,20 +766,6 @@ Transform:
   m_Father: {fileID: 5288355818519945019}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1346236021351400951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7191733551750576650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35604bad60694ba4dbb0dfd8f409c2cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 5288355818519945016}
-  playerInventory: {fileID: 856750480813842556}
 --- !u!114 &8293061806737836654
 MonoBehaviour:
   m_ObjectHideFlags: 0

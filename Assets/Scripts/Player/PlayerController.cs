@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference healActionReference;
 
     [Header("Item Usages")]
-    [SerializeField] private BucketItemUsage bucketItemUsage;
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
     [SerializeField] private HealingItemUsage healingItemUsage;
     [SerializeField] private ThrowableItemUsage throwableItemUsage;
@@ -218,7 +217,6 @@ public class PlayerController : MonoBehaviour
     {
         itemNameToUsage = new Dictionary<string, IItemUsage>
         {
-            { "Bucket", bucketItemUsage },
             { "Fishing Rod", fishingRodItemUsage }
         };
 
