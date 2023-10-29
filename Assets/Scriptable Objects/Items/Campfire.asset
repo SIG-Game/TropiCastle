@@ -14,3 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Campfire
   sprite: {fileID: 21300000, guid: 681f991e545d9d940abeeb0ac97f73dc, type: 3}
+  stackSize: 1
+  lockPlacementToGrid: 0
+  oneAtATimePlacement: 0
+  hasCustomColliderSize: 0
+  triggerCollisionPickup: 0
+  customColliderSize: {x: 0, y: 0}
