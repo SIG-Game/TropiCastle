@@ -49,6 +49,8 @@ public class CampfireUIController : MonoBehaviour
     {
         OnCampfireUIClosed();
 
+        campfireInventoryUIController.UnsetInventory();
+
         inventoryUIManager.OnInventoryUIClosed -=
             InventoryUIManager_OnCampfireUIClosed;
     }

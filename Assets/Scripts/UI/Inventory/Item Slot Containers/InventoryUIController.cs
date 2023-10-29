@@ -57,6 +57,13 @@ public class InventoryUIController : MonoBehaviour
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
     }
 
+    public void UnsetInventory()
+    {
+        inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
+
+        inventory = null;
+    }
+
 #if UNITY_EDITOR
     [ContextMenu("Set Item Slot Controllers")]
     private void SetItemSlotControllers()
