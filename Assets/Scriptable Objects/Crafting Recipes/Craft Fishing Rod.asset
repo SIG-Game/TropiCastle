@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d85f03e2abd17a4681b4d6ec1113743, type: 3}
-  m_Name: Fishing Rod
+  m_Name: Craft Fishing Rod
   m_EditorClassIdentifier: 
   ingredients:
   - itemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
