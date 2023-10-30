@@ -169,7 +169,9 @@ public class CampfireItemInteractable : ItemInteractable
         campfireItemInstanceProperties.UpdateSerializableInventory(campfireInventory);
 
         bool inputItemChanged = index == 0;
-        if (inputItemChanged)
+        bool resultItemEmptied =
+            index == 1 && campfireInventory.GetItemAtIndex(1).itemDefinition.IsEmpty();
+        if (inputItemChanged || resultItemEmptied)
         {
             SetCurrentRecipe();
 
