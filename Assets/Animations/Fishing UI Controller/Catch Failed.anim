@@ -40,7 +40,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Fishing UI/FishBar/Fish/Image
+    path: Fishing UI/Fish Bar/Fish/Image
   m_FloatCurves:
   - curve:
       serializedVersion: 2
@@ -67,7 +67,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: Fishing UI/FishBar/Fish/Image
+    path: Fishing UI/Fish Bar/Fish/Image
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_PPtrCurves: []
@@ -139,7 +139,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: Fishing UI/FishBar/Fish/Image
+    path: Fishing UI/Fish Bar/Fish/Image
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   - curve:
@@ -167,7 +167,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: Fishing UI/FishBar/Fish/Image
+    path: Fishing UI/Fish Bar/Fish/Image
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -195,7 +195,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: Fishing UI/FishBar/Fish/Image
+    path: Fishing UI/Fish Bar/Fish/Image
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -223,7 +223,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: Fishing UI/FishBar/Fish/Image
+    path: Fishing UI/Fish Bar/Fish/Image
     classID: 224
     script: {fileID: 0}
   m_EulerEditorCurves: []
