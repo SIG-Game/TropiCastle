@@ -4,7 +4,6 @@ using UnityEngine;
 public class DebugAddItemAmountInputField : MonoBehaviour
 {
     [SerializeField] private TMP_InputField amountInputField;
-    [SerializeField] private DebugAddItemDropdownController debugAddItemDropdownController;
     [SerializeField] private InputManager inputManager;
 
     private void Start()
@@ -20,24 +19,6 @@ public class DebugAddItemAmountInputField : MonoBehaviour
         if (amountInputField.isFocused)
         {
             inputManager.DisableGettingNumberKeyInputThisFrame();
-        }
-    }
-
-    public void AmountInputField_OnEndEdit(string _)
-    {
-        ClampAmountToStackSize();
-    }
-
-    public void ClampAmountToStackSize()
-    {
-        int itemToAddStackSize =
-            debugAddItemDropdownController.GetSelectedItemScriptableObject().stackSize;
-
-        if (int.TryParse(amountInputField.text, out int amount) &&
-            itemToAddStackSize < amount)
-        {
-            amountInputField.text = itemToAddStackSize.ToString();
-            amountInputField.ActivateInputField();
         }
     }
 }

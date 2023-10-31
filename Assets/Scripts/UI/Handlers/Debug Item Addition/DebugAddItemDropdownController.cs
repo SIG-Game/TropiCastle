@@ -7,7 +7,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class DebugAddItemDropdownController : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown dropdown;
-    [SerializeField] private DebugAddItemAmountInputField debugAddItemAmountInputField;
 
     private List<ItemScriptableObject> itemScriptableObjects;
     private AsyncOperationHandle<IList<ItemScriptableObject>> itemsLoadHandle;
@@ -47,11 +46,6 @@ public class DebugAddItemDropdownController : MonoBehaviour
         {
             Addressables.Release(itemsLoadHandle);
         }
-    }
-
-    public void AddItemDropdown_OnValueChanged(int _)
-    {
-        debugAddItemAmountInputField.ClampAmountToStackSize();
     }
 
     public ItemScriptableObject GetSelectedItemScriptableObject() => itemScriptableObjects[dropdown.value];

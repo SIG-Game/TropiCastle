@@ -21,13 +21,24 @@ public class DebugAddItemButton : MonoBehaviour
         ItemScriptableObject selectedItemScriptableObject =
             addItemDropdownController.GetSelectedItemScriptableObject();
 
-        if (int.TryParse(amountInputField.text, out int amount))
+        if (!int.TryParse(amountInputField.text, out int amountToAdd) ||
+            amountToAdd <= 0)
         {
-            playerInventory.AddItem(selectedItemScriptableObject, amount);
+            amountToAdd = 1;
         }
-        else
+
+        int stackSize = selectedItemScriptableObject.stackSize;
+        int numberOfStacks = amountToAdd / stackSize;
+        int remainingAmount = amountToAdd % stackSize;
+
+        for (int i = 0; i < numberOfStacks; ++i)
         {
-            playerInventory.AddItem(selectedItemScriptableObject, 1);
+            playerInventory.AddItem(selectedItemScriptableObject, stackSize);
+        }
+
+        if (remainingAmount != 0)
+        {
+            playerInventory.AddItem(selectedItemScriptableObject, remainingAmount);
         }
     }
 }

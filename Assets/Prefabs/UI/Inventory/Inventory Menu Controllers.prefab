@@ -260,32 +260,20 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
+  m_ContentType: 2
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 0
+  m_KeyboardType: 4
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 0
+  m_CharacterValidation: 2
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5322188097645069079}
-        m_TargetAssemblyTypeName: DebugAddItemAmountInputField, Assembly-CSharp
-        m_MethodName: AmountInputField_OnEndEdit
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -2736,7 +2724,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountInputField: {fileID: 1558176768086040830}
-  debugAddItemDropdownController: {fileID: 8774762380487729169}
   inputManager: {fileID: 0}
 --- !u!114 &8774762380487729169
 MonoBehaviour:
@@ -2751,7 +2738,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropdown: {fileID: 8774762379773181893}
-  debugAddItemAmountInputField: {fileID: 5322188097645069079}
 --- !u!114 &8774762380487729168
 MonoBehaviour:
   m_ObjectHideFlags: 0
