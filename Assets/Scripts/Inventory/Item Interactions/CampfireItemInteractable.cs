@@ -4,32 +4,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class CampfireItemInteractable : ItemInteractable
+public class CampfireItemInteractable :
+    ContainerItemInteractable<CampfireItemInstanceProperties>
 {
-    private Inventory campfireInventory;
-    private CampfireItemInstanceProperties campfireItemInstanceProperties;
     private CampfireUIController campfireUIController;
     private IList<CampfireRecipeScriptableObject> campfireRecipes;
     private CampfireRecipeScriptableObject currentRecipe;
     private ItemStack currentRecipeInputItem;
     private bool activeInUI;
 
-    private void Awake()
+    protected override void Awake()
     {
-        campfireInventory = gameObject.AddComponent<Inventory>();
-
-        campfireItemInstanceProperties =
-            (CampfireItemInstanceProperties)GetComponent<ItemWorld>()
-                .GetItem().instanceProperties;
-
-        campfireInventory.InitializeItemListWithSize(
-            CampfireItemInstanceProperties.CampfireInventorySize);
-
-        if (campfireItemInstanceProperties != null)
-        {
-            campfireInventory.SetUpFromSerializableInventory(
-                campfireItemInstanceProperties.SerializableInventory);
-        }
+        base.Awake();
 
         var campfireRecipesLoadHandle =
             Addressables.LoadAssetsAsync<CampfireRecipeScriptableObject>(
@@ -40,44 +26,35 @@ public class CampfireItemInteractable : ItemInteractable
         Addressables.Release(campfireRecipesLoadHandle);
 
         SetCurrentRecipe();
-
-        campfireInventory.OnItemChangedAtIndex +=
-            CampfireInventory_OnItemChangedAtIndex;
     }
 
     private void Update()
     {
         if (currentRecipe != null)
         {
-            campfireItemInstanceProperties.CookTimeProgress += Time.unscaledDeltaTime;
+            itemInstanceProperties.CookTimeProgress += Time.unscaledDeltaTime;
 
-            if (campfireItemInstanceProperties.CookTimeProgress >= currentRecipe.CookTime)
+            if (itemInstanceProperties.CookTimeProgress >= currentRecipe.CookTime)
             {
-                ItemStack inputItem = campfireInventory.GetItemAtIndex(0);
+                ItemStack inputItem = inventory.GetItemAtIndex(0);
 
-                campfireInventory.AddItemAtIndex(currentRecipe.ResultItem, 1);
+                inventory.AddItemAtIndex(currentRecipe.ResultItem, 1);
 
                 // Changing the input item in campfireInventory
                 // updates currentRecipe and currentRecipeInputItem
-                campfireInventory.SetItemAmountAtIndex(
+                inventory.SetItemAmountAtIndex(
                     inputItem.amount - currentRecipeInputItem.amount, 0);
 
-                campfireItemInstanceProperties.CookTimeProgress = 0f;
+                itemInstanceProperties.CookTimeProgress = 0f;
             }
 
             UpdateCampfireUIProgressArrow();
         }
     }
 
-    private void OnDestroy()
-    {
-        campfireInventory.OnItemChangedAtIndex -=
-            CampfireInventory_OnItemChangedAtIndex;
-    }
-
     public override void Interact(PlayerController _)
     {
-        campfireUIController.SetInventory(campfireInventory);
+        campfireUIController.SetInventory(inventory);
 
         campfireUIController.Show();
 
@@ -98,8 +75,8 @@ public class CampfireItemInteractable : ItemInteractable
 
     private void SetCurrentRecipe()
     {
-        ItemStack inputItem = campfireInventory.GetItemAtIndex(0);
-        ItemStack inventoryResultItem = campfireInventory.GetItemAtIndex(1);
+        ItemStack inputItem = inventory.GetItemAtIndex(0);
+        ItemStack inventoryResultItem = inventory.GetItemAtIndex(1);
 
         IEnumerable<CampfireRecipeScriptableObject> possiblyMatchingRecipes;
 
@@ -158,24 +135,24 @@ public class CampfireItemInteractable : ItemInteractable
             else
             {
                 campfireUIController.UpdateCookTimeProgressArrow(
-                    campfireItemInstanceProperties.CookTimeProgress,
+                    itemInstanceProperties.CookTimeProgress,
                     currentRecipe.CookTime);
             }
         }
     }
 
-    private void CampfireInventory_OnItemChangedAtIndex(ItemStack itemStack, int index)
+    protected override void Inventory_OnItemChangedAtIndex(ItemStack itemStack, int index)
     {
-        campfireItemInstanceProperties.UpdateSerializableInventory(campfireInventory);
+        base.Inventory_OnItemChangedAtIndex(itemStack, index);
 
         bool inputItemChanged = index == 0;
         bool resultItemEmptied =
-            index == 1 && campfireInventory.GetItemAtIndex(1).itemDefinition.IsEmpty();
+            index == 1 && inventory.GetItemAtIndex(1).itemDefinition.IsEmpty();
         if (inputItemChanged || resultItemEmptied)
         {
             SetCurrentRecipe();
 
-            campfireItemInstanceProperties.CookTimeProgress = 0f;
+            itemInstanceProperties.CookTimeProgress = 0f;
 
             UpdateCampfireUIProgressArrow();
         }

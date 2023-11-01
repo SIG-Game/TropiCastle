@@ -1,57 +1,9 @@
-using System.Collections.Generic;
-using static Inventory;
+using System;
 
-public class CampfireItemInstanceProperties : ItemInstanceProperties
+[Serializable]
+public class CampfireItemInstanceProperties : ContainerItemInstanceProperties
 {
-    public SerializableInventory SerializableInventory;
     public float CookTimeProgress;
 
-    public const int CampfireInventorySize = 2;
-
-    public CampfireItemInstanceProperties()
-    {
-        List<SerializableInventoryItem> campfireItemList =
-            new List<SerializableInventoryItem>(CampfireInventorySize);
-
-        for (int i = 0; i < CampfireInventorySize; ++i)
-        {
-            campfireItemList.Add(new SerializableInventoryItem
-            {
-                ItemName = "Empty",
-                Amount = 0
-            });
-        }
-
-        SerializableInventory = new SerializableInventory
-        {
-            SerializableItemList = campfireItemList
-        };
-    }
-
-    public void UpdateSerializableInventory(Inventory inventory)
-    {
-        SerializableInventory = inventory.GetAsSerializableInventory();
-    }
-
-    public override ItemInstanceProperties DeepCopy()
-    {
-        List<SerializableInventoryItem> campfireItemListDeepCopy =
-            new List<SerializableInventoryItem>(CampfireInventorySize);
-
-        for (int i = 0; i < CampfireInventorySize; ++i)
-        {
-            campfireItemListDeepCopy.Add(new SerializableInventoryItem(
-                SerializableInventory.SerializableItemList[i]));
-        }
-
-        CampfireItemInstanceProperties deepCopy =
-            (CampfireItemInstanceProperties)base.DeepCopy();
-
-        deepCopy.SerializableInventory = new SerializableInventory
-        {
-            SerializableItemList = campfireItemListDeepCopy
-        };
-
-        return deepCopy;
-    }
+    public override int InventorySize => 2;
 }
