@@ -115,7 +115,11 @@ public class SaveController : MonoBehaviour
     {
         using (var streamWriter = new StreamWriter(filePath))
         {
+#if UNITY_EDITOR
+            string serializableObjectJson = JsonUtility.ToJson(serializableObject, true);
+#else
             string serializableObjectJson = JsonUtility.ToJson(serializableObject);
+#endif
 
             streamWriter.Write(serializableObjectJson);
         }
