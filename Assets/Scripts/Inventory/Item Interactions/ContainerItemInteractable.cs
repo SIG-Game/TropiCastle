@@ -1,4 +1,4 @@
-﻿public abstract class ContainerItemInteractable<TItemInstanceProperties> :
+public abstract class ContainerItemInteractable<TItemInstanceProperties> :
     ItemInteractable where TItemInstanceProperties : ContainerItemInstanceProperties
 {
     protected Inventory inventory;
