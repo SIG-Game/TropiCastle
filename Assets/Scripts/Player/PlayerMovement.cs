@@ -56,16 +56,6 @@ public class PlayerMovement : MonoBehaviour
 
         velocity = newVelocity;
 
-        UpdateDirection(movementInput);
-    }
-
-    private void FixedUpdate()
-    {
-        rb2d.MovePosition(transform.position + (Vector3)velocity);
-    }
-
-    private void UpdateDirection(Vector2 movementInput)
-    {
         if (movementInput != Vector2.zero)
         {
             // If the magnitude of the input's y component is greater than the
@@ -81,6 +71,11 @@ public class PlayerMovement : MonoBehaviour
                     CharacterDirection.Right : CharacterDirection.Left;
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        rb2d.MovePosition(transform.position + (Vector3)velocity);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
