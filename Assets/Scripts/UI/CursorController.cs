@@ -25,9 +25,12 @@ public class CursorController : MonoBehaviour
         }
     }
 
+    public bool LockToGrid { private get; set; }
+
     private SpriteRenderer cursorSpriteRenderer;
     private SpriteRenderer cursorBackgroundSpriteRenderer;
     private InputAction moveCursorAction;
+    private Vector2 cursorPosition;
     private Vector2 cursorWorldPosition;
     private Vector2 horizontalCameraBounds;
     private Vector2 verticalCameraBounds;
@@ -43,6 +46,7 @@ public class CursorController : MonoBehaviour
 
         moveCursorAction = moveCursorActionReference.action;
 
+        cursorPosition = Vector2.zero;
         cursorWorldPosition = Vector2.zero;
 
         pauseController.OnGamePausedSet += PauseController_OnGamePausedSet;
@@ -80,14 +84,28 @@ public class CursorController : MonoBehaviour
                 cursorDelta *= gamepadSensitivity * Time.deltaTime;
             }
 
-            transform.position = ClampToScreen(transform.position + (Vector3)cursorDelta);
+            cursorPosition = ClampToScreen(cursorPosition + cursorDelta);
         }
         else if (cameraSizeChanged)
         {
-            transform.position = ClampToScreen(transform.position);
+            cursorPosition = ClampToScreen(cursorPosition);
         }
 
-        UpdateCursorWorldPosition();
+        cursorWorldPosition = (Vector2)Camera.main.transform.position + cursorPosition;
+
+        if (LockToGrid)
+        {
+            Vector2 roundedCursorWorldPosition = new Vector2(
+                RoundToGrid(cursorWorldPosition.x),
+                RoundToGrid(cursorWorldPosition.y));
+
+            transform.position =
+                roundedCursorWorldPosition - (Vector2)Camera.main.transform.position;
+        }
+        else
+        {
+            transform.position = cursorPosition;
+        }
 
         previousCameraOrthographicSize = cursorCamera.orthographicSize;
         previousCameraAspect = cursorCamera.aspect;
@@ -144,11 +162,6 @@ public class CursorController : MonoBehaviour
             input.z);
 
         return clampedInput;
-    }
-
-    private void UpdateCursorWorldPosition()
-    {
-        cursorWorldPosition = Camera.main.transform.position + transform.position;
     }
 
     private void HideAndLockMouseCursor()
@@ -210,4 +223,8 @@ public class CursorController : MonoBehaviour
     }
 
     public Vector2 GetWorldPosition() => cursorWorldPosition;
+
+    // Round to the nearest number ending in .25 or .75
+    private static float RoundToGrid(float value) =>
+        Mathf.Round(2f * value - 0.5f) / 2f + 0.25f;
 }

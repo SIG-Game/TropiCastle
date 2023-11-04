@@ -122,6 +122,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public void ResetCursor()
     {
         cursorController.UseDefaultCursor();
+        cursorController.LockToGrid = false;
     }
 
     public void ResetCursorAndPlayerItem()
@@ -150,6 +151,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         ItemStack placementItem = selectedItem.itemDefinition.oneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
+
+        cursorController.LockToGrid = selectedItem.itemDefinition.lockPlacementToGrid;
 
         Color cursorBackgroundColor = CanPlaceItemAtCursorPosition ?
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor;
