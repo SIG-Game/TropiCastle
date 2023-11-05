@@ -263,6 +263,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8300868821272580690, guid: 04cfd4d604aadc446bb4a09fde99465b,
         type: 3}
+      propertyPath: inventoryUIManager
+      value: 
+      objectReference: {fileID: 6847651757298814667}
+    - target: {fileID: 8300868821272580690, guid: 04cfd4d604aadc446bb4a09fde99465b,
+        type: 3}
       propertyPath: tradingUIController
       value: 
       objectReference: {fileID: 1170725310}
