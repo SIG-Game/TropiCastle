@@ -6,15 +6,19 @@ public class NPCSpinner : MonoBehaviour
 {
     [SerializeField] private CharacterDirectionController directionController;
     [SerializeField] private Vector2Int spinsBeforeWaitRange;
-    [SerializeField] private Vector2 timeBetweenSpinsSecondsRange;
+    [SerializeField] private Vector2 timeBetweenSpinsRange;
+    [SerializeField] private float timeBetweenDirectionChanges;
 
     private List<CharacterDirection> spinDirections;
     private Coroutine spinCoroutine;
+    private WaitForSeconds directionChangeWaitForSeconds;
 
     private void Awake()
     {
         spinDirections = new List<CharacterDirection> { CharacterDirection.Down,
             CharacterDirection.Left, CharacterDirection.Up, CharacterDirection.Right };
+
+        directionChangeWaitForSeconds = new WaitForSeconds(timeBetweenDirectionChanges);
     }
 
     public void StartSpinning()
@@ -42,16 +46,16 @@ public class NPCSpinner : MonoBehaviour
                 foreach (CharacterDirection direction in spinDirections)
                 {
                     directionController.Direction = direction;
-                    yield return new WaitForSeconds(0.175f);
+                    yield return directionChangeWaitForSeconds;
                 }
             }
 
             directionController.Direction = CharacterDirection.Down;
 
-            float waitBeforeSpinningSeconds = Random.Range(timeBetweenSpinsSecondsRange.x,
-                timeBetweenSpinsSecondsRange.y);
+            float waitBeforeSpinning = Random.Range(timeBetweenSpinsRange.x,
+                timeBetweenSpinsRange.y);
 
-            yield return new WaitForSeconds(waitBeforeSpinningSeconds);
+            yield return new WaitForSeconds(waitBeforeSpinning);
         }
     }
 }

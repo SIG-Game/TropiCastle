@@ -269,7 +269,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directionController: {fileID: 6226198124874705005}
   spinsBeforeWaitRange: {x: 2, y: 5}
-  timeBetweenSpinsSecondsRange: {x: 0.5, y: 3}
+  timeBetweenSpinsRange: {x: 0.5, y: 3}
+  timeBetweenDirectionChanges: 0.175
 --- !u!114 &6226198124874705005
 MonoBehaviour:
   m_ObjectHideFlags: 0
