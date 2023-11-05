@@ -11,7 +11,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Sprite itemPickupArrow;
-    [SerializeField] private Sprite itemPickupArrowInventoryFull;
+    [SerializeField] private Sprite cannotPickUpArrow;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
     [SerializeField] private Color cannotPlaceCursorBackgroundColor;
     [SerializeField] private InputActionReference itemPickupAndPlacementActionReference;
@@ -78,8 +78,11 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PickUpHoveredItem()
     {
-        PickUpItemWorld(HoveredItemWorld,
-            playerInventory, player.GetSelectedItemIndex());
+        if (!HoveredItemContainsItem())
+        {
+            PickUpItemWorld(HoveredItemWorld,
+                playerInventory, player.GetSelectedItemIndex());
+        }
     }
 
     public void PlaceSelectedItemAtCursorPosition()
@@ -133,11 +136,13 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePickupCursor()
     {
-        if (HoveredItemWorld != null &&
+        bool cannotAddHoveredItem = HoveredItemWorld != null &&
             !playerInventory.CanAddItem(HoveredItemWorld.GetItem(), out int canAddAmount) &&
-            canAddAmount == 0)
+            canAddAmount == 0;
+
+        if (cannotAddHoveredItem || HoveredItemContainsItem())
         {
-            cursorController.Sprite = itemPickupArrowInventoryFull;
+            cursorController.Sprite = cannotPickUpArrow;
         }
         else
         {
@@ -217,6 +222,10 @@ public class ItemPickupAndPlacement : MonoBehaviour
             !WaitingForInputReleaseBeforePlacement &&
             !selectedItemDefinition.IsEmpty();
     }
+
+    private bool HoveredItemContainsItem() => HoveredItemWorld != null &&
+        HoveredItemWorld.TryGetComponent(out Inventory hoveredInventory) &&
+        hoveredInventory.GetItemList().Exists(x => !x.itemDefinition.IsEmpty());
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)
     {
