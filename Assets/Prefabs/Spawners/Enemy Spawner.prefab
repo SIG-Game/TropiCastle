@@ -52,8 +52,8 @@ MonoBehaviour:
   timeBeforeFirstSpawnRange: {x: 4, y: 11}
   timeBetweenSpawns: 5
   maxSpawnedPrefabs: 2
-  minSpawnPosition: {x: -8, y: -3}
-  maxSpawnPosition: {x: 8, y: 4}
+  minSpawnPosition: {x: -9.5, y: -3}
+  maxSpawnPosition: {x: -4.5, y: 2}
   logOnSpawn: 0
   playerTransform: {fileID: 0}
   playerInventory: {fileID: 0}
