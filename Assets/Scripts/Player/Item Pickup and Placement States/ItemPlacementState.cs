@@ -24,7 +24,12 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
         if (itemPickupAndPlacement.CursorIsOverItemWorld)
         {
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.PickupState);
+            return;
+        }
 
+        if (itemPickupAndPlacement.SelectedItemIsEmpty())
+        {
+            itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
             return;
         }
 
@@ -38,19 +43,14 @@ public class ItemPlacementState : BaseItemPickupAndPlacementState
             }
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
-
-            return;
         }
-
         // Cancel item placement when use item button is pressed while placing an item
-        if (itemPickupAndPlacement.PlacingItem &&
+        else if (itemPickupAndPlacement.PlacingItem &&
             inputManager.GetUseItemButtonDownIfUnusedThisFrame())
         {
             itemPickupAndPlacement.WaitingForInputReleaseBeforePlacement = true;
 
             itemPickupAndPlacement.SwitchState(itemPickupAndPlacement.DefaultState);
-
-            return;
         }
     }
 

@@ -172,6 +172,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
         playerItemInWorld.ShowItem(placementItem);
     }
 
+    public bool SelectedItemIsEmpty()
+    {
+        ItemScriptableObject selectedItemDefinition =
+            player.GetSelectedItem().itemDefinition;
+
+        return selectedItemDefinition.IsEmpty();
+    }
+
     private void UpdateHoveredItemWorld()
     {
         Collider2D cursorOverlapCollider = Physics2D.OverlapPoint(cursorPoint);
@@ -215,12 +223,9 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void UpdatePlacingItem()
     {
-        ItemScriptableObject selectedItemDefinition =
-            player.GetSelectedItem().itemDefinition;
-
         PlacingItem = itemPickupAndPlacementAction.IsPressed() &&
             !WaitingForInputReleaseBeforePlacement &&
-            !selectedItemDefinition.IsEmpty();
+            !SelectedItemIsEmpty();
     }
 
     private bool HoveredItemContainsItem() => HoveredItemWorld != null &&
