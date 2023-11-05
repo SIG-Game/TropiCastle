@@ -7,6 +7,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: back
+      value: 
+      objectReference: {fileID: -690965134, guid: 1ff2176498d710b46a747e62a8c2624a,
+        type: 3}
+    - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: left
+      value: 
+      objectReference: {fileID: -213109132, guid: 1ff2176498d710b46a747e62a8c2624a,
+        type: 3}
+    - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: front
+      value: 
+      objectReference: {fileID: 1015748305, guid: 1ff2176498d710b46a747e62a8c2624a,
+        type: 3}
+    - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: right
+      value: 
+      objectReference: {fileID: 1600285437, guid: 1ff2176498d710b46a747e62a8c2624a,
+        type: 3}
     - target: {fileID: 4509858844898638299, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
         type: 3}
       propertyPath: m_RootOrder
@@ -62,6 +86,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4509858844898638300, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509858844898638302, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1015748305, guid: 1ff2176498d710b46a747e62a8c2624a,
+        type: 3}
     - target: {fileID: 4509858844898638303, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
         type: 3}
       propertyPath: m_Name
