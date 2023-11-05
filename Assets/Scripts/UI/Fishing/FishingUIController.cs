@@ -163,7 +163,6 @@ public class FishingUIController : MonoBehaviour
 
         selectedFish = fishItemScriptableObjects[selectedFishIndex];
         fishUI.Speed = selectedFish.speed;
-        fishUI.SetColor(selectedFish.fishUIColor);
 
         selectedFishItem = new ItemStack(selectedFish, 1);
 

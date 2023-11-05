@@ -15,9 +15,11 @@ MonoBehaviour:
   name: Pufferfish
   sprite: {fileID: 21300000, guid: e90013d418b7dce4c811c92f566d9048, type: 3}
   stackSize: 99
+  lockPlacementToGrid: 0
+  oneAtATimePlacement: 0
   hasCustomColliderSize: 0
+  triggerCollisionPickup: 0
   customColliderSize: {x: 0, y: 0}
   description: A very prickly fish.
   speed: 176
   probabilityWeight: 0.35
-  fishUIColor: {r: 1, g: 0.9346504, b: 0.30566037, a: 1}

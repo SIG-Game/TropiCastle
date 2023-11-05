@@ -1,9 +1,7 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FishUIController : HorizontalMover
 {
-    [SerializeField] private Image fishUIImage;
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private RectTransform fishUIImageRectTransform;
     [SerializeField] private Vector2 fishStartAbsXPositionRange;
@@ -36,9 +34,6 @@ public class FishUIController : HorizontalMover
     public void ResetFishUIImage()
     {
         fishUIImageRectTransform.localScale = Vector3.one;
-
-        fishUIImage.color = new Color(fishUIImage.color.r,
-            fishUIImage.color.g, fishUIImage.color.b, 1f);
     }
 
     private float GetRandomFishXPosition() => Random.Range(fishStartAbsXPositionRange.x,
@@ -52,10 +47,5 @@ public class FishUIController : HorizontalMover
 
         transform.localScale = new Vector3(-transform.localScale.x,
             transform.localScale.y, transform.localScale.z);
-    }
-
-    public void SetColor(Color color)
-    {
-        fishUIImage.color = color;
     }
 }

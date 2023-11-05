@@ -15,9 +15,11 @@ MonoBehaviour:
   name: Goldfish
   sprite: {fileID: 21300000, guid: 22c3d90b6e1de424d89e664553bef6c5, type: 3}
   stackSize: 99
+  lockPlacementToGrid: 0
+  oneAtATimePlacement: 0
   hasCustomColliderSize: 0
+  triggerCollisionPickup: 0
   customColliderSize: {x: 0, y: 0}
   description: Not made of gold...
   speed: 220
   probabilityWeight: 0.45
-  fishUIColor: {r: 1, g: 0.6825071, b: 0, a: 1}

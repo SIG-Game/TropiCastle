@@ -15,9 +15,11 @@ MonoBehaviour:
   name: Marlin
   sprite: {fileID: 21300000, guid: cfa79c1b28ceb51418c432c96af1ae48, type: 3}
   stackSize: 99
+  lockPlacementToGrid: 0
+  oneAtATimePlacement: 0
   hasCustomColliderSize: 0
+  triggerCollisionPickup: 0
   customColliderSize: {x: 0, y: 0}
   description: Quite the nose on this one.
   speed: 440
   probabilityWeight: 0.2
-  fishUIColor: {r: 0, g: 0.655246, b: 1, a: 1}
