@@ -12,7 +12,6 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
     {
         if (playerController.WaterInteractionCast(0.5f, 0.4f).collider == null)
         {
-            DialogueBox.Instance.PlayDialogue("You must be facing water to fish.");
             return;
         }
 
