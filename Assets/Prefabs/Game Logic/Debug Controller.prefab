@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7955603510779849680}
-  - component: {fileID: 7955603510779849681}
-  - component: {fileID: 5183015604412245750}
+  - component: {fileID: 1288853852849473767}
   m_Layer: 0
-  m_Name: Debug
+  m_Name: Debug Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7955603510779849681
+--- !u!114 &1288853852849473767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,20 +41,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7955603510779849682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5493b111dcd2604595d45bff612c934, type: 3}
+  m_Script: {fileID: 11500000, guid: db2f4515c4bfb8b4cb5bf93cf065cf9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetFrameRate: 0
---- !u!114 &5183015604412245750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7955603510779849682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b497333eb19d8f44fbcace92b7382841, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   debugModeEnabled: 1

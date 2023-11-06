@@ -34,7 +34,7 @@ public class DebugAddItemDropdownController : MonoBehaviour
 
     private void Start()
     {
-        if (!DebugModeController.DebugModeEnabled)
+        if (!DebugController.DebugModeEnabled)
         {
             dropdown.gameObject.SetActive(false);
         }

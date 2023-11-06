@@ -10,7 +10,7 @@ public class DebugAddItemButton : MonoBehaviour
 
     private void Start()
     {
-        if (!DebugModeController.DebugModeEnabled)
+        if (!DebugController.DebugModeEnabled)
         {
             debugAddItemButton.SetActive(false);
         }

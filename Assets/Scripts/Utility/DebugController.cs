@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class DebugModeController : MonoBehaviour
+public class DebugController : MonoBehaviour
 {
+    [SerializeField] private int targetFrameRate;
     [SerializeField] private bool debugModeEnabled;
 
     public static bool DebugModeEnabled;
@@ -9,5 +10,10 @@ public class DebugModeController : MonoBehaviour
     private void Awake()
     {
         DebugModeEnabled = debugModeEnabled;
+    }
+
+    private void Update()
+    {
+        Application.targetFrameRate = targetFrameRate;
     }
 }

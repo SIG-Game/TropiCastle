@@ -8,7 +8,7 @@ public class DebugAddItemAmountInputField : MonoBehaviour
 
     private void Start()
     {
-        if (!DebugModeController.DebugModeEnabled)
+        if (!DebugController.DebugModeEnabled)
         {
             amountInputField.gameObject.SetActive(false);
         }
