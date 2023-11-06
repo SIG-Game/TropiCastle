@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 434c0039ae443204589775ec4e227516, type: 3}
-  m_Name: Goldfish To Rock
+  m_Name: Trade 1 Goldfish For 1 Rock
   m_EditorClassIdentifier: 
   InputItems:
   - itemDefinition: {fileID: 11400000, guid: a4423d94df5353a49bba5cc5ef47541c, type: 2}
