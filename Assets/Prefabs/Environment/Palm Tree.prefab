@@ -125,7 +125,7 @@ PrefabInstance:
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
       propertyPath: timeBetweenSpawns
-      value: 20
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
@@ -172,7 +172,12 @@ PrefabInstance:
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
       propertyPath: timeBeforeFirstSpawnRange.x
-      value: 2
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
+        type: 3}
+      propertyPath: timeBeforeFirstSpawnRange.y
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6287177743119961213, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
