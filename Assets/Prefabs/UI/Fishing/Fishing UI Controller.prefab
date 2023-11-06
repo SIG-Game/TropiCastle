@@ -501,6 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xPositionRange: {x: -200, y: 200}
+  fishingUIController: {fileID: 4788721817516295151}
   rectTransform: {fileID: 4788721819336372576}
   fishUIImageRectTransform: {fileID: 4788721818253555018}
   fishStartAbsXPositionRange: {x: 80, y: 190}
