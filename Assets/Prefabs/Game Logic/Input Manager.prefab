@@ -51,8 +51,6 @@ MonoBehaviour:
     type: 3}
   inventoryActionReference: {fileID: -723665129591468507, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
-  fishActionReference: {fileID: 2727089031427943020, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
-    type: 3}
 --- !u!114 &4078219768602616832
 MonoBehaviour:
   m_ObjectHideFlags: 0

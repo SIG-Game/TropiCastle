@@ -6,16 +6,12 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private FishingUIController fishingUIController;
 
-    private int fishingRodItemIndex;
-
-    public void UseItem(ItemStack _, int itemIndex)
+    public void UseItem(ItemStack _, int _1)
     {
         if (playerController.WaterInteractionCast(0.5f, 0.4f).collider == null)
         {
             return;
         }
-
-        fishingRodItemIndex = itemIndex;
 
         fishingUIController.OnFishingStopped += FishingUIController_OnFishingStopped;
 
@@ -24,7 +20,8 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 
     private void FishingUIController_OnFishingStopped()
     {
-        playerInventory.DecrementItemDurabilityAtIndex(fishingRodItemIndex);
+        playerInventory.DecrementItemDurabilityAtIndex(
+            playerController.GetSelectedItemIndex());
 
         fishingUIController.OnFishingStopped -= FishingUIController_OnFishingStopped;
     }

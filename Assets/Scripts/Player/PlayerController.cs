@@ -108,15 +108,6 @@ public class PlayerController : MonoBehaviour
         {
             weaponItemUsage.AttackWithStrongestWeaponInInventory();
         }
-        // Do not check for fish input on the same frame that an item is used
-        else if (inputManager.GetFishButtonDownIfUnusedThisFrame() &&
-            !playerActionDisablingUIManager.ActionDisablingUIOpen &&
-            TryGetFishingRodItemIndex(out int fishingRodItemIndex))
-        {
-            ItemStack fishingRodItem = inventory.GetItemList()[fishingRodItemIndex];
-
-            fishingRodItemUsage.UseItem(fishingRodItem, fishingRodItemIndex);
-        }
         else if (healAction.WasPressedThisFrame())
         {
             healingItemUsage.ConsumeFirstHealingItemInPlayerInventory();
@@ -189,14 +180,6 @@ public class PlayerController : MonoBehaviour
     {
         PauseController.Instance.GamePaused = true;
         OnPlayerDied();
-    }
-
-    private bool TryGetFishingRodItemIndex(out int fishingRodItemIndex)
-    {
-        fishingRodItemIndex = inventory.GetItemList()
-            .FindIndex(x => x.itemDefinition.name == "Fishing Rod");
-
-        return fishingRodItemIndex != -1;
     }
 
     private void OnTriggerStay2D(Collider2D other)

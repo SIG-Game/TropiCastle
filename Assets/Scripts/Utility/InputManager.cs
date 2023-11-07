@@ -6,24 +6,20 @@ public class InputManager : MonoBehaviour
     [SerializeField] private InputActionReference useItemActionReference;
     [SerializeField] private InputActionReference interactActionReference;
     [SerializeField] private InputActionReference inventoryActionReference;
-    [SerializeField] private InputActionReference fishActionReference;
 
     private InputAction useItemAction;
     private InputAction interactAction;
     private InputAction inventoryAction;
-    private InputAction fishAction;
     private bool numberKeyUsedThisFrame;
     private bool useItemButtonDownUsedThisFrame;
     private bool interactButtonDownUsedThisFrame;
     private bool inventoryButtonDownUsedThisFrame;
-    private bool fishButtonDownUsedThisFrame;
 
     private void Awake()
     {
         useItemAction = useItemActionReference.action;
         interactAction = interactActionReference.action;
         inventoryAction = inventoryActionReference.action;
-        fishAction = fishActionReference.action;
     }
 
     // Has to run before any scripts that use IfUnusedThisFrame methods
@@ -33,7 +29,6 @@ public class InputManager : MonoBehaviour
         useItemButtonDownUsedThisFrame = false;
         interactButtonDownUsedThisFrame = false;
         inventoryButtonDownUsedThisFrame = false;
-        fishButtonDownUsedThisFrame = false;
     }
 
     // Returns input bool when that input has not been used this frame
@@ -104,8 +99,4 @@ public class InputManager : MonoBehaviour
     public bool GetInventoryButtonDownIfUnusedThisFrame() =>
         GetInputIfUnusedThisFrame(inventoryAction.WasPressedThisFrame(),
             ref inventoryButtonDownUsedThisFrame);
-
-    public bool GetFishButtonDownIfUnusedThisFrame() =>
-        GetInputIfUnusedThisFrame(fishAction.WasPressedThisFrame(),
-            ref fishButtonDownUsedThisFrame);
 }

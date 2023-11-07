@@ -69,15 +69,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Fish",
-                    "type": "Button",
-                    "id": "6f34eb14-fc79-4c9f-9fbe-df2b4bdcc3a3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Heal",
                     "type": "Button",
                     "id": "b8d3d5e4-f18a-4080-93b7-fac6ddae54d4",
@@ -352,28 +343,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cbff970a-b35d-416d-be19-4e70ff9f9b7d",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mouse and Keyboard",
-                    "action": "Fish",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c140ab36-123b-418c-a481-8cb55bdd15b2",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Fish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
