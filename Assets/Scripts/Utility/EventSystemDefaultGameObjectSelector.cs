@@ -41,6 +41,11 @@ public class EventSystemDefaultGameObjectSelector : MonoBehaviour
         Instance = null;
     }
 
+    public void SelectNull()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
     public void SetDefaultSelectedGameObject(GameObject defaultSelectedGameObject)
     {
         this.defaultSelectedGameObject = defaultSelectedGameObject;
