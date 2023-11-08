@@ -18,7 +18,7 @@ public abstract class SaveManager : MonoBehaviour
 
 #if UNITY_EDITOR
     [ContextMenu("Set Save GUID")]
-    private void SetSaveGuid()
+    public void SetSaveGuid()
     {
         saveGuid = Guid.NewGuid().ToString();
 
