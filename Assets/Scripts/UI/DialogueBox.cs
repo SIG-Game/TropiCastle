@@ -20,12 +20,8 @@ public class DialogueBox : MonoBehaviour
     private WaitForSeconds characterScrollWaitForSeconds;
     private bool textScrolling;
 
-    public static DialogueBox Instance { get; private set; }
-
     private void Awake()
     {
-        Instance = this;
-
         linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
         characterScrollWaitForSeconds = new WaitForSeconds(characterScrollWaitSeconds);
         textScrolling = false;
@@ -51,11 +47,6 @@ public class DialogueBox : MonoBehaviour
                 AdvanceDialogue();
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        Instance = null;
     }
 
     private void AdvanceDialogue()

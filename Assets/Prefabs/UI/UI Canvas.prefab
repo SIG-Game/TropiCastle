@@ -1513,6 +1513,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2f285a73707d5141bd3fb697e5c3a0b, type: 3}
+--- !u!114 &6847651758018855121 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9220680041550966002, guid: e2f285a73707d5141bd3fb697e5c3a0b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2373908668822776867}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f526718de560dc8499c83b70b6a7eb59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6847651758018855122 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9220680041550966001, guid: e2f285a73707d5141bd3fb697e5c3a0b,
@@ -4412,6 +4424,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: db8c7ef7f806cb046bba834696f5a580,
         type: 3}
+    - target: {fileID: 4788721817516295151, guid: 6eec2d617ac261b42855edf00e17c077,
+        type: 3}
+      propertyPath: dialogueBox
+      value: 
+      objectReference: {fileID: 6847651758018855121}
     - target: {fileID: 4788721817516295151, guid: 6eec2d617ac261b42855edf00e17c077,
         type: 3}
       propertyPath: playerInventory

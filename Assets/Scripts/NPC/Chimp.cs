@@ -11,6 +11,7 @@ public class Chimp : NPCInteractable
     [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
+    [SerializeField] private DialogueBox dialogueBox;
 
     public float LastGiveTimeSeconds { get; set; }
     public float TimeBetweenGivesSeconds { get; set; }
@@ -62,8 +63,8 @@ public class Chimp : NPCInteractable
             dialogueLinesToPlay = notGivingItemDialogueLines;
         }
 
-        DialogueBox.Instance.SetCharacterName(chimpCharacterName);
-        DialogueBox.Instance.PlayDialogue(dialogueLinesToPlay,
+        dialogueBox.SetCharacterName(chimpCharacterName);
+        dialogueBox.PlayDialogue(dialogueLinesToPlay,
             () => Chimp_AfterDialogueAction(player, itemToGive));
     }
 

@@ -12,6 +12,7 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private Transform hookTransform;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
+    [SerializeField] private DialogueBox dialogueBox;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Vector2 catchFishXPositionRange;
@@ -104,7 +105,7 @@ public class FishingUIController : MonoBehaviour
             playerItemInWorld.Hide();
         }
 
-        DialogueBox.Instance.PlayDialogue(
+        dialogueBox.PlayDialogue(
             $"You caught a {selectedFish.name.ToLowerInvariant()}!\n" +
             $"{selectedFish.description}", afterCatchDialogueAction);
     }
