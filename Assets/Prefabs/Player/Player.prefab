@@ -521,8 +521,6 @@ MonoBehaviour:
   cursorController: {fileID: 0}
   inventoryUIManager: {fileID: 0}
   inputManager: {fileID: 0}
-  attackActionReference: {fileID: -3758019864443385551, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
-    type: 3}
   healActionReference: {fileID: 5534942449988417204, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
   fishingRodItemUsage: {fileID: 8293061806737836654}
@@ -825,7 +823,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 5288355818519945016}
-  playerInventory: {fileID: 856750480813842556}
   playerAnimator: {fileID: 8669891105156055949}
   weaponController: {fileID: 981241631752593405}
   weaponSpriteRenderer: {fileID: 2130907984869856252}

@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CursorController cursorController;
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InputManager inputManager;
-    [SerializeField] private InputActionReference attackActionReference;
     [SerializeField] private InputActionReference healActionReference;
 
     [Header("Item Usages")]
@@ -52,7 +51,6 @@ public class PlayerController : MonoBehaviour
     private ItemSelectionController itemSelectionController;
     private SpriteRenderer spriteRenderer;
     private CharacterDirectionController directionController;
-    private InputAction attackAction;
     private InputAction healAction;
     private LayerMask interactableMask;
     private LayerMask waterMask;
@@ -66,7 +64,6 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         directionController = GetComponent<CharacterDirectionController>();
 
-        attackAction = attackActionReference.action;
         healAction = healActionReference.action;
 
         interactableMask = LayerMask.GetMask("Interactable");
@@ -103,10 +100,6 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-        }
-        else if (attackAction.WasPressedThisFrame() && weaponItemUsage.PlayerHasWeapon())
-        {
-            weaponItemUsage.AttackWithStrongestWeaponInInventory();
         }
         else if (healAction.WasPressedThisFrame())
         {
