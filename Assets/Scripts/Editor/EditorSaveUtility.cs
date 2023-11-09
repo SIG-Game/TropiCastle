@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,6 +27,39 @@ public static class EditorSaveUtility
         if (!emptySaveGuidExists)
         {
             Debug.Log("No empty save GUIDs in active scene");
+        }
+    }
+
+    [MenuItem("Save Utility/Verify Save GUID Uniqueness in Active Scene")]
+    public static void VerifySaveGuidUniquenessInActiveScene()
+    {
+        SaveManager[] saveManagers = Object.FindObjectsOfType<SaveManager>(true);
+
+        var saveGuidToGameObjectName = new Dictionary<string, string>();
+
+        bool duplicateSaveGuidExists = false;
+
+        foreach (var saveManager in saveManagers)
+        {
+            string currentSaveGuid = saveManager.GetSaveGuid();
+
+            if (saveGuidToGameObjectName.ContainsKey(currentSaveGuid))
+            {
+                duplicateSaveGuidExists = true;
+
+                Debug.LogError($"Save GUID of GameObject {saveManager.gameObject.name} " +
+                    $"is a duplicate of save GUID of GameObject " +
+                    saveGuidToGameObjectName[currentSaveGuid]);
+            }
+            else
+            {
+                saveGuidToGameObjectName.Add(currentSaveGuid, saveManager.gameObject.name);
+            }
+        }
+
+        if (!duplicateSaveGuidExists)
+        {
+            Debug.Log("No duplicate save GUIDs in active scene");
         }
     }
 }
