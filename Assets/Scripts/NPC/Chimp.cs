@@ -16,11 +16,22 @@ public class Chimp : NPCInteractable
     public float LastGiveTimeSeconds { get; set; }
     public float TimeBetweenGivesSeconds { get; set; }
 
+    private List<float> itemProbabilityWeights;
+    private float itemProbabilityWeightSum;
+
     private const string chimpCharacterName = "Chimp";
 
     protected override void Awake()
     {
         base.Awake();
+
+        itemProbabilityWeights = new List<float>();
+
+        foreach (NPCItemToGive itemToGive in itemOffering.PotentialItemsToGive)
+        {
+            itemProbabilityWeights.Add(itemToGive.ProbabilityWeight);
+            itemProbabilityWeightSum += itemToGive.ProbabilityWeight;
+        }
 
         LastGiveTimeSeconds = 0f;
         TimeBetweenGivesSeconds = 0f;
@@ -45,7 +56,7 @@ public class Chimp : NPCInteractable
             int itemToGiveIndex =
                 Random.Range(0, itemOffering.PotentialItemsToGive.Count);
 
-            itemToGive = itemOffering.PotentialItemsToGive[itemToGiveIndex];
+            itemToGive = SelectItemToGive();
 
             if (!player.GetInventory().CanAddItem(itemToGive))
             {
@@ -81,6 +92,27 @@ public class Chimp : NPCInteractable
         }
 
         chimpSpinner.StartSpinning();
+    }
+
+    private ItemStack SelectItemToGive()
+    {
+        int selectedItemIndex = -1;
+        float selector = Random.Range(0f, itemProbabilityWeightSum);
+        float selectionLowerBound = 0f;
+
+        for (int i = 0; i < itemProbabilityWeights.Count; ++i)
+        {
+            if (selector >= selectionLowerBound &&
+                selector <= selectionLowerBound + itemProbabilityWeights[i])
+            {
+                selectedItemIndex = i;
+                break;
+            }
+
+            selectionLowerBound += itemProbabilityWeights[i];
+        }
+
+        return itemOffering.PotentialItemsToGive[selectedItemIndex].Item;
     }
 
     public bool ItemGiveAvailable() =>

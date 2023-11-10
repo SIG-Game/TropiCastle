@@ -4,5 +4,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Object/NPC Item Offering")]
 public class NPCItemOfferingScriptableObject : ScriptableObject
 {
-    public List<ItemStack> PotentialItemsToGive;
+    public List<NPCItemToGive> PotentialItemsToGive;
 }
