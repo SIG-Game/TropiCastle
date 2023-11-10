@@ -11,8 +11,6 @@ public class Inventory : MonoBehaviour
     private int firstEmptyIndex;
 
     public event Action<ItemStack, int> OnItemChangedAtIndex = (_, _) => {};
-    public event Action<ItemStack> OnItemAdded = (_) => {};
-    public event Action<ItemStack> OnItemRemoved = (_) => {};
     public event Action OnFailedToAddItemToFullInventory = () => {};
 
     // Every empty item slot references this instance
@@ -117,10 +115,6 @@ public class Inventory : MonoBehaviour
         item.amount += amountAdded;
 
         OnItemChangedAtIndex(item, index);
-
-        ItemStack itemAdded = item.GetCopyWithAmount(amountAdded);
-
-        OnItemAdded(itemAdded);
     }
 
     public void SwapItemsAt(int index1, int index2)
@@ -191,8 +185,6 @@ public class Inventory : MonoBehaviour
         {
             firstEmptyIndex = index;
         }
-
-        OnItemRemoved(itemAtIndex);
     }
 
     private void SetFirstEmptyIndex()
@@ -246,8 +238,6 @@ public class Inventory : MonoBehaviour
         {
             SetFirstEmptyIndex();
         }
-
-        OnItemAdded(newItemCopy);
     }
 
     public void SetItemAtIndex(ItemStack item, int index)
