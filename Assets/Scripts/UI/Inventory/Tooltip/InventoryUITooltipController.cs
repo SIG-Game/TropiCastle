@@ -14,7 +14,6 @@ public class InventoryUITooltipController : MonoBehaviour
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private EventSystem eventSystem;
-    [SerializeField] private bool logTooltipList;
 
     private RectTransform rectTransform;
 
