@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     [Header("Item Usages")]
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
     [SerializeField] private HealingItemUsage healingItemUsage;
-    [SerializeField] private ThrowableItemUsage throwableItemUsage;
     [SerializeField] private WeaponItemUsage weaponItemUsage;
 
     public CharacterDirection Direction
@@ -199,7 +198,6 @@ public class PlayerController : MonoBehaviour
         itemScriptableObjectTypeToUsage = new Dictionary<Type, IItemUsage>
         {
             { typeof(HealingItemScriptableObject), healingItemUsage },
-            { typeof(ThrowableItemScriptableObject), throwableItemUsage },
             { typeof(WeaponItemScriptableObject), weaponItemUsage }
         };
     }

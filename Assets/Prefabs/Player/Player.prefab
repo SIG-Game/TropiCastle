@@ -525,7 +525,6 @@ MonoBehaviour:
     type: 3}
   fishingRodItemUsage: {fileID: 8293061806737836654}
   healingItemUsage: {fileID: 7288205203562457323}
-  throwableItemUsage: {fileID: 5567921040364044053}
   weaponItemUsage: {fileID: 2485764338336164774}
 --- !u!114 &2526882180276161147
 MonoBehaviour:
@@ -740,7 +739,6 @@ GameObject:
   - component: {fileID: 4901340854988399641}
   - component: {fileID: 8293061806737836654}
   - component: {fileID: 7288205203562457323}
-  - component: {fileID: 5567921040364044053}
   - component: {fileID: 2485764338336164774}
   m_Layer: 0
   m_Name: Item Usages
@@ -793,23 +791,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealthController: {fileID: 3015389456133774718}
   playerInventory: {fileID: 856750480813842556}
---- !u!114 &5567921040364044053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7191733551750576650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50c1d05f75f666e4c9fa75cf441eb4f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 5288355818519945016}
-  playerInventory: {fileID: 856750480813842556}
-  playerCollider2D: {fileID: 5288355818519945018}
-  cursorController: {fileID: 0}
-  canThrowBoxCastDistance: 0.5
 --- !u!114 &2485764338336164774
 MonoBehaviour:
   m_ObjectHideFlags: 0
