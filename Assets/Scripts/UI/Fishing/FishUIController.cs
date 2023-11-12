@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class FishUIController : HorizontalMover
 {
-    [SerializeField] private FishingUIController fishingUIController;
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private RectTransform fishUIImageRectTransform;
     [SerializeField] private Vector2 fishStartAbsXPositionRange;
@@ -10,21 +9,14 @@ public class FishUIController : HorizontalMover
 
     public float Speed { private get; set; }
 
-    private void Awake()
-    {
-        fishingUIController.OnFishingUIOpened += FishingUIController_OnFishingUIOpened;
-    }
-
-    private void OnDestroy()
-    {
-        fishingUIController.OnFishingUIOpened -= FishingUIController_OnFishingUIOpened;
-    }
-
-    private void FishingUIController_OnFishingUIOpened()
+    private void OnEnable()
     {
         fishUIImageRectTransform.localScale = Vector3.one;
 
-        rectTransform.anchoredPosition = new Vector3(GetRandomFishXPosition(), 0f, 0f);
+        float randomFishXPosition = Random.Range(fishStartAbsXPositionRange.x,
+            fishStartAbsXPositionRange.y) * GetRandomSign();
+
+        rectTransform.anchoredPosition = new Vector3(randomFishXPosition, 0f, 0f);
 
         if (logStartPosition)
         {
@@ -44,9 +36,6 @@ public class FishUIController : HorizontalMover
         transform.localScale = new Vector3(-transform.localScale.x,
             transform.localScale.y, transform.localScale.z);
     }
-
-    private float GetRandomFishXPosition() => Random.Range(fishStartAbsXPositionRange.x,
-        fishStartAbsXPositionRange.y) * GetRandomSign();
 
     private float GetRandomSign() => Random.Range(0, 2) == 0 ? 1f : -1f;
 }
