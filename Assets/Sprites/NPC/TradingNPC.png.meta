@@ -121,8 +121,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 30
+        width: 14
+        height: 25
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,10 +140,10 @@ TextureImporter:
       name: TradingNPC_1
       rect:
         serializedVersion: 2
-        x: 17
+        x: 15
         y: 0
-        width: 13
-        height: 30
+        width: 10
+        height: 25
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,10 +161,10 @@ TextureImporter:
       name: TradingNPC_2
       rect:
         serializedVersion: 2
-        x: 31
+        x: 26
         y: 0
-        width: 13
-        height: 30
+        width: 10
+        height: 25
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,10 +182,10 @@ TextureImporter:
       name: TradingNPC_3
       rect:
         serializedVersion: 2
-        x: 45
+        x: 37
         y: 0
-        width: 16
-        height: 30
+        width: 14
+        height: 25
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
