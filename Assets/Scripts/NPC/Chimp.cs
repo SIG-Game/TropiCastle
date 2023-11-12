@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,8 +17,7 @@ public class Chimp : NPCInteractable
     public float LastGiveTimeSeconds { get; set; }
     public float TimeBetweenGivesSeconds { get; set; }
 
-    private List<float> itemProbabilityWeights;
-    private float itemProbabilityWeightSum;
+    private WeightedRandomSelector itemSelector;
 
     private const string chimpCharacterName = "Chimp";
 
@@ -25,13 +25,10 @@ public class Chimp : NPCInteractable
     {
         base.Awake();
 
-        itemProbabilityWeights = new List<float>();
+        List<float> itemWeights = itemOffering.PotentialItemsToGive
+            .Select(x => x.ProbabilityWeight).ToList();
 
-        foreach (NPCItemToGive itemToGive in itemOffering.PotentialItemsToGive)
-        {
-            itemProbabilityWeights.Add(itemToGive.ProbabilityWeight);
-            itemProbabilityWeightSum += itemToGive.ProbabilityWeight;
-        }
+        itemSelector = new WeightedRandomSelector(itemWeights);
 
         LastGiveTimeSeconds = 0f;
         TimeBetweenGivesSeconds = 0f;
@@ -53,10 +50,8 @@ public class Chimp : NPCInteractable
 
         if (ItemGiveAvailable())
         {
-            int itemToGiveIndex =
-                Random.Range(0, itemOffering.PotentialItemsToGive.Count);
-
-            itemToGive = SelectItemToGive();
+            int itemToGiveIndex = itemSelector.SelectIndex();
+            itemToGive = itemOffering.PotentialItemsToGive[itemToGiveIndex].Item;
 
             if (!player.GetInventory().CanAddItem(itemToGive))
             {
@@ -92,27 +87,6 @@ public class Chimp : NPCInteractable
         }
 
         chimpSpinner.StartSpinning();
-    }
-
-    private ItemStack SelectItemToGive()
-    {
-        int selectedItemIndex = -1;
-        float selector = Random.Range(0f, itemProbabilityWeightSum);
-        float selectionLowerBound = 0f;
-
-        for (int i = 0; i < itemProbabilityWeights.Count; ++i)
-        {
-            if (selector >= selectionLowerBound &&
-                selector <= selectionLowerBound + itemProbabilityWeights[i])
-            {
-                selectedItemIndex = i;
-                break;
-            }
-
-            selectionLowerBound += itemProbabilityWeights[i];
-        }
-
-        return itemOffering.PotentialItemsToGive[selectedItemIndex].Item;
     }
 
     public bool ItemGiveAvailable() =>

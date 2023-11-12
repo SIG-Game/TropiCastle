@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using Random = UnityEngine.Random;
 
 public class FishingUIController : MonoBehaviour
 {
@@ -23,10 +23,9 @@ public class FishingUIController : MonoBehaviour
     public event Action OnFishingUIClosed = () => {};
 
     private Animator animator;
+    private WeightedRandomSelector fishSelector;
     private FishItemScriptableObject selectedFish;
     private ItemStack selectedFishItem;
-    private List<float> fishProbabilityWeights;
-    private float fishProbabilityWeightSum;
     private bool catchFailedAnimationStarted;
 
     private IList<FishItemScriptableObject> fishItemScriptableObjects;
@@ -41,14 +40,10 @@ public class FishingUIController : MonoBehaviour
 
         fishItemScriptableObjects = fishItemsLoadHandle.WaitForCompletion();
 
-        fishProbabilityWeights = new List<float>();
-        fishProbabilityWeightSum = 0f;
+        List<float> fishWeights = fishItemScriptableObjects
+            .Select(x => x.probabilityWeight).ToList();
 
-        foreach (var fishItemScriptableObject in fishItemScriptableObjects)
-        {
-            fishProbabilityWeights.Add(fishItemScriptableObject.probabilityWeight);
-            fishProbabilityWeightSum += fishItemScriptableObject.probabilityWeight;
-        }
+        fishSelector = new WeightedRandomSelector(fishWeights);
     }
 
     private void Update()
@@ -118,7 +113,15 @@ public class FishingUIController : MonoBehaviour
             return;
         }
 
-        SelectRandomFish();
+        selectedFish = fishItemScriptableObjects[fishSelector.SelectIndex()];
+        fishUI.Speed = selectedFish.speed;
+
+        selectedFishItem = new ItemStack(selectedFish, 1);
+
+        if (logSelectedFish)
+        {
+            Debug.Log("Selected fish: " + selectedFish.name);
+        }
 
         if (!playerInventory.CanAddItem(selectedFishItem))
         {
@@ -132,35 +135,6 @@ public class FishingUIController : MonoBehaviour
         fishUI.gameObject.SetActive(true);
 
         OnFishingUIOpened();
-    }
-
-    private void SelectRandomFish()
-    {
-        int selectedFishIndex = -1;
-        float fishSelector = Random.Range(0f, fishProbabilityWeightSum);
-        float fishSelectionLowerBound = 0f;
-
-        for (int i = 0; i < fishProbabilityWeights.Count; ++i)
-        {
-            if (fishSelector >= fishSelectionLowerBound &&
-                fishSelector <= fishSelectionLowerBound + fishProbabilityWeights[i])
-            {
-                selectedFishIndex = i;
-                break;
-            }
-
-            fishSelectionLowerBound += fishProbabilityWeights[i];
-        }
-
-        selectedFish = fishItemScriptableObjects[selectedFishIndex];
-        fishUI.Speed = selectedFish.speed;
-
-        selectedFishItem = new ItemStack(selectedFish, 1);
-
-        if (logSelectedFish)
-        {
-            Debug.Log("Selected fish: " + selectedFish.name);
-        }
     }
 
     private void HideFishingUI()
