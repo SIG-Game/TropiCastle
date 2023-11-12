@@ -10,6 +10,7 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private GameObject fishingUI;
     [SerializeField] private FishUIController fishUI;
     [SerializeField] private Transform hookTransform;
+    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private DialogueBox dialogueBox;
@@ -134,6 +135,8 @@ public class FishingUIController : MonoBehaviour
         fishingUI.SetActive(true);
         fishUI.gameObject.SetActive(true);
 
+        playerActionDisablingUIManager.ActionDisablingUIOpen = true;
+
         OnFishingUIOpened();
     }
 
@@ -141,6 +144,8 @@ public class FishingUIController : MonoBehaviour
     {
         fishingUI.SetActive(false);
         fishUI.gameObject.SetActive(false);
+
+        playerActionDisablingUIManager.ActionDisablingUIOpen = false;
 
         OnFishingUIClosed();
     }

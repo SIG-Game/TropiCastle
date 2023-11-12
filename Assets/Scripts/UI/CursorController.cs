@@ -186,8 +186,7 @@ public class CursorController : MonoBehaviour
 
     private void ShowIfUnpaused()
     {
-        // PauseController.Instance can be null here when the scene ends
-        if (PauseController.Instance != null && !PauseController.Instance.GamePaused)
+        if (!PauseController.Instance.GamePaused)
         {
             gameObject.SetActive(true);
         }
