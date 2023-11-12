@@ -7,7 +7,6 @@ public class ItemWorld : MonoBehaviour
 {
     [SerializeField] private ItemStack item;
     [SerializeField] private TMP_Text amountText;
-    [SerializeField] private bool logOnInteract;
 
     private static readonly Dictionary<string, Type> itemNameToInteractableType =
         new Dictionary<string, Type>
@@ -17,12 +16,6 @@ public class ItemWorld : MonoBehaviour
     };
 
     private ItemInteractableDependencies itemInteractableDependencies;
-    private Spawnable spawnable;
-
-    private void Awake()
-    {
-        spawnable = GetComponent<Spawnable>();
-    }
 
     public void SetUpItemWorld(ItemStack item,
         ItemInteractableDependencies itemInteractableDependencies)

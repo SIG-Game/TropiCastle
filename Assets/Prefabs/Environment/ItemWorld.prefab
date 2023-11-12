@@ -153,7 +153,6 @@ MonoBehaviour:
     itemDefinition: {fileID: 0}
     amount: 1
   amountText: {fileID: 6997112948358293008}
-  logOnInteract: 0
 --- !u!114 &5689536345290061009
 MonoBehaviour:
   m_ObjectHideFlags: 0
