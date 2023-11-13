@@ -55,7 +55,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     {
         if (HoldingItem())
         {
-            UpdateHeldItemPosition();
+            heldItemRectTransform.anchoredPosition =
+                MousePositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
 
             if (rightClickToResetEnabled &&
                 Input.GetMouseButtonDown(1) &&
@@ -69,12 +70,6 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     private void OnDestroy()
     {
         inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
-    }
-
-    private void UpdateHeldItemPosition()
-    {
-        heldItemRectTransform.anchoredPosition =
-            MousePositionHelper.GetClampedMouseCanvasPosition(canvasRectTransform);
     }
 
     public void LeftClickedItemAtIndex(
