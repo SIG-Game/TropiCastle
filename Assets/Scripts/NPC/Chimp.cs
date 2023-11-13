@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,8 +7,8 @@ public class Chimp : NPCInteractable
     [SerializeField] private List<string> givingItemDialogueLines;
     [SerializeField] private List<string> notGivingItemDialogueLines;
     [SerializeField] private List<string> playerInventoryFullDialogueLines;
-    [SerializeField] private NPCItemOfferingScriptableObject itemOffering;
     [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
+    [SerializeField] private NPCItemOfferingSelector itemOfferingSelector;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
     [SerializeField] private DialogueBox dialogueBox;
@@ -17,18 +16,11 @@ public class Chimp : NPCInteractable
     public float LastGiveTimeSeconds { get; set; }
     public float TimeBetweenGivesSeconds { get; set; }
 
-    private WeightedRandomSelector itemSelector;
-
     private const string chimpCharacterName = "Chimp";
 
     protected override void Awake()
     {
         base.Awake();
-
-        List<float> itemWeights = itemOffering.PotentialItemsToGive
-            .Select(x => x.ProbabilityWeight).ToList();
-
-        itemSelector = new WeightedRandomSelector(itemWeights);
 
         LastGiveTimeSeconds = 0f;
         TimeBetweenGivesSeconds = 0f;
@@ -50,8 +42,7 @@ public class Chimp : NPCInteractable
 
         if (ItemGiveAvailable())
         {
-            int itemToGiveIndex = itemSelector.SelectIndex();
-            itemToGive = itemOffering.PotentialItemsToGive[itemToGiveIndex].Item;
+            itemToGive = itemOfferingSelector.SelectItemToGive();
 
             if (!player.GetInventory().CanAddItem(itemToGive))
             {

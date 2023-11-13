@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 6226198124874704992}
   - component: {fileID: 6226198124874704994}
   - component: {fileID: 6226198124874704995}
+  - component: {fileID: 8074924875869424796}
   - component: {fileID: 856391509901689041}
   - component: {fileID: 6226198124874705005}
   - component: {fileID: 2289581544261555151}
@@ -251,10 +252,24 @@ MonoBehaviour:
   playerInventoryFullDialogueLines:
   - (The chimp is eager to give you something but can sense that your inventory is
     full.)
-  itemOffering: {fileID: 11400000, guid: 1c4403d0d8d65d946b38729e9bce432f, type: 2}
   timeBetweenGivesSecondsRange: {x: 5, y: 10}
+  itemOfferingSelector: {fileID: 8074924875869424796}
   chimpSpinner: {fileID: 856391509901689041}
   chimpItemInWorld: {fileID: 5168677056278632683}
+  dialogueBox: {fileID: 0}
+--- !u!114 &8074924875869424796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6226198124874704999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df731977a95b5da47903bdc57615488f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemOffering: {fileID: 11400000, guid: 1c4403d0d8d65d946b38729e9bce432f, type: 2}
 --- !u!114 &856391509901689041
 MonoBehaviour:
   m_ObjectHideFlags: 0
