@@ -22,8 +22,8 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
 
         playerController.DisableItemSelection();
 
-        string attackTypeString = weaponItemDefinition.attackType.ToString();
+        string attackType = weaponItemDefinition.GetProperty("AttackType");
 
-        playerAnimator.Play($"{attackTypeString} {playerController.Direction}");
+        playerAnimator.Play($"{attackType} {playerController.Direction}");
     }
 }
