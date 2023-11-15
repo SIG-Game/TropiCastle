@@ -1,17 +1,25 @@
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Object/Item/Weapon Item")]
 public class WeaponItemScriptableObject : ItemScriptableObject
 {
     public Sprite weaponSprite;
-    public int damage;
-    public float knockback;
-    public float attackSpeed;
     public List<ItemProperty> properties;
 
-    public string GetProperty(string name) => properties.Find(x => x.Name == name).Value;
+    public string GetStringProperty(string name) =>
+        properties.Find(x => x.Name == name).Value;
 
-    public override string GetAdditionalInfo() => $"\n{GetProperty("AttackType")} Attack\n" +
-        $"Deals {damage} Damage\n{knockback} Knockback\n{attackSpeed} Attack Speed";
+    public float GetFloatProperty(string name) =>
+        float.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
+
+    public int GetIntProperty(string name) =>
+        int.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
+
+    public override string GetAdditionalInfo() =>
+        $"\n{GetStringProperty("AttackType")} Attack\n" +
+        $"Deals {GetIntProperty("Damage")} Damage\n" +
+        $"{GetFloatProperty("Knockback")} Knockback\n" +
+        $"{GetFloatProperty("AttackSpeed")} Attack Speed";
 }

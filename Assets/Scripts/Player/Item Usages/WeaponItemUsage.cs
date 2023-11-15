@@ -13,7 +13,7 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
             (WeaponItemScriptableObject)item.itemDefinition;
 
         playerAnimator.SetFloat("Attack Speed Multiplier",
-            weaponItemDefinition.attackSpeed);
+            weaponItemDefinition.GetFloatProperty("AttackSpeed"));
 
         weaponSpriteRenderer.sprite = weaponItemDefinition.weaponSprite;
         weaponController.SetUpUsingScriptableObject(weaponItemDefinition);
@@ -22,7 +22,7 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
 
         playerController.DisableItemSelection();
 
-        string attackType = weaponItemDefinition.GetProperty("AttackType");
+        string attackType = weaponItemDefinition.GetStringProperty("AttackType");
 
         playerAnimator.Play($"{attackType} {playerController.Direction}");
     }

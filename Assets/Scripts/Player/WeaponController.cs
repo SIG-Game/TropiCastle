@@ -36,7 +36,7 @@ public class WeaponController : MonoBehaviour
     public void SetUpUsingScriptableObject(
         WeaponItemScriptableObject weaponItemScriptableObject)
     {
-        Damage = weaponItemScriptableObject.damage;
-        EnemyKnockbackForce = weaponItemScriptableObject.knockback;
+        Damage = weaponItemScriptableObject.GetIntProperty("Damage");
+        EnemyKnockbackForce = weaponItemScriptableObject.GetFloatProperty("Knockback");
     }
 }

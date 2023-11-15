@@ -21,9 +21,12 @@ MonoBehaviour:
   triggerCollisionPickup: 0
   customColliderSize: {x: 0, y: 0}
   weaponSprite: {fileID: 21300000, guid: 349d3eb683eac8a4097352ae27210a1e, type: 3}
-  damage: 60
-  knockback: 3
-  attackSpeed: 2
   properties:
   - Name: AttackType
     Value: Stab
+  - Name: Damage
+    Value: 60
+  - Name: Knockback
+    Value: 3
+  - Name: AttackSpeed
+    Value: 2
