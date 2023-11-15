@@ -62,7 +62,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
                 Input.GetMouseButtonDown(1) &&
                 hoveredItemSlotManager.HoveredItemIndex == -1)
             {
-                ResetHeldItem();
+                PutHeldItemBack();
             }
         }
     }
@@ -148,11 +148,9 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
     private void PlaceHeldItem(int clickedItemIndex, ItemStack clickedItem)
     {
-        bool putHeldItemBack = clickedInventory == heldItemInventory &&
-            clickedItemIndex == heldItemIndex;
-        if (putHeldItemBack)
+        if (clickedInventory == heldItemInventory && clickedItemIndex == heldItemIndex)
         {
-            ResetHeldItem();
+            PutHeldItemBack();
         }
         else if (clickedItem.itemDefinition.name == HeldItem.itemDefinition.name &&
             clickedItem.amount < clickedItem.itemDefinition.stackSize)
@@ -226,12 +224,12 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
     private void InventoryUIManager_OnInventoryUIClosed()
     {
-        ResetHeldItem();
+        PutHeldItemBack();
     }
 
     private void UpdateHeldItemUI()
     {
-        if (HeldItem != null)
+        if (HoldingItem())
         {
             heldItemImage.sprite = HeldItem.itemDefinition.sprite;
             heldItemAmountText.text = HeldItem.GetAmountText();
@@ -261,7 +259,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
     }
 
-    public void ResetHeldItem()
+    public void PutHeldItemBack()
     {
         if (HoldingItem())
         {
@@ -282,10 +280,6 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     }
 
     public bool HoldingItem() => HeldItem != null;
-
-    public int GetHeldItemIndex() => heldItemIndex.Value;
-
-    public Inventory GetHeldItemInventory() => heldItemInventory;
 
     public string GetTooltipText() => HeldItem.GetTooltipText();
 }
