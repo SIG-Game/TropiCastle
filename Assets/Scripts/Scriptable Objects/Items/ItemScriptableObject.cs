@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -12,10 +14,20 @@ public class ItemScriptableObject : ScriptableObject
     public bool hasCustomColliderSize;
     public bool triggerCollisionPickup;
     public Vector2 customColliderSize;
+    public List<ItemProperty> properties;
 
     private const int defaultStackSize = 99;
 
     public bool IsEmpty() => name == "Empty";
+
+    public string GetStringProperty(string name) =>
+        properties.Find(x => x.Name == name).Value;
+
+    public float GetFloatProperty(string name) =>
+        float.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
+
+    public int GetIntProperty(string name) =>
+        int.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
 
     public string GetTooltipText() => IsEmpty() ?
         string.Empty : string.Concat(name, GetAdditionalInfo());
