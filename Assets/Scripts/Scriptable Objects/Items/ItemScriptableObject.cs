@@ -29,8 +29,29 @@ public class ItemScriptableObject : ScriptableObject
     public int GetIntProperty(string name) =>
         int.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
 
-    public string GetTooltipText() => IsEmpty() ?
-        string.Empty : string.Concat(name, GetAdditionalInfo());
+    public bool HasProperty(string name) =>
+        properties.Exists(x => x.Name == name);
+
+    public string GetTooltipText()
+    {
+        string tooltipText;
+
+        if (IsEmpty())
+        {
+            tooltipText = string.Empty;
+        }
+        else
+        {
+            tooltipText = string.Concat(name, GetAdditionalInfo());
+
+            if (HasProperty("InitialDurability"))
+            {
+                tooltipText += $"\nDurability: {GetIntProperty("InitialDurability")}";
+            }
+        }
+
+        return tooltipText;
+    }
 
     public virtual string GetAdditionalInfo() => string.Empty;
 
