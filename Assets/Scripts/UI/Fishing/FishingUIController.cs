@@ -25,24 +25,25 @@ public class FishingUIController : MonoBehaviour
 
     private Animator animator;
     private WeightedRandomSelector fishSelector;
-    private FishItemScriptableObject selectedFish;
+    private ItemScriptableObject selectedFishDefinition;
     private ItemStack selectedFishItem;
     private bool catchFailedAnimationStarted;
 
-    private IList<FishItemScriptableObject> fishItemScriptableObjects;
-    private AsyncOperationHandle<IList<FishItemScriptableObject>> fishItemsLoadHandle;
+    private IList<ItemScriptableObject> fishItemScriptableObjects;
+    private AsyncOperationHandle<IList<ItemScriptableObject>> itemsLoadHandle;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
 
-        fishItemsLoadHandle = Addressables
-            .LoadAssetsAsync<FishItemScriptableObject>("item", null);
+        itemsLoadHandle =
+            Addressables.LoadAssetsAsync<ItemScriptableObject>("item", null);
 
-        fishItemScriptableObjects = fishItemsLoadHandle.WaitForCompletion();
+        fishItemScriptableObjects = itemsLoadHandle.WaitForCompletion()
+            .Where(x => x.HasProperty("FishSpeed")).ToList();
 
         List<float> fishWeights = fishItemScriptableObjects
-            .Select(x => x.probabilityWeight).ToList();
+            .Select(x => x.GetFloatProperty("FishProbabilityWeight")).ToList();
 
         fishSelector = new WeightedRandomSelector(fishWeights);
     }
@@ -63,9 +64,9 @@ public class FishingUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (fishItemsLoadHandle.IsValid())
+        if (itemsLoadHandle.IsValid())
         {
-            Addressables.Release(fishItemsLoadHandle);
+            Addressables.Release(itemsLoadHandle);
         }
     }
 
@@ -102,8 +103,9 @@ public class FishingUIController : MonoBehaviour
         }
 
         dialogueBox.PlayDialogue(
-            $"You caught a {selectedFish.name.ToLowerInvariant()}!\n" +
-            $"{selectedFish.description}", afterCatchDialogueAction);
+            $"You caught a {selectedFishDefinition.name.ToLowerInvariant()}!\n" +
+                selectedFishDefinition.GetStringProperty("FishDescription"),
+            afterCatchDialogueAction);
     }
 
     public void StartFishing()
@@ -114,14 +116,14 @@ public class FishingUIController : MonoBehaviour
             return;
         }
 
-        selectedFish = fishItemScriptableObjects[fishSelector.SelectIndex()];
-        fishUI.Speed = selectedFish.speed;
+        selectedFishDefinition = fishItemScriptableObjects[fishSelector.SelectIndex()];
+        fishUI.Speed = selectedFishDefinition.GetFloatProperty("FishSpeed");
 
-        selectedFishItem = new ItemStack(selectedFish, 1);
+        selectedFishItem = new ItemStack(selectedFishDefinition, 1);
 
         if (logSelectedFish)
         {
-            Debug.Log("Selected fish: " + selectedFish.name);
+            Debug.Log("Selected fish: " + selectedFishDefinition.name);
         }
 
         if (!playerInventory.CanAddItem(selectedFishItem))
