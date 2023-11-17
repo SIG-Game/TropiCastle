@@ -158,7 +158,11 @@ public class PlayerController : MonoBehaviour
 
     private void UseItem(ItemStack item, int itemIndex)
     {
-        if (TryGetItemUsage(item, out IItemUsage itemUsage))
+        if (item.itemDefinition.HasProperty("HealAmount"))
+        {
+            healingItemUsage.UseItem(item, itemIndex);
+        }
+        else if (TryGetItemUsage(item, out IItemUsage itemUsage))
         {
             itemUsage.UseItem(item, itemIndex);
         }
@@ -197,7 +201,6 @@ public class PlayerController : MonoBehaviour
 
         itemScriptableObjectTypeToUsage = new Dictionary<Type, IItemUsage>
         {
-            { typeof(HealingItemScriptableObject), healingItemUsage },
             { typeof(WeaponItemScriptableObject), weaponItemUsage }
         };
     }

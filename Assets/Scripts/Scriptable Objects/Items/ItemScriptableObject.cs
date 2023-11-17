@@ -48,6 +48,11 @@ public class ItemScriptableObject : ScriptableObject
             {
                 tooltipText += $"\nDurability: {GetIntProperty("InitialDurability")}";
             }
+
+            if (HasProperty("HealAmount"))
+            {
+                tooltipText += $"\nHeals {GetIntProperty("HealAmount")} Health";
+            }
         }
 
         return tooltipText;
