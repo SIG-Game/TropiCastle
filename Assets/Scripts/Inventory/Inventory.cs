@@ -314,17 +314,20 @@ public class Inventory : MonoBehaviour
     {
         ItemStack breakableItem = GetItemAtIndex(index);
 
-        if (breakableItem.instanceProperties is
-            BreakableItemInstanceProperties breakableItemInstanceProperties)
+        if (breakableItem.instanceProperties.HasProperty("Durability"))
         {
-            breakableItemInstanceProperties.Durability--;
+            int durability =
+                breakableItem.instanceProperties.GetIntProperty("Durability") - 1;
 
-            if (breakableItemInstanceProperties.Durability == 0)
+            if (durability == 0)
             {
                 RemoveItemAtIndex(index);
             }
             else
             {
+                breakableItem.instanceProperties.SetExistingProperty(
+                    "Durability", durability.ToString());
+
                 OnItemChangedAtIndex(breakableItem, index);
             }
         }

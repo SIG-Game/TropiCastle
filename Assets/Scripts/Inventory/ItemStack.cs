@@ -34,8 +34,10 @@ public class ItemStack
     {
         if (itemDefinition.HasProperty("InitialDurability"))
         {
-            instanceProperties = new BreakableItemInstanceProperties(
-                itemDefinition.GetIntProperty("InitialDurability"));
+            instanceProperties = new ItemInstanceProperties();
+
+            instanceProperties.AddProperty("Durability",
+                itemDefinition.GetStringProperty("InitialDurability"));
         }
         else if (itemNameToInstancePropertiesType.TryGetValue(itemDefinition.name,
             out Type itemInstancePropertiesType))
@@ -59,10 +61,11 @@ public class ItemStack
 
     public bool TryGetDurabilityProperties(out int durability, out int initialDurability)
     {
-        if (instanceProperties is BreakableItemInstanceProperties breakableItemProperties &&
+        if (instanceProperties != null &&
+            instanceProperties.HasProperty("Durability") &&
             itemDefinition.HasProperty("InitialDurability"))
         {
-            durability = breakableItemProperties.Durability;
+            durability = instanceProperties.GetIntProperty("Durability");
             initialDurability = itemDefinition.GetIntProperty("InitialDurability");
 
             return true;
