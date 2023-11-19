@@ -804,6 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 5288355818519945016}
+  playerInventory: {fileID: 856750480813842556}
   playerAnimator: {fileID: 8669891105156055949}
   weaponController: {fileID: 981241631752593405}
   weaponSpriteRenderer: {fileID: 2130907984869856252}

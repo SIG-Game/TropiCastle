@@ -32,7 +32,7 @@ public class ItemScriptableObject : ScriptableObject
     public bool HasProperty(string name) =>
         properties.Exists(x => x.Name == name);
 
-    public string GetTooltipText()
+    public string GetTooltipText(bool includeInitialDurability = true)
     {
         string tooltipText;
 
@@ -44,7 +44,7 @@ public class ItemScriptableObject : ScriptableObject
         {
             tooltipText = string.Concat(name, GetAdditionalInfo());
 
-            if (HasProperty("InitialDurability"))
+            if (includeInitialDurability && HasProperty("InitialDurability"))
             {
                 tooltipText += $"\nDurability: {GetIntProperty("InitialDurability")}";
             }

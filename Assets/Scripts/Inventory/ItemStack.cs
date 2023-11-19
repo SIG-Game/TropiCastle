@@ -49,14 +49,14 @@ public class ItemStack
 
     public string GetTooltipText()
     {
+        string tooltipText = itemDefinition.GetTooltipText(includeInitialDurability: false);
+
         if (TryGetDurabilityProperties(out int durability, out int initialDurability))
         {
-            return $"{itemDefinition.name}\nDurability: {durability} / {initialDurability}";
+            tooltipText += $"\nDurability: {durability} / {initialDurability}";
         }
-        else
-        {
-            return itemDefinition.GetTooltipText();
-        }
+
+        return tooltipText;
     }
 
     public bool TryGetDurabilityProperties(out int durability, out int initialDurability)

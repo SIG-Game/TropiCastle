@@ -3,11 +3,12 @@ using UnityEngine;
 public class WeaponItemUsage : MonoBehaviour, IItemUsage
 {
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private Inventory playerInventory;
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private WeaponController weaponController;
     [SerializeField] private SpriteRenderer weaponSpriteRenderer;
 
-    public void UseItem(ItemStack item, int _)
+    public void UseItem(ItemStack item, int itemIndex)
     {
         WeaponItemScriptableObject weaponItemDefinition =
             (WeaponItemScriptableObject)item.itemDefinition;
@@ -25,5 +26,11 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
         string attackType = weaponItemDefinition.GetStringProperty("AttackType");
 
         playerAnimator.Play($"{attackType} {playerController.Direction}");
+
+        if (item.instanceProperties != null &&
+            item.instanceProperties.HasProperty("Durability"))
+        {
+            playerInventory.DecrementItemDurabilityAtIndex(itemIndex);
+        }
     }
 }
