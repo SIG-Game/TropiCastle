@@ -17,7 +17,6 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Vector2 catchFishXPositionRange;
-    [SerializeField] private bool logSelectedFish;
 
     public event Action OnFishingStopped = () => {};
     public event Action OnFishingUIOpened = () => {};
@@ -120,11 +119,6 @@ public class FishingUIController : MonoBehaviour
         fishUI.Speed = selectedFishDefinition.GetFloatProperty("FishSpeed");
 
         selectedFishItem = new ItemStack(selectedFishDefinition, 1);
-
-        if (logSelectedFish)
-        {
-            Debug.Log("Selected fish: " + selectedFishDefinition.name);
-        }
 
         if (!playerInventory.CanAddItem(selectedFishItem))
         {

@@ -5,7 +5,6 @@ public class FishUIController : HorizontalMover
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private RectTransform fishUIImageRectTransform;
     [SerializeField] private Vector2 fishStartAbsXPositionRange;
-    [SerializeField] private bool logStartPosition;
 
     public float Speed { private get; set; }
 
@@ -17,11 +16,6 @@ public class FishUIController : HorizontalMover
             fishStartAbsXPositionRange.y) * GetRandomSign();
 
         rectTransform.anchoredPosition = new Vector3(randomFishXPosition, 0f, 0f);
-
-        if (logStartPosition)
-        {
-            Debug.Log("Set fish UI x position to: " + transform.localPosition.x);
-        }
 
         transform.localScale = new Vector3(GetRandomSign(),
             transform.localScale.y, transform.localScale.z);
