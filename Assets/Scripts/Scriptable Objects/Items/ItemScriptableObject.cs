@@ -42,7 +42,15 @@ public class ItemScriptableObject : ScriptableObject
         }
         else
         {
-            tooltipText = string.Concat(Name, GetAdditionalInfo());
+            tooltipText = Name;
+
+            if (HasProperty("AttackType"))
+            {
+                tooltipText += $"\n{GetStringProperty("AttackType")} Attack" +
+                    $"\nDeals {GetIntProperty("Damage")} Damage" +
+                    $"\n{GetFloatProperty("Knockback")} Knockback" +
+                    $"\n{GetFloatProperty("AttackSpeed")} Attack Speed";
+            }
 
             if (includeInitialDurability && HasProperty("InitialDurability"))
             {
@@ -57,8 +65,6 @@ public class ItemScriptableObject : ScriptableObject
 
         return tooltipText;
     }
-
-    public virtual string GetAdditionalInfo() => string.Empty;
 
     public static ItemScriptableObject FromName(string name)
     {

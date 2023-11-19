@@ -46,6 +46,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b870c6dac3565b542931ddc09aec67de, type: 2}
   - {fileID: 11400000, guid: dc26bfbebf8ed104f90fa56322c852af, type: 2}
   - {fileID: 11400000, guid: 16b0a3ca96729fa4faa7f65b7ae70cb3, type: 2}
+  - {fileID: 11400000, guid: e46b24fca47264a4cbd972b4a43ef553, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -90,6 +91,7 @@ MonoBehaviour:
     - campfire recipe
     - item
     - savable prefab
+    - weapon sprite
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9e6fe3bca18276a40a75c7e2c368c30a, type: 2}

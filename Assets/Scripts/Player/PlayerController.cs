@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
     public event Action OnPlayerDied = () => {};
 
     private Dictionary<string, IItemUsage> itemNameToUsage;
-    private Dictionary<Type, IItemUsage> itemScriptableObjectTypeToUsage;
 
     private BoxCollider2D boxCollider;
     private HealthController healthController;
@@ -68,7 +67,10 @@ public class PlayerController : MonoBehaviour
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
 
-        SetItemUsageDictionaries();
+        itemNameToUsage = new Dictionary<string, IItemUsage>
+        {
+            { "Fishing Rod", fishingRodItemUsage }
+        };
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
     }
@@ -162,15 +164,16 @@ public class PlayerController : MonoBehaviour
         {
             healingItemUsage.UseItem(item, itemIndex);
         }
-        else if (TryGetItemUsage(item, out IItemUsage itemUsage))
+        else if (item.itemDefinition.HasProperty("AttackType"))
+        {
+            weaponItemUsage.UseItem(item, itemIndex);
+        }
+        else if (itemNameToUsage.TryGetValue(
+            item.itemDefinition.Name, out IItemUsage itemUsage))
         {
             itemUsage.UseItem(item, itemIndex);
         }
     }
-
-    private bool TryGetItemUsage(ItemStack item, out IItemUsage itemUsage) =>
-        itemNameToUsage.TryGetValue(item.itemDefinition.Name, out itemUsage) ||
-        itemScriptableObjectTypeToUsage.TryGetValue(item.itemDefinition.GetType(), out itemUsage);
 
     private void PlayerDeath()
     {
@@ -190,19 +193,6 @@ public class PlayerController : MonoBehaviour
     private void HealthController_OnHealthSetToZero()
     {
         PlayerDeath();
-    }
-
-    private void SetItemUsageDictionaries()
-    {
-        itemNameToUsage = new Dictionary<string, IItemUsage>
-        {
-            { "Fishing Rod", fishingRodItemUsage }
-        };
-
-        itemScriptableObjectTypeToUsage = new Dictionary<Type, IItemUsage>
-        {
-            { typeof(WeaponItemScriptableObject), weaponItemUsage }
-        };
     }
 
     private void AttackEndedAnimationEvent()

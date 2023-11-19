@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Weapon Sprites
+  m_EditorClassIdentifier: 
+  m_GroupName: Weapon Sprites
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 256fe9d673fe05b47a0fc64b4b088a81
+  m_SerializeEntries:
+  - m_GUID: 5d40182399ee58a4688ef07fbd11239c
+    m_Address: Assets/Sprites/Weapons
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - weapon sprite
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: edb73a2364990aa47a457b58d8d58896, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c65168aab636853408d4e8e27b0ff310, type: 2}
+    - {fileID: 11400000, guid: 6b734e2085329944d8bf4a924e6565bc, type: 2}

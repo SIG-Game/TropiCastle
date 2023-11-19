@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class WeaponItemUsage : MonoBehaviour, IItemUsage
 {
@@ -8,22 +10,42 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
     [SerializeField] private WeaponController weaponController;
     [SerializeField] private SpriteRenderer weaponSpriteRenderer;
 
+    private Dictionary<string, Sprite> weaponNameToSprite;
+
+    private void Awake()
+    {
+        weaponNameToSprite = new Dictionary<string, Sprite>();
+
+        var weaponSpritesLoadHandle = Addressables
+            .LoadAssetsAsync<Sprite>("weapon sprite", null);
+
+        var weaponSprites = weaponSpritesLoadHandle.WaitForCompletion();
+
+        foreach (var weaponSprite in weaponSprites)
+        {
+            weaponNameToSprite[weaponSprite.name] = weaponSprite;
+        }
+
+        if (weaponSpritesLoadHandle.IsValid())
+        {
+            Addressables.Release(weaponSpritesLoadHandle);
+        }
+    }
+
     public void UseItem(ItemStack item, int itemIndex)
     {
-        WeaponItemScriptableObject weaponItemDefinition =
-            (WeaponItemScriptableObject)item.itemDefinition;
-
         playerAnimator.SetFloat("Attack Speed Multiplier",
-            weaponItemDefinition.GetFloatProperty("AttackSpeed"));
+            item.itemDefinition.GetFloatProperty("AttackSpeed"));
 
-        weaponSpriteRenderer.sprite = weaponItemDefinition.WeaponSprite;
-        weaponController.SetUpUsingScriptableObject(weaponItemDefinition);
+        weaponSpriteRenderer.sprite = weaponNameToSprite[item.itemDefinition.name];
+
+        weaponController.SetUpUsingScriptableObject(item.itemDefinition);
 
         playerController.IsAttacking = true;
 
         playerController.DisableItemSelection();
 
-        string attackType = weaponItemDefinition.GetStringProperty("AttackType");
+        string attackType = item.itemDefinition.GetStringProperty("AttackType");
 
         playerAnimator.Play($"{attackType} {playerController.Direction}");
 
