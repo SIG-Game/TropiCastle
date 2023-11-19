@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: CookedCrabMeat
   m_EditorClassIdentifier: 
-  Name: Cooked Crab Meat
+  DisplayName: Cooked Crab Meat
   Sprite: {fileID: 21300000, guid: 26cadbf702382f248ae1939959bc0872, type: 3}
   StackSize: 99
   LockPlacementToGrid: 0

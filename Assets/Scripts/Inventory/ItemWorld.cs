@@ -54,7 +54,7 @@ public class ItemWorld : MonoBehaviour
                 item.itemDefinition.TriggerCollisionPickup;
         }
 
-        if (itemNameToInteractableType.TryGetValue(item.itemDefinition.Name,
+        if (itemNameToInteractableType.TryGetValue(item.itemDefinition.name,
             out Type itemInteractableType))
         {
             gameObject.AddComponent(itemInteractableType);
@@ -65,7 +65,7 @@ public class ItemWorld : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("Interactable");
         }
 
-        name = $"{item.itemDefinition.Name} ItemWorld";
+        name = $"{item.itemDefinition.DisplayName} ItemWorld";
 
         amountText.text = item.GetAmountText();
     }

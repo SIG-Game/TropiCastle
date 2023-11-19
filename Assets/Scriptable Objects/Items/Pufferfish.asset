@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Pufferfish
   m_EditorClassIdentifier: 
-  Name: Pufferfish
+  DisplayName: Pufferfish
   Sprite: {fileID: 21300000, guid: e90013d418b7dce4c811c92f566d9048, type: 3}
   StackSize: 99
   LockPlacementToGrid: 0

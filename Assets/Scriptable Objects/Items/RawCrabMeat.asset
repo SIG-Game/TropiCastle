@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: RawCrabMeat
   m_EditorClassIdentifier: 
-  Name: Raw Crab Meat
+  DisplayName: Raw Crab Meat
   Sprite: {fileID: 21300000, guid: 773a04f1a7844b3499b852055b99f01c, type: 3}
   StackSize: 99
   LockPlacementToGrid: 0

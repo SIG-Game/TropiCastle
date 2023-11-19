@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: FishingRod
   m_EditorClassIdentifier: 
-  Name: Fishing Rod
+  DisplayName: Fishing Rod
   Sprite: {fileID: 21300000, guid: 7411f00792f59ca4986386c5aa708369, type: 3}
   StackSize: 1
   LockPlacementToGrid: 0

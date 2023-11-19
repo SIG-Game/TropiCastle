@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
         itemNameToUsage = new Dictionary<string, IItemUsage>
         {
-            { "Fishing Rod", fishingRodItemUsage }
+            { "FishingRod", fishingRodItemUsage }
         };
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
             weaponItemUsage.UseItem(item, itemIndex);
         }
         else if (itemNameToUsage.TryGetValue(
-            item.itemDefinition.Name, out IItemUsage itemUsage))
+            item.itemDefinition.name, out IItemUsage itemUsage))
         {
             itemUsage.UseItem(item, itemIndex);
         }

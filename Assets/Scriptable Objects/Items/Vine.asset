@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Vine
   m_EditorClassIdentifier: 
-  Name: Vine
+  DisplayName: Vine
   Sprite: {fileID: 21300000, guid: 62e2067f41db8d74a90b0bb88312b76d, type: 3}

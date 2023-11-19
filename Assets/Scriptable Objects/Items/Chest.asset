@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Chest
   m_EditorClassIdentifier: 
-  Name: Chest
+  DisplayName: Chest
   Sprite: {fileID: 21300000, guid: fdd79127e406a714197bbd0da994b6f6, type: 3}
   StackSize: 1
   HasCustomColliderSize: 0

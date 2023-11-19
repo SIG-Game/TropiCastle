@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 [CreateAssetMenu(menuName = "Scriptable Object/Item/Item")]
 public class ItemScriptableObject : ScriptableObject
 {
-    public string Name;
+    public string DisplayName;
     public Sprite Sprite;
     public int StackSize = defaultStackSize;
     public bool LockPlacementToGrid;
@@ -18,7 +18,7 @@ public class ItemScriptableObject : ScriptableObject
 
     private const int defaultStackSize = 99;
 
-    public bool IsEmpty() => Name == "Empty";
+    public bool IsEmpty() => name == "Empty";
 
     public string GetStringProperty(string name) =>
         Properties.Find(x => x.Name == name).Value;
@@ -42,7 +42,7 @@ public class ItemScriptableObject : ScriptableObject
         }
         else
         {
-            tooltipText = Name;
+            tooltipText = DisplayName;
 
             if (HasProperty("AttackType"))
             {

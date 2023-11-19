@@ -87,8 +87,8 @@ public class CampfireItemInteractable :
         else
         {
             Func<CampfireRecipeScriptableObject, bool> isValidRecipe = x =>
-                x.ResultItem.itemDefinition.Name ==
-                    inventoryResultItem.itemDefinition.Name &&
+                x.ResultItem.itemDefinition.name ==
+                    inventoryResultItem.itemDefinition.name &&
                 x.ResultItem.amount + inventoryResultItem.amount <=
                     x.ResultItem.itemDefinition.StackSize;
 
@@ -101,7 +101,7 @@ public class CampfireItemInteractable :
         foreach (var recipe in possiblyMatchingRecipes)
         {
             matchingRecipeInputItem = recipe.PossibleInputItems.FirstOrDefault(
-                x => x.itemDefinition.Name == inputItem.itemDefinition.Name &&
+                x => x.itemDefinition.name == inputItem.itemDefinition.name &&
                 x.amount <= inputItem.amount);
 
             if (matchingRecipeInputItem != null)

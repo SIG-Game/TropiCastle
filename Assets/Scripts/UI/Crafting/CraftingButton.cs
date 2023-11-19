@@ -66,8 +66,10 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
             bool playerHasIngredient = playerInventory
                 .HasReplacementInputItem(itemIndexToUsedAmount, ingredient);
 
-            ingredientsStringBuilder.Append(playerHasIngredient ? "<color=#00FF00>" : "<color=#FF0000>");
-            ingredientsStringBuilder.Append($"- {ingredient.amount} {ingredient.itemDefinition.Name}: ");
+            ingredientsStringBuilder.Append(
+                playerHasIngredient ? "<color=#00FF00>" : "<color=#FF0000>");
+            ingredientsStringBuilder.Append(
+                $"- {ingredient.amount} {ingredient.itemDefinition.DisplayName}: ");
             ingredientsStringBuilder.Append(playerHasIngredient ? "Y" : "N");
             ingredientsStringBuilder.Append("</color>");
             ingredientsStringBuilder.AppendLine();

@@ -360,7 +360,7 @@ public class Inventory : MonoBehaviour
 
                 ItemStack currentItem = itemList[i];
 
-                if ((currentItem.itemDefinition.Name == newItem.itemDefinition.Name &&
+                if ((currentItem.itemDefinition.name == newItem.itemDefinition.name &&
                     currentItem.amount < currentItem.itemDefinition.StackSize) ||
                     currentItem.itemDefinition.IsEmpty())
                 {
@@ -415,7 +415,7 @@ public class Inventory : MonoBehaviour
 
             ItemStack currentItem = itemList[i];
 
-            if (targetItem.itemDefinition.Name == currentItem.itemDefinition.Name)
+            if (targetItem.itemDefinition.name == currentItem.itemDefinition.name)
             {
                 int combinedAmount = targetItem.amount + currentItem.amount;
 
@@ -529,7 +529,7 @@ public class Inventory : MonoBehaviour
         {
             ItemStack currentItem = itemList[i];
 
-            if (currentItem.itemDefinition.Name == inputItem.itemDefinition.Name)
+            if (currentItem.itemDefinition.name == inputItem.itemDefinition.name)
             {
                 int currentItemAmount = currentItem.amount;
 
@@ -567,7 +567,7 @@ public class Inventory : MonoBehaviour
         {
             ItemStack currentItem = itemList[i];
 
-            if ((currentItem.itemDefinition.Name == outputItem.itemDefinition.Name &&
+            if ((currentItem.itemDefinition.name == outputItem.itemDefinition.name &&
                 currentItem.amount < currentItem.itemDefinition.StackSize) ||
                 currentItem.itemDefinition.IsEmpty())
             {
@@ -612,7 +612,7 @@ public class Inventory : MonoBehaviour
     }
 
     private int FindItemStackIndex(ItemStack item) =>
-        itemList.FindIndex(x => x.itemDefinition.Name == item.itemDefinition.Name &&
+        itemList.FindIndex(x => x.itemDefinition.name == item.itemDefinition.name &&
             x.amount < x.itemDefinition.StackSize);
 
     public ItemStack GetItemAtIndex(int index) => itemList[index];
@@ -683,8 +683,7 @@ public class Inventory : MonoBehaviour
 
         public SerializableInventoryItem(ItemStack item)
         {
-            // Use ScriptableObject name and not item display name
-            ItemName = ((ScriptableObject)item.itemDefinition).name;
+            ItemName = item.itemDefinition.name;
             Amount = item.amount;
             InstanceProperties = item.instanceProperties;
         }
@@ -702,7 +701,7 @@ public class Inventory : MonoBehaviour
         {
             ItemStack currentItem = itemList[i];
 
-            if (currentItem.itemDefinition.Name == "Coconut")
+            if (currentItem.itemDefinition.name == "Coconut")
             {
                 currentItem.amount = coconutItemInfo.StackSize;
 

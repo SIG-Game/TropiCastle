@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
-  Name: Block
+  DisplayName: Block
   Sprite: {fileID: 21300000, guid: abcee70a047358940a07565d69117150, type: 3}
   StackSize: 99
   LockPlacementToGrid: 1

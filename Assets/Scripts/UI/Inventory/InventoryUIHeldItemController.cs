@@ -118,7 +118,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
         ItemStack clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
 
-        if (HeldItem.itemDefinition.Name == clickedItem.itemDefinition.Name
+        if (HeldItem.itemDefinition.name == clickedItem.itemDefinition.name
             && HeldItem.amount < HeldItem.itemDefinition.StackSize)
         {
             int combinedAmount = HeldItem.amount + clickedItem.amount;
@@ -152,7 +152,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         {
             PutHeldItemBack();
         }
-        else if (clickedItem.itemDefinition.Name == HeldItem.itemDefinition.Name &&
+        else if (clickedItem.itemDefinition.name == HeldItem.itemDefinition.name &&
             clickedItem.amount < clickedItem.itemDefinition.StackSize)
         {
             CombineHeldItemStackWithClickedItemStack(clickedItemIndex, clickedItem);
@@ -189,7 +189,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     private void PlaceOneOfHeldItem(int clickedItemIndex, ItemStack clickedItem)
     {
         bool canPlaceInClickedItemStack =
-            clickedItem.itemDefinition.Name == HeldItem.itemDefinition.Name &&
+            clickedItem.itemDefinition.name == HeldItem.itemDefinition.name &&
             clickedItem.amount < clickedItem.itemDefinition.StackSize;
         if (canPlaceInClickedItemStack)
         {

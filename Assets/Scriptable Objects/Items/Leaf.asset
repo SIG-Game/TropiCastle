@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Leaf
   m_EditorClassIdentifier: 
-  Name: Leaf
+  DisplayName: Leaf
   Sprite: {fileID: 21300000, guid: 92f0a291c5f3678479c7d81daac57101, type: 3}
   HasCustomColliderSize: 0
   CustomColliderSize: {x: 0, y: 0}

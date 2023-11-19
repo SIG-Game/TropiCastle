@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Marlin
   m_EditorClassIdentifier: 
-  Name: Marlin
+  DisplayName: Marlin
   Sprite: {fileID: 21300000, guid: cfa79c1b28ceb51418c432c96af1ae48, type: 3}
   StackSize: 99
   LockPlacementToGrid: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  Name: Apple
+  DisplayName: Apple
   Sprite: {fileID: 21300000, guid: b7a05f292b2904c1bbb972877b9ab557, type: 3}
   StackSize: 99
   LockPlacementToGrid: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Rock
   m_EditorClassIdentifier: 
-  Name: Rock
+  DisplayName: Rock
   Sprite: {fileID: 21300000, guid: f3c7db8102c0d3a49b43b081d1cf8315, type: 3}
   StackSize: 99
   LockPlacementToGrid: 0

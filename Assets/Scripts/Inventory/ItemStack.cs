@@ -39,7 +39,7 @@ public class ItemStack
             instanceProperties.AddProperty("Durability",
                 itemDefinition.GetStringProperty("InitialDurability"));
         }
-        else if (itemNameToInstancePropertiesType.TryGetValue(itemDefinition.Name,
+        else if (itemNameToInstancePropertiesType.TryGetValue(itemDefinition.name,
             out Type itemInstancePropertiesType))
         {
             instanceProperties = (ItemInstanceProperties)Activator

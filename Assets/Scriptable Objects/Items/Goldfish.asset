@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Goldfish
   m_EditorClassIdentifier: 
-  Name: Goldfish
+  DisplayName: Goldfish
   Sprite: {fileID: 21300000, guid: 22c3d90b6e1de424d89e664553bef6c5, type: 3}
   StackSize: 99
   LockPlacementToGrid: 0

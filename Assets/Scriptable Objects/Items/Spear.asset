@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Spear
   m_EditorClassIdentifier: 
-  Name: Spear
+  DisplayName: Spear
   Sprite: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1, type: 3}
   StackSize: 1
   LockPlacementToGrid: 0
