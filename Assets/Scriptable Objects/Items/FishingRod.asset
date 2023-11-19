@@ -22,4 +22,4 @@ MonoBehaviour:
   customColliderSize: {x: 0, y: 0}
   properties:
   - Name: InitialDurability
-    Value: 10
+    Value: 30
