@@ -7,14 +7,14 @@ public class Chimp : NPCInteractable
     [SerializeField] private List<string> givingItemDialogueLines;
     [SerializeField] private List<string> notGivingItemDialogueLines;
     [SerializeField] private List<string> playerInventoryFullDialogueLines;
-    [SerializeField] private Vector2 timeBetweenGivesSecondsRange;
+    [SerializeField] private Vector2 timeBetweenGivesRange;
     [SerializeField] private NPCItemOfferingSelector itemOfferingSelector;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
     [SerializeField] private DialogueBox dialogueBox;
 
-    public float LastGiveTimeSeconds { get; set; }
-    public float TimeBetweenGivesSeconds { get; set; }
+    public float LastGiveTime { get; set; }
+    public float TimeBetweenGives { get; set; }
 
     private const string chimpCharacterName = "Chimp";
 
@@ -22,8 +22,8 @@ public class Chimp : NPCInteractable
     {
         base.Awake();
 
-        LastGiveTimeSeconds = 0f;
-        TimeBetweenGivesSeconds = 0f;
+        LastGiveTime = 0f;
+        TimeBetweenGives = 0f;
     }
 
     private void Start()
@@ -73,16 +73,15 @@ public class Chimp : NPCInteractable
 
             chimpItemInWorld.Hide();
 
-            LastGiveTimeSeconds = Time.time;
-            TimeBetweenGivesSeconds = GetRandomTimeBetweenGivesSeconds();
+            LastGiveTime = Time.time;
+            TimeBetweenGives = GetRandomTimeBetweenGives();
         }
 
         chimpSpinner.StartSpinning();
     }
 
-    public bool ItemGiveAvailable() =>
-        LastGiveTimeSeconds + TimeBetweenGivesSeconds <= Time.time;
+    public bool ItemGiveAvailable() => LastGiveTime + TimeBetweenGives <= Time.time;
 
-    private float GetRandomTimeBetweenGivesSeconds() =>
-        Random.Range(timeBetweenGivesSecondsRange.x, timeBetweenGivesSecondsRange.y);
+    private float GetRandomTimeBetweenGives() =>
+        Random.Range(timeBetweenGivesRange.x, timeBetweenGivesRange.y);
 }

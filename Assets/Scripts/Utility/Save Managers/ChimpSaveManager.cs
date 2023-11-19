@@ -7,24 +7,23 @@ public class ChimpSaveManager : SaveManager
 
     public override SaveManagerState GetState()
     {
-        float timeUntilNextGiveSeconds;
+        float timeUntilNextGive;
 
         if (chimp.ItemGiveAvailable())
         {
-            timeUntilNextGiveSeconds = 0f;
+            timeUntilNextGive = 0f;
         }
         else
         {
-            float nextGiveTimeSeconds =
-                chimp.LastGiveTimeSeconds + chimp.TimeBetweenGivesSeconds;
+            float nextGiveTime = chimp.LastGiveTime + chimp.TimeBetweenGives;
 
-            timeUntilNextGiveSeconds = nextGiveTimeSeconds - Time.time;
+            timeUntilNextGive = nextGiveTime - Time.time;
         }
 
         var saveManagerState = new ChimpSaveManagerState
         {
             SaveGuid = saveGuid,
-            TimeSecondsUntilNextGive = timeUntilNextGiveSeconds
+            TimeUntilNextGive = timeUntilNextGive
         };
 
         return saveManagerState;
@@ -34,14 +33,14 @@ public class ChimpSaveManager : SaveManager
     {
         ChimpSaveManagerState chimpState = (ChimpSaveManagerState)saveManagerState;
 
-        chimp.TimeBetweenGivesSeconds = chimpState.TimeSecondsUntilNextGive;
+        chimp.TimeBetweenGives = chimpState.TimeUntilNextGive;
 
-        chimp.LastGiveTimeSeconds = Time.time;
+        chimp.LastGiveTime = Time.time;
     }
 
     [Serializable]
     public class ChimpSaveManagerState : SaveManagerState
     {
-        public float TimeSecondsUntilNextGive;
+        public float TimeUntilNextGive;
     }
 }

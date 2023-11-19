@@ -252,7 +252,7 @@ MonoBehaviour:
   playerInventoryFullDialogueLines:
   - (The chimp is eager to give you something but can sense that your inventory is
     full.)
-  timeBetweenGivesSecondsRange: {x: 5, y: 10}
+  timeBetweenGivesRange: {x: 5, y: 10}
   itemOfferingSelector: {fileID: 8074924875869424796}
   chimpSpinner: {fileID: 856391509901689041}
   chimpItemInWorld: {fileID: 5168677056278632683}
