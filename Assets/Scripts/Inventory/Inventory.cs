@@ -108,7 +108,7 @@ public class Inventory : MonoBehaviour
     {
         ItemStack item = itemList[index];
 
-        int stackSize = item.itemDefinition.stackSize;
+        int stackSize = item.itemDefinition.StackSize;
 
         amountAdded = Math.Min(amount, stackSize - item.amount);
 
@@ -360,8 +360,8 @@ public class Inventory : MonoBehaviour
 
                 ItemStack currentItem = itemList[i];
 
-                if ((currentItem.itemDefinition.name == newItem.itemDefinition.name &&
-                    currentItem.amount < currentItem.itemDefinition.stackSize) ||
+                if ((currentItem.itemDefinition.Name == newItem.itemDefinition.Name &&
+                    currentItem.amount < currentItem.itemDefinition.StackSize) ||
                     currentItem.itemDefinition.IsEmpty())
                 {
                     stackIndex = i;
@@ -379,7 +379,7 @@ public class Inventory : MonoBehaviour
             ItemStack itemAtStackIndex = itemList[stackIndex];
 
             int amountToReachStackSizeLimit =
-                itemAtStackIndex.itemDefinition.stackSize - itemAtStackIndex.amount;
+                itemAtStackIndex.itemDefinition.StackSize - itemAtStackIndex.amount;
 
             if (amountToReachStackSizeLimit < amountToAdd)
             {
@@ -415,11 +415,11 @@ public class Inventory : MonoBehaviour
 
             ItemStack currentItem = itemList[i];
 
-            if (targetItem.itemDefinition.name == currentItem.itemDefinition.name)
+            if (targetItem.itemDefinition.Name == currentItem.itemDefinition.Name)
             {
                 int combinedAmount = targetItem.amount + currentItem.amount;
 
-                if (combinedAmount <= targetItem.itemDefinition.stackSize)
+                if (combinedAmount <= targetItem.itemDefinition.StackSize)
                 {
                     targetItem.amount = combinedAmount;
 
@@ -427,9 +427,9 @@ public class Inventory : MonoBehaviour
                 }
                 else
                 {
-                    targetItem.amount = targetItem.itemDefinition.stackSize;
+                    targetItem.amount = targetItem.itemDefinition.StackSize;
 
-                    currentItem.amount = combinedAmount - targetItem.itemDefinition.stackSize;
+                    currentItem.amount = combinedAmount - targetItem.itemDefinition.StackSize;
 
                     OnItemChangedAtIndex(currentItem, i);
                 }
@@ -529,7 +529,7 @@ public class Inventory : MonoBehaviour
         {
             ItemStack currentItem = itemList[i];
 
-            if (currentItem.itemDefinition.name == inputItem.itemDefinition.name)
+            if (currentItem.itemDefinition.Name == inputItem.itemDefinition.Name)
             {
                 int currentItemAmount = currentItem.amount;
 
@@ -567,8 +567,8 @@ public class Inventory : MonoBehaviour
         {
             ItemStack currentItem = itemList[i];
 
-            if ((currentItem.itemDefinition.name == outputItem.itemDefinition.name &&
-                currentItem.amount < currentItem.itemDefinition.stackSize) ||
+            if ((currentItem.itemDefinition.Name == outputItem.itemDefinition.Name &&
+                currentItem.amount < currentItem.itemDefinition.StackSize) ||
                 currentItem.itemDefinition.IsEmpty())
             {
                 int currentItemAmount = currentItem.amount;
@@ -578,7 +578,7 @@ public class Inventory : MonoBehaviour
                     currentItemAmount += itemIndexToAddAmount[i];
                 }
 
-                if (currentItemAmount + amountToAdd <= outputItem.itemDefinition.stackSize)
+                if (currentItemAmount + amountToAdd <= outputItem.itemDefinition.StackSize)
                 {
                     itemIndexToAddAmount.AddOrIncreaseValue(i, amountToAdd);
 
@@ -587,7 +587,7 @@ public class Inventory : MonoBehaviour
                 else
                 {
                     int amountAdded =
-                        outputItem.itemDefinition.stackSize - currentItemAmount;
+                        outputItem.itemDefinition.StackSize - currentItemAmount;
 
                     itemIndexToAddAmount.AddOrIncreaseValue(i, amountAdded);
 
@@ -612,8 +612,8 @@ public class Inventory : MonoBehaviour
     }
 
     private int FindItemStackIndex(ItemStack item) =>
-        itemList.FindIndex(x => x.itemDefinition.name == item.itemDefinition.name &&
-            x.amount < x.itemDefinition.stackSize);
+        itemList.FindIndex(x => x.itemDefinition.Name == item.itemDefinition.Name &&
+            x.amount < x.itemDefinition.StackSize);
 
     public ItemStack GetItemAtIndex(int index) => itemList[index];
 
@@ -696,15 +696,15 @@ public class Inventory : MonoBehaviour
             ItemScriptableObject.FromName("Coconut");
 
         ItemStack coconutItemWithMaxAmount = new ItemStack(coconutItemInfo,
-            coconutItemInfo.stackSize);
+            coconutItemInfo.StackSize);
 
         for (int i = 0; i < itemList.Count; ++i)
         {
             ItemStack currentItem = itemList[i];
 
-            if (currentItem.itemDefinition.name == "Coconut")
+            if (currentItem.itemDefinition.Name == "Coconut")
             {
-                currentItem.amount = coconutItemInfo.stackSize;
+                currentItem.amount = coconutItemInfo.StackSize;
 
                 OnItemChangedAtIndex(currentItem, i);
             }

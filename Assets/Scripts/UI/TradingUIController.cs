@@ -66,7 +66,7 @@ public class TradingUIController : MonoBehaviour
 
             Image itemImage = itemUI.transform.GetChild(0).GetComponent<Image>();
 
-            itemImage.sprite = item.itemDefinition.sprite;
+            itemImage.sprite = item.itemDefinition.Sprite;
 
             TextMeshProUGUI itemAmountText =
                 itemUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();

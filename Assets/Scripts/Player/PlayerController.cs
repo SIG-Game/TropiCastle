@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private bool TryGetItemUsage(ItemStack item, out IItemUsage itemUsage) =>
-        itemNameToUsage.TryGetValue(item.itemDefinition.name, out itemUsage) ||
+        itemNameToUsage.TryGetValue(item.itemDefinition.Name, out itemUsage) ||
         itemScriptableObjectTypeToUsage.TryGetValue(item.itemDefinition.GetType(), out itemUsage);
 
     private void PlayerDeath()

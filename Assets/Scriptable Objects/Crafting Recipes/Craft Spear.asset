@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d85f03e2abd17a4681b4d6ec1113743, type: 3}
   m_Name: Craft Spear
   m_EditorClassIdentifier: 
-  ingredients:
+  Ingredients:
   - itemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
     amount: 3
   - itemDefinition: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
     amount: 1
   - itemDefinition: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
     amount: 1
-  resultItem:
+  ResultItem:
     itemDefinition: {fileID: 11400000, guid: 3f1a9772cbbbdc84ba12bdeddd4d8074, type: 2}
     amount: 1

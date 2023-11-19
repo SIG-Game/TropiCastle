@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Rock
   m_EditorClassIdentifier: 
-  name: Rock
-  sprite: {fileID: 21300000, guid: f3c7db8102c0d3a49b43b081d1cf8315, type: 3}
-  stackSize: 99
-  lockPlacementToGrid: 0
-  oneAtATimePlacement: 0
-  hasCustomColliderSize: 0
-  triggerCollisionPickup: 0
-  customColliderSize: {x: 0, y: 0}
+  Name: Rock
+  Sprite: {fileID: 21300000, guid: f3c7db8102c0d3a49b43b081d1cf8315, type: 3}
+  StackSize: 99
+  LockPlacementToGrid: 0
+  OneAtATimePlacement: 0
+  HasCustomColliderSize: 0
+  TriggerCollisionPickup: 0
+  CustomColliderSize: {x: 0, y: 0}

@@ -27,7 +27,7 @@ public class DebugAddItemButton : MonoBehaviour
             amountToAdd = 1;
         }
 
-        int stackSize = selectedItemScriptableObject.stackSize;
+        int stackSize = selectedItemScriptableObject.StackSize;
         int numberOfStacks = amountToAdd / stackSize;
         int remainingAmount = amountToAdd % stackSize;
 

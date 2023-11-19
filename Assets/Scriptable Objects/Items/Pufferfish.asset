@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331eaebd44876f9489025778549b0e33, type: 3}
   m_Name: Pufferfish
   m_EditorClassIdentifier: 
-  name: Pufferfish
-  sprite: {fileID: 21300000, guid: e90013d418b7dce4c811c92f566d9048, type: 3}
-  stackSize: 99
-  lockPlacementToGrid: 0
-  oneAtATimePlacement: 0
-  hasCustomColliderSize: 0
-  triggerCollisionPickup: 0
-  customColliderSize: {x: 0, y: 0}
-  properties:
+  Name: Pufferfish
+  Sprite: {fileID: 21300000, guid: e90013d418b7dce4c811c92f566d9048, type: 3}
+  StackSize: 99
+  LockPlacementToGrid: 0
+  OneAtATimePlacement: 0
+  HasCustomColliderSize: 0
+  TriggerCollisionPickup: 0
+  CustomColliderSize: {x: 0, y: 0}
+  Properties:
   - Name: FishDescription
     Value: A very prickly fish.
   - Name: FishSpeed

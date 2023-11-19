@@ -41,20 +41,20 @@ public class ItemWorld : MonoBehaviour
     {
         this.item = item;
 
-        GetComponent<SpriteRenderer>().sprite = item.itemDefinition.sprite;
+        GetComponent<SpriteRenderer>().sprite = item.itemDefinition.Sprite;
 
-        if (item.itemDefinition.hasCustomColliderSize)
+        if (item.itemDefinition.HasCustomColliderSize)
         {
-            GetComponent<BoxCollider2D>().size = item.itemDefinition.customColliderSize;
+            GetComponent<BoxCollider2D>().size = item.itemDefinition.CustomColliderSize;
         }
 
-        if (item.itemDefinition.triggerCollisionPickup)
+        if (item.itemDefinition.TriggerCollisionPickup)
         {
             GetComponent<BoxCollider2D>().isTrigger =
-                item.itemDefinition.triggerCollisionPickup;
+                item.itemDefinition.TriggerCollisionPickup;
         }
 
-        if (itemNameToInteractableType.TryGetValue(item.itemDefinition.name,
+        if (itemNameToInteractableType.TryGetValue(item.itemDefinition.Name,
             out Type itemInteractableType))
         {
             gameObject.AddComponent(itemInteractableType);
@@ -65,7 +65,7 @@ public class ItemWorld : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("Interactable");
         }
 
-        name = $"{item.itemDefinition.name} ItemWorld";
+        name = $"{item.itemDefinition.Name} ItemWorld";
 
         amountText.text = item.GetAmountText();
     }

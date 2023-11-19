@@ -89,7 +89,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         ItemStack selectedItem = player.GetSelectedItem();
 
-        ItemStack itemToPlace = selectedItem.itemDefinition.oneAtATimePlacement ?
+        ItemStack itemToPlace = selectedItem.itemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
 
         int itemToPlaceIndex = player.GetSelectedItemIndex();
@@ -98,7 +98,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
         {
             Vector2 itemPlacementPosition;
 
-            if (itemToPlace.itemDefinition.lockPlacementToGrid)
+            if (itemToPlace.itemDefinition.LockPlacementToGrid)
             {
                 itemPlacementPosition = new Vector2(
                     RoundToGrid(cursorPoint.x), RoundToGrid(cursorPoint.y));
@@ -111,7 +111,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(
                 itemPlacementPosition, itemToPlace);
 
-            if (selectedItem.itemDefinition.oneAtATimePlacement)
+            if (selectedItem.itemDefinition.OneAtATimePlacement)
             {
                 playerInventory.DecrementItemStackAtIndex(itemToPlaceIndex);
             }
@@ -154,10 +154,10 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         ItemStack selectedItem = player.GetSelectedItem();
 
-        ItemStack placementItem = selectedItem.itemDefinition.oneAtATimePlacement ?
+        ItemStack placementItem = selectedItem.itemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
 
-        cursorController.LockToGrid = selectedItem.itemDefinition.lockPlacementToGrid;
+        cursorController.LockToGrid = selectedItem.itemDefinition.LockPlacementToGrid;
 
         Color cursorBackgroundColor = CanPlaceItemAtCursorPosition ?
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor;
@@ -207,7 +207,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         Vector2 itemPlacementPosition;
 
-        if (selectedItemDefinition.lockPlacementToGrid)
+        if (selectedItemDefinition.LockPlacementToGrid)
         {
             itemPlacementPosition = new Vector2(
                 RoundToGrid(cursorPoint.x), RoundToGrid(cursorPoint.y));

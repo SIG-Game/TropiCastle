@@ -118,12 +118,12 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
         ItemStack clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
 
-        if (HeldItem.itemDefinition.name == clickedItem.itemDefinition.name
-            && HeldItem.amount < HeldItem.itemDefinition.stackSize)
+        if (HeldItem.itemDefinition.Name == clickedItem.itemDefinition.Name
+            && HeldItem.amount < HeldItem.itemDefinition.StackSize)
         {
             int combinedAmount = HeldItem.amount + clickedItem.amount;
 
-            if (combinedAmount <= HeldItem.itemDefinition.stackSize)
+            if (combinedAmount <= HeldItem.itemDefinition.StackSize)
             {
                 clickedInventory.RemoveItemAtIndex(clickedItemIndex);
 
@@ -132,9 +132,9 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
             else
             {
                 clickedInventory.SetItemAmountAtIndex(
-                    combinedAmount - HeldItem.itemDefinition.stackSize, clickedItemIndex);
+                    combinedAmount - HeldItem.itemDefinition.StackSize, clickedItemIndex);
 
-                HeldItem.amount = HeldItem.itemDefinition.stackSize;
+                HeldItem.amount = HeldItem.itemDefinition.StackSize;
             }
 
             UpdateHeldItemUI();
@@ -152,8 +152,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         {
             PutHeldItemBack();
         }
-        else if (clickedItem.itemDefinition.name == HeldItem.itemDefinition.name &&
-            clickedItem.amount < clickedItem.itemDefinition.stackSize)
+        else if (clickedItem.itemDefinition.Name == HeldItem.itemDefinition.Name &&
+            clickedItem.amount < clickedItem.itemDefinition.StackSize)
         {
             CombineHeldItemStackWithClickedItemStack(clickedItemIndex, clickedItem);
         }
@@ -169,7 +169,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         int clickedItemIndex, ItemStack clickedItem)
     {
         int amountToMove = Math.Min(HeldItem.amount,
-            clickedItem.itemDefinition.stackSize - clickedItem.amount);
+            clickedItem.itemDefinition.StackSize - clickedItem.amount);
 
         clickedInventory.SetItemAmountAtIndex(
             clickedItem.amount + amountToMove, clickedItemIndex);
@@ -189,8 +189,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     private void PlaceOneOfHeldItem(int clickedItemIndex, ItemStack clickedItem)
     {
         bool canPlaceInClickedItemStack =
-            clickedItem.itemDefinition.name == HeldItem.itemDefinition.name &&
-            clickedItem.amount < clickedItem.itemDefinition.stackSize;
+            clickedItem.itemDefinition.Name == HeldItem.itemDefinition.Name &&
+            clickedItem.amount < clickedItem.itemDefinition.StackSize;
         if (canPlaceInClickedItemStack)
         {
             clickedInventory.IncrementItemStackAtIndex(clickedItemIndex);
@@ -231,7 +231,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     {
         if (HoldingItem())
         {
-            heldItemImage.sprite = HeldItem.itemDefinition.sprite;
+            heldItemImage.sprite = HeldItem.itemDefinition.Sprite;
             heldItemAmountText.text = HeldItem.GetAmountText();
             durabilityMeter.UpdateUsingItem(HeldItem);
         }

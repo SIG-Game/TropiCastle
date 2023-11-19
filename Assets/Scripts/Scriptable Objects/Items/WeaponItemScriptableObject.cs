@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Object/Item/Weapon Item")]
 public class WeaponItemScriptableObject : ItemScriptableObject
 {
-    public Sprite weaponSprite;
+    public Sprite WeaponSprite;
 
     public override string GetAdditionalInfo() =>
         $"\n{GetStringProperty("AttackType")} Attack\n" +

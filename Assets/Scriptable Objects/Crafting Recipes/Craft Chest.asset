@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d85f03e2abd17a4681b4d6ec1113743, type: 3}
   m_Name: Craft Chest
   m_EditorClassIdentifier: 
-  ingredients:
+  Ingredients:
   - itemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
     amount: 10
   - itemDefinition: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
     amount: 2
-  resultItem:
+  ResultItem:
     itemDefinition: {fileID: 11400000, guid: 16f54b3adf6da2848973e2d33521d5c1, type: 2}
     amount: 1

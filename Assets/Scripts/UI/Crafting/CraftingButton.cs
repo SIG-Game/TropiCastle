@@ -24,7 +24,7 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
         // This could be changed to not be set at runtime
         // It this wasn't set at runtime, an old item tooltip format might get cached
         resultItemTooltipText = $"Result:\n" +
-            craftingRecipe.resultItem.itemDefinition.GetTooltipText();
+            craftingRecipe.ResultItem.itemDefinition.GetTooltipText();
 
         inventoryUIHeldItemController.OnItemHeld +=
             InventoryUIHeldItemController_OnItemHeld;
@@ -43,7 +43,7 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
     public void CraftingButton_OnClick()
     {
         playerInventory.ReplaceItems(
-            craftingRecipe.ingredients, craftingRecipe.resultItem);
+            craftingRecipe.Ingredients, craftingRecipe.ResultItem);
     }
 
     public void SetUpCraftingButton(CraftingButtonDependencies craftingButtonDependencies,
@@ -52,7 +52,7 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
         this.craftingButtonDependencies = craftingButtonDependencies;
         this.craftingRecipe = craftingRecipe;
 
-        craftingButtonImage.sprite = craftingRecipe.resultItem.itemDefinition.sprite;
+        craftingButtonImage.sprite = craftingRecipe.ResultItem.itemDefinition.Sprite;
     }
 
     private string GetIngredientsAsString()
@@ -61,13 +61,13 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
 
         Dictionary<int, int> itemIndexToUsedAmount = new Dictionary<int, int>();
 
-        foreach (ItemStack ingredient in craftingRecipe.ingredients)
+        foreach (ItemStack ingredient in craftingRecipe.Ingredients)
         {
             bool playerHasIngredient = playerInventory
                 .HasReplacementInputItem(itemIndexToUsedAmount, ingredient);
 
             ingredientsStringBuilder.Append(playerHasIngredient ? "<color=#00FF00>" : "<color=#FF0000>");
-            ingredientsStringBuilder.Append($"- {ingredient.amount} {ingredient.itemDefinition.name}: ");
+            ingredientsStringBuilder.Append($"- {ingredient.amount} {ingredient.itemDefinition.Name}: ");
             ingredientsStringBuilder.Append(playerHasIngredient ? "Y" : "N");
             ingredientsStringBuilder.Append("</color>");
             ingredientsStringBuilder.AppendLine();

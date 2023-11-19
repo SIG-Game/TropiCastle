@@ -6,22 +6,22 @@ using UnityEngine.AddressableAssets;
 [CreateAssetMenu(menuName = "Scriptable Object/Item/Item")]
 public class ItemScriptableObject : ScriptableObject
 {
-    public new string name;
-    public Sprite sprite;
-    public int stackSize = defaultStackSize;
-    public bool lockPlacementToGrid;
-    public bool oneAtATimePlacement;
-    public bool hasCustomColliderSize;
-    public bool triggerCollisionPickup;
-    public Vector2 customColliderSize;
-    public List<ItemProperty> properties;
+    public string Name;
+    public Sprite Sprite;
+    public int StackSize = defaultStackSize;
+    public bool LockPlacementToGrid;
+    public bool OneAtATimePlacement;
+    public bool HasCustomColliderSize;
+    public bool TriggerCollisionPickup;
+    public Vector2 CustomColliderSize;
+    public List<ItemProperty> Properties;
 
     private const int defaultStackSize = 99;
 
-    public bool IsEmpty() => name == "Empty";
+    public bool IsEmpty() => Name == "Empty";
 
     public string GetStringProperty(string name) =>
-        properties.Find(x => x.Name == name).Value;
+        Properties.Find(x => x.Name == name).Value;
 
     public float GetFloatProperty(string name) =>
         float.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
@@ -30,7 +30,7 @@ public class ItemScriptableObject : ScriptableObject
         int.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
 
     public bool HasProperty(string name) =>
-        properties.Exists(x => x.Name == name);
+        Properties.Exists(x => x.Name == name);
 
     public string GetTooltipText(bool includeInitialDurability = true)
     {
@@ -42,7 +42,7 @@ public class ItemScriptableObject : ScriptableObject
         }
         else
         {
-            tooltipText = string.Concat(name, GetAdditionalInfo());
+            tooltipText = string.Concat(Name, GetAdditionalInfo());
 
             if (includeInitialDurability && HasProperty("InitialDurability"))
             {

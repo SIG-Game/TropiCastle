@@ -102,7 +102,7 @@ public class FishingUIController : MonoBehaviour
         }
 
         dialogueBox.PlayDialogue(
-            $"You caught a {selectedFishDefinition.name.ToLowerInvariant()}!\n" +
+            $"You caught a {selectedFishDefinition.Name.ToLowerInvariant()}!\n" +
                 selectedFishDefinition.GetStringProperty("FishDescription"),
             afterCatchDialogueAction);
     }

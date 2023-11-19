@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2584ce2c2cfc1e4e96c67b07389cab7, type: 3}
   m_Name: Spear
   m_EditorClassIdentifier: 
-  name: Spear
-  sprite: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1, type: 3}
-  stackSize: 1
-  lockPlacementToGrid: 0
-  oneAtATimePlacement: 0
-  hasCustomColliderSize: 0
-  triggerCollisionPickup: 0
-  customColliderSize: {x: 0, y: 0}
-  properties:
+  Name: Spear
+  Sprite: {fileID: 21300000, guid: 5f1045aba4951f941a379f66062ce0f1, type: 3}
+  StackSize: 1
+  LockPlacementToGrid: 0
+  OneAtATimePlacement: 0
+  HasCustomColliderSize: 0
+  TriggerCollisionPickup: 0
+  CustomColliderSize: {x: 0, y: 0}
+  Properties:
   - Name: AttackType
     Value: Stab
   - Name: Damage
@@ -31,4 +31,4 @@ MonoBehaviour:
     Value: 2
   - Name: InitialDurability
     Value: 50
-  weaponSprite: {fileID: 21300000, guid: 349d3eb683eac8a4097352ae27210a1e, type: 3}
+  WeaponSprite: {fileID: 21300000, guid: 349d3eb683eac8a4097352ae27210a1e, type: 3}

@@ -16,7 +16,7 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
         playerAnimator.SetFloat("Attack Speed Multiplier",
             weaponItemDefinition.GetFloatProperty("AttackSpeed"));
 
-        weaponSpriteRenderer.sprite = weaponItemDefinition.weaponSprite;
+        weaponSpriteRenderer.sprite = weaponItemDefinition.WeaponSprite;
         weaponController.SetUpUsingScriptableObject(weaponItemDefinition);
 
         playerController.IsAttacking = true;

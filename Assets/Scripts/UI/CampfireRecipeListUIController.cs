@@ -26,8 +26,8 @@ public class CampfireRecipeListUIController : MonoBehaviour
             foreach (ItemStack inputItem in recipe.PossibleInputItems)
             {
                 recipeListBuilder.AppendLine(
-                    $"{inputItem.amount} {inputItem.itemDefinition.name} -> " +
-                    $"{recipe.ResultItem.amount} {recipe.ResultItem.itemDefinition.name}");
+                    $"{inputItem.amount} {inputItem.itemDefinition.Name} -> " +
+                    $"{recipe.ResultItem.amount} {recipe.ResultItem.itemDefinition.Name}");
             }
         }
 

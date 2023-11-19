@@ -80,9 +80,9 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
     {
         Vector2 itemColliderExtents;
 
-        if (itemDefinition.hasCustomColliderSize)
+        if (itemDefinition.HasCustomColliderSize)
         {
-            itemColliderExtents = itemDefinition.customColliderSize / 2f;
+            itemColliderExtents = itemDefinition.CustomColliderSize / 2f;
         }
         else
         {
@@ -96,9 +96,9 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
     {
         Vector2 itemColliderSize;
 
-        if (itemDefinition.hasCustomColliderSize)
+        if (itemDefinition.HasCustomColliderSize)
         {
-            itemColliderSize = itemDefinition.customColliderSize;
+            itemColliderSize = itemDefinition.CustomColliderSize;
         }
         else
         {
