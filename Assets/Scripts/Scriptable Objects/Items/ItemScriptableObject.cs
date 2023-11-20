@@ -11,8 +11,8 @@ public class ItemScriptableObject : ScriptableObject
     public int StackSize = defaultStackSize;
     public bool LockPlacementToGrid;
     public bool OneAtATimePlacement;
-    public bool HasCustomColliderSize;
     public bool TriggerCollisionPickup;
+    public bool HasCustomColliderSize;
     public Vector2 CustomColliderSize;
     public List<ItemProperty> Properties;
 
