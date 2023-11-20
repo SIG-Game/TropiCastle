@@ -54,10 +54,11 @@ MonoBehaviour:
   maxSpawnedPrefabs: 1
   minSpawnPosition: {x: 0, y: 0}
   maxSpawnPosition: {x: 0, y: 0}
-  logOnSpawn: 0
   itemToSpawn:
     itemDefinition: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
     amount: 1
+    instanceProperties:
+      PropertyList: []
   itemInteractableDependencies: {fileID: 0}
 --- !u!114 &5395899409496471975
 MonoBehaviour:

@@ -11,7 +11,6 @@ public class PrefabSpawner : MonoBehaviour
     [SerializeField] private int maxSpawnedPrefabs;
     [SerializeField] private Vector2 minSpawnPosition;
     [SerializeField] private Vector2 maxSpawnPosition;
-    [SerializeField] private bool logOnSpawn;
 
     public int NumPrefabs { get; set; }
     public float SpawnTimer { get; set; }
@@ -90,11 +89,6 @@ public class PrefabSpawner : MonoBehaviour
         spawnedPrefab.GetComponent<Spawnable>().SetSpawner(this);
 
         ApplySpawnedPrefabProperties(spawnedPrefab);
-
-        if (logOnSpawn)
-        {
-            Debug.Log($"Spawned {spawnedPrefab.name} at {spawnedPrefab.transform.position}.");
-        }
 
         NumPrefabs++;
     }

@@ -54,7 +54,6 @@ MonoBehaviour:
   maxSpawnedPrefabs: 2
   minSpawnPosition: {x: -9.5, y: -3}
   maxSpawnPosition: {x: -4.5, y: 2}
-  logOnSpawn: 0
   playerTransform: {fileID: 0}
   playerInventory: {fileID: 0}
 --- !u!114 &2763883772261998751
