@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,8 +41,6 @@ public class PlayerController : MonoBehaviour
     public event Action<bool> OnIsAttackingSet = (_) => {};
     public event Action OnPlayerDied = () => {};
 
-    private Dictionary<string, IItemUsage> itemNameToUsage;
-
     private BoxCollider2D boxCollider;
     private HealthController healthController;
     private ItemSelectionController itemSelectionController;
@@ -66,11 +63,6 @@ public class PlayerController : MonoBehaviour
 
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
-
-        itemNameToUsage = new Dictionary<string, IItemUsage>
-        {
-            { "FishingRod", fishingRodItemUsage }
-        };
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
     }
@@ -168,10 +160,9 @@ public class PlayerController : MonoBehaviour
         {
             weaponItemUsage.UseItem(item, itemIndex);
         }
-        else if (itemNameToUsage.TryGetValue(
-            item.itemDefinition.name, out IItemUsage itemUsage))
+        else if (item.itemDefinition.name == "FishingRod")
         {
-            itemUsage.UseItem(item, itemIndex);
+            fishingRodItemUsage.UseItem(item, itemIndex);
         }
     }
 
