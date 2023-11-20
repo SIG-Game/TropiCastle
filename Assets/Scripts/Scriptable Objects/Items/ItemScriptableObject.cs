@@ -3,7 +3,7 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[CreateAssetMenu(menuName = "Scriptable Object/Item/Item")]
+[CreateAssetMenu(menuName = "Scriptable Object/Item")]
 public class ItemScriptableObject : ScriptableObject
 {
     public string DisplayName;
