@@ -17,6 +17,9 @@ MonoBehaviour:
   StackSize: 1
   LockPlacementToGrid: 0
   OneAtATimePlacement: 0
-  HasCustomColliderSize: 0
   TriggerCollisionPickup: 0
+  HasCustomColliderSize: 0
   CustomColliderSize: {x: 0, y: 0}
+  Properties:
+  - Name: InteractableType
+    Value: CampfireItemInteractable

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -7,13 +6,6 @@ public class ItemWorld : MonoBehaviour
 {
     [SerializeField] private ItemStack item;
     [SerializeField] private TMP_Text amountText;
-
-    private static readonly Dictionary<string, Type> itemNameToInteractableType =
-        new Dictionary<string, Type>
-    {
-        { "Campfire", typeof(CampfireItemInteractable) },
-        { "Chest", typeof(ChestItemInteractable) }
-    };
 
     private ItemInteractableDependencies itemInteractableDependencies;
 
@@ -54,9 +46,11 @@ public class ItemWorld : MonoBehaviour
                 item.itemDefinition.TriggerCollisionPickup;
         }
 
-        if (itemNameToInteractableType.TryGetValue(item.itemDefinition.name,
-            out Type itemInteractableType))
+        if (item.itemDefinition.HasProperty("InteractableType"))
         {
+            Type itemInteractableType = Type.GetType(
+                item.itemDefinition.GetStringProperty("InteractableType"));
+
             gameObject.AddComponent(itemInteractableType);
 
             GetComponent<ItemInteractable>()
