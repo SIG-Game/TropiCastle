@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: Leaf
   Sprite: {fileID: 21300000, guid: 92f0a291c5f3678479c7d81daac57101, type: 3}
+  StackSize: 99
+  LockPlacementToGrid: 0
+  OneAtATimePlacement: 0
+  TriggerCollisionPickup: 1
   HasCustomColliderSize: 0
   CustomColliderSize: {x: 0, y: 0}
+  Properties: []

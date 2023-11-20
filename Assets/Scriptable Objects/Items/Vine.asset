@@ -14,3 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: Vine
   Sprite: {fileID: 21300000, guid: 62e2067f41db8d74a90b0bb88312b76d, type: 3}
+  StackSize: 99
+  LockPlacementToGrid: 0
+  OneAtATimePlacement: 0
+  TriggerCollisionPickup: 1
+  HasCustomColliderSize: 0
+  CustomColliderSize: {x: 0, y: 0}
+  Properties: []
