@@ -69,9 +69,39 @@ public class ItemPickupAndPlacement : MonoBehaviour
         }
 
         cursorPoint = cursorController.GetWorldPosition();
-        UpdateHoveredItemWorld();
-        UpdateCanPlaceItemAtCursorPosition();
-        UpdatePlacingItem();
+
+        Collider2D cursorOverlapCollider = Physics2D.OverlapPoint(cursorPoint);
+
+        CursorIsOverItemWorld = cursorOverlapCollider != null &&
+            cursorOverlapCollider.CompareTag("Item World");
+
+        HoveredItemWorld = CursorIsOverItemWorld ?
+            cursorOverlapCollider.GetComponent<ItemWorld>() : null;
+
+        ItemScriptableObject selectedItemDefinition =
+            player.GetSelectedItem().itemDefinition;
+
+        Vector2 selectedItemColliderExtents = ItemWorldPrefabInstanceFactory
+            .GetItemColliderExtents(selectedItemDefinition);
+
+        Vector2 itemPlacementPosition;
+
+        if (selectedItemDefinition.LockPlacementToGrid)
+        {
+            itemPlacementPosition = new Vector2(
+                RoundToGrid(cursorPoint.x), RoundToGrid(cursorPoint.y));
+        }
+        else
+        {
+            itemPlacementPosition = cursorPoint;
+        }
+
+        CanPlaceItemAtCursorPosition = SpawnColliderHelper.CanSpawnColliderAtPosition(
+            itemPlacementPosition, selectedItemColliderExtents);
+
+        PlacingItem = itemPickupAndPlacementAction.IsPressed() &&
+            !WaitingForInputReleaseBeforePlacement &&
+            !SelectedItemIsEmpty();
 
         currentState.StateUpdate();
     }
@@ -178,54 +208,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
             player.GetSelectedItem().itemDefinition;
 
         return selectedItemDefinition.IsEmpty();
-    }
-
-    private void UpdateHoveredItemWorld()
-    {
-        Collider2D cursorOverlapCollider = Physics2D.OverlapPoint(cursorPoint);
-
-        bool cursorIsOverCollider = cursorOverlapCollider != null;
-        CursorIsOverItemWorld = cursorIsOverCollider && cursorOverlapCollider.CompareTag("Item World");
-
-        if (CursorIsOverItemWorld)
-        {
-            HoveredItemWorld = cursorOverlapCollider.GetComponent<ItemWorld>();
-        }
-        else
-        {
-            HoveredItemWorld = null;
-        }
-    }
-
-    private void UpdateCanPlaceItemAtCursorPosition()
-    {
-        ItemScriptableObject selectedItemDefinition =
-            player.GetSelectedItem().itemDefinition;
-
-        Vector2 selectedItemColliderExtents =
-            ItemWorldPrefabInstanceFactory.GetItemColliderExtents(selectedItemDefinition);
-
-        Vector2 itemPlacementPosition;
-
-        if (selectedItemDefinition.LockPlacementToGrid)
-        {
-            itemPlacementPosition = new Vector2(
-                RoundToGrid(cursorPoint.x), RoundToGrid(cursorPoint.y));
-        }
-        else
-        {
-            itemPlacementPosition = cursorPoint;
-        }
-
-        CanPlaceItemAtCursorPosition = SpawnColliderHelper.CanSpawnColliderAtPosition(
-            itemPlacementPosition, selectedItemColliderExtents);
-    }
-
-    private void UpdatePlacingItem()
-    {
-        PlacingItem = itemPickupAndPlacementAction.IsPressed() &&
-            !WaitingForInputReleaseBeforePlacement &&
-            !SelectedItemIsEmpty();
     }
 
     private bool HoveredItemContainsItem() => HoveredItemWorld != null &&
