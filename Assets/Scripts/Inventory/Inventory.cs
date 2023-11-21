@@ -685,7 +685,18 @@ public class Inventory : MonoBehaviour
         {
             ItemName = item.itemDefinition.name;
             Amount = item.amount;
-            InstanceProperties = item.instanceProperties;
+
+            // Prevent serialization of empty instance properties
+            if (item.instanceProperties != null &&
+                item.instanceProperties.GetType() == typeof(ItemInstanceProperties) &&
+                item.instanceProperties.PropertyList.Count == 0)
+            {
+                InstanceProperties = null;
+            }
+            else
+            {
+                InstanceProperties = item.instanceProperties;
+            }
         }
     }
 
