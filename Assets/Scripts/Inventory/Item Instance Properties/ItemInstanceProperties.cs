@@ -16,6 +16,9 @@ public class ItemInstanceProperties
     public string GetStringProperty(string name) =>
         PropertyList.Find(x => x.Name == name).Value;
 
+    public float GetFloatProperty(string name) =>
+        float.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
+
     public int GetIntProperty(string name) =>
         int.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
 
