@@ -14,7 +14,7 @@ public class InventorySaveManager : SaveManager
         var saveManagerState = new InventorySaveManagerState
         {
             SaveGuid = saveGuid,
-            serializableInventory = serializableInventory
+            SerializedInventory = JsonUtility.ToJson(serializableInventory)
         };
 
         return saveManagerState;
@@ -25,12 +25,15 @@ public class InventorySaveManager : SaveManager
         InventorySaveManagerState inventoryState =
             (InventorySaveManagerState)saveManagerState;
 
-        inventory.SetUpFromSerializableInventory(inventoryState.serializableInventory);
+        SerializableInventory serializableInventory = JsonUtility
+            .FromJson<SerializableInventory>(inventoryState.SerializedInventory);
+
+        inventory.SetUpFromSerializableInventory(serializableInventory);
     }
 
     [Serializable]
     public class InventorySaveManagerState : SaveManagerState
     {
-        public SerializableInventory serializableInventory;
+        public string SerializedInventory;
     }
 }
