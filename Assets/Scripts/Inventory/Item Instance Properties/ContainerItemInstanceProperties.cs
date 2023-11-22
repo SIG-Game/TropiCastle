@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using static Inventory;
 
 [Serializable]
-public abstract class ContainerItemInstanceProperties : ItemInstanceProperties
+public abstract class ContainerItemInstanceProperties : PropertyCollection
 {
     public SerializableInventory SerializableInventory;
 
@@ -34,7 +34,7 @@ public abstract class ContainerItemInstanceProperties : ItemInstanceProperties
         SerializableInventory = inventory.GetAsSerializableInventory();
     }
 
-    public override ItemInstanceProperties DeepCopy()
+    public override PropertyCollection DeepCopy()
     {
         List<SerializableInventoryItem> containerItemListDeepCopy =
             new List<SerializableInventoryItem>(InventorySize);

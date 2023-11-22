@@ -6,7 +6,7 @@ public class ItemStack
 {
     public ItemScriptableObject itemDefinition;
     public int amount;
-    public ItemInstanceProperties instanceProperties;
+    public PropertyCollection instanceProperties;
 
     private static readonly Dictionary<string, Type> itemNameToInstancePropertiesType =
         new Dictionary<string, Type>
@@ -16,7 +16,7 @@ public class ItemStack
     };
 
     public ItemStack(ItemScriptableObject itemDefinition, int amount,
-        ItemInstanceProperties instanceProperties = null)
+        PropertyCollection instanceProperties = null)
     {
         this.itemDefinition = itemDefinition;
         this.amount = amount;
@@ -34,7 +34,7 @@ public class ItemStack
     {
         if (itemDefinition.HasProperty("InitialDurability"))
         {
-            instanceProperties = new ItemInstanceProperties();
+            instanceProperties = new PropertyCollection();
 
             instanceProperties.AddProperty("Durability",
                 itemDefinition.GetStringProperty("InitialDurability"));
@@ -42,7 +42,7 @@ public class ItemStack
         else if (itemNameToInstancePropertiesType.TryGetValue(itemDefinition.name,
             out Type itemInstancePropertiesType))
         {
-            instanceProperties = (ItemInstanceProperties)Activator
+            instanceProperties = (PropertyCollection)Activator
                 .CreateInstance(itemInstancePropertiesType);
         }
     }

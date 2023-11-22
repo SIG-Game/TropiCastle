@@ -667,7 +667,7 @@ public class Inventory : MonoBehaviour
         public int Amount;
 
         [SerializeReference]
-        public ItemInstanceProperties InstanceProperties;
+        public PropertyCollection InstanceProperties;
 
         public SerializableInventoryItem()
         {
@@ -688,7 +688,7 @@ public class Inventory : MonoBehaviour
 
             // Prevent serialization of empty instance properties
             if (item.instanceProperties != null &&
-                item.instanceProperties.GetType() == typeof(ItemInstanceProperties) &&
+                item.instanceProperties.GetType() == typeof(PropertyCollection) &&
                 item.instanceProperties.PropertyList.Count == 0)
             {
                 InstanceProperties = null;

@@ -4,13 +4,13 @@ using System.Globalization;
 using System.Linq;
 
 [Serializable]
-public class ItemInstanceProperties
+public class PropertyCollection
 {
-    public List<ItemInstanceProperty> PropertyList;
+    public List<Property> PropertyList;
 
-    public ItemInstanceProperties()
+    public PropertyCollection()
     {
-        PropertyList = new List<ItemInstanceProperty>();
+        PropertyList = new List<Property>();
     }
 
     public string GetStringProperty(string name) =>
@@ -26,18 +26,18 @@ public class ItemInstanceProperties
         PropertyList.Find(x => x.Name == name).Value = value;
 
     public void AddProperty(string name, string value) =>
-        PropertyList.Add(new ItemInstanceProperty(name, value));
+        PropertyList.Add(new Property(name, value));
 
     public bool HasProperty(string name) =>
         PropertyList.Exists(x => x.Name == name);
 
-    public virtual ItemInstanceProperties DeepCopy()
+    public virtual PropertyCollection DeepCopy()
     {
-        List<ItemInstanceProperty> propertyListDeepCopy = PropertyList
-            .Select(x => new ItemInstanceProperty(x.Name, x.Value)).ToList();
+        List<Property> propertyListDeepCopy = PropertyList
+            .Select(x => new Property(x.Name, x.Value)).ToList();
 
-        ItemInstanceProperties deepCopy =
-            (ItemInstanceProperties)MemberwiseClone();
+        PropertyCollection deepCopy =
+            (PropertyCollection)MemberwiseClone();
 
         deepCopy.PropertyList = propertyListDeepCopy;
 
