@@ -1,7 +1,8 @@
 using System;
 
 [Serializable]
-public abstract class SaveManagerState
+public class SaveManagerState
 {
     public string SaveGuid;
+    public PropertyCollection Properties;
 }

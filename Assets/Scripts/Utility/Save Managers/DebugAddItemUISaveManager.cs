@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,11 +9,16 @@ public class DebugAddItemUISaveManager : SaveManager
 
     public override SaveManagerState GetState()
     {
-        var saveManagerState = new DebugAddItemUISaveManagerState
+        var propertyList = new List<Property>()
+        {
+            new Property("AmountInputFieldText", amountInputField.text),
+            new Property("ItemDropdownValue", itemDropdown.value.ToString())
+        };
+
+        var saveManagerState = new SaveManagerState
         {
             SaveGuid = saveGuid,
-            AmountInputFieldText = amountInputField.text,
-            ItemDropdownValue = itemDropdown.value
+            Properties = new PropertyCollection(propertyList)
         };
 
         return saveManagerState;
@@ -21,17 +26,9 @@ public class DebugAddItemUISaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        DebugAddItemUISaveManagerState debugAddItemUIState =
-            (DebugAddItemUISaveManagerState)saveManagerState;
-
-        amountInputField.text = debugAddItemUIState.AmountInputFieldText;
-        itemDropdown.value = debugAddItemUIState.ItemDropdownValue;
-    }
-
-    [Serializable]
-    public class DebugAddItemUISaveManagerState : SaveManagerState
-    {
-        public string AmountInputFieldText;
-        public int ItemDropdownValue;
+        amountInputField.text = saveManagerState.Properties
+            .GetStringProperty("AmountInputFieldText");
+        itemDropdown.value = saveManagerState.Properties
+            .GetIntProperty("ItemDropdownValue");
     }
 }

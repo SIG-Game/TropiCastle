@@ -13,6 +13,11 @@ public class PropertyCollection
         PropertyList = new List<Property>();
     }
 
+    public PropertyCollection(List<Property> propertyList)
+    {
+        PropertyList = propertyList;
+    }
+
     public string GetStringProperty(string name) =>
         PropertyList.Find(x => x.Name == name).Value;
 
