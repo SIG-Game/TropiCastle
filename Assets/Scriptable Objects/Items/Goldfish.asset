@@ -21,9 +21,10 @@ MonoBehaviour:
   TriggerCollisionPickup: 0
   CustomColliderSize: {x: 0, y: 0}
   Properties:
-  - Name: FishDescription
-    Value: Not made of gold...
-  - Name: FishSpeed
-    Value: 220
-  - Name: FishProbabilityWeight
-    Value: 0.45
+    PropertyList:
+    - Name: FishDescription
+      Value: Not made of gold...
+    - Name: FishSpeed
+      Value: 220
+    - Name: FishProbabilityWeight
+      Value: 0.45

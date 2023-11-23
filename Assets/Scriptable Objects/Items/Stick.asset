@@ -21,11 +21,12 @@ MonoBehaviour:
   HasCustomColliderSize: 0
   CustomColliderSize: {x: 0, y: 0}
   Properties:
-  - Name: AttackType
-    Value: Swing
-  - Name: Damage
-    Value: 40
-  - Name: Knockback
-    Value: 2.5
-  - Name: AttackSpeed
-    Value: 1
+    PropertyList:
+    - Name: AttackType
+      Value: Swing
+    - Name: Damage
+      Value: 40
+    - Name: Knockback
+      Value: 2.5
+    - Name: AttackSpeed
+      Value: 1

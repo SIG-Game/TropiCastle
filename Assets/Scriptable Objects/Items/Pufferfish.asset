@@ -21,9 +21,10 @@ MonoBehaviour:
   TriggerCollisionPickup: 0
   CustomColliderSize: {x: 0, y: 0}
   Properties:
-  - Name: FishDescription
-    Value: A very prickly fish.
-  - Name: FishSpeed
-    Value: 176
-  - Name: FishProbabilityWeight
-    Value: 0.35
+    PropertyList:
+    - Name: FishDescription
+      Value: A very prickly fish.
+    - Name: FishSpeed
+      Value: 176
+    - Name: FishProbabilityWeight
+      Value: 0.35

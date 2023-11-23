@@ -21,13 +21,14 @@ MonoBehaviour:
   TriggerCollisionPickup: 0
   CustomColliderSize: {x: 0, y: 0}
   Properties:
-  - Name: AttackType
-    Value: Stab
-  - Name: Damage
-    Value: 60
-  - Name: Knockback
-    Value: 3
-  - Name: AttackSpeed
-    Value: 2
-  - Name: InitialDurability
-    Value: 50
+    PropertyList:
+    - Name: AttackType
+      Value: Stab
+    - Name: Damage
+      Value: 60
+    - Name: Knockback
+      Value: 3
+    - Name: AttackSpeed
+      Value: 2
+    - Name: InitialDurability
+      Value: 50

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -14,23 +12,11 @@ public class ItemScriptableObject : ScriptableObject
     public bool TriggerCollisionPickup;
     public bool HasCustomColliderSize;
     public Vector2 CustomColliderSize;
-    public List<ItemProperty> Properties;
+    public PropertyCollection Properties;
 
     private const int defaultStackSize = 99;
 
     public bool IsEmpty() => name == "Empty";
-
-    public string GetStringProperty(string name) =>
-        Properties.Find(x => x.Name == name).Value;
-
-    public float GetFloatProperty(string name) =>
-        float.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
-
-    public int GetIntProperty(string name) =>
-        int.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
-
-    public bool HasProperty(string name) =>
-        Properties.Exists(x => x.Name == name);
 
     public string GetTooltipText(bool includeInitialDurability = true)
     {
@@ -65,6 +51,11 @@ public class ItemScriptableObject : ScriptableObject
 
         return tooltipText;
     }
+
+    public string GetStringProperty(string name) => Properties.GetStringProperty(name);
+    public float GetFloatProperty(string name) => Properties.GetFloatProperty(name);
+    public int GetIntProperty(string name) => Properties.GetIntProperty(name);
+    public bool HasProperty(string name) => Properties.HasProperty(name);
 
     public static ItemScriptableObject FromName(string name)
     {

@@ -21,5 +21,6 @@ MonoBehaviour:
   TriggerCollisionPickup: 0
   CustomColliderSize: {x: 0, y: 0}
   Properties:
-  - Name: HealAmount
-    Value: 10
+    PropertyList:
+    - Name: HealAmount
+      Value: 10

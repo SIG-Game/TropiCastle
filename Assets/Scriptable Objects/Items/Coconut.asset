@@ -20,4 +20,5 @@ MonoBehaviour:
   TriggerCollisionPickup: 1
   HasCustomColliderSize: 0
   CustomColliderSize: {x: 0, y: 0}
-  Properties: []
+  Properties:
+    PropertyList: []
