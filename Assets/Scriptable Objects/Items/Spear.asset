@@ -17,8 +17,8 @@ MonoBehaviour:
   StackSize: 1
   LockPlacementToGrid: 0
   OneAtATimePlacement: 0
-  HasCustomColliderSize: 0
   TriggerCollisionPickup: 0
+  HasCustomColliderSize: 0
   CustomColliderSize: {x: 0, y: 0}
   Properties:
     PropertyList:
@@ -30,5 +30,7 @@ MonoBehaviour:
       Value: 3
     - Name: AttackSpeed
       Value: 2
-    - Name: InitialDurability
+  DefaultInstanceProperties:
+    PropertyList:
+    - Name: Durability
       Value: 50

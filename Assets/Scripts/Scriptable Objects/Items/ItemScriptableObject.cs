@@ -13,6 +13,7 @@ public class ItemScriptableObject : ScriptableObject
     public bool HasCustomColliderSize;
     public Vector2 CustomColliderSize;
     public PropertyCollection Properties;
+    public PropertyCollection DefaultInstanceProperties;
 
     private const int defaultStackSize = 99;
 
@@ -38,9 +39,11 @@ public class ItemScriptableObject : ScriptableObject
                     $"\n{GetFloatProperty("AttackSpeed")} Attack Speed";
             }
 
-            if (includeInitialDurability && HasProperty("InitialDurability"))
+            if (includeInitialDurability &&
+                DefaultInstanceProperties.HasProperty("Durability"))
             {
-                tooltipText += $"\nDurability: {GetIntProperty("InitialDurability")}";
+                tooltipText += "\nDurability: " +
+                    DefaultInstanceProperties.GetIntProperty("Durability");
             }
 
             if (HasProperty("HealAmount"))

@@ -32,18 +32,23 @@ public class ItemStack
 
     public void InitializeItemInstanceProperties()
     {
-        if (itemDefinition.HasProperty("InitialDurability"))
-        {
-            instanceProperties = new PropertyCollection();
+        List<Property> defaultInstancePropertyList =
+            itemDefinition.DefaultInstanceProperties.PropertyList;
 
-            instanceProperties.AddProperty("Durability",
-                itemDefinition.GetStringProperty("InitialDurability"));
-        }
-        else if (itemNameToInstancePropertiesType.TryGetValue(itemDefinition.name,
+        if (itemNameToInstancePropertiesType.TryGetValue(itemDefinition.name,
             out Type itemInstancePropertiesType))
         {
             instanceProperties = (PropertyCollection)Activator
                 .CreateInstance(itemInstancePropertiesType);
+        }
+        else if (defaultInstancePropertyList.Count != 0)
+        {
+            instanceProperties = new PropertyCollection();
+        }
+
+        foreach (var property in defaultInstancePropertyList)
+        {
+            instanceProperties.AddProperty(property.Name, property.Value);
         }
     }
 
@@ -63,10 +68,11 @@ public class ItemStack
     {
         if (instanceProperties != null &&
             instanceProperties.HasProperty("Durability") &&
-            itemDefinition.HasProperty("InitialDurability"))
+            itemDefinition.DefaultInstanceProperties.HasProperty("Durability"))
         {
             durability = instanceProperties.GetIntProperty("Durability");
-            initialDurability = itemDefinition.GetIntProperty("InitialDurability");
+            initialDurability =
+                itemDefinition.DefaultInstanceProperties.GetIntProperty("Durability");
 
             return true;
         }
