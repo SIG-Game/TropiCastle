@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class PropertyCollection
@@ -26,6 +27,9 @@ public class PropertyCollection
 
     public int GetIntProperty(string name) =>
         int.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
+
+    public Vector3 GetVector3Property(string name) =>
+        Vector3Helper.FromString(GetStringProperty(name));
 
     public void SetExistingProperty(string name, string value) =>
         PropertyList.Find(x => x.Name == name).Value = value;

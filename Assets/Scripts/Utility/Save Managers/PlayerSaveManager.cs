@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSaveManager : SaveManager
@@ -9,18 +9,19 @@ public class PlayerSaveManager : SaveManager
 
     public override SaveManagerState GetState()
     {
-        Vector2 playerPosition = playerController.transform.position;
-        int playerDirection = (int)playerController.Direction;
-        int selectedItemIndex = itemSelectionController.SelectedItemIndex;
-        int health = playerHealthController.CurrentHealth;
+        var propertyList = new List<Property>
+        {
+            new Property("Position", playerController.transform.position.ToString()),
+            new Property("Direction", ((int)playerController.Direction).ToString()),
+            new Property("Health", playerHealthController.CurrentHealth.ToString()),
+            new Property("SelectedItemIndex",
+                itemSelectionController.SelectedItemIndex.ToString())
+        };
 
-        var saveManagerState = new PlayerSaveManagerState
+        var saveManagerState = new SaveManagerState
         {
             SaveGuid = saveGuid,
-            PlayerPosition = playerPosition,
-            PlayerDirection = playerDirection,
-            SelectedItemIndex = selectedItemIndex,
-            Health = health
+            Properties = new PropertyCollection(propertyList)
         };
 
         return saveManagerState;
@@ -28,20 +29,13 @@ public class PlayerSaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        PlayerSaveManagerState playerState = (PlayerSaveManagerState)saveManagerState;
-
-        playerController.transform.position = playerState.PlayerPosition;
-        playerController.Direction = (CharacterDirection)playerState.PlayerDirection;
-        itemSelectionController.SelectedItemIndex = playerState.SelectedItemIndex;
-        playerHealthController.CurrentHealth = playerState.Health;
-    }
-
-    [Serializable]
-    public class PlayerSaveManagerState : SaveManagerState
-    {
-        public Vector2 PlayerPosition;
-        public int PlayerDirection;
-        public int SelectedItemIndex;
-        public int Health;
+        playerController.transform.position =
+            saveManagerState.Properties.GetVector3Property("Position");
+        playerController.Direction =
+            (CharacterDirection)saveManagerState.Properties.GetIntProperty("Direction");
+        playerHealthController.CurrentHealth =
+            saveManagerState.Properties.GetIntProperty("Health");
+        itemSelectionController.SelectedItemIndex =
+            saveManagerState.Properties.GetIntProperty("SelectedItemIndex");
     }
 }
