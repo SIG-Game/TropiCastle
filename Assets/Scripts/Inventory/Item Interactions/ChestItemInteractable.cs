@@ -1,5 +1,4 @@
-public class ChestItemInteractable :
-    ContainerItemInteractable<ChestItemInstanceProperties>
+public class ChestItemInteractable : ContainerItemInteractable
 {
     private ChestUIController chestUIController;
 

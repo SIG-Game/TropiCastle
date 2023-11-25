@@ -4,8 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class CampfireItemInteractable :
-    ContainerItemInteractable<CampfireItemInstanceProperties>
+public class CampfireItemInteractable : ContainerItemInteractable
 {
     private CampfireUIController campfireUIController;
     private IList<CampfireRecipeScriptableObject> campfireRecipes;

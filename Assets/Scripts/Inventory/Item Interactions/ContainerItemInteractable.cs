@@ -1,19 +1,19 @@
-public abstract class ContainerItemInteractable<TItemInstanceProperties> :
-    ItemInteractable where TItemInstanceProperties : ContainerItemInstanceProperties
+public abstract class ContainerItemInteractable : ItemInteractable
 {
     protected Inventory inventory;
-    protected TItemInstanceProperties itemInstanceProperties;
+    protected ContainerItemInstanceProperties itemInstanceProperties;
 
     protected virtual void Awake()
     {
         inventory = gameObject.AddComponent<Inventory>();
 
+        ItemStack item = GetComponent<ItemWorld>().GetItem();
+
         itemInstanceProperties =
-            (TItemInstanceProperties)GetComponent<ItemWorld>()
-                .GetItem().instanceProperties;
+            (ContainerItemInstanceProperties)item.instanceProperties;
 
         inventory.InitializeItemListWithSize(
-            itemInstanceProperties.InventorySize);
+            item.itemDefinition.GetIntProperty("ContainerSize"));
 
         if (itemInstanceProperties != null)
         {

@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using static Inventory;
 
 [Serializable]
-public abstract class ContainerItemInstanceProperties : PropertyCollection
+public class ContainerItemInstanceProperties : PropertyCollection
 {
     public SerializableInventory SerializableInventory;
 
-    public abstract int InventorySize { get; }
-
-    public ContainerItemInstanceProperties()
+    public ContainerItemInstanceProperties(int containerSize)
     {
         List<SerializableInventoryItem> containerItemList =
-            new List<SerializableInventoryItem>(InventorySize);
+            new List<SerializableInventoryItem>(containerSize);
 
-        for (int i = 0; i < InventorySize; ++i)
+        for (int i = 0; i < containerSize; ++i)
         {
             containerItemList.Add(new SerializableInventoryItem
             {
@@ -36,10 +34,12 @@ public abstract class ContainerItemInstanceProperties : PropertyCollection
 
     public override PropertyCollection DeepCopy()
     {
-        List<SerializableInventoryItem> containerItemListDeepCopy =
-            new List<SerializableInventoryItem>(InventorySize);
+        int containerSize = SerializableInventory.SerializableItemList.Count;
 
-        for (int i = 0; i < InventorySize; ++i)
+        List<SerializableInventoryItem> containerItemListDeepCopy =
+            new List<SerializableInventoryItem>(containerSize);
+
+        for (int i = 0; i < containerSize; ++i)
         {
             containerItemListDeepCopy.Add(new SerializableInventoryItem(
                 SerializableInventory.SerializableItemList[i]));

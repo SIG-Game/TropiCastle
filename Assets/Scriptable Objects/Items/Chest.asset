@@ -24,3 +24,7 @@ MonoBehaviour:
     PropertyList:
     - Name: InteractableType
       Value: ChestItemInteractable
+    - Name: ContainerSize
+      Value: 10
+  DefaultInstanceProperties:
+    PropertyList: []

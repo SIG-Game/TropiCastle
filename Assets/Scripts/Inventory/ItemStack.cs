@@ -8,13 +8,6 @@ public class ItemStack
     public int amount;
     public PropertyCollection instanceProperties;
 
-    private static readonly Dictionary<string, Type> itemNameToInstancePropertiesType =
-        new Dictionary<string, Type>
-    {
-        { "Campfire", typeof(CampfireItemInstanceProperties) },
-        { "Chest", typeof(ChestItemInstanceProperties) }
-    };
-
     public ItemStack(ItemScriptableObject itemDefinition, int amount,
         PropertyCollection instanceProperties = null)
     {
@@ -35,11 +28,11 @@ public class ItemStack
         List<Property> defaultInstancePropertyList =
             itemDefinition.DefaultInstanceProperties.PropertyList;
 
-        if (itemNameToInstancePropertiesType.TryGetValue(itemDefinition.name,
-            out Type itemInstancePropertiesType))
+        if (itemDefinition.HasProperty("ContainerSize"))
         {
-            instanceProperties = (PropertyCollection)Activator
-                .CreateInstance(itemInstancePropertiesType);
+            int containerSize = itemDefinition.GetIntProperty("ContainerSize");
+
+            instanceProperties = new ContainerItemInstanceProperties(containerSize);
         }
         else if (defaultInstancePropertyList.Count != 0)
         {
