@@ -28,7 +28,6 @@ public class InventoryMenuController : MonoBehaviour
             playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
             inventoryUIManager.SetCurrentInventoryUIGameObjects(inventoryMenuGameObjects);
-            inventoryUIManager.SetCanCloseUsingInteractAction(false);
             inventoryUIManager.EnableCurrentInventoryUI();
         }
     }

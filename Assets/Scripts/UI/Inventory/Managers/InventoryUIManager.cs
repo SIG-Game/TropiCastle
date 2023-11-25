@@ -23,7 +23,6 @@ public class InventoryUIManager : MonoBehaviour
     public event Action OnInventoryUIClosed = () => {};
 
     private List<GameObject> currentInventoryUIGameObjects;
-    private bool canCloseUsingInteractAction;
     private bool inventoryUIOpen;
 
     private void Awake()
@@ -45,7 +44,7 @@ public class InventoryUIManager : MonoBehaviour
     {
         bool closeUsingEscapeKey = Input.GetKeyDown(KeyCode.Escape);
 
-        bool closeUsingInteractAction = canCloseUsingInteractAction &&
+        bool closeUsingInteractAction =
             inputManager.GetInteractButtonDownIfUnusedThisFrame();
 
         bool closeUsingInventoryAction =
@@ -82,10 +81,5 @@ public class InventoryUIManager : MonoBehaviour
         List<GameObject> currentInventoryUIGameObjects)
     {
         this.currentInventoryUIGameObjects = currentInventoryUIGameObjects;
-    }
-
-    public void SetCanCloseUsingInteractAction(bool canCloseUsingInteractAction)
-    {
-        this.canCloseUsingInteractAction = canCloseUsingInteractAction;
     }
 }

@@ -49,7 +49,6 @@ public class TradingUIController : MonoBehaviour
         playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
         inventoryUIManager.SetCurrentInventoryUIGameObjects(tradingUIGameObjects);
-        inventoryUIManager.SetCanCloseUsingInteractAction(true);
         inventoryUIManager.EnableCurrentInventoryUI();
     }
 
