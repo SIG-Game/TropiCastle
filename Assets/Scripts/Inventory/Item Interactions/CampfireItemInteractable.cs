@@ -74,8 +74,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
     public override void SetUpUsingDependencies(
         ItemInteractableDependencies itemInteractableDependencies)
     {
-        campfireUIController =
-            itemInteractableDependencies.GetCampfireUIController();
+        campfireUIController = itemInteractableDependencies.CampfireUIController;
     }
 
     private void SetCurrentRecipe()

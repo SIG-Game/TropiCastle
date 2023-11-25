@@ -5,7 +5,7 @@ public class ItemInteractableDependencies : MonoBehaviour
     [SerializeField] private ChestUIController chestUIController;
     [SerializeField] private CampfireUIController campfireUIController;
 
-    public ChestUIController GetChestUIController() => chestUIController;
+    public ChestUIController ChestUIController => chestUIController;
 
-    public CampfireUIController GetCampfireUIController() => campfireUIController;
+    public CampfireUIController CampfireUIController => campfireUIController;
 }

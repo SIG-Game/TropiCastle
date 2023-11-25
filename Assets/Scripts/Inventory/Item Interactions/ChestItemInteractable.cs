@@ -12,7 +12,6 @@ public class ChestItemInteractable : ContainerItemInteractable
     public override void SetUpUsingDependencies(
         ItemInteractableDependencies itemInteractableDependencies)
     {
-        chestUIController =
-            itemInteractableDependencies.GetChestUIController();
+        chestUIController = itemInteractableDependencies.ChestUIController;
     }
 }
