@@ -64,7 +64,15 @@ public class CursorController : MonoBehaviour
             cursorCamera.aspect != previousCameraAspect;
         if (cameraSizeChanged)
         {
-            UpdateCameraBounds();
+            float halfCameraHeight = cursorCamera.orthographicSize;
+            float halfCameraWidth = halfCameraHeight * cursorCamera.aspect;
+
+            horizontalCameraBounds = new Vector2(
+                cursorCamera.transform.position.x - halfCameraWidth,
+                cursorCamera.transform.position.x + halfCameraWidth);
+            verticalCameraBounds = new Vector2(
+                cursorCamera.transform.position.y - halfCameraHeight,
+                cursorCamera.transform.position.y + halfCameraHeight);
         }
 
         Vector2 moveCursorInput = moveCursorAction.ReadValue<Vector2>();
@@ -141,17 +149,6 @@ public class CursorController : MonoBehaviour
         Sprite = defaultCursorSprite;
         amountText.text = string.Empty;
         UpdateCursorBackground(Color.clear, Vector3.zero);
-    }
-
-    private void UpdateCameraBounds()
-    {
-        float halfCameraHeight = cursorCamera.orthographicSize;
-        float halfCameraWidth = cursorCamera.orthographicSize * cursorCamera.aspect;
-
-        horizontalCameraBounds = new Vector2(cursorCamera.transform.position.x - halfCameraWidth,
-            cursorCamera.transform.position.x + halfCameraWidth);
-        verticalCameraBounds = new Vector2(cursorCamera.transform.position.y - halfCameraHeight,
-            cursorCamera.transform.position.y + halfCameraHeight);
     }
 
     private Vector3 ClampToScreen(Vector3 input)
