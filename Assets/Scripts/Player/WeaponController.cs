@@ -3,7 +3,6 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     [SerializeField] private float minTimeBetweenHits;
-    [SerializeField] private bool logOnHit;
 
     public int Damage { private get; set; }
     public float EnemyKnockbackForce { private get; set; }
@@ -25,11 +24,6 @@ public class WeaponController : MonoBehaviour
 
             Vector2 directionToEnemy = (other.transform.position - transform.position).normalized;
             hitEnemy.ApplyKnockback(directionToEnemy, EnemyKnockbackForce);
-
-            if (logOnHit)
-            {
-                Debug.Log($"Attacked enemy {other.name} for {Damage} damage with knockback {EnemyKnockbackForce}.");
-            }
         }
     }
 
