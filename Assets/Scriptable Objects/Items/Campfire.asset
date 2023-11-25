@@ -24,3 +24,7 @@ MonoBehaviour:
     PropertyList:
     - Name: InteractableType
       Value: CampfireItemInteractable
+  DefaultInstanceProperties:
+    PropertyList:
+    - Name: CookTimeProgress
+      Value: 0
