@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnerSaveManager : SaveManager
@@ -7,12 +7,18 @@ public class SpawnerSaveManager : SaveManager
 
     public override SaveManagerState GetState()
     {
-        var saveManagerState = new SpawnerSaveManagerState
+        var propertyList = new List<Property>()
+        {
+            new Property("NumberOfSpawnedPrefabs", spawner.NumPrefabs.ToString()),
+            new Property("SpawnTimer", spawner.SpawnTimer.ToString()),
+            new Property("WaitBeforeFirstSpawnCompleted",
+                spawner.WaitBeforeFirstSpawnCompleted.ToString())
+        };
+
+        var saveManagerState = new SaveManagerState
         {
             SaveGuid = saveGuid,
-            NumberOfSpawnedPrefabs = spawner.NumPrefabs,
-            SpawnTimer = spawner.SpawnTimer,
-            WaitBeforeFirstSpawnCompleted = spawner.WaitBeforeFirstSpawnCompleted
+            Properties = new PropertyCollection(propertyList)
         };
 
         return saveManagerState;
@@ -20,18 +26,9 @@ public class SpawnerSaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        SpawnerSaveManagerState spawnerState = (SpawnerSaveManagerState)saveManagerState;
-
-        spawner.NumPrefabs = spawnerState.NumberOfSpawnedPrefabs;
-        spawner.SpawnTimer = spawnerState.SpawnTimer;
-        spawner.WaitBeforeFirstSpawnCompleted = spawnerState.WaitBeforeFirstSpawnCompleted;
-    }
-
-    [Serializable]
-    public class SpawnerSaveManagerState : SaveManagerState
-    {
-        public int NumberOfSpawnedPrefabs;
-        public float SpawnTimer;
-        public bool WaitBeforeFirstSpawnCompleted;
+        spawner.NumPrefabs = saveManagerState.Properties.GetIntProperty("NumberOfSpawnedPrefabs");
+        spawner.SpawnTimer = saveManagerState.Properties.GetFloatProperty("SpawnTimer");
+        spawner.WaitBeforeFirstSpawnCompleted =
+            saveManagerState.Properties.GetBoolProperty("WaitBeforeFirstSpawnCompleted");
     }
 }

@@ -28,6 +28,9 @@ public class PropertyCollection
     public int GetIntProperty(string name) =>
         int.Parse(GetStringProperty(name), CultureInfo.InvariantCulture);
 
+    public bool GetBoolProperty(string name) =>
+        bool.Parse(GetStringProperty(name));
+
     public Vector3 GetVector3Property(string name) =>
         Vector3Helper.FromString(GetStringProperty(name));
 
