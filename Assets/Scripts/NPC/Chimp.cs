@@ -13,7 +13,7 @@ public class Chimp : NPCInteractable
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
     [SerializeField] private DialogueBox dialogueBox;
 
-    public float LastGiveTime { get; set; }
+    public float LastGiveTime { get; private set; }
     public float TimeBetweenGives { get; set; }
 
     private const string chimpCharacterName = "Chimp";
@@ -22,7 +22,7 @@ public class Chimp : NPCInteractable
     {
         base.Awake();
 
-        LastGiveTime = 0f;
+        LastGiveTime = Time.time;
         TimeBetweenGives = 0f;
     }
 

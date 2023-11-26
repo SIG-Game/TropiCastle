@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ChimpSaveManager : SaveManager
@@ -20,10 +20,15 @@ public class ChimpSaveManager : SaveManager
             timeUntilNextGive = nextGiveTime - Time.time;
         }
 
-        var saveManagerState = new ChimpSaveManagerState
+        var propertyList = new List<Property>()
+        {
+            new Property("TimeUntilNextGive", timeUntilNextGive.ToString())
+        };
+
+        var saveManagerState = new SaveManagerState
         {
             SaveGuid = saveGuid,
-            TimeUntilNextGive = timeUntilNextGive
+            Properties = new PropertyCollection(propertyList)
         };
 
         return saveManagerState;
@@ -31,16 +36,7 @@ public class ChimpSaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        ChimpSaveManagerState chimpState = (ChimpSaveManagerState)saveManagerState;
-
-        chimp.TimeBetweenGives = chimpState.TimeUntilNextGive;
-
-        chimp.LastGiveTime = Time.time;
-    }
-
-    [Serializable]
-    public class ChimpSaveManagerState : SaveManagerState
-    {
-        public float TimeUntilNextGive;
+        chimp.TimeBetweenGives = saveManagerState.Properties
+            .GetFloatProperty("TimeUntilNextGive");
     }
 }
