@@ -12,15 +12,8 @@ public class InventoryUISwapInputHandler : MonoBehaviour
     // swap items in inventory UI takes priority over using number keys to select an item
     private void Update()
     {
-        if (inventoryUIManager.InventoryUIOpen)
-        {
-            SwapItemsUsingNumberKeyInput();
-        }
-    }
-
-    private void SwapItemsUsingNumberKeyInput()
-    {
-        bool canSwapItems = hoveredItemSlotManager.HoveredItemIndex != -1 &&
+        bool canSwapItems = inventoryUIManager.InventoryUIOpen &&
+            hoveredItemSlotManager.HoveredItemIndex != -1 &&
             !inventoryUIHeldItemController.HoldingItem();
         if (!canSwapItems)
         {
