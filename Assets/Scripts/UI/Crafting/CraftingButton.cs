@@ -16,10 +16,9 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
 
     private void Awake()
     {
-        playerInventory =
-            craftingButtonDependencies.GetPlayerInventory();
+        playerInventory = craftingButtonDependencies.PlayerInventory;
         inventoryUIHeldItemController =
-            craftingButtonDependencies.GetInventoryUIHeldItemController();
+            craftingButtonDependencies.InventoryUIHeldItemController;
 
         // This could be changed to not be set at runtime
         // It this wasn't set at runtime, an old item tooltip format might get cached

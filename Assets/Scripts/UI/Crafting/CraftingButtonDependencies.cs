@@ -5,8 +5,8 @@ public class CraftingButtonDependencies : MonoBehaviour
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
 
-    public Inventory GetPlayerInventory() => playerInventory;
+    public Inventory PlayerInventory => playerInventory;
 
-    public InventoryUIHeldItemController GetInventoryUIHeldItemController() =>
+    public InventoryUIHeldItemController InventoryUIHeldItemController =>
         inventoryUIHeldItemController;
 }
