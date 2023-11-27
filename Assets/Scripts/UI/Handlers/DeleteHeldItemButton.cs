@@ -22,13 +22,9 @@ public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
         }
     }
 
-    public void OnPointerEnter(PointerEventData _)
-    {
-        inventoryUIHeldItemController.SetRightClickToResetEnabled(false);
-    }
+    public void OnPointerEnter(PointerEventData _) =>
+        inventoryUIHeldItemController.RightClickToResetEnabled = false;
 
-    public void OnPointerExit(PointerEventData _)
-    {
-        inventoryUIHeldItemController.SetRightClickToResetEnabled(true);
-    }
+    public void OnPointerExit(PointerEventData _) =>
+        inventoryUIHeldItemController.RightClickToResetEnabled = true;
 }

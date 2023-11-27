@@ -15,6 +15,15 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     public event Action OnItemHeld = () => {};
     public event Action OnHidden = () => {};
 
+    public bool RightClickToResetEnabled
+    {
+        private get => rightClickToResetEnabled;
+        set
+        {
+            rightClickToResetEnabled = value;
+        }
+    }
+
     private ItemStack HeldItem
     {
         get => heldItem;
@@ -272,11 +281,6 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     public void HideHeldItemUI()
     {
         HeldItem = null;
-    }
-
-    public void SetRightClickToResetEnabled(bool rightClickToResetEnabled)
-    {
-        this.rightClickToResetEnabled = rightClickToResetEnabled;
     }
 
     public bool HoldingItem() => HeldItem != null;
