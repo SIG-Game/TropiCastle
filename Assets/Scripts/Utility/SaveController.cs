@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -12,6 +13,7 @@ public class SaveController : MonoBehaviour
     [SerializeField] private SavableEnemyDependencySetter enemyDependencySetter;
 
     private Dictionary<Type, ISavablePrefabDependencySetter> typeToDependencySetter;
+    private JsonSerializerSettings serializerSettings;
     private string saveDataFilePath;
 
     private const string saveDataFileName = "save_data.json";
@@ -24,6 +26,12 @@ public class SaveController : MonoBehaviour
                 { typeof(SavableItemWorldDependencySetter), itemWorldDependencySetter },
                 { typeof(SavableEnemyDependencySetter), enemyDependencySetter }
             };
+
+        serializerSettings = new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto
+        };
 
         saveDataFilePath = GetSaveDataFilePath();
     }
@@ -116,9 +124,11 @@ public class SaveController : MonoBehaviour
         using (var streamWriter = new StreamWriter(filePath))
         {
 #if UNITY_EDITOR
-            string serializableObjectJson = JsonUtility.ToJson(serializableObject, true);
+            string serializableObjectJson = JsonConvert.SerializeObject(
+                serializableObject, Formatting.Indented, serializerSettings);
 #else
-            string serializableObjectJson = JsonUtility.ToJson(serializableObject);
+            string serializableObjectJson =
+                JsonConvert.SerializeObject(serializableObject, serializerSettings);
 #endif
 
             streamWriter.Write(serializableObjectJson);
@@ -134,8 +144,8 @@ public class SaveController : MonoBehaviour
         {
             string serializableObjectJson = streamReader.ReadToEnd();
 
-            serializableObject = JsonUtility
-                .FromJson<TSerializableObject>(serializableObjectJson);
+            serializableObject = JsonConvert.DeserializeObject<TSerializableObject>(
+                serializableObjectJson, serializerSettings);
         }
 
         return serializableObject;
