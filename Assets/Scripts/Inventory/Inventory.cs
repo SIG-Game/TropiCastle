@@ -227,7 +227,8 @@ public class Inventory : MonoBehaviour
         // Prevent newItem from being modified
         ItemStack newItemCopy = new ItemStack(newItem);
 
-        if (newItemCopy.instanceProperties == null)
+        if (newItemCopy.instanceProperties == null ||
+            newItemCopy.instanceProperties.PropertyList.Count == 0)
         {
             newItemCopy.InitializeItemInstanceProperties();
         }
