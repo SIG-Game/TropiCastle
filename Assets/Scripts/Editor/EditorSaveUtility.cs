@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -61,5 +62,11 @@ public static class EditorSaveUtility
         {
             Debug.Log("No duplicate save GUIDs in active scene");
         }
+    }
+
+    [MenuItem("Save Utility/Delete Save Data")]
+    public static void DeleteSaveFile()
+    {
+        File.Delete(SaveController.GetSaveDataFilePath());
     }
 }
