@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,19 +10,18 @@ public class PlayerSaveManager : SaveManager
 
     public override SaveManagerState GetState()
     {
-        var propertyList = new List<Property>
+        var properties = new Dictionary<string, object>
         {
-            new Property("Position", playerController.transform.position.ToString()),
-            new Property("Direction", ((int)playerController.Direction).ToString()),
-            new Property("Health", playerHealthController.CurrentHealth.ToString()),
-            new Property("SelectedItemIndex",
-                itemSelectionController.SelectedItemIndex.ToString())
+            { "Position", playerController.transform.position.ToString() },
+            { "Direction", (int)playerController.Direction },
+            { "Health", playerHealthController.CurrentHealth },
+            { "SelectedItemIndex", itemSelectionController.SelectedItemIndex }
         };
 
         var saveManagerState = new SaveManagerState
         {
             SaveGuid = saveGuid,
-            Properties = new PropertyCollection(propertyList)
+            Properties = properties
         };
 
         return saveManagerState;
@@ -29,13 +29,13 @@ public class PlayerSaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        playerController.transform.position =
-            saveManagerState.Properties.GetVector3Property("Position");
-        playerController.Direction =
-            (CharacterDirection)saveManagerState.Properties.GetIntProperty("Direction");
+        playerController.transform.position = Vector3Helper.FromString(
+            (string)saveManagerState.Properties["Position"]);
+        playerController.Direction = (CharacterDirection)
+            Convert.ToInt32(saveManagerState.Properties["Direction"]);
         playerHealthController.CurrentHealth =
-            saveManagerState.Properties.GetIntProperty("Health");
+            Convert.ToInt32(saveManagerState.Properties["Health"]);
         itemSelectionController.SelectedItemIndex =
-            saveManagerState.Properties.GetIntProperty("SelectedItemIndex");
+            Convert.ToInt32(saveManagerState.Properties["SelectedItemIndex"]);
     }
 }

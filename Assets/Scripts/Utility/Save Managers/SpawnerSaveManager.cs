@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,18 +8,18 @@ public class SpawnerSaveManager : SaveManager
 
     public override SaveManagerState GetState()
     {
-        var propertyList = new List<Property>()
+        var properties = new Dictionary<string, object>
         {
-            new Property("NumberOfSpawnedPrefabs", spawner.NumPrefabs.ToString()),
-            new Property("SpawnTimer", spawner.SpawnTimer.ToString()),
-            new Property("WaitBeforeFirstSpawnCompleted",
-                spawner.WaitBeforeFirstSpawnCompleted.ToString())
+            { "NumberOfSpawnedPrefabs", spawner.NumPrefabs },
+            { "SpawnTimer", spawner.SpawnTimer },
+            { "WaitBeforeFirstSpawnCompleted",
+                spawner.WaitBeforeFirstSpawnCompleted }
         };
 
         var saveManagerState = new SaveManagerState
         {
             SaveGuid = saveGuid,
-            Properties = new PropertyCollection(propertyList)
+            Properties = properties
         };
 
         return saveManagerState;
@@ -26,9 +27,11 @@ public class SpawnerSaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        spawner.NumPrefabs = saveManagerState.Properties.GetIntProperty("NumberOfSpawnedPrefabs");
-        spawner.SpawnTimer = saveManagerState.Properties.GetFloatProperty("SpawnTimer");
+        spawner.NumPrefabs =
+            Convert.ToInt32(saveManagerState.Properties["NumberOfSpawnedPrefabs"]);
+        spawner.SpawnTimer =
+            Convert.ToSingle(saveManagerState.Properties["SpawnTimer"]);
         spawner.WaitBeforeFirstSpawnCompleted =
-            saveManagerState.Properties.GetBoolProperty("WaitBeforeFirstSpawnCompleted");
+            (bool)saveManagerState.Properties["WaitBeforeFirstSpawnCompleted"];
     }
 }

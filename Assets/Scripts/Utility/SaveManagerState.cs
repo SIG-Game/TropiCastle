@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class SaveManagerState
 {
     public string SaveGuid;
-    public PropertyCollection Properties;
+    public Dictionary<string, object> Properties;
 }

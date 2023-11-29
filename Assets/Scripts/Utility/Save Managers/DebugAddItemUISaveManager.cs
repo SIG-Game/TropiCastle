@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,16 +10,16 @@ public class DebugAddItemUISaveManager : SaveManager
 
     public override SaveManagerState GetState()
     {
-        var propertyList = new List<Property>()
+        var properties = new Dictionary<string, object>
         {
-            new Property("AmountInputFieldText", amountInputField.text),
-            new Property("ItemDropdownValue", itemDropdown.value.ToString())
+            { "AmountInputFieldText", amountInputField.text },
+            { "ItemDropdownValue", itemDropdown.value }
         };
 
         var saveManagerState = new SaveManagerState
         {
             SaveGuid = saveGuid,
-            Properties = new PropertyCollection(propertyList)
+            Properties = properties
         };
 
         return saveManagerState;
@@ -26,9 +27,9 @@ public class DebugAddItemUISaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        amountInputField.text = saveManagerState.Properties
-            .GetStringProperty("AmountInputFieldText");
-        itemDropdown.value = saveManagerState.Properties
-            .GetIntProperty("ItemDropdownValue");
+        amountInputField.text =
+            (string)saveManagerState.Properties["AmountInputFieldText"];
+        itemDropdown.value =
+           Convert.ToInt32(saveManagerState.Properties["ItemDropdownValue"]);
     }
 }

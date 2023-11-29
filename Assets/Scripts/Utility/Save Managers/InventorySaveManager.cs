@@ -11,16 +11,15 @@ public class InventorySaveManager : SaveManager
         SerializableInventory serializableInventory =
             inventory.GetAsSerializableInventory();
 
-        var propertyList = new List<Property>
+        var properties = new Dictionary<string, object>
         {
-            new Property("SerializedInventory",
-                JsonUtility.ToJson(serializableInventory))
+            { "SerializedInventory", serializableInventory }
         };
 
         var saveManagerState = new SaveManagerState
         {
             SaveGuid = saveGuid,
-            Properties = new PropertyCollection(propertyList)
+            Properties = properties
         };
 
         return saveManagerState;
@@ -28,12 +27,7 @@ public class InventorySaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        string serializedInventory = saveManagerState.Properties
-            .GetStringProperty("SerializedInventory");
-
-        SerializableInventory serializableInventory = JsonUtility
-            .FromJson<SerializableInventory>(serializedInventory);
-
-        inventory.SetUpFromSerializableInventory(serializableInventory);
+        inventory.SetUpFromSerializableInventory((SerializableInventory)
+            saveManagerState.Properties["SerializedInventory"]);
     }
 }
