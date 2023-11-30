@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SavablePrefabEnemy : SavablePrefab
@@ -9,11 +10,17 @@ public class SavablePrefabEnemy : SavablePrefab
 
     public override SavablePrefabState GetSavablePrefabState()
     {
-        var savableState = new SavableEnemyState
+        var properties = new Dictionary<string, object>
         {
-            Position = transform.position,
-            Health = healthController.CurrentHealth,
-            SpawnerGuid = spawnable.GetSpawnerGuid()
+            { "Position", transform.position.ToString() },
+            { "Health", healthController.CurrentHealth },
+            { "SpawnerGuid", spawnable.GetSpawnerGuid() }
+        };
+
+        var savableState = new SavablePrefabState
+        {
+            PrefabGameObjectName = "Crab",
+            Properties = properties
         };
 
         return savableState;
@@ -21,28 +28,18 @@ public class SavablePrefabEnemy : SavablePrefab
 
     public override void SetUpFromSavablePrefabState(SavablePrefabState savableState)
     {
-        SavableEnemyState enemyState = (SavableEnemyState)savableState;
+        transform.position =
+            Vector3Helper.FromString((string)savableState.Properties["Position"]);
 
-        transform.position = enemyState.Position;
+        healthController.CurrentHealth = 
+            Convert.ToInt32(savableState.Properties["Health"]);
 
-        healthController.CurrentHealth = enemyState.Health;
-
-        spawnable
-            .SetSpawnerUsingGuid<EnemySpawner>(enemyState.SpawnerGuid);
+        spawnable.SetSpawnerUsingGuid<EnemySpawner>(
+            (string)savableState.Properties["SpawnerGuid"]);
     }
 
     public override Type GetDependencySetterType() =>
         typeof(SavableEnemyDependencySetter);
 
     public EnemyController GetEnemyController() => enemyController;
-
-    [Serializable]
-    public class SavableEnemyState : SavablePrefabState
-    {
-        public Vector2 Position;
-        public int Health;
-        public string SpawnerGuid;
-
-        public override string GetPrefabGameObjectName() => "Crab";
-    }
 }

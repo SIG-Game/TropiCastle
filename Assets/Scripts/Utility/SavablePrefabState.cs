@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
-public abstract class SavablePrefabState
+public class SavablePrefabState
 {
-    public abstract string GetPrefabGameObjectName();
+    public string PrefabGameObjectName;
+    public Dictionary<string, object> Properties;
 }

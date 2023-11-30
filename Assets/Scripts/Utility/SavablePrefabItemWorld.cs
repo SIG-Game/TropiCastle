@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static Inventory;
 
@@ -11,11 +12,17 @@ public class SavablePrefabItemWorld : SavablePrefab
     {
         var serializableItem = new SerializableInventoryItem(itemWorld.GetItem());
 
-        var savableState = new SavableItemWorldState
+        var properties = new Dictionary<string, object>
         {
-            Item = serializableItem,
-            Position = transform.position,
-            SpawnerGuid = spawnable.GetSpawnerGuid()
+            { "Position", transform.position.ToString() },
+            { "Item", serializableItem },
+            { "SpawnerGuid", spawnable.GetSpawnerGuid() }
+        };
+
+        var savableState = new SavablePrefabState
+        {
+            PrefabGameObjectName = "ItemWorld",
+            Properties = properties
         };
 
         return savableState;
@@ -23,35 +30,27 @@ public class SavablePrefabItemWorld : SavablePrefab
 
     public override void SetUpFromSavablePrefabState(SavablePrefabState savableState)
     {
-        SavableItemWorldState itemWorldState = (SavableItemWorldState)savableState;
+        transform.position =
+            Vector3Helper.FromString((string)savableState.Properties["Position"]);
 
-        transform.position = itemWorldState.Position;
+        SerializableInventoryItem serializableItem =
+            (SerializableInventoryItem)savableState.Properties["Item"];
 
         ItemScriptableObject itemScriptableObject =
-            ItemScriptableObject.FromName(itemWorldState.Item.ItemName);
+            ItemScriptableObject.FromName(serializableItem.ItemName);
 
         ItemStack item = new ItemStack(itemScriptableObject,
-            itemWorldState.Item.Amount,
-            itemWorldState.Item.InstanceProperties);
+            serializableItem.Amount,
+            serializableItem.InstanceProperties);
 
         itemWorld.SetItem(item);
 
-        spawnable
-            .SetSpawnerUsingGuid<ItemSpawner>(itemWorldState.SpawnerGuid);
+        spawnable.SetSpawnerUsingGuid<ItemSpawner>(
+            (string)savableState.Properties["SpawnerGuid"]);
     }
 
     public override Type GetDependencySetterType() =>
         typeof(SavableItemWorldDependencySetter);
 
     public ItemWorld GetItemWorld() => itemWorld;
-
-    [Serializable]
-    public class SavableItemWorldState : SavablePrefabState
-    {
-        public SerializableInventoryItem Item;
-        public Vector2 Position;
-        public string SpawnerGuid;
-
-        public override string GetPrefabGameObjectName() => "ItemWorld";
-    }
 }

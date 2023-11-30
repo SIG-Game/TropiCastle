@@ -92,12 +92,9 @@ public class SaveController : MonoBehaviour
 
         foreach (var savablePrefabState in saveData.SavablePrefabStates)
         {
-            string savablePrefabGameObjectName =
-                savablePrefabState.GetPrefabGameObjectName();
-
             GameObject savablePrefabGameObject =
                 savablePrefabGameObjects.Find(
-                    x => x.name == savablePrefabGameObjectName);
+                    x => x.name == savablePrefabState.PrefabGameObjectName);
 
             GameObject spawnedGameObject = Instantiate(savablePrefabGameObject);
 
