@@ -5,10 +5,13 @@ using static Inventory;
 [Serializable]
 public class ContainerItemInstanceProperties : PropertyCollection
 {
-    public SerializableInventory SerializableInventory;
+    // TODO: Store all item instance properties in a Dictionary
+    public Dictionary<string, object> PropertyDictionary;
 
     public ContainerItemInstanceProperties(int containerSize)
     {
+        PropertyDictionary = new Dictionary<string, object>();
+
         List<SerializableInventoryItem> containerItemList =
             new List<SerializableInventoryItem>(containerSize);
 
@@ -21,7 +24,8 @@ public class ContainerItemInstanceProperties : PropertyCollection
             });
         }
 
-        SerializableInventory = new SerializableInventory
+        PropertyDictionary["SerializableInventory"] =
+            new SerializableInventory
         {
             SerializableItemList = containerItemList
         };
@@ -29,12 +33,16 @@ public class ContainerItemInstanceProperties : PropertyCollection
 
     public void UpdateSerializableInventory(Inventory inventory)
     {
-        SerializableInventory = inventory.GetAsSerializableInventory();
+        PropertyDictionary["SerializableInventory"] =
+            inventory.GetAsSerializableInventory();
     }
 
     public override PropertyCollection DeepCopy()
     {
-        int containerSize = SerializableInventory.SerializableItemList.Count;
+        var serializableInventory = (SerializableInventory)
+            PropertyDictionary["SerializableInventory"];
+
+        int containerSize = serializableInventory.SerializableItemList.Count;
 
         List<SerializableInventoryItem> containerItemListDeepCopy =
             new List<SerializableInventoryItem>(containerSize);
@@ -42,15 +50,20 @@ public class ContainerItemInstanceProperties : PropertyCollection
         for (int i = 0; i < containerSize; ++i)
         {
             containerItemListDeepCopy.Add(new SerializableInventoryItem(
-                SerializableInventory.SerializableItemList[i]));
+                serializableInventory.SerializableItemList[i]));
         }
 
         ContainerItemInstanceProperties deepCopy =
             (ContainerItemInstanceProperties)base.DeepCopy();
 
-        deepCopy.SerializableInventory = new SerializableInventory
+        var serializableInventoryDeepCopy = new SerializableInventory
         {
             SerializableItemList = containerItemListDeepCopy
+        };
+
+        deepCopy.PropertyDictionary = new Dictionary<string, object>
+        {
+            { "SerializableInventory", serializableInventoryDeepCopy }
         };
 
         return deepCopy;
