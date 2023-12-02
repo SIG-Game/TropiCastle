@@ -167,7 +167,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public void UsePickupCursor()
     {
         bool cannotAddHoveredItem = HoveredItemWorld != null &&
-            !playerInventory.CanAddItem(HoveredItemWorld.GetItem(), out int canAddAmount) &&
+            !playerInventory.CanAddItem(HoveredItemWorld.Item, out int canAddAmount) &&
             canAddAmount == 0;
 
         if (cannotAddHoveredItem || HoveredItemContainsItem())
@@ -224,7 +224,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public static void PickUpItemWorld(ItemWorld itemWorld,
         Inventory inventory, int preferredIndex)
     {
-        ItemStack item = itemWorld.GetItem();
+        ItemStack item = itemWorld.Item;
 
         inventory.TryAddItemToFirstStackOrIndex(
             item, preferredIndex, out int amountAdded);

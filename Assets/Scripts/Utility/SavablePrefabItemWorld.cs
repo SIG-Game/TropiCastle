@@ -9,7 +9,7 @@ public class SavablePrefabItemWorld : SavablePrefab
 
     public override SavablePrefabState GetSavablePrefabState()
     {
-        var serializableItem = new SerializableItem(itemWorld.GetItem());
+        var serializableItem = new SerializableItem(itemWorld.Item);
 
         var properties = new Dictionary<string, object>
         {
@@ -38,11 +38,9 @@ public class SavablePrefabItemWorld : SavablePrefab
         ItemScriptableObject itemScriptableObject =
             ItemScriptableObject.FromName(serializableItem.ItemName);
 
-        ItemStack item = new ItemStack(itemScriptableObject,
+        itemWorld.Item = new ItemStack(itemScriptableObject,
             serializableItem.Amount,
             serializableItem.InstanceProperties);
-
-        itemWorld.SetItem(item);
 
         spawnable.SetSpawnerUsingGuid<ItemSpawner>(
             (string)savableState.Properties["SpawnerGuid"]);

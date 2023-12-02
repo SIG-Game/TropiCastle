@@ -9,7 +9,7 @@ public abstract class ContainerItemInteractable : ItemInteractable
     {
         inventory = gameObject.AddComponent<Inventory>();
 
-        ItemStack item = GetComponent<ItemWorld>().GetItem();
+        ItemStack item = GetComponent<ItemWorld>().Item;
 
         itemInstanceProperties =
             (ContainerItemInstanceProperties)item.instanceProperties;

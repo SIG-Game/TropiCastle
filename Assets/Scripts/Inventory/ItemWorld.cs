@@ -7,20 +7,27 @@ public class ItemWorld : MonoBehaviour
     [SerializeField] private ItemStack item;
     [SerializeField] private TMP_Text amountText;
 
+    public ItemStack Item
+    {
+        get => item;
+        set => SetItem(value);
+    }
+
     private ItemInteractableDependencies itemInteractableDependencies;
 
     public void SetUpItemWorld(ItemStack item,
         ItemInteractableDependencies itemInteractableDependencies)
     {
         SetItemInteractableDependencies(itemInteractableDependencies);
-        SetItem(item);
+        
+        Item = item;
     }
 
     public void SetItemAmount(int amount)
     {
-        item.amount = amount;
+        Item.amount = amount;
 
-        amountText.text = item.GetAmountText();
+        amountText.text = Item.GetAmountText();
     }
 
     public void SetItemInteractableDependencies(
@@ -29,27 +36,27 @@ public class ItemWorld : MonoBehaviour
         this.itemInteractableDependencies = itemInteractableDependencies;
     }
 
-    public void SetItem(ItemStack item)
+    private void SetItem(ItemStack item)
     {
         this.item = item;
 
-        GetComponent<SpriteRenderer>().sprite = item.itemDefinition.Sprite;
+        GetComponent<SpriteRenderer>().sprite = Item.itemDefinition.Sprite;
 
-        if (item.itemDefinition.HasCustomColliderSize)
+        if (Item.itemDefinition.HasCustomColliderSize)
         {
-            GetComponent<BoxCollider2D>().size = item.itemDefinition.CustomColliderSize;
+            GetComponent<BoxCollider2D>().size = Item.itemDefinition.CustomColliderSize;
         }
 
-        if (item.itemDefinition.TriggerCollisionPickup)
+        if (Item.itemDefinition.TriggerCollisionPickup)
         {
             GetComponent<BoxCollider2D>().isTrigger =
-                item.itemDefinition.TriggerCollisionPickup;
+                Item.itemDefinition.TriggerCollisionPickup;
         }
 
-        if (item.itemDefinition.HasProperty("InteractableType"))
+        if (Item.itemDefinition.HasProperty("InteractableType"))
         {
             Type itemInteractableType = Type.GetType(
-                item.itemDefinition.GetStringProperty("InteractableType"));
+                Item.itemDefinition.GetStringProperty("InteractableType"));
 
             gameObject.AddComponent(itemInteractableType);
 
@@ -59,10 +66,8 @@ public class ItemWorld : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("Interactable");
         }
 
-        name = $"{item.itemDefinition.DisplayName} ItemWorld";
+        name = $"{Item.itemDefinition.DisplayName} ItemWorld";
 
-        amountText.text = item.GetAmountText();
+        amountText.text = Item.GetAmountText();
     }
-
-    public ItemStack GetItem() => item;
 }
