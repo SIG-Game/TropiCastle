@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static Inventory;
 
 public class InventorySaveManager : SaveManager
 {
@@ -8,12 +7,12 @@ public class InventorySaveManager : SaveManager
 
     public override SaveManagerState GetState()
     {
-        SerializableInventory serializableInventory =
-            inventory.GetAsSerializableInventory();
+        List<SerializableItem> serializableItemList =
+            inventory.GetAsSerializableItemList();
 
         var properties = new Dictionary<string, object>
         {
-            { "SerializedInventory", serializableInventory }
+            { "ItemList", serializableItemList }
         };
 
         var saveManagerState = new SaveManagerState
@@ -27,7 +26,7 @@ public class InventorySaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        inventory.SetUpFromSerializableInventory((SerializableInventory)
-            saveManagerState.Properties["SerializedInventory"]);
+        inventory.SetUpFromSerializableItemList((List<SerializableItem>)
+            saveManagerState.Properties["ItemList"]);
     }
 }

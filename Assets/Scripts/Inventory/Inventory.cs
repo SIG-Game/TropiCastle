@@ -622,83 +622,27 @@ public class Inventory : MonoBehaviour
 
     public bool HasNoEmptySlots() => firstEmptyIndex == -1;
 
-    public SerializableInventory GetAsSerializableInventory()
+    public List<SerializableItem> GetAsSerializableItemList() =>
+        itemList.Select(x => new SerializableItem(x)).ToList();
+
+    public void SetUpFromSerializableItemList(
+        List<SerializableItem> serializableItemList)
     {
-        List<SerializableInventoryItem> serializableItemList =
-            itemList.Select(x => new SerializableInventoryItem(x)).ToList();
-
-        var serializableInventory = new SerializableInventory
+        for (int i = 0; i < serializableItemList.Count; ++i)
         {
-            SerializableItemList = serializableItemList
-        };
-
-        return serializableInventory;
-    }
-
-    public void SetUpFromSerializableInventory(SerializableInventory serializableInventory)
-    {
-        for (int i = 0; i < serializableInventory.SerializableItemList.Count; ++i)
-        {
-            SerializableInventoryItem serializableInventoryItem =
-                serializableInventory.SerializableItemList[i];
+            SerializableItem serializableItem = serializableItemList[i];
 
             ItemScriptableObject itemScriptableObject =
-                ItemScriptableObject.FromName(serializableInventoryItem.ItemName);
+                ItemScriptableObject.FromName(serializableItem.ItemName);
 
             ItemStack item = new ItemStack(itemScriptableObject,
-                serializableInventoryItem.Amount,
-                serializableInventoryItem.InstanceProperties);
+                serializableItem.Amount,
+                serializableItem.InstanceProperties);
 
             SetItemAtIndex(item, i);
         }
 
         SetFirstEmptyIndex();
-    }
-
-    [Serializable]
-    public class SerializableInventory
-    {
-        public List<SerializableInventoryItem> SerializableItemList;
-    }
-
-    [Serializable]
-    public class SerializableInventoryItem
-    {
-        public string ItemName;
-        public int Amount;
-
-        [SerializeReference]
-        public PropertyCollection InstanceProperties;
-
-        public SerializableInventoryItem()
-        {
-        }
-
-        public SerializableInventoryItem(
-            SerializableInventoryItem serializableInventoryItem)
-        {
-            ItemName = serializableInventoryItem.ItemName;
-            Amount = serializableInventoryItem.Amount;
-            InstanceProperties = serializableInventoryItem.InstanceProperties?.DeepCopy();
-        }
-
-        public SerializableInventoryItem(ItemStack item)
-        {
-            ItemName = item.itemDefinition.name;
-            Amount = item.amount;
-
-            // Prevent serialization of empty instance properties
-            if (item.instanceProperties != null &&
-                item.instanceProperties.GetType() == typeof(PropertyCollection) &&
-                item.instanceProperties.PropertyList.Count == 0)
-            {
-                InstanceProperties = null;
-            }
-            else
-            {
-                InstanceProperties = item.instanceProperties;
-            }
-        }
     }
 
     public void FillInventory()

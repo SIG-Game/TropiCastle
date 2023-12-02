@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Inventory;
 
 public class SavablePrefabItemWorld : SavablePrefab
 {
@@ -10,7 +9,7 @@ public class SavablePrefabItemWorld : SavablePrefab
 
     public override SavablePrefabState GetSavablePrefabState()
     {
-        var serializableItem = new SerializableInventoryItem(itemWorld.GetItem());
+        var serializableItem = new SerializableItem(itemWorld.GetItem());
 
         var properties = new Dictionary<string, object>
         {
@@ -33,8 +32,8 @@ public class SavablePrefabItemWorld : SavablePrefab
         transform.position =
             Vector3Helper.FromString((string)savableState.Properties["Position"]);
 
-        SerializableInventoryItem serializableItem =
-            (SerializableInventoryItem)savableState.Properties["Item"];
+        SerializableItem serializableItem =
+            (SerializableItem)savableState.Properties["Item"];
 
         ItemScriptableObject itemScriptableObject =
             ItemScriptableObject.FromName(serializableItem.ItemName);

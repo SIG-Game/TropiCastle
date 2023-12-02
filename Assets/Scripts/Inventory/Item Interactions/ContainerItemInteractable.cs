@@ -1,4 +1,4 @@
-using static Inventory;
+using System.Collections.Generic;
 
 public abstract class ContainerItemInteractable : ItemInteractable
 {
@@ -19,10 +19,10 @@ public abstract class ContainerItemInteractable : ItemInteractable
 
         if (itemInstanceProperties != null)
         {
-            var serializableInventory = (SerializableInventory)
-                itemInstanceProperties.PropertyDictionary["SerializableInventory"];
+            var serializableItemList = (List<SerializableItem>)
+                itemInstanceProperties.PropertyDictionary["ItemList"];
 
-            inventory.SetUpFromSerializableInventory(serializableInventory);
+            inventory.SetUpFromSerializableItemList(serializableItemList);
         }
 
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
@@ -35,6 +35,6 @@ public abstract class ContainerItemInteractable : ItemInteractable
 
     protected virtual void Inventory_OnItemChangedAtIndex(ItemStack _, int _1)
     {
-        itemInstanceProperties.UpdateSerializableInventory(inventory);
+        itemInstanceProperties.UpdateSerializableItemList(inventory);
     }
 }
