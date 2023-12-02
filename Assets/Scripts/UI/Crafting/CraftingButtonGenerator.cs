@@ -43,7 +43,10 @@ public class CraftingButtonGenerator : MonoBehaviour
         prefabCraftingButtonsParent =
             prefabCraftingButtonGenerator.craftingButtonsParentTransform;
 
-        DeleteCraftingButtons(prefabCraftingButtonsParent);
+        while (prefabCraftingButtonsParent.childCount > 0)
+        {
+            DestroyImmediate(prefabCraftingButtonsParent.GetChild(0).gameObject);
+        }
 
         var craftingRecipeScriptableObjectsLoadHandle =
             Addressables.LoadAssetsAsync<CraftingRecipeScriptableObject>("crafting recipe", null);
@@ -88,17 +91,6 @@ public class CraftingButtonGenerator : MonoBehaviour
         PrefabUtility.UnloadPrefabContents(prefabRoot);
 
         Addressables.Release(craftingRecipesAsyncOperationHandle);
-    }
-
-    private void DeleteCraftingButtons(Transform prefabCraftingButtonsParent)
-    {
-        // Delete crafting buttons from prefab
-        while (prefabCraftingButtonsParent.childCount > 0)
-        {
-            DestroyImmediate(prefabCraftingButtonsParent.GetChild(0).gameObject);
-        }
-
-        // Crafting buttons are deleted from the prefab instance automatically
     }
 #endif
 }
