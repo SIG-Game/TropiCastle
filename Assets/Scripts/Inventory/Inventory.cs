@@ -467,18 +467,13 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        Dictionary<int, int> itemIndexToAddAmount = new Dictionary<int, int>();
-
-        foreach (ItemStack outputItem in outputItems)
+        if (!CanAddReplaceOutputItems(outputItems))
         {
-            if (!CanAddReplaceOutputItem(itemIndexToAddAmount, outputItem))
-            {
-                RevertItemRemoval(itemIndexToItemBeforeRemoval);
-                return;
-            }
+            RevertItemRemoval(itemIndexToItemBeforeRemoval);
+            return;
         }
 
-        foreach(ItemStack outputItem in outputItems)
+        foreach (ItemStack outputItem in outputItems)
         {
             AddItem(outputItem);
         }
@@ -559,7 +554,22 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public bool CanAddReplaceOutputItem(
+    private bool CanAddReplaceOutputItems(List<ItemStack> outputItems)
+    {
+        Dictionary<int, int> itemIndexToAddAmount = new Dictionary<int, int>();
+
+        foreach (ItemStack outputItem in outputItems)
+        {
+            if (!CanAddReplaceOutputItem(itemIndexToAddAmount, outputItem))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private bool CanAddReplaceOutputItem(
         Dictionary<int, int> itemIndexToAddAmount, ItemStack outputItem)
     {
         int amountToAdd = outputItem.amount;
