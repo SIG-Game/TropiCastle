@@ -12,7 +12,7 @@ public class SavablePrefabEnemy : SavablePrefab
     {
         var properties = new Dictionary<string, object>
         {
-            { "Position", transform.position.ToString() },
+            { "Position", transform.position.ToArray() },
             { "Health", healthController.Health },
             { "SpawnerGuid", spawnable.GetSpawnerGuid() }
         };
@@ -29,7 +29,7 @@ public class SavablePrefabEnemy : SavablePrefab
     public override void SetUpFromSavablePrefabState(SavablePrefabState savableState)
     {
         transform.position =
-            Vector3Helper.FromString((string)savableState.Properties["Position"]);
+            Vector3Helper.FromArray((float[])savableState.Properties["Position"]);
 
         healthController.SetInitialHealth(
             Convert.ToInt32(savableState.Properties["Health"]));

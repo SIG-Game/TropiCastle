@@ -13,7 +13,7 @@ public class SavablePrefabItemWorld : SavablePrefab
 
         var properties = new Dictionary<string, object>
         {
-            { "Position", transform.position.ToString() },
+            { "Position", transform.position.ToArray() },
             { "Item", serializableItem },
             { "SpawnerGuid", spawnable.GetSpawnerGuid() }
         };
@@ -30,7 +30,7 @@ public class SavablePrefabItemWorld : SavablePrefab
     public override void SetUpFromSavablePrefabState(SavablePrefabState savableState)
     {
         transform.position =
-            Vector3Helper.FromString((string)savableState.Properties["Position"]);
+            Vector3Helper.FromArray((float[])savableState.Properties["Position"]);
 
         SerializableItem serializableItem =
             (SerializableItem)savableState.Properties["Item"];

@@ -12,7 +12,7 @@ public class PlayerSaveManager : SaveManager
     {
         var properties = new Dictionary<string, object>
         {
-            { "Position", playerController.transform.position.ToString() },
+            { "Position", playerController.transform.position.ToArray() },
             { "Direction", (int)playerController.Direction },
             { "Health", playerHealthController.Health },
             { "SelectedItemIndex", itemSelectionController.SelectedItemIndex }
@@ -29,8 +29,8 @@ public class PlayerSaveManager : SaveManager
 
     public override void UpdateFromState(SaveManagerState saveManagerState)
     {
-        playerController.transform.position = Vector3Helper.FromString(
-            (string)saveManagerState.Properties["Position"]);
+        playerController.transform.position = Vector3Helper.FromArray(
+            (float[])saveManagerState.Properties["Position"]);
         playerController.Direction = (CharacterDirection)
             Convert.ToInt32(saveManagerState.Properties["Direction"]);
         playerHealthController.SetInitialHealth(
