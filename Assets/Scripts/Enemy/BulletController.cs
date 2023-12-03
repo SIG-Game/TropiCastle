@@ -17,7 +17,7 @@ public class BulletController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<HealthController>().DecreaseHealth(10);
+            other.GetComponent<HealthController>().Health -= 10;
 
             Destroy(gameObject);
         }

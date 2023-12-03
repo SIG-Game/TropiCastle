@@ -5,74 +5,65 @@ public class HealthController : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
 
-    private int currentHealth;
-
-    public int CurrentHealth
+    public int Health
     {
-        get => currentHealth;
+        get => health;
         set
         {
-            currentHealth = value;
+            int previousHealth = health;
 
-            OnHealthSet(currentHealth);
+            health = Math.Clamp(value, 0, maxHealth);
 
-            if (currentHealth == 0)
+            InvokeOnHealthSetEvents();
+
+            if (raiseHealthChangedEvent)
             {
-                OnHealthSetToZero();
+                OnHealthChangedByAmount(health - previousHealth);
             }
         }
     }
+
+    public int MaxHealth => maxHealth;
+    public bool AtMaxHealth => Health == MaxHealth;
 
     public event Action<int> OnHealthSet = (_) => {};
     public event Action<int> OnHealthChangedByAmount = (_) => {};
     public event Action OnHealthSetToZero = () => {};
 
+    private int health;
+    private bool raiseHealthChangedEvent;
+
     private void Awake()
     {
-        currentHealth = maxHealth;
+        health = maxHealth;
+
+        raiseHealthChangedEvent = true;
     }
 
-    // currentHealth can be set by another script between the execution of Awake
-    // and Start, and OnHealthSet should not be raised in Awake because other
-    // scripts may have not yet subscribed to that event at that time
+    // health can be set by another script between Awake and Start, and
+    // events should not be raised in Awake because other scripts may
+    // have not yet subscribed to those events at that time
     private void Start()
     {
-        OnHealthSet(currentHealth);
+        InvokeOnHealthSetEvents();
     }
 
-    public void IncreaseHealth(int amount)
+    public void SetInitialHealth(int initialHealth)
     {
-        int newHealth = CurrentHealth + amount;
+        raiseHealthChangedEvent = false;
 
-        if (newHealth > maxHealth)
-        {
-            newHealth = maxHealth;
-        }
+        Health = initialHealth;
 
-        int healthDelta = newHealth - CurrentHealth;
-
-        CurrentHealth = newHealth;
-
-        OnHealthChangedByAmount(healthDelta);
+        raiseHealthChangedEvent = true;
     }
 
-    public void DecreaseHealth(int amount)
+    private void InvokeOnHealthSetEvents()
     {
-        int newHealth = CurrentHealth - amount;
+        OnHealthSet(Health);
 
-        if (newHealth <= 0)
+        if (Health == 0)
         {
-            newHealth = 0;
+            OnHealthSetToZero();
         }
-
-        int healthDelta = newHealth - CurrentHealth;
-
-        CurrentHealth = newHealth;
-
-        OnHealthChangedByAmount(healthDelta);
     }
-
-    public bool AtMaxHealth() => CurrentHealth >= maxHealth;
-
-    public int GetMaxHealth() => maxHealth;
 }

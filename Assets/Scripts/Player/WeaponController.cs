@@ -20,7 +20,7 @@ public class WeaponController : MonoBehaviour
         {
             hitEnemy.LastHitTime = Time.time;
 
-            other.GetComponent<HealthController>().DecreaseHealth(Damage);
+            other.GetComponent<HealthController>().Health -= Damage;
 
             Vector2 directionToEnemy = (other.transform.position - transform.position).normalized;
             hitEnemy.ApplyKnockback(directionToEnemy, EnemyKnockbackForce);

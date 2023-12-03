@@ -15,7 +15,7 @@ public class HealthBarUIController : MonoBehaviour
 
     private void Awake()
     {
-        targetMaxHealthFloat = targetHealthController.GetMaxHealth();
+        targetMaxHealthFloat = targetHealthController.MaxHealth;
         fillWidth = healthBarFill.sizeDelta.x;
         minHealthFillXPosition =
             healthBarFill.anchoredPosition.x - fillWidth;

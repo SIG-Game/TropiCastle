@@ -17,7 +17,7 @@ public class HealthTextController : MonoBehaviour
 
         if (displayMaxHealth)
         {
-            targetMaxHealth = targetHealthController.GetMaxHealth();
+            targetMaxHealth = targetHealthController.MaxHealth;
         }
 
         targetHealthController.OnHealthSet += HealthController_OnHealthSet;

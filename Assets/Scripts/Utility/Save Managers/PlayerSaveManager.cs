@@ -14,7 +14,7 @@ public class PlayerSaveManager : SaveManager
         {
             { "Position", playerController.transform.position.ToString() },
             { "Direction", (int)playerController.Direction },
-            { "Health", playerHealthController.CurrentHealth },
+            { "Health", playerHealthController.Health },
             { "SelectedItemIndex", itemSelectionController.SelectedItemIndex }
         };
 
@@ -33,8 +33,8 @@ public class PlayerSaveManager : SaveManager
             (string)saveManagerState.Properties["Position"]);
         playerController.Direction = (CharacterDirection)
             Convert.ToInt32(saveManagerState.Properties["Direction"]);
-        playerHealthController.CurrentHealth =
-            Convert.ToInt32(saveManagerState.Properties["Health"]);
+        playerHealthController.SetInitialHealth(
+            Convert.ToInt32(saveManagerState.Properties["Health"]));
         itemSelectionController.SelectedItemIndex =
             Convert.ToInt32(saveManagerState.Properties["SelectedItemIndex"]);
     }

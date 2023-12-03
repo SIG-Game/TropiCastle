@@ -7,11 +7,11 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
 
     public void UseItem(ItemStack item, int itemIndex)
     {
-        if (!playerHealthController.AtMaxHealth())
+        if (!playerHealthController.AtMaxHealth)
         {
             int amountToHeal = item.itemDefinition.GetIntProperty("HealAmount");
 
-            playerHealthController.IncreaseHealth(amountToHeal);
+            playerHealthController.Health += amountToHeal;
 
             playerInventory.DecrementItemStackAtIndex(itemIndex);
         }
