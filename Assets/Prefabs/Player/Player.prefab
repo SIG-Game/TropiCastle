@@ -518,10 +518,7 @@ MonoBehaviour:
   playerActionDisablingUIManager: {fileID: 534933106481965837}
   overlaySpriteMask: {fileID: 7652320630200294286}
   cursorController: {fileID: 0}
-  inventoryUIManager: {fileID: 0}
   inputManager: {fileID: 0}
-  healActionReference: {fileID: 5534942449988417204, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
-    type: 3}
   fishingRodItemUsage: {fileID: 8293061806737836654}
   healingItemUsage: {fileID: 7288205203562457323}
   weaponItemUsage: {fileID: 2485764338336164774}

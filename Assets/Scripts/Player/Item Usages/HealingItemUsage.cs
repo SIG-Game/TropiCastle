@@ -16,17 +16,4 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
             playerInventory.DecrementItemStackAtIndex(itemIndex);
         }
     }
-
-    public void ConsumeFirstHealingItemInPlayerInventory()
-    {
-        int healingItemIndex = playerInventory.GetItemList().FindIndex(
-            x => x.itemDefinition.HasProperty("HealAmount"));
-
-        if (healingItemIndex != -1)
-        {
-            ItemStack healingItem = playerInventory.GetItemAtIndex(healingItemIndex);
-
-            UseItem(healingItem, healingItemIndex);
-        }
-    }
 }

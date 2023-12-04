@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,9 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private SpriteMask overlaySpriteMask;
     [SerializeField] private CursorController cursorController;
-    [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InputManager inputManager;
-    [SerializeField] private InputActionReference healActionReference;
 
     [Header("Item Usages")]
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
@@ -46,7 +43,6 @@ public class PlayerController : MonoBehaviour
     private ItemSelectionController itemSelectionController;
     private SpriteRenderer spriteRenderer;
     private CharacterDirectionController directionController;
-    private InputAction healAction;
     private LayerMask interactableMask;
     private LayerMask waterMask;
     private bool isAttacking;
@@ -58,8 +54,6 @@ public class PlayerController : MonoBehaviour
         itemSelectionController = GetComponent<ItemSelectionController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         directionController = GetComponent<CharacterDirectionController>();
-
-        healAction = healActionReference.action;
 
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
@@ -76,11 +70,6 @@ public class PlayerController : MonoBehaviour
     {
         if (PauseController.Instance.GamePaused)
         {
-            if (healAction.WasPressedThisFrame() && inventoryUIManager.InventoryUIOpen)
-            {
-                healingItemUsage.ConsumeFirstHealingItemInPlayerInventory();
-            }
-
             return;
         }
 
@@ -93,10 +82,6 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-        }
-        else if (healAction.WasPressedThisFrame())
-        {
-            healingItemUsage.ConsumeFirstHealingItemInPlayerInventory();
         }
 
         if (inputManager.GetInteractButtonDownIfUnusedThisFrame())
