@@ -152,10 +152,7 @@ public class SaveController : MonoBehaviour
     [Serializable]
     private class SaveData
     {
-        [SerializeReference]
         public SaveManagerState[] SaveManagerStates;
-
-        [SerializeReference]
         public SavablePrefabState[] SavablePrefabStates;
     }
 

@@ -1,13 +1,10 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public class SerializableItem
 {
     public string ItemName;
     public int Amount;
-
-    [SerializeReference]
     public PropertyCollection InstanceProperties;
 
     public SerializableItem()
