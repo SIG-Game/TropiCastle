@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 2998866271281183571}
   - component: {fileID: 3468598432584300815}
   m_Layer: 0
-  m_Name: LevelLoader
+  m_Name: Level Loader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
