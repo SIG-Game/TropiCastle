@@ -67,6 +67,17 @@ public static class EditorSaveUtility
     [MenuItem("Save Utility/Delete Save Data")]
     public static void DeleteSaveFile()
     {
-        File.Delete(SaveController.GetSaveDataFilePath());
+        string saveDataFilePath = SaveController.GetSaveDataFilePath();
+
+        if (File.Exists(saveDataFilePath))
+        {
+            File.Delete(saveDataFilePath);
+
+            Debug.Log("Save data file deleted");
+        }
+        else
+        {
+            Debug.Log("Save data file does not exist");
+        }
     }
 }
