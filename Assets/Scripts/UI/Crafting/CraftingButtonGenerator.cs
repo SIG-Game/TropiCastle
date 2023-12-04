@@ -80,7 +80,7 @@ public class CraftingButtonGenerator : MonoBehaviour
         {
             GameObject craftingButton = PrefabUtility.InstantiatePrefab(craftingButtonPrefab,
                 prefabCraftingButtonsParent) as GameObject;
-            craftingButton.name = $"Craft {craftingRecipe.name} Button";
+            craftingButton.name = $"{craftingRecipe.name} Button";
 
             craftingButton.GetComponent<CraftingButton>().SetUpCraftingButton(
                 prefabCraftingButtonGenerator.craftingButtonDependencies, craftingRecipe);
