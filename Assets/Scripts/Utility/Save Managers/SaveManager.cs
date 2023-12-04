@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
@@ -12,7 +13,7 @@ public abstract class SaveManager : MonoBehaviour
 
     public abstract SaveManagerState GetState();
 
-    public abstract void UpdateFromState(SaveManagerState saveManagerState);
+    public abstract void UpdateFromProperties(Dictionary<string, object> properties);
 
     public string GetSaveGuid() => saveGuid;
 

@@ -35,9 +35,8 @@ public class ChimpSaveManager : SaveManager
         return saveManagerState;
     }
 
-    public override void UpdateFromState(SaveManagerState saveManagerState)
+    public override void UpdateFromProperties(Dictionary<string, object> properties)
     {
-        chimp.TimeBetweenGives =
-            Convert.ToSingle(saveManagerState.Properties["TimeUntilNextGive"]);
+        chimp.TimeBetweenGives = Convert.ToSingle(properties["TimeUntilNextGive"]);
     }
 }

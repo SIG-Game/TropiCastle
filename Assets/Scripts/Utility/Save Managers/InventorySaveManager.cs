@@ -24,9 +24,9 @@ public class InventorySaveManager : SaveManager
         return saveManagerState;
     }
 
-    public override void UpdateFromState(SaveManagerState saveManagerState)
+    public override void UpdateFromProperties(Dictionary<string, object> properties)
     {
-        inventory.SetUpFromSerializableItemList((List<SerializableItem>)
-            saveManagerState.Properties["ItemList"]);
+        inventory.SetUpFromSerializableItemList(
+            (List<SerializableItem>)properties["ItemList"]);
     }
 }

@@ -82,7 +82,7 @@ public class SaveController : MonoBehaviour
             SaveManager saveManager = saveManagers.FirstOrDefault(
                 x => x.GetSaveGuid() == saveManagerState.SaveGuid);
 
-            saveManager.UpdateFromState(saveManagerState);
+            saveManager.UpdateFromProperties(saveManagerState.Properties);
         }
 
         var savablePrefabGameObjectsLoadHandle = Addressables

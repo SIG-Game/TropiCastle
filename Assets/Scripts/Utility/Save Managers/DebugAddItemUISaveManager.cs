@@ -25,11 +25,9 @@ public class DebugAddItemUISaveManager : SaveManager
         return saveManagerState;
     }
 
-    public override void UpdateFromState(SaveManagerState saveManagerState)
+    public override void UpdateFromProperties(Dictionary<string, object> properties)
     {
-        amountInputField.text =
-            (string)saveManagerState.Properties["AmountInputFieldText"];
-        itemDropdown.value =
-           Convert.ToInt32(saveManagerState.Properties["ItemDropdownValue"]);
+        amountInputField.text = (string)properties["AmountInputFieldText"];
+        itemDropdown.value = Convert.ToInt32(properties["ItemDropdownValue"]);
     }
 }

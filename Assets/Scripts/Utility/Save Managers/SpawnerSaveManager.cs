@@ -25,13 +25,11 @@ public class SpawnerSaveManager : SaveManager
         return saveManagerState;
     }
 
-    public override void UpdateFromState(SaveManagerState saveManagerState)
+    public override void UpdateFromProperties(Dictionary<string, object> properties)
     {
-        spawner.NumPrefabs =
-            Convert.ToInt32(saveManagerState.Properties["NumberOfSpawnedPrefabs"]);
-        spawner.SpawnTimer =
-            Convert.ToSingle(saveManagerState.Properties["SpawnTimer"]);
+        spawner.NumPrefabs = Convert.ToInt32(properties["NumberOfSpawnedPrefabs"]);
+        spawner.SpawnTimer = Convert.ToSingle(properties["SpawnTimer"]);
         spawner.WaitBeforeFirstSpawnCompleted =
-            (bool)saveManagerState.Properties["WaitBeforeFirstSpawnCompleted"];
+            (bool)properties["WaitBeforeFirstSpawnCompleted"];
     }
 }

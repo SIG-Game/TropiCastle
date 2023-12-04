@@ -27,15 +27,15 @@ public class PlayerSaveManager : SaveManager
         return saveManagerState;
     }
 
-    public override void UpdateFromState(SaveManagerState saveManagerState)
+    public override void UpdateFromProperties(Dictionary<string, object> properties)
     {
         playerController.transform.position = Vector3Helper.FromArray(
-            (float[])saveManagerState.Properties["Position"]);
+            (float[])properties["Position"]);
         playerController.Direction = (CharacterDirection)
-            Convert.ToInt32(saveManagerState.Properties["Direction"]);
+            Convert.ToInt32(properties["Direction"]);
         playerHealthController.SetInitialHealth(
-            Convert.ToInt32(saveManagerState.Properties["Health"]));
+            Convert.ToInt32(properties["Health"]));
         itemSelectionController.SelectedItemIndex =
-            Convert.ToInt32(saveManagerState.Properties["SelectedItemIndex"]);
+            Convert.ToInt32(properties["SelectedItemIndex"]);
     }
 }
