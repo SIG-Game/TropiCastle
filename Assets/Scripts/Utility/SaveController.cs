@@ -88,14 +88,14 @@ public class SaveController : MonoBehaviour
         var savablePrefabGameObjectsLoadHandle = Addressables
             .LoadAssetsAsync<GameObject>("savable prefab", null);
 
-        List<GameObject> savablePrefabGameObjects = new List<GameObject>(
-            savablePrefabGameObjectsLoadHandle.WaitForCompletion());
+        Dictionary<string, GameObject> savablePrefabGameObjects =
+            savablePrefabGameObjectsLoadHandle
+                .WaitForCompletion().ToDictionary(x => x.name);
 
         foreach (var savablePrefabState in saveData.SavablePrefabStates)
         {
-            GameObject savablePrefabGameObject =
-                savablePrefabGameObjects.Find(
-                    x => x.name == savablePrefabState.PrefabGameObjectName);
+            GameObject savablePrefabGameObject = savablePrefabGameObjects[
+                savablePrefabState.PrefabGameObjectName];
 
             GameObject spawnedGameObject = Instantiate(savablePrefabGameObject);
 
