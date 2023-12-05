@@ -165,6 +165,8 @@ MonoBehaviour:
   droppedLoot:
   - itemDefinition: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
     amount: 2
+    instanceProperties:
+      PropertyList: []
 --- !u!114 &5115571631946345362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,8 +285,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4d1f0699d7037404db42f53f6c8c64b5, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 76cfe8b2f36560541b0859b6d7346df4, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
