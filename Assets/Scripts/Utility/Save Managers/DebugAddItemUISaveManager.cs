@@ -8,7 +8,7 @@ public class DebugAddItemUISaveManager : SaveManager
     [SerializeField] private TMP_InputField amountInputField;
     [SerializeField] private TMP_Dropdown itemDropdown;
 
-    public override SaveManagerState GetState()
+    public override Dictionary<string, object> GetProperties()
     {
         var properties = new Dictionary<string, object>
         {
@@ -16,13 +16,7 @@ public class DebugAddItemUISaveManager : SaveManager
             { "ItemDropdownValue", itemDropdown.value }
         };
 
-        var saveManagerState = new SaveManagerState
-        {
-            SaveGuid = saveGuid,
-            Properties = properties
-        };
-
-        return saveManagerState;
+        return properties;
     }
 
     public override void UpdateFromProperties(Dictionary<string, object> properties)

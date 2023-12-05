@@ -5,7 +5,7 @@ public class InventorySaveManager : SaveManager
 {
     [SerializeField] private Inventory inventory;
 
-    public override SaveManagerState GetState()
+    public override Dictionary<string, object> GetProperties()
     {
         List<SerializableItem> serializableItemList =
             inventory.GetAsSerializableItemList();
@@ -15,13 +15,7 @@ public class InventorySaveManager : SaveManager
             { "ItemList", serializableItemList }
         };
 
-        var saveManagerState = new SaveManagerState
-        {
-            SaveGuid = saveGuid,
-            Properties = properties
-        };
-
-        return saveManagerState;
+        return properties;
     }
 
     public override void UpdateFromProperties(Dictionary<string, object> properties)

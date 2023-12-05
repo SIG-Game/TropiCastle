@@ -11,7 +11,18 @@ public abstract class SaveManager : MonoBehaviour
 {
     [SerializeField] protected string saveGuid;
 
-    public abstract SaveManagerState GetState();
+    public SaveManagerState GetState()
+    {
+        var saveManagerState = new SaveManagerState
+        {
+            SaveGuid = saveGuid,
+            Properties = GetProperties()
+        };
+
+        return saveManagerState;
+    }
+
+    public abstract Dictionary<string, object> GetProperties();
 
     public abstract void UpdateFromProperties(Dictionary<string, object> properties);
 

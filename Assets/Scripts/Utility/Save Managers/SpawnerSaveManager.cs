@@ -6,7 +6,7 @@ public class SpawnerSaveManager : SaveManager
 {
     [SerializeField] private PrefabSpawner spawner;
 
-    public override SaveManagerState GetState()
+    public override Dictionary<string, object> GetProperties()
     {
         var properties = new Dictionary<string, object>
         {
@@ -16,13 +16,7 @@ public class SpawnerSaveManager : SaveManager
                 spawner.WaitBeforeFirstSpawnCompleted }
         };
 
-        var saveManagerState = new SaveManagerState
-        {
-            SaveGuid = saveGuid,
-            Properties = properties
-        };
-
-        return saveManagerState;
+        return properties;
     }
 
     public override void UpdateFromProperties(Dictionary<string, object> properties)

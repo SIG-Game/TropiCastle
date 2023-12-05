@@ -6,7 +6,7 @@ public class ChimpSaveManager : SaveManager
 {
     [SerializeField] private Chimp chimp;
 
-    public override SaveManagerState GetState()
+    public override Dictionary<string, object> GetProperties()
     {
         float timeUntilNextGive;
 
@@ -26,13 +26,7 @@ public class ChimpSaveManager : SaveManager
             { "TimeUntilNextGive", timeUntilNextGive }
         };
 
-        var saveManagerState = new SaveManagerState
-        {
-            SaveGuid = saveGuid,
-            Properties = properties
-        };
-
-        return saveManagerState;
+        return properties;
     }
 
     public override void UpdateFromProperties(Dictionary<string, object> properties)
