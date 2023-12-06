@@ -1,12 +1,24 @@
-using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
-[Serializable]
+[JsonObject(MemberSerialization.OptIn)]
 public class ItemStack
 {
     public ItemScriptableObject itemDefinition;
-    public int amount;
-    public PropertyCollection instanceProperties;
+
+    [JsonProperty(Order = 1)] public int amount;
+    [JsonProperty(Order = 2)] public PropertyCollection instanceProperties;
+
+    [JsonProperty(Order = 0)] public string ItemName => itemDefinition.name;
+
+    [JsonConstructor]
+    public ItemStack(string itemName, int amount,
+        PropertyCollection instanceProperties)
+    {
+        itemDefinition = ItemScriptableObject.FromName(itemName);
+        this.amount = amount;
+        this.instanceProperties = instanceProperties;
+    }
 
     public ItemStack(ItemScriptableObject itemDefinition, int amount,
         PropertyCollection instanceProperties = null)

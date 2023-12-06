@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
+[JsonObject(MemberSerialization.OptIn)]
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int inventorySize;
 
-    private List<ItemStack> itemList;
+    [JsonProperty] private List<ItemStack> itemList;
+
     private int firstEmptyIndex;
 
     public event Action<ItemStack, int> OnItemChangedAtIndex = (_, _) => {};
@@ -650,6 +653,16 @@ public class Inventory : MonoBehaviour
                 serializableItem.InstanceProperties);
 
             SetItemAtIndex(item, i);
+        }
+
+        SetFirstEmptyIndex();
+    }
+
+    public void SetUpFromItemList(List<ItemStack> itemList)
+    {
+        for (int i = 0; i < itemList.Count; ++i)
+        {
+            SetItemAtIndex(itemList[i], i);
         }
 
         SetFirstEmptyIndex();

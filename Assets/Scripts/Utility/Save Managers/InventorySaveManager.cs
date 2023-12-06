@@ -7,12 +7,9 @@ public class InventorySaveManager : SaveManager
 
     public override Dictionary<string, object> GetProperties()
     {
-        List<SerializableItem> serializableItemList =
-            inventory.GetAsSerializableItemList();
-
         var properties = new Dictionary<string, object>
         {
-            { "ItemList", serializableItemList }
+            { "ItemList", inventory.GetItemList() }
         };
 
         return properties;
@@ -20,7 +17,6 @@ public class InventorySaveManager : SaveManager
 
     public override void UpdateFromProperties(Dictionary<string, object> properties)
     {
-        inventory.SetUpFromSerializableItemList(
-            (List<SerializableItem>)properties["ItemList"]);
+        inventory.SetUpFromItemList((List<ItemStack>)properties["ItemList"]);
     }
 }
