@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-[JsonObject(MemberSerialization.OptIn)]
+[Serializable, JsonObject(MemberSerialization.OptIn)]
 public class ItemStack
 {
     public ItemScriptableObject itemDefinition;
