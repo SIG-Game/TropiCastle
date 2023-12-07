@@ -8,7 +8,9 @@ public class SavablePrefabEnemy : SavablePrefab
     [SerializeField] private HealthController healthController;
     [SerializeField] private Spawnable spawnable;
 
-    public override SavablePrefabState GetSavablePrefabState()
+    public override string PrefabGameObjectName => "Crab";
+
+    public override Dictionary<string, object> GetProperties()
     {
         var properties = new Dictionary<string, object>
         {
@@ -17,25 +19,16 @@ public class SavablePrefabEnemy : SavablePrefab
             { "SpawnerGuid", spawnable.GetSpawnerGuid() }
         };
 
-        var savableState = new SavablePrefabState
-        {
-            PrefabGameObjectName = "Crab",
-            Properties = properties
-        };
-
-        return savableState;
+        return properties;
     }
 
-    public override void SetUpFromSavablePrefabState(SavablePrefabState savableState)
+    public override void SetUpFromProperties(Dictionary<string, object> properties)
     {
-        transform.position =
-            Vector3Helper.FromArray((float[])savableState.Properties["Position"]);
+        transform.position = Vector3Helper.FromArray((float[])properties["Position"]);
 
-        healthController.SetInitialHealth(
-            Convert.ToInt32(savableState.Properties["Health"]));
+        healthController.SetInitialHealth(Convert.ToInt32(properties["Health"]));
 
-        spawnable.SetSpawnerUsingGuid<EnemySpawner>(
-            (string)savableState.Properties["SpawnerGuid"]);
+        spawnable.SetSpawnerUsingGuid<EnemySpawner>((string)properties["SpawnerGuid"]);
     }
 
     public override Type GetDependencySetterType() =>

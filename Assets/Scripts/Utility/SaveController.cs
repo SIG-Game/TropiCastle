@@ -108,7 +108,7 @@ public class SaveController : MonoBehaviour
             // Must run before SetUpFromSavablePrefabState
             dependencySetter.SetPrefabDependencies(savablePrefab);
 
-            savablePrefab.SetUpFromSavablePrefabState(savablePrefabState);
+            savablePrefab.SetUpFromProperties(savablePrefabState.Properties);
         }
 
         if (savablePrefabGameObjectsLoadHandle.IsValid())

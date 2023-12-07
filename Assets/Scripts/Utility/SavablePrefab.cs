@@ -1,12 +1,25 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class SavablePrefab : MonoBehaviour
 {
-    public abstract SavablePrefabState GetSavablePrefabState();
+    public abstract string PrefabGameObjectName { get; }
 
-    public abstract void SetUpFromSavablePrefabState(
-        SavablePrefabState savableState);
+    public SavablePrefabState GetSavablePrefabState()
+    {
+        var savablePrefabState = new SavablePrefabState
+        {
+            PrefabGameObjectName = PrefabGameObjectName,
+            Properties = GetProperties()
+        };
+
+        return savablePrefabState;
+    }
+
+    public abstract Dictionary<string, object> GetProperties();
+
+    public abstract void SetUpFromProperties(Dictionary<string, object> properties);
 
     public abstract Type GetDependencySetterType();
 }

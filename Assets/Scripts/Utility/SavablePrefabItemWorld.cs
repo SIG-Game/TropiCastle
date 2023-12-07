@@ -7,7 +7,9 @@ public class SavablePrefabItemWorld : SavablePrefab
     [SerializeField] private ItemWorld itemWorld;
     [SerializeField] private Spawnable spawnable;
 
-    public override SavablePrefabState GetSavablePrefabState()
+    public override string PrefabGameObjectName => "ItemWorld";
+
+    public override Dictionary<string, object> GetProperties()
     {
         var serializableItem = new SerializableItem(itemWorld.Item);
 
@@ -18,32 +20,23 @@ public class SavablePrefabItemWorld : SavablePrefab
             { "SpawnerGuid", spawnable.GetSpawnerGuid() }
         };
 
-        var savableState = new SavablePrefabState
-        {
-            PrefabGameObjectName = "ItemWorld",
-            Properties = properties
-        };
-
-        return savableState;
+        return properties;
     }
 
-    public override void SetUpFromSavablePrefabState(SavablePrefabState savableState)
+    public override void SetUpFromProperties(Dictionary<string, object> properties)
     {
-        transform.position =
-            Vector3Helper.FromArray((float[])savableState.Properties["Position"]);
+        transform.position = Vector3Helper.FromArray((float[])properties["Position"]);
 
-        SerializableItem serializableItem =
-            (SerializableItem)savableState.Properties["Item"];
+        var serializableItem = (SerializableItem)properties["Item"];
 
-        ItemScriptableObject itemScriptableObject =
+        var itemScriptableObject =
             ItemScriptableObject.FromName(serializableItem.ItemName);
 
         itemWorld.Item = new ItemStack(itemScriptableObject,
             serializableItem.Amount,
             serializableItem.InstanceProperties);
 
-        spawnable.SetSpawnerUsingGuid<ItemSpawner>(
-            (string)savableState.Properties["SpawnerGuid"]);
+        spawnable.SetSpawnerUsingGuid<ItemSpawner>((string)properties["SpawnerGuid"]);
     }
 
     public override Type GetDependencySetterType() =>
