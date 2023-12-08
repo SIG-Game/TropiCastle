@@ -14,7 +14,7 @@ public class ItemStack
 
     [JsonConstructor]
     public ItemStack(string itemName, int amount,
-        PropertyCollection instanceProperties)
+        PropertyCollection instanceProperties = null)
     {
         itemDefinition = ItemScriptableObject.FromName(itemName);
         this.amount = amount;

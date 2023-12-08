@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -634,29 +633,6 @@ public class Inventory : MonoBehaviour
     public List<ItemStack> GetItemList() => itemList;
 
     public bool HasNoEmptySlots() => firstEmptyIndex == -1;
-
-    public List<SerializableItem> GetAsSerializableItemList() =>
-        itemList.Select(x => new SerializableItem(x)).ToList();
-
-    public void SetUpFromSerializableItemList(
-        List<SerializableItem> serializableItemList)
-    {
-        for (int i = 0; i < serializableItemList.Count; ++i)
-        {
-            SerializableItem serializableItem = serializableItemList[i];
-
-            ItemScriptableObject itemScriptableObject =
-                ItemScriptableObject.FromName(serializableItem.ItemName);
-
-            ItemStack item = new ItemStack(itemScriptableObject,
-                serializableItem.Amount,
-                serializableItem.InstanceProperties);
-
-            SetItemAtIndex(item, i);
-        }
-
-        SetFirstEmptyIndex();
-    }
 
     public void SetUpFromItemList(List<ItemStack> itemList)
     {

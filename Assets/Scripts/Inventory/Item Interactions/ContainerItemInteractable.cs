@@ -19,10 +19,10 @@ public abstract class ContainerItemInteractable : ItemInteractable
 
         if (itemInstanceProperties != null)
         {
-            var serializableItemList = (List<SerializableItem>)
+            var itemList = (List<ItemStack>)
                 itemInstanceProperties.PropertyDictionary["ItemList"];
 
-            inventory.SetUpFromSerializableItemList(serializableItemList);
+            inventory.SetUpFromItemList(itemList);
         }
 
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
@@ -35,6 +35,6 @@ public abstract class ContainerItemInteractable : ItemInteractable
 
     protected virtual void Inventory_OnItemChangedAtIndex(ItemStack _, int _1)
     {
-        itemInstanceProperties.UpdateSerializableItemList(inventory);
+        itemInstanceProperties.UpdateItemListProperty(inventory);
     }
 }

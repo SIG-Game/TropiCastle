@@ -11,39 +11,30 @@ public class ContainerItemInstanceProperties : PropertyCollection
     {
         PropertyDictionary = new Dictionary<string, object>();
 
-        List<SerializableItem> containerItemList =
-            new List<SerializableItem>(containerSize);
+        var containerItemList = new List<ItemStack>(containerSize);
 
         for (int i = 0; i < containerSize; ++i)
         {
-            containerItemList.Add(new SerializableItem
-            {
-                ItemName = "Empty",
-                Amount = 0
-            });
+            containerItemList.Add(new ItemStack("Empty", 0));
         }
 
         PropertyDictionary["ItemList"] = containerItemList;
     }
 
-    public void UpdateSerializableItemList(Inventory inventory)
+    public void UpdateItemListProperty(Inventory inventory)
     {
-        PropertyDictionary["ItemList"] =
-            inventory.GetAsSerializableItemList();
+        PropertyDictionary["ItemList"] = inventory.GetItemList();
     }
 
     public override PropertyCollection DeepCopy()
     {
-        var containerItemList = (List<SerializableItem>)
-            PropertyDictionary["ItemList"];
+        var itemList = (List<ItemStack>)PropertyDictionary["ItemList"];
 
-        List<SerializableItem> containerItemListDeepCopy =
-            new List<SerializableItem>(containerItemList.Count);
+        var itemListDeepCopy = new List<ItemStack>(itemList.Count);
 
-        for (int i = 0; i < containerItemList.Count; ++i)
+        for (int i = 0; i < itemList.Count; ++i)
         {
-            containerItemListDeepCopy.Add(
-                new SerializableItem(containerItemList[i]));
+            itemListDeepCopy.Add(new ItemStack(itemList[i]));
         }
 
         ContainerItemInstanceProperties deepCopy =
@@ -51,7 +42,7 @@ public class ContainerItemInstanceProperties : PropertyCollection
 
         deepCopy.PropertyDictionary = new Dictionary<string, object>
         {
-            { "ItemList", containerItemListDeepCopy }
+            { "ItemList", itemListDeepCopy }
         };
 
         return deepCopy;
