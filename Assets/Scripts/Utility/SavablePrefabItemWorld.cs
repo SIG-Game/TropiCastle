@@ -11,12 +11,10 @@ public class SavablePrefabItemWorld : SavablePrefab
 
     public override Dictionary<string, object> GetProperties()
     {
-        var serializableItem = new SerializableItem(itemWorld.Item);
-
         var properties = new Dictionary<string, object>
         {
             { "Position", transform.position.ToArray() },
-            { "Item", serializableItem },
+            { "Item", itemWorld.Item },
             { "SpawnerGuid", spawnable.GetSpawnerGuid() }
         };
 
@@ -27,14 +25,7 @@ public class SavablePrefabItemWorld : SavablePrefab
     {
         transform.position = Vector3Helper.FromArray((float[])properties["Position"]);
 
-        var serializableItem = (SerializableItem)properties["Item"];
-
-        var itemScriptableObject =
-            ItemScriptableObject.FromName(serializableItem.ItemName);
-
-        itemWorld.Item = new ItemStack(itemScriptableObject,
-            serializableItem.Amount,
-            serializableItem.InstanceProperties);
+        itemWorld.Item = (ItemStack)properties["Item"];
 
         spawnable.SetSpawnerUsingGuid<ItemSpawner>((string)properties["SpawnerGuid"]);
     }
