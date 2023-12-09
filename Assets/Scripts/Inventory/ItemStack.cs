@@ -95,4 +95,6 @@ public class ItemStack
         new ItemStack(itemDefinition, amount, instanceProperties);
 
     public string GetAmountText() => amount > 1 ? amount.ToString() : string.Empty;
+
+    public override string ToString() => $"{amount} {itemDefinition.DisplayName}";
 }
