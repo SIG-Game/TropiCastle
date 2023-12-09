@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public abstract class ContainerItemInteractable : ItemInteractable
 {
     protected Inventory inventory;
-    protected ContainerItemInstanceProperties itemInstanceProperties;
+    protected PropertyCollection itemInstanceProperties;
 
     protected virtual void Awake()
     {
@@ -11,8 +11,7 @@ public abstract class ContainerItemInteractable : ItemInteractable
 
         ItemStack item = GetComponent<ItemWorld>().Item;
 
-        itemInstanceProperties =
-            (ContainerItemInstanceProperties)item.instanceProperties;
+        itemInstanceProperties = item.instanceProperties;
 
         inventory.InitializeItemListWithSize(
             item.itemDefinition.GetIntProperty("ContainerSize"));

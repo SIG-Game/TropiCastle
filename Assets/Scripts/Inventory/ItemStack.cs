@@ -43,9 +43,10 @@ public class ItemStack
 
         if (itemDefinition.HasProperty("ContainerSize"))
         {
-            int containerSize = itemDefinition.GetIntProperty("ContainerSize");
+            instanceProperties = new PropertyCollection();
 
-            instanceProperties = new ContainerItemInstanceProperties(containerSize);
+            int containerSize = itemDefinition.GetIntProperty("ContainerSize");
+            instanceProperties.AddItemListProperty(containerSize);
         }
         else if (defaultInstancePropertyList.Count != 0)
         {
