@@ -55,7 +55,17 @@ public class ItemStack
 
         foreach (var property in defaultInstancePropertyList)
         {
-            instanceProperties.AddProperty(property.Name, property.Value);
+            // TODO: Store all item instance properties in a Dictionary
+            if (property.Name == "Durability")
+            {
+                instanceProperties.SetDictionaryProperty(
+                    property.Name, property.Value);
+            }
+            else
+            {
+                instanceProperties.AddProperty(
+                    property.Name, property.Value);
+            }
         }
     }
 
@@ -74,10 +84,10 @@ public class ItemStack
     public bool TryGetDurabilityProperties(out int durability, out int initialDurability)
     {
         if (instanceProperties != null &&
-            instanceProperties.HasProperty("Durability") &&
+            instanceProperties.HasDictionaryProperty("Durability") &&
             itemDefinition.DefaultInstanceProperties.HasProperty("Durability"))
         {
-            durability = instanceProperties.GetIntProperty("Durability");
+            durability = instanceProperties.GetDictionaryIntProperty("Durability");
             initialDurability =
                 itemDefinition.DefaultInstanceProperties.GetIntProperty("Durability");
 

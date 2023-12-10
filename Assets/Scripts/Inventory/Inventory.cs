@@ -230,7 +230,8 @@ public class Inventory : MonoBehaviour
         ItemStack newItemCopy = new ItemStack(newItem);
 
         if (newItemCopy.instanceProperties == null ||
-            newItemCopy.instanceProperties.PropertyList.Count == 0)
+            (newItemCopy.instanceProperties.PropertyList.Count == 0 &&
+            newItemCopy.instanceProperties.PropertyDictionary.Count == 0))
         {
             newItemCopy.InitializeItemInstanceProperties();
         }
@@ -317,10 +318,10 @@ public class Inventory : MonoBehaviour
     {
         ItemStack breakableItem = GetItemAtIndex(index);
 
-        if (breakableItem.instanceProperties.HasProperty("Durability"))
+        if (breakableItem.instanceProperties.HasDictionaryProperty("Durability"))
         {
-            int durability =
-                breakableItem.instanceProperties.GetIntProperty("Durability") - 1;
+            int durability = breakableItem.instanceProperties
+                .GetDictionaryIntProperty("Durability") - 1;
 
             if (durability == 0)
             {
@@ -328,8 +329,8 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                breakableItem.instanceProperties.SetExistingProperty(
-                    "Durability", durability.ToString());
+                breakableItem.instanceProperties
+                    .SetDictionaryProperty("Durability", durability);
 
                 OnItemChangedAtIndex(breakableItem, index);
             }

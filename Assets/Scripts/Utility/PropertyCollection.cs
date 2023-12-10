@@ -45,6 +45,16 @@ public class PropertyCollection
     public bool HasProperty(string name) =>
         PropertyList.Exists(x => x.Name == name);
 
+    // TODO: Do not store properties in two variables in this class
+    public int GetDictionaryIntProperty(string name) =>
+        Convert.ToInt32(PropertyDictionary[name]);
+
+    public void SetDictionaryProperty(string name, object value) =>
+        PropertyDictionary[name] = value;
+
+    public bool HasDictionaryProperty(string name) =>
+        PropertyDictionary.ContainsKey(name);
+
     public void AddItemListProperty(int itemListCount)
     {
         var itemList = new List<ItemStack>(itemListCount);
