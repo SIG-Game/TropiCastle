@@ -62,7 +62,18 @@ public class SaveController : MonoBehaviour
             SavablePrefabStates = savablePrefabStates
         };
 
-        WriteSerializableObjectAsJsonToFile(saveData, saveDataFilePath);
+        using (var streamWriter = new StreamWriter(saveDataFilePath))
+        {
+#if UNITY_EDITOR
+            string saveDataJson = JsonConvert.SerializeObject(
+                saveData, Formatting.Indented, serializerSettings);
+#else
+            string saveDataJson = JsonConvert.SerializeObject(
+                saveData, serializerSettings);
+#endif
+
+            streamWriter.Write(saveDataJson);
+        }
     }
 
     private void LoadFromFile()
@@ -72,8 +83,15 @@ public class SaveController : MonoBehaviour
             return;
         }
 
-        var saveData =
-            GetSerializableObjectFromJsonFile<SaveData>(saveDataFilePath);
+        SaveData saveData;
+
+        using (var streamReader = new StreamReader(saveDataFilePath))
+        {
+            string serializableObjectJson = streamReader.ReadToEnd();
+
+            saveData = JsonConvert.DeserializeObject<SaveData>(
+                serializableObjectJson, serializerSettings);
+        }
 
         SaveManager[] saveManagers = FindObjectsOfType<SaveManager>();
 
@@ -115,38 +133,6 @@ public class SaveController : MonoBehaviour
         {
             Addressables.Release(savablePrefabGameObjectsLoadHandle);
         }
-    }
-
-    private void WriteSerializableObjectAsJsonToFile(object serializableObject, string filePath)
-    {
-        using (var streamWriter = new StreamWriter(filePath))
-        {
-#if UNITY_EDITOR
-            string serializableObjectJson = JsonConvert.SerializeObject(
-                serializableObject, Formatting.Indented, serializerSettings);
-#else
-            string serializableObjectJson =
-                JsonConvert.SerializeObject(serializableObject, serializerSettings);
-#endif
-
-            streamWriter.Write(serializableObjectJson);
-        }
-    }
-
-    private TSerializableObject GetSerializableObjectFromJsonFile<TSerializableObject>(
-        string filePath)
-    {
-        TSerializableObject serializableObject;
-
-        using (var streamReader = new StreamReader(filePath))
-        {
-            string serializableObjectJson = streamReader.ReadToEnd();
-
-            serializableObject = JsonConvert.DeserializeObject<TSerializableObject>(
-                serializableObjectJson, serializerSettings);
-        }
-
-        return serializableObject;
     }
 
     [Serializable]
