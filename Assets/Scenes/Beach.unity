@@ -35465,6 +35465,11 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 572276101}
+    - target: {fileID: 6847651758260162643, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: eventSystemDefaultGameObjectSelector
+      value: 
+      objectReference: {fileID: 8494658916821513172}
     - target: {fileID: 6847651758268619063, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: hoveredItemSlotManager
@@ -35860,6 +35865,11 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 572276101}
+    - target: {fileID: 7976920315976224363, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: eventSystemDefaultGameObjectSelector
+      value: 
+      objectReference: {fileID: 8494658916821513172}
     - target: {fileID: 8006763497998644967, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inputManager
@@ -36125,5 +36135,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8494658916821513172 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8494658916369790395, guid: 559fb8c14ac19b34091355c72e5b7c5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8494658916821513170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db239fa10ccd06342b9854567cecd259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

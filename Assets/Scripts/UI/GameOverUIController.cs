@@ -6,6 +6,7 @@ public class GameOverUIController : MonoBehaviour
     [SerializeField] private GameObject menuBackground;
     [SerializeField] private GameObject reloadButton;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private EventSystemDefaultGameObjectSelector eventSystemDefaultGameObjectSelector;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class GameOverUIController : MonoBehaviour
         gameOverUI.SetActive(true);
         menuBackground.SetActive(true);
 
-        EventSystemDefaultGameObjectSelector.Instance
+        eventSystemDefaultGameObjectSelector
             .SetDefaultSelectedGameObject(reloadButton);
     }
 }

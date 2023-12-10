@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private GameObject resumeButton;
     [SerializeField] private InputActionReference pauseActionReference;
+    [SerializeField] private EventSystemDefaultGameObjectSelector eventSystemDefaultGameObjectSelector;
 
     private InputAction pauseAction;
 
@@ -35,12 +36,12 @@ public class PauseMenu : MonoBehaviour
 
         if (PauseController.Instance.GamePaused)
         {
-            EventSystemDefaultGameObjectSelector.Instance
+            eventSystemDefaultGameObjectSelector
                 .SetDefaultSelectedGameObject(resumeButton);
         }
         else
         {
-            EventSystemDefaultGameObjectSelector.Instance
+            eventSystemDefaultGameObjectSelector
                 .SetDefaultSelectedGameObject(null);
 
             EventSystem.current.SetSelectedGameObject(null);

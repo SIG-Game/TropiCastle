@@ -11,12 +11,8 @@ public class EventSystemDefaultGameObjectSelector : MonoBehaviour
     private InputAction navigateAction;
     private InputAction submitAction;
 
-    public static EventSystemDefaultGameObjectSelector Instance;
-
     private void Awake()
     {
-        Instance = this;
-
         InputActionAsset inputActionAsset =
             GetComponent<InputSystemUIInputModule>().actionsAsset;
 
@@ -34,11 +30,6 @@ public class EventSystemDefaultGameObjectSelector : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(defaultSelectedGameObject);
         }
-    }
-
-    private void OnDestroy()
-    {
-        Instance = null;
     }
 
     public void SelectNull()
