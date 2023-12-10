@@ -110,8 +110,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
     {
         if (!HoveredItemContainsItem())
         {
-            PickUpItemWorld(HoveredItemWorld,
-                playerInventory, player.GetSelectedItemIndex());
+            PickUpItemWorld(HoveredItemWorld, playerInventory,
+                itemSelectionController.SelectedItemIndex);
         }
     }
 
@@ -121,8 +121,6 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
         ItemStack itemToPlace = selectedItem.itemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
-
-        int itemToPlaceIndex = player.GetSelectedItemIndex();
 
         if (!itemToPlace.itemDefinition.IsEmpty())
         {
@@ -143,11 +141,13 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
             if (selectedItem.itemDefinition.OneAtATimePlacement)
             {
-                playerInventory.DecrementItemStackAtIndex(itemToPlaceIndex);
+                playerInventory.DecrementItemStackAtIndex(
+                    itemSelectionController.SelectedItemIndex);
             }
             else
             {
-                playerInventory.RemoveItemAtIndex(itemToPlaceIndex);
+                playerInventory.RemoveItemAtIndex(
+                    itemSelectionController.SelectedItemIndex);
             }
         }
     }
