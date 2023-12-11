@@ -6,9 +6,8 @@ using System.Linq;
 [Serializable]
 public class PropertyCollection
 {
+    // TODO: Do not store properties in two variables in this class
     public List<Property> PropertyList;
-
-    // TODO: Store all item instance properties in a Dictionary
     public Dictionary<string, object> PropertyDictionary;
 
     public PropertyCollection()
@@ -45,9 +44,11 @@ public class PropertyCollection
     public bool HasProperty(string name) =>
         PropertyList.Exists(x => x.Name == name);
 
-    // TODO: Do not store properties in two variables in this class
     public int GetDictionaryIntProperty(string name) =>
         Convert.ToInt32(PropertyDictionary[name]);
+
+    public float GetDictionaryFloatProperty(string name) =>
+        Convert.ToSingle(PropertyDictionary[name]);
 
     public void SetDictionaryProperty(string name, object value) =>
         PropertyDictionary[name] = value;

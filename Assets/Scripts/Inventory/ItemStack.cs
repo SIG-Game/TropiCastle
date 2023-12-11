@@ -55,17 +55,8 @@ public class ItemStack
 
         foreach (var property in defaultInstancePropertyList)
         {
-            // TODO: Store all item instance properties in a Dictionary
-            if (property.Name == "Durability")
-            {
-                instanceProperties.SetDictionaryProperty(
-                    property.Name, property.Value);
-            }
-            else
-            {
-                instanceProperties.AddProperty(
-                    property.Name, property.Value);
-            }
+            instanceProperties.SetDictionaryProperty(
+                property.Name, property.Value);
         }
     }
 
