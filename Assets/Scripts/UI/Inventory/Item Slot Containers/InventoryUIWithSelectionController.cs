@@ -24,23 +24,13 @@ public class InventoryUIWithSelectionController : InventoryUIController
             ItemSelectionController_OnItemDeselectedAtIndex;
     }
 
-    protected virtual void ItemSelectionController_OnItemSelectedAtIndex(int index)
+    private void ItemSelectionController_OnItemSelectedAtIndex(int index)
     {
-        HighlightSlotAtIndex(index);
+        itemSlotControllers[index].Highlight();
     }
 
-    protected virtual void ItemSelectionController_OnItemDeselectedAtIndex(int index)
+    private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
     {
-        UnhighlightSlotAtIndex(index);
-    }
-
-    protected void HighlightSlotAtIndex(int slotIndex)
-    {
-        itemSlotControllers[slotIndex].Highlight();
-    }
-
-    protected void UnhighlightSlotAtIndex(int slotIndex)
-    {
-        itemSlotControllers[slotIndex].Unhighlight();
+        itemSlotControllers[index].Unhighlight();
     }
 }

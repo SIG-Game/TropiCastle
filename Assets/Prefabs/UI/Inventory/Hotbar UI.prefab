@@ -191,7 +191,6 @@ MonoBehaviour:
   - {fileID: 1933860603901713551}
   - {fileID: 1933860605246012561}
   itemSelectionController: {fileID: 0}
-  inventoryUIManager: {fileID: 0}
 --- !u!1001 &7402690958086517192
 PrefabInstance:
   m_ObjectHideFlags: 0
