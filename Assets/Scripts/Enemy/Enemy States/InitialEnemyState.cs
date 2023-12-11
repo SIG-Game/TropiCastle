@@ -17,7 +17,7 @@ public class InitialEnemyState : BaseEnemyState
     public override void StateUpdate()
     {
         if (Time.time - stateEnterTime >=
-            enemyController.GetInitialWaitTimeBeforeIdleSeconds())
+            enemyController.InitialWaitTimeBeforeIdleSeconds)
         {
             enemyController.SwitchState(enemyController.IdleState);
         }

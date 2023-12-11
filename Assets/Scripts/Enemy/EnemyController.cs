@@ -25,6 +25,9 @@ public class EnemyController : MonoBehaviour
 
     public float LastHitTime { get; set; }
 
+    public float InitialWaitTimeBeforeIdleSeconds => initialWaitTimeBeforeIdleSeconds;
+    public float WaitTimeAfterKnockbackSeconds => waitTimeAfterKnockbackSeconds;
+
     private BaseEnemyState currentState;
     private Rigidbody2D rb2d;
     private new Collider2D collider2D;
@@ -155,12 +158,6 @@ public class EnemyController : MonoBehaviour
 
     public float GetNewFadingOutAlpha() =>
         spriteRenderer.color.a - fadeOutSpeed * Time.deltaTime;
-
-    public float GetInitialWaitTimeBeforeIdleSeconds() =>
-        initialWaitTimeBeforeIdleSeconds;
-
-    public float GetWaitTimeAfterKnockbackSeconds() =>
-        waitTimeAfterKnockbackSeconds;
 
     private Vector2 GetPlayerColliderPosition() =>
         (Vector2)playerTransform.position + playerColliderOffset;

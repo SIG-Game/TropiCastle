@@ -17,7 +17,7 @@ public class KnockedBackEnemyState : BaseEnemyState
     public override void StateUpdate()
     {
         if (Time.time - knockbackStartTime >=
-            enemyController.GetWaitTimeAfterKnockbackSeconds())
+            enemyController.WaitTimeAfterKnockbackSeconds)
         {
             enemyController.SwitchState(enemyController.IdleState);
         }
