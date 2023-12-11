@@ -15,16 +15,11 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
     private const int maxDropSpawnAttempts = 20;
 
-    public static ItemWorldPrefabInstanceFactory Instance;
+    private static Vector2 staticItemWorldPrefabColliderExtents;
 
     private void Awake()
     {
-        Instance = this;
-    }
-
-    private void OnDestroy()
-    {
-        Instance = null;
+        staticItemWorldPrefabColliderExtents = itemWorldPrefabColliderExtents;
     }
 
 #if UNITY_EDITOR
@@ -86,7 +81,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         }
         else
         {
-            itemColliderExtents = Instance.itemWorldPrefabColliderExtents;
+            itemColliderExtents = staticItemWorldPrefabColliderExtents;
         }
 
         return itemColliderExtents;
@@ -102,7 +97,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         }
         else
         {
-            itemColliderSize = Instance.itemWorldPrefabColliderExtents * 2f;
+            itemColliderSize = staticItemWorldPrefabColliderExtents * 2f;
         }
 
         return itemColliderSize;

@@ -56,6 +56,7 @@ MonoBehaviour:
   maxSpawnPosition: {x: -4.5, y: 2}
   playerTransform: {fileID: 0}
   playerInventory: {fileID: 0}
+  itemWorldPrefabInstanceFactory: {fileID: 0}
 --- !u!114 &2763883772261998751
 MonoBehaviour:
   m_ObjectHideFlags: 0

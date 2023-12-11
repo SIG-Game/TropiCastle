@@ -5,12 +5,13 @@ public class SavableEnemyDependencySetter : MonoBehaviour,
 {
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
+    [SerializeField] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
 
     public void SetPrefabDependencies(SavablePrefab savablePrefab)
     {
         SavablePrefabEnemy savablePrefabEnemy = (SavablePrefabEnemy)savablePrefab;
 
-        savablePrefabEnemy.GetEnemyController()
-            .SetUpEnemy(playerTransform, playerInventory);
+        savablePrefabEnemy.GetEnemyController().SetUpEnemy(playerTransform,
+            playerInventory, itemWorldPrefabInstanceFactory);
     }
 }

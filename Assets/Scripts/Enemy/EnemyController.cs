@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private List<ItemStack> droppedLoot;
+    [SerializeField] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
 
     public InitialEnemyState InitialState { get; private set; }
     public IdleEnemyState IdleState { get; private set; }
@@ -98,7 +99,7 @@ public class EnemyController : MonoBehaviour
                 ItemStack itemToDrop = new ItemStack(loot.itemDefinition,
                     loot.amount - amountAdded, loot.instanceProperties);
 
-                ItemWorldPrefabInstanceFactory.Instance.DropItem(
+                itemWorldPrefabInstanceFactory.DropItem(
                     transform.position, itemToDrop);
             }
         }
@@ -170,10 +171,12 @@ public class EnemyController : MonoBehaviour
     private float GetDistanceToPlayerCollider() =>
         Vector2.Distance(transform.position, GetPlayerColliderPosition());
 
-    public void SetUpEnemy(Transform playerTransform, Inventory playerInventory)
+    public void SetUpEnemy(Transform playerTransform, Inventory playerInventory,
+        ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory)
     {
         this.playerTransform = playerTransform;
         this.playerInventory = playerInventory;
+        this.itemWorldPrefabInstanceFactory = itemWorldPrefabInstanceFactory;
 
         playerColliderOffset = playerTransform.GetComponent<BoxCollider2D>().offset;
     }

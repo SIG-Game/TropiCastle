@@ -10,6 +10,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private CursorController cursorController;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
     [SerializeField] private Sprite itemPickupArrow;
     [SerializeField] private Sprite cannotPickUpArrow;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
@@ -136,7 +137,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
                 itemPlacementPosition = cursorPoint;
             }
 
-            _ = ItemWorldPrefabInstanceFactory.Instance.SpawnItemWorld(
+            _ = itemWorldPrefabInstanceFactory.SpawnItemWorld(
                 itemPlacementPosition, itemToPlace);
 
             if (selectedItem.itemDefinition.OneAtATimePlacement)
