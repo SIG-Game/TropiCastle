@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InventoryUIManager : MonoBehaviour
 {
+    [SerializeField] private GameObject menuBackground;
     [SerializeField] private InputManager inputManager;
 
     public bool InventoryUIOpen
@@ -75,6 +76,8 @@ public class InventoryUIManager : MonoBehaviour
     private void SetCurrentInventoryUIActive(bool active)
     {
         currentInventoryUIGameObjects.ForEach(x => x.SetActive(active));
+
+        menuBackground.SetActive(active);
     }
 
     public void SetCurrentInventoryUIGameObjects(

@@ -2674,7 +2674,6 @@ MonoBehaviour:
   - {fileID: 8774762379877637705}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   playerInventoryUI: {fileID: 0}
   inventoryUIManager: {fileID: 0}
   playerActionDisablingUIManager: {fileID: 0}

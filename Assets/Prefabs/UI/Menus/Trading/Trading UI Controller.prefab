@@ -633,7 +633,6 @@ MonoBehaviour:
   tradingUIGameObjects:
   - {fileID: 1940752636071755932}
   - {fileID: 0}
-  - {fileID: 0}
   tradeButton: {fileID: 1940752636002710947}
   tradeItemUIPrefab: {fileID: 4086417001512461242, guid: 525e31c21f15aa94cb90be7153d2a3c5,
     type: 3}

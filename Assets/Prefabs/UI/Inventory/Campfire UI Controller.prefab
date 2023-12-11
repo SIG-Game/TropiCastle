@@ -415,7 +415,6 @@ MonoBehaviour:
   campfireUIGameObjects:
   - {fileID: 1252840876479137081}
   - {fileID: 0}
-  - {fileID: 0}
   campfireInventoryUIController: {fileID: 2093669872953180739}
   progressArrowMask: {fileID: 8966371435259824113}
   inventoryUIManager: {fileID: 0}

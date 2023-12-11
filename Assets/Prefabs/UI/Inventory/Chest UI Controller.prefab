@@ -228,7 +228,6 @@ MonoBehaviour:
   chestUIGameObjects:
   - {fileID: 6696742860878197956}
   - {fileID: 0}
-  - {fileID: 0}
   chestInventoryUIController: {fileID: 2446165521011752754}
   playerInventoryUI: {fileID: 0}
   inventoryUIManager: {fileID: 0}

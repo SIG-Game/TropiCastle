@@ -3982,6 +3982,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory UI Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 7692915957405232258, guid: 8e4fe6d6fc4eb29469cf72d9ecc1f85d,
+        type: 3}
+      propertyPath: menuBackground
+      value: 
+      objectReference: {fileID: 8008340607082156497}
     - target: {fileID: 8706121767110804777, guid: 8e4fe6d6fc4eb29469cf72d9ecc1f85d,
         type: 3}
       propertyPath: m_Pivot.x
