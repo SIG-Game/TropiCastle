@@ -40,12 +40,16 @@ public class CampfireItemInteractable : ContainerItemInteractable
             {
                 ItemStack inputItem = inventory.GetItemAtIndex(0);
 
+                int inputRemoveAmount = currentRecipeInputItem.amount;
+
+                // Inventory_OnItemChangedAtIndex in this class
+                // updates currentRecipe and currentRecipeInputItem
+                // based on inventory changes
+
                 inventory.AddItemAtIndex(currentRecipe.ResultItem, 1);
 
-                // Changing the input item in campfireInventory
-                // updates currentRecipe and currentRecipeInputItem
                 inventory.SetItemAmountAtIndex(
-                    inputItem.amount - currentRecipeInputItem.amount, 0);
+                    inputItem.amount - inputRemoveAmount, 0);
 
                 cookTimeProgress = 0f;
             }
@@ -149,13 +153,12 @@ public class CampfireItemInteractable : ContainerItemInteractable
     {
         base.Inventory_OnItemChangedAtIndex(itemStack, index);
 
-        bool inputItemChanged = index == 0;
-        bool resultItemEmptied =
-            index == 1 && inventory.GetItemAtIndex(1).itemDefinition.IsEmpty();
-        if (inputItemChanged || resultItemEmptied)
-        {
-            SetCurrentRecipe();
+        var previousRecipe = currentRecipe;
 
+        SetCurrentRecipe();
+
+        if (previousRecipe != currentRecipe)
+        {
             itemInstanceProperties.SetDictionaryProperty("CookTimeProgress", 0f);
 
             UpdateCampfireUIProgressArrow();
