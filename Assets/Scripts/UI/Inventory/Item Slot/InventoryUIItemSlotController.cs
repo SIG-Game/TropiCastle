@@ -10,23 +10,35 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
     [SerializeField] private int slotItemIndex;
     [SerializeField] private bool itemPlacementEnabled;
 
+    public Inventory Inventory
+    {
+        private get => inventory;
+        set => inventory = value;
+    }
+
+    public int SlotItemIndex
+    {
+        private get => slotItemIndex;
+        set => slotItemIndex = value;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (hoveredItemSlotManager != null)
         {
-            hoveredItemSlotManager.HoveredItemIndex = slotItemIndex;
-            hoveredItemSlotManager.HoveredInventory = inventory;
+            hoveredItemSlotManager.HoveredItemIndex = SlotItemIndex;
+            hoveredItemSlotManager.HoveredInventory = Inventory;
         }
 
         if (Input.GetMouseButton(0))
         {
             inventoryUIHeldItemController.HeldLeftClickOverItemAtIndex(
-                inventory, slotItemIndex);
+                Inventory, SlotItemIndex);
         }
         else if (Input.GetMouseButton(1) && itemPlacementEnabled)
         {
             inventoryUIHeldItemController.HeldRightClickOverItemAtIndex(
-                inventory, slotItemIndex);
+                Inventory, SlotItemIndex);
         }
     }
 
@@ -35,13 +47,13 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             inventoryUIHeldItemController.LeftClickedItemAtIndex(
-                inventory, slotItemIndex, itemPlacementEnabled);
+                Inventory, SlotItemIndex, itemPlacementEnabled);
         }
         else if (eventData.button == PointerEventData.InputButton.Right &&
             itemPlacementEnabled)
         {
             inventoryUIHeldItemController.RightClickedItemAtIndex(
-                inventory, slotItemIndex);
+                Inventory, SlotItemIndex);
         }
     }
 
@@ -53,22 +65,6 @@ public class InventoryUIItemSlotController : ItemSlotController, IElementWithToo
         }
     }
 
-    private string GetSlotItemTooltipText()
-    {
-        ItemStack slotItem = inventory.GetItemAtIndex(slotItemIndex);
-
-        return slotItem.GetTooltipText();
-    }
-
-    public void SetInventory(Inventory inventory)
-    {
-        this.inventory = inventory;
-    }
-
-    public void SetSlotItemIndex(int slotItemIndex)
-    {
-        this.slotItemIndex = slotItemIndex;
-    }
-
-    public string GetTooltipText() => GetSlotItemTooltipText();
+    public string GetTooltipText() =>
+        Inventory.GetItemAtIndex(SlotItemIndex).GetTooltipText();
 }

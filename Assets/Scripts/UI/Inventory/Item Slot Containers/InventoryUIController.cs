@@ -50,7 +50,8 @@ public class InventoryUIController : MonoBehaviour
                 itemSlotControllers[i] as InventoryUIItemSlotController;
             ItemStack item = itemList[i];
 
-            itemSlotController.SetInventory(inventory);
+            itemSlotController.Inventory = inventory;
+
             itemSlotController.UpdateUsingItem(item);
         }
 
@@ -88,7 +89,8 @@ public class InventoryUIController : MonoBehaviour
         foreach (InventoryUIItemSlotController inventoryUIItemSlot in
             childInventoryUIItemSlots)
         {
-            inventoryUIItemSlot.SetSlotItemIndex(currentSlotItemIndex);
+            inventoryUIItemSlot.SlotItemIndex = currentSlotItemIndex;
+
             ++currentSlotItemIndex;
         }
     }
