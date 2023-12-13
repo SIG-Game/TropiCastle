@@ -12,15 +12,6 @@ public class ItemStack
 
     [JsonProperty(Order = 0)] public string ItemName => itemDefinition.name;
 
-    [JsonConstructor]
-    public ItemStack(string itemName, int amount,
-        ItemInstanceProperties instanceProperties = null)
-    {
-        itemDefinition = ItemScriptableObject.FromName(itemName);
-        this.amount = amount;
-        this.instanceProperties = instanceProperties;
-    }
-
     public ItemStack(ItemScriptableObject itemDefinition, int amount,
         ItemInstanceProperties instanceProperties = null)
     {
@@ -29,11 +20,16 @@ public class ItemStack
         this.instanceProperties = instanceProperties;
     }
 
-    public ItemStack(ItemStack item)
+    [JsonConstructor]
+    public ItemStack(string itemName, int amount,
+        ItemInstanceProperties instanceProperties = null) :
+            this(ItemScriptableObject.FromName(itemName), amount, instanceProperties)
     {
-        itemDefinition = item.itemDefinition;
-        amount = item.amount;
-        instanceProperties = item.instanceProperties?.DeepCopy();
+    }
+
+    public ItemStack(ItemStack item) : this(item.itemDefinition, item.amount,
+        item.instanceProperties?.DeepCopy())
+    {
     }
 
     public void InitializeItemInstanceProperties()
