@@ -6,21 +6,16 @@ using System.Linq;
 [Serializable]
 public class PropertyCollection
 {
-    // TODO: Do not store properties in two variables in this class
     public List<Property> PropertyList;
-    public Dictionary<string, object> PropertyDictionary;
 
     public PropertyCollection()
     {
         PropertyList = new List<Property>();
-        PropertyDictionary = new Dictionary<string, object>();
     }
 
-    public PropertyCollection(List<Property> propertyList,
-        Dictionary<string, object> propertyDictionary)
+    public PropertyCollection(List<Property> propertyList)
     {
         PropertyList = propertyList;
-        PropertyDictionary = propertyDictionary;
     }
 
     public string GetStringProperty(string name) =>
@@ -44,58 +39,13 @@ public class PropertyCollection
     public bool HasProperty(string name) =>
         PropertyList.Exists(x => x.Name == name);
 
-    public int GetDictionaryIntProperty(string name) =>
-        Convert.ToInt32(PropertyDictionary[name]);
-
-    public float GetDictionaryFloatProperty(string name) =>
-        Convert.ToSingle(PropertyDictionary[name]);
-
-    public void SetDictionaryProperty(string name, object value) =>
-        PropertyDictionary[name] = value;
-
-    public bool HasDictionaryProperty(string name) =>
-        PropertyDictionary.ContainsKey(name);
-
-    public void AddItemListProperty(int itemListCount)
-    {
-        var itemList = new List<ItemStack>(itemListCount);
-
-        for (int i = 0; i < itemListCount; ++i)
-        {
-            itemList.Add(new ItemStack("Empty", 0));
-        }
-
-        PropertyDictionary["ItemList"] = itemList;
-    }
-
-    public void UpdateItemListProperty(Inventory inventory)
-    {
-        PropertyDictionary["ItemList"] = inventory.GetItemList();
-    }
-
     public virtual PropertyCollection DeepCopy()
     {
-        List<Property> propertyListDeepCopy = PropertyList
-            .Select(x => new Property(x.Name, x.Value)).ToList();
-
         PropertyCollection deepCopy =
             (PropertyCollection)MemberwiseClone();
 
-        deepCopy.PropertyList = propertyListDeepCopy;
-
-        if (PropertyDictionary.ContainsKey("ItemList"))
-        {
-            var itemList = (List<ItemStack>)PropertyDictionary["ItemList"];
-
-            var itemListDeepCopy = new List<ItemStack>(itemList.Count);
-
-            for (int i = 0; i < itemList.Count; ++i)
-            {
-                itemListDeepCopy.Add(new ItemStack(itemList[i]));
-            }
-
-            deepCopy.PropertyDictionary.Add("ItemList", itemList);
-        }
+        deepCopy.PropertyList = 
+            PropertyList.Select(x => new Property(x.Name, x.Value)).ToList();
 
         return deepCopy;
     }

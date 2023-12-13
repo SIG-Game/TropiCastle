@@ -32,7 +32,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
         if (currentRecipe != null)
         {
             float cookTimeProgress = itemInstanceProperties
-                .GetDictionaryFloatProperty("CookTimeProgress");
+                .GetFloatProperty("CookTimeProgress");
 
             cookTimeProgress += Time.unscaledDeltaTime;
 
@@ -54,7 +54,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
                 cookTimeProgress = 0f;
             }
 
-            itemInstanceProperties.SetDictionaryProperty(
+            itemInstanceProperties.SetProperty(
                 "CookTimeProgress", cookTimeProgress);
 
             UpdateCampfireUIProgressArrow();
@@ -143,7 +143,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
             else
             {
                 campfireUIController.UpdateCookTimeProgressArrow(
-                    itemInstanceProperties.GetDictionaryFloatProperty("CookTimeProgress"),
+                    itemInstanceProperties.GetFloatProperty("CookTimeProgress"),
                     currentRecipe.CookTime);
             }
         }
@@ -159,7 +159,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
 
         if (previousRecipe != currentRecipe)
         {
-            itemInstanceProperties.SetDictionaryProperty("CookTimeProgress", 0f);
+            itemInstanceProperties.SetProperty("CookTimeProgress", 0f);
 
             UpdateCampfireUIProgressArrow();
         }

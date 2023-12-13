@@ -50,7 +50,7 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
         playerAnimator.Play($"{attackType} {playerController.Direction}");
 
         if (item.instanceProperties != null &&
-            item.instanceProperties.HasDictionaryProperty("Durability"))
+            item.instanceProperties.HasProperty("Durability"))
         {
             playerInventory.DecrementItemDurabilityAtIndex(itemIndex);
         }

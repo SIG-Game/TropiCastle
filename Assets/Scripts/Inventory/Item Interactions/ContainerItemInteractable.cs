@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public abstract class ContainerItemInteractable : ItemInteractable
 {
     protected Inventory inventory;
-    protected PropertyCollection itemInstanceProperties;
+    protected ItemInstanceProperties itemInstanceProperties;
 
     protected virtual void Awake()
     {

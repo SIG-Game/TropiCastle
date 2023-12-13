@@ -8,13 +8,13 @@ public class ItemStack
     public ItemScriptableObject itemDefinition;
 
     [JsonProperty(Order = 1)] public int amount;
-    [JsonProperty(Order = 2)] public PropertyCollection instanceProperties;
+    [JsonProperty(Order = 2)] public ItemInstanceProperties instanceProperties;
 
     [JsonProperty(Order = 0)] public string ItemName => itemDefinition.name;
 
     [JsonConstructor]
     public ItemStack(string itemName, int amount,
-        PropertyCollection instanceProperties = null)
+        ItemInstanceProperties instanceProperties = null)
     {
         itemDefinition = ItemScriptableObject.FromName(itemName);
         this.amount = amount;
@@ -22,7 +22,7 @@ public class ItemStack
     }
 
     public ItemStack(ItemScriptableObject itemDefinition, int amount,
-        PropertyCollection instanceProperties = null)
+        ItemInstanceProperties instanceProperties = null)
     {
         this.itemDefinition = itemDefinition;
         this.amount = amount;
@@ -43,20 +43,19 @@ public class ItemStack
 
         if (itemDefinition.HasProperty("ContainerSize"))
         {
-            instanceProperties = new PropertyCollection();
+            instanceProperties = new ItemInstanceProperties();
 
             int containerSize = itemDefinition.GetIntProperty("ContainerSize");
             instanceProperties.AddItemListProperty(containerSize);
         }
         else if (defaultInstancePropertyList.Count != 0)
         {
-            instanceProperties = new PropertyCollection();
+            instanceProperties = new ItemInstanceProperties();
         }
 
         foreach (var property in defaultInstancePropertyList)
         {
-            instanceProperties.SetDictionaryProperty(
-                property.Name, property.Value);
+            instanceProperties.SetProperty(property.Name, property.Value);
         }
     }
 
@@ -75,10 +74,10 @@ public class ItemStack
     public bool TryGetDurabilityProperties(out int durability, out int initialDurability)
     {
         if (instanceProperties != null &&
-            instanceProperties.HasDictionaryProperty("Durability") &&
+            instanceProperties.HasProperty("Durability") &&
             itemDefinition.DefaultInstanceProperties.HasProperty("Durability"))
         {
-            durability = instanceProperties.GetDictionaryIntProperty("Durability");
+            durability = instanceProperties.GetIntProperty("Durability");
             initialDurability =
                 itemDefinition.DefaultInstanceProperties.GetIntProperty("Durability");
 
