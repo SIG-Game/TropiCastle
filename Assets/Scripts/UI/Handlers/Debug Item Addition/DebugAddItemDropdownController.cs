@@ -25,8 +25,8 @@ public class DebugAddItemDropdownController : MonoBehaviour
 
         foreach (ItemScriptableObject itemScriptableObject in itemScriptableObjects)
         {
-            TMP_Dropdown.OptionData itemOption = new TMP_Dropdown.OptionData(
-                itemScriptableObject.DisplayName, itemScriptableObject.Sprite);
+            TMP_Dropdown.OptionData itemOption =
+                new TMP_Dropdown.OptionData(itemScriptableObject.Sprite);
 
             dropdown.options.Add(itemOption);
         }
