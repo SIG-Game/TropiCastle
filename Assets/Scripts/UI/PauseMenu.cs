@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private CanvasGroup pauseMenuCanvasGroup;
     [SerializeField] private GameObject menuBackground;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private GameObject resumeButton;
@@ -21,7 +21,8 @@ public class PauseMenu : MonoBehaviour
     private void Update()
     {
         if (pauseAction.WasPressedThisFrame() &&
-            (!PauseController.Instance.GamePaused || pauseMenuUI.activeInHierarchy))
+            (!PauseController.Instance.GamePaused ||
+                pauseMenuCanvasGroup.alpha == 1f))
         {
             TogglePauseMenu();
         }
@@ -30,8 +31,13 @@ public class PauseMenu : MonoBehaviour
     public void TogglePauseMenu()
     {
         PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
-        pauseMenuUI.SetActive(PauseController.Instance.GamePaused);
+
+        pauseMenuCanvasGroup.alpha = PauseController.Instance.GamePaused ? 1f : 0f;
+        pauseMenuCanvasGroup.interactable = PauseController.Instance.GamePaused;
+        pauseMenuCanvasGroup.blocksRaycasts = PauseController.Instance.GamePaused;
+
         menuBackground.SetActive(PauseController.Instance.GamePaused);
+
         playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
         if (PauseController.Instance.GamePaused)
