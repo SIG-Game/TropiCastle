@@ -2235,7 +2235,7 @@ PrefabInstance:
     - target: {fileID: 8669040124083499746, guid: c029c9b1e93740b44b335dd17bf6bf1a,
         type: 3}
       propertyPath: m_Name
-      value: Game Over UI Controller
+      value: Game Over UI
       objectReference: {fileID: 0}
     - target: {fileID: 8669040124083499747, guid: c029c9b1e93740b44b335dd17bf6bf1a,
         type: 3}

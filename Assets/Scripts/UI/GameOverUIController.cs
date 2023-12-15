@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameOverUIController : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private CanvasGroup gameOverUICanvasGroup;
     [SerializeField] private GameObject menuBackground;
     [SerializeField] private GameObject reloadButton;
     [SerializeField] private PlayerController playerController;
@@ -20,7 +20,10 @@ public class GameOverUIController : MonoBehaviour
 
     private void PlayerController_OnPlayerDied()
     {
-        gameOverUI.SetActive(true);
+        gameOverUICanvasGroup.alpha = 1f;
+        gameOverUICanvasGroup.interactable = true;
+        gameOverUICanvasGroup.blocksRaycasts = true;
+
         menuBackground.SetActive(true);
 
         eventSystemDefaultGameObjectSelector
