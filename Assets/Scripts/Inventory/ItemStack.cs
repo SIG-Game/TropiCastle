@@ -93,5 +93,7 @@ public class ItemStack
 
     public string GetAmountText() => amount > 1 ? amount.ToString() : string.Empty;
 
+    public ItemStackStruct ToStructType() => new ItemStackStruct(itemDefinition, amount);
+
     public override string ToString() => $"{amount} {itemDefinition.DisplayName}";
 }
