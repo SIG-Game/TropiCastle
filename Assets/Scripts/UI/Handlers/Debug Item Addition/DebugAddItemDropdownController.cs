@@ -50,5 +50,6 @@ public class DebugAddItemDropdownController : MonoBehaviour
         }
     }
 
-    public ItemScriptableObject GetSelectedItemScriptableObject() => itemScriptableObjects[dropdown.value];
+    public ItemScriptableObject GetSelectedItemDefinition() =>
+        itemScriptableObjects[dropdown.value];
 }

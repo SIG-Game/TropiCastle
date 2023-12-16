@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -18,27 +19,23 @@ public class DebugAddItemButton : MonoBehaviour
 
     public void DebugAddItemButton_OnClick()
     {
-        ItemScriptableObject selectedItemScriptableObject =
-            addItemDropdownController.GetSelectedItemScriptableObject();
+        ItemScriptableObject selectedItemDefinition =
+            addItemDropdownController.GetSelectedItemDefinition();
 
-        if (!int.TryParse(amountInputField.text, out int amountToAdd) ||
-            amountToAdd <= 0)
+        if (!int.TryParse(amountInputField.text, out int addAmount) ||
+            addAmount <= 0)
         {
-            amountToAdd = 1;
+            addAmount = 1;
         }
 
-        int stackSize = selectedItemScriptableObject.StackSize;
-        int numberOfStacks = amountToAdd / stackSize;
-        int remainingAmount = amountToAdd % stackSize;
-
-        for (int i = 0; i < numberOfStacks; ++i)
+        while (addAmount > 0)
         {
-            playerInventory.AddItem(selectedItemScriptableObject, stackSize);
-        }
+            int iterationAddAmount =
+                Math.Min(addAmount, selectedItemDefinition.StackSize);
 
-        if (remainingAmount != 0)
-        {
-            playerInventory.AddItem(selectedItemScriptableObject, remainingAmount);
+            playerInventory.AddItem(selectedItemDefinition, iterationAddAmount);
+
+            addAmount -= iterationAddAmount;
         }
     }
 }
