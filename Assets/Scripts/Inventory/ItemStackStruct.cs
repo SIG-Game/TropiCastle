@@ -1,4 +1,7 @@
+using System;
+
 // Experimental type to potentially replace the ItemStack class
+[Serializable]
 public struct ItemStackStruct
 {
     public ItemScriptableObject ItemDefinition;

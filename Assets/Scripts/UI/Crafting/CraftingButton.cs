@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
         // This could be changed to not be set at runtime
         // It this wasn't set at runtime, an old item tooltip format might get cached
         resultItemTooltipText = $"Result:\n" +
-            craftingRecipe.ResultItem.itemDefinition.GetTooltipText();
+            craftingRecipe.ResultItem.ItemDefinition.GetTooltipText();
 
         inventoryUIHeldItemController.OnItemHeld +=
             InventoryUIHeldItemController_OnItemHeld;
@@ -42,7 +43,8 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
     public void CraftingButton_OnClick()
     {
         playerInventory.ReplaceItems(
-            craftingRecipe.Ingredients, craftingRecipe.ResultItem);
+            craftingRecipe.Ingredients.Select(x => x.ToClassType()).ToList(),
+            craftingRecipe.ResultItem.ToClassType());
     }
 
     public void SetUpCraftingButton(CraftingButtonDependencies craftingButtonDependencies,
@@ -51,7 +53,7 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
         this.craftingButtonDependencies = craftingButtonDependencies;
         this.craftingRecipe = craftingRecipe;
 
-        craftingButtonImage.sprite = craftingRecipe.ResultItem.itemDefinition.Sprite;
+        craftingButtonImage.sprite = craftingRecipe.ResultItem.ItemDefinition.Sprite;
     }
 
     private string GetIngredientsAsString()
@@ -60,8 +62,10 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
 
         Dictionary<int, int> itemIndexToUsedAmount = new Dictionary<int, int>();
 
-        foreach (ItemStack ingredient in craftingRecipe.Ingredients)
+        foreach (ItemStackStruct ingredientStruct in craftingRecipe.Ingredients)
         {
+            ItemStack ingredient = ingredientStruct.ToClassType();
+
             bool playerHasIngredient = playerInventory
                 .HasReplacementInputItem(itemIndexToUsedAmount, ingredient);
 
