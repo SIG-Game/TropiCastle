@@ -162,11 +162,10 @@ MonoBehaviour:
   healthBarCanvasGroup: {fileID: 1082179321904278149}
   playerTransform: {fileID: 0}
   playerInventory: {fileID: 0}
-  droppedLoot:
-  - itemDefinition: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
-    amount: 2
-    instanceProperties:
-      PropertyList: []
+  loot:
+  - ItemDefinition: {fileID: 11400000, guid: bc3d3663cf6302243a759edd5e2519c5, type: 2}
+    Amount: 2
+  itemWorldPrefabInstanceFactory: {fileID: 0}
 --- !u!114 &5115571631946345362
 MonoBehaviour:
   m_ObjectHideFlags: 0

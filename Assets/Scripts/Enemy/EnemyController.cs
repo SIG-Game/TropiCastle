@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private CanvasGroup healthBarCanvasGroup;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private List<ItemStack> droppedLoot;
+    [SerializeField] private List<ItemStackStruct> loot;
     [SerializeField] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
 
     public InitialEnemyState InitialState { get; private set; }
@@ -92,15 +92,17 @@ public class EnemyController : MonoBehaviour
 
     public void EnemyDeath()
     {
-        foreach (ItemStack loot in droppedLoot)
+        foreach (ItemStackStruct lootItemStruct in loot)
         {
-            playerInventory.TryAddItem(loot, out int amountAdded);
+            ItemStack lootItem = lootItemStruct.ToClassType();
+            
+            playerInventory.TryAddItem(lootItem, out int amountAdded);
 
-            bool lootItemNotFullyAdded = amountAdded != loot.amount;
+            bool lootItemNotFullyAdded = amountAdded != lootItem.amount;
             if (lootItemNotFullyAdded)
             {
-                ItemStack itemToDrop = new ItemStack(loot.itemDefinition,
-                    loot.amount - amountAdded, loot.instanceProperties);
+                ItemStack itemToDrop = new ItemStack(lootItem.itemDefinition,
+                    lootItem.amount - amountAdded, lootItem.instanceProperties);
 
                 itemWorldPrefabInstanceFactory.DropItem(
                     transform.position, itemToDrop);
