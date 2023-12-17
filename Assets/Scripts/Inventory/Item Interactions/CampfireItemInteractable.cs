@@ -46,7 +46,8 @@ public class CampfireItemInteractable : ContainerItemInteractable
                 // updates currentRecipe and currentRecipeInputItem
                 // based on inventory changes
 
-                inventory.AddItemAtIndex(currentRecipe.ResultItem, 1);
+                inventory.AddItemAtIndex(
+                    currentRecipe.ResultItem.ToClassType(), 1);
 
                 inventory.SetItemAmountAtIndex(
                     inputItem.amount - inputRemoveAmount, 0);
@@ -95,10 +96,10 @@ public class CampfireItemInteractable : ContainerItemInteractable
         else
         {
             Func<CampfireRecipeScriptableObject, bool> isValidRecipe = x =>
-                x.ResultItem.itemDefinition.name ==
+                x.ResultItem.ItemDefinition.name ==
                     inventoryResultItem.itemDefinition.name &&
-                x.ResultItem.amount + inventoryResultItem.amount <=
-                    x.ResultItem.itemDefinition.StackSize;
+                x.ResultItem.Amount + inventoryResultItem.amount <=
+                    x.ResultItem.ItemDefinition.StackSize;
 
             possiblyMatchingRecipes = campfireRecipes.Where(isValidRecipe);
         }
@@ -108,12 +109,14 @@ public class CampfireItemInteractable : ContainerItemInteractable
 
         foreach (var recipe in possiblyMatchingRecipes)
         {
-            matchingRecipeInputItem = recipe.PossibleInputItems.FirstOrDefault(
-                x => x.itemDefinition.name == inputItem.itemDefinition.name &&
-                x.amount <= inputItem.amount);
+            int inputItemIndex = recipe.PossibleInputItems.FindIndex(
+                x => x.ItemDefinition.name == inputItem.itemDefinition.name &&
+                x.Amount <= inputItem.amount);
 
-            if (matchingRecipeInputItem != null)
+            if (inputItemIndex != -1)
             {
+                matchingRecipeInputItem =
+                    recipe.PossibleInputItems[inputItemIndex].ToClassType();
                 matchingRecipe = recipe;
 
                 break;
