@@ -74,14 +74,12 @@ public class Chimp : NPCInteractable
             chimpItemInWorld.Hide();
 
             LastGiveTime = Time.time;
-            TimeBetweenGives = GetRandomTimeBetweenGives();
+            TimeBetweenGives = Random.Range(
+                timeBetweenGivesRange.x, timeBetweenGivesRange.y);
         }
 
         chimpSpinner.StartSpinning();
     }
 
     public bool ItemGiveAvailable() => LastGiveTime + TimeBetweenGives <= Time.time;
-
-    private float GetRandomTimeBetweenGives() =>
-        Random.Range(timeBetweenGivesRange.x, timeBetweenGivesRange.y);
 }
