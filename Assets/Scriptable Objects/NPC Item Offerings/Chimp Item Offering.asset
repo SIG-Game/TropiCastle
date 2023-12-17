@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PotentialItemsToGive:
   - Item:
-      itemDefinition: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
-      amount: 1
+      ItemDefinition: {fileID: 11400000, guid: 7b79f98aa1d00bc438bde8f0fc2db82f, type: 2}
+      Amount: 1
     ProbabilityWeight: 0.2
   - Item:
-      itemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-      amount: 1
+      ItemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+      Amount: 1
     ProbabilityWeight: 0.45
   - Item:
-      itemDefinition: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
-      amount: 1
+      ItemDefinition: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
+      Amount: 1
     ProbabilityWeight: 0.35

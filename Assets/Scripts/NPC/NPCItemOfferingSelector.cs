@@ -19,6 +19,6 @@ public class NPCItemOfferingSelector : MonoBehaviour
     public ItemStack SelectItemToGive()
     {
         int itemToGiveIndex = itemSelector.SelectIndex();
-        return itemOffering.PotentialItemsToGive[itemToGiveIndex].Item;
+        return itemOffering.PotentialItemsToGive[itemToGiveIndex].Item.ToClassType();
     }
 }
