@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,15 +53,17 @@ public class TradingUIController : MonoBehaviour
         inventoryUIManager.EnableCurrentInventoryUI();
     }
 
-    private void UpdateTradeItemUI(Transform itemUIParent, List<ItemStack> items)
+    private void UpdateTradeItemUI(Transform itemUIParent, List<ItemStackStruct> items)
     {
         foreach (Transform itemUI in itemUIParent)
         {
             Destroy(itemUI.gameObject);
         }
 
-        foreach (ItemStack item in items)
+        foreach (ItemStackStruct itemStruct in items)
         {
+            ItemStack item = itemStruct.ToClassType();
+
             GameObject itemUI = Instantiate(tradeItemUIPrefab, itemUIParent);
 
             Image itemImage = itemUI.transform.GetChild(0).GetComponent<Image>();
@@ -79,8 +82,8 @@ public class TradingUIController : MonoBehaviour
     public void TradeButton_OnClick()
     {
         playerInventory.ReplaceItems(
-            currentTrade.InputItems,
-            currentTrade.OutputItems);
+            currentTrade.InputItems.Select(x => x.ToClassType()).ToList(),
+            currentTrade.OutputItems.Select(x => x.ToClassType()).ToList());
 
         SetIsCurrentTradePossible();
 
@@ -93,8 +96,10 @@ public class TradingUIController : MonoBehaviour
 
         isCurrentTradePossible = true;
 
-        foreach (ItemStack inputItem in currentTrade.InputItems)
+        foreach (ItemStackStruct inputItemStruct in currentTrade.InputItems)
         {
+            ItemStack inputItem = inputItemStruct.ToClassType();
+
             bool playerHasInputItem = playerInventory.HasReplacementInputItem(
                itemIndexToUsedAmount, inputItem);
 

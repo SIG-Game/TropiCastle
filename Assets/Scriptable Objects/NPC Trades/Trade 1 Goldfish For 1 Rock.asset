@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Trade 1 Goldfish For 1 Rock
   m_EditorClassIdentifier: 
   InputItems:
-  - itemDefinition: {fileID: 11400000, guid: a4423d94df5353a49bba5cc5ef47541c, type: 2}
-    amount: 1
+  - ItemDefinition: {fileID: 11400000, guid: a4423d94df5353a49bba5cc5ef47541c, type: 2}
+    Amount: 1
   OutputItems:
-  - itemDefinition: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
-    amount: 1
+  - ItemDefinition: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
+    Amount: 1
