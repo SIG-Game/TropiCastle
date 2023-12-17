@@ -298,10 +298,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e72cf51700a9c48ad0af8562d44fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  front: {fileID: -1438307777634969595, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
-  back: {fileID: -8782420528491673401, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
-  left: {fileID: -2894374843917858475, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
-  right: {fileID: -4276444356177666921, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
+  sprites:
+    back: {fileID: -8782420528491673401, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
+    front: {fileID: -1438307777634969595, guid: 709e98cf21a73d7448807c6489d9c4f6,
+      type: 3}
+    left: {fileID: -2894374843917858475, guid: 709e98cf21a73d7448807c6489d9c4f6, type: 3}
+    right: {fileID: -4276444356177666921, guid: 709e98cf21a73d7448807c6489d9c4f6,
+      type: 3}
   defaultDirection: 1
 --- !u!114 &2289581544261555151
 MonoBehaviour:

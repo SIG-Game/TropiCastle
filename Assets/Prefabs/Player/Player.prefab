@@ -611,10 +611,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e72cf51700a9c48ad0af8562d44fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  front: {fileID: -1534306997, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
-  back: {fileID: 1830328267, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
-  left: {fileID: 309449331, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
-  right: {fileID: -214433504, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+  sprites:
+    back: {fileID: 1830328267, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+    front: {fileID: -1534306997, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+    left: {fileID: 309449331, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+    right: {fileID: -214433504, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
   defaultDirection: 1
 --- !u!114 &6692545634876907308
 MonoBehaviour:
@@ -993,7 +994,7 @@ MonoBehaviour:
   - {x: -0.046875, y: 0.1875, z: 0}
   fishingUIController: {fileID: 0}
   fishingRodInWorldSprites:
-  - {fileID: -1096853386, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
-  - {fileID: -1391235922, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
-  - {fileID: 300538706, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
-  - {fileID: 760536588, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
+    back: {fileID: -1096853386, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
+    front: {fileID: -1391235922, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
+    left: {fileID: 300538706, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}
+    right: {fileID: 760536588, guid: db9e46d73d2cb46418105b5238fb7353, type: 3}

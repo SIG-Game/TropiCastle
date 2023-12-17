@@ -1,12 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFishingRodInWorldController : CharacterObjectInWorldController
 {
     [SerializeField] private FishingUIController fishingUIController;
-
-    // Direction order for this variable is up, down, left, right
-    [SerializeField] private List<Sprite> fishingRodInWorldSprites;
+    [SerializeField] private DirectionalSprites fishingRodInWorldSprites;
 
     protected override void Awake()
     {
@@ -24,6 +21,7 @@ public class PlayerFishingRodInWorldController : CharacterObjectInWorldControlle
 
     private void FishingUIController_OnFishingUIOpened()
     {
-        Show(fishingRodInWorldSprites[(int)characterDirectionController.Direction]);
+        Show(fishingRodInWorldSprites.ForDirection(
+            characterDirectionController.Direction));
     }
 }

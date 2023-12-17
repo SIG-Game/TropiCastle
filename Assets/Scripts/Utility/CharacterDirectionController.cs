@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterDirectionController : MonoBehaviour
 {
-    [SerializeField] private Sprite front, back, left, right;
+    [SerializeField] private DirectionalSprites sprites;
     [SerializeField] private CharacterDirection defaultDirection;
 
     public CharacterDirection Direction
@@ -13,14 +13,7 @@ public class CharacterDirectionController : MonoBehaviour
         {
             direction = value;
 
-            spriteRenderer.sprite = direction switch
-            {
-                CharacterDirection.Up => back,
-                CharacterDirection.Down => front,
-                CharacterDirection.Left => left,
-                CharacterDirection.Right => right,
-                _ => throw new ArgumentOutOfRangeException(nameof(direction))
-            };
+            spriteRenderer.sprite = sprites.ForDirection(direction);
         }
     }
 

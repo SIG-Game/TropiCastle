@@ -124,8 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e72cf51700a9c48ad0af8562d44fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  front: {fileID: -1534306997, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
-  back: {fileID: 1830328267, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
-  left: {fileID: 309449331, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
-  right: {fileID: -214433504, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+  sprites:
+    back: {fileID: 1830328267, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+    front: {fileID: -1534306997, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+    left: {fileID: 309449331, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
+    right: {fileID: -214433504, guid: ce65140ab512e844da4c48fddf4b01a7, type: 3}
   defaultDirection: 1
