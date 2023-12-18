@@ -1,12 +1,16 @@
 using System;
+using Newtonsoft.Json;
 
 // Experimental type to potentially replace the ItemStack class
-[Serializable]
+[Serializable, JsonObject(MemberSerialization.OptIn)]
 public struct ItemStackStruct
 {
     public ItemScriptableObject ItemDefinition;
-    public int Amount;
-    public ItemInstanceProperties InstanceProperties;
+
+    [JsonProperty(Order = 1)] public int Amount;
+    [JsonProperty(Order = 2)] public ItemInstanceProperties InstanceProperties;
+
+    [JsonProperty(Order = 0)] public string ItemName => ItemDefinition.name;
 
     public ItemStackStruct(ItemScriptableObject itemDefinition, int amount,
         ItemInstanceProperties instanceProperties = null)
@@ -14,6 +18,13 @@ public struct ItemStackStruct
         ItemDefinition = itemDefinition;
         Amount = amount;
         InstanceProperties = instanceProperties;
+    }
+
+    [JsonConstructor]
+    public ItemStackStruct(string itemName, int amount,
+        ItemInstanceProperties instanceProperties = null) :
+            this(ItemScriptableObject.FromName(itemName), amount, instanceProperties)
+    {
     }
 
     public ItemStack ToClassType() =>
