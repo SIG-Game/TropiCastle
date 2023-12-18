@@ -1,4 +1,4 @@
-public class HotbarUIController : InventoryUIWithSelectionController
+public class HotbarUIController : InventoryUIController
 {
     private int hotbarSize;
 

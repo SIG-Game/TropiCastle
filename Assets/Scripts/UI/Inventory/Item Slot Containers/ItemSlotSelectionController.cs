@@ -1,36 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryUIWithSelectionController : InventoryUIController
+public class ItemSlotSelectionController : MonoBehaviour
 {
-    [SerializeField] protected ItemSelectionController itemSelectionController;
+    [SerializeField] private ItemSelectionController itemSelectionController;
+    [SerializeField] private List<ItemSlotController> itemSlotControllers;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         itemSelectionController.OnItemSelectedAtIndex +=
             ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex +=
             ItemSelectionController_OnItemDeselectedAtIndex;
     }
 
-    protected override void OnDestroy()
+    private void OnDestroy()
     {
-        base.OnDestroy();
-
         itemSelectionController.OnItemSelectedAtIndex -=
             ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex -=
             ItemSelectionController_OnItemDeselectedAtIndex;
     }
 
-    private void ItemSelectionController_OnItemSelectedAtIndex(int index)
-    {
+    private void ItemSelectionController_OnItemSelectedAtIndex(int index) =>
         itemSlotControllers[index].Highlight();
-    }
 
-    private void ItemSelectionController_OnItemDeselectedAtIndex(int index)
-    {
+    private void ItemSelectionController_OnItemDeselectedAtIndex(int index) =>
         itemSlotControllers[index].Unhighlight();
-    }
 }

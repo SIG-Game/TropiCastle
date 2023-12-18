@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7402690958607989238}
   - component: {fileID: 7402690958607989239}
+  - component: {fileID: 2642764070200558899}
   m_Layer: 5
   m_Name: Hotbar UI
   m_TagString: Untagged
@@ -190,7 +191,30 @@ MonoBehaviour:
   - {fileID: 1933860603442842140}
   - {fileID: 1933860603901713551}
   - {fileID: 1933860605246012561}
+--- !u!114 &2642764070200558899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7402690958607989237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76e55723a06e8144a9952f0c46c2cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   itemSelectionController: {fileID: 0}
+  itemSlotControllers:
+  - {fileID: 1933860604167188834}
+  - {fileID: 1933860605139370521}
+  - {fileID: 1933860603582358508}
+  - {fileID: 1933860604243847639}
+  - {fileID: 1933860603358774745}
+  - {fileID: 1933860604530797335}
+  - {fileID: 1933860604498142671}
+  - {fileID: 1933860603442842140}
+  - {fileID: 1933860603901713551}
+  - {fileID: 1933860605246012561}
 --- !u!1001 &7402690958086517192
 PrefabInstance:
   m_ObjectHideFlags: 0
