@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (PauseController.Instance.GamePaused)
+        if (IsAttacking || PauseController.Instance.GamePaused)
         {
             return;
         }
