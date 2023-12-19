@@ -29,4 +29,7 @@ public struct ItemStackStruct
 
     public ItemStack ToClassType() =>
         new ItemStack(ItemDefinition, Amount, InstanceProperties);
+
+    public static implicit operator ItemStackStruct(ItemStack itemStack) =>
+        itemStack.ToStructType();
 }

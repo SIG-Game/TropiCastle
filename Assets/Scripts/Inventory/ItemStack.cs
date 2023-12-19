@@ -97,4 +97,7 @@ public class ItemStack
         new ItemStackStruct(itemDefinition, amount, instanceProperties);
 
     public override string ToString() => $"{amount} {itemDefinition.DisplayName}";
+
+    public static implicit operator ItemStack(ItemStackStruct itemStackStruct) =>
+        itemStackStruct.ToClassType();
 }
