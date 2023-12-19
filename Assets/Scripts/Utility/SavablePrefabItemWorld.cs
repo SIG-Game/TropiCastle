@@ -14,7 +14,7 @@ public class SavablePrefabItemWorld : SavablePrefab
         var properties = new Dictionary<string, object>
         {
             { "Position", transform.position.ToArray() },
-            { "Item", itemWorld.Item.ToStructType() },
+            { "Item", itemWorld.Item },
             { "SpawnerGuid", spawnable.GetSpawnerGuid() }
         };
 
@@ -25,7 +25,7 @@ public class SavablePrefabItemWorld : SavablePrefab
     {
         transform.position = Vector3Helper.FromArray((float[])properties["Position"]);
 
-        itemWorld.Item = ((ItemStackStruct)properties["Item"]).ToClassType();
+        itemWorld.Item = (ItemStackStruct)properties["Item"];
 
         spawnable.SetSpawnerUsingGuid<ItemSpawner>((string)properties["SpawnerGuid"]);
     }

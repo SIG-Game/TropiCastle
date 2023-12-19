@@ -27,6 +27,8 @@ public struct ItemStackStruct
     {
     }
 
+    public string GetAmountText() => Amount > 1 ? Amount.ToString() : string.Empty;
+
     public ItemStack ToClassType() =>
         new ItemStack(ItemDefinition, Amount, InstanceProperties);
 

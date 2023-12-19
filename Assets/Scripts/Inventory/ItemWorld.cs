@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ItemWorld : MonoBehaviour
 {
-    [SerializeField] private ItemStack item;
+    [SerializeField] private ItemStackStruct item;
     [SerializeField] private TMP_Text amountText;
 
-    public ItemStack Item
+    public ItemStackStruct Item
     {
         get => item;
         set => SetItem(value);
@@ -25,7 +25,7 @@ public class ItemWorld : MonoBehaviour
 
     public void SetItemAmount(int amount)
     {
-        Item.amount = amount;
+        item.Amount = amount;
 
         amountText.text = Item.GetAmountText();
     }
@@ -40,23 +40,23 @@ public class ItemWorld : MonoBehaviour
     {
         this.item = item;
 
-        GetComponent<SpriteRenderer>().sprite = Item.itemDefinition.Sprite;
+        GetComponent<SpriteRenderer>().sprite = Item.ItemDefinition.Sprite;
 
-        if (Item.itemDefinition.HasCustomColliderSize)
+        if (Item.ItemDefinition.HasCustomColliderSize)
         {
-            GetComponent<BoxCollider2D>().size = Item.itemDefinition.CustomColliderSize;
+            GetComponent<BoxCollider2D>().size = Item.ItemDefinition.CustomColliderSize;
         }
 
-        if (Item.itemDefinition.TriggerCollisionPickup)
+        if (Item.ItemDefinition.TriggerCollisionPickup)
         {
             GetComponent<BoxCollider2D>().isTrigger =
-                Item.itemDefinition.TriggerCollisionPickup;
+                Item.ItemDefinition.TriggerCollisionPickup;
         }
 
-        if (Item.itemDefinition.HasProperty("InteractableType"))
+        if (Item.ItemDefinition.HasProperty("InteractableType"))
         {
             Type itemInteractableType = Type.GetType(
-                Item.itemDefinition.GetStringProperty("InteractableType"));
+                Item.ItemDefinition.GetStringProperty("InteractableType"));
 
             gameObject.AddComponent(itemInteractableType);
 
@@ -66,7 +66,7 @@ public class ItemWorld : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("Interactable");
         }
 
-        name = $"{Item.itemDefinition.DisplayName} ItemWorld";
+        name = $"{Item.ItemDefinition.DisplayName} ItemWorld";
 
         amountText.text = Item.GetAmountText();
     }

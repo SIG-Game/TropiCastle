@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    itemDefinition: {fileID: 0}
-    amount: 1
+    ItemDefinition: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101, type: 2}
+    Amount: 1
   amountText: {fileID: 6997112948358293008}
 --- !u!114 &5689536345290061009
 MonoBehaviour:
