@@ -213,7 +213,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private bool HoveredItemContainsItem() => HoveredItemWorld != null &&
         HoveredItemWorld.TryGetComponent(out Inventory hoveredInventory) &&
-        hoveredInventory.GetItemList().Exists(x => !x.itemDefinition.IsEmpty());
+        hoveredInventory.GetItemClassList().Exists(x => !x.itemDefinition.IsEmpty());
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)
     {

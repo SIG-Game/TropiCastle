@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -139,7 +140,7 @@ public class Inventory : MonoBehaviour
     {
         ItemStack itemAtIndexBeforeSwap = itemList[index];
 
-        SetItemAtIndex(otherInventory.GetItemList()[otherInventoryIndex], index);
+        SetItemAtIndex(otherInventory.GetItemClassList()[otherInventoryIndex], index);
         otherInventory.SetItemAtIndex(itemAtIndexBeforeSwap, otherInventoryIndex);
 
         SetFirstEmptyIndex();
@@ -630,11 +631,14 @@ public class Inventory : MonoBehaviour
 
     public ItemStack GetItemAtIndex(int index) => itemList[index];
 
-    public List<ItemStack> GetItemList() => itemList;
+    public List<ItemStack> GetItemClassList() => itemList;
+
+    public List<ItemStackStruct> GetItemList() =>
+        itemList.Select(x => x.ToStructType()).ToList();
 
     public bool HasNoEmptySlots() => firstEmptyIndex == -1;
 
-    public void SetUpFromItemList(List<ItemStack> itemList)
+    public void SetUpFromItemList(List<ItemStackStruct> itemList)
     {
         for (int i = 0; i < itemList.Count; ++i)
         {

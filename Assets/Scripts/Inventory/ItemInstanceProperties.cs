@@ -30,11 +30,11 @@ public class ItemInstanceProperties
 
     public void AddItemListProperty(int itemListCount)
     {
-        var itemList = new List<ItemStack>(itemListCount);
+        var itemList = new List<ItemStackStruct>(itemListCount);
 
         for (int i = 0; i < itemListCount; ++i)
         {
-            itemList.Add(new ItemStack("Empty", 0));
+            itemList.Add(new ItemStackStruct("Empty", 0));
         }
 
         PropertyDictionary["ItemList"] = itemList;
@@ -55,13 +55,13 @@ public class ItemInstanceProperties
 
         if (PropertyDictionary.ContainsKey("ItemList"))
         {
-            var itemList = (List<ItemStack>)PropertyDictionary["ItemList"];
+            var itemList = (List<ItemStackStruct>)PropertyDictionary["ItemList"];
 
-            var itemListDeepCopy = new List<ItemStack>(itemList.Count);
+            var itemListDeepCopy = new List<ItemStackStruct>(itemList.Count);
 
             for (int i = 0; i < itemList.Count; ++i)
             {
-                itemListDeepCopy.Add(new ItemStack(itemList[i]));
+                itemListDeepCopy.Add(new ItemStackStruct(itemList[i]));
             }
 
             deepCopy.PropertyDictionary["ItemList"] = itemListDeepCopy;

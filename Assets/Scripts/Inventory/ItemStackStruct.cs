@@ -27,6 +27,11 @@ public struct ItemStackStruct
     {
     }
 
+    public ItemStackStruct(ItemStackStruct item) : this(item.ItemDefinition,
+        item.Amount, item.InstanceProperties?.DeepCopy())
+    {
+    }
+
     public string GetAmountText() => Amount > 1 ? Amount.ToString() : string.Empty;
 
     public ItemStack ToClassType() =>

@@ -18,7 +18,7 @@ public abstract class ContainerItemInteractable : ItemInteractable
 
         if (itemInstanceProperties != null)
         {
-            var itemList = (List<ItemStack>)
+            var itemList = (List<ItemStackStruct>)
                 itemInstanceProperties.PropertyDictionary["ItemList"];
 
             inventory.SetUpFromItemList(itemList);

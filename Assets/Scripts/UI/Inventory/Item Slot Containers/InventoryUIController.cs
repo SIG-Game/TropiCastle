@@ -42,7 +42,7 @@ public class InventoryUIController : MonoBehaviour
     {
         this.inventory = inventory;
 
-        List<ItemStack> itemList = inventory.GetItemList();
+        List<ItemStack> itemList = inventory.GetItemClassList();
 
         for (int i = 0; i < itemSlotControllers.Count; ++i)
         {
