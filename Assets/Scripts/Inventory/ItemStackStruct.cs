@@ -32,6 +32,8 @@ public struct ItemStackStruct
     public ItemStack ToClassType() =>
         new ItemStack(ItemDefinition, Amount, InstanceProperties);
 
+    public override string ToString() => $"{Amount} {ItemDefinition.DisplayName}";
+
     public static implicit operator ItemStackStruct(ItemStack itemStack) =>
         itemStack.ToStructType();
 }
