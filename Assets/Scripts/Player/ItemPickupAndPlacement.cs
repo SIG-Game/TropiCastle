@@ -118,16 +118,16 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PlaceSelectedItemAtCursorPosition()
     {
-        ItemStack selectedItem = player.GetSelectedItem();
+        ItemStackStruct selectedItem = player.GetSelectedItem();
 
-        ItemStack itemToPlace = selectedItem.itemDefinition.OneAtATimePlacement ?
+        ItemStackStruct itemToPlace = selectedItem.ItemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
 
-        if (!itemToPlace.itemDefinition.IsEmpty())
+        if (!itemToPlace.ItemDefinition.IsEmpty())
         {
             Vector2 itemPlacementPosition;
 
-            if (itemToPlace.itemDefinition.LockPlacementToGrid)
+            if (itemToPlace.ItemDefinition.LockPlacementToGrid)
             {
                 itemPlacementPosition = new Vector2(
                     RoundToGrid(cursorPoint.x), RoundToGrid(cursorPoint.y));
@@ -140,7 +140,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             _ = itemWorldPrefabInstanceFactory.SpawnItemWorld(
                 itemPlacementPosition, itemToPlace);
 
-            if (selectedItem.itemDefinition.OneAtATimePlacement)
+            if (selectedItem.ItemDefinition.OneAtATimePlacement)
             {
                 playerInventory.DecrementItemStackAtIndex(
                     itemSelectionController.SelectedItemIndex);
@@ -183,18 +183,18 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePlacementCursorAndPlayerItem()
     {
-        ItemStack selectedItem = player.GetSelectedItem();
+        ItemStackStruct selectedItem = player.GetSelectedItem();
 
-        ItemStack placementItem = selectedItem.itemDefinition.OneAtATimePlacement ?
+        ItemStackStruct placementItem = selectedItem.ItemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
 
-        cursorController.LockToGrid = selectedItem.itemDefinition.LockPlacementToGrid;
+        cursorController.LockToGrid = selectedItem.ItemDefinition.LockPlacementToGrid;
 
         Color cursorBackgroundColor = CanPlaceItemAtCursorPosition ?
             canPlaceCursorBackgroundColor : cannotPlaceCursorBackgroundColor;
 
         Vector2 selectedItemColliderSize =
-            ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItem.itemDefinition);
+            ItemWorldPrefabInstanceFactory.GetItemColliderSize(selectedItem.ItemDefinition);
 
         cursorController.UpdateUsingItem(placementItem);
         cursorController.UpdateCursorBackground(cursorBackgroundColor,
@@ -225,18 +225,18 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public static void PickUpItemWorld(ItemWorld itemWorld,
         Inventory inventory, int preferredIndex)
     {
-        ItemStack item = itemWorld.Item;
+        ItemStackStruct item = itemWorld.Item;
 
         inventory.TryAddItemToFirstStackOrIndex(
             item, preferredIndex, out int amountAdded);
 
-        if (amountAdded == item.amount)
+        if (amountAdded == item.Amount)
         {
             Destroy(itemWorld.gameObject);
         }
         else if (amountAdded != 0)
         {
-            itemWorld.SetItemAmount(item.amount - amountAdded);
+            itemWorld.SetItemAmount(item.Amount - amountAdded);
         }
     }
 

@@ -32,6 +32,9 @@ public struct ItemStackStruct
     {
     }
 
+    public ItemStack GetCopyWithAmount(int amount) =>
+        new ItemStack(ItemDefinition, amount, InstanceProperties);
+
     public string GetAmountText() => Amount > 1 ? Amount.ToString() : string.Empty;
 
     public ItemStack ToClassType() =>
