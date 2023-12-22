@@ -32,25 +32,25 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
         }
     }
 
-    public void UseItem(ItemStack item, int itemIndex)
+    public void UseItem(ItemStackStruct item, int itemIndex)
     {
         playerAnimator.SetFloat("Attack Speed Multiplier",
-            item.itemDefinition.GetFloatProperty("AttackSpeed"));
+            item.ItemDefinition.GetFloatProperty("AttackSpeed"));
 
-        weaponSpriteRenderer.sprite = weaponNameToSprite[item.itemDefinition.name];
+        weaponSpriteRenderer.sprite = weaponNameToSprite[item.ItemDefinition.name];
 
-        weaponController.SetUpUsingScriptableObject(item.itemDefinition);
+        weaponController.SetUpUsingScriptableObject(item.ItemDefinition);
 
         playerController.IsAttacking = true;
 
         playerController.DisableItemSelection();
 
-        string attackType = item.itemDefinition.GetStringProperty("AttackType");
+        string attackType = item.ItemDefinition.GetStringProperty("AttackType");
 
         playerAnimator.Play($"{attackType} {playerController.Direction}");
 
-        if (item.instanceProperties != null &&
-            item.instanceProperties.HasProperty("Durability"))
+        if (item.InstanceProperties != null &&
+            item.InstanceProperties.HasProperty("Durability"))
         {
             playerInventory.DecrementItemDurabilityAtIndex(itemIndex);
         }
