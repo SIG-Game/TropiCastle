@@ -17619,6 +17619,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
+      propertyPath: itemToSpawn.Amount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
+        type: 3}
       propertyPath: maxSpawnPosition.x
       value: -5
       objectReference: {fileID: 0}
@@ -17658,6 +17663,12 @@ PrefabInstance:
       propertyPath: drawnSpawnAreaColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
+        type: 3}
+      propertyPath: itemToSpawn.ItemDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649,
+        type: 2}
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
       propertyPath: itemToSpawn.itemDefinition
@@ -27611,6 +27622,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
+      propertyPath: itemToSpawn.Amount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
+        type: 3}
       propertyPath: maxSpawnPosition.x
       value: 6
       objectReference: {fileID: 0}
@@ -27644,6 +27660,12 @@ PrefabInstance:
       propertyPath: drawnSpawnAreaColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
+        type: 3}
+      propertyPath: itemToSpawn.ItemDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 44fba0e56d7820c44825585f71313101,
+        type: 2}
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
       propertyPath: timeBeforeFirstSpawnRange.y

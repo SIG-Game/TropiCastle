@@ -129,6 +129,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
+      propertyPath: itemToSpawn.Amount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
+        type: 3}
       propertyPath: maxSpawnPosition.x
       value: 0.5
       objectReference: {fileID: 0}
@@ -163,6 +168,12 @@ PrefabInstance:
       propertyPath: drawnSpawnAreaColor.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
+        type: 3}
+      propertyPath: itemToSpawn.ItemDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a,
+        type: 2}
     - target: {fileID: 6287177743119961212, guid: fb14583144f915348ae00c6079385b6b,
         type: 3}
       propertyPath: itemToSpawn.itemDefinition
