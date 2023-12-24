@@ -33468,6 +33468,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1407859890151699208, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: healthController
+      value: 
+      objectReference: {fileID: 1982112581}
     - target: {fileID: 1546214460106165925, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: cursorController
