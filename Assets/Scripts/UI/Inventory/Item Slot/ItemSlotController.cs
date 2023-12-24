@@ -19,13 +19,6 @@ public class ItemSlotController : MonoBehaviour
         durabilityMeter.UpdateUsingItem(item);
     }
 
-    public void Clear()
-    {
-        itemSlotImage.sprite = transparentSprite;
-        amountText.text = string.Empty;
-        durabilityMeter.HideMeter();
-    }
-
     public void Highlight()
     {
         itemSlotBackgroundImage.color = highlightedBackgroundColor;
