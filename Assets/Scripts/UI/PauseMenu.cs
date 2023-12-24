@@ -32,9 +32,14 @@ public class PauseMenu : MonoBehaviour
     {
         PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
 
-        pauseMenuCanvasGroup.alpha = PauseController.Instance.GamePaused ? 1f : 0f;
-        pauseMenuCanvasGroup.interactable = PauseController.Instance.GamePaused;
-        pauseMenuCanvasGroup.blocksRaycasts = PauseController.Instance.GamePaused;
+        if (PauseController.Instance.GamePaused)
+        {
+            pauseMenuCanvasGroup.ShowAndMakeInteractable();
+        }
+        else
+        {
+            pauseMenuCanvasGroup.HideAndMakeNonInteractive();
+        }
 
         menuBackground.SetActive(PauseController.Instance.GamePaused);
 

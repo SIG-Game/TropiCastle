@@ -20,9 +20,7 @@ public class GameOverUIController : MonoBehaviour
 
     private void PlayerController_OnPlayerDied()
     {
-        gameOverUICanvasGroup.alpha = 1f;
-        gameOverUICanvasGroup.interactable = true;
-        gameOverUICanvasGroup.blocksRaycasts = true;
+        gameOverUICanvasGroup.ShowAndMakeInteractable();
 
         menuBackground.SetActive(true);
 
