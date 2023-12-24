@@ -16,19 +16,8 @@ public class Inventory : MonoBehaviour
     public event Action<ItemStack, int> OnItemChangedAtIndex = (_, _) => {};
     public event Action OnFailedToAddItemToFullInventory = () => {};
 
-    // Every empty item slot references this instance
-    private static ItemStack emptyItemInstance;
-
     private void Awake()
     {
-        if (emptyItemInstance == null)
-        {
-            ItemScriptableObject emptyItemInfo =
-                ItemScriptableObject.FromName("Empty");
-
-            emptyItemInstance = new ItemStack(emptyItemInfo, 0);
-        }
-
         InitializeItemListWithSize(inventorySize);
     }
 
@@ -36,9 +25,11 @@ public class Inventory : MonoBehaviour
     {
         itemList = new List<ItemStack>(inventorySize);
 
+        var emptyItem = new ItemStackStruct("Empty", 0);
+
         for (int i = 0; i < inventorySize; ++i)
         {
-            itemList.Add(emptyItemInstance);
+            itemList.Add(emptyItem);
         }
 
         firstEmptyIndex = 0;
@@ -182,7 +173,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        SetItemAtIndex(emptyItemInstance, index);
+        SetItemAtIndex(new ItemStackStruct("Empty", 0), index);
 
         if (index < firstEmptyIndex || HasNoEmptySlots())
         {
@@ -675,9 +666,11 @@ public class Inventory : MonoBehaviour
 
     public void ClearInventory()
     {
+        var emptyItem = new ItemStackStruct("Empty", 0);
+
         for (int i = 0; i < itemList.Count; ++i)
         {
-            SetItemAtIndex(emptyItemInstance, i);
+            SetItemAtIndex(emptyItem, i);
         }
 
         firstEmptyIndex = 0;
