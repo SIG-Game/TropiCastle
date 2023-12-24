@@ -16,9 +16,9 @@ public class NPCItemOfferingSelector : MonoBehaviour
         itemSelector = new WeightedRandomSelector(itemWeights);
     }
 
-    public ItemStack SelectItemToGive()
+    public ItemStackStruct SelectItemToGive()
     {
         int itemToGiveIndex = itemSelector.SelectIndex();
-        return itemOffering.PotentialItemsToGive[itemToGiveIndex].Item.ToClassType();
+        return itemOffering.PotentialItemsToGive[itemToGiveIndex].Item;
     }
 }

@@ -37,7 +37,7 @@ public class Chimp : NPCInteractable
 
         FacePlayer(player);
 
-        ItemStack itemToGive = null;
+        ItemStackStruct? itemToGive = null;
         List<string> dialogueLinesToPlay = null;
 
         if (ItemGiveAvailable())
@@ -65,7 +65,8 @@ public class Chimp : NPCInteractable
             () => Chimp_AfterDialogueAction(player, itemToGive));
     }
 
-    private void Chimp_AfterDialogueAction(PlayerController player, ItemStack itemToGive)
+    private void Chimp_AfterDialogueAction(
+        PlayerController player, ItemStackStruct? itemToGive)
     {
         if (itemToGive != null)
         {
