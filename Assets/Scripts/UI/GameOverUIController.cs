@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class GameOverUIController : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup gameOverUICanvasGroup;
+    [SerializeField] private MenuProperties menuProperties;
     [SerializeField] private GameObject menuBackground;
-    [SerializeField] private GameObject reloadButton;
+    [SerializeField] private MenuManager menuManager;
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private EventSystemDefaultGameObjectSelector eventSystemDefaultGameObjectSelector;
 
     private void Awake()
     {
@@ -20,11 +19,8 @@ public class GameOverUIController : MonoBehaviour
 
     private void PlayerController_OnPlayerDied()
     {
-        gameOverUICanvasGroup.ShowAndMakeInteractable();
-
         menuBackground.SetActive(true);
 
-        eventSystemDefaultGameObjectSelector
-            .SetDefaultSelectedGameObject(reloadButton);
+        menuManager.ShowMenu(menuProperties);
     }
 }

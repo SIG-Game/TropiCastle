@@ -212,8 +212,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7201862459031678527}
-  - component: {fileID: 294407622594106316}
   - component: {fileID: 7751967308244379482}
+  - component: {fileID: 294407622594106316}
+  - component: {fileID: 5197232534126088143}
   m_Layer: 5
   m_Name: Pause Menu
   m_TagString: Untagged
@@ -243,25 +244,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &294407622594106316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7201862459031678512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b200a3e6789e3c48917d0e2ac74aa25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseMenuCanvasGroup: {fileID: 7751967308244379482}
-  menuBackground: {fileID: 0}
-  playerController: {fileID: 0}
-  resumeButton: {fileID: 588967580717827745}
-  pauseActionReference: {fileID: 3111250234772231522, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
-    type: 3}
-  eventSystemDefaultGameObjectSelector: {fileID: 0}
 --- !u!225 &7751967308244379482
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -274,6 +256,38 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &294407622594106316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201862459031678512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b200a3e6789e3c48917d0e2ac74aa25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuProperties: {fileID: 5197232534126088143}
+  menuBackground: {fileID: 0}
+  menuManager: {fileID: 0}
+  playerController: {fileID: 0}
+  pauseActionReference: {fileID: 3111250234772231522, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
+    type: 3}
+--- !u!114 &5197232534126088143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201862459031678512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9303cc55f6f6d474b86ef1884004e12e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuCanvasGroup: {fileID: 7751967308244379482}
+  defaultSelectedGameObject: {fileID: 588967580717827745}
 --- !u!1001 &2271021608055204249
 PrefabInstance:
   m_ObjectHideFlags: 0

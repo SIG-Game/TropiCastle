@@ -33177,6 +33177,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1234441276}
   m_PrefabAsset: {fileID: 0}
+--- !u!50 &1696438045 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 5288355818519944997, guid: 055035cc7ee7c8646858260629418a55,
+    type: 3}
+  m_PrefabInstance: {fileID: 1982112580}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1731795749 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6847651757852005858, guid: cb76167790ad17b418442606107678be,
@@ -34987,6 +34993,11 @@ PrefabInstance:
       objectReference: {fileID: 572276101}
     - target: {fileID: 6562392072500299050, guid: cb76167790ad17b418442606107678be,
         type: 3}
+      propertyPath: playerRigidbody2D
+      value: 
+      objectReference: {fileID: 1696438045}
+    - target: {fileID: 6562392072500299050, guid: cb76167790ad17b418442606107678be,
+        type: 3}
       propertyPath: eventSystemDefaultGameObjectSelector
       value: 
       objectReference: {fileID: 8494658916821513172}
@@ -35800,6 +35811,11 @@ PrefabInstance:
       propertyPath: targetHealthController
       value: 
       objectReference: {fileID: 1982112581}
+    - target: {fileID: 7412081645634447707, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: eventSystemDefaultGameObjectSelector
+      value: 
+      objectReference: {fileID: 8494658916821513172}
     - target: {fileID: 7461270902237564431, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory

@@ -1,15 +1,13 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup pauseMenuCanvasGroup;
+    [SerializeField] private MenuProperties menuProperties;
     [SerializeField] private GameObject menuBackground;
-    [SerializeField] private PlayerController playerController;
-    [SerializeField] private GameObject resumeButton;
+    [SerializeField] private MenuManager menuManager;
+    [SerializeField] private Rigidbody2D playerRigidbody2D;
     [SerializeField] private InputActionReference pauseActionReference;
-    [SerializeField] private EventSystemDefaultGameObjectSelector eventSystemDefaultGameObjectSelector;
 
     private InputAction pauseAction;
 
@@ -22,7 +20,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (pauseAction.WasPressedThisFrame() &&
             (!PauseController.Instance.GamePaused ||
-                pauseMenuCanvasGroup.alpha == 1f))
+                menuProperties.MenuIsVisible))
         {
             TogglePauseMenu();
         }
@@ -34,28 +32,15 @@ public class PauseMenu : MonoBehaviour
 
         if (PauseController.Instance.GamePaused)
         {
-            pauseMenuCanvasGroup.ShowAndMakeInteractable();
+            menuManager.ShowMenu(menuProperties);
         }
         else
         {
-            pauseMenuCanvasGroup.HideAndMakeNonInteractive();
+            menuManager.HideCurrentMenu();
         }
 
         menuBackground.SetActive(PauseController.Instance.GamePaused);
 
-        playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
-        if (PauseController.Instance.GamePaused)
-        {
-            eventSystemDefaultGameObjectSelector
-                .SetDefaultSelectedGameObject(resumeButton);
-        }
-        else
-        {
-            eventSystemDefaultGameObjectSelector
-                .SetDefaultSelectedGameObject(null);
-
-            EventSystem.current.SetSelectedGameObject(null);
-        }
+        playerRigidbody2D.velocity = Vector2.zero;
     }
 }

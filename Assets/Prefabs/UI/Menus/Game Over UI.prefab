@@ -210,8 +210,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8669040124083499747}
-  - component: {fileID: 8669040124083499748}
   - component: {fileID: 4999167417101745221}
+  - component: {fileID: 8669040124083499748}
+  - component: {fileID: 8852077798540769944}
   m_Layer: 5
   m_Name: Game Over UI
   m_TagString: Untagged
@@ -241,23 +242,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8669040124083499748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8669040124083499746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ada125bfc5f15d42b8aa9213febcfdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameOverUICanvasGroup: {fileID: 4999167417101745221}
-  menuBackground: {fileID: 0}
-  reloadButton: {fileID: 4025382448035222220}
-  playerController: {fileID: 0}
-  eventSystemDefaultGameObjectSelector: {fileID: 0}
 --- !u!225 &4999167417101745221
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -270,6 +254,36 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &8669040124083499748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669040124083499746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ada125bfc5f15d42b8aa9213febcfdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuProperties: {fileID: 8852077798540769944}
+  menuBackground: {fileID: 0}
+  menuManager: {fileID: 0}
+  playerController: {fileID: 0}
+--- !u!114 &8852077798540769944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669040124083499746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9303cc55f6f6d474b86ef1884004e12e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuCanvasGroup: {fileID: 4999167417101745221}
+  defaultSelectedGameObject: {fileID: 4025382448035222220}
 --- !u!1001 &1412615700909998191
 PrefabInstance:
   m_ObjectHideFlags: 0
