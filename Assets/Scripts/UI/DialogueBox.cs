@@ -29,11 +29,10 @@ public class DialogueBox : MonoBehaviour
     }
 
     // Must run before PlayerController Update method to prevent
-    // dialogue from immediately advancing after interaction
+    // that script from using the inputs that advance dialogue
     private void Update()
     {
-        bool canAdvanceDialogue = DialogueBoxOpen() && !PauseController.Instance.GamePaused;
-        if (canAdvanceDialogue)
+        if (dialogueBoxUI.activeInHierarchy && !PauseController.Instance.GamePaused)
         {
             // Get both inputs so that neither can be used elsewhere
             bool useItemButtonInput =
@@ -41,9 +40,7 @@ public class DialogueBox : MonoBehaviour
             bool interactButtonInput =
                 inputManager.GetInteractButtonDownIfUnusedThisFrame();
 
-            bool advanceDialogueInputPressedThisFrame =
-                useItemButtonInput || interactButtonInput;
-            if (advanceDialogueInputPressedThisFrame)
+            if (useItemButtonInput || interactButtonInput)
             {
                 AdvanceDialogue();
             }
@@ -158,6 +155,4 @@ public class DialogueBox : MonoBehaviour
             StopCoroutine(displayScrollingTextCoroutine);
         }
     }
-
-    private bool DialogueBoxOpen() => dialogueBoxUI.activeInHierarchy;
 }
