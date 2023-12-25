@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] private MenuProperties currentMenuProperties;
     [SerializeField] private EventSystemDefaultGameObjectSelector eventSystemDefaultGameObjectSelector;
 
     public bool MenuOpen => currentMenuProperties != null;
-
-    private MenuProperties currentMenuProperties;
 
     public void ShowMenu(MenuProperties menuProperties)
     {
