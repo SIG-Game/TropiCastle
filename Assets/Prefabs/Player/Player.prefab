@@ -722,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd199dc392c9d940a5562b993f47468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthController: {fileID: 0}
+  healthController: {fileID: 3015389456133774718}
   healthChangeTextPrefab: {fileID: 928500359597897181, guid: 9242018da622f564fab950dc3cde3d28,
     type: 3}
 --- !u!1 &7191733551750576650
