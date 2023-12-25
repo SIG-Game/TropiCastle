@@ -56,22 +56,20 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
         craftingButtonImage.sprite = craftingRecipe.ResultItem.ItemDefinition.Sprite;
     }
 
-    private string GetIngredientsAsString()
+    public string GetTooltipText()
     {
         StringBuilder ingredientsStringBuilder = new StringBuilder("Ingredients:\n");
 
         Dictionary<int, int> itemIndexToUsedAmount = new Dictionary<int, int>();
 
-        foreach (ItemStackStruct ingredientStruct in craftingRecipe.Ingredients)
+        foreach (ItemStackStruct ingredient in craftingRecipe.Ingredients)
         {
-            ItemStack ingredient = ingredientStruct.ToClassType();
-
             bool playerHasIngredient = playerInventory
                 .HasReplacementInputItem(itemIndexToUsedAmount, ingredient);
 
             ingredientsStringBuilder.Append(
                 playerHasIngredient ? "<color=#00FF00>" : "<color=#FF0000>");
-            ingredientsStringBuilder.Append($"- {ingredientStruct}: ");
+            ingredientsStringBuilder.Append($"- {ingredient} ");
             ingredientsStringBuilder.Append(playerHasIngredient ? "Y" : "N");
             ingredientsStringBuilder.Append("</color>");
             ingredientsStringBuilder.AppendLine();
@@ -79,8 +77,6 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
 
         return ingredientsStringBuilder.ToString();
     }
-
-    public string GetTooltipText() => GetIngredientsAsString();
 
     public string GetAlternateTooltipText() => resultItemTooltipText;
 
