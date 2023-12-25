@@ -4,8 +4,10 @@ public class QuitButton : MonoBehaviour
 {
     public void QuitButton_OnClick()
     {
-        Debug.Log("Quitting application...");
-
         Application.Quit();
+
+#if UNITY_EDITOR
+        Debug.Log("Application.Quit() called");
+#endif
     }
 }
