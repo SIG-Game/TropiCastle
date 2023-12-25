@@ -9,14 +9,14 @@ public class ItemSelectionController : MonoBehaviour
     [SerializeField] private InputManager inputManager;
     [SerializeField] private InputActionReference selectLeftItemActionReference;
     [SerializeField] private InputActionReference selectRightItemActionReference;
-    [SerializeField] private int onePlusMaxSelectedItemIndex;
+    [SerializeField] private int maxSelectedItemIndex;
     [SerializeField] private float selectInputRepeatTimeSeconds;
 
+    private Coroutine repeatSelectLeftCoroutine;
+    private Coroutine repeatSelectRightCoroutine;
+    private WaitForSeconds selectInputRepeatWaitForSeconds;
     private InputAction selectLeftItemAction;
     private InputAction selectRightItemAction;
-    private Coroutine repeatSelectLeftItemCoroutine;
-    private Coroutine repeatSelectRightItemCoroutine;
-    private WaitForSeconds selectInputRepeatWaitForSeconds;
     private int selectedItemIndex;
 
     public int SelectedItemIndex
@@ -41,37 +41,36 @@ public class ItemSelectionController : MonoBehaviour
 
     private void Awake()
     {
-        selectLeftItemAction = selectLeftItemActionReference.action;
-        selectRightItemAction = selectRightItemActionReference.action;
-
-        selectedItemIndex = 0;
-    }
-
-    // Runs after SaveController loads saved game data, which can change selectedItemIndex
-    private void Start()
-    {
         selectInputRepeatWaitForSeconds = new WaitForSeconds(selectInputRepeatTimeSeconds);
 
-        OnItemSelectedAtIndex(selectedItemIndex);
+        selectLeftItemAction = selectLeftItemActionReference.action;
+        selectRightItemAction = selectRightItemActionReference.action;
 
         CanScroll = true;
         CanSelect = true;
     }
 
+    // Runs after SaveController loads saved game data, which can change selectedItemIndex
+    private void Start()
+    {
+        OnItemSelectedAtIndex(selectedItemIndex);
+    }
+
     private void Update()
     {
-        StopRepeatSelectCoroutinesIfNeeded();
+        StopRepeatSelectCoroutines();
 
-        if ((PauseController.Instance.GamePaused &&
-            !inventoryUIManager.InventoryUIOpen) ||
-            !CanSelect)
+        if (!CanSelect ||
+            (PauseController.Instance.GamePaused &&
+                !inventoryUIManager.InventoryUIOpen))
         {
             return;
         }
 
-        if (Input.mouseScrollDelta.y != 0f && CanScroll)
+        if (CanScroll && Input.mouseScrollDelta.y != 0f)
         {
-            int newSelectedItemIndex = SelectedItemIndex - (int)Mathf.Sign(Input.mouseScrollDelta.y);
+            int newSelectedItemIndex = 
+                SelectedItemIndex - Math.Sign(Input.mouseScrollDelta.y);
 
             SelectedItemIndex = ClampSelectedItemIndex(newSelectedItemIndex);
         }
@@ -82,14 +81,18 @@ public class ItemSelectionController : MonoBehaviour
             SelectedItemIndex = numberKeyIndex.Value;
         }
 
-        if (selectLeftItemAction.IsPressed() && repeatSelectLeftItemCoroutine == null)
+        if (selectLeftItemAction.IsPressed() && 
+            repeatSelectLeftCoroutine == null)
         {
-            repeatSelectLeftItemCoroutine = StartCoroutine(RepeatSelectLeftItemCoroutine());
+            repeatSelectLeftCoroutine =
+                StartCoroutine(RepeatSelectLeftCoroutine());
         }
 
-        if (selectRightItemAction.IsPressed() && repeatSelectRightItemCoroutine == null)
+        if (selectRightItemAction.IsPressed() &&
+            repeatSelectRightCoroutine == null)
         {
-            repeatSelectRightItemCoroutine = StartCoroutine(RepeatSelectRightItemCoroutine());
+            repeatSelectRightCoroutine =
+                StartCoroutine(RepeatSelectRightCoroutine());
         }
     }
 
@@ -97,13 +100,13 @@ public class ItemSelectionController : MonoBehaviour
     {
         int clampedSelectedItemIndex;
 
-        if (selectedItemIndex >= onePlusMaxSelectedItemIndex)
+        if (selectedItemIndex > maxSelectedItemIndex)
         {
             clampedSelectedItemIndex = 0;
         }
         else if (selectedItemIndex < 0)
         {
-            clampedSelectedItemIndex = onePlusMaxSelectedItemIndex - 1;
+            clampedSelectedItemIndex = maxSelectedItemIndex;
         }
         else
         {
@@ -113,34 +116,32 @@ public class ItemSelectionController : MonoBehaviour
         return clampedSelectedItemIndex;
     }
 
-    private void StopRepeatSelectCoroutinesIfNeeded()
+    private void StopRepeatSelectCoroutines()
     {
-        if (!selectLeftItemAction.IsPressed() && repeatSelectLeftItemCoroutine != null)
+        if (!selectLeftItemAction.IsPressed() &&
+            repeatSelectLeftCoroutine != null)
         {
-            StopCoroutine(repeatSelectLeftItemCoroutine);
+            StopCoroutine(repeatSelectLeftCoroutine);
 
-            repeatSelectLeftItemCoroutine = null;
+            repeatSelectLeftCoroutine = null;
         }
 
-        if (!selectRightItemAction.IsPressed() && repeatSelectRightItemCoroutine != null)
+        if (!selectRightItemAction.IsPressed() &&
+            repeatSelectRightCoroutine != null)
         {
-            StopCoroutine(repeatSelectRightItemCoroutine);
+            StopCoroutine(repeatSelectRightCoroutine);
 
-            repeatSelectRightItemCoroutine = null;
+            repeatSelectRightCoroutine = null;
         }
     }
 
-    private IEnumerator RepeatSelectLeftItemCoroutine()
-    {
-        return RepeatSelectItemWithIndexOffset(-1);
-    }
+    private IEnumerator RepeatSelectLeftCoroutine() =>
+        RepeatSelectWithIndexOffsetCoroutine(-1);
 
-    private IEnumerator RepeatSelectRightItemCoroutine()
-    {
-        return RepeatSelectItemWithIndexOffset(1);
-    }
+    private IEnumerator RepeatSelectRightCoroutine() =>
+        RepeatSelectWithIndexOffsetCoroutine(1);
 
-    private IEnumerator RepeatSelectItemWithIndexOffset(int indexOffset)
+    private IEnumerator RepeatSelectWithIndexOffsetCoroutine(int indexOffset)
     {
         while (true)
         {

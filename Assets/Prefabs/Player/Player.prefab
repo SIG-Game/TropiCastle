@@ -597,7 +597,7 @@ MonoBehaviour:
     type: 3}
   selectRightItemActionReference: {fileID: 3435081143351072354, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
-  onePlusMaxSelectedItemIndex: 10
+  maxSelectedItemIndex: 9
   selectInputRepeatTimeSeconds: 0.25
 --- !u!114 &5613604618592605289
 MonoBehaviour:
@@ -722,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd199dc392c9d940a5562b993f47468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetHealthController: {fileID: 3015389456133774718}
+  healthController: {fileID: 0}
   healthChangeTextPrefab: {fileID: 928500359597897181, guid: 9242018da622f564fab950dc3cde3d28,
     type: 3}
 --- !u!1 &7191733551750576650
