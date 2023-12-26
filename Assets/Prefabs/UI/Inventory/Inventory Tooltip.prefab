@@ -446,5 +446,4 @@ MonoBehaviour:
   graphicRaycaster: {fileID: 0}
   canvasRectTransform: {fileID: 0}
   inventoryUIManager: {fileID: 0}
-  eventSystem: {fileID: 0}
-  logTooltipList: 0
+  inventoryUIHeldItemController: {fileID: 0}

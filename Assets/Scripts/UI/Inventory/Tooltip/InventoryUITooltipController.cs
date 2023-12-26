@@ -13,19 +13,15 @@ public class InventoryUITooltipController : MonoBehaviour
     [SerializeField] private RectTransform canvasRectTransform;
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
-    [SerializeField] private EventSystem eventSystem;
 
     private RectTransform rectTransform;
 
-    public static InventoryUITooltipController Instance;
-
     private void Awake()
     {
-        Instance = this;
-
         rectTransform = GetComponent<RectTransform>();
 
-        inventoryUIManager.OnInventoryUIClosed += InventoryUIManager_OnInventoryUIClosed;
+        inventoryUIManager.OnInventoryUIClosed +=
+            InventoryUIManager_OnInventoryUIClosed;
     }
 
     private void LateUpdate()
@@ -52,35 +48,26 @@ public class InventoryUITooltipController : MonoBehaviour
 
     private void OnDestroy()
     {
-        Instance = null;
-
-        inventoryUIManager.OnInventoryUIClosed -= InventoryUIManager_OnInventoryUIClosed;
+        inventoryUIManager.OnInventoryUIClosed -=
+            InventoryUIManager_OnInventoryUIClosed;
     }
 
     private void UpdateTooltipTextUsingRaycast()
     {
-        PointerEventData pointerEventData = new PointerEventData(eventSystem);
+        var pointerEventData = new PointerEventData(EventSystem.current);
         pointerEventData.position = Input.mousePosition;
 
-        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        var raycastResults = new List<RaycastResult>();
 
         graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-        foreach (RaycastResult result in raycastResults)
+        if (raycastResults.Count != 0 &&
+            raycastResults[0].gameObject.TryGetComponent(
+                out IElementWithTooltip elementWithTooltip))
         {
-            if (result.gameObject.TryGetComponent(out IElementWithTooltip elementWithTooltip))
-            {
-                SetTooltipText(elementWithTooltip);
-
-                break;
-            }
-            else
-            {
-                ClearTooltipText();
-            }
+            SetTooltipText(elementWithTooltip);
         }
-
-        if (raycastResults.Count == 0)
+        else
         {
             ClearTooltipText();
         }
@@ -92,7 +79,8 @@ public class InventoryUITooltipController : MonoBehaviour
             elementWithTooltip.GetAlternateTooltipText());
     }
 
-    private void SetTooltipText(string tooltipTextString, string alternateTooltipTextString)
+    private void SetTooltipText(
+        string tooltipTextString, string alternateTooltipTextString)
     {
         tooltipText.text = tooltipTextString;
         alternateTooltipText.text = alternateTooltipTextString;
@@ -118,14 +106,16 @@ public class InventoryUITooltipController : MonoBehaviour
 
         if (rightEdgeXPosition > canvasRectTransform.rect.xMax)
         {
-            float distanceOverRightEdge = rightEdgeXPosition - canvasRectTransform.rect.xMax;
+            float distanceOverRightEdge =
+                rightEdgeXPosition - canvasRectTransform.rect.xMax;
 
             newAnchoredPosition.x -= distanceOverRightEdge;
         }
 
         if (bottomEdgeYPosition < canvasRectTransform.rect.yMin)
         {
-            float distanceOverBottomEdge = bottomEdgeYPosition - canvasRectTransform.rect.yMin;
+            float distanceOverBottomEdge =
+                bottomEdgeYPosition - canvasRectTransform.rect.yMin;
 
             newAnchoredPosition.y -= distanceOverBottomEdge;
         }
