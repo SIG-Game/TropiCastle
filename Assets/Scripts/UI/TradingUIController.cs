@@ -60,15 +60,13 @@ public class TradingUIController : MonoBehaviour
             Destroy(itemUI.gameObject);
         }
 
-        foreach (ItemStackStruct itemStruct in items)
+        foreach (ItemStackStruct item in items)
         {
-            ItemStack item = itemStruct.ToClassType();
-
             GameObject itemUI = Instantiate(tradeItemUIPrefab, itemUIParent);
 
             Image itemImage = itemUI.transform.GetChild(0).GetComponent<Image>();
 
-            itemImage.sprite = item.itemDefinition.Sprite;
+            itemImage.sprite = item.ItemDefinition.Sprite;
 
             TextMeshProUGUI itemAmountText =
                 itemUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();

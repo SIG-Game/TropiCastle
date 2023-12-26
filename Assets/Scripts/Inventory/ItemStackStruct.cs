@@ -32,6 +32,39 @@ public struct ItemStackStruct
     {
     }
 
+    public string GetTooltipText()
+    {
+        string tooltipText = ItemDefinition.GetTooltipText(includeInitialDurability: false);
+
+        if (TryGetDurabilityProperties(out int durability, out int initialDurability))
+        {
+            tooltipText += $"\nDurability: {durability} / {initialDurability}";
+        }
+
+        return tooltipText;
+    }
+
+    public bool TryGetDurabilityProperties(out int durability, out int initialDurability)
+    {
+        if (InstanceProperties != null &&
+            InstanceProperties.HasProperty("Durability") &&
+            ItemDefinition.DefaultInstanceProperties.HasProperty("Durability"))
+        {
+            durability = InstanceProperties.GetIntProperty("Durability");
+            initialDurability =
+                ItemDefinition.DefaultInstanceProperties.GetIntProperty("Durability");
+
+            return true;
+        }
+        else
+        {
+            durability = -1;
+            initialDurability = -1;
+
+            return false;
+        }
+    }
+
     public ItemStack GetCopyWithAmount(int amount) =>
         new ItemStack(ItemDefinition, amount, InstanceProperties);
 
