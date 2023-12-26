@@ -27,10 +27,17 @@ public class CharacterDirectionController : MonoBehaviour
         UseDefaultDirection();
     }
 
-    public void UseDefaultDirection()
-    {
-        Direction = defaultDirection;
-    }
+    public void UseDefaultDirection() => Direction = defaultDirection;
+
+    public void UseOppositeOfDirection(CharacterDirection direction) =>
+        Direction = direction switch
+        {
+            CharacterDirection.Up => CharacterDirection.Down,
+            CharacterDirection.Down => CharacterDirection.Up,
+            CharacterDirection.Left => CharacterDirection.Right,
+            CharacterDirection.Right => CharacterDirection.Left,
+            _ => throw new ArgumentOutOfRangeException(nameof(direction))
+        };
 
     public Vector2 GetDirectionVector() =>
         Direction switch
