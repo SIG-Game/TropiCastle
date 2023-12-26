@@ -9,7 +9,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
     private CampfireUIController campfireUIController;
     private IList<CampfireRecipeScriptableObject> campfireRecipes;
     private CampfireRecipeScriptableObject currentRecipe;
-    private ItemStack currentRecipeInputItem;
+    private ItemStackStruct? currentRecipeInputItem;
     private bool activeInUI;
 
     protected override void Awake()
@@ -38,9 +38,9 @@ public class CampfireItemInteractable : ContainerItemInteractable
 
             if (cookTimeProgress >= currentRecipe.CookTime)
             {
-                ItemStack inputItem = inventory.GetItemAtIndex(0);
+                ItemStackStruct inputItem = inventory.GetItemAtIndex(0);
 
-                int inputRemoveAmount = currentRecipeInputItem.amount;
+                int inputRemoveAmount = currentRecipeInputItem.Value.Amount;
 
                 // Inventory_OnItemChangedAtIndex in this class
                 // updates currentRecipe and currentRecipeInputItem
@@ -50,7 +50,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
                     currentRecipe.ResultItem.ToClassType(), 1);
 
                 inventory.SetItemAmountAtIndex(
-                    inputItem.amount - inputRemoveAmount, 0);
+                    inputItem.Amount - inputRemoveAmount, 0);
 
                 cookTimeProgress = 0f;
             }
@@ -84,12 +84,12 @@ public class CampfireItemInteractable : ContainerItemInteractable
 
     private void SetCurrentRecipe()
     {
-        ItemStack inputItem = inventory.GetItemAtIndex(0);
-        ItemStack inventoryResultItem = inventory.GetItemAtIndex(1);
+        ItemStackStruct inputItem = inventory.GetItemAtIndex(0);
+        ItemStackStruct inventoryResultItem = inventory.GetItemAtIndex(1);
 
         IEnumerable<CampfireRecipeScriptableObject> possiblyMatchingRecipes;
 
-        if (inventoryResultItem.itemDefinition.IsEmpty())
+        if (inventoryResultItem.ItemDefinition.IsEmpty())
         {
             possiblyMatchingRecipes = campfireRecipes;
         }
@@ -97,21 +97,21 @@ public class CampfireItemInteractable : ContainerItemInteractable
         {
             Func<CampfireRecipeScriptableObject, bool> isValidRecipe = x =>
                 x.ResultItem.ItemDefinition.name ==
-                    inventoryResultItem.itemDefinition.name &&
-                x.ResultItem.Amount + inventoryResultItem.amount <=
+                    inventoryResultItem.ItemDefinition.name &&
+                x.ResultItem.Amount + inventoryResultItem.Amount <=
                     x.ResultItem.ItemDefinition.StackSize;
 
             possiblyMatchingRecipes = campfireRecipes.Where(isValidRecipe);
         }
 
         CampfireRecipeScriptableObject matchingRecipe = null;
-        ItemStack matchingRecipeInputItem = null;
+        ItemStackStruct? matchingRecipeInputItem = null;
 
         foreach (var recipe in possiblyMatchingRecipes)
         {
             int inputItemIndex = recipe.PossibleInputItems.FindIndex(
-                x => x.ItemDefinition.name == inputItem.itemDefinition.name &&
-                x.Amount <= inputItem.amount);
+                x => x.ItemDefinition.name == inputItem.ItemDefinition.name &&
+                x.Amount <= inputItem.Amount);
 
             if (inputItemIndex != -1)
             {
@@ -126,7 +126,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
         if (matchingRecipe != null)
         {
             currentRecipe = matchingRecipe;
-            currentRecipeInputItem = matchingRecipeInputItem;
+            currentRecipeInputItem = matchingRecipeInputItem.Value;
         }
         else
         {
