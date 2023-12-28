@@ -92,17 +92,15 @@ public class EnemyController : MonoBehaviour
 
     public void EnemyDeath()
     {
-        foreach (ItemStackStruct lootItemStruct in loot)
+        foreach (ItemStackStruct lootItem in loot)
         {
-            ItemStack lootItem = lootItemStruct.ToClassType();
-            
             playerInventory.TryAddItem(lootItem, out int amountAdded);
 
-            bool lootItemNotFullyAdded = amountAdded != lootItem.amount;
+            bool lootItemNotFullyAdded = amountAdded != lootItem.Amount;
             if (lootItemNotFullyAdded)
             {
-                ItemStack itemToDrop = new ItemStack(lootItem.itemDefinition,
-                    lootItem.amount - amountAdded, lootItem.instanceProperties);
+                ItemStackStruct itemToDrop = lootItem
+                    .GetCopyWithAmount(lootItem.Amount - amountAdded); 
 
                 itemWorldPrefabInstanceFactory.DropItem(
                     transform.position, itemToDrop);
