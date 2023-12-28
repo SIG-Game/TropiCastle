@@ -8,7 +8,6 @@ public class ItemSlotController : MonoBehaviour
     [SerializeField] private Image itemSlotBackgroundImage;
     [SerializeField] private TextMeshProUGUI amountText;
     [SerializeField] private ItemDurabilityMeterController durabilityMeter;
-    [SerializeField] private Sprite transparentSprite;
     [SerializeField] private Color highlightedBackgroundColor;
     [SerializeField] private Color unhighlightedBackgroundColor;
 
