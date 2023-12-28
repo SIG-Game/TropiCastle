@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static CharacterDirection;
 
 public class CharacterDirectionController : MonoBehaviour
 {
@@ -32,20 +33,20 @@ public class CharacterDirectionController : MonoBehaviour
     public void UseOppositeOfDirection(CharacterDirection direction) =>
         Direction = direction switch
         {
-            CharacterDirection.Up => CharacterDirection.Down,
-            CharacterDirection.Down => CharacterDirection.Up,
-            CharacterDirection.Left => CharacterDirection.Right,
-            CharacterDirection.Right => CharacterDirection.Left,
+            Up => Down,
+            Down => Up,
+            Left => Right,
+            Right => Left,
             _ => throw new ArgumentOutOfRangeException(nameof(direction))
         };
 
     public Vector2 GetDirectionVector() =>
         Direction switch
         {
-            CharacterDirection.Up => Vector2.up,
-            CharacterDirection.Down => Vector2.down,
-            CharacterDirection.Left => Vector2.left,
-            CharacterDirection.Right => Vector2.right,
+            Up => Vector2.up,
+            Down => Vector2.down,
+            Left => Vector2.left,
+            Right => Vector2.right,
             _ => throw new ArgumentOutOfRangeException(nameof(Direction))
         };
 }
