@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,17 +41,15 @@ public class InventoryUIController : MonoBehaviour
     {
         this.inventory = inventory;
 
-        List<ItemStack> itemList = inventory.GetItemClassList();
-
         for (int i = 0; i < itemSlotControllers.Count; ++i)
         {
-            InventoryUIItemSlotController itemSlotController =
-                itemSlotControllers[i] as InventoryUIItemSlotController;
-            ItemStack item = itemList[i];
+            itemSlotControllers[i].UpdateUsingItem(inventory.GetItemAtIndex(i));
 
-            itemSlotController.Inventory = inventory;
-
-            itemSlotController.UpdateUsingItem(item);
+            if (itemSlotControllers[i].TryGetComponent<ClickableItemSlotHandler>(
+                out var clickableItemSlotHandler))
+            {
+                clickableItemSlotHandler.Inventory = inventory;
+            }
         }
 
         inventory.OnItemChangedAtIndex += Inventory_OnItemChangedAtIndex;
@@ -75,24 +72,6 @@ public class InventoryUIController : MonoBehaviour
         itemSlotControllers = new List<ItemSlotController>(childItemSlotControllersArray);
 
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
-    }
-
-    [ContextMenu("Set Inventory UI Item Slot Indexes")]
-    private void SetInventoryUIItemSlotIndexes()
-    {
-        InventoryUIItemSlotController[] childInventoryUIItemSlots =
-            GetComponentsInChildren<InventoryUIItemSlotController>(true);
-
-        Undo.RecordObjects(childInventoryUIItemSlots, "Set Inventory UI Item Slot Indexes");
-
-        int currentSlotItemIndex = 0;
-        foreach (InventoryUIItemSlotController inventoryUIItemSlot in
-            childInventoryUIItemSlots)
-        {
-            inventoryUIItemSlot.SlotItemIndex = currentSlotItemIndex;
-
-            ++currentSlotItemIndex;
-        }
     }
 #endif
 }

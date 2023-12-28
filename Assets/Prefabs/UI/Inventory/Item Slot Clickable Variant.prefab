@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 3940269534088966668, guid: 41b1c1a20cea77944a32a62a21f6716c,
         type: 3}
       propertyPath: m_Name
-      value: Item Slot Inventory UI Variant
+      value: Item Slot Clickable Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3940269534088966671, guid: 41b1c1a20cea77944a32a62a21f6716c,
         type: 3}
@@ -117,28 +117,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8966059712471266257, guid: 41b1c1a20cea77944a32a62a21f6716c, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41b1c1a20cea77944a32a62a21f6716c, type: 3}
---- !u!114 &415455371410550688 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3940269534088966656, guid: 41b1c1a20cea77944a32a62a21f6716c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3705715058460761504}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 415455371410550700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &415455371410550700 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3940269534088966668, guid: 41b1c1a20cea77944a32a62a21f6716c,
     type: 3}
   m_PrefabInstance: {fileID: 3705715058460761504}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1100312019
+--- !u!114 &6921456017128989611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,54 +134,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 415455371410550700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c297006eba5c7fb4db352893d7d13798, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f801e9ae801a5f4e8a9be27bf35fed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSlotImage: {fileID: 415455371632956867}
-  itemSlotBackgroundImage: {fileID: 415455371410550688}
-  amountText: {fileID: 4273917025913859715}
-  durabilityMeter: {fileID: 4559145478903878071}
-  transparentSprite: {fileID: 21300000, guid: 50e0e4a1e1793d24b8e92fe1155518e7, type: 3}
-  highlightedBackgroundColor: {r: 0.77254903, g: 0.77254903, b: 0.77254903, a: 1}
-  unhighlightedBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
   hoveredItemSlotManager: {fileID: 0}
   inventoryUIHeldItemController: {fileID: 0}
   inventory: {fileID: 0}
   slotItemIndex: 0
   itemPlacementEnabled: 1
---- !u!114 &415455371632956867 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3940269534252583011, guid: 41b1c1a20cea77944a32a62a21f6716c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3705715058460761504}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4273917025913859715 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 593728386246406947, guid: 41b1c1a20cea77944a32a62a21f6716c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3705715058460761504}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4559145478903878071 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 875966199815097367, guid: 41b1c1a20cea77944a32a62a21f6716c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3705715058460761504}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 333fe7d2adf75414bac8019c9f364baa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

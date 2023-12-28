@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryUIItemSlotController : ItemSlotController, IElementWithTooltip,
+public class ClickableItemSlotHandler : MonoBehaviour, IElementWithTooltip,
     IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
