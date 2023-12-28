@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class QuitButton : MonoBehaviour
@@ -8,6 +9,8 @@ public class QuitButton : MonoBehaviour
 
 #if UNITY_EDITOR
         Debug.Log("Application.Quit() called");
+
+        EditorApplication.isPlaying = false;
 #endif
     }
 }
