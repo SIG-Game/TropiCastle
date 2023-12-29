@@ -13,6 +13,7 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private TextMeshProUGUI characterNameText;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private PauseController pauseController;
     [SerializeField] private float characterScrollWaitSeconds;
 
     private IEnumerator<string> linesEnumerator;
@@ -32,7 +33,7 @@ public class DialogueBox : MonoBehaviour
     // that script from using the inputs that advance dialogue
     private void Update()
     {
-        if (dialogueBoxUI.activeInHierarchy && !PauseController.Instance.GamePaused)
+        if (dialogueBoxUI.activeInHierarchy && !pauseController.GamePaused)
         {
             // Get both inputs so that neither can be used elsewhere
             bool useItemButtonInput =

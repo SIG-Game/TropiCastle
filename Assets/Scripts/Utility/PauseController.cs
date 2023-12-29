@@ -19,17 +19,8 @@ public class PauseController : MonoBehaviour
 
     public event Action OnGamePausedSet = () => {};
 
-    public static PauseController Instance;
-
     private void Awake()
     {
-        Instance = this;
-
         GamePaused = false;
-    }
-
-    private void OnDestroy()
-    {
-        Instance = null;
     }
 }

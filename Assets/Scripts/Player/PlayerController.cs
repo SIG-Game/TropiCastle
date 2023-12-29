@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteMask overlaySpriteMask;
     [SerializeField] private CursorController cursorController;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private PauseController pauseController;
 
     [Header("Item Usages")]
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (IsAttacking || PauseController.Instance.GamePaused)
+        if (IsAttacking || pauseController.GamePaused)
         {
             return;
         }
@@ -153,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerDeath()
     {
-        PauseController.Instance.GamePaused = true;
+        pauseController.GamePaused = true;
         OnPlayerDied();
     }
 
@@ -183,7 +184,7 @@ public class PlayerController : MonoBehaviour
         itemSelectionController.CanSelect = false;
     }
 
-    public bool CanMove() => !IsAttacking && !PauseController.Instance.GamePaused &&
+    public bool CanMove() => !IsAttacking && !pauseController.GamePaused &&
         !playerActionDisablingUIManager.ActionDisablingUIOpen;
 
     public ItemStack GetSelectedItem() => inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);

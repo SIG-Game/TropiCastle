@@ -16,6 +16,7 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private DialogueBox dialogueBox;
     [SerializeField] private InventoryFullUIController inventoryFullUIController;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private PauseController pauseController;
     [SerializeField] private Vector2 catchFishXPositionRange;
 
     public event Action OnFishingStopped = () => {};
@@ -49,7 +50,7 @@ public class FishingUIController : MonoBehaviour
 
     private void Update()
     {
-        if (!fishingUI.activeSelf || PauseController.Instance.GamePaused)
+        if (!fishingUI.activeSelf || pauseController.GamePaused)
         {
             return;
         }

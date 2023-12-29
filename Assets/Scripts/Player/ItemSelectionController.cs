@@ -7,6 +7,7 @@ public class ItemSelectionController : MonoBehaviour
 {
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private PauseController pauseController;
     [SerializeField] private InputActionReference selectLeftItemActionReference;
     [SerializeField] private InputActionReference selectRightItemActionReference;
     [SerializeField] private int maxSelectedItemIndex;
@@ -61,7 +62,7 @@ public class ItemSelectionController : MonoBehaviour
         StopRepeatSelectCoroutines();
 
         if (!CanSelect ||
-            (PauseController.Instance.GamePaused &&
+            (pauseController.GamePaused &&
                 !inventoryUIManager.InventoryUIOpen))
         {
             return;

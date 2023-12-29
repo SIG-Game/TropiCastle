@@ -33474,6 +33474,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1407859890151699208, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
     - target: {fileID: 1546214460106165925, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: cursorController
@@ -33596,6 +33601,11 @@ PrefabInstance:
       propertyPath: fishingMinigame
       value: 
       objectReference: {fileID: 837265633}
+    - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
     - target: {fileID: 5288355818519945016, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: cursorController
@@ -33736,6 +33746,11 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 1274756994}
+    - target: {fileID: 8536875563149633422, guid: 055035cc7ee7c8646858260629418a55,
+        type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
     - target: {fileID: 8536875563149633422, guid: 055035cc7ee7c8646858260629418a55,
         type: 3}
       propertyPath: inventoryUIManager
@@ -34588,6 +34603,11 @@ PrefabInstance:
       objectReference: {fileID: 1274756994}
     - target: {fileID: 2122123279961665939, guid: cb76167790ad17b418442606107678be,
         type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
+    - target: {fileID: 2122123279961665939, guid: cb76167790ad17b418442606107678be,
+        type: 3}
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1982112582}
@@ -34841,6 +34861,11 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 1274756994}
+    - target: {fileID: 4365771476343332667, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
     - target: {fileID: 4378347577464081252, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -35121,6 +35146,11 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 6562392072500299050, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
     - target: {fileID: 6562392072500299050, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: playerController
@@ -35668,6 +35698,11 @@ PrefabInstance:
       objectReference: {fileID: 1274756994}
     - target: {fileID: 6847651757852005858, guid: cb76167790ad17b418442606107678be,
         type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
+    - target: {fileID: 6847651757852005858, guid: cb76167790ad17b418442606107678be,
+        type: 3}
       propertyPath: itemSelectionController
       value: 
       objectReference: {fileID: 1982112583}
@@ -35731,6 +35766,11 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 1274756994}
+    - target: {fileID: 6847651758018855121, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1654789940}
     - target: {fileID: 6847651758018855121, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: playerActionDisablingUIManager

@@ -8,6 +8,7 @@ public class InventoryMenuController : MonoBehaviour
     [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private PauseController pauseController;
     [SerializeField] private Vector2 playerInventoryUIPosition;
 
     // Must run after any script Update methods that can set ActionDisablingUIOpen
@@ -21,7 +22,7 @@ public class InventoryMenuController : MonoBehaviour
         }
 
         bool openPlayerInventoryUI =
-            !PauseController.Instance.GamePaused &&
+            !pauseController.GamePaused &&
             inputManager.GetInventoryButtonDownIfUnusedThisFrame();
         if (openPlayerInventoryUI)
         {

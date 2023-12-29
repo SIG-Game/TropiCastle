@@ -175,7 +175,7 @@ public class CursorController : MonoBehaviour
 
     private void HideIfUnpaused()
     {
-        if (!PauseController.Instance.GamePaused)
+        if (!pauseController.GamePaused)
         {
             gameObject.SetActive(false);
         }
@@ -183,7 +183,7 @@ public class CursorController : MonoBehaviour
 
     private void ShowIfUnpaused()
     {
-        if (!PauseController.Instance.GamePaused)
+        if (!pauseController.GamePaused)
         {
             gameObject.SetActive(true);
         }
@@ -191,7 +191,7 @@ public class CursorController : MonoBehaviour
 
     private void PauseController_OnGamePausedSet()
     {
-        if (PauseController.Instance.GamePaused)
+        if (pauseController.GamePaused)
         {
             ShowAndUnlockMouseCursor();
 
@@ -211,7 +211,7 @@ public class CursorController : MonoBehaviour
 
     private void PlayerController_OnIsAttackingSet(bool isAttacking)
     {
-        if (PauseController.Instance.GamePaused)
+        if (pauseController.GamePaused)
         {
             return;
         }

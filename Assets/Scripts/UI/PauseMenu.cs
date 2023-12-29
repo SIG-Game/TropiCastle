@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private MenuProperties menuProperties;
     [SerializeField] private GameObject menuBackground;
     [SerializeField] private MenuManager menuManager;
+    [SerializeField] private PauseController pauseController;
     [SerializeField] private Rigidbody2D playerRigidbody2D;
     [SerializeField] private InputActionReference pauseActionReference;
 
@@ -19,7 +20,7 @@ public class PauseMenu : MonoBehaviour
     private void Update()
     {
         if (pauseAction.WasPressedThisFrame() &&
-            (!PauseController.Instance.GamePaused ||
+            (!pauseController.GamePaused ||
                 menuProperties.MenuIsVisible))
         {
             TogglePauseMenu();
@@ -28,9 +29,9 @@ public class PauseMenu : MonoBehaviour
 
     public void TogglePauseMenu()
     {
-        PauseController.Instance.GamePaused = !PauseController.Instance.GamePaused;
+        pauseController.GamePaused = !pauseController.GamePaused;
 
-        if (PauseController.Instance.GamePaused)
+        if (pauseController.GamePaused)
         {
             menuManager.ShowMenu(menuProperties);
         }
@@ -39,7 +40,7 @@ public class PauseMenu : MonoBehaviour
             menuManager.HideCurrentMenu();
         }
 
-        menuBackground.SetActive(PauseController.Instance.GamePaused);
+        menuBackground.SetActive(pauseController.GamePaused);
 
         playerRigidbody2D.velocity = Vector2.zero;
     }

@@ -11,6 +11,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
+    [SerializeField] private PauseController pauseController;
     [SerializeField] private Sprite itemPickupArrow;
     [SerializeField] private Sprite cannotPickUpArrow;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
@@ -57,7 +58,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             WaitingForInputReleaseBeforePlacement = false;
         }
 
-        if (PauseController.Instance.GamePaused ||
+        if (pauseController.GamePaused ||
             playerActionDisablingUIManager.ActionDisablingUIOpen || player.IsAttacking)
         {
             bool shouldCancelPlacement = currentState == PlacementState;

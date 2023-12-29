@@ -6,6 +6,7 @@ public class InventoryUIManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuBackground;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private PauseController pauseController;
 
     public bool InventoryUIOpen
     {
@@ -60,7 +61,7 @@ public class InventoryUIManager : MonoBehaviour
         SetCurrentInventoryUIActive(true);
 
         InventoryUIOpen = true;
-        PauseController.Instance.GamePaused = true;
+        pauseController.GamePaused = true;
     }
 
     public void DisableCurrentInventoryUI()
@@ -70,7 +71,7 @@ public class InventoryUIManager : MonoBehaviour
         currentInventoryUIGameObjects = null;
 
         InventoryUIOpen = false;
-        PauseController.Instance.GamePaused = false;
+        pauseController.GamePaused = false;
     }
 
     private void SetCurrentInventoryUIActive(bool active)
