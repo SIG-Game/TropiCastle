@@ -94,12 +94,10 @@ public class TradingUIController : MonoBehaviour
 
         isCurrentTradePossible = true;
 
-        foreach (ItemStackStruct inputItemStruct in currentTrade.InputItems)
+        foreach (ItemStackStruct inputItem in currentTrade.InputItems)
         {
-            ItemStack inputItem = inputItemStruct.ToClassType();
-
-            bool playerHasInputItem = playerInventory.HasReplacementInputItem(
-               itemIndexToUsedAmount, inputItem);
+            bool playerHasInputItem = playerInventory
+                .HasReplacementInputItem(itemIndexToUsedAmount, inputItem);
 
             isCurrentTradePossible = isCurrentTradePossible && playerHasInputItem;
         }
