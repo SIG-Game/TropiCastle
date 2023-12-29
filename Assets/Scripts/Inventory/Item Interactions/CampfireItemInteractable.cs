@@ -152,9 +152,10 @@ public class CampfireItemInteractable : ContainerItemInteractable
         }
     }
 
-    protected override void Inventory_OnItemChangedAtIndex(ItemStack itemStack, int index)
+    protected override void Inventory_OnItemChangedAtIndex(
+        ItemStackStruct item, int index)
     {
-        base.Inventory_OnItemChangedAtIndex(itemStack, index);
+        base.Inventory_OnItemChangedAtIndex(item, index);
 
         var previousRecipe = currentRecipe;
 

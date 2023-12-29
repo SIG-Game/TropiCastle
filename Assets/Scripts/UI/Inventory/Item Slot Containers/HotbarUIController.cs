@@ -9,7 +9,8 @@ public class HotbarUIController : InventoryUIController
         hotbarSize = itemSlotControllers.Count;
     }
 
-    protected override void Inventory_OnItemChangedAtIndex(ItemStack item, int index)
+    protected override void Inventory_OnItemChangedAtIndex(
+        ItemStackStruct item, int index)
     {
         if (index < hotbarSize)
         {

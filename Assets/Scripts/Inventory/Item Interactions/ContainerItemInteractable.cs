@@ -32,7 +32,7 @@ public abstract class ContainerItemInteractable : ItemInteractable
         inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
     }
 
-    protected virtual void Inventory_OnItemChangedAtIndex(ItemStack _, int _1)
+    protected virtual void Inventory_OnItemChangedAtIndex(ItemStackStruct _, int _1)
     {
         itemInstanceProperties.UpdateItemListProperty(inventory);
     }

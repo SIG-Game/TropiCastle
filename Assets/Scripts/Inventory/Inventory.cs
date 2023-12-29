@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
 
     private int firstEmptyIndex;
 
-    public event Action<ItemStack, int> OnItemChangedAtIndex = (_, _) => {};
+    public event Action<ItemStackStruct, int> OnItemChangedAtIndex = (_, _) => {};
     public event Action OnFailedToAddItemToFullInventory = () => {};
 
     private void Awake()

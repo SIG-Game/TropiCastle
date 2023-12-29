@@ -27,14 +27,10 @@ public class InventoryUIController : MonoBehaviour
         }
     }
 
-    protected virtual void Inventory_OnItemChangedAtIndex(ItemStack item, int index)
+    protected virtual void Inventory_OnItemChangedAtIndex(
+        ItemStackStruct item, int index)
     {
-        UpdateSlotAtIndexUsingItem(index, item);
-    }
-
-    protected void UpdateSlotAtIndexUsingItem(int slotIndex, ItemStack item)
-    {
-        itemSlotControllers[slotIndex].UpdateUsingItem(item);
+        itemSlotControllers[index].UpdateUsingItem(item);
     }
 
     public void SetInventory(Inventory inventory)
