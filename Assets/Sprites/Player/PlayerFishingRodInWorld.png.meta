@@ -120,11 +120,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 5
-        height: 15
+        y: 8
+        width: 7
+        height: 43
       alignment: 9
-      pivot: {x: 0.5, y: 0}
+      pivot: {x: 0.71428573, y: 0.6511628}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -140,12 +140,12 @@ TextureImporter:
       name: PlayerFishingRodInWorld_1
       rect:
         serializedVersion: 2
-        x: 6
-        y: 0
+        x: 8
+        y: 30
         width: 16
-        height: 12
+        height: 18
       alignment: 9
-      pivot: {x: 1, y: 0}
+      pivot: {x: 1, y: 0.33333334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -161,12 +161,12 @@ TextureImporter:
       name: PlayerFishingRodInWorld_2
       rect:
         serializedVersion: 2
-        x: 23
-        y: 0
+        x: 25
+        y: 30
         width: 16
-        height: 12
+        height: 18
       alignment: 9
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0, y: 0.33333334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -182,12 +182,12 @@ TextureImporter:
       name: PlayerFishingRodInWorld_3
       rect:
         serializedVersion: 2
-        x: 40
+        x: 42
         y: 0
-        width: 5
-        height: 15
+        width: 7
+        height: 51
       alignment: 9
-      pivot: {x: 0.5, y: 0}
+      pivot: {x: 0.2857143, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
