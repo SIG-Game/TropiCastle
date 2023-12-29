@@ -4,11 +4,11 @@ using Random = UnityEngine.Random;
 
 public class Chimp : NPCInteractable
 {
+    [SerializeField] private NPCItemOfferingScriptableObject itemOffering;
     [SerializeField] private List<string> givingItemDialogueLines;
     [SerializeField] private List<string> notGivingItemDialogueLines;
     [SerializeField] private List<string> playerInventoryFullDialogueLines;
     [SerializeField] private Vector2 timeBetweenGivesRange;
-    [SerializeField] private NPCItemOfferingSelector itemOfferingSelector;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
     [SerializeField] private DialogueBox dialogueBox;
@@ -16,11 +16,15 @@ public class Chimp : NPCInteractable
     public float LastGiveTime { get; private set; }
     public float TimeBetweenGives { get; set; }
 
+    private NPCItemOfferingSelector itemOfferingSelector;
+
     private const string chimpCharacterName = "Chimp";
 
     protected override void Awake()
     {
         base.Awake();
+
+        itemOfferingSelector = new NPCItemOfferingSelector(itemOffering);
 
         LastGiveTime = Time.time;
         TimeBetweenGives = 0f;

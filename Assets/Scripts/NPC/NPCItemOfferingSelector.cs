@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-public class NPCItemOfferingSelector : MonoBehaviour
+public class NPCItemOfferingSelector
 {
-    [SerializeField] private NPCItemOfferingScriptableObject itemOffering;
-
+    private NPCItemOfferingScriptableObject itemOffering;
     private WeightedRandomSelector itemSelector;
 
-    private void Awake()
+    public NPCItemOfferingSelector(NPCItemOfferingScriptableObject itemOffering)
     {
+        this.itemOffering = itemOffering;
+
         List<float> itemWeights = itemOffering.PotentialItemsToGive
             .Select(x => x.ProbabilityWeight).ToList();
-
         itemSelector = new WeightedRandomSelector(itemWeights);
     }
 
