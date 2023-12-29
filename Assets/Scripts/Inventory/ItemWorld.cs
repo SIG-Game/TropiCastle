@@ -13,27 +13,11 @@ public class ItemWorld : MonoBehaviour
         set => SetItem(value);
     }
 
-    private ItemInteractableDependencies itemInteractableDependencies;
-
-    public void SetUpItemWorld(ItemStack item,
-        ItemInteractableDependencies itemInteractableDependencies)
-    {
-        SetItemInteractableDependencies(itemInteractableDependencies);
-        
-        Item = item;
-    }
-
     public void SetItemAmount(int amount)
     {
         item.Amount = amount;
 
         amountText.text = Item.GetAmountText();
-    }
-
-    public void SetItemInteractableDependencies(
-        ItemInteractableDependencies itemInteractableDependencies)
-    {
-        this.itemInteractableDependencies = itemInteractableDependencies;
     }
 
     private void SetItem(ItemStack item)
@@ -59,9 +43,6 @@ public class ItemWorld : MonoBehaviour
                 Item.ItemDefinition.GetStringProperty("InteractableType"));
 
             gameObject.AddComponent(itemInteractableType);
-
-            GetComponent<ItemInteractable>()
-                .SetUpUsingDependencies(itemInteractableDependencies);
 
             gameObject.layer = LayerMask.NameToLayer("Interactable");
         }

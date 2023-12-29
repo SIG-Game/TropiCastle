@@ -9,7 +9,6 @@ using UnityEditor.SceneManagement;
 public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 {
     [SerializeField] private GameObject itemWorldPrefab;
-    [SerializeField] private ItemInteractableDependencies itemInteractableDependencies;
     [SerializeField] private Transform itemWorldParent;
     [SerializeField] private Vector2 itemWorldPrefabColliderExtents;
 
@@ -39,7 +38,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
         GameObject spawnedGameObject = Instantiate(itemWorldPrefab, position, Quaternion.identity, itemWorldParent);
         ItemWorld spawnedItemWorld = spawnedGameObject.GetComponent<ItemWorld>();
 
-        spawnedItemWorld.SetUpItemWorld(itemToSpawn, itemInteractableDependencies);
+        spawnedItemWorld.Item = itemToSpawn;
 
         return spawnedItemWorld;
     }

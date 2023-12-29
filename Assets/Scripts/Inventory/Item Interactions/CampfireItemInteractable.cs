@@ -6,15 +6,18 @@ using UnityEngine.AddressableAssets;
 
 public class CampfireItemInteractable : ContainerItemInteractable
 {
-    private CampfireUIController campfireUIController;
     private IList<CampfireRecipeScriptableObject> campfireRecipes;
     private CampfireRecipeScriptableObject currentRecipe;
     private ItemStackStruct? currentRecipeInputItem;
     private bool activeInUI;
 
+    [Inject] private CampfireUIController campfireUIController;
+
     protected override void Awake()
     {
         base.Awake();
+
+        this.InjectDependencies();
 
         var campfireRecipesLoadHandle =
             Addressables.LoadAssetsAsync<CampfireRecipeScriptableObject>(
@@ -74,12 +77,6 @@ public class CampfireItemInteractable : ContainerItemInteractable
 
         campfireUIController.OnCampfireUIClosed +=
             CampfireUIController_OnCampfireUIClosed;
-    }
-
-    public override void SetUpUsingDependencies(
-        ItemInteractableDependencies itemInteractableDependencies)
-    {
-        campfireUIController = itemInteractableDependencies.CampfireUIController;
     }
 
     private void SetCurrentRecipe()

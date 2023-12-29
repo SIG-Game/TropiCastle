@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public abstract class ContainerItemInteractable : ItemInteractable
+public abstract class ContainerItemInteractable : Interactable
 {
     protected Inventory inventory;
     protected ItemInstanceProperties itemInstanceProperties;

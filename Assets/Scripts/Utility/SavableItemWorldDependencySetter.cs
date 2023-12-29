@@ -3,7 +3,6 @@ using UnityEngine;
 public class SavableItemWorldDependencySetter : MonoBehaviour,
     ISavablePrefabDependencySetter
 {
-    [SerializeField] private ItemInteractableDependencies itemInteractableDependencies;
     [SerializeField] private Transform itemWorldParent;
 
     public void SetPrefabDependencies(SavablePrefab savablePrefab)
@@ -12,8 +11,5 @@ public class SavableItemWorldDependencySetter : MonoBehaviour,
             (SavablePrefabItemWorld)savablePrefab;
 
         savablePrefabItemWorld.transform.parent = itemWorldParent;
-
-        savablePrefabItemWorld.GetItemWorld()
-            .SetItemInteractableDependencies(itemInteractableDependencies);
     }
 }
