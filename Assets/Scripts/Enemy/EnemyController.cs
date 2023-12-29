@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float waitTimeAfterKnockbackSeconds;
     [SerializeField] private float fadeOutSpeed;
     [SerializeField] private CanvasGroup healthBarCanvasGroup;
+    [SerializeField] private SpriteRenderer healthBarBackground;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private List<ItemStackStruct> loot;
@@ -87,6 +88,12 @@ public class EnemyController : MonoBehaviour
         if (healthBarCanvasGroup != null)
         {
             healthBarCanvasGroup.alpha = alpha;
+        }
+
+        if (healthBarBackground != null)
+        {
+            healthBarBackground.color = new Color(healthBarBackground.color.r,
+                healthBarBackground.color.g, healthBarBackground.color.b, alpha);
         }
     }
 
