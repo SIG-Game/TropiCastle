@@ -636,6 +636,7 @@ MonoBehaviour:
   playerController: {fileID: 5288355818519945016}
   itemSelectionController: {fileID: 8536875563149633422}
   playerHealthController: {fileID: 3015389456133774718}
+  playerMoneyController: {fileID: 5755445992949103826}
 --- !u!114 &2514896595225604082
 MonoBehaviour:
   m_ObjectHideFlags: 0

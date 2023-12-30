@@ -7,6 +7,7 @@ public class PlayerSaveManager : SaveManager
     [SerializeField] private PlayerController playerController;
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private HealthController playerHealthController;
+    [SerializeField] private MoneyController playerMoneyController;
 
     public override Dictionary<string, object> GetProperties()
     {
@@ -15,7 +16,8 @@ public class PlayerSaveManager : SaveManager
             { "Position", playerController.transform.position.ToArray() },
             { "Direction", (int)playerController.Direction },
             { "Health", playerHealthController.Health },
-            { "SelectedItemIndex", itemSelectionController.SelectedItemIndex }
+            { "SelectedItemIndex", itemSelectionController.SelectedItemIndex },
+            { "Money", playerMoneyController.Money }
         };
 
         return properties;
@@ -31,5 +33,6 @@ public class PlayerSaveManager : SaveManager
             Convert.ToInt32(properties["Health"]));
         itemSelectionController.SelectedItemIndex =
             Convert.ToInt32(properties["SelectedItemIndex"]);
+        playerMoneyController.Money = Convert.ToInt32(properties["Money"]);
     }
 }
