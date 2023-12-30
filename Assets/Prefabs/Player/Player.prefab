@@ -366,7 +366,6 @@ GameObject:
   - component: {fileID: 5288355818519944997}
   - component: {fileID: 5288355818519945016}
   - component: {fileID: 2526882180276161147}
-  - component: {fileID: 534933106481965837}
   - component: {fileID: 3015389456133774718}
   - component: {fileID: 856750480813842556}
   - component: {fileID: 8536875563149633422}
@@ -400,6 +399,7 @@ Transform:
   - {fileID: 4901340854988399641}
   - {fileID: 3201894121020275491}
   - {fileID: 2831154316492321512}
+  - {fileID: 4184163032742305094}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -515,10 +515,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 856750480813842556}
-  playerActionDisablingUIManager: {fileID: 534933106481965837}
+  playerActionDisablingUIManager: {fileID: 3928446635819121091}
   overlaySpriteMask: {fileID: 7652320630200294286}
   cursorController: {fileID: 0}
   inputManager: {fileID: 0}
+  pauseController: {fileID: 0}
   fishingRodItemUsage: {fileID: 8293061806737836654}
   healingItemUsage: {fileID: 7288205203562457323}
   weaponItemUsage: {fileID: 2485764338336164774}
@@ -541,18 +542,6 @@ MonoBehaviour:
   movementSpeed: 0.06
   sprintSpeedMultiplier: 1.25
   waterSpeedMultiplier: 0.5
---- !u!114 &534933106481965837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5288355818519944996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de47d73493498c469fdee263b82fdb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3015389456133774718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryUIManager: {fileID: 0}
   inputManager: {fileID: 0}
+  pauseController: {fileID: 0}
   selectLeftItemActionReference: {fileID: -766893524004852649, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
     type: 3}
   selectRightItemActionReference: {fileID: 3435081143351072354, guid: 0bbbad7fe01cf7c46a1201e0d5ea4448,
@@ -725,6 +715,51 @@ MonoBehaviour:
   healthController: {fileID: 3015389456133774718}
   healthChangeTextPrefab: {fileID: 928500359597897181, guid: 9242018da622f564fab950dc3cde3d28,
     type: 3}
+  pauseController: {fileID: 0}
+--- !u!1 &7070325552965084463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4184163032742305094}
+  - component: {fileID: 3928446635819121091}
+  m_Layer: 6
+  m_Name: Player Action Disabling UI Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4184163032742305094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7070325552965084463}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5288355818519945019}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3928446635819121091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7070325552965084463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de47d73493498c469fdee263b82fdb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7191733551750576650
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,10 +11,11 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject characterNameUI;
     [SerializeField] private TextMeshProUGUI characterNameText;
-    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private PauseController pauseController;
     [SerializeField] private float characterScrollWaitSeconds;
+
+    [Inject] private InputManager inputManager;
+    [Inject] private PauseController pauseController;
+    [Inject] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
 
     private IEnumerator<string> linesEnumerator;
     private Action afterDialogueAction;
@@ -24,6 +25,8 @@ public class DialogueBox : MonoBehaviour
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         linesEnumerator = Enumerable.Empty<string>().GetEnumerator();
         characterScrollWaitForSeconds = new WaitForSeconds(characterScrollWaitSeconds);
         textScrolling = false;
