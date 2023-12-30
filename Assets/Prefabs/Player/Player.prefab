@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 3015389456133774718}
   - component: {fileID: 856750480813842556}
   - component: {fileID: 8536875563149633422}
+  - component: {fileID: 5755445992949103826}
   - component: {fileID: 5613604618592605289}
   - component: {fileID: 6692545634876907308}
   - component: {fileID: 2514896595225604082}
@@ -589,6 +590,18 @@ MonoBehaviour:
     type: 3}
   maxSelectedItemIndex: 9
   selectInputRepeatTimeSeconds: 0.25
+--- !u!114 &5755445992949103826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288355818519944996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94937e32bfd9d14b8efac7ad71f78e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5613604618592605289
 MonoBehaviour:
   m_ObjectHideFlags: 0
