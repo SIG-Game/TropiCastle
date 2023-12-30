@@ -34136,7 +34136,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerInput
       value: 
-      objectReference: {fileID: 6628131629790253058}
+      objectReference: {fileID: 6628131629790253057}
     - target: {fileID: 987879900132414908, guid: 1618a20a205e6e64e8cf9c6a051be3a0,
         type: 3}
       propertyPath: cursorCamera
@@ -34465,9 +34465,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b6a5004a53f4f408f3e74a2678249f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6628131629790253058 stripped
+--- !u!114 &6628131629790253057 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1180359260467625487, guid: 0b10992830a0ba7439705a4db0804f24,
+  m_CorrespondingSourceObject: {fileID: 3927141190518846018, guid: 0b10992830a0ba7439705a4db0804f24,
     type: 3}
   m_PrefabInstance: {fileID: 6628131629790253055}
   m_PrefabAsset: {fileID: 0}
@@ -36581,7 +36581,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerInput
       value: 
-      objectReference: {fileID: 6628131629790253058}
+      objectReference: {fileID: 6628131629790253057}
     - target: {fileID: 8494658916369790395, guid: 559fb8c14ac19b34091355c72e5b7c5a,
         type: 3}
       propertyPath: inputManager
