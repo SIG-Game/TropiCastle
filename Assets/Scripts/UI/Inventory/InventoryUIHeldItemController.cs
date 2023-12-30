@@ -136,7 +136,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
             {
                 clickedInventory.RemoveItemAtIndex(clickedItemIndex);
 
-                SetHeldItemAmount(combinedAmount);
+                HeldItem = HeldItem.Value.GetCopyWithAmount(combinedAmount);
             }
             else
             {
@@ -144,7 +144,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
                     combinedAmount - HeldItem.Value.ItemDefinition.StackSize,
                     clickedItemIndex);
 
-                SetHeldItemAmount(HeldItem.Value.ItemDefinition.StackSize);
+                HeldItem = HeldItem.Value.GetCopyWithAmount(
+                    HeldItem.Value.ItemDefinition.StackSize);
             }
 
             UpdateHeldItemUI();
@@ -190,7 +191,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
         else
         {
-            SetHeldItemAmount(HeldItem.Value.Amount - amountToMove);
+            HeldItem = HeldItem.Value.GetCopyWithAmount(
+                HeldItem.Value.Amount - amountToMove);
 
             UpdateHeldItemUI();
         }
@@ -255,17 +257,10 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
     }
 
-    private void SetHeldItemAmount(int amount)
-    {
-        var newHeldItem = new ItemStackStruct(HeldItem.Value);
-        newHeldItem.Amount = amount;
-        
-        HeldItem = newHeldItem;
-    }
-
     public void DecrementHeldItemStack()
     {
-        SetHeldItemAmount(HeldItem.Value.Amount - 1);
+        HeldItem = HeldItem.Value.GetCopyWithAmount(
+            HeldItem.Value.Amount - 1);
 
         if (HeldItem.Value.Amount == 0)
         {
