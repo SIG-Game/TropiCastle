@@ -8,13 +8,14 @@ public class CursorController : MonoBehaviour
     [SerializeField] private GameObject cursorBackground;
     [SerializeField] private TMP_Text amountText;
     [SerializeField] private Camera cursorCamera;
-    [SerializeField] private PauseController pauseController;
-    [SerializeField] private PlayerController playerController;
-    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
-    [SerializeField] private PlayerInput playerInput;
     [SerializeField] private InputActionReference moveCursorActionReference;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private float gamepadSensitivity;
+
+    [Inject] private PauseController pauseController;
+    [Inject] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
+    [Inject] private PlayerController playerController;
+    [Inject] private PlayerInput playerInput;
 
     public Sprite Sprite
     {
@@ -39,6 +40,8 @@ public class CursorController : MonoBehaviour
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         HideAndLockMouseCursor();
 
         cursorSpriteRenderer = GetComponent<SpriteRenderer>();
