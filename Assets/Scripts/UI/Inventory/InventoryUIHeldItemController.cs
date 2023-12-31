@@ -24,7 +24,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
     }
 
-    private ItemStackStruct? HeldItem
+    private ItemStack? HeldItem
     {
         get => heldItem;
         set
@@ -43,7 +43,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
     private Inventory clickedInventory;
     private Inventory heldItemInventory;
-    private ItemStackStruct? heldItem;
+    private ItemStack? heldItem;
     private RectTransform heldItemRectTransform;
     private Image heldItemImage;
     private int? heldItemIndex;
@@ -86,7 +86,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     {
         this.clickedInventory = clickedInventory;
 
-        ItemStackStruct clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
+        ItemStack clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
 
         if (HoldingItem())
         {
@@ -102,6 +102,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
                 clickedInventory.ConsolidateItemsToIndex(clickedItemIndex);
             }
 
+            clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
+
             HoldItem(clickedInventory, clickedItemIndex, clickedItem);
         }
     }
@@ -110,7 +112,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     {
         this.clickedInventory = clickedInventory;
 
-        ItemStackStruct clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
+        ItemStack clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
 
         if (HoldingItem())
         {
@@ -125,7 +127,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
             return;
         }
 
-        ItemStackStruct clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
+        ItemStack clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
 
         if (HeldItem.Value.ItemDefinition.name == clickedItem.ItemDefinition.name
             && HeldItem.Value.Amount < HeldItem.Value.ItemDefinition.StackSize)
@@ -157,7 +159,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         RightClickedItemAtIndex(clickedInventory, clickedItemIndex);
     }
 
-    private void PlaceHeldItem(int clickedItemIndex, ItemStackStruct clickedItem)
+    private void PlaceHeldItem(int clickedItemIndex, ItemStack clickedItem)
     {
         if (clickedInventory == heldItemInventory && clickedItemIndex == heldItemIndex)
         {
@@ -170,14 +172,14 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
         else if (clickedItem.ItemDefinition.IsEmpty())
         {
-            clickedInventory.AddItemAtEmptyItemIndex(HeldItem, clickedItemIndex);
+            clickedInventory.AddItemAtEmptyItemIndex(HeldItem.Value, clickedItemIndex);
 
             HideHeldItemUI();
         }
     }
 
     private void CombineHeldItemStackWithClickedItemStack(
-        int clickedItemIndex, ItemStackStruct clickedItem)
+        int clickedItemIndex, ItemStack clickedItem)
     {
         int amountToMove = Math.Min(HeldItem.Value.Amount,
             clickedItem.ItemDefinition.StackSize - clickedItem.Amount);
@@ -198,7 +200,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
     }
 
-    private void PlaceOneOfHeldItem(int clickedItemIndex, ItemStackStruct clickedItem)
+    private void PlaceOneOfHeldItem(int clickedItemIndex, ItemStack clickedItem)
     {
         bool canPlaceInClickedItemStack =
             clickedItem.ItemDefinition.name == HeldItem.Value.ItemDefinition.name &&
@@ -209,7 +211,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
         else if (clickedItem.ItemDefinition.IsEmpty())
         {
-            ItemStackStruct oneOfHeldItem = HeldItem.Value.GetCopyWithAmount(1);
+            ItemStack oneOfHeldItem = HeldItem.Value.GetCopyWithAmount(1);
 
             clickedInventory.AddItemAtEmptyItemIndex(oneOfHeldItem, clickedItemIndex);
         }
@@ -221,7 +223,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         DecrementHeldItemStack();
     }
 
-    private void HoldItem(Inventory inventory, int itemIndex, ItemStackStruct item)
+    private void HoldItem(Inventory inventory, int itemIndex, ItemStack item)
     {
         heldItemInventory = inventory;
         heldItemIndex = itemIndex;
@@ -245,7 +247,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         {
             heldItemImage.sprite = HeldItem.Value.ItemDefinition.Sprite;
             heldItemAmountText.text = HeldItem.Value.GetAmountText();
-            durabilityMeter.UpdateUsingItem(HeldItem);
+            durabilityMeter.UpdateUsingItem(HeldItem.Value);
         }
         else
         {
@@ -276,7 +278,7 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     {
         if (HoldingItem())
         {
-            heldItemInventory.AddItemAtIndex(HeldItem, heldItemIndex.Value);
+            heldItemInventory.AddItemAtIndex(HeldItem.Value, heldItemIndex.Value);
         }
 
         HideHeldItemUI();

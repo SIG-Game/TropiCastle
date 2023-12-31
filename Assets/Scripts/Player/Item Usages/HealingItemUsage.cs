@@ -5,7 +5,7 @@ public class HealingItemUsage : MonoBehaviour, IItemUsage
     [SerializeField] private HealthController playerHealthController;
     [SerializeField] private Inventory playerInventory;
 
-    public void UseItem(ItemStackStruct item, int itemIndex)
+    public void UseItem(ItemStack item, int itemIndex)
     {
         if (!playerHealthController.AtMaxHealth)
         {

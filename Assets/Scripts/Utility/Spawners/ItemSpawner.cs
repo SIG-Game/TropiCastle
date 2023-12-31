@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ItemSpawner : PrefabSpawner
 {
-    [SerializeField] private ItemStackStruct itemToSpawn;
+    [SerializeField] private ItemStack itemToSpawn;
 
     protected override void ApplySpawnedPrefabProperties(GameObject spawnedPrefab)
     {

@@ -17,6 +17,6 @@ public class InventorySaveManager : SaveManager
 
     public override void UpdateFromProperties(Dictionary<string, object> properties)
     {
-        inventory.SetUpFromItemList((List<ItemStackStruct>)properties["ItemList"]);
+        inventory.SetUpFromItemList((List<ItemStack>)properties["ItemList"]);
     }
 }

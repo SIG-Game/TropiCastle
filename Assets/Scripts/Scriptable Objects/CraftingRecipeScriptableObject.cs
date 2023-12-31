@@ -4,6 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Object/Recipe/Crafting Recipe")]
 public class CraftingRecipeScriptableObject : ScriptableObject
 {
-    public List<ItemStackStruct> Ingredients;
-    public ItemStackStruct ResultItem;
+    public List<ItemStack> Ingredients;
+    public ItemStack ResultItem;
 }

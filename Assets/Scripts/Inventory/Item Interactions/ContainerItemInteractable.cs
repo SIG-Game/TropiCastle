@@ -11,14 +11,14 @@ public abstract class ContainerItemInteractable : Interactable
 
         ItemStack item = GetComponent<ItemWorld>().Item;
 
-        itemInstanceProperties = item.instanceProperties;
+        itemInstanceProperties = item.InstanceProperties;
 
         inventory.InitializeItemListWithSize(
-            item.itemDefinition.GetIntProperty("ContainerSize"));
+            item.ItemDefinition.GetIntProperty("ContainerSize"));
 
         if (itemInstanceProperties != null)
         {
-            var itemList = (List<ItemStackStruct>)
+            var itemList = (List<ItemStack>)
                 itemInstanceProperties.PropertyDictionary["ItemList"];
 
             inventory.SetUpFromItemList(itemList);
@@ -32,7 +32,7 @@ public abstract class ContainerItemInteractable : Interactable
         inventory.OnItemChangedAtIndex -= Inventory_OnItemChangedAtIndex;
     }
 
-    protected virtual void Inventory_OnItemChangedAtIndex(ItemStackStruct _, int _1)
+    protected virtual void Inventory_OnItemChangedAtIndex(ItemStack _, int _1)
     {
         itemInstanceProperties.UpdateItemListProperty(inventory);
     }

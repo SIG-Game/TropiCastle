@@ -3,6 +3,6 @@ using System;
 [Serializable]
 public class NPCItemToGive
 {
-    public ItemStackStruct Item;
+    public ItemStack Item;
     public float ProbabilityWeight;
 }

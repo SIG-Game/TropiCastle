@@ -138,15 +138,15 @@ public class PlayerController : MonoBehaviour
 
     private void UseItem(ItemStack item, int itemIndex)
     {
-        if (item.itemDefinition.HasProperty("HealAmount"))
+        if (item.ItemDefinition.HasProperty("HealAmount"))
         {
             healingItemUsage.UseItem(item, itemIndex);
         }
-        else if (item.itemDefinition.HasProperty("AttackType"))
+        else if (item.ItemDefinition.HasProperty("AttackType"))
         {
             weaponItemUsage.UseItem(item, itemIndex);
         }
-        else if (item.itemDefinition.name == "FishingRod")
+        else if (item.ItemDefinition.name == "FishingRod")
         {
             fishingRodItemUsage.UseItem(item, itemIndex);
         }
@@ -187,7 +187,8 @@ public class PlayerController : MonoBehaviour
     public bool CanMove() => !IsAttacking && !pauseController.GamePaused &&
         !playerActionDisablingUIManager.ActionDisablingUIOpen;
 
-    public ItemStack GetSelectedItem() => inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
+    public ItemStack GetSelectedItem() =>
+        inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
 
     public Inventory GetInventory() => inventory;
 }

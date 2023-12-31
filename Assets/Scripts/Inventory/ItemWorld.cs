@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ItemWorld : MonoBehaviour
 {
-    [SerializeField] private ItemStackStruct item;
+    [SerializeField] private ItemStack item;
     [SerializeField] private TMP_Text amountText;
 
-    public ItemStackStruct Item
+    public ItemStack Item
     {
         get => item;
         set => SetItem(value);

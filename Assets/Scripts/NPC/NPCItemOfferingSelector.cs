@@ -15,7 +15,7 @@ public class NPCItemOfferingSelector
         itemSelector = new WeightedRandomSelector(itemWeights);
     }
 
-    public ItemStackStruct SelectItemToGive()
+    public ItemStack SelectItemToGive()
     {
         int itemToGiveIndex = itemSelector.SelectIndex();
         return itemOffering.PotentialItemsToGive[itemToGiveIndex].Item;

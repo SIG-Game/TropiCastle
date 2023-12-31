@@ -41,14 +41,14 @@ public class Chimp : NPCInteractable
 
         FacePlayer(player);
 
-        ItemStackStruct? itemToGive = null;
+        ItemStack? itemToGive = null;
         List<string> dialogueLinesToPlay = null;
 
         if (ItemGiveAvailable())
         {
             itemToGive = itemOfferingSelector.SelectItemToGive();
 
-            if (!player.GetInventory().CanAddItem(itemToGive))
+            if (!player.GetInventory().CanAddItem(itemToGive.Value))
             {
                 dialogueLinesToPlay = playerInventoryFullDialogueLines;
                 itemToGive = null;
@@ -56,7 +56,7 @@ public class Chimp : NPCInteractable
             else
             {
                 dialogueLinesToPlay = givingItemDialogueLines;
-                chimpItemInWorld.ShowItem(itemToGive);
+                chimpItemInWorld.ShowItem(itemToGive.Value);
             }
         }
         else
@@ -70,11 +70,11 @@ public class Chimp : NPCInteractable
     }
 
     private void Chimp_AfterDialogueAction(
-        PlayerController player, ItemStackStruct? itemToGive)
+        PlayerController player, ItemStack? itemToGive)
     {
         if (itemToGive != null)
         {
-            player.GetInventory().AddItem(itemToGive);
+            player.GetInventory().AddItem(itemToGive.Value);
 
             chimpItemInWorld.Hide();
 

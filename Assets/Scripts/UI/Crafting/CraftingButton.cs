@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,8 +42,7 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
     public void CraftingButton_OnClick()
     {
         playerInventory.ReplaceItems(
-            craftingRecipe.Ingredients.Select(x => x.ToClassType()).ToList(),
-            craftingRecipe.ResultItem.ToClassType());
+            craftingRecipe.Ingredients, craftingRecipe.ResultItem);
     }
 
     public void SetUpCraftingButton(CraftingButtonDependencies craftingButtonDependencies,
@@ -62,7 +60,7 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
 
         Dictionary<int, int> itemIndexToUsedAmount = new Dictionary<int, int>();
 
-        foreach (ItemStackStruct ingredient in craftingRecipe.Ingredients)
+        foreach (ItemStack ingredient in craftingRecipe.Ingredients)
         {
             bool playerHasIngredient = playerInventory
                 .HasReplacementInputItem(itemIndexToUsedAmount, ingredient);

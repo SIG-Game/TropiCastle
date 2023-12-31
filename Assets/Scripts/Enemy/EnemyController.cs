@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private SpriteRenderer healthBarBackground;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private List<ItemStackStruct> loot;
+    [SerializeField] private List<ItemStack> loot;
     [SerializeField] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
 
     public InitialEnemyState InitialState { get; private set; }
@@ -99,14 +99,14 @@ public class EnemyController : MonoBehaviour
 
     public void EnemyDeath()
     {
-        foreach (ItemStackStruct lootItem in loot)
+        foreach (ItemStack lootItem in loot)
         {
             playerInventory.TryAddItem(lootItem, out int amountAdded);
 
             bool lootItemNotFullyAdded = amountAdded != lootItem.Amount;
             if (lootItemNotFullyAdded)
             {
-                ItemStackStruct itemToDrop = lootItem
+                ItemStack itemToDrop = lootItem
                     .GetCopyWithAmount(lootItem.Amount - amountAdded); 
 
                 itemWorldPrefabInstanceFactory.DropItem(

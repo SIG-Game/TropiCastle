@@ -8,7 +8,7 @@ public class FishingRodItemUsage : MonoBehaviour, IItemUsage
 
     private int itemIndex;
 
-    public void UseItem(ItemStackStruct _, int itemIndex)
+    public void UseItem(ItemStack _, int itemIndex)
     {
         if (playerController.WaterInteractionCast(0.5f, 0.4f).collider == null)
         {

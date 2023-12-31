@@ -10,7 +10,7 @@ public class HotbarUIController : InventoryUIController
     }
 
     protected override void Inventory_OnItemChangedAtIndex(
-        ItemStackStruct item, int index)
+        ItemStack item, int index)
     {
         if (index < hotbarSize)
         {

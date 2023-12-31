@@ -8,7 +8,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
 {
     private IList<CampfireRecipeScriptableObject> campfireRecipes;
     private CampfireRecipeScriptableObject currentRecipe;
-    private ItemStackStruct? currentRecipeInputItem;
+    private ItemStack? currentRecipeInputItem;
     private bool activeInUI;
 
     [Inject] private CampfireUIController campfireUIController;
@@ -41,7 +41,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
 
             if (cookTimeProgress >= currentRecipe.CookTime)
             {
-                ItemStackStruct inputItem = inventory.GetItemAtIndex(0);
+                ItemStack inputItem = inventory.GetItemAtIndex(0);
 
                 int inputRemoveAmount = currentRecipeInputItem.Value.Amount;
 
@@ -49,8 +49,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
                 // updates currentRecipe and currentRecipeInputItem
                 // based on inventory changes
 
-                inventory.AddItemAtIndex(
-                    currentRecipe.ResultItem.ToClassType(), 1);
+                inventory.AddItemAtIndex(currentRecipe.ResultItem, 1);
 
                 inventory.SetItemAmountAtIndex(
                     inputItem.Amount - inputRemoveAmount, 0);
@@ -81,8 +80,8 @@ public class CampfireItemInteractable : ContainerItemInteractable
 
     private void SetCurrentRecipe()
     {
-        ItemStackStruct inputItem = inventory.GetItemAtIndex(0);
-        ItemStackStruct inventoryResultItem = inventory.GetItemAtIndex(1);
+        ItemStack inputItem = inventory.GetItemAtIndex(0);
+        ItemStack inventoryResultItem = inventory.GetItemAtIndex(1);
 
         IEnumerable<CampfireRecipeScriptableObject> possiblyMatchingRecipes;
 
@@ -102,7 +101,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
         }
 
         CampfireRecipeScriptableObject matchingRecipe = null;
-        ItemStackStruct? matchingRecipeInputItem = null;
+        ItemStack? matchingRecipeInputItem = null;
 
         foreach (var recipe in possiblyMatchingRecipes)
         {
@@ -113,7 +112,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
             if (inputItemIndex != -1)
             {
                 matchingRecipeInputItem =
-                    recipe.PossibleInputItems[inputItemIndex].ToClassType();
+                    recipe.PossibleInputItems[inputItemIndex];
                 matchingRecipe = recipe;
 
                 break;
@@ -150,7 +149,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
     }
 
     protected override void Inventory_OnItemChangedAtIndex(
-        ItemStackStruct item, int index)
+        ItemStack item, int index)
     {
         base.Inventory_OnItemChangedAtIndex(item, index);
 

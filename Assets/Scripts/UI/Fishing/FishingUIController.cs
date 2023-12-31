@@ -26,7 +26,7 @@ public class FishingUIController : MonoBehaviour
     private Animator animator;
     private WeightedRandomSelector fishSelector;
     private ItemScriptableObject selectedFishDefinition;
-    private ItemStackStruct selectedFishItem;
+    private ItemStack selectedFishItem;
     private bool catchFailedAnimationStarted;
 
     private IList<ItemScriptableObject> fishItemScriptableObjects;
@@ -119,7 +119,7 @@ public class FishingUIController : MonoBehaviour
         selectedFishDefinition = fishItemScriptableObjects[fishSelector.SelectIndex()];
         fishUI.Speed = selectedFishDefinition.GetFloatProperty("FishSpeed");
 
-        selectedFishItem = new ItemStackStruct(selectedFishDefinition, 1);
+        selectedFishItem = new ItemStack(selectedFishDefinition, 1);
 
         if (!playerInventory.CanAddItem(selectedFishItem))
         {

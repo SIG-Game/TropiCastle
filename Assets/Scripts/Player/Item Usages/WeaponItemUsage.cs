@@ -32,7 +32,7 @@ public class WeaponItemUsage : MonoBehaviour, IItemUsage
         }
     }
 
-    public void UseItem(ItemStackStruct item, int itemIndex)
+    public void UseItem(ItemStack item, int itemIndex)
     {
         playerAnimator.SetFloat("Attack Speed Multiplier",
             item.ItemDefinition.GetFloatProperty("AttackSpeed"));

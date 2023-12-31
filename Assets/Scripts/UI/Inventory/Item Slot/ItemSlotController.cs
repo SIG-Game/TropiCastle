@@ -13,7 +13,7 @@ public class ItemSlotController : MonoBehaviour
 
     public void UpdateUsingItem(ItemStack item)
     {
-        itemSlotImage.sprite = item.itemDefinition.Sprite;
+        itemSlotImage.sprite = item.ItemDefinition.Sprite;
         amountText.text = item.GetAmountText();
         durabilityMeter.UpdateUsingItem(item);
     }

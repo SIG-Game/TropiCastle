@@ -25,7 +25,7 @@ public class SavablePrefabItemWorld : SavablePrefab
     {
         transform.position = Vector3Helper.FromArray((float[])properties["Position"]);
 
-        itemWorld.Item = (ItemStackStruct)properties["Item"];
+        itemWorld.Item = (ItemStack)properties["Item"];
 
         spawnable.SetSpawnerUsingGuid<ItemSpawner>((string)properties["SpawnerGuid"]);
     }

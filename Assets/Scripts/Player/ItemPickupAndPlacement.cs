@@ -81,7 +81,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
             cursorOverlapCollider.GetComponent<ItemWorld>() : null;
 
         ItemScriptableObject selectedItemDefinition =
-            player.GetSelectedItem().itemDefinition;
+            player.GetSelectedItem().ItemDefinition;
 
         Vector2 selectedItemColliderExtents = ItemWorldPrefabInstanceFactory
             .GetItemColliderExtents(selectedItemDefinition);
@@ -119,9 +119,9 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PlaceSelectedItemAtCursorPosition()
     {
-        ItemStackStruct selectedItem = player.GetSelectedItem();
+        ItemStack selectedItem = player.GetSelectedItem();
 
-        ItemStackStruct itemToPlace = selectedItem.ItemDefinition.OneAtATimePlacement ?
+        ItemStack itemToPlace = selectedItem.ItemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
 
         if (!itemToPlace.ItemDefinition.IsEmpty())
@@ -184,9 +184,9 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePlacementCursorAndPlayerItem()
     {
-        ItemStackStruct selectedItem = player.GetSelectedItem();
+        ItemStack selectedItem = player.GetSelectedItem();
 
-        ItemStackStruct placementItem = selectedItem.ItemDefinition.OneAtATimePlacement ?
+        ItemStack placementItem = selectedItem.ItemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
 
         cursorController.LockToGrid = selectedItem.ItemDefinition.LockPlacementToGrid;
@@ -207,14 +207,14 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public bool SelectedItemIsEmpty()
     {
         ItemScriptableObject selectedItemDefinition =
-            player.GetSelectedItem().itemDefinition;
+            player.GetSelectedItem().ItemDefinition;
 
         return selectedItemDefinition.IsEmpty();
     }
 
     private bool HoveredItemContainsItem() => HoveredItemWorld != null &&
         HoveredItemWorld.TryGetComponent(out Inventory hoveredInventory) &&
-        hoveredInventory.GetItemClassList().Exists(x => !x.itemDefinition.IsEmpty());
+        hoveredInventory.GetItemList().Exists(x => !x.ItemDefinition.IsEmpty());
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)
     {
@@ -226,7 +226,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
     public static void PickUpItemWorld(ItemWorld itemWorld,
         Inventory inventory, int preferredIndex)
     {
-        ItemStackStruct item = itemWorld.Item;
+        ItemStack item = itemWorld.Item;
 
         inventory.TryAddItemToFirstStackOrIndex(
             item, preferredIndex, out int amountAdded);

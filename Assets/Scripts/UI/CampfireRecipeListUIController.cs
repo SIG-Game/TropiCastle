@@ -23,7 +23,7 @@ public class CampfireRecipeListUIController : MonoBehaviour
 
         foreach (CampfireRecipeScriptableObject recipe in campfireRecipes)
         {
-            foreach (ItemStackStruct inputItem in recipe.PossibleInputItems)
+            foreach (ItemStack inputItem in recipe.PossibleInputItems)
             {
                 recipeListBuilder.AppendLine($"{inputItem} -> {recipe.ResultItem}");
             }

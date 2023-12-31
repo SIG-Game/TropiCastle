@@ -45,7 +45,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
 
     public void DropItem(Vector3 dropPosition, ItemStack itemToDrop)
     {
-        if (itemToDrop.itemDefinition.IsEmpty())
+        if (itemToDrop.ItemDefinition.IsEmpty())
         {
             return;
         }
@@ -58,7 +58,7 @@ public class ItemWorldPrefabInstanceFactory : MonoBehaviour
             return dropPosition + randomOffset;
         }
 
-        Vector2 itemColliderExtents = GetItemColliderExtents(itemToDrop.itemDefinition);
+        Vector2 itemColliderExtents = GetItemColliderExtents(itemToDrop.ItemDefinition);
 
         if (SpawnColliderHelper.TryGetSpawnPositionOutsideColliders(spawnPositionGenerator, itemColliderExtents,
             maxDropSpawnAttempts, out Vector2 spawnPosition))
