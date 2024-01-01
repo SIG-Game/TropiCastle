@@ -33520,6 +33520,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1915371346 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5755445992949103826, guid: 055035cc7ee7c8646858260629418a55,
+    type: 3}
+  m_PrefabInstance: {fileID: 1982112580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94937e32bfd9d14b8efac7ad71f78e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1982112580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34782,6 +34794,11 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 2404763004835229440, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: moneyController
+      value: 
+      objectReference: {fileID: 1915371346}
     - target: {fileID: 2773298394765778435, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
