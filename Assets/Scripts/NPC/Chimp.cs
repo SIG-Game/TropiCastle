@@ -11,7 +11,8 @@ public class Chimp : NPCInteractable
     [SerializeField] private Vector2 timeBetweenGivesRange;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
-    [SerializeField] private DialogueBox dialogueBox;
+
+    [Inject] private DialogueBox dialogueBox;
 
     public float LastGiveTime { get; private set; }
     public float TimeBetweenGives { get; set; }
@@ -23,6 +24,8 @@ public class Chimp : NPCInteractable
     protected override void Awake()
     {
         base.Awake();
+
+        this.InjectDependencies();
 
         itemOfferingSelector = new NPCItemOfferingSelector(itemOffering);
 

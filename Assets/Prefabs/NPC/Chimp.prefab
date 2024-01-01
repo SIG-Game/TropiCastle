@@ -255,7 +255,6 @@ MonoBehaviour:
   timeBetweenGivesRange: {x: 5, y: 10}
   chimpSpinner: {fileID: 856391509901689041}
   chimpItemInWorld: {fileID: 5168677056278632683}
-  dialogueBox: {fileID: 0}
 --- !u!114 &856391509901689041
 MonoBehaviour:
   m_ObjectHideFlags: 0
