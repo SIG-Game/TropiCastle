@@ -3,9 +3,15 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private MenuProperties currentMenuProperties;
-    [SerializeField] private EventSystemDefaultGameObjectSelector eventSystemDefaultGameObjectSelector;
+
+    [Inject] private EventSystemDefaultGameObjectSelector eventSystemDefaultGameObjectSelector;
 
     public bool MenuOpen => currentMenuProperties != null;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     public void ShowMenu(MenuProperties menuProperties)
     {
