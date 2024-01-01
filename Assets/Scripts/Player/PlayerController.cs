@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (item.ItemDefinition.name == "FishingRod")
         {
-            fishingRodItemUsage.UseItem(item, itemIndex);
+            fishingRodItemUsage.UseItem(itemIndex);
         }
     }
 

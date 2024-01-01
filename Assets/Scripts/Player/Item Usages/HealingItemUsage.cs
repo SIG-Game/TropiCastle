@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealingItemUsage : MonoBehaviour, IItemUsage
+public class HealingItemUsage : MonoBehaviour
 {
     [SerializeField] private HealthController playerHealthController;
     [SerializeField] private Inventory playerInventory;

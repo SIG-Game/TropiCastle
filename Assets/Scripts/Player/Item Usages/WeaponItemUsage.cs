@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class WeaponItemUsage : MonoBehaviour, IItemUsage
+public class WeaponItemUsage : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Inventory playerInventory;
