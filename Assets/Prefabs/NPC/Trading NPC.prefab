@@ -157,5 +157,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trade: {fileID: 11400000, guid: 7c877f6345a21f54a832fde78ec813fd, type: 2}
-  tradingUIController: {fileID: 0}
-  inventoryUIManager: {fileID: 0}

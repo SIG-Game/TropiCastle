@@ -3,8 +3,16 @@ using UnityEngine;
 public class TradingNPC : NPCInteractable
 {
     [SerializeField] private NPCTradeScriptableObject trade;
-    [SerializeField] private TradingUIController tradingUIController;
-    [SerializeField] private InventoryUIManager inventoryUIManager;
+
+    [Inject] private InventoryUIManager inventoryUIManager;
+    [Inject] private TradingUIController tradingUIController;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        this.InjectDependencies();
+    }
 
     public override void Interact(PlayerController player)
     {
