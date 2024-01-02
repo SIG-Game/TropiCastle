@@ -7,6 +7,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: sprites.back
+      value: 
+      objectReference: {fileID: -774096393, guid: 1cf9480184702f249b5d40657cc3d228,
+        type: 3}
+    - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: sprites.left
+      value: 
+      objectReference: {fileID: -2034914121, guid: 1cf9480184702f249b5d40657cc3d228,
+        type: 3}
+    - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: sprites.front
+      value: 
+      objectReference: {fileID: 503975195, guid: 1cf9480184702f249b5d40657cc3d228,
+        type: 3}
+    - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: sprites.right
+      value: 
+      objectReference: {fileID: 1378076885, guid: 1cf9480184702f249b5d40657cc3d228,
+        type: 3}
     - target: {fileID: 4509858844898638299, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
         type: 3}
       propertyPath: m_RootOrder
@@ -62,6 +86,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4509858844898638300, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509858844898638300, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.4375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509858844898638300, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.78125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509858844898638302, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 503975195, guid: 1cf9480184702f249b5d40657cc3d228,
+        type: 3}
     - target: {fileID: 4509858844898638303, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
         type: 3}
       propertyPath: m_Name
@@ -88,4 +133,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMoneyController: {fileID: 0}
-  dialogueBox: {fileID: 0}
