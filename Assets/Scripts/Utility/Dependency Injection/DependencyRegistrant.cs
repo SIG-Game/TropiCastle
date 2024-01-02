@@ -9,13 +9,20 @@ using UnityEditor;
 public class DependencyRegistrant : MonoBehaviour
 {
     [SerializeField] private List<MonoBehaviour> dependencies;
+    [SerializeField] private List<Transform> transformDependencies;
 
-    // Must run before any scripts that use the Inject attribute
+    // Must run before any scripts that use an injection attribute
     private void Awake()
     {
         foreach (var dependency in dependencies)
         {
             InjectionContainer.Register(dependency.GetType(), dependency);
+        }
+
+        foreach (var transform in transformDependencies)
+        {
+            InjectionContainer.Register(
+                $"{transform.gameObject.name}{nameof(Transform)}", transform);
         }
     }
 

@@ -14,15 +14,38 @@ public static class MonoBehaviourExtensions
 
         foreach (var injectField in injectFields)
         {
-            if (InjectionContainer.TryGetDependency(
-                injectField.FieldType, out MonoBehaviour dependency))
+            string dependencyName = injectField
+                .GetCustomAttribute<InjectAttribute>().Name;
+
+            if (dependencyName == null)
             {
-                injectField.SetValue(monoBehaviour, dependency);
+                if (InjectionContainer.TryGetDependency(injectField.FieldType,
+                    out MonoBehaviour dependency))
+                {
+                    injectField.SetValue(monoBehaviour, dependency);
+                }
+                else if (!Attribute.IsDefined(injectField,
+                    typeof(OptionalInjectAttribute)))
+                {
+                    Debug.LogError(
+                        $"Unable to inject dependency of type {injectField.FieldType} " +
+                        $"in GameObject {monoBehaviour.gameObject.name}");
+                }
             }
-            else if (!Attribute.IsDefined(injectField, typeof(OptionalInjectAttribute)))
+            else
             {
-                Debug.LogError($"Unable to inject dependency of type {injectField.FieldType} " +
-                    $"in GameObject {monoBehaviour.gameObject.name}.");
+                if (InjectionContainer.TryGetDependency(
+                    dependencyName, out Component dependency))
+                {
+                    injectField.SetValue(monoBehaviour, dependency);
+                }
+                else if (!Attribute.IsDefined(injectField,
+                    typeof(OptionalInjectAttribute)))
+                {
+                    Debug.LogError(
+                        $"Unable to inject dependency named {dependencyName} " +
+                        $"in GameObject {monoBehaviour.gameObject.name}");
+                }
             }
         }
     }
