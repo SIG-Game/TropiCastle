@@ -178,7 +178,7 @@ PrefabInstance:
     - target: {fileID: 333410530622530166, guid: 04cfd4d604aadc446bb4a09fde99465b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 333410530622530166, guid: 04cfd4d604aadc446bb4a09fde99465b,
         type: 3}
@@ -278,6 +278,7 @@ Transform:
   m_Children:
   - {fileID: 6226198124461100918}
   - {fileID: 1725342076}
+  - {fileID: 296509989}
   - {fileID: 235751147}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -294,6 +295,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcddf3dff77da643950b9f25f035654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &296509988
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 272226784}
+    m_Modifications:
+    - target: {fileID: 4816734053402067425, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_Name
+      value: Seller NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6583116414401315246, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 6583116414401315246, guid: b1d21f61fa0365845a1e1365e4baae7c,
+        type: 3}
+      propertyPath: playerMoneyController
+      value: 
+      objectReference: {fileID: 1915371346}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b1d21f61fa0365845a1e1365e4baae7c, type: 3}
+--- !u!4 &296509989 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
+    type: 3}
+  m_PrefabInstance: {fileID: 296509988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &303969647 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6628131629488667280, guid: 0b10992830a0ba7439705a4db0804f24,
@@ -33589,6 +33675,7 @@ MonoBehaviour:
   - {fileID: 572276101}
   - {fileID: 6628131629790253057}
   - {fileID: 1170725310}
+  transformDependencies: []
 --- !u!4 &1854850080
 Transform:
   m_ObjectHideFlags: 0
