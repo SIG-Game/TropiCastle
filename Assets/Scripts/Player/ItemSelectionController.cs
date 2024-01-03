@@ -5,13 +5,14 @@ using UnityEngine.InputSystem;
 
 public class ItemSelectionController : MonoBehaviour
 {
-    [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private PauseController pauseController;
     [SerializeField] private InputActionReference selectLeftItemActionReference;
     [SerializeField] private InputActionReference selectRightItemActionReference;
     [SerializeField] private int maxSelectedItemIndex;
     [SerializeField] private float selectInputRepeatTimeSeconds;
+
+    [Inject] private InputManager inputManager;
+    [Inject] private InventoryUIManager inventoryUIManager;
+    [Inject] private PauseController pauseController;
 
     private Coroutine repeatSelectLeftCoroutine;
     private Coroutine repeatSelectRightCoroutine;
@@ -42,6 +43,8 @@ public class ItemSelectionController : MonoBehaviour
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         selectInputRepeatWaitForSeconds = new WaitForSeconds(selectInputRepeatTimeSeconds);
 
         selectLeftItemAction = selectLeftItemActionReference.action;
