@@ -87,9 +87,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88396d3fd63bdd746a48fff3027b4d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemToSell:
-    ItemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
-    Amount: 1
-  cost: 10
+  product: {fileID: 11400000, guid: 6575aeda3d587c240ae0a4773dd17bc4, type: 2}
   playerInventory: {fileID: 0}
   playerMoneyController: {fileID: 0}

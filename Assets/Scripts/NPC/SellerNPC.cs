@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class SellerNPC : NPCInteractable
 {
-    [SerializeField] private ItemStack itemToSell;
-    [SerializeField] private int cost;
+    [SerializeField] private NPCProductScriptableObject product;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private MoneyController playerMoneyController;
 
@@ -20,23 +19,23 @@ public class SellerNPC : NPCInteractable
     {
         FacePlayer(player);
 
-        if (playerMoneyController.Money < cost)
+        if (playerMoneyController.Money < product.Cost)
         {
             dialogueBox.PlayDialogue("You have insufficient funds.",
                 AfterDialogueAction);
         }
-        else if (!playerInventory.CanAddItem(itemToSell))
+        else if (!playerInventory.CanAddItem(product.Item))
         {
             dialogueBox.PlayDialogue("Your inventory is full.",
                 AfterDialogueAction);
         }
         else
         {
-            playerInventory.AddItem(itemToSell);
+            playerInventory.AddItem(product.Item);
 
-            playerMoneyController.Money -= cost;
+            playerMoneyController.Money -= product.Cost;
 
-            dialogueBox.PlayDialogue($"-{cost} money for {itemToSell}.",
+            dialogueBox.PlayDialogue($"-{product.Cost} money for {product.Item}.",
                 AfterDialogueAction);
         }
     }
