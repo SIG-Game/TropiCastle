@@ -268,8 +268,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuProperties: {fileID: 8852077798540769944}
   menuBackground: {fileID: 0}
-  menuManager: {fileID: 0}
-  playerController: {fileID: 0}
 --- !u!114 &8852077798540769944
 MonoBehaviour:
   m_ObjectHideFlags: 0

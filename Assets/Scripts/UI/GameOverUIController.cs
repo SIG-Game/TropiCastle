@@ -4,11 +4,14 @@ public class GameOverUIController : MonoBehaviour
 {
     [SerializeField] private MenuProperties menuProperties;
     [SerializeField] private GameObject menuBackground;
-    [SerializeField] private MenuManager menuManager;
-    [SerializeField] private PlayerController playerController;
+
+    [Inject] private MenuManager menuManager;
+    [Inject] private PlayerController playerController;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         playerController.OnPlayerDied += PlayerController_OnPlayerDied;
     }
 
