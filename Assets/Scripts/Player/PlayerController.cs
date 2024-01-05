@@ -4,16 +4,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
-    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private SpriteMask overlaySpriteMask;
-    [SerializeField] private CursorController cursorController;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private PauseController pauseController;
 
     [Header("Item Usages")]
     [SerializeField] private FishingRodItemUsage fishingRodItemUsage;
     [SerializeField] private HealingItemUsage healingItemUsage;
     [SerializeField] private WeaponItemUsage weaponItemUsage;
+
+    [Inject] private InputManager inputManager;
+    [Inject] private PauseController pauseController;
+    [Inject] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
 
     public CharacterDirection Direction
     {
@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         boxCollider = GetComponent<BoxCollider2D>();
         healthController = GetComponent<HealthController>();
         itemSelectionController = GetComponent<ItemSelectionController>();
