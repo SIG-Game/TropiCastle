@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class PlayerFishingRodInWorldController : CharacterObjectInWorldController
 {
-    [SerializeField] private FishingUIController fishingUIController;
     [SerializeField] private DirectionalSprites fishingRodInWorldSprites;
+
+    [Inject] private FishingUIController fishingUIController;
 
     protected override void Awake()
     {
         base.Awake();
+
+        this.InjectDependencies();
 
         fishingUIController.OnFishingUIOpened += FishingUIController_OnFishingUIOpened;
         fishingUIController.OnFishingUIClosed += Hide;
