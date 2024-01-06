@@ -151,6 +151,8 @@ public class Inventory : MonoBehaviour
         {
             itemAtStackIndex.Amount -= 1;
 
+            itemList[stackIndex] = itemAtStackIndex;
+
             OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
         }
     }
