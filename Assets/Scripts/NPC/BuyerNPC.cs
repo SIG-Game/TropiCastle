@@ -30,6 +30,8 @@ public class BuyerNPC : NPCInteractable
         {
             playerInventory.DecrementItemStackAtIndex(itemToBuyIndex);
 
+            playerMoneyController.Money += buyCost;
+
             dialogueBox.PlayDialogue(
                 $"+{buyCost} money for 1 {itemToBuyDefinition.DisplayName}.",
                 directionController.UseDefaultDirection);
