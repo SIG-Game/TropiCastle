@@ -5,15 +5,18 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private MenuProperties menuProperties;
     [SerializeField] private GameObject menuBackground;
-    [SerializeField] private MenuManager menuManager;
-    [SerializeField] private PauseController pauseController;
     [SerializeField] private Rigidbody2D playerRigidbody2D;
     [SerializeField] private InputActionReference pauseActionReference;
+
+    [Inject] private MenuManager menuManager;
+    [Inject] private PauseController pauseController;
 
     private InputAction pauseAction;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         pauseAction = pauseActionReference.action;
     }
 
