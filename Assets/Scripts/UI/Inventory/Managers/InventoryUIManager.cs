@@ -5,8 +5,9 @@ using UnityEngine;
 public class InventoryUIManager : MonoBehaviour
 {
     [SerializeField] private GameObject menuBackground;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private PauseController pauseController;
+
+    [Inject] private InputManager inputManager;
+    [Inject] private PauseController pauseController;
 
     public bool InventoryUIOpen
     {
@@ -29,6 +30,8 @@ public class InventoryUIManager : MonoBehaviour
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         inventoryUIOpen = false;
     }
 
