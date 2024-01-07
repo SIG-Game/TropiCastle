@@ -178,7 +178,7 @@ PrefabInstance:
     - target: {fileID: 333410530622530166, guid: 04cfd4d604aadc446bb4a09fde99465b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 333410530622530166, guid: 04cfd4d604aadc446bb4a09fde99465b,
         type: 3}
@@ -278,7 +278,6 @@ Transform:
   m_Children:
   - {fileID: 1274217959}
   - {fileID: 6226198124461100918}
-  - {fileID: 1725342076}
   - {fileID: 296509989}
   - {fileID: 235751147}
   m_Father: {fileID: 0}
@@ -311,7 +310,7 @@ PrefabInstance:
     - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4816734053402067429, guid: b1d21f61fa0365845a1e1365e4baae7c,
         type: 3}
@@ -33367,86 +33366,6 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 5288355818519944997, guid: 055035cc7ee7c8646858260629418a55,
     type: 3}
   m_PrefabInstance: {fileID: 1982112580}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1725342075
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 272226784}
-    m_Modifications:
-    - target: {fileID: 4966808919360793882, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: playerMoneyController
-      value: 
-      objectReference: {fileID: 1915371346}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.42
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8323156617785561884, guid: 42b17c1a13d62804895c91142834e4d7,
-        type: 3}
-      propertyPath: m_Name
-      value: Money Giver NPC
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 42b17c1a13d62804895c91142834e4d7, type: 3}
---- !u!4 &1725342076 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8323156617785561880, guid: 42b17c1a13d62804895c91142834e4d7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1725342075}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1731795749 stripped
 MonoBehaviour:
