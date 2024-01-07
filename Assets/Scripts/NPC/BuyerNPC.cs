@@ -32,18 +32,13 @@ public class BuyerNPC : NPCInteractable
 
             dialogueBox.PlayDialogue(
                 $"+{buyCost} money for 1 {itemToBuyDefinition.DisplayName}.",
-                AfterDialogueAction);
+                directionController.UseDefaultDirection);
         }
         else
         {
             dialogueBox.PlayDialogue(
                 $"I will buy {itemToBuyDefinition.DisplayName} items from you.",
-                AfterDialogueAction);
+                directionController.UseDefaultDirection);
         }
-    }
-
-    private void AfterDialogueAction()
-    {
-        directionController.UseDefaultDirection();
     }
 }

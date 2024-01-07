@@ -22,12 +22,12 @@ public class SellerNPC : NPCInteractable
         if (playerMoneyController.Money < product.Cost)
         {
             dialogueBox.PlayDialogue("You have insufficient funds.",
-                AfterDialogueAction);
+                directionController.UseDefaultDirection);
         }
         else if (!playerInventory.CanAddItem(product.Item))
         {
             dialogueBox.PlayDialogue("Your inventory is full.",
-                AfterDialogueAction);
+                directionController.UseDefaultDirection);
         }
         else
         {
@@ -36,12 +36,7 @@ public class SellerNPC : NPCInteractable
             playerMoneyController.Money -= product.Cost;
 
             dialogueBox.PlayDialogue($"-{product.Cost} money for {product.Item}.",
-                AfterDialogueAction);
+                directionController.UseDefaultDirection);
         }
-    }
-
-    private void AfterDialogueAction()
-    {
-        directionController.UseDefaultDirection();
     }
 }

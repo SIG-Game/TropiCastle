@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ public class DialogueNPC : NPCInteractable
     {
         FacePlayer(player);
 
-        Action afterDialogueAction = directionController.UseDefaultDirection;
-        dialogueBox.PlayDialogue(dialogueLines, afterDialogueAction);
+        dialogueBox.PlayDialogue(dialogueLines,
+            directionController.UseDefaultDirection);
     }
 }
