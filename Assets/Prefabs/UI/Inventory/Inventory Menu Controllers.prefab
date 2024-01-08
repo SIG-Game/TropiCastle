@@ -2570,6 +2570,7 @@ MonoBehaviour:
   inventoryUIManager: {fileID: 0}
   playerActionDisablingUIManager: {fileID: 0}
   inputManager: {fileID: 0}
+  pauseController: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: 0}
 --- !u!114 &4477077557678837287
 MonoBehaviour:
@@ -2583,7 +2584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84e4f9e35f6a014db80747fc8f489ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUIManager: {fileID: 0}
 --- !u!114 &3413011963817745242
 MonoBehaviour:
   m_ObjectHideFlags: 0
