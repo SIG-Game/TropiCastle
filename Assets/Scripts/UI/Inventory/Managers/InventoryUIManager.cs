@@ -16,6 +16,8 @@ public class InventoryUIManager : MonoBehaviour
         {
             inventoryUIOpen = value;
 
+            pauseController.GamePaused = inventoryUIOpen;
+
             if (!inventoryUIOpen)
             {
                 OnInventoryUIClosed();
@@ -31,8 +33,6 @@ public class InventoryUIManager : MonoBehaviour
     private void Awake()
     {
         this.InjectDependencies();
-
-        inventoryUIOpen = false;
     }
 
     // Must run after the PauseMenu Update method so that an Escape key press
@@ -64,7 +64,6 @@ public class InventoryUIManager : MonoBehaviour
         SetCurrentInventoryUIActive(true);
 
         InventoryUIOpen = true;
-        pauseController.GamePaused = true;
     }
 
     public void DisableCurrentInventoryUI()
@@ -74,7 +73,6 @@ public class InventoryUIManager : MonoBehaviour
         currentInventoryUIGameObjects = null;
 
         InventoryUIOpen = false;
-        pauseController.GamePaused = false;
     }
 
     private void SetCurrentInventoryUIActive(bool active)
