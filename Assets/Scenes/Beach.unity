@@ -34451,6 +34451,11 @@ PrefabInstance:
       propertyPath: dialogueBox
       value: 
       objectReference: {fileID: 537164969}
+    - target: {fileID: 6226198124874704995, guid: 3575553e460267e42948f49db8775401,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
     - target: {fileID: 6226198124874704999, guid: 3575553e460267e42948f49db8775401,
         type: 3}
       propertyPath: m_Name

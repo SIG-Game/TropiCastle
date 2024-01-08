@@ -1,4 +1,6 @@
-public abstract class NPCInteractable : Interactable
+using UnityEngine;
+
+public abstract class NPCInteractable : MonoBehaviour, IInteractable
 {
     protected CharacterDirectionController directionController;
 
@@ -9,4 +11,6 @@ public abstract class NPCInteractable : Interactable
 
     public void FacePlayer(PlayerController player) =>
         directionController.UseOppositeOfDirection(player.Direction);
+
+    public abstract void Interact();
 }

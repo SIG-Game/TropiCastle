@@ -7,6 +7,7 @@ public class SellerNPC : NPCInteractable
     [SerializeField] private MoneyController playerMoneyController;
 
     [Inject] private DialogueBox dialogueBox;
+    [Inject] private PlayerController playerController;
 
     protected override void Awake()
     {
@@ -15,9 +16,9 @@ public class SellerNPC : NPCInteractable
         this.InjectDependencies();
     }
 
-    public override void Interact(PlayerController player)
+    public override void Interact()
     {
-        FacePlayer(player);
+        FacePlayer(playerController);
 
         if (playerMoneyController.Money < product.Cost)
         {

@@ -9,7 +9,7 @@ public class ChestItemInteractable : ContainerItemInteractable
         this.InjectDependencies();
     }
 
-    public override void Interact(PlayerController _)
+    public override void Interact()
     {
         chestUIController.SetChestInventory(inventory);
 

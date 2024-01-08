@@ -5,6 +5,7 @@ public class TradingNPC : NPCInteractable
     [SerializeField] private NPCTradeScriptableObject trade;
 
     [Inject] private InventoryUIManager inventoryUIManager;
+    [Inject] private PlayerController playerController;
     [Inject] private TradingUIController tradingUIController;
 
     protected override void Awake()
@@ -14,9 +15,9 @@ public class TradingNPC : NPCInteractable
         this.InjectDependencies();
     }
 
-    public override void Interact(PlayerController player)
+    public override void Interact()
     {
-        FacePlayer(player);
+        FacePlayer(playerController);
 
         tradingUIController.DisplayTrade(trade);
 

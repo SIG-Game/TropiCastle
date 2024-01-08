@@ -11,8 +11,10 @@ public class Chimp : NPCInteractable
     [SerializeField] private Vector2 timeBetweenGivesRange;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
+    [SerializeField] private Inventory playerInventory;
 
     [Inject] private DialogueBox dialogueBox;
+    [Inject] private PlayerController playerController;
 
     public float LastGiveTime { get; private set; }
     public float TimeBetweenGives { get; set; }
@@ -38,11 +40,11 @@ public class Chimp : NPCInteractable
         chimpSpinner.StartSpinning();
     }
 
-    public override void Interact(PlayerController player)
+    public override void Interact()
     {
         chimpSpinner.StopSpinning();
 
-        FacePlayer(player);
+        FacePlayer(playerController);
 
         ItemStack? itemToGive = null;
         List<string> dialogueLinesToPlay = null;
@@ -51,7 +53,7 @@ public class Chimp : NPCInteractable
         {
             itemToGive = itemOfferingSelector.SelectItemToGive();
 
-            if (!player.GetInventory().CanAddItem(itemToGive.Value))
+            if (!playerInventory.CanAddItem(itemToGive.Value))
             {
                 dialogueLinesToPlay = playerInventoryFullDialogueLines;
                 itemToGive = null;
@@ -69,15 +71,14 @@ public class Chimp : NPCInteractable
 
         dialogueBox.SetCharacterName(chimpCharacterName);
         dialogueBox.PlayDialogue(dialogueLinesToPlay,
-            () => Chimp_AfterDialogueAction(player, itemToGive));
+            () => Chimp_AfterDialogueAction(itemToGive));
     }
 
-    private void Chimp_AfterDialogueAction(
-        PlayerController player, ItemStack? itemToGive)
+    private void Chimp_AfterDialogueAction(ItemStack? itemToGive)
     {
         if (itemToGive != null)
         {
-            player.GetInventory().AddItem(itemToGive.Value);
+            playerInventory.AddItem(itemToGive.Value);
 
             chimpItemInWorld.Hide();
 

@@ -64,7 +64,7 @@ public class CampfireItemInteractable : ContainerItemInteractable
         }
     }
 
-    public override void Interact(PlayerController _)
+    public override void Interact()
     {
         campfireUIController.SetInventory(inventory);
 

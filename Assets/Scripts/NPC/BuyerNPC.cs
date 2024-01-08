@@ -9,6 +9,7 @@ public class BuyerNPC : NPCInteractable
     [SerializeField] private MoneyController playerMoneyController;
 
     [Inject] private DialogueBox dialogueBox;
+    [Inject] private PlayerController playerController;
 
     protected override void Awake()
     {
@@ -17,9 +18,9 @@ public class BuyerNPC : NPCInteractable
         this.InjectDependencies();
     }
 
-    public override void Interact(PlayerController player)
+    public override void Interact()
     {
-        FacePlayer(player);
+        FacePlayer(playerController);
 
         List<ItemStack> playerItemList = playerInventory.GetItemList();
 

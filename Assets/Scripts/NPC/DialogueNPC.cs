@@ -4,11 +4,20 @@ using UnityEngine;
 public class DialogueNPC : NPCInteractable
 {
     [SerializeField] private List<string> dialogueLines;
-    [SerializeField] private DialogueBox dialogueBox;
 
-    public override void Interact(PlayerController player)
+    [Inject] private DialogueBox dialogueBox;
+    [Inject] private PlayerController playerController;
+
+    protected override void Awake()
     {
-        FacePlayer(player);
+        base.Awake();
+
+        this.InjectDependencies();
+    }
+
+    public override void Interact()
+    {
+        FacePlayer(playerController);
 
         dialogueBox.PlayDialogue(dialogueLines,
             directionController.UseDefaultDirection);

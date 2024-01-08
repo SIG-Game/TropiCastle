@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null)
             {
-                hit.transform.gameObject.GetComponent<Interactable>().Interact(this);
+                hit.transform.gameObject.GetComponent<IInteractable>().Interact();
             }
         }
     }
@@ -191,6 +191,4 @@ public class PlayerController : MonoBehaviour
 
     public ItemStack GetSelectedItem() =>
         inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
-
-    public Inventory GetInventory() => inventory;
 }

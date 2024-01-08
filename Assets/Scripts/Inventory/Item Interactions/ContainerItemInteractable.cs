@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public abstract class ContainerItemInteractable : Interactable
+public abstract class ContainerItemInteractable : MonoBehaviour, IInteractable
 {
     protected Inventory inventory;
     protected ItemInstanceProperties itemInstanceProperties;
@@ -36,4 +37,6 @@ public abstract class ContainerItemInteractable : Interactable
     {
         itemInstanceProperties.UpdateItemListProperty(inventory);
     }
+
+    public abstract void Interact();
 }
