@@ -4,7 +4,13 @@ using UnityEngine;
 public class DebugAddItemAmountInputField : MonoBehaviour
 {
     [SerializeField] private TMP_InputField amountInputField;
-    [SerializeField] private InputManager inputManager;
+    
+    [Inject] private InputManager inputManager;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     private void Start()
     {
