@@ -21,6 +21,6 @@ public class MoneyTextController : MonoBehaviour
 
     private void MoneyController_OnMoneySet()
     {
-        moneyText.text = $"Money: {moneyController.Money}";
+        moneyText.text = moneyController.Money.ToString();
     }
 }

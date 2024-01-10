@@ -132,7 +132,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMenuProperties: {fileID: 0}
-  eventSystemDefaultGameObjectSelector: {fileID: 0}
 --- !u!1 &4401946414035090331
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,12 +1772,12 @@ PrefabInstance:
     - target: {fileID: 3714639697965058767, guid: dda1c2bff9a68e94b8fff3780db7b8d6,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -278.3
+      value: -278.125
       objectReference: {fileID: 0}
     - target: {fileID: 3714639697965058767, guid: dda1c2bff9a68e94b8fff3780db7b8d6,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 115.7
+      value: 104.375
       objectReference: {fileID: 0}
     - target: {fileID: 3714639697965058767, guid: dda1c2bff9a68e94b8fff3780db7b8d6,
         type: 3}
@@ -1798,7 +1797,7 @@ PrefabInstance:
     - target: {fileID: 5085398908205274854, guid: dda1c2bff9a68e94b8fff3780db7b8d6,
         type: 3}
       propertyPath: m_Name
-      value: Money Text (TMP)
+      value: Money UI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dda1c2bff9a68e94b8fff3780db7b8d6, type: 3}
