@@ -11,16 +11,19 @@ public class TradingUIController : MonoBehaviour
     [SerializeField] private Transform inputItemUIParent;
     [SerializeField] private Transform outputItemUIParent;
     [SerializeField] private RectTransform playerInventoryUI;
-    [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private Vector2 playerInventoryUIPosition;
+
+    [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
+    [Inject] private InventoryUIManager inventoryUIManager;
 
     private NPCTradeScriptableObject currentTrade;
     private bool isCurrentTradePossible;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         inventoryUIHeldItemController.OnItemHeld +=
             InventoryUIHeldItemController_OnItemHeld;
         inventoryUIHeldItemController.OnHidden +=

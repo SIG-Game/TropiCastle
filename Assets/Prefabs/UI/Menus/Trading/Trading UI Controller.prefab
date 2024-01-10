@@ -639,8 +639,6 @@ MonoBehaviour:
   inputItemUIParent: {fileID: 4015977664589591005}
   outputItemUIParent: {fileID: 7073821193137134376}
   playerInventoryUI: {fileID: 0}
-  inventoryUIManager: {fileID: 0}
-  inventoryUIHeldItemController: {fileID: 0}
   playerInventory: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: -46.6875}
 --- !u!1 &2962974638359084580
