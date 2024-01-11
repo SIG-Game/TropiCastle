@@ -11,8 +11,6 @@ public class ChestItemInteractable : ContainerItemInteractable
 
     public override void Interact()
     {
-        chestUIController.SetChestInventory(inventory);
-
-        chestUIController.ShowChestUI();
+        chestUIController.ShowChestUI(inventory);
     }
 }

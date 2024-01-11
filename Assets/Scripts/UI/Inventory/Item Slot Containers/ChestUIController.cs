@@ -15,16 +15,13 @@ public class ChestUIController : MonoBehaviour
         this.InjectDependencies();
     }
 
-    public void ShowChestUI()
+    public void ShowChestUI(Inventory chestInventory)
     {
+        chestInventoryUIController.SetInventory(chestInventory);
+
         playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
         inventoryUIManager.SetCurrentInventoryUIGameObjects(chestUIGameObjects);
         inventoryUIManager.EnableCurrentInventoryUI();
-    }
-
-    public void SetChestInventory(Inventory chestInventory)
-    {
-        chestInventoryUIController.SetInventory(chestInventory);
     }
 }
