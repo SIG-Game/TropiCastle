@@ -127,8 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4592499a84c4b4a46aa1fd47e18b32d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemToBuyDefinition: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a,
-    type: 2}
-  buyCost: 10
+  purchase: {fileID: 11400000, guid: ebbc3738efc36ad46857bf65447ea46e, type: 2}
   playerInventory: {fileID: 0}
   playerMoneyController: {fileID: 0}

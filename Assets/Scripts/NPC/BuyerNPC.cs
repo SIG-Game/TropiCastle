@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class BuyerNPC : NPCInteractable
 {
-    [SerializeField] private ItemScriptableObject itemToBuyDefinition;
-    [SerializeField] private int buyCost;
+    [SerializeField] private NPCPurchaseScriptableObject purchase;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private MoneyController playerMoneyController;
 
@@ -25,22 +24,22 @@ public class BuyerNPC : NPCInteractable
         List<ItemStack> playerItemList = playerInventory.GetItemList();
 
         int itemToBuyIndex = playerItemList.FindIndex(
-            x => x.ItemDefinition == itemToBuyDefinition);
+            x => x.ItemDefinition == purchase.ItemDefinition);
 
         if (itemToBuyIndex != -1)
         {
             playerInventory.DecrementItemStackAtIndex(itemToBuyIndex);
 
-            playerMoneyController.Money += buyCost;
+            playerMoneyController.Money += purchase.Payment;
 
-            dialogueBox.PlayDialogue(
-                $"+{buyCost} money for 1 {itemToBuyDefinition.DisplayName}.",
+            dialogueBox.PlayDialogue($"+{purchase.Payment} money " +
+                    $"for 1 {purchase.ItemDefinition.DisplayName}.",
                 directionController.UseDefaultDirection);
         }
         else
         {
-            dialogueBox.PlayDialogue(
-                $"I will buy {itemToBuyDefinition.DisplayName} items from you.",
+            dialogueBox.PlayDialogue($"I will buy " +
+                    $"{purchase.ItemDefinition.DisplayName} items from you.",
                 directionController.UseDefaultDirection);
         }
     }
