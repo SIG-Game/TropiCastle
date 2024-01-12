@@ -3,11 +3,10 @@ using UnityEngine;
 public class SellerNPC : NPCInteractable
 {
     [SerializeField] private NPCProductScriptableObject product;
-    [SerializeField] private Inventory playerInventory;
-    [SerializeField] private MoneyController playerMoneyController;
 
-    [Inject] private DialogueBox dialogueBox;
+    [Inject] private InventoryUIManager inventoryUIManager;
     [Inject] private PlayerController playerController;
+    [Inject] private SellerNPCUIController sellerNPCUIController;
 
     protected override void Awake()
     {
@@ -20,24 +19,17 @@ public class SellerNPC : NPCInteractable
     {
         FacePlayer(playerController);
 
-        if (playerMoneyController.Money < product.Cost)
-        {
-            dialogueBox.PlayDialogue("You have insufficient funds.",
-                directionController.UseDefaultDirection);
-        }
-        else if (!playerInventory.CanAddItem(product.Item))
-        {
-            dialogueBox.PlayDialogue("Your inventory is full.",
-                directionController.UseDefaultDirection);
-        }
-        else
-        {
-            playerInventory.AddItem(product.Item);
+        sellerNPCUIController.DisplayProduct(product);
 
-            playerMoneyController.Money -= product.Cost;
+        inventoryUIManager.OnInventoryUIClosed +=
+            InventoryUIManager_OnInventoryUIClosed;
+    }
 
-            dialogueBox.PlayDialogue($"-{product.Cost} money for {product.Item}.",
-                directionController.UseDefaultDirection);
-        }
+    private void InventoryUIManager_OnInventoryUIClosed()
+    {
+        directionController.UseDefaultDirection();
+
+        inventoryUIManager.OnInventoryUIClosed -=
+            InventoryUIManager_OnInventoryUIClosed;
     }
 }

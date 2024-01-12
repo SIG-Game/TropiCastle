@@ -89,7 +89,7 @@ PrefabInstance:
     - target: {fileID: 4509858844898638300, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
         type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4509858844898638300, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
         type: 3}
@@ -133,5 +133,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   product: {fileID: 11400000, guid: 6575aeda3d587c240ae0a4773dd17bc4, type: 2}
-  playerInventory: {fileID: 0}
-  playerMoneyController: {fileID: 0}

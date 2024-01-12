@@ -17665,6 +17665,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &505186822 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5820488378499450579, guid: cb76167790ad17b418442606107678be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6847651757298814663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0976309c5f22a34dbe0b73671bda7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &537164969 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6847651758018855121, guid: cb76167790ad17b418442606107678be,
@@ -33706,6 +33718,7 @@ MonoBehaviour:
   - {fileID: 1982112585}
   - {fileID: 572276101}
   - {fileID: 6628131629790253057}
+  - {fileID: 505186822}
   - {fileID: 1170725310}
   transformDependencies: []
 --- !u!4 &1854850080
@@ -35382,6 +35395,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5820488378499450579, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 5820488378499450579, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerMoneyController
+      value: 
+      objectReference: {fileID: 1915371346}
     - target: {fileID: 6268319904256855415, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
