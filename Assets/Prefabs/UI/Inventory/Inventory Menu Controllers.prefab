@@ -2567,10 +2567,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   playerInventoryUI: {fileID: 0}
-  inventoryUIManager: {fileID: 0}
-  playerActionDisablingUIManager: {fileID: 0}
-  inputManager: {fileID: 0}
-  pauseController: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: 0}
 --- !u!114 &4477077557678837287
 MonoBehaviour:
@@ -2614,7 +2610,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountInputField: {fileID: 1558176768086040830}
-  inputManager: {fileID: 0}
 --- !u!114 &8774762380487729169
 MonoBehaviour:
   m_ObjectHideFlags: 0

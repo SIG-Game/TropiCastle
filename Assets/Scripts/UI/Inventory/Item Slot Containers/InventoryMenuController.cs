@@ -5,11 +5,17 @@ public class InventoryMenuController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> inventoryMenuGameObjects;
     [SerializeField] private RectTransform playerInventoryUI;
-    [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private PauseController pauseController;
     [SerializeField] private Vector2 playerInventoryUIPosition;
+
+    [Inject] private InputManager inputManager;
+    [Inject] private InventoryUIManager inventoryUIManager;
+    [Inject] private PauseController pauseController;
+    [Inject] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     // Must run after any script Update methods that can set ActionDisablingUIOpen
     // to true to prevent an action disabling UI from opening on the same frame
