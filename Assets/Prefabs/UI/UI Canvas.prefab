@@ -4769,9 +4769,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1052642088988709816, guid: 5c49254750a38594996fa5adb8d2bd10,
         type: 3}
+      propertyPath: playerInventoryUI
+      value: 
+      objectReference: {fileID: 4685527892054663145}
+    - target: {fileID: 1052642088988709816, guid: 5c49254750a38594996fa5adb8d2bd10,
+        type: 3}
       propertyPath: sellerNPCUIGameObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 8008340607082156497}
+      objectReference: {fileID: 4685527892054663144}
     - target: {fileID: 1810005239828023869, guid: 5c49254750a38594996fa5adb8d2bd10,
         type: 3}
       propertyPath: m_Name

@@ -189,8 +189,11 @@ MonoBehaviour:
   - {fileID: 7805898087143950659}
   - {fileID: 0}
   productText: {fileID: 8331894515990592718}
+  buyButton: {fileID: 5267244672223012018}
+  playerInventoryUI: {fileID: 0}
   playerInventory: {fileID: 0}
   playerMoneyController: {fileID: 0}
+  playerInventoryUIPosition: {x: 0, y: -20}
 --- !u!1 &5306066499122198482
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +231,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 5}
+  m_AnchoredPosition: {x: 0, y: 93.5}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &316974163911544157
@@ -399,7 +402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 40}
+  m_AnchoredPosition: {x: 0, y: 126}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8351103162149277011
