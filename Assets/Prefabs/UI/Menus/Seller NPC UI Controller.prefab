@@ -51,15 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0976309c5f22a34dbe0b73671bda7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sellerNPCUIGameObjects:
+  uiGameObjects:
   - {fileID: 7805898087143950659}
   - {fileID: 0}
-  productText: {fileID: 8331894515990592718}
-  buyButton: {fileID: 5267244672223012018}
   playerInventoryUI: {fileID: 0}
   playerInventory: {fileID: 0}
-  playerMoneyController: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: -20}
+  productText: {fileID: 8331894515990592718}
+  buyButton: {fileID: 5267244672223012018}
+  playerMoneyController: {fileID: 0}
 --- !u!114 &7344194496398724029
 MonoBehaviour:
   m_ObjectHideFlags: 0

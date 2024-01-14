@@ -3,40 +3,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TradingUIController : MonoBehaviour
+public class TradingUIController : NPCInventoryUIController
 {
-    [SerializeField] private List<GameObject> tradingUIGameObjects;
     [SerializeField] private Button tradeButton;
     [SerializeField] private GameObject tradeItemUIPrefab;
     [SerializeField] private Transform inputItemUIParent;
     [SerializeField] private Transform outputItemUIParent;
-    [SerializeField] private RectTransform playerInventoryUI;
-    [SerializeField] private Inventory playerInventory;
-    [SerializeField] private Vector2 playerInventoryUIPosition;
-
-    [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
-    [Inject] private InventoryUIManager inventoryUIManager;
 
     private NPCTradeScriptableObject currentTrade;
     private bool isCurrentTradePossible;
-
-    private void Awake()
-    {
-        this.InjectDependencies();
-
-        inventoryUIHeldItemController.OnItemHeld +=
-            InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden +=
-            InventoryUIHeldItemController_OnHidden;
-    }
-
-    private void OnDestroy()
-    {
-        inventoryUIHeldItemController.OnItemHeld -=
-            InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden -=
-            InventoryUIHeldItemController_OnHidden;
-    }
 
     public void DisplayTrade(NPCTradeScriptableObject trade)
     {
@@ -49,10 +24,7 @@ public class TradingUIController : MonoBehaviour
 
         tradeButton.interactable = isCurrentTradePossible;
 
-        playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
-
-        inventoryUIManager.SetCurrentInventoryUIGameObjects(tradingUIGameObjects);
-        inventoryUIManager.EnableCurrentInventoryUI();
+        DisplayUI();
     }
 
     private void UpdateTradeItemUI(Transform itemUIParent, List<ItemStack> items)
@@ -104,13 +76,9 @@ public class TradingUIController : MonoBehaviour
         }
     }
 
-    private void InventoryUIHeldItemController_OnItemHeld()
-    {
+    protected override void InventoryUIHeldItemController_OnItemHeld() =>
         tradeButton.interactable = false;
-    }
 
-    private void InventoryUIHeldItemController_OnHidden()
-    {
+    protected override void InventoryUIHeldItemController_OnHidden() =>
         tradeButton.interactable = isCurrentTradePossible;
-    }
 }

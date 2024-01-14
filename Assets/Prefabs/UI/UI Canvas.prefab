@@ -4352,6 +4352,11 @@ PrefabInstance:
       objectReference: {fileID: 4365771476343332667}
     - target: {fileID: 1940752636317157425, guid: f05bb67feddd1804bbb72e5be82da685,
         type: 3}
+      propertyPath: uiGameObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 4685527892054663144}
+    - target: {fileID: 1940752636317157425, guid: f05bb67feddd1804bbb72e5be82da685,
+        type: 3}
       propertyPath: inventoryUIHeldItemController
       value: 
       objectReference: {fileID: 2594139973274944938}
@@ -4772,6 +4777,11 @@ PrefabInstance:
       propertyPath: playerInventoryUI
       value: 
       objectReference: {fileID: 4685527892054663145}
+    - target: {fileID: 1052642088988709816, guid: 5c49254750a38594996fa5adb8d2bd10,
+        type: 3}
+      propertyPath: uiGameObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 4685527892054663144}
     - target: {fileID: 1052642088988709816, guid: 5c49254750a38594996fa5adb8d2bd10,
         type: 3}
       propertyPath: sellerNPCUIGameObjects.Array.data[1]

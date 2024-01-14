@@ -630,17 +630,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f8c79a4e066ad4a8e24477f2999b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tradingUIGameObjects:
+  uiGameObjects:
   - {fileID: 1940752636071755932}
   - {fileID: 0}
+  playerInventoryUI: {fileID: 0}
+  playerInventory: {fileID: 0}
+  playerInventoryUIPosition: {x: 0, y: -46.6875}
   tradeButton: {fileID: 1940752636002710947}
   tradeItemUIPrefab: {fileID: 4086417001512461242, guid: 525e31c21f15aa94cb90be7153d2a3c5,
     type: 3}
   inputItemUIParent: {fileID: 4015977664589591005}
   outputItemUIParent: {fileID: 7073821193137134376}
-  playerInventoryUI: {fileID: 0}
-  playerInventory: {fileID: 0}
-  playerInventoryUIPosition: {x: 0, y: -46.6875}
 --- !u!1 &2962974638359084580
 GameObject:
   m_ObjectHideFlags: 0
