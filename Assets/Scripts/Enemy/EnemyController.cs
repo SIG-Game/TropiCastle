@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
     public float WaitTimeAfterKnockbackSeconds => waitTimeAfterKnockbackSeconds;
 
     private BaseEnemyState currentState;
-    private Rigidbody2D rb2d;
+    private new Rigidbody2D rigidbody2D;
     private new Collider2D collider2D;
     private SpriteRenderer spriteRenderer;
     private HealthController healthController;
@@ -46,7 +46,7 @@ public class EnemyController : MonoBehaviour
 
         LastHitTime = 0f;
 
-        rb2d = GetComponent<Rigidbody2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
         collider2D = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         healthController = GetComponent<HealthController>();
@@ -67,7 +67,7 @@ public class EnemyController : MonoBehaviour
     {
         if (currentState == ChasingState)
         {
-            rb2d.MovePosition(Vector2.MoveTowards(transform.position,
+            rigidbody2D.MovePosition(Vector2.MoveTowards(transform.position,
                 GetPlayerColliderPosition(), speed));
         }
     }
@@ -141,14 +141,14 @@ public class EnemyController : MonoBehaviour
     {
         if (currentState == KnockedBackState)
         {
-            rb2d.velocity = Vector2.zero;
+            rigidbody2D.velocity = Vector2.zero;
         }
         else if (currentState != FadingOutState)
         {
             SwitchState(KnockedBackState);
         }
 
-        rb2d.AddForce(normalizedDirection * force, ForceMode2D.Impulse);
+        rigidbody2D.AddForce(normalizedDirection * force, ForceMode2D.Impulse);
 
         KnockedBackState.ResetKnockbackStartTime();
     }

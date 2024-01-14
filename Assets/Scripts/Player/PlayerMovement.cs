@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float waterSpeedMultiplier;
 
     private PlayerController playerController;
-    private Rigidbody2D rb2d;
+    private new Rigidbody2D rigidbody2D;
     private Vector2 velocity;
     private InputAction moveAction;
     private InputAction sprintAction;
@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
-        rb2d = GetComponent<Rigidbody2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
 
         velocity = Vector2.zero;
 
@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb2d.MovePosition(transform.position + (Vector3)velocity);
+        rigidbody2D.MovePosition(transform.position + (Vector3)velocity);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

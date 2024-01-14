@@ -4,13 +4,13 @@ public class BulletController : MonoBehaviour
 {
     [SerializeField] private float speed;
 
-    private Rigidbody2D rb2d;
+    private new Rigidbody2D rigidbody2D;
 
     private void Awake()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
 
-        rb2d.velocity = speed * transform.up;
+        rigidbody2D.velocity = speed * transform.up;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
