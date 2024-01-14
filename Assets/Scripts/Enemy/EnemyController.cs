@@ -13,10 +13,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float fadeOutSpeed;
     [SerializeField] private SpriteRenderer healthBarBackground;
     [SerializeField] private SpriteRenderer healthBarFill;
-    [SerializeField] private Transform playerTransform;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private List<ItemStack> loot;
-    [SerializeField] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
+
+    [Inject] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
+    [Inject("PlayerTransform")] private Transform playerTransform;
 
     public InitialEnemyState InitialState { get; private set; }
     public IdleEnemyState IdleState { get; private set; }
@@ -38,6 +39,8 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         InitialState = new InitialEnemyState(this);
         IdleState = new IdleEnemyState(this);
         ChasingState = new ChasingEnemyState(this);
@@ -50,6 +53,8 @@ public class EnemyController : MonoBehaviour
         collider2D = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         healthController = GetComponent<HealthController>();
+
+        playerColliderOffset = playerTransform.GetComponent<BoxCollider2D>().offset;
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
 
@@ -176,15 +181,8 @@ public class EnemyController : MonoBehaviour
     private float GetDistanceToPlayerCollider() =>
         Vector2.Distance(transform.position, GetPlayerColliderPosition());
 
-    public void SetUpEnemy(Transform playerTransform, Inventory playerInventory,
-        ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory)
-    {
-        this.playerTransform = playerTransform;
+    public void SetPlayerInventory(Inventory playerInventory) =>
         this.playerInventory = playerInventory;
-        this.itemWorldPrefabInstanceFactory = itemWorldPrefabInstanceFactory;
-
-        playerColliderOffset = playerTransform.GetComponent<BoxCollider2D>().offset;
-    }
 
     public void SwitchState(BaseEnemyState newState)
     {
