@@ -6,13 +6,16 @@ using UnityEngine.InputSystem.UI;
 public class EventSystemDefaultGameObjectSelector : MonoBehaviour
 {
     [SerializeField] private GameObject defaultSelectedGameObject;
-    [SerializeField] private PlayerInput playerInput;
+
+    [Inject] private PlayerInput playerInput;
 
     private InputAction navigateAction;
     private InputAction submitAction;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         InputActionAsset inputActionAsset =
             GetComponent<InputSystemUIInputModule>().actionsAsset;
 
