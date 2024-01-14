@@ -28100,6 +28100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc31599282b18304680eaba8ac3df522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1313262520 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 845027886384467111, guid: cb76167790ad17b418442606107678be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6847651757298814663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799de11a6a710af4a80e8a654b11d2f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1402876791 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2594139973274944938, guid: cb76167790ad17b418442606107678be,
@@ -33705,6 +33717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dependencies:
+  - {fileID: 1313262520}
   - {fileID: 1816801988}
   - {fileID: 6847651757298814668}
   - {fileID: 537164969}
@@ -34817,6 +34830,16 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 1274756994}
+    - target: {fileID: 845027886384467111, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 845027886384467111, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerMoneyController
+      value: 
+      objectReference: {fileID: 1915371346}
     - target: {fileID: 1117327658388732048, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -36307,6 +36330,11 @@ PrefabInstance:
       propertyPath: targetHealthController
       value: 
       objectReference: {fileID: 1982112581}
+    - target: {fileID: 7311749465179744124, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: moneyController
+      value: 
+      objectReference: {fileID: 1915371346}
     - target: {fileID: 7412081645634447707, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: eventSystemDefaultGameObjectSelector

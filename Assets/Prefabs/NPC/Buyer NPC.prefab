@@ -128,5 +128,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   purchase: {fileID: 11400000, guid: ebbc3738efc36ad46857bf65447ea46e, type: 2}
-  playerInventory: {fileID: 0}
-  playerMoneyController: {fileID: 0}
