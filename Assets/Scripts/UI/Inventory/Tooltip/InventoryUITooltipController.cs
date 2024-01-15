@@ -11,13 +11,16 @@ public class InventoryUITooltipController : MonoBehaviour
     [SerializeField] private RectTransform tooltipBackgroundRectTransform;
     [SerializeField] private GraphicRaycaster graphicRaycaster;
     [SerializeField] private RectTransform canvasRectTransform;
-    [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
+
+    [Inject] private InventoryUIManager inventoryUIManager;
+    [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
 
     private RectTransform rectTransform;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         rectTransform = GetComponent<RectTransform>();
 
         inventoryUIManager.OnInventoryUIClosed +=
