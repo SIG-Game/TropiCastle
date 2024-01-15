@@ -35395,6 +35395,11 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1982112582}
+    - target: {fileID: 5516310395184446904, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: moneyController
+      value: 
+      objectReference: {fileID: 1915371346}
     - target: {fileID: 5745872446509260880, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
