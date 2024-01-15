@@ -37,6 +37,16 @@ public class DependencyRegistrant : MonoBehaviour
     {
         Undo.RecordObject(this, "Sort Dependencies");
 
+        List<string> duplicateDependencyNames = dependencies.GroupBy(x => x)
+            .Where(x => x.Count() > 1)
+            .Select(x => x.Key.GetType().Name).ToList();
+
+        if (duplicateDependencyNames.Count > 0)
+        {
+            Debug.LogWarning("Duplicate dependencies: " +
+                $"{string.Join(", ", duplicateDependencyNames)}");
+        }
+
         dependencies = dependencies.OrderBy(x => x.GetType().Name).ToList();
     }
 #endif
