@@ -168,6 +168,34 @@ public class Inventory : MonoBehaviour
         OnItemChangedAtIndex(itemAtStackIndex, stackIndex);
     }
 
+    public void RemoveItem(ItemStack itemToRemove)
+    {
+        int amountToRemove = itemToRemove.Amount;
+
+        for (int i = 0; i < itemList.Count; ++i)
+        {
+            ItemStack currentItem = itemList[i];
+
+            if (currentItem.ItemDefinition.name == itemToRemove.ItemDefinition.name)
+            {
+                int currentItemAmountToRemove =
+                    Math.Min(currentItem.Amount, amountToRemove);
+
+                SetItemAmountAtIndex(
+                    currentItem.Amount - currentItemAmountToRemove, i);
+
+                amountToRemove -= currentItemAmountToRemove;
+
+                if (amountToRemove == 0)
+                {
+                    return;
+                }
+            }
+        }
+
+        Debug.LogError($"Failed to remove item from inventory: {itemToRemove}");
+    }
+
     public void RemoveItemAtIndex(int index)
     {
         ItemStack itemAtIndex = itemList[index];
@@ -397,6 +425,28 @@ public class Inventory : MonoBehaviour
 
         canAddAmount = newItem.Amount;
         return true;
+    }
+
+    public bool CanRemoveItem(ItemStack itemToRemove)
+    {
+        int amountToRemove = itemToRemove.Amount;
+
+        for (int i = 0; i < itemList.Count; ++i)
+        {
+            ItemStack currentItem = itemList[i];
+
+            if (currentItem.ItemDefinition.name == itemToRemove.ItemDefinition.name)
+            {
+                amountToRemove -= Math.Min(amountToRemove, currentItem.Amount);
+
+                if (amountToRemove == 0)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public void ConsolidateItemsToIndex(int targetItemIndex)

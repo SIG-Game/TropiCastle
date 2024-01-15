@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2bcc72248d07945bdd84bcfe023ed0, type: 3}
   m_Name: Leaf NPC Purchase
   m_EditorClassIdentifier: 
-  ItemDefinition: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
+  Item:
+    ItemDefinition: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
+    Amount: 1
   Payment: 10

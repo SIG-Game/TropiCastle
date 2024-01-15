@@ -15,22 +15,16 @@ public class BuyerNPCUIController : NPCInventoryUIController
     {
         this.purchase = purchase;
 
-        purchaseText.text = $"1 {purchase.ItemDefinition.DisplayName}" +
-            $" For {purchase.Payment} Money";
+        purchaseText.text = $"{purchase.Item} For {purchase.Payment} Money";
 
         DisplayUI();
     }
 
     public void SellButton_OnClick()
     {
-        List<ItemStack> playerItemList = playerInventory.GetItemList();
-
-        int purchaseItemIndex = playerItemList.FindIndex(
-            x => x.ItemDefinition == purchase.ItemDefinition);
-
-        if (purchaseItemIndex != -1)
+        if (playerInventory.CanRemoveItem(purchase.Item))
         {
-            playerInventory.DecrementItemStackAtIndex(purchaseItemIndex);
+            playerInventory.RemoveItem(purchase.Item);
 
             playerMoneyController.Money += purchase.Payment;
         }
