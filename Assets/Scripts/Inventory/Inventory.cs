@@ -363,68 +363,40 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool CanAddItem(ItemStack newItem) => CanAddItem(newItem, out _);
+    public bool CanAddItem(ItemStack itemToAdd) => CanAddItem(itemToAdd, out _);
 
-    public bool CanAddItem(ItemStack newItem, out int canAddAmount)
+    public bool CanAddItem(ItemStack itemToAdd, out int canAddAmount)
     {
         if (firstEmptyIndex != -1)
         {
-            canAddAmount = newItem.Amount;
+            canAddAmount = itemToAdd.Amount;
+
             return true;
         }
 
-        HashSet<int> itemSlotsFilled = new HashSet<int>();
+        int amountToAdd = itemToAdd.Amount;
 
-        int amountToAdd = newItem.Amount;
-
-        while (amountToAdd > 0)
+        for (int i = 0; i < itemList.Count; ++i)
         {
-            int stackIndex = -1;
+            ItemStack currentItem = itemList[i];
 
-            for (int i = 0; i < itemList.Count; ++i)
+            if (currentItem.ItemDefinition.name == itemToAdd.ItemDefinition.name)
             {
-                if (itemSlotsFilled.Contains(i))
+                amountToAdd -= Math.Min(amountToAdd,
+                    currentItem.ItemDefinition.StackSize - currentItem.Amount);
+
+                if (amountToAdd == 0)
                 {
-                    continue;
+                    canAddAmount = itemToAdd.Amount;
+
+                    return true;
                 }
-
-                ItemStack currentItem = itemList[i];
-
-                if ((currentItem.ItemDefinition.name == newItem.ItemDefinition.name &&
-                    currentItem.Amount < currentItem.ItemDefinition.StackSize) ||
-                    currentItem.ItemDefinition.IsEmpty())
-                {
-                    stackIndex = i;
-
-                    break;
-                }
-            }
-
-            if (stackIndex == -1)
-            {
-                canAddAmount = newItem.Amount - amountToAdd;
-                return false;
-            }
-
-            ItemStack itemAtStackIndex = itemList[stackIndex];
-
-            int amountToReachStackSizeLimit =
-                itemAtStackIndex.ItemDefinition.StackSize - itemAtStackIndex.Amount;
-
-            if (amountToReachStackSizeLimit < amountToAdd)
-            {
-                itemSlotsFilled.Add(stackIndex);
-
-                amountToAdd -= amountToReachStackSizeLimit;
-            }
-            else
-            {
-                amountToAdd = 0;
             }
         }
 
-        canAddAmount = newItem.Amount;
-        return true;
+        canAddAmount = itemToAdd.Amount - amountToAdd;
+
+        return false;
     }
 
     public bool CanRemoveItem(ItemStack itemToRemove)
