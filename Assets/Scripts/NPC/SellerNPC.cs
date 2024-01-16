@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SellerNPC : NPCInteractable
 {
-    [SerializeField] private NPCProductScriptableObject product;
+    [SerializeField] private List<NPCProductScriptableObject> products;
 
     [Inject] private InventoryUIManager inventoryUIManager;
     [Inject] private PlayerController playerController;
@@ -19,7 +20,7 @@ public class SellerNPC : NPCInteractable
     {
         FacePlayer(playerController);
 
-        sellerNPCUIController.DisplayProduct(product);
+        sellerNPCUIController.DisplayProducts(products);
 
         inventoryUIManager.OnInventoryUIClosed +=
             InventoryUIManager_OnInventoryUIClosed;
