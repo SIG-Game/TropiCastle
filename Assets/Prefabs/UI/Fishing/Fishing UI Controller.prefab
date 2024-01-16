@@ -91,12 +91,8 @@ MonoBehaviour:
   fishingUI: {fileID: 24094386154538983}
   fishUI: {fileID: 6030874414711316719}
   hookTransform: {fileID: 1938744877893344358}
-  playerActionDisablingUIManager: {fileID: 0}
   playerInventory: {fileID: 0}
   playerItemInWorld: {fileID: 0}
-  dialogueBox: {fileID: 0}
-  inventoryFullUIController: {fileID: 0}
-  inputManager: {fileID: 0}
   catchFishXPositionRange: {x: -50, y: 50}
 --- !u!95 &239831750938302052
 Animator:

@@ -10,14 +10,15 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private GameObject fishingUI;
     [SerializeField] private FishUIController fishUI;
     [SerializeField] private Transform hookTransform;
-    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
-    [SerializeField] private DialogueBox dialogueBox;
-    [SerializeField] private InventoryFullUIController inventoryFullUIController;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private PauseController pauseController;
     [SerializeField] private Vector2 catchFishXPositionRange;
+
+    [Inject] private DialogueBox dialogueBox;
+    [Inject] private InputManager inputManager;
+    [Inject] private InventoryFullUIController inventoryFullUIController;
+    [Inject] private PauseController pauseController;
+    [Inject] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
 
     public event Action OnFishingStopped = () => {};
     public event Action OnFishingUIOpened = () => {};
@@ -34,6 +35,8 @@ public class FishingUIController : MonoBehaviour
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         animator = GetComponent<Animator>();
 
         itemsLoadHandle =
