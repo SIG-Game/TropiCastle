@@ -7,12 +7,18 @@ public class CampfireUIController : MonoBehaviour
     [SerializeField] private List<GameObject> campfireUIGameObjects;
     [SerializeField] private InventoryUIController campfireInventoryUIController;
     [SerializeField] private RectTransform progressArrowMask;
-    [SerializeField] private InventoryUIManager inventoryUIManager;
     [SerializeField] private RectTransform playerInventoryUI;
     [SerializeField] private Vector2 playerInventoryUIPosition;
     [SerializeField] private float maxProgressArrowMaskWidth;
 
+    [Inject] private InventoryUIManager inventoryUIManager;
+
     public event Action OnCampfireUIClosed = () => {};
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     public void Show()
     {
