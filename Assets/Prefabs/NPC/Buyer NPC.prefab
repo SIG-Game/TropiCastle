@@ -127,4 +127,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4592499a84c4b4a46aa1fd47e18b32d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purchase: {fileID: 11400000, guid: ebbc3738efc36ad46857bf65447ea46e, type: 2}
+  purchases:
+  - {fileID: 11400000, guid: ebbc3738efc36ad46857bf65447ea46e, type: 2}

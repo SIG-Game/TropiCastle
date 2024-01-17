@@ -5,23 +5,55 @@ using UnityEngine.UI;
 
 public class BuyerNPCUIController : NPCInventoryUIController
 {
-    [SerializeField] private TextMeshProUGUI purchaseText;
-    [SerializeField] private Button sellButton;
+    [SerializeField] private GameObject purchaseUIPrefab;
+    [SerializeField] private Transform purchaseUIParent;
     [SerializeField] private MoneyController playerMoneyController;
 
-    private NPCPurchaseScriptableObject purchase;
+    private List<NPCPurchaseScriptableObject> purchases;
+    private List<Button> sellButtons;
 
-    public void DisplayPurchase(NPCPurchaseScriptableObject purchase)
+    protected override void Awake()
     {
-        this.purchase = purchase;
+        base.Awake();
 
-        purchaseText.text = $"{purchase.Item} For {purchase.Payment} Money";
+        sellButtons = new List<Button>();
+    }
+
+    public void DisplayPurchases(List<NPCPurchaseScriptableObject> purchases)
+    {
+        this.purchases = purchases;
+
+        sellButtons.Clear();
+
+        foreach (Transform purchaseUI in purchaseUIParent)
+        {
+            Destroy(purchaseUI.gameObject);
+        }
+
+        for (int i = 0; i < purchases.Count; ++i)
+        {
+            var purchase = purchases[i];
+
+            GameObject purchaseUI = Instantiate(purchaseUIPrefab, purchaseUIParent);
+
+            purchaseUI.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                $"{purchase.Item} For {purchase.Payment} Money";
+
+            var sellButton = purchaseUI.transform.GetChild(1).GetComponent<Button>();
+
+            int iCopy = i;
+            sellButton.onClick.AddListener(() => SellButton_OnClick(iCopy));
+
+            sellButtons.Add(sellButton);
+        }
 
         DisplayUI();
     }
 
-    public void SellButton_OnClick()
+    public void SellButton_OnClick(int purchaseIndex)
     {
+        var purchase = purchases[purchaseIndex];
+
         if (playerInventory.CanRemoveItem(purchase.Item))
         {
             playerInventory.RemoveItem(purchase.Item);
@@ -31,8 +63,8 @@ public class BuyerNPCUIController : NPCInventoryUIController
     }
 
     protected override void InventoryUIHeldItemController_OnItemHeld() =>
-        sellButton.interactable = false;
+        sellButtons.ForEach(x => x.interactable = false);
 
     protected override void InventoryUIHeldItemController_OnHidden() =>
-        sellButton.interactable = true;
+        sellButtons.ForEach(x => x.interactable = true);
 }
