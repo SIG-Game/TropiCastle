@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d2bcc72248d07945bdd84bcfe023ed0, type: 3}
-  m_Name: Leaf NPC Purchase
+  m_Name: Cooked Crab Meat NPC Purchase
   m_EditorClassIdentifier: 
   Item:
-    ItemDefinition: {fileID: 11400000, guid: 5b80c890845f5f941a05a40fe948549a, type: 2}
+    ItemDefinition: {fileID: 11400000, guid: 8e2cdb634b8ed1c48ac2dc91bd9e1bcc, type: 2}
     Amount: 1
-  Payment: 10
+  Payment: 3

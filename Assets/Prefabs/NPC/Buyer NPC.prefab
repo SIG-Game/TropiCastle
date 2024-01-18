@@ -128,4 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   purchases:
-  - {fileID: 11400000, guid: ebbc3738efc36ad46857bf65447ea46e, type: 2}
+  - {fileID: 11400000, guid: fd3d229679594e04dafcca3e855b145e, type: 2}
+  - {fileID: 11400000, guid: f4cb57e3df0aca444a24c89de3b5c97f, type: 2}
+  - {fileID: 11400000, guid: da4fb1fc4bd5c5644bdf701db9d9fd4a, type: 2}
+  - {fileID: 11400000, guid: 18b540be0c5b1754d899cd697de8c897, type: 2}
