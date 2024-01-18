@@ -44,6 +44,9 @@ public class BuyerNPCUIController : NPCInventoryUIController
             int iCopy = i;
             sellButton.onClick.AddListener(() => SellButton_OnClick(iCopy));
 
+            sellButton.transform.GetChild(0)
+                .GetComponent<TextMeshProUGUI>().text = "Sell";
+
             sellButtons.Add(sellButton);
         }
 

@@ -120,7 +120,7 @@ MonoBehaviour:
   playerInventoryUI: {fileID: 0}
   playerInventory: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: -20}
-  purchaseUIPrefab: {fileID: 4426703402800039571, guid: 4582964eae82fa84b897e1009b8d7502,
+  purchaseUIPrefab: {fileID: 4426703402800039571, guid: 9fc679fcebcc6fe42a7f051ba4bbea2d,
     type: 3}
   purchaseUIParent: {fileID: 6235393996974837748}
   playerMoneyController: {fileID: 0}
