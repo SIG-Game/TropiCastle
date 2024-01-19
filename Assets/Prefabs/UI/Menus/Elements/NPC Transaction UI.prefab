@@ -145,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8427080235088270803}
   m_Layer: 5
-  m_Name: NPC UI Button And Text
+  m_Name: NPC Transaction UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

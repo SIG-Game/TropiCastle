@@ -29,7 +29,7 @@ public abstract class NPCInventoryUIController : MonoBehaviour
             InventoryUIHeldItemController_OnHidden;
     }
 
-    protected void DisplayUI()
+    protected virtual void DisplayUI()
     {
         playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 

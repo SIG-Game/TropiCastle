@@ -57,10 +57,11 @@ MonoBehaviour:
   playerInventoryUI: {fileID: 0}
   playerInventory: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: -20}
-  productUIPrefab: {fileID: 4426703402800039571, guid: 9fc679fcebcc6fe42a7f051ba4bbea2d,
+  transactionUIPrefab: {fileID: 4426703402800039571, guid: 9fc679fcebcc6fe42a7f051ba4bbea2d,
     type: 3}
-  productUIParent: {fileID: 4506722046202061256}
+  transactionUIParent: {fileID: 4506722046202061256}
   playerMoneyController: {fileID: 0}
+  buttonText: Buy
 --- !u!1 &5334357593213346324
 GameObject:
   m_ObjectHideFlags: 0
