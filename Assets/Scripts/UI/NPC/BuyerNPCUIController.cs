@@ -14,12 +14,11 @@ public class BuyerNPCUIController : NPCTransactionUIController
         DisplayUI();
     }
 
-    protected override string GetTransactionText(int index)
-    {
-        var purchase = purchases[index];
+    protected override string GetTransactionItemText(int index) =>
+        purchases[index].Item.ToString();
 
-        return $"{purchase.Item} For {purchase.Payment} Money";
-    }
+    protected override string GetTransactionMoneyText(int index) =>
+        purchases[index].Payment.ToString();
 
     protected override Action GetButtonOnClickListener(int index) =>
         () =>

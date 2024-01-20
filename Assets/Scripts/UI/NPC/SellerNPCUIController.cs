@@ -14,12 +14,11 @@ public class SellerNPCUIController : NPCTransactionUIController
         DisplayUI();
     }
 
-    protected override string GetTransactionText(int index)
-    {
-        var product = products[index];
+    protected override string GetTransactionItemText(int index) =>
+        products[index].Item.ToString();
 
-        return $"{product.Item} For {product.Cost} Money";
-    }
+    protected override string GetTransactionMoneyText(int index) =>
+        products[index].Cost.ToString();
 
     protected override Action GetButtonOnClickListener(int index) =>
         () =>

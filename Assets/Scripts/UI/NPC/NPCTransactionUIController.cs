@@ -11,6 +11,7 @@ public abstract class NPCTransactionUIController : NPCInventoryUIController
     [SerializeField] private Transform transactionUIParent;
     [SerializeField] protected MoneyController playerMoneyController;
     [SerializeField] private string buttonText;
+    [SerializeField] private bool flipArrow;
 
     protected abstract int TransactionCount { get; }
 
@@ -37,10 +38,7 @@ public abstract class NPCTransactionUIController : NPCInventoryUIController
             GameObject transactionUI =
                 Instantiate(transactionUIPrefab, transactionUIParent);
 
-            transactionUI.transform.GetChild(0)
-                .GetComponent<TextMeshProUGUI>().text = GetTransactionText(i);
-
-            var button = transactionUI.transform.GetChild(1).GetComponent<Button>();
+            var button = transactionUI.transform.GetChild(0).GetComponent<Button>();
 
             button.onClick.AddListener(new UnityAction(GetButtonOnClickListener(i)));
 
@@ -48,6 +46,18 @@ public abstract class NPCTransactionUIController : NPCInventoryUIController
                 .GetComponent<TextMeshProUGUI>().text = buttonText;
 
             buttons.Add(button);
+
+            transactionUI.transform.GetChild(1).GetChild(1)
+                .GetComponent<TextMeshProUGUI>().text = GetTransactionMoneyText(i);
+
+            if (flipArrow)
+            {
+                transactionUI.transform.GetChild(2)
+                    .GetComponent<RectTransform>().localScale = new Vector3(-1f, 1f, 1f);
+            }
+
+            transactionUI.transform.GetChild(3)
+                .GetComponent<TextMeshProUGUI>().text = GetTransactionItemText(i);
         }
 
         base.DisplayUI();
@@ -59,7 +69,9 @@ public abstract class NPCTransactionUIController : NPCInventoryUIController
     protected override void InventoryUIHeldItemController_OnHidden() =>
         buttons.ForEach(x => x.interactable = true);
 
-    protected abstract string GetTransactionText(int index);
+    protected abstract string GetTransactionItemText(int index);
+
+    protected abstract string GetTransactionMoneyText(int index);
 
     protected abstract Action GetButtonOnClickListener(int index);
 }

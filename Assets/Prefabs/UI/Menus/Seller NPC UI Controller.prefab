@@ -31,7 +31,6 @@ RectTransform:
   m_Children:
   - {fileID: 6602720189956812966}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -62,6 +61,7 @@ MonoBehaviour:
   transactionUIParent: {fileID: 4506722046202061256}
   playerMoneyController: {fileID: 0}
   buttonText: Buy
+  flipArrow: 0
 --- !u!1 &5334357593213346324
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +92,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6602720189956812966}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -155,7 +154,6 @@ RectTransform:
   m_Children:
   - {fileID: 4506722046202061256}
   m_Father: {fileID: 2321382953618471639}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
