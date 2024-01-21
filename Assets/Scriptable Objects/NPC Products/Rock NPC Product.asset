@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c7b23d99fbfcc04ea35f6b4fea76af3, type: 3}
-  m_Name: Stick NPC Product
+  m_Name: Rock NPC Product
   m_EditorClassIdentifier: 
   Item:
-    ItemDefinition: {fileID: 11400000, guid: 731f933625aa64b47bbcc047bb783649, type: 2}
+    ItemDefinition: {fileID: 11400000, guid: 318889e74d7ee5e4bb00d9f49bb02303, type: 2}
     Amount: 1
-  Cost: 4
+  Cost: 7
