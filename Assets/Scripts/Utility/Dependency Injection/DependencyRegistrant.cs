@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +10,7 @@ using UnityEditor;
 public class DependencyRegistrant : MonoBehaviour
 {
     [SerializeField] private List<MonoBehaviour> dependencies;
+    [SerializeField] private List<NamedDependency> namedDependencies;
     [SerializeField] private List<Transform> transformDependencies;
 
     // Must run before any scripts that use an injection attribute
@@ -17,6 +19,12 @@ public class DependencyRegistrant : MonoBehaviour
         foreach (var dependency in dependencies)
         {
             InjectionContainer.Register(dependency.GetType(), dependency);
+        }
+
+        foreach (var namedDependency in namedDependencies)
+        {
+            InjectionContainer.Register(
+                namedDependency.Name, namedDependency.Dependency);
         }
 
         foreach (var transform in transformDependencies)
@@ -50,4 +58,11 @@ public class DependencyRegistrant : MonoBehaviour
         dependencies = dependencies.OrderBy(x => x.GetType().Name).ToList();
     }
 #endif
+
+    [Serializable]
+    private class NamedDependency
+    {
+        public string Name;
+        public MonoBehaviour Dependency;
+    }
 }
