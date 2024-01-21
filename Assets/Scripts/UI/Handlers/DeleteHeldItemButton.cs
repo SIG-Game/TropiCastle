@@ -4,8 +4,14 @@ using UnityEngine.EventSystems;
 public class DeleteHeldItemButton : MonoBehaviour, IPointerClickHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private Inventory inventory;
+
+    [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
