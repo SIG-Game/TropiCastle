@@ -10,7 +10,6 @@ using UnityEditor.SceneManagement;
 
 public class CraftingButtonGenerator : MonoBehaviour
 {
-    [SerializeField] private CraftingButtonDependencies craftingButtonDependencies;
     [SerializeField] private GameObject craftingButtonPrefab;
     [SerializeField] private Transform craftingButtonsParentTransform;
 
@@ -78,12 +77,12 @@ public class CraftingButtonGenerator : MonoBehaviour
         // Apply changes to prefab
         foreach (CraftingRecipeScriptableObject craftingRecipe in craftingRecipes)
         {
-            GameObject craftingButton = PrefabUtility.InstantiatePrefab(craftingButtonPrefab,
-                prefabCraftingButtonsParent) as GameObject;
+            GameObject craftingButton = PrefabUtility.InstantiatePrefab(
+                craftingButtonPrefab, prefabCraftingButtonsParent) as GameObject;
             craftingButton.name = $"{craftingRecipe.name} Button";
 
-            craftingButton.GetComponent<CraftingButton>().SetUpCraftingButton(
-                prefabCraftingButtonGenerator.craftingButtonDependencies, craftingRecipe);
+            craftingButton.GetComponent<CraftingButton>()
+                .SetUpCraftingButton(craftingRecipe);
         }
 
         PrefabUtility.RecordPrefabInstancePropertyModifications(prefabRoot);

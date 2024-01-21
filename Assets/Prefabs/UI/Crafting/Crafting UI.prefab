@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3872985727311164804}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -144,7 +143,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3872985727311164804}
-  - component: {fileID: 8455560938854511820}
   - component: {fileID: 3872985727311164805}
   m_Layer: 5
   m_Name: Crafting UI
@@ -168,27 +166,12 @@ RectTransform:
   - {fileID: 3872985727245635635}
   - {fileID: 2155727715256348928}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8455560938854511820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3872985727311164811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fdf8a82830df914f8842c0642272bd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInventory: {fileID: 0}
-  inventoryUIHeldItemController: {fileID: 0}
 --- !u!114 &3872985727311164805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e0d77954804ff4e8727ff712684c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  craftingButtonDependencies: {fileID: 8455560938854511820}
   craftingButtonPrefab: {fileID: 6009137097597202608, guid: 466a4b07e1998a740a8b182a342903dd,
     type: 3}
   craftingButtonsParentTransform: {fileID: 2155727715256348928}
@@ -239,7 +221,6 @@ RectTransform:
   - {fileID: 1573646003501048813}
   - {fileID: 5617814468285570613}
   m_Father: {fileID: 3872985727311164804}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -275,6 +256,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2155727715256348928}
     m_Modifications:
     - target: {fileID: 2692672177494040863, guid: 466a4b07e1998a740a8b182a342903dd,
@@ -289,11 +271,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: a4804d59189d7dd4cb4b8ef9dc2c63f2,
         type: 2}
-    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
-        type: 3}
-      propertyPath: craftingButtonDependencies
-      value: 
-      objectReference: {fileID: 8455560938854511820}
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_Pivot.x
@@ -405,6 +382,9 @@ PrefabInstance:
       value: Craft Chest Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
 --- !u!224 &6538627446970026569 stripped
 RectTransform:
@@ -417,6 +397,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2155727715256348928}
     m_Modifications:
     - target: {fileID: 2692672177494040863, guid: 466a4b07e1998a740a8b182a342903dd,
@@ -431,11 +412,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 46d2472a2843f104d899177307cb20df,
         type: 2}
-    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
-        type: 3}
-      propertyPath: craftingButtonDependencies
-      value: 
-      objectReference: {fileID: 8455560938854511820}
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_Pivot.x
@@ -547,6 +523,9 @@ PrefabInstance:
       value: Craft Spear Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
 --- !u!224 &5617814468285570613 stripped
 RectTransform:
@@ -559,6 +538,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2155727715256348928}
     m_Modifications:
     - target: {fileID: 2692672177494040863, guid: 466a4b07e1998a740a8b182a342903dd,
@@ -573,11 +553,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: bc744e9066fa8ff40afbc26dbcf74d3a,
         type: 2}
-    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
-        type: 3}
-      propertyPath: craftingButtonDependencies
-      value: 
-      objectReference: {fileID: 8455560938854511820}
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_Pivot.x
@@ -689,6 +664,9 @@ PrefabInstance:
       value: Craft Fishing Rod Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
 --- !u!224 &1573646003501048813 stripped
 RectTransform:
@@ -701,6 +679,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2155727715256348928}
     m_Modifications:
     - target: {fileID: 2692672177494040863, guid: 466a4b07e1998a740a8b182a342903dd,
@@ -715,11 +694,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 1ff4c30ada4ec6e42bda8acb29ff622c,
         type: 2}
-    - target: {fileID: 6009137097597202574, guid: 466a4b07e1998a740a8b182a342903dd,
-        type: 3}
-      propertyPath: craftingButtonDependencies
-      value: 
-      objectReference: {fileID: 8455560938854511820}
     - target: {fileID: 6009137097597202575, guid: 466a4b07e1998a740a8b182a342903dd,
         type: 3}
       propertyPath: m_Pivot.x
@@ -831,6 +805,9 @@ PrefabInstance:
       value: Craft Campfire Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 466a4b07e1998a740a8b182a342903dd, type: 3}
 --- !u!224 &4342866191883935850 stripped
 RectTransform:

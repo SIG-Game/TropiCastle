@@ -33866,7 +33866,9 @@ MonoBehaviour:
   - {fileID: 6628131629790253057}
   - {fileID: 505186822}
   - {fileID: 1170725310}
-  namedDependencies: []
+  namedDependencies:
+  - Name: PlayerInventory
+    Dependency: {fileID: 1982112582}
   transformDependencies:
   - {fileID: 572276104}
 --- !u!4 &1854850080

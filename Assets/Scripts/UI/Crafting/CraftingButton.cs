@@ -6,19 +6,17 @@ using UnityEngine.UI;
 public class CraftingButton : MonoBehaviour, IElementWithTooltip
 {
     [SerializeField] private Button craftingButton;
-    [SerializeField] private CraftingButtonDependencies craftingButtonDependencies;
     [SerializeField] private CraftingRecipeScriptableObject craftingRecipe;
     [SerializeField] private Image craftingButtonImage;
 
-    private Inventory playerInventory;
-    private InventoryUIHeldItemController inventoryUIHeldItemController;
+    [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
+    [Inject("PlayerInventory")] private Inventory playerInventory;
+
     private string resultItemTooltipText;
 
     private void Awake()
     {
-        playerInventory = craftingButtonDependencies.PlayerInventory;
-        inventoryUIHeldItemController =
-            craftingButtonDependencies.InventoryUIHeldItemController;
+        this.InjectDependencies();
 
         // This could be changed to not be set at runtime
         // It this wasn't set at runtime, an old item tooltip format might get cached
@@ -45,10 +43,8 @@ public class CraftingButton : MonoBehaviour, IElementWithTooltip
             craftingRecipe.Ingredients, craftingRecipe.ResultItem);
     }
 
-    public void SetUpCraftingButton(CraftingButtonDependencies craftingButtonDependencies,
-        CraftingRecipeScriptableObject craftingRecipe)
+    public void SetUpCraftingButton(CraftingRecipeScriptableObject craftingRecipe)
     {
-        this.craftingButtonDependencies = craftingButtonDependencies;
         this.craftingRecipe = craftingRecipe;
 
         craftingButtonImage.sprite = craftingRecipe.ResultItem.ItemDefinition.Sprite;

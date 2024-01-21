@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6009137097597202575}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -110,7 +109,6 @@ RectTransform:
   m_Children:
   - {fileID: 8544840934275653013}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -224,6 +222,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   craftingButton: {fileID: 6009137097597202573}
-  craftingButtonDependencies: {fileID: 0}
   craftingRecipe: {fileID: 0}
   craftingButtonImage: {fileID: 2692672177494040863}
