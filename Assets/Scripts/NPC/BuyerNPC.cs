@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class BuyerNPC : NPCInteractable
 {
-    [SerializeField] private List<NPCPurchaseScriptableObject> purchases;
+    [SerializeField] private List<NPCTransactionScriptableObject> purchases;
 
-    [Inject] private BuyerNPCUIController buyerNPCUIController;
     [Inject] private InventoryUIManager inventoryUIManager;
+    [Inject] private NPCTransactionUIController npcTransactionUIController;
     [Inject] private PlayerController playerController;
 
     protected override void Awake()
@@ -20,7 +20,7 @@ public class BuyerNPC : NPCInteractable
     {
         FacePlayer(playerController);
 
-        buyerNPCUIController.DisplayPurchases(purchases);
+        npcTransactionUIController.DisplayTransactions(purchases);
 
         inventoryUIManager.OnInventoryUIClosed +=
             InventoryUIManager_OnInventoryUIClosed;

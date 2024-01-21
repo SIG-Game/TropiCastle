@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d2bcc72248d07945bdd84bcfe023ed0, type: 3}
+  m_Script: {fileID: 11500000, guid: b9888657fed66514e93839d7fec8e171, type: 3}
   m_Name: Marlin NPC Purchase
   m_EditorClassIdentifier: 
+  TransactionType: 1
   Item:
     ItemDefinition: {fileID: 11400000, guid: e72a46fd3c1ba554abaeea8237faf836, type: 2}
     Amount: 1
-  Payment: 10
+  Money: 10

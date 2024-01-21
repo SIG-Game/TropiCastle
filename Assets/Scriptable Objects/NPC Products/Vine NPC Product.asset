@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c7b23d99fbfcc04ea35f6b4fea76af3, type: 3}
+  m_Script: {fileID: 11500000, guid: b9888657fed66514e93839d7fec8e171, type: 3}
   m_Name: Vine NPC Product
   m_EditorClassIdentifier: 
+  TransactionType: 0
   Item:
     ItemDefinition: {fileID: 11400000, guid: bac278ede63aa484a874a58b40348bba, type: 2}
     Amount: 1
-  Cost: 5
+  Money: 5

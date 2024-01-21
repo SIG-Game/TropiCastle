@@ -17754,18 +17754,6 @@ Transform:
   - {fileID: 571519487}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &505186822 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5820488378499450579, guid: cb76167790ad17b418442606107678be,
-    type: 3}
-  m_PrefabInstance: {fileID: 6847651757298814663}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0976309c5f22a34dbe0b73671bda7e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &537164969 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6847651758018855121, guid: cb76167790ad17b418442606107678be,
@@ -28014,6 +28002,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2b821007229b5f449b7f6812e84f90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1205689139 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7264300179790493560, guid: cb76167790ad17b418442606107678be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6847651757298814663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 553a4764689132c469d9d5ea238a1232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1234441276
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28223,18 +28223,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc31599282b18304680eaba8ac3df522, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1313262520 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 845027886384467111, guid: cb76167790ad17b418442606107678be,
-    type: 3}
-  m_PrefabInstance: {fileID: 6847651757298814663}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799de11a6a710af4a80e8a654b11d2f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1402876791 stripped
@@ -33848,7 +33836,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dependencies:
-  - {fileID: 1313262520}
   - {fileID: 1816801988}
   - {fileID: 6847651757298814668}
   - {fileID: 537164969}
@@ -33860,11 +33847,11 @@ MonoBehaviour:
   - {fileID: 6847651757298814667}
   - {fileID: 1197448800}
   - {fileID: 1164902125}
+  - {fileID: 1205689139}
   - {fileID: 1654789940}
   - {fileID: 1982112585}
   - {fileID: 572276101}
   - {fileID: 6628131629790253057}
-  - {fileID: 505186822}
   - {fileID: 1170725310}
   namedDependencies:
   - Name: PlayerInventory
@@ -36507,6 +36494,16 @@ PrefabInstance:
       propertyPath: targetHealthController
       value: 
       objectReference: {fileID: 1982112581}
+    - target: {fileID: 7264300179790493560, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1982112582}
+    - target: {fileID: 7264300179790493560, guid: cb76167790ad17b418442606107678be,
+        type: 3}
+      propertyPath: playerMoneyController
+      value: 
+      objectReference: {fileID: 1915371346}
     - target: {fileID: 7311749465179744124, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: moneyController

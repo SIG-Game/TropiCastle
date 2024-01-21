@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2249377909206000377, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
@@ -108,6 +109,13 @@ PrefabInstance:
       value: Buyer NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4509858844898638303, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7196797115099419309}
   m_SourcePrefab: {fileID: 100100000, guid: ab2eb29b8ae26cc4cb34ce3331827ea5, type: 3}
 --- !u!1 &6627451504148731766 stripped
 GameObject:
