@@ -6,8 +6,8 @@ public class TransactorNPC : NPCInteractable
     [SerializeField] private List<NPCTransactionScriptableObject> transactions;
 
     [Inject] private InventoryUIManager inventoryUIManager;
-    [Inject] private NPCTransactionUIController npcTransactionUIController;
     [Inject] private PlayerController playerController;
+    [Inject] private TransactorNPCUIController transactorNPCUIController;
 
     protected override void Awake()
     {
@@ -20,7 +20,7 @@ public class TransactorNPC : NPCInteractable
     {
         FacePlayer(playerController);
 
-        npcTransactionUIController.DisplayTransactions(transactions);
+        transactorNPCUIController.DisplayTransactions(transactions);
 
         inventoryUIManager.OnInventoryUIClosed +=
             InventoryUIManager_OnInventoryUIClosed;

@@ -159,8 +159,8 @@ RectTransform:
   m_Children:
   - {fileID: 3088339907086435066}
   - {fileID: 828222128231791803}
-  - {fileID: 2352121328059422230}
   - {fileID: 6877747647967441444}
+  - {fileID: 2352121328059422230}
   - {fileID: 256159019066620201}
   - {fileID: 6847651757743611970}
   - {fileID: 1540434473152835797}
@@ -434,7 +434,7 @@ PrefabInstance:
     - target: {fileID: 1810005239828023869, guid: 3a74ee955c7ba104a852986d24f0e1de,
         type: 3}
       propertyPath: m_Name
-      value: NPC Transaction UI Controller
+      value: Transactor NPC UI Controller
       objectReference: {fileID: 0}
     - target: {fileID: 2321382953618471639, guid: 3a74ee955c7ba104a852986d24f0e1de,
         type: 3}

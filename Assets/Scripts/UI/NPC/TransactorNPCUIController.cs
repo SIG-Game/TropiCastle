@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class NPCTransactionUIController : NPCInventoryUIController
+public class TransactorNPCUIController : NPCInventoryUIController
 {
     [SerializeField] private GameObject transactionUIPrefab;
     [SerializeField] private Transform transactionUIParent;
