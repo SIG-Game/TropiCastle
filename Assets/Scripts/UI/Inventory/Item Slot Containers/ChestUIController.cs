@@ -21,7 +21,6 @@ public class ChestUIController : MonoBehaviour
 
         playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
-        inventoryUIManager.SetCurrentInventoryUIGameObjects(chestUIGameObjects);
-        inventoryUIManager.EnableCurrentInventoryUI();
+        inventoryUIManager.ShowInventoryUI(chestUIGameObjects);
     }
 }

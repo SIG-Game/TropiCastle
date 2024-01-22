@@ -24,8 +24,7 @@ public class CampfireUIController : MonoBehaviour
     {
         playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
-        inventoryUIManager.SetCurrentInventoryUIGameObjects(campfireUIGameObjects);
-        inventoryUIManager.EnableCurrentInventoryUI();
+        inventoryUIManager.ShowInventoryUI(campfireUIGameObjects);
 
         inventoryUIManager.OnInventoryUIClosed +=
             InventoryUIManager_OnCampfireUIClosed;

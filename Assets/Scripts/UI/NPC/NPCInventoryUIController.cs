@@ -33,8 +33,7 @@ public abstract class NPCInventoryUIController : MonoBehaviour
     {
         playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
-        inventoryUIManager.SetCurrentInventoryUIGameObjects(uiGameObjects);
-        inventoryUIManager.EnableCurrentInventoryUI();
+        inventoryUIManager.ShowInventoryUI(uiGameObjects);
     }
 
     protected abstract void InventoryUIHeldItemController_OnItemHeld();

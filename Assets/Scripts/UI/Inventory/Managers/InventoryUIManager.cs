@@ -59,8 +59,10 @@ public class InventoryUIManager : MonoBehaviour
             closeUsingInventoryAction;
     }
 
-    public void EnableCurrentInventoryUI()
+    public void ShowInventoryUI(List<GameObject> inventoryUIGameObjects)
     {
+        currentInventoryUIGameObjects = inventoryUIGameObjects;
+
         SetCurrentInventoryUIActive(true);
 
         InventoryUIOpen = true;
@@ -80,11 +82,5 @@ public class InventoryUIManager : MonoBehaviour
         currentInventoryUIGameObjects.ForEach(x => x.SetActive(active));
 
         menuBackground.SetActive(active);
-    }
-
-    public void SetCurrentInventoryUIGameObjects(
-        List<GameObject> currentInventoryUIGameObjects)
-    {
-        this.currentInventoryUIGameObjects = currentInventoryUIGameObjects;
     }
 }
