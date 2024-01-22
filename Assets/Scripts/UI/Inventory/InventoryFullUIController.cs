@@ -3,24 +3,27 @@ using UnityEngine;
 
 public class InventoryFullUIController : MonoBehaviour
 {
-    [SerializeField] private Inventory inventory;
     [SerializeField] private CanvasGroupAlphaInterpolator canvasGroupAlphaInterpolator;
     [SerializeField] private float visibleTimeSeconds;
+
+    [Inject("PlayerInventory")] private Inventory playerInventory;
 
     private Coroutine startFadingOutAfterWaitCoroutineObject;
     private WaitForSeconds visibleWaitForSeconds;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         visibleWaitForSeconds = new WaitForSeconds(visibleTimeSeconds);
 
-        inventory.OnFailedToAddItemToFullInventory +=
+        playerInventory.OnFailedToAddItemToFullInventory +=
             Inventory_OnFailedToAddItemToFullInventory;
     }
 
     private void OnDestroy()
     {
-        inventory.OnFailedToAddItemToFullInventory -=
+        playerInventory.OnFailedToAddItemToFullInventory -=
             Inventory_OnFailedToAddItemToFullInventory;
     }
 
