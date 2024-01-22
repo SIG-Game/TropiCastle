@@ -27954,6 +27954,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b895e4d0d0a534f945065c2c047b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1278932380 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6736210025769766868, guid: 055035cc7ee7c8646858260629418a55,
+    type: 3}
+  m_PrefabInstance: {fileID: 1982112580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94937e32bfd9d14b8efac7ad71f78e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1402876791 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2594139973274944938, guid: cb76167790ad17b418442606107678be,
@@ -33529,18 +33541,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1915371346 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5755445992949103826, guid: 055035cc7ee7c8646858260629418a55,
-    type: 3}
-  m_PrefabInstance: {fileID: 1982112580}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e94937e32bfd9d14b8efac7ad71f78e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1982112580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34352,7 +34352,7 @@ PrefabInstance:
         type: 3}
       propertyPath: moneyController
       value: 
-      objectReference: {fileID: 1915371346}
+      objectReference: {fileID: 1278932380}
     - target: {fileID: 2381178632106261385, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: inventory
@@ -34582,7 +34582,7 @@ PrefabInstance:
         type: 3}
       propertyPath: moneyController
       value: 
-      objectReference: {fileID: 1915371346}
+      objectReference: {fileID: 1278932380}
     - target: {fileID: 5745872446509260880, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -34877,7 +34877,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerMoneyController
       value: 
-      objectReference: {fileID: 1915371346}
+      objectReference: {fileID: 1278932380}
     - target: {fileID: 7613643847479905876, guid: cb76167790ad17b418442606107678be,
         type: 3}
       propertyPath: m_AnchorMax.y
