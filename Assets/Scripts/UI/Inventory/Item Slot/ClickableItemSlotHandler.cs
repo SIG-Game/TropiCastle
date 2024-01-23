@@ -26,10 +26,10 @@ public class ClickableItemSlotHandler : MonoBehaviour, IElementWithTooltip,
             inventoryUIHeldItemController.HeldLeftClickOverItemAtIndex(
                 Inventory, slotItemIndex);
         }
-        else if (Input.GetMouseButton(1) && itemPlacementEnabled)
+        else if (Input.GetMouseButton(1))
         {
             inventoryUIHeldItemController.HeldRightClickOverItemAtIndex(
-                Inventory, slotItemIndex);
+                Inventory, slotItemIndex, itemPlacementEnabled);
         }
     }
 
@@ -40,11 +40,10 @@ public class ClickableItemSlotHandler : MonoBehaviour, IElementWithTooltip,
             inventoryUIHeldItemController.LeftClickedItemAtIndex(
                 Inventory, slotItemIndex, itemPlacementEnabled);
         }
-        else if (eventData.button == PointerEventData.InputButton.Right &&
-            itemPlacementEnabled)
+        else if (eventData.button == PointerEventData.InputButton.Right)
         {
             inventoryUIHeldItemController.RightClickedItemAtIndex(
-                Inventory, slotItemIndex);
+                Inventory, slotItemIndex, itemPlacementEnabled);
         }
     }
 

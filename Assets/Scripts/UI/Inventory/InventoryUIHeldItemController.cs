@@ -108,7 +108,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
     }
 
-    public void RightClickedItemAtIndex(Inventory clickedInventory, int clickedItemIndex)
+    public void RightClickedItemAtIndex(
+        Inventory clickedInventory, int clickedItemIndex, bool itemPlacementEnabled)
     {
         this.clickedInventory = clickedInventory;
 
@@ -116,7 +117,26 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
         if (HoldingItem())
         {
-            PlaceOneOfHeldItem(clickedItemIndex, clickedItem);
+            if (itemPlacementEnabled)
+            {
+                PlaceOneOfHeldItem(clickedItemIndex, clickedItem);
+            }
+        }
+        else
+        {
+            int newClickedItemAmount = clickedItem.Amount / 2;
+            int newHeldItemAmount = clickedItem.Amount - newClickedItemAmount;
+
+            clickedInventory.SetItemAmountAtIndex(
+                newClickedItemAmount, clickedItemIndex);
+
+            heldItemInventory = clickedInventory;
+            heldItemIndex = clickedItemIndex;
+            HeldItem = clickedItem.GetCopyWithAmount(newHeldItemAmount);
+
+            UpdateHeldItemUI();
+
+            OnItemHeld();
         }
     }
 
@@ -154,9 +174,17 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
         }
     }
 
-    public void HeldRightClickOverItemAtIndex(Inventory clickedInventory, int clickedItemIndex)
+    public void HeldRightClickOverItemAtIndex(
+        Inventory clickedInventory, int clickedItemIndex, bool itemPlacementEnabled)
     {
-        RightClickedItemAtIndex(clickedInventory, clickedItemIndex);
+        if (HoldingItem() && itemPlacementEnabled)
+        {
+            this.clickedInventory = clickedInventory;
+
+            ItemStack clickedItem = clickedInventory.GetItemAtIndex(clickedItemIndex);
+
+            PlaceOneOfHeldItem(clickedItemIndex, clickedItem);
+        }
     }
 
     private void PlaceHeldItem(int clickedItemIndex, ItemStack clickedItem)
