@@ -4,9 +4,15 @@ public class FishingRodItemUsage : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private FishingUIController fishingUIController;
+
+    [Inject] private FishingUIController fishingUIController;
 
     private int itemIndex;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     public void UseItem(int itemIndex)
     {

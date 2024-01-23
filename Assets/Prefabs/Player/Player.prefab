@@ -931,7 +931,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 5288355818519945016}
   playerInventory: {fileID: 3819991220739398948}
-  fishingUIController: {fileID: 0}
 --- !u!114 &7288205203562457323
 MonoBehaviour:
   m_ObjectHideFlags: 0
