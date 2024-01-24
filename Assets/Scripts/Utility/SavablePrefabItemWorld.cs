@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,9 +28,4 @@ public class SavablePrefabItemWorld : SavablePrefab
 
         spawnable.SetSpawnerUsingGuid<ItemSpawner>((string)properties["SpawnerGuid"]);
     }
-
-    public override Type GetDependencySetterType() =>
-        typeof(SavableItemWorldDependencySetter);
-
-    public ItemWorld GetItemWorld() => itemWorld;
 }

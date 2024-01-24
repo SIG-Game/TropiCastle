@@ -13,10 +13,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float fadeOutSpeed;
     [SerializeField] private SpriteRenderer healthBarBackground;
     [SerializeField] private SpriteRenderer healthBarFill;
-    [SerializeField] private Inventory playerInventory;
     [SerializeField] private List<ItemStack> loot;
 
     [Inject] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
+    [Inject("PlayerInventory")] private Inventory playerInventory;
     [Inject("PlayerTransform")] private Transform playerTransform;
 
     public InitialEnemyState InitialState { get; private set; }
@@ -180,9 +180,6 @@ public class EnemyController : MonoBehaviour
 
     private float GetDistanceToPlayerCollider() =>
         Vector2.Distance(transform.position, GetPlayerColliderPosition());
-
-    public void SetPlayerInventory(Inventory playerInventory) =>
-        this.playerInventory = playerInventory;
 
     public void SwitchState(BaseEnemyState newState)
     {

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +19,4 @@ public abstract class SavablePrefab : MonoBehaviour
     public abstract Dictionary<string, object> GetProperties();
 
     public abstract void SetUpFromProperties(Dictionary<string, object> properties);
-
-    public abstract Type GetDependencySetterType();
 }

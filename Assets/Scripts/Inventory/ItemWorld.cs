@@ -7,10 +7,19 @@ public class ItemWorld : MonoBehaviour
     [SerializeField] private ItemStack item;
     [SerializeField] private TMP_Text amountText;
 
+    [Inject("ItemWorldsTransform")] private Transform itemWorldsTransform;
+
     public ItemStack Item
     {
         get => item;
         set => SetItem(value);
+    }
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+
+        transform.parent = itemWorldsTransform;
     }
 
     public void SetItemAmount(int amount)

@@ -9,10 +9,7 @@ using UnityEngine.AddressableAssets;
 public class SaveController : MonoBehaviour
 {
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private SavableItemWorldDependencySetter itemWorldDependencySetter;
-    [SerializeField] private SavableEnemyDependencySetter enemyDependencySetter;
 
-    private Dictionary<Type, ISavablePrefabDependencySetter> typeToDependencySetter;
     private JsonSerializerSettings serializerSettings;
     private string saveDataFilePath;
 
@@ -20,13 +17,6 @@ public class SaveController : MonoBehaviour
 
     private void Awake()
     {
-        typeToDependencySetter =
-            new Dictionary<Type, ISavablePrefabDependencySetter>
-            {
-                { typeof(SavableItemWorldDependencySetter), itemWorldDependencySetter },
-                { typeof(SavableEnemyDependencySetter), enemyDependencySetter }
-            };
-
         serializerSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
@@ -119,12 +109,6 @@ public class SaveController : MonoBehaviour
 
             SavablePrefab savablePrefab =
                 spawnedGameObject.GetComponent<SavablePrefab>();
-
-            ISavablePrefabDependencySetter dependencySetter =
-                typeToDependencySetter[savablePrefab.GetDependencySetterType()];
-
-            // Must run before SetUpFromSavablePrefabState
-            dependencySetter.SetPrefabDependencies(savablePrefab);
 
             savablePrefab.SetUpFromProperties(savablePrefabState.Properties);
         }

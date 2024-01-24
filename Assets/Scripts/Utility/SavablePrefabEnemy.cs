@@ -28,11 +28,6 @@ public class SavablePrefabEnemy : SavablePrefab
 
         healthController.SetInitialHealth(Convert.ToInt32(properties["Health"]));
 
-        spawnable.SetSpawnerUsingGuid<EnemySpawner>((string)properties["SpawnerGuid"]);
+        spawnable.SetSpawnerUsingGuid<PrefabSpawner>((string)properties["SpawnerGuid"]);
     }
-
-    public override Type GetDependencySetterType() =>
-        typeof(SavableEnemyDependencySetter);
-
-    public EnemyController GetEnemyController() => enemyController;
 }

@@ -33525,6 +33525,7 @@ MonoBehaviour:
   - Name: PlayerInventory
     Dependency: {fileID: 1982112582}
   transformDependencies:
+  - {fileID: 979836934}
   - {fileID: 572276104}
 --- !u!4 &1854850080
 Transform:
