@@ -18,19 +18,43 @@ public class DependencyRegistrant : MonoBehaviour
     {
         foreach (var dependency in dependencies)
         {
-            InjectionContainer.Register(dependency.GetType(), dependency);
+            if (dependency != null)
+            {
+                InjectionContainer.Register(dependency.GetType(), dependency);
+            }
+            else
+            {
+                Debug.LogWarning($"Cannot register null dependency " +
+                    $"in GameObject {gameObject.name}");
+            }
         }
 
         foreach (var namedDependency in namedDependencies)
         {
-            InjectionContainer.Register(
-                namedDependency.Name, namedDependency.Dependency);
+            if (namedDependency.Dependency != null)
+            {
+                InjectionContainer.Register(
+                    namedDependency.Name, namedDependency.Dependency);
+            }
+            else
+            {
+                Debug.LogWarning($"Cannot register null named dependency " +
+                    $"in GameObject {gameObject.name}");
+            }
         }
 
         foreach (var transform in transformDependencies)
         {
-            InjectionContainer.Register(
-                $"{transform.gameObject.name}{nameof(Transform)}", transform);
+            if (transform != null)
+            {
+                InjectionContainer.Register(
+                    $"{transform.gameObject.name}{nameof(Transform)}", transform);
+            }
+            else
+            {
+                Debug.LogWarning($"Cannot register null Transform dependency " +
+                    $"in GameObject {gameObject.name}");
+            }
         }
     }
 
