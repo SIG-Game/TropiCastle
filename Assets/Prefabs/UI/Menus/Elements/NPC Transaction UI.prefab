@@ -143,6 +143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8427080235088270803}
+  - component: {fileID: 3275445080623272502}
   m_Layer: 5
   m_Name: NPC Transaction UI
   m_TagString: Untagged
@@ -173,6 +174,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 114.75}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3275445080623272502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4426703402800039571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaea682249568c42a718dc6b2f73ab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 5891227937891750731}
+  arrow: {fileID: 5078416482265573377}
+  buttonText: {fileID: 7903133030727174479}
+  moneyText: {fileID: 6228337039187648221}
+  itemText: {fileID: 7743955420102396727}
 --- !u!1 &5871063173574524971
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,3 +797,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1536052515980645913}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6228337039187648221 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4845407101707552964, guid: dda1c2bff9a68e94b8fff3780db7b8d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1536052515980645913}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

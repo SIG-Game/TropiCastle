@@ -33524,6 +33524,8 @@ MonoBehaviour:
   namedDependencies:
   - Name: PlayerInventory
     Dependency: {fileID: 1982112582}
+  - Name: PlayerMoneyController
+    Dependency: {fileID: 1278932380}
   transformDependencies:
   - {fileID: 979836934}
   - {fileID: 572276104}

@@ -11,7 +11,7 @@ public abstract class NPCInventoryUIController : MonoBehaviour
     [Inject] protected InventoryUIHeldItemController inventoryUIHeldItemController;
     [Inject] protected InventoryUIManager inventoryUIManager;
 
-    protected virtual void Awake()
+    private void Awake()
     {
         this.InjectDependencies();
 
@@ -36,7 +36,11 @@ public abstract class NPCInventoryUIController : MonoBehaviour
         inventoryUIManager.ShowInventoryUI(uiGameObjects);
     }
 
-    protected abstract void InventoryUIHeldItemController_OnItemHeld();
+    protected virtual void InventoryUIHeldItemController_OnItemHeld()
+    {
+    }
 
-    protected abstract void InventoryUIHeldItemController_OnHidden();
+    protected virtual void InventoryUIHeldItemController_OnHidden()
+    {
+    }
 }

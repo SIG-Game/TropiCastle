@@ -121,7 +121,6 @@ MonoBehaviour:
   transactionUIPrefab: {fileID: 4426703402800039571, guid: 9fc679fcebcc6fe42a7f051ba4bbea2d,
     type: 3}
   transactionUIParent: {fileID: 6235393996974837748}
-  playerMoneyController: {fileID: 0}
 --- !u!1 &7805898087143950659
 GameObject:
   m_ObjectHideFlags: 0
