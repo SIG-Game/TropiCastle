@@ -31,9 +31,9 @@ public class NPCTransactionUIController : MonoBehaviour
 
     private void OnDestroy()
     {
-        inventoryUIHeldItemController.OnItemHeld +=
+        inventoryUIHeldItemController.OnItemHeld -=
             InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden +=
+        inventoryUIHeldItemController.OnHidden -=
             InventoryUIHeldItemController_OnHidden;
     }
 
