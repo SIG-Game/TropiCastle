@@ -9,9 +9,10 @@ public class NPCTransactionUIController : MonoBehaviour
 {
     [SerializeField] private Button button;
     [SerializeField] private RectTransform arrow;
+    [SerializeField] private Image itemImage;
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private TextMeshProUGUI moneyText;
-    [SerializeField] private TextMeshProUGUI itemText;
+    [SerializeField] private TextMeshProUGUI itemAmountText;
 
     [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [Inject("PlayerInventory")] private Inventory playerInventory;
@@ -57,7 +58,9 @@ public class NPCTransactionUIController : MonoBehaviour
         }
 
         moneyText.text = transaction.Money.ToString();
-        itemText.text = transaction.Item.ToString();
+        itemAmountText.text = transaction.Item.Amount.ToString();
+
+        itemImage.sprite = transaction.Item.ItemDefinition.Sprite;
     }
 
     private Action GetBuyButtonOnClickListener(
