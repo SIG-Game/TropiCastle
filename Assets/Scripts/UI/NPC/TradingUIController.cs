@@ -10,8 +10,28 @@ public class TradingUIController : NPCInventoryUIController
     [SerializeField] private Transform inputItemUIParent;
     [SerializeField] private Transform outputItemUIParent;
 
+    [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
+
     private NPCTradeScriptableObject currentTrade;
     private bool isCurrentTradePossible;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        inventoryUIHeldItemController.OnItemHeld +=
+            InventoryUIHeldItemController_OnItemHeld;
+        inventoryUIHeldItemController.OnHidden +=
+            InventoryUIHeldItemController_OnHidden;
+    }
+
+    private void OnDestroy()
+    {
+        inventoryUIHeldItemController.OnItemHeld -=
+            InventoryUIHeldItemController_OnItemHeld;
+        inventoryUIHeldItemController.OnHidden -=
+            InventoryUIHeldItemController_OnHidden;
+    }
 
     public void DisplayTrade(NPCTradeScriptableObject trade)
     {
@@ -76,9 +96,9 @@ public class TradingUIController : NPCInventoryUIController
         }
     }
 
-    protected override void InventoryUIHeldItemController_OnItemHeld() =>
+    private void InventoryUIHeldItemController_OnItemHeld() =>
         tradeButton.interactable = false;
 
-    protected override void InventoryUIHeldItemController_OnHidden() =>
+    private void InventoryUIHeldItemController_OnHidden() =>
         tradeButton.interactable = isCurrentTradePossible;
 }
