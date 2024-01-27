@@ -2,18 +2,14 @@ using UnityEngine;
 
 public class TranslucentTrigger : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRendererAlphaInterpolator alphaInterpolator;
     [SerializeField] private float translucentAlpha;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            spriteRenderer.color = new Color(
-                spriteRenderer.color.r,
-                spriteRenderer.color.g,
-                spriteRenderer.color.b,
-                translucentAlpha);
+            alphaInterpolator.TargetAlpha = translucentAlpha;
         }
     }
 
@@ -21,11 +17,7 @@ public class TranslucentTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            spriteRenderer.color = new Color(
-                spriteRenderer.color.r,
-                spriteRenderer.color.g,
-                spriteRenderer.color.b,
-                1f);
+            alphaInterpolator.TargetAlpha = 1f;
         }
     }
 }

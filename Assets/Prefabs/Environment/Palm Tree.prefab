@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4842603464928017021}
   - component: {fileID: 4842603464928017022}
   - component: {fileID: 4790698819826670267}
+  - component: {fileID: 5501938907498357168}
   m_Layer: 0
   m_Name: Palm Tree
   m_TagString: Untagged
@@ -136,6 +137,20 @@ PolygonCollider2D:
       - {x: 0.25, y: 0.09375}
       - {x: 0.25, y: 0}
   m_UseDelaunayMesh: 0
+--- !u!114 &5501938907498357168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4842603464928017008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157e817faa031ea498461aed9df1c685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 4842603464928017022}
+  alphaChangeSpeed: 6
 --- !u!1 &5309204911193295910
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9cb7aaaf7af80418938c324dbbdf03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 4842603464928017022}
+  alphaInterpolator: {fileID: 5501938907498357168}
   translucentAlpha: 0.5
 --- !u!1001 &204980597690814274
 PrefabInstance:
