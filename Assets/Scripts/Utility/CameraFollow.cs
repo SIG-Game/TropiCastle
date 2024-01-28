@@ -25,24 +25,16 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(GetNewXPosition(),
-            GetNewYPosition(), transform.position.z);
-    }
-
-    private float GetNewXPosition()
-    {
-        float halfCameraWidth = camera.orthographicSize * camera.aspect;
-
-        return GetNewPositionOnOneAxis(target.position.x,
-            tilemapMinX, tilemapMaxX, halfCameraWidth);
-    }
-
-    private float GetNewYPosition()
-    {
         float halfCameraHeight = camera.orthographicSize;
+        float halfCameraWidth = halfCameraHeight * camera.aspect;
 
-        return GetNewPositionOnOneAxis(target.position.y,
-            tilemapMinY, tilemapMaxY, halfCameraHeight);
+        float newXPosition = GetNewPositionOnOneAxis(
+            target.position.x, tilemapMinX, tilemapMaxX, halfCameraWidth);
+        float newYPosition = GetNewPositionOnOneAxis(
+            target.position.y, tilemapMinY, tilemapMaxY, halfCameraHeight);
+
+        transform.position = new Vector3(
+            newXPosition, newYPosition, transform.position.z);
     }
 
     private float GetNewPositionOnOneAxis(float targetPosition,
