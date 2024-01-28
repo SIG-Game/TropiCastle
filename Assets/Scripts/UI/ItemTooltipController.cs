@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TradeItemTooltipController : MonoBehaviour, IElementWithTooltip
+public class ItemTooltipController : MonoBehaviour, IElementWithTooltip
 {
     public ItemStack Item { private get; set; }
 

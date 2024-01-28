@@ -61,6 +61,8 @@ public class NPCTransactionUIController : MonoBehaviour
         itemAmountText.text = transaction.Item.Amount.ToString();
 
         itemImage.sprite = transaction.Item.ItemDefinition.Sprite;
+
+        itemImage.GetComponent<ItemTooltipController>().Item = transaction.Item;
     }
 
     private Action GetBuyButtonOnClickListener(

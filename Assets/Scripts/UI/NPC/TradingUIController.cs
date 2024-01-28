@@ -67,7 +67,7 @@ public class TradingUIController : NPCInventoryUIController
 
             itemAmountText.text = item.GetAmountText();
 
-            itemUI.GetComponent<TradeItemTooltipController>().Item = item;
+            itemUI.GetComponent<ItemTooltipController>().Item = item;
         }
     }
 
