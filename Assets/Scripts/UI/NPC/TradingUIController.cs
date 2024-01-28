@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,27 +46,20 @@ public class TradingUIController : NPCInventoryUIController
         DisplayUI();
     }
 
-    private void UpdateTradeItemUI(Transform itemUIParent, List<ItemStack> items)
+    private void UpdateTradeItemUI(
+        Transform tradeItemUIParent, List<ItemStack> items)
     {
-        foreach (Transform itemUI in itemUIParent)
+        foreach (Transform tradeItemUI in tradeItemUIParent)
         {
-            Destroy(itemUI.gameObject);
+            Destroy(tradeItemUI.gameObject);
         }
 
         foreach (ItemStack item in items)
         {
-            GameObject itemUI = Instantiate(tradeItemUIPrefab, itemUIParent);
+            GameObject tradeItemUI = Instantiate(
+                tradeItemUIPrefab, tradeItemUIParent);
 
-            Image itemImage = itemUI.transform.GetChild(0).GetComponent<Image>();
-
-            itemImage.sprite = item.ItemDefinition.Sprite;
-
-            TextMeshProUGUI itemAmountText =
-                itemUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-
-            itemAmountText.text = item.GetAmountText();
-
-            itemUI.GetComponent<ItemTooltipController>().Item = item;
+            tradeItemUI.GetComponent<NPCTradeItemUIController>().SetUp(item);
         }
     }
 
