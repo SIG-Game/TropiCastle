@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Inventory inventory;
+    [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private SpriteMask overlaySpriteMask;
 
     [Header("Item Usages")]
@@ -41,7 +42,6 @@ public class PlayerController : MonoBehaviour
 
     private BoxCollider2D boxCollider;
     private HealthController healthController;
-    private ItemSelectionController itemSelectionController;
     private SpriteRenderer spriteRenderer;
     private CharacterDirectionController directionController;
     private LayerMask interactableMask;
@@ -54,7 +54,6 @@ public class PlayerController : MonoBehaviour
 
         boxCollider = GetComponent<BoxCollider2D>();
         healthController = GetComponent<HealthController>();
-        itemSelectionController = GetComponent<ItemSelectionController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         directionController = GetComponent<CharacterDirectionController>();
 
