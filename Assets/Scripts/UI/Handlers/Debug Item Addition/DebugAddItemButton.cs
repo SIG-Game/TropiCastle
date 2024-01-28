@@ -7,8 +7,14 @@ public class DebugAddItemButton : MonoBehaviour
     [SerializeField] private GameObject debugAddItemButton;
     [SerializeField] private DebugAddItemDropdownController addItemDropdownController;
     [SerializeField] private TMP_InputField amountInputField;
-    [SerializeField] private Inventory playerInventory;
 
+    [Inject("PlayerInventory")] private Inventory playerInventory;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
+    
     private void Start()
     {
         if (!DebugController.DebugModeEnabled)
