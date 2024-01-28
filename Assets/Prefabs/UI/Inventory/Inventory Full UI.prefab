@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7245580463441394799}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -107,7 +106,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7245580463441394799}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -245,7 +243,6 @@ RectTransform:
   - {fileID: 7245580461666287405}
   - {fileID: 7245580463131075100}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -264,7 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e6e8764f5ac5143a9328ab5effc108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   canvasGroupAlphaInterpolator: {fileID: 4433987175935075433}
   visibleTimeSeconds: 1.75
 --- !u!114 &4433987175935075433
@@ -279,8 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa0092cb5d464a44b4ab441afb8fcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 7245580463441394793}
   alphaChangeSpeed: 8
+  canvasGroup: {fileID: 7245580463441394793}
 --- !u!225 &7245580463441394793
 CanvasGroup:
   m_ObjectHideFlags: 0

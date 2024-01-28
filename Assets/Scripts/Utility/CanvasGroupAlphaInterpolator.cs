@@ -1,23 +1,12 @@
 using UnityEngine;
 
-public class CanvasGroupAlphaInterpolator : MonoBehaviour
+public class CanvasGroupAlphaInterpolator : AlphaInterpolator
 {
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private float alphaChangeSpeed;
 
-    public float TargetAlpha { get; set; }
-
-    private void Awake()
+    protected override float Alpha
     {
-        TargetAlpha = canvasGroup.alpha;
-    }
-
-    private void Update()
-    {
-        if (canvasGroup.alpha != TargetAlpha)
-        {
-            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha,
-                TargetAlpha, alphaChangeSpeed * Time.deltaTime);
-        }
+        get => canvasGroup.alpha;
+        set => canvasGroup.alpha = value;
     }
 }

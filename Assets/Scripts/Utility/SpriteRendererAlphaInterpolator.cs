@@ -1,34 +1,36 @@
 using UnityEngine;
 
-public class SpriteRendererAlphaInterpolator : MonoBehaviour
+public class SpriteRendererAlphaInterpolator : AlphaInterpolator
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private float alphaChangeSpeed;
 
     [Inject] private PauseController pauseController;
 
-    public float TargetAlpha { private get; set; }
-
-    private void Awake()
+    protected override float Alpha
     {
-        this.InjectDependencies();
-
-        TargetAlpha = spriteRenderer.color.a;
-    }
-
-    private void Update()
-    {
-        if (!pauseController.GamePaused &&
-            spriteRenderer.color.a != TargetAlpha)
+        get => spriteRenderer.color.a;
+        set
         {
-            float newAlpha = Mathf.MoveTowards(spriteRenderer.color.a,
-                TargetAlpha, alphaChangeSpeed * Time.deltaTime);
-
             spriteRenderer.color = new Color(
                 spriteRenderer.color.r,
                 spriteRenderer.color.g,
                 spriteRenderer.color.b,
-                newAlpha);
+                value);
+        }
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        this.InjectDependencies();
+    }
+
+    protected override void Update()
+    {
+        if (!pauseController.GamePaused)
+        {
+            base.Update();
         }
     }
 }
