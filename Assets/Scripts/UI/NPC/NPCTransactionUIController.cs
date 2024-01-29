@@ -20,26 +20,40 @@ public class NPCTransactionUIController : MonoBehaviour
 
     public Button Button => button;
 
+    private NPCTransactionScriptableObject transaction;
+
     private void Awake()
     {
         this.InjectDependencies();
 
+        UpdateButtonInteractability();
+
         inventoryUIHeldItemController.OnItemHeld +=
             InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden +=
-            InventoryUIHeldItemController_OnHidden;
+        inventoryUIHeldItemController.OnHidden += UpdateButtonInteractability;
+        playerInventory.OnItemChangedAtIndex += 
+            PlayerInventory_OnItemChangedAtIndex;
+
+        if (transaction.TransactionType == Product)
+        {
+            playerMoneyController.OnMoneySet += UpdateButtonInteractability;
+        }
     }
 
     private void OnDestroy()
     {
         inventoryUIHeldItemController.OnItemHeld -=
             InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden -=
-            InventoryUIHeldItemController_OnHidden;
+        inventoryUIHeldItemController.OnHidden -= UpdateButtonInteractability;
+        playerInventory.OnItemChangedAtIndex -=
+            PlayerInventory_OnItemChangedAtIndex;
+        playerMoneyController.OnMoneySet -= UpdateButtonInteractability;
     }
 
     public void SetUp(NPCTransactionScriptableObject transaction)
     {
+        this.transaction = transaction;
+
         if (transaction.TransactionType == Product)
         {
             buttonText.text = "Buy";
@@ -63,6 +77,25 @@ public class NPCTransactionUIController : MonoBehaviour
         itemImage.sprite = transaction.Item.ItemDefinition.Sprite;
 
         itemImage.GetComponent<ItemTooltipController>().Item = transaction.Item;
+    }
+
+    private void UpdateButtonInteractability()
+    {
+        if (inventoryUIHeldItemController.HoldingItem())
+        {
+            button.interactable = false;
+        }
+        else if (transaction.TransactionType == Product)
+        {
+            button.interactable =
+                playerMoneyController.Money >= transaction.Money &&
+                playerInventory.CanAddItem(transaction.Item);
+        }
+        else
+        {
+            button.interactable =
+                playerInventory.CanRemoveItem(transaction.Item);
+        }
     }
 
     private Action GetBuyButtonOnClickListener(
@@ -93,6 +126,6 @@ public class NPCTransactionUIController : MonoBehaviour
     private void InventoryUIHeldItemController_OnItemHeld() =>
         button.interactable = false;
 
-    private void InventoryUIHeldItemController_OnHidden() =>
-        button.interactable = true;
+    private void PlayerInventory_OnItemChangedAtIndex(ItemStack _, int _1) =>
+        UpdateButtonInteractability();
 }
