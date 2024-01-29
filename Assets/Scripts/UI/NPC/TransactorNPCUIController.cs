@@ -28,10 +28,8 @@ public class TransactorNPCUIController : NPCInventoryUIController
             GameObject transactionUI =
                 Instantiate(transactionUIPrefab, transactionUIParent);
 
-            var transactionUIController =
-                transactionUI.GetComponent<NPCTransactionUIController>();
-
-            transactionUIController.SetUp(transaction);
+            transactionUI.GetComponent<NPCTransactionUIController>()
+                .SetUp(transaction);
         }
 
         base.DisplayUI();
