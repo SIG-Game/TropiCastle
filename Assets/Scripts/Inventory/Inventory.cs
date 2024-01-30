@@ -508,6 +508,22 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public bool CanReplaceItems(
+        List<ItemStack> inputItems, List<ItemStack> outputItems)
+    {
+        if (!TryRemoveReplaceInputItems(inputItems,
+            out Dictionary<int, ItemStack> itemIndexToItemBeforeRemoval))
+        {
+            return false;
+        }
+
+        bool canAddReplaceOutputItems = CanAddReplaceOutputItems(outputItems);
+
+        RevertItemRemoval(itemIndexToItemBeforeRemoval);
+
+        return canAddReplaceOutputItems;
+    }
+
     private bool TryRemoveReplaceInputItems(List<ItemStack> inputItems,
         out Dictionary<int, ItemStack> itemIndexToItemBeforeRemoval)
     {

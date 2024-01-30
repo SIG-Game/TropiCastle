@@ -12,7 +12,6 @@ public class TradingUIController : NPCInventoryUIController
     [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
 
     private NPCTradeScriptableObject currentTrade;
-    private bool isCurrentTradePossible;
 
     protected override void Awake()
     {
@@ -21,7 +20,9 @@ public class TradingUIController : NPCInventoryUIController
         inventoryUIHeldItemController.OnItemHeld +=
             InventoryUIHeldItemController_OnItemHeld;
         inventoryUIHeldItemController.OnHidden +=
-            InventoryUIHeldItemController_OnHidden;
+            UpdateTradeButtonInteractability;
+        playerInventory.OnItemChangedAtIndex +=
+            PlayerInventory_OnItemChangedAtIndex;
     }
 
     private void OnDestroy()
@@ -29,7 +30,9 @@ public class TradingUIController : NPCInventoryUIController
         inventoryUIHeldItemController.OnItemHeld -=
             InventoryUIHeldItemController_OnItemHeld;
         inventoryUIHeldItemController.OnHidden -=
-            InventoryUIHeldItemController_OnHidden;
+            UpdateTradeButtonInteractability;
+        playerInventory.OnItemChangedAtIndex -=
+            PlayerInventory_OnItemChangedAtIndex;
     }
 
     public void DisplayTrade(NPCTradeScriptableObject trade)
@@ -39,11 +42,12 @@ public class TradingUIController : NPCInventoryUIController
         UpdateTradeItemUI(inputItemUIParent, trade.InputItems);
         UpdateTradeItemUI(outputItemUIParent, trade.OutputItems);
 
-        SetIsCurrentTradePossible();
-
-        tradeButton.interactable = isCurrentTradePossible;
+        UpdateTradeButtonInteractability();
 
         DisplayUI();
+
+        inventoryUIManager.OnInventoryUIClosed +=
+            InventoryUIManager_OnTradingUIClosed;
     }
 
     private void UpdateTradeItemUI(
@@ -63,34 +67,42 @@ public class TradingUIController : NPCInventoryUIController
         }
     }
 
-    public void TradeButton_OnClick()
+    private void UpdateTradeButtonInteractability()
     {
+        if (inventoryUIHeldItemController.HoldingItem())
+        {
+            tradeButton.interactable = false;
+        }
+        else if (currentTrade != null)
+        {
+            // Prevent this method from calling itself
+            // through PlayerInventory_OnItemChangedAtIndex
+            playerInventory.OnItemChangedAtIndex -=
+                PlayerInventory_OnItemChangedAtIndex;
+
+            tradeButton.interactable = playerInventory.CanReplaceItems(
+                currentTrade.InputItems, currentTrade.OutputItems);
+
+            playerInventory.OnItemChangedAtIndex +=
+                PlayerInventory_OnItemChangedAtIndex;
+        }
+    }
+
+    public void TradeButton_OnClick() =>
         playerInventory.ReplaceItems(
             currentTrade.InputItems, currentTrade.OutputItems);
 
-        SetIsCurrentTradePossible();
-
-        tradeButton.interactable = isCurrentTradePossible;
-    }
-
-    private void SetIsCurrentTradePossible()
+    private void InventoryUIManager_OnTradingUIClosed()
     {
-        Dictionary<int, int> itemIndexToUsedAmount = new Dictionary<int, int>();
+        currentTrade = null;
 
-        isCurrentTradePossible = true;
-
-        foreach (ItemStack inputItem in currentTrade.InputItems)
-        {
-            bool playerHasInputItem = playerInventory
-                .HasReplacementInputItem(itemIndexToUsedAmount, inputItem);
-
-            isCurrentTradePossible = isCurrentTradePossible && playerHasInputItem;
-        }
+        inventoryUIManager.OnInventoryUIClosed -=
+            InventoryUIManager_OnTradingUIClosed;
     }
 
     private void InventoryUIHeldItemController_OnItemHeld() =>
         tradeButton.interactable = false;
 
-    private void InventoryUIHeldItemController_OnHidden() =>
-        tradeButton.interactable = isCurrentTradePossible;
+    private void PlayerInventory_OnItemChangedAtIndex(ItemStack _, int _1) =>
+        UpdateTradeButtonInteractability();
 }
