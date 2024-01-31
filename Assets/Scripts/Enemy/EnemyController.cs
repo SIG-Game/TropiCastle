@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static EnemyStateEnum;
 
 public class EnemyController : MonoBehaviour
 {
@@ -24,13 +25,13 @@ public class EnemyController : MonoBehaviour
     public ChasingEnemyState ChasingState { get; private set; }
     public KnockedBackEnemyState KnockedBackState { get; private set; }
     public FadingOutEnemyState FadingOutState { get; private set; }
+    public BaseEnemyState CurrentState { get; private set; }
 
     public float LastHitTime { get; set; }
 
     public float InitialWaitTimeBeforeIdleSeconds => initialWaitTimeBeforeIdleSeconds;
     public float WaitTimeAfterKnockbackSeconds => waitTimeAfterKnockbackSeconds;
 
-    private BaseEnemyState currentState;
     private new Rigidbody2D rigidbody2D;
     private new Collider2D collider2D;
     private SpriteRenderer spriteRenderer;
@@ -57,20 +58,28 @@ public class EnemyController : MonoBehaviour
         playerColliderOffset = playerTransform.GetComponent<BoxCollider2D>().offset;
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
+    }
 
-        currentState = InitialState;
+    private void Start()
+    {
+        // CurrentState can be set before the Start method
+        // runs using the SetInitialStateFromEnum method
+        if (CurrentState == null)
+        {
+            CurrentState = InitialState;
+        }
 
-        currentState.StateEnter();
+        CurrentState.StateEnter();
     }
 
     private void Update()
     {
-        currentState.StateUpdate();
+        CurrentState.StateUpdate();
     }
 
     private void FixedUpdate()
     {
-        if (currentState == ChasingState)
+        if (CurrentState == ChasingState)
         {
             rigidbody2D.MovePosition(Vector2.MoveTowards(transform.position,
                 GetPlayerColliderPosition(), speed));
@@ -134,7 +143,7 @@ public class EnemyController : MonoBehaviour
         {
             other.GetComponent<HealthController>().Health -= playerDamageAmount;
 
-            if (currentState != KnockedBackState)
+            if (CurrentState != KnockedBackState)
             {
                 Vector2 directionFromPlayerToEnemy = GetDirectionFromPlayerToEnemy();
                 ApplyKnockback(directionFromPlayerToEnemy, playerKnockbackForce);
@@ -144,11 +153,11 @@ public class EnemyController : MonoBehaviour
 
     public void ApplyKnockback(Vector2 normalizedDirection, float force)
     {
-        if (currentState == KnockedBackState)
+        if (CurrentState == KnockedBackState)
         {
             rigidbody2D.velocity = Vector2.zero;
         }
-        else if (currentState != FadingOutState)
+        else if (CurrentState != FadingOutState)
         {
             SwitchState(KnockedBackState);
         }
@@ -181,9 +190,20 @@ public class EnemyController : MonoBehaviour
     private float GetDistanceToPlayerCollider() =>
         Vector2.Distance(transform.position, GetPlayerColliderPosition());
 
+    public void SetInitialStateFromEnum(EnemyStateEnum enemyState) =>
+        CurrentState = enemyState switch
+        {
+            Initial => InitialState,
+            Idle => IdleState,
+            Chasing => ChasingState,
+            KnockedBack => KnockedBackState,
+            FadingOut => FadingOutState,
+            _ => IdleState
+        };
+
     public void SwitchState(BaseEnemyState newState)
     {
-        currentState = newState;
-        currentState.StateEnter();
+        CurrentState = newState;
+        CurrentState.StateEnter();
     }
 }
