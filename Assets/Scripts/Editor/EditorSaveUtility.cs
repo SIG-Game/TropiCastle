@@ -80,4 +80,8 @@ public static class EditorSaveUtility
             Debug.Log("Save data file does not exist");
         }
     }
+
+    [MenuItem("Save Utility/Open Save Data Folder")]
+    public static void OpenSaveDataFolder() =>
+        EditorUtility.RevealInFinder(SaveController.GetSaveDataFilePath());
 }
