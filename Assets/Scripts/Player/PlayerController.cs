@@ -77,7 +77,10 @@ public class PlayerController : MonoBehaviour
 
         if (inputManager.GetUseItemButtonDownIfUnusedThisFrame())
         {
-            UseItem(GetSelectedItem(), itemSelectionController.SelectedItemIndex);
+            ItemStack selectedItem = inventory.GetItemAtIndex(
+                itemSelectionController.SelectedItemIndex);
+
+            UseItem(selectedItem, itemSelectionController.SelectedItemIndex);
 
             // Prevent doing other actions on the frame an attack starts
             if (IsAttacking)
@@ -187,7 +190,4 @@ public class PlayerController : MonoBehaviour
 
     public bool CanMove() => !IsAttacking && !pauseController.GamePaused &&
         !playerActionDisablingUIManager.ActionDisablingUIOpen;
-
-    public ItemStack GetSelectedItem() =>
-        inventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
 }

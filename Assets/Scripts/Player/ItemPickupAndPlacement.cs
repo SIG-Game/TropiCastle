@@ -80,8 +80,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
         HoveredItemWorld = CursorIsOverItemWorld ?
             cursorOverlapCollider.GetComponent<ItemWorld>() : null;
 
-        ItemScriptableObject selectedItemDefinition =
-            player.GetSelectedItem().ItemDefinition;
+        ItemScriptableObject selectedItemDefinition = GetSelectedItem().ItemDefinition;
 
         Vector2 selectedItemColliderExtents = ItemWorldPrefabInstanceFactory
             .GetItemColliderExtents(selectedItemDefinition);
@@ -119,7 +118,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void PlaceSelectedItemAtCursorPosition()
     {
-        ItemStack selectedItem = player.GetSelectedItem();
+        ItemStack selectedItem = GetSelectedItem();
 
         ItemStack itemToPlace = selectedItem.ItemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
@@ -184,7 +183,7 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     public void UsePlacementCursorAndPlayerItem()
     {
-        ItemStack selectedItem = player.GetSelectedItem();
+        ItemStack selectedItem = GetSelectedItem();
 
         ItemStack placementItem = selectedItem.ItemDefinition.OneAtATimePlacement ?
             selectedItem.GetCopyWithAmount(1) : selectedItem;
@@ -204,17 +203,15 @@ public class ItemPickupAndPlacement : MonoBehaviour
         playerItemInWorld.ShowItem(placementItem);
     }
 
-    public bool SelectedItemIsEmpty()
-    {
-        ItemScriptableObject selectedItemDefinition =
-            player.GetSelectedItem().ItemDefinition;
-
-        return selectedItemDefinition.IsEmpty();
-    }
-
     private bool HoveredItemContainsItem() => HoveredItemWorld != null &&
         HoveredItemWorld.TryGetComponent(out Inventory hoveredInventory) &&
         hoveredInventory.GetItemList().Exists(x => !x.ItemDefinition.IsEmpty());
+
+    private ItemStack GetSelectedItem() =>
+        playerInventory.GetItemAtIndex(itemSelectionController.SelectedItemIndex);
+
+    public bool SelectedItemIsEmpty() =>
+        GetSelectedItem().ItemDefinition.IsEmpty();
 
     public void SwitchState(BaseItemPickupAndPlacementState newState)
     {
