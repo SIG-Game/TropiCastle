@@ -10,7 +10,7 @@ public abstract class NPCInventoryUIController : MonoBehaviour
     [Inject] protected InventoryUIManager inventoryUIManager;
     [Inject("PlayerInventory")] protected Inventory playerInventory;
 
-    protected virtual void Awake()
+    private void Awake()
     {
         this.InjectDependencies();
     }

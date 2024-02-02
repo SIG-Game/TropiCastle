@@ -12,28 +12,7 @@ public class TradingUIController : NPCInventoryUIController
     [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
 
     private NPCTradeScriptableObject currentTrade;
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        inventoryUIHeldItemController.OnItemHeld +=
-            InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden +=
-            UpdateTradeButtonInteractability;
-        playerInventory.OnItemChangedAtIndex +=
-            PlayerInventory_OnItemChangedAtIndex;
-    }
-
-    private void OnDestroy()
-    {
-        inventoryUIHeldItemController.OnItemHeld -=
-            InventoryUIHeldItemController_OnItemHeld;
-        inventoryUIHeldItemController.OnHidden -=
-            UpdateTradeButtonInteractability;
-        playerInventory.OnItemChangedAtIndex -=
-            PlayerInventory_OnItemChangedAtIndex;
-    }
+    private bool skipInventoryChangeEventHandler;
 
     public void DisplayTrade(NPCTradeScriptableObject trade)
     {
@@ -46,6 +25,12 @@ public class TradingUIController : NPCInventoryUIController
 
         DisplayUI();
 
+        inventoryUIHeldItemController.OnItemHeld +=
+            InventoryUIHeldItemController_OnItemHeld;
+        inventoryUIHeldItemController.OnHidden +=
+            UpdateTradeButtonInteractability;
+        playerInventory.OnItemChangedAtIndex +=
+            PlayerInventory_OnItemChangedAtIndex;
         inventoryUIManager.OnInventoryUIClosed +=
             InventoryUIManager_OnTradingUIClosed;
     }
@@ -53,11 +38,6 @@ public class TradingUIController : NPCInventoryUIController
     private void UpdateTradeItemUI(
         Transform tradeItemUIParent, List<ItemStack> items)
     {
-        foreach (Transform tradeItemUI in tradeItemUIParent)
-        {
-            Destroy(tradeItemUI.gameObject);
-        }
-
         foreach (ItemStack item in items)
         {
             GameObject tradeItemUI = Instantiate(
@@ -77,14 +57,12 @@ public class TradingUIController : NPCInventoryUIController
         {
             // Prevent this method from calling itself
             // through PlayerInventory_OnItemChangedAtIndex
-            playerInventory.OnItemChangedAtIndex -=
-                PlayerInventory_OnItemChangedAtIndex;
+            skipInventoryChangeEventHandler = true;
 
             tradeButton.interactable = playerInventory.CanReplaceItems(
                 currentTrade.InputItems, currentTrade.OutputItems);
 
-            playerInventory.OnItemChangedAtIndex +=
-                PlayerInventory_OnItemChangedAtIndex;
+            skipInventoryChangeEventHandler = false;
         }
     }
 
@@ -96,6 +74,22 @@ public class TradingUIController : NPCInventoryUIController
     {
         currentTrade = null;
 
+        foreach (Transform inputItemUI in inputItemUIParent)
+        {
+            Destroy(inputItemUI.gameObject);
+        }
+
+        foreach (Transform outputItemUI in outputItemUIParent)
+        {
+            Destroy(outputItemUI.gameObject);
+        }
+
+        inventoryUIHeldItemController.OnItemHeld -=
+            InventoryUIHeldItemController_OnItemHeld;
+        inventoryUIHeldItemController.OnHidden -=
+            UpdateTradeButtonInteractability;
+        playerInventory.OnItemChangedAtIndex -=
+            PlayerInventory_OnItemChangedAtIndex;
         inventoryUIManager.OnInventoryUIClosed -=
             InventoryUIManager_OnTradingUIClosed;
     }
@@ -103,6 +97,11 @@ public class TradingUIController : NPCInventoryUIController
     private void InventoryUIHeldItemController_OnItemHeld() =>
         tradeButton.interactable = false;
 
-    private void PlayerInventory_OnItemChangedAtIndex(ItemStack _, int _1) =>
-        UpdateTradeButtonInteractability();
+    private void PlayerInventory_OnItemChangedAtIndex(ItemStack _, int _1)
+    {
+        if (!skipInventoryChangeEventHandler)
+        {
+            UpdateTradeButtonInteractability();
+        }
+    }
 }
