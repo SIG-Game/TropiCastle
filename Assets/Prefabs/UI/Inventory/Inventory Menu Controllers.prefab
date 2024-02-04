@@ -266,6 +266,54 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &4186113823368286007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 602121679067144105}
+  - component: {fileID: 6336418485732429063}
+  m_Layer: 5
+  m_Name: Hovered Item Slot Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &602121679067144105
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4186113823368286007}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8774762380487729171}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6336418485732429063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4186113823368286007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84e4f9e35f6a014db80747fc8f489ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7071490440757550962
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +497,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8774762380487729171}
   - component: {fileID: 8774762380487729170}
-  - component: {fileID: 4477077557678837287}
   - component: {fileID: 3413011963817745242}
   - component: {fileID: 5322188097645069079}
   - component: {fileID: 8774762380487729169}
@@ -475,6 +522,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 602121679067144105}
   - {fileID: 8774762379877637704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -501,18 +549,6 @@ MonoBehaviour:
   - {fileID: 0}
   playerInventoryUI: {fileID: 0}
   playerInventoryUIPosition: {x: 0, y: 0}
---- !u!114 &4477077557678837287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8774762380487729172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e84e4f9e35f6a014db80747fc8f489ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3413011963817745242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,7 +562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  hoveredItemSlotManager: {fileID: 4477077557678837287}
+  hoveredItemSlotManager: {fileID: 6336418485732429063}
   inventoryUIManager: {fileID: 0}
   inventoryUIHeldItemController: {fileID: 0}
   inputManager: {fileID: 0}
