@@ -556,6 +556,16 @@ PrefabInstance:
       propertyPath: uiGameObjects.Array.data[2]
       value: 
       objectReference: {fileID: 2512943664112281383}
+    - target: {fileID: 7231837736808651705, guid: 3a74ee955c7ba104a852986d24f0e1de,
+        type: 3}
+      propertyPath: transactorNPCUIGameObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 4685527892054663144}
+    - target: {fileID: 7231837736808651705, guid: 3a74ee955c7ba104a852986d24f0e1de,
+        type: 3}
+      propertyPath: transactorNPCUIGameObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 2512943664112281383}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

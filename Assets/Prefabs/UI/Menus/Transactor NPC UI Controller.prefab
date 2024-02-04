@@ -111,15 +111,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553a4764689132c469d9d5ea238a1232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiGameObjects:
+  transactorNPCUIGameObjects:
   - {fileID: 7805898087143950659}
   - {fileID: 0}
   - {fileID: 0}
-  playerInventoryUI: {fileID: 0}
-  playerInventoryUIPosition: {x: 0, y: -20}
   transactionUIPrefab: {fileID: 4426703402800039571, guid: 9fc679fcebcc6fe42a7f051ba4bbea2d,
     type: 3}
   transactionUIParent: {fileID: 6235393996974837748}
+  playerInventoryUI: {fileID: 0}
+  playerInventoryUIPosition: {x: 0, y: -20}
 --- !u!1 &7805898087143950659
 GameObject:
   m_ObjectHideFlags: 0

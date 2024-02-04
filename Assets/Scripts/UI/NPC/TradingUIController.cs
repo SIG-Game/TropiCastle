@@ -2,17 +2,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TradingUIController : NPCInventoryUIController
+public class TradingUIController : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> tradingUIGameObjects;
     [SerializeField] private Button tradeButton;
     [SerializeField] private GameObject tradeItemUIPrefab;
     [SerializeField] private Transform inputItemUIParent;
     [SerializeField] private Transform outputItemUIParent;
+    [SerializeField] private RectTransform playerInventoryUI;
+    [SerializeField] private Vector2 playerInventoryUIPosition;
 
     [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
+    [Inject] private InventoryUIManager inventoryUIManager;
+    [Inject("PlayerInventory")] private Inventory playerInventory;
 
     private NPCTradeScriptableObject currentTrade;
     private bool skipInventoryChangeEventHandler;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     public void DisplayTrade(NPCTradeScriptableObject trade)
     {
@@ -23,7 +33,9 @@ public class TradingUIController : NPCInventoryUIController
 
         UpdateTradeButtonInteractability();
 
-        DisplayUI();
+        playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
+
+        inventoryUIManager.ShowInventoryUI(tradingUIGameObjects);
 
         inventoryUIHeldItemController.OnItemHeld +=
             InventoryUIHeldItemController_OnItemHeld;

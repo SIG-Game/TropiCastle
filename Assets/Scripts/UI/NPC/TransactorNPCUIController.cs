@@ -1,22 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransactorNPCUIController : NPCInventoryUIController
+public class TransactorNPCUIController : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> transactorNPCUIGameObjects;
     [SerializeField] private GameObject transactionUIPrefab;
     [SerializeField] private Transform transactionUIParent;
+    [SerializeField] private RectTransform playerInventoryUI;
+    [SerializeField] private Vector2 playerInventoryUIPosition;
 
-    private List<NPCTransactionScriptableObject> transactions;
+    [Inject] private InventoryUIManager inventoryUIManager;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     public void DisplayTransactions(
         List<NPCTransactionScriptableObject> transactions)
-    {
-        this.transactions = transactions;
-
-        DisplayUI();
-    }
-
-    protected override void DisplayUI()
     {
         foreach (Transform transactionUI in transactionUIParent)
         {
@@ -32,6 +33,8 @@ public class TransactorNPCUIController : NPCInventoryUIController
                 .SetUp(transaction);
         }
 
-        base.DisplayUI();
+        playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
+
+        inventoryUIManager.ShowInventoryUI(transactorNPCUIGameObjects);
     }
 }
