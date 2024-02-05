@@ -8,9 +8,10 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
     [SerializeField] private TextMeshProUGUI heldItemAmountText;
     [SerializeField] private ItemDurabilityMeterController durabilityMeter;
     [SerializeField] private RectTransform canvasRectTransform;
-    [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
     [SerializeField] private Sprite transparentSprite;
+
+    [Inject] private HoveredItemSlotManager hoveredItemSlotManager;
+    [Inject] private InventoryUIManager inventoryUIManager;
 
     public event Action OnItemHeld = () => {};
     public event Action OnHidden = () => {};
@@ -51,6 +52,8 @@ public class InventoryUIHeldItemController : MonoBehaviour, IElementWithTooltip
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         heldItemRectTransform = GetComponent<RectTransform>();
         heldItemImage = GetComponent<Image>();
 
