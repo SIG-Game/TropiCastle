@@ -33506,6 +33506,7 @@ MonoBehaviour:
   dependencies:
   - {fileID: 1816801988}
   - {fileID: 6847651757298814668}
+  - {fileID: 1812985303}
   - {fileID: 537164969}
   - {fileID: 8494658916821513172}
   - {fileID: 837265633}
@@ -33514,6 +33515,7 @@ MonoBehaviour:
   - {fileID: 2023076930}
   - {fileID: 1402876791}
   - {fileID: 6847651757298814667}
+  - {fileID: 1982112583}
   - {fileID: 1197448800}
   - {fileID: 1164902125}
   - {fileID: 1654789940}
@@ -33525,6 +33527,8 @@ MonoBehaviour:
   namedDependencies:
   - Name: PlayerInventory
     Dependency: {fileID: 1982112582}
+  - Name: PlayerItemInWorld
+    Dependency: {fileID: 1982112584}
   - Name: PlayerMoneyController
     Dependency: {fileID: 1278932380}
   transformDependencies:

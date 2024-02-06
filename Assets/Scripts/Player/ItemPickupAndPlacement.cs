@@ -3,20 +3,21 @@ using UnityEngine.InputSystem;
 
 public class ItemPickupAndPlacement : MonoBehaviour
 {
-    [SerializeField] private PlayerController player;
-    [SerializeField] private Inventory playerInventory;
-    [SerializeField] private ItemSelectionController itemSelectionController;
-    [SerializeField] private CharacterItemInWorldController playerItemInWorld;
-    [SerializeField] private CursorController cursorController;
-    [SerializeField] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
-    [SerializeField] private InputManager inputManager;
-    [SerializeField] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
-    [SerializeField] private PauseController pauseController;
     [SerializeField] private Sprite itemPickupArrow;
     [SerializeField] private Sprite cannotPickUpArrow;
     [SerializeField] private Color canPlaceCursorBackgroundColor;
     [SerializeField] private Color cannotPlaceCursorBackgroundColor;
     [SerializeField] private InputActionReference itemPickupAndPlacementActionReference;
+
+    [Inject] private CursorController cursorController;
+    [Inject] private InputManager inputManager;
+    [Inject] private ItemSelectionController itemSelectionController;
+    [Inject] private ItemWorldPrefabInstanceFactory itemWorldPrefabInstanceFactory;
+    [Inject] private PauseController pauseController;
+    [Inject] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
+    [Inject] private PlayerController playerController;
+    [Inject("PlayerInventory")] private Inventory playerInventory;
+    [Inject("PlayerItemInWorld")] private CharacterItemInWorldController playerItemInWorld;
 
     public bool WaitingForInputReleaseBeforePlacement { get; set; }
     public ItemWorld HoveredItemWorld { get; private set; }
@@ -34,6 +35,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         WaitingForInputReleaseBeforePlacement = false;
 
         itemPickupAndPlacementAction = itemPickupAndPlacementActionReference.action;
@@ -59,7 +62,8 @@ public class ItemPickupAndPlacement : MonoBehaviour
         }
 
         if (pauseController.GamePaused ||
-            playerActionDisablingUIManager.ActionDisablingUIOpen || player.IsAttacking)
+            playerActionDisablingUIManager.ActionDisablingUIOpen ||
+            playerController.IsAttacking)
         {
             bool shouldCancelPlacement = currentState == PlacementState;
             if (shouldCancelPlacement)
