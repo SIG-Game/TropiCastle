@@ -8,6 +8,7 @@ public class InventoryUITooltipController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI tooltipText;
     [SerializeField] private TextMeshProUGUI alternateTooltipText;
+    [SerializeField] private CanvasGroup tooltipBackgroundCanvasGroup;
     [SerializeField] private RectTransform tooltipBackgroundRectTransform;
     [SerializeField] private GraphicRaycaster graphicRaycaster;
     [SerializeField] private RectTransform canvasRectTransform;
@@ -43,8 +44,14 @@ public class InventoryUITooltipController : MonoBehaviour
             UpdateTooltipTextUsingRaycast();
         }
 
-        if (!string.IsNullOrEmpty(tooltipText.text))
+        if (string.IsNullOrEmpty(tooltipText.text))
         {
+            tooltipBackgroundCanvasGroup.alpha = 0f;
+        }
+        else
+        {
+            tooltipBackgroundCanvasGroup.alpha = 1f;
+
             UpdateInventoryTooltipPosition();
         }
     }

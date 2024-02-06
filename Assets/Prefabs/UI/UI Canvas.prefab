@@ -3112,10 +3112,20 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8220138900881955955, guid: 30808bde98eba564d86145adacbba1b1,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8220138900881955955, guid: 30808bde98eba564d86145adacbba1b1,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8220138901426017182, guid: 30808bde98eba564d86145adacbba1b1,
         type: 3}
       propertyPath: m_Name
-      value: Inventory Tooltip
+      value: Inventory UI Tooltip
       objectReference: {fileID: 0}
     - target: {fileID: 8220138901426017184, guid: 30808bde98eba564d86145adacbba1b1,
         type: 3}
