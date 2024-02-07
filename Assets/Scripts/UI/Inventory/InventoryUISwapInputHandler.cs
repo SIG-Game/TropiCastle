@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class InventoryUISwapInputHandler : MonoBehaviour
 {
-    [SerializeField] private Inventory inventory;
-    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
-    [SerializeField] private InventoryUIManager inventoryUIManager;
-    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
-    [SerializeField] private InputManager inputManager;
+    [Inject] private HoveredItemSlotManager hoveredItemSlotManager;
+    [Inject] private InputManager inputManager;
+    [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
+    [Inject] private InventoryUIManager inventoryUIManager;
+    [Inject("PlayerInventory")] private Inventory playerInventory;
+
+    private void Awake()
+    {
+        this.InjectDependencies();
+    }
 
     // Must run before ItemSelectionController Update method so that using number keys to
     // swap items in inventory UI takes priority over using number keys to select an item
@@ -26,14 +31,14 @@ public class InventoryUISwapInputHandler : MonoBehaviour
             return;
         }
 
-        if (inventory == hoveredItemSlotManager.HoveredInventory)
+        if (playerInventory == hoveredItemSlotManager.HoveredInventory)
         {
-            inventory.SwapItemsAt(
+            playerInventory.SwapItemsAt(
                 hoveredItemSlotManager.HoveredItemIndex, numberKeyIndex.Value);
         }
         else
         {
-            inventory.SwapItemsBetweenInventories(numberKeyIndex.Value,
+            playerInventory.SwapItemsBetweenInventories(numberKeyIndex.Value,
                 hoveredItemSlotManager.HoveredInventory,
                 hoveredItemSlotManager.HoveredItemIndex);
         }

@@ -561,11 +561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1587849b73232c4e9fac2eb6105099a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
-  hoveredItemSlotManager: {fileID: 6336418485732429063}
-  inventoryUIManager: {fileID: 0}
-  inventoryUIHeldItemController: {fileID: 0}
-  inputManager: {fileID: 0}
 --- !u!114 &5322188097645069079
 MonoBehaviour:
   m_ObjectHideFlags: 0
