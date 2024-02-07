@@ -16,20 +16,26 @@ public class ClickableItemSlotHandler : MonoBehaviour, IElementWithTooltip,
         set => inventory = value;
     }
 
+    public int SlotItemIndex
+    {
+        private get => slotItemIndex;
+        set => slotItemIndex = value;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         hoveredItemSlotManager.HoveredInventory = Inventory;
-        hoveredItemSlotManager.HoveredItemIndex = slotItemIndex;
+        hoveredItemSlotManager.HoveredItemIndex = SlotItemIndex;
 
         if (Input.GetMouseButton(0))
         {
             inventoryUIHeldItemController.HeldLeftClickOverItemAtIndex(
-                Inventory, slotItemIndex);
+                Inventory, SlotItemIndex);
         }
         else if (Input.GetMouseButton(1))
         {
             inventoryUIHeldItemController.HeldRightClickOverItemAtIndex(
-                Inventory, slotItemIndex, itemPlacementEnabled);
+                Inventory, SlotItemIndex, itemPlacementEnabled);
         }
     }
 
@@ -38,12 +44,12 @@ public class ClickableItemSlotHandler : MonoBehaviour, IElementWithTooltip,
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             inventoryUIHeldItemController.LeftClickedItemAtIndex(
-                Inventory, slotItemIndex, itemPlacementEnabled);
+                Inventory, SlotItemIndex, itemPlacementEnabled);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             inventoryUIHeldItemController.RightClickedItemAtIndex(
-                Inventory, slotItemIndex, itemPlacementEnabled);
+                Inventory, SlotItemIndex, itemPlacementEnabled);
         }
     }
 
@@ -53,5 +59,5 @@ public class ClickableItemSlotHandler : MonoBehaviour, IElementWithTooltip,
     }
 
     public string GetTooltipText() =>
-        Inventory.GetItemAtIndex(slotItemIndex).GetTooltipText();
+        Inventory.GetItemAtIndex(SlotItemIndex).GetTooltipText();
 }

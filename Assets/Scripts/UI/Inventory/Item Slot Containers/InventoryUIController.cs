@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
+using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
@@ -10,6 +11,11 @@ public class InventoryUIController : MonoBehaviour
 {
     [SerializeField] protected Inventory inventory;
     [SerializeField] protected List<ItemSlotController> itemSlotControllers;
+
+#if UNITY_EDITOR
+    private const string setClickableItemSlotHandlerIndexes =
+        "Set Clickable Item Slot Handler Indexes";
+#endif
 
     protected virtual void Awake()
     {
@@ -68,6 +74,21 @@ public class InventoryUIController : MonoBehaviour
         itemSlotControllers = new List<ItemSlotController>(childItemSlotControllersArray);
 
         EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+    }
+
+    [ContextMenu(setClickableItemSlotHandlerIndexes)]
+    private void SetClickableItemSlotHandlerIndexes()
+    {
+        ClickableItemSlotHandler[] clickableItemSlotHandlers =
+            GetComponentsInChildren<ClickableItemSlotHandler>(true);
+
+        Undo.RecordObjects(clickableItemSlotHandlers,
+            setClickableItemSlotHandlerIndexes);
+
+        for (int i = 0; i < clickableItemSlotHandlers.Length; ++i)
+        {
+            clickableItemSlotHandlers[i].SlotItemIndex = i;
+        }
     }
 #endif
 }
