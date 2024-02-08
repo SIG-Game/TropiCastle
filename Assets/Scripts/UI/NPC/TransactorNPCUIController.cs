@@ -19,11 +19,6 @@ public class TransactorNPCUIController : MonoBehaviour
     public void DisplayTransactions(
         List<NPCTransactionScriptableObject> transactions)
     {
-        foreach (Transform transactionUI in transactionUIParent)
-        {
-            Destroy(transactionUI.gameObject);
-        }
-
         foreach (var transaction in transactions)
         {
             GameObject transactionUI =
@@ -36,5 +31,19 @@ public class TransactorNPCUIController : MonoBehaviour
         playerInventoryUI.anchoredPosition = playerInventoryUIPosition;
 
         inventoryUIManager.ShowInventoryUI(transactorNPCUIGameObjects);
+
+        inventoryUIManager.OnInventoryUIClosed +=
+            InventoryUIManager_OnTransactorNPCUIClosed;
+    }
+
+    private void InventoryUIManager_OnTransactorNPCUIClosed()
+    {
+        foreach (Transform transactionUI in transactionUIParent)
+        {
+            Destroy(transactionUI.gameObject);
+        }
+
+        inventoryUIManager.OnInventoryUIClosed -=
+            InventoryUIManager_OnTransactorNPCUIClosed;
     }
 }
