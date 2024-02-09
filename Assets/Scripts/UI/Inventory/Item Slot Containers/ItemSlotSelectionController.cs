@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class ItemSlotSelectionController : MonoBehaviour
 {
-    [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private List<ItemSlotController> itemSlotControllers;
+
+    [Inject] private ItemSelectionController itemSelectionController;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         itemSelectionController.OnItemSelectedAtIndex +=
             ItemSelectionController_OnItemSelectedAtIndex;
         itemSelectionController.OnItemDeselectedAtIndex +=
