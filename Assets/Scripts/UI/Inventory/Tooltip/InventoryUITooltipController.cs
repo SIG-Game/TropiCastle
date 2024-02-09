@@ -136,5 +136,7 @@ public class InventoryUITooltipController : MonoBehaviour
     private void InventoryUIManager_OnInventoryUIClosed()
     {
         ClearTooltipText();
+
+        tooltipBackgroundCanvasGroup.alpha = 0f;
     }
 }
