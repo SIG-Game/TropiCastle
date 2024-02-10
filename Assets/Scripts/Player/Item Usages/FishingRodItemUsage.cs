@@ -16,7 +16,8 @@ public class FishingRodItemUsage : MonoBehaviour
 
     public void UseItem(int itemIndex)
     {
-        if (playerController.WaterInteractionCast(0.5f, 0.4f).collider == null)
+        if (playerController.InWater ||
+            playerController.WaterInteractionCast(0.5f, 0.4f).collider == null)
         {
             return;
         }

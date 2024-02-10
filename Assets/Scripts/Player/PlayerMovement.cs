@@ -14,8 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 velocity;
     private InputAction moveAction;
     private InputAction sprintAction;
-    private bool inWater;
-    private int waterLayer;
 
     private void Awake()
     {
@@ -26,10 +24,6 @@ public class PlayerMovement : MonoBehaviour
 
         moveAction = moveActionReference.action;
         sprintAction = sprintActionReference.action;
-
-        inWater = false;
-
-        waterLayer = LayerMask.NameToLayer("Water");
     }
 
     private void Update()
@@ -49,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
             newVelocity *= sprintSpeedMultiplier;
         }
 
-        if (inWater)
+        if (playerController.InWater)
         {
             newVelocity *= waterSpeedMultiplier;
         }
@@ -76,21 +70,5 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rigidbody2D.MovePosition(transform.position + (Vector3)velocity);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == waterLayer)
-        {
-            inWater = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.layer == waterLayer)
-        {
-            inWater = false;
-        }
     }
 }
