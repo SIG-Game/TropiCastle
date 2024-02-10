@@ -4,11 +4,12 @@ using UnityEngine.EventSystems;
 public class ClickableItemSlotHandler : MonoBehaviour, IElementWithTooltip,
     IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private HoveredItemSlotManager hoveredItemSlotManager;
-    [SerializeField] private InventoryUIHeldItemController inventoryUIHeldItemController;
     [SerializeField] private Inventory inventory;
     [SerializeField] private int slotItemIndex;
     [SerializeField] private bool itemPlacementEnabled;
+
+    [Inject] private HoveredItemSlotManager hoveredItemSlotManager;
+    [Inject] private InventoryUIHeldItemController inventoryUIHeldItemController;
 
     public Inventory Inventory
     {
@@ -20,6 +21,11 @@ public class ClickableItemSlotHandler : MonoBehaviour, IElementWithTooltip,
     {
         private get => slotItemIndex;
         set => slotItemIndex = value;
+    }
+
+    private void Awake()
+    {
+        this.InjectDependencies();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3940269534088966668, guid: 41b1c1a20cea77944a32a62a21f6716c,
@@ -118,6 +119,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3940269534088966668, guid: 41b1c1a20cea77944a32a62a21f6716c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6921456017128989611}
   m_SourcePrefab: {fileID: 100100000, guid: 41b1c1a20cea77944a32a62a21f6716c, type: 3}
 --- !u!1 &415455371410550700 stripped
 GameObject:
@@ -137,8 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f801e9ae801a5f4e8a9be27bf35fed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoveredItemSlotManager: {fileID: 0}
-  inventoryUIHeldItemController: {fileID: 0}
   inventory: {fileID: 0}
   slotItemIndex: 0
   itemPlacementEnabled: 1
