@@ -8,8 +8,6 @@ using UnityEngine.AddressableAssets;
 
 public class SaveController : MonoBehaviour
 {
-    [SerializeField] private Inventory playerInventory;
-
     private JsonSerializerSettings serializerSettings;
     private string saveDataFilePath;
 
