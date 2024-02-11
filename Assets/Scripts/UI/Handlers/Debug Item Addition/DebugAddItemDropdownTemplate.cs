@@ -4,12 +4,15 @@ using UnityEngine.UI;
 public class DebugAddItemDropdownTemplate : MonoBehaviour
 {
     [SerializeField] private DebugAddItemDropdownController debugAddItemDropdownController;
-    [SerializeField] private ItemSelectionController itemSelectionController;
+
+    [Inject] private ItemSelectionController itemSelectionController;
 
     private ScrollRect scrollRect;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         itemSelectionController.CanScroll = false;
     }
 

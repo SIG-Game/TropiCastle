@@ -763,7 +763,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugAddItemDropdownController: {fileID: 0}
-  itemSelectionController: {fileID: 0}
 --- !u!1 &2878272507815614421
 GameObject:
   m_ObjectHideFlags: 0
