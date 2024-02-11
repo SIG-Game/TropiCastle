@@ -8,7 +8,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class FishingUIController : MonoBehaviour
 {
     [SerializeField] private GameObject fishingUI;
-    [SerializeField] private FishUIController fishUI;
+    [SerializeField] private FishUIController fishUIController;
+    [SerializeField] private HookUIController hookUIController;
     [SerializeField] private Transform hookTransform;
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
@@ -78,14 +79,16 @@ public class FishingUIController : MonoBehaviour
         float catchFishXMin = hookTransform.position.x + catchFishXPositionRange.x;
         float catchFishXMax = hookTransform.position.x + catchFishXPositionRange.y;
 
-        bool canCatchFish = fishUI.transform.position.x >= catchFishXMin &&
-            fishUI.transform.position.x <= catchFishXMax;
+        bool canCatchFish = fishUIController.transform.position.x >= catchFishXMin &&
+            fishUIController.transform.position.x <= catchFishXMax;
         if (canCatchFish)
         {
             CatchFish();
         }
         else
         {
+            fishUIController.StopMovement();
+            hookUIController.StopMovement();
             animator.SetTrigger("Catch Failed");
             catchFailedAnimationStarted = true;
         }
@@ -120,7 +123,7 @@ public class FishingUIController : MonoBehaviour
         }
 
         selectedFishDefinition = fishItemScriptableObjects[fishSelector.SelectIndex()];
-        fishUI.Speed = selectedFishDefinition.GetFloatProperty("FishSpeed");
+        fishUIController.Speed = selectedFishDefinition.GetFloatProperty("FishSpeed");
 
         selectedFishItem = new ItemStack(selectedFishDefinition, 1);
 
@@ -133,7 +136,7 @@ public class FishingUIController : MonoBehaviour
         catchFailedAnimationStarted = false;
 
         fishingUI.SetActive(true);
-        fishUI.gameObject.SetActive(true);
+        fishUIController.gameObject.SetActive(true);
 
         playerActionDisablingUIManager.ActionDisablingUIOpen = true;
 
@@ -143,7 +146,7 @@ public class FishingUIController : MonoBehaviour
     private void HideFishingUI()
     {
         fishingUI.SetActive(false);
-        fishUI.gameObject.SetActive(false);
+        fishUIController.gameObject.SetActive(false);
 
         playerActionDisablingUIManager.ActionDisablingUIOpen = false;
 
