@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using static EnemyStateEnum;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float speed;
     [SerializeField] private int playerDamageAmount;
     [SerializeField] private float playerKnockbackForce;
     [SerializeField] private float maxStartChasingDistanceToPlayer;
@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
     public FadingOutEnemyState FadingOutState { get; private set; }
     public BaseEnemyState CurrentState { get; private set; }
 
+    public NavMeshAgent Agent { get; private set; }
     public float LastHitTime { get; set; }
 
     public float InitialWaitTimeBeforeIdleSeconds => initialWaitTimeBeforeIdleSeconds;
@@ -50,10 +51,14 @@ public class EnemyController : MonoBehaviour
 
         LastHitTime = 0f;
 
+        Agent = GetComponent<NavMeshAgent>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         collider2D = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         healthController = GetComponent<HealthController>();
+
+        Agent.updateRotation = false;
+        Agent.updateUpAxis = false;
 
         playerColliderOffset = playerTransform.GetComponent<BoxCollider2D>().offset;
 
@@ -75,15 +80,6 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         CurrentState.StateUpdate();
-    }
-
-    private void FixedUpdate()
-    {
-        if (CurrentState == ChasingState)
-        {
-            rigidbody2D.MovePosition(Vector2.MoveTowards(transform.position,
-                GetPlayerColliderPosition(), speed));
-        }
     }
 
     private void OnDestroy()
@@ -181,7 +177,7 @@ public class EnemyController : MonoBehaviour
     public float GetNewFadingOutAlpha() =>
         spriteRenderer.color.a - fadeOutSpeed * Time.deltaTime;
 
-    private Vector2 GetPlayerColliderPosition() =>
+    public Vector2 GetPlayerColliderPosition() =>
         (Vector2)playerTransform.position + playerColliderOffset;
 
     private Vector2 GetDirectionFromPlayerToEnemy() =>
@@ -203,6 +199,11 @@ public class EnemyController : MonoBehaviour
 
     public void SwitchState(BaseEnemyState newState)
     {
+        if (CurrentState == ChasingState)
+        {
+            Agent.enabled = false;
+        }
+
         CurrentState = newState;
         CurrentState.StateEnter();
     }

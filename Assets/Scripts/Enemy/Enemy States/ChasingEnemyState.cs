@@ -7,16 +7,19 @@ public class ChasingEnemyState : BaseEnemyState
 
     public override void StateEnter()
     {
+        enemyController.Agent.enabled = true;
     }
 
     public override void StateUpdate()
     {
-        // Movement toward the player occurs in the FixedUpdate
-        // method in EnemyController.cs
-
         if (enemyController.ShouldStopChasingPlayer())
         {
             enemyController.SwitchState(enemyController.IdleState);
+        }
+        else
+        {
+            enemyController.Agent.SetDestination(
+                enemyController.GetPlayerColliderPosition());
         }
     }
 }
