@@ -4,10 +4,13 @@ public class HealthChangeTextUISpawner : MonoBehaviour
 {
     [SerializeField] private HealthController healthController;
     [SerializeField] private GameObject healthChangeTextPrefab;
-    [SerializeField] private PauseController pauseController;
+
+    [Inject] private PauseController pauseController;
 
     private void Awake()
     {
+        this.InjectDependencies();
+
         healthController.OnHealthChangedByAmount +=
             HealthController_OnHealthChangedByAmount;
     }
