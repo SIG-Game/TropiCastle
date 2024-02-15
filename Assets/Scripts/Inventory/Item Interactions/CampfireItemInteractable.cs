@@ -148,20 +148,41 @@ public class CampfireItemInteractable : ContainerItemInteractable
         }
     }
 
-    protected override void Inventory_OnItemChangedAtIndex(
-        ItemStack item, int index)
+    private void ResetCookTimeProgress()
+    {
+        itemInstanceProperties.SetProperty("CookTimeProgress", 0f);
+
+        UpdateCampfireUIProgressArrow();
+    }
+
+    protected override void Inventory_OnItemChangedAtIndex(ItemStack item, int index)
     {
         base.Inventory_OnItemChangedAtIndex(item, index);
 
-        var previousRecipe = currentRecipe;
-
-        SetCurrentRecipe();
-
-        if (previousRecipe != currentRecipe)
+        if (currentRecipe == null || currentRecipeInputItem == null)
         {
-            itemInstanceProperties.SetProperty("CookTimeProgress", 0f);
+            SetCurrentRecipe();
+            ResetCookTimeProgress();
+        }
+        else
+        {
+            ItemStack inputItem = inventory.GetItemAtIndex(0);
+            ItemStack inventoryResultItem = inventory.GetItemAtIndex(1);
 
-            UpdateCampfireUIProgressArrow();
+            bool inputItemMatchesCurrentRecipe =
+                inputItem.ItemDefinition == currentRecipeInputItem.Value.ItemDefinition &&
+                inputItem.Amount >= currentRecipeInputItem.Value.Amount;
+            bool inventoryResultItemMatchesCurrentRecipe = 
+                inventoryResultItem.ItemDefinition.IsEmpty() ||
+                (inventoryResultItem.ItemDefinition == currentRecipe.ResultItem.ItemDefinition &&
+                inventoryResultItem.Amount + currentRecipe.ResultItem.Amount <=
+                    inventoryResultItem.ItemDefinition.StackSize);
+            if (!inputItemMatchesCurrentRecipe ||
+                !inventoryResultItemMatchesCurrentRecipe)
+            {
+                SetCurrentRecipe();
+                ResetCookTimeProgress();
+            }
         }
     }
 
