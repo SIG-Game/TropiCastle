@@ -90,7 +90,6 @@ MonoBehaviour:
   fishUIController: {fileID: 6030874414711316719}
   hookUIController: {fileID: 1305937006091616511}
   hookTransform: {fileID: 1938744877893344358}
-  playerInventory: {fileID: 0}
   playerItemInWorld: {fileID: 0}
   catchFishXPositionRange: {x: -57.1, y: 54}
 --- !u!95 &239831750938302052

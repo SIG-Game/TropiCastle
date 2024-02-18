@@ -204,7 +204,7 @@ PrefabInstance:
     - target: {fileID: 4509858844898638303, guid: ab2eb29b8ae26cc4cb34ce3331827ea5,
         type: 3}
       propertyPath: m_Name
-      value: Chimp 1
+      value: Chimp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -272,7 +272,6 @@ MonoBehaviour:
   timeBetweenGivesRange: {x: 5, y: 10}
   chimpSpinner: {fileID: 6970519242344443504}
   chimpItemInWorld: {fileID: 7845572361741486575}
-  playerInventory: {fileID: 0}
 --- !u!114 &6970519242344443504
 MonoBehaviour:
   m_ObjectHideFlags: 0

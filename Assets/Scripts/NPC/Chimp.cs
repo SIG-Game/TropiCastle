@@ -11,10 +11,10 @@ public class Chimp : NPCInteractable
     [SerializeField] private Vector2 timeBetweenGivesRange;
     [SerializeField] private NPCSpinner chimpSpinner;
     [SerializeField] private CharacterItemInWorldController chimpItemInWorld;
-    [SerializeField] private Inventory playerInventory;
 
     [Inject] private DialogueBox dialogueBox;
     [Inject] private PlayerController playerController;
+    [Inject("PlayerInventory")] private Inventory playerInventory;
 
     public float LastGiveTime { get; private set; }
     public float TimeBetweenGives { get; set; }

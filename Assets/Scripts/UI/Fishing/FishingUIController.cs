@@ -11,7 +11,6 @@ public class FishingUIController : MonoBehaviour
     [SerializeField] private FishUIController fishUIController;
     [SerializeField] private HookUIController hookUIController;
     [SerializeField] private Transform hookTransform;
-    [SerializeField] private Inventory playerInventory;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private Vector2 catchFishXPositionRange;
 
@@ -20,6 +19,7 @@ public class FishingUIController : MonoBehaviour
     [Inject] private InventoryFullUIController inventoryFullUIController;
     [Inject] private PauseController pauseController;
     [Inject] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
+    [Inject("PlayerInventory")] private Inventory playerInventory;
 
     public event Action OnFishingStopped = () => {};
     public event Action OnFishingUIOpened = () => {};
