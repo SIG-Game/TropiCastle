@@ -8,14 +8,16 @@ public class FishUIController : HorizontalMover
 
     public float Speed { private get; set; }
 
-    private void OnEnable()
+    public override void StartMovement()
     {
         fishUIImageRectTransform.localScale = Vector3.one;
 
         float randomFishXPosition = Random.Range(fishStartAbsXPositionRange.x,
             fishStartAbsXPositionRange.y) * GetRandomSign();
 
-        rectTransform.anchoredPosition = new Vector3(randomFishXPosition, 0f, 0f);
+        rectTransform.anchoredPosition = new Vector2(
+            randomFishXPosition,
+            rectTransform.anchoredPosition.y);
 
         transform.localScale = new Vector3(GetRandomSign(),
             transform.localScale.y, transform.localScale.z);

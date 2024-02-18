@@ -31,7 +31,9 @@ public abstract class HorizontalMover : MonoBehaviour
         transform.localPosition = newPosition;
     }
 
-    protected virtual void FlipXVelocityDirection() => xVelocity *= -1f;
+    public abstract void StartMovement();
 
     public void StopMovement() => xVelocity = 0f;
+
+    protected virtual void FlipXVelocityDirection() => xVelocity *= -1f;
 }

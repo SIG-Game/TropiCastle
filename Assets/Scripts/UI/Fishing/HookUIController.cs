@@ -11,7 +11,7 @@ public class HookUIController : HorizontalMover
         initialPosition = transform.localPosition;
     }
 
-    private void OnEnable()
+    public override void StartMovement()
     {
         float randomXPosition = Random.Range(xPositionRange.x, xPositionRange.y);
 
