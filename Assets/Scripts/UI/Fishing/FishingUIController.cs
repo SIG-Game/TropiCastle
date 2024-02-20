@@ -9,7 +9,6 @@ public class FishingUIController : MonoBehaviour
 {
     [SerializeField] private FishUIController fishUIController;
     [SerializeField] private HookUIController hookUIController;
-    [SerializeField] private Transform hookTransform;
     [SerializeField] private CharacterItemInWorldController playerItemInWorld;
     [SerializeField] private Vector2 catchFishXPositionRange;
 
@@ -26,6 +25,8 @@ public class FishingUIController : MonoBehaviour
 
     private Animator animator;
     private CanvasGroup canvasGroup;
+    private RectTransform fishUIRectTransform;
+    private RectTransform hookUIRectTransform;
     private WeightedRandomSelector fishSelector;
     private ItemScriptableObject selectedFishDefinition;
     private ItemStack selectedFishItem;
@@ -40,6 +41,9 @@ public class FishingUIController : MonoBehaviour
 
         animator = GetComponent<Animator>();
         canvasGroup = GetComponent<CanvasGroup>();
+
+        fishUIRectTransform = fishUIController.GetComponent<RectTransform>();
+        hookUIRectTransform = hookUIController.GetComponent<RectTransform>();
 
         itemsLoadHandle =
             Addressables.LoadAssetsAsync<ItemScriptableObject>("item", null);
@@ -77,12 +81,13 @@ public class FishingUIController : MonoBehaviour
 
     private void AttemptToCatchFish()
     {
-        float catchFishXMin = hookTransform.position.x + catchFishXPositionRange.x;
-        float catchFishXMax = hookTransform.position.x + catchFishXPositionRange.y;
+        float catchFishXMin =
+            hookUIRectTransform.anchoredPosition.x + catchFishXPositionRange.x;
+        float catchFishXMax =
+            hookUIRectTransform.anchoredPosition.x + catchFishXPositionRange.y;
 
-        bool canCatchFish = fishUIController.transform.position.x >= catchFishXMin &&
-            fishUIController.transform.position.x <= catchFishXMax;
-        if (canCatchFish)
+        if (fishUIRectTransform.anchoredPosition.x >= catchFishXMin &&
+            fishUIRectTransform.anchoredPosition.x <= catchFishXMax)
         {
             CatchFish();
         }
