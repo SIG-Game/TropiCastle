@@ -20,6 +20,6 @@ public class DialogueNPC : NPCInteractable
         FacePlayer(playerController);
 
         dialogueBox.PlayDialogue(dialogueLines,
-            directionController.UseDefaultDirection);
+            StartWaitThenReturnToDefaultDirectionCouroutine);
     }
 }

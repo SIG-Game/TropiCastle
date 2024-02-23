@@ -27,7 +27,7 @@ public class TradingNPC : NPCInteractable
 
     private void InventoryUIManager_OnInventoryUIClosed()
     {
-        directionController.UseDefaultDirection();
+        StartWaitThenReturnToDefaultDirectionCouroutine();
 
         inventoryUIManager.OnInventoryUIClosed -=
             InventoryUIManager_OnInventoryUIClosed;
