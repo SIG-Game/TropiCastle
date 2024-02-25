@@ -560,6 +560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 5891227937891750731}
+  coin: {fileID: 9096031627616274609}
   arrow: {fileID: 5078416482265573377}
   itemImage: {fileID: 2155145312872519061}
   buttonText: {fileID: 7903133030727174479}

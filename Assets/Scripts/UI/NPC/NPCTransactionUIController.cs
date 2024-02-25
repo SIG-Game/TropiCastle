@@ -8,6 +8,7 @@ using static NPCTransactionType;
 public class NPCTransactionUIController : MonoBehaviour
 {
     [SerializeField] private Button button;
+    [SerializeField] private RectTransform coin;
     [SerializeField] private RectTransform arrow;
     [SerializeField] private Image itemImage;
     [SerializeField] private TextMeshProUGUI buttonText;
@@ -68,7 +69,10 @@ public class NPCTransactionUIController : MonoBehaviour
             button.onClick.AddListener(new UnityAction(
                 GetSellButtonOnClickListener(transaction)));
 
-            arrow.localScale = new Vector3(-1f, 1f, 1f);
+            itemImage.transform.SetAsFirstSibling();
+            itemAmountText.transform.SetAsFirstSibling();
+            moneyText.transform.SetAsLastSibling();
+            coin.SetAsLastSibling();
         }
 
         moneyText.text = transaction.Money.ToString();
