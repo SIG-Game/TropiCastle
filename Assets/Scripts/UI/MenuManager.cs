@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -17,23 +15,17 @@ public class MenuManager : MonoBehaviour
 
     public void ShowMenu(MenuProperties menuProperties)
     {
-        Selectable[] childSelectables =
-            menuProperties.MenuCanvasGroup.GetComponentsInChildren<Selectable>();
-
-        List<float> childSelectableFadeDurations = new();
-
-        foreach (var childSelectable in childSelectables)
+        foreach (var childSelectable in menuProperties.ChildSelectables)
         {
-            childSelectableFadeDurations.Add(childSelectable.colors.fadeDuration);
-
             childSelectable.SetFadeDuration(0f);
         }
 
         menuProperties.MenuCanvasGroup.ShowAndMakeInteractable();
 
-        for (int i = 0; i < childSelectables.Length; ++i)
+        for (int i = 0; i < menuProperties.ChildSelectables.Length; ++i)
         {
-            childSelectables[i].SetFadeDuration(childSelectableFadeDurations[i]);
+            menuProperties.ChildSelectables[i].SetFadeDuration(
+                menuProperties.ChildSelectableFadeDurations[i]);
         }
 
         eventSystemDefaultGameObjectSelector.SetDefaultSelectedGameObject(
