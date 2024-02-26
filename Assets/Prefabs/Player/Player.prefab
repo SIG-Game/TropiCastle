@@ -742,7 +742,6 @@ MonoBehaviour:
     type: 3}
   movementSpeed: 0.06
   sprintSpeedMultiplier: 1.25
-  waterSpeedMultiplier: 0.5
 --- !u!114 &3015389456133774718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,7 +870,6 @@ MonoBehaviour:
   healthController: {fileID: 3015389456133774718}
   healthChangeTextPrefab: {fileID: 928500359597897181, guid: 9242018da622f564fab950dc3cde3d28,
     type: 3}
-  pauseController: {fileID: 0}
 --- !u!1 &7070325552965084463
 GameObject:
   m_ObjectHideFlags: 0

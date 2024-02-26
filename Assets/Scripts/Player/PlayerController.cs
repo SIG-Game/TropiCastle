@@ -37,8 +37,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool InWater { get; private set; }
-
     public event Action<bool> OnIsAttackingSet = (_) => {};
     public event Action OnPlayerDied = () => {};
 
@@ -48,7 +46,6 @@ public class PlayerController : MonoBehaviour
     private CharacterDirectionController directionController;
     private LayerMask interactableMask;
     private LayerMask waterMask;
-    private int waterLayer;
     private bool isAttacking;
 
     private void Awake()
@@ -62,8 +59,6 @@ public class PlayerController : MonoBehaviour
 
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
-
-        waterLayer = LayerMask.NameToLayer("Water");
 
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
     }
@@ -165,22 +160,6 @@ public class PlayerController : MonoBehaviour
     {
         pauseController.GamePaused = true;
         OnPlayerDied();
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == waterLayer)
-        {
-            InWater = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.layer == waterLayer)
-        {
-            InWater = false;
-        }
     }
 
     private void OnTriggerStay2D(Collider2D other)

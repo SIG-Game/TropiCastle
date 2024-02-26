@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private InputActionReference sprintActionReference;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float sprintSpeedMultiplier;
-    [SerializeField] private float waterSpeedMultiplier;
 
     private PlayerController playerController;
     private new Rigidbody2D rigidbody2D;
@@ -41,11 +40,6 @@ public class PlayerMovement : MonoBehaviour
         if (sprintAction.IsPressed())
         {
             newVelocity *= sprintSpeedMultiplier;
-        }
-
-        if (playerController.InWater)
-        {
-            newVelocity *= waterSpeedMultiplier;
         }
 
         velocity = newVelocity;
