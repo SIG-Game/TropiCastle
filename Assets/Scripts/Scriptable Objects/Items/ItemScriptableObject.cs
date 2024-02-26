@@ -34,7 +34,7 @@ public class ItemScriptableObject : ScriptableObject
             if (HasProperty("AttackType"))
             {
                 tooltipText += $"\n{GetStringProperty("AttackType")} Attack" +
-                    $"\nDeals {GetIntProperty("Damage")} Damage" +
+                    $"\n{GetIntProperty("Damage")} Damage" +
                     $"\n{GetFloatProperty("Knockback")} Knockback" +
                     $"\n{GetFloatProperty("AttackSpeed")} Attack Speed";
             }
@@ -42,13 +42,14 @@ public class ItemScriptableObject : ScriptableObject
             if (includeInitialDurability &&
                 DefaultInstanceProperties.HasProperty("Durability"))
             {
-                tooltipText += "\nDurability: " +
-                    DefaultInstanceProperties.GetIntProperty("Durability");
+                tooltipText += "\n" +
+                    DefaultInstanceProperties.GetIntProperty("Durability") +
+                    " Durability";
             }
 
             if (HasProperty("HealAmount"))
             {
-                tooltipText += $"\nHeals {GetIntProperty("HealAmount")} Health";
+                tooltipText += $"\n{GetIntProperty("HealAmount")} Healing";
             }
         }
 

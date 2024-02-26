@@ -61,7 +61,7 @@ public struct ItemStack
 
         if (TryGetDurabilityProperties(out int durability, out int initialDurability))
         {
-            tooltipText += $"\nDurability: {durability} / {initialDurability}";
+            tooltipText += $"\n{durability}/{initialDurability} Durability";
         }
 
         return tooltipText;
