@@ -79,7 +79,24 @@ public class InventoryUIManager : MonoBehaviour
 
     private void SetCurrentInventoryUIActive(bool active)
     {
-        currentInventoryUIGameObjects.ForEach(x => x.SetActive(active));
+        foreach (var gameObject in currentInventoryUIGameObjects)
+        {
+            if (gameObject.TryGetComponent<CanvasGroup>(out var canvasGroup))
+            {
+                if (active)
+                {
+                    canvasGroup.ShowAndMakeInteractable();
+                }
+                else
+                {
+                    canvasGroup.HideAndMakeNonInteractive();
+                }
+            }
+            else
+            {
+                gameObject.SetActive(active);
+            }
+        }
 
         menuBackground.SetActive(active);
     }
