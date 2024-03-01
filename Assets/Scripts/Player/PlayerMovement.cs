@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float sprintSpeedMultiplier;
 
     private PlayerController playerController;
+    private CharacterDirectionController directionController;
     private new Rigidbody2D rigidbody2D;
     private Vector2 velocity;
     private InputAction moveAction;
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
+        directionController = GetComponent<CharacterDirectionController>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
         velocity = Vector2.zero;
@@ -50,12 +52,12 @@ public class PlayerMovement : MonoBehaviour
             // magnitude of the input's x component, then use a vertical direction
             if (Mathf.Abs(movementInput.y) > Mathf.Abs(movementInput.x))
             {
-                playerController.Direction = movementInput.y > 0f ?
+                directionController.Direction = movementInput.y > 0f ?
                     CharacterDirection.Up : CharacterDirection.Down;
             }
             else
             {
-                playerController.Direction = movementInput.x > 0f ?
+                directionController.Direction = movementInput.x > 0f ?
                     CharacterDirection.Right : CharacterDirection.Left;
             }
         }

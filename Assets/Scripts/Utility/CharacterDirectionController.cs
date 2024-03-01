@@ -15,8 +15,12 @@ public class CharacterDirectionController : MonoBehaviour
             direction = value;
 
             spriteRenderer.sprite = sprites.ForDirection(direction);
+
+            OnDirectionSet();
         }
     }
+
+    public event Action OnDirectionSet = () => {};
 
     private SpriteRenderer spriteRenderer;
     private CharacterDirection direction;

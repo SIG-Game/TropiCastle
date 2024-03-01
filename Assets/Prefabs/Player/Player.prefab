@@ -787,6 +787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveGuid: 710d5612-7175-4f2a-a3a9-b1817a4b52d9
   playerController: {fileID: 5288355818519945016}
+  directionController: {fileID: 5613604618592605289}
   itemSelectionController: {fileID: 7097838542593330430}
   playerHealthController: {fileID: 3015389456133774718}
   playerMoneyController: {fileID: 6736210025769766868}

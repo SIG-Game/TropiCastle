@@ -16,17 +16,6 @@ public class PlayerController : MonoBehaviour
     [Inject] private PauseController pauseController;
     [Inject] private PlayerActionDisablingUIManager playerActionDisablingUIManager;
 
-    public CharacterDirection Direction
-    {
-        get => directionController.Direction;
-        set
-        {
-            directionController.Direction = value;
-
-            overlaySpriteMask.sprite = spriteRenderer.sprite;
-        }
-    }
-
     public bool IsAttacking
     {
         get => isAttacking;
@@ -36,6 +25,8 @@ public class PlayerController : MonoBehaviour
             OnIsAttackingSet(isAttacking);
         }
     }
+
+    public CharacterDirection Direction => directionController.Direction;
 
     public event Action<bool> OnIsAttackingSet = (_) => {};
     public event Action OnPlayerDied = () => {};
@@ -60,6 +51,7 @@ public class PlayerController : MonoBehaviour
         interactableMask = LayerMask.GetMask("Interactable");
         waterMask = LayerMask.GetMask("Water");
 
+        directionController.OnDirectionSet += DirectionController_OnDirectionSet;
         healthController.OnHealthSetToZero += HealthController_OnHealthSetToZero;
     }
 
@@ -102,6 +94,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
+        directionController.OnDirectionSet -= DirectionController_OnDirectionSet;
+
         if (healthController != null)
         {
             healthController.OnHealthSetToZero -= HealthController_OnHealthSetToZero;
@@ -171,10 +165,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HealthController_OnHealthSetToZero()
-    {
-        PlayerDeath();
-    }
+    private void DirectionController_OnDirectionSet() =>
+        overlaySpriteMask.sprite = spriteRenderer.sprite;
+
+    private void HealthController_OnHealthSetToZero() => PlayerDeath();
 
     private void AttackEndedAnimationEvent()
     {

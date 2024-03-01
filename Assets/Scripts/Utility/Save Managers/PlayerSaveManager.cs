@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerSaveManager : SaveManager
 {
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private CharacterDirectionController directionController;
     [SerializeField] private ItemSelectionController itemSelectionController;
     [SerializeField] private HealthController playerHealthController;
     [SerializeField] private MoneyController playerMoneyController;
@@ -14,7 +15,7 @@ public class PlayerSaveManager : SaveManager
         var properties = new Dictionary<string, object>
         {
             { "Position", playerController.transform.position.ToArray() },
-            { "Direction", (int)playerController.Direction },
+            { "Direction", (int)directionController.Direction },
             { "Health", playerHealthController.Health },
             { "SelectedItemIndex", itemSelectionController.SelectedItemIndex },
             { "Money", playerMoneyController.Money }
@@ -27,7 +28,7 @@ public class PlayerSaveManager : SaveManager
     {
         playerController.transform.position = Vector3Helper.FromArray(
             (float[])properties["Position"]);
-        playerController.Direction = (CharacterDirection)
+        directionController.Direction = (CharacterDirection)
             Convert.ToInt32(properties["Direction"]);
         playerHealthController.SetInitialHealth(
             Convert.ToInt32(properties["Health"]));
